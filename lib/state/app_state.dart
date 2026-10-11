@@ -1525,6 +1525,17 @@ class AppState extends ChangeNotifier {
   /// journey keeps: one answer said at 90% and missed is not "overconfident
   /// by 90 points", and the profile used to say exactly that.
   double? get overconfidence {
+    final said = sureAgainstRight;
+    return said == null ? null : said.sure - said.right;
+  }
+
+  /// The two numbers [overconfidence] is the distance between, in percent:
+  /// how sure the reader says they are, on average over every judgement,
+  /// and how often they turned out right. Null under the same floor, for
+  /// the same reason. The paywall says them to a reader who has them,
+  /// because "80% sure, right 62% of the time" is the reader's own and a
+  /// gap of eighteen points is a statistic.
+  ({double sure, double right})? get sureAgainstRight {
     if (judgements.length < kCalibrationFloor) return null;
     var claimed = 0.0;
     var right = 0;
@@ -1533,7 +1544,7 @@ class AppState extends ChangeNotifier {
       if (j.correct) right++;
     }
     final n = judgements.length;
-    return (claimed / n) - (right / n * 100);
+    return (sure: claimed / n, right: right / n * 100);
   }
 
   bool isSaved(String pillId) => savedIds.contains(pillId);

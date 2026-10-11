@@ -1019,12 +1019,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get perkArchiveTitle => 'Je hele archief';
-
-  @override
-  String get perkArchiveLine => 'Elke dag die je las, voorgoed bewaard.';
-
-  @override
   String get plusIsActive => 'ASTUTE+ IS ACTIEF';
 
   @override
@@ -1038,13 +1032,100 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get noChargeTodayCancel => 'Vandaag niets betalen · altijd opzegbaar';
-
-  @override
   String get chargedTodayCancel => 'Vandaag afgeschreven · altijd opzegbaar';
 
   @override
-  String get everyCardForYouMark => 'jou';
+  String get paywallRecordTitle => 'Ontdek hoeveel je echt weet.';
+
+  @override
+  String get paywallRecordMark => 'echt';
+
+  @override
+  String get paywallRecordLine =>
+      'Elke dag zeg je hoe zeker je bent. Astute+ laat zien of het gat tussen zeker en goed kleiner wordt, en de zetten die je blijft missen.';
+
+  @override
+  String paywallRecordOver(int sure, int right) {
+    return 'Je zegt $sure% zeker te zijn en hebt het $right% van de keren goed. Astute+ laat zien of dat gat kleiner wordt, en de zetten die je blijft missen.';
+  }
+
+  @override
+  String paywallRecordUnder(int sure, int right) {
+    return 'Je zegt $sure% zeker te zijn en hebt het $right% van de keren goed: je weet meer dan je denkt. Astute+ laat zien of dat gat kleiner wordt.';
+  }
+
+  @override
+  String paywallRecordEven(int sure, int right) {
+    return 'Je zegt $sure% zeker te zijn en hebt het $right% van de keren goed: bijna gelijk. Astute+ laat zien of dat zo blijft, en de zetten die je blijft missen.';
+  }
+
+  @override
+  String get paywallOutcomeTitle => 'Laat je door niemand beetnemen.';
+
+  @override
+  String get paywallOutcomeMark => 'beetnemen.';
+
+  @override
+  String get paywallOutcomeLine =>
+      'Vijf kaarten per dag op jouw niveau. Wat je mist, komt terug tot het blijft hangen. En je ziet jezelf veranderen, week na week.';
+
+  @override
+  String get paywallFiveTitle => 'Alle vijf, van jou.';
+
+  @override
+  String get paywallFiveMark => 'van jou.';
+
+  @override
+  String get paywallFiveLine =>
+      'Gratis zijn er twee van de vijf voor jou, drie na een volgehouden week. Astute+ kiest alle vijf uit jouw draden, op jouw niveau, en brengt terug wat je mist.';
+
+  @override
+  String get paywallReadTitle => 'Wat je gelezen hebt, dag na dag.';
+
+  @override
+  String get paywallReadMark => 'dag na dag.';
+
+  @override
+  String get paywallReadLine =>
+      'De dagen die je de laatste tijd las, nieuwste eerst. Tik op een dag om zijn vijf kaarten te openen, en op een kaart om hem opnieuw te lezen.';
+
+  @override
+  String get perkGapTitle => 'Zie het gat kleiner worden';
+
+  @override
+  String get perkGapLine =>
+      'Je reis, week na week: hoe zeker tegenover hoe goed, en de zetten die je blijft missen.';
+
+  @override
+  String get perkOwnFiveTitle => 'Vijf eigen kaarten';
+
+  @override
+  String get perkOwnFiveLine =>
+      'Elke dag, op jouw niveau, en wat je mist komt terug.';
+
+  @override
+  String get perkReadTitle => 'Wat je gelezen hebt';
+
+  @override
+  String get perkReadLine =>
+      'Je laatste dagen, elk met zijn vijf kaarten, klaar om weer te openen.';
+
+  @override
+  String get trialToday => 'Vandaag · heel Astute+, gratis';
+
+  @override
+  String trialReminder(int day) {
+    return 'Dag $day · we herinneren je eraan';
+  }
+
+  @override
+  String trialCharge(int day, String price, String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {
+      'year': 'voor een jaar',
+      'other': 'per maand',
+    });
+    return 'Dag $day · $price $_temp0, tenzij je opzegt';
+  }
 
   @override
   String get trialStartedNoPayment =>
@@ -1586,16 +1667,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.';
 
   @override
-  String get everyCardForYou => 'Elke kaart, voor jou gekozen.';
-
-  @override
-  String get perkOwnTitle => 'Vijf kaarten per dag, allemaal van jou';
-
-  @override
-  String get perkOwnLine =>
-      'Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
-
-  @override
   String get plusCardHeadline => 'Alle vijf van jou.';
 
   @override
@@ -1611,10 +1682,6 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Een week volgehouden: morgen zijn drie van de vijf van jou.';
-
-  @override
-  String get perkJourneyLine =>
-      'Je niveau, elk vak draad voor draad, wat bleef, en de zetten die je blijft missen.';
 
   @override
   String get topOfTheWeek => 'Top van de week';

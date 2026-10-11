@@ -983,12 +983,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get perkArchiveTitle => '你的全部档案';
-
-  @override
-  String get perkArchiveLine => '你读过的每一天，永久保存。';
-
-  @override
   String get plusIsActive => 'ASTUTE+ 已激活';
 
   @override
@@ -1002,13 +996,92 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get noChargeTodayCancel => '今天不扣款 · 随时可取消';
-
-  @override
   String get chargedTodayCancel => '今天扣款 · 随时可取消';
 
   @override
-  String get everyCardForYouMark => '你';
+  String get paywallRecordTitle => '看看你真正知道多少。';
+
+  @override
+  String get paywallRecordMark => '真正';
+
+  @override
+  String get paywallRecordLine =>
+      '每天你都会说出自己有多确定。Astute+ 会告诉你，确定与答对之间的差距是否在缩小，以及你一再错过的招。';
+
+  @override
+  String paywallRecordOver(int sure, int right) {
+    return '你说有 $sure% 的把握，实际答对 $right%。Astute+ 会告诉你这个差距是否在缩小，以及你一再错过的招。';
+  }
+
+  @override
+  String paywallRecordUnder(int sure, int right) {
+    return '你说有 $sure% 的把握，实际答对 $right%：你知道的比你以为的多。Astute+ 会告诉你这个差距是否在缩小。';
+  }
+
+  @override
+  String paywallRecordEven(int sure, int right) {
+    return '你说有 $sure% 的把握，实际答对 $right%：几乎一致。Astute+ 会告诉你能否保持，以及你一再错过的招。';
+  }
+
+  @override
+  String get paywallOutcomeTitle => '做那个谁都骗不了的人。';
+
+  @override
+  String get paywallOutcomeMark => '骗不了';
+
+  @override
+  String get paywallOutcomeLine => '每天五张，匹配你的水平。答错的会一再回来，直到你记住。你还会看到自己一周一周地变化。';
+
+  @override
+  String get paywallFiveTitle => '五张，全是你的。';
+
+  @override
+  String get paywallFiveMark => '你的。';
+
+  @override
+  String get paywallFiveLine =>
+      '免费版的五张里有两张为你挑选，连续一周后的第二天是三张。Astute+ 从你的分支、按你的水平挑选全部五张，还会把答错的带回来。';
+
+  @override
+  String get paywallReadTitle => '你读过的，按天回看。';
+
+  @override
+  String get paywallReadMark => '按天回看。';
+
+  @override
+  String get paywallReadLine => '你最近读过的日子，最新的在前。点按某一天打开那天的五张卡片，点按卡片即可重读。';
+
+  @override
+  String get perkGapTitle => '看着差距缩小';
+
+  @override
+  String get perkGapLine => '你的旅程，一周一周：有多确定，对了多少，以及你一再错过的招。';
+
+  @override
+  String get perkOwnFiveTitle => '五张属于你的卡片';
+
+  @override
+  String get perkOwnFiveLine => '每天按你的水平挑选，答错的会回来。';
+
+  @override
+  String get perkReadTitle => '你读过的';
+
+  @override
+  String get perkReadLine => '你最近的每一天，各带五张卡片，可随时重新打开。';
+
+  @override
+  String get trialToday => '今天 · 免费使用全部 Astute+';
+
+  @override
+  String trialReminder(int day) {
+    return '第 $day 天 · 我们会提醒你';
+  }
+
+  @override
+  String trialCharge(int day, String price, String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {'year': '每年', 'other': '每月'});
+    return '第 $day 天 · 若不取消，$_temp0 $price';
+  }
 
   @override
   String get trialStartedNoPayment => '试用已开始。此版本未接入付款。';
@@ -1536,15 +1609,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。';
 
   @override
-  String get everyCardForYou => '每一张卡片，都为你而选。';
-
-  @override
-  String get perkOwnTitle => '每天五张，全部为你';
-
-  @override
-  String get perkOwnLine => '来自你选的分支，按你的水平，绝不重复已读。免费版每天两张。';
-
-  @override
   String get plusCardHeadline => '让五张全都为你。';
 
   @override
@@ -1558,9 +1622,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
-
-  @override
-  String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及你一再错过的招。';
 
   @override
   String get topOfTheWeek => '本周热门';

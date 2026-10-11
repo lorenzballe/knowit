@@ -12,6 +12,7 @@ import '../legal.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../state/app_state.dart';
+import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
@@ -43,20 +44,119 @@ int get kYearlySavingPercent {
   return (100 * (full - kYearlyCents) / full).round();
 }
 
-// Three things, and everything else is the same on both plans. The day made
-// entirely of the reader's own cards; the journey; the whole archive. Six
-// perks read as a list of features; three read as a reason.
-List<({IconData icon, String title, String sub})> _perks(
+// Three things, the record first: the free profile says how far off the
+// reader is today, and only the journey says whether that is closing, so it
+// is the one thing the free plan cannot show at all. Then the day made of
+// the reader's own cards, then the days to open again. Six perks read as a
+// list of features; three read as a reason.
+List<({IconData icon, String title, String sub})> _perks(AppLocalizations l) =>
+    [
+      (icon: Icons.insights_rounded, title: l.perkGapTitle, sub: l.perkGapLine),
+      (
+        icon: Icons.auto_awesome_rounded,
+        title: l.perkOwnFiveTitle,
+        sub: l.perkOwnFiveLine,
+      ),
+      (
+        icon: Icons.inventory_2_rounded,
+        title: l.perkReadTitle,
+        sub: l.perkReadLine,
+      ),
+    ];
+
+/// What the paywall opens on, by the door it was opened from.
+///
+/// A reader who reached for the journey wanted to know how they are doing,
+/// one who reached for the card after the fifth wanted the rest of the day,
+/// one who reached for the archive wanted something they read: the first
+/// thing each reads should be that, not one headline for everybody about
+/// what the free plan already mostly gives.
+enum PaywallVariant {
+  /// How sure against how right, and whether the gap closes: the journey.
+  record('A'),
+
+  /// What the day Astute+ deals adds up to: every door not named here.
+  outcome('B'),
+
+  /// All five of the day, against the free day's two: the card after the
+  /// fifth.
+  five('C'),
+
+  /// The days read, to open again: the archive.
+  read('D');
+
+  const PaywallVariant(this.letter);
+
+  /// How the paywall's numbers name it.
+  final String letter;
+
+  /// The variant [source] opens on. `calibration` is the record's own door
+  /// in the paywall's numbers (see the README) and opens on the record,
+  /// though no screen passes it today.
+  static PaywallVariant of(String source) => switch (source) {
+    'journey' || 'calibration' => record,
+    'sixth card' => five,
+    'archive' => read,
+    _ => outcome,
+  };
+}
+
+/// The reader's own numbers, once there are enough answers to say them
+/// from (the floor the profile and the journey keep): how sure they say
+/// they are on average and how often they are right, in whole percent, and
+/// the signed gap between the two, positive when more sure than right.
+({int sure, int right, double gap})? _readerNumbers(AppState app) {
+  final double? gap = app.overconfidence;
+  final said = app.sureAgainstRight;
+  if (app.judgements.length < kCalibrationFloor ||
+      gap == null ||
+      said == null) {
+    return null;
+  }
+  return (sure: said.sure.round(), right: said.right.round(), gap: gap);
+}
+
+/// What a door opens on: the headline, the words in it painted in the
+/// lights, and the line under it.
+({String title, String mark, String line}) _opening(
   AppLocalizations l,
-) => [
-  (icon: Icons.auto_awesome_rounded, title: l.perkOwnTitle, sub: l.perkOwnLine),
-  (icon: Icons.route_rounded, title: l.yourJourney, sub: l.perkJourneyLine),
-  (
-    icon: Icons.inventory_2_rounded,
-    title: l.perkArchiveTitle,
-    sub: l.perkArchiveLine,
+  PaywallVariant variant,
+  AppState app,
+) => switch (variant) {
+  PaywallVariant.record => (
+    title: l.paywallRecordTitle,
+    mark: l.paywallRecordMark,
+    line: switch (_readerNumbers(app)) {
+      // Said the way the profile says it: within five points either way is
+      // a match, and only past that is the reader over or under.
+      (:final int sure, :final int right, :final double gap)
+          when gap.abs().round() <= 5 =>
+        l.paywallRecordEven(sure, right),
+      (:final int sure, :final int right, :final double gap) when gap > 0 =>
+        l.paywallRecordOver(sure, right),
+      (:final int sure, :final int right, gap: _) => l.paywallRecordUnder(
+        sure,
+        right,
+      ),
+      null => l.paywallRecordLine,
+    },
   ),
-];
+  PaywallVariant.outcome => (
+    title: l.paywallOutcomeTitle,
+    mark: l.paywallOutcomeMark,
+    line: l.paywallOutcomeLine,
+  ),
+  PaywallVariant.five => (
+    title: l.paywallFiveTitle,
+    mark: l.paywallFiveMark,
+    line: l.paywallFiveLine,
+  ),
+  PaywallVariant.read => (
+    title: l.paywallReadTitle,
+    mark: l.paywallReadMark,
+    line: l.paywallReadLine,
+  ),
+};
 
 /// What the year comes to a month, in the store's own currency once it has
 /// answered: an American reader saw "\$29.99" on the tile and "€2,49 a month"
@@ -216,12 +316,20 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   Subscription get _store => Subscription.instance;
 
+  /// What this door opens on.
+  PaywallVariant get _variant => PaywallVariant.of(widget.source);
+
   @override
   void initState() {
     super.initState();
     Analytics.screen('paywall');
     Analytics.capture('paywall shown', {
       'source': widget.source,
+      // Which opening the door gave, and whether the reader has numbers of
+      // their own to be told: on the record's door they are the line under
+      // the headline; on any other, they count who could have been told.
+      'variant': _variant.letter,
+      'has_number': _readerNumbers(widget.app) != null,
       'plan_shown': _plan.name,
       // Whether the prices on screen are the store's or the ones written
       // into the app. A conversion rate measured against a made-up price is
@@ -246,13 +354,30 @@ class _PaywallScreenState extends State<PaywallScreen> {
         : context.l10n.subscribeFor(price, suffix);
   }
 
-  /// The line under the button: what happens today. With no store behind
-  /// this build nothing is ever charged, and a month "charged today" would
-  /// be a lie, so that case says so instead.
+  /// The line under the button when the plan on screen has no free days:
+  /// what happens today. With no store behind this build nothing is ever
+  /// charged, and a month "charged today" would be a lie, so that case says
+  /// so instead. A plan with free days has the trial's steps there instead,
+  /// which say "nothing today" and "cancel" with the days on them.
   String get _terms {
     final l = context.l10n;
-    if (_freeDays(_plan) != null) return l.noChargeTodayCancel;
     return _package != null ? l.chargedTodayCancel : l.cancelAnyTimeNoPayment;
+  }
+
+  /// The free trial as it will go, when the plan on screen starts with one
+  /// this reader can have: today, the reminder, and the day it is charged,
+  /// at the store's own price. Null when there is no trial to show.
+  List<String>? get _trialSteps {
+    final int? days = _freeDays(_plan);
+    if (days == null || widget.app.isPlus) return null;
+    final l = context.l10n;
+    return [
+      l.trialToday,
+      // The app reminds the reader two days before a trial ends. A trial
+      // too short to have that day has no step for it.
+      if (days >= 3) l.trialReminder(days - 2),
+      l.trialCharge(days, _priceFor(_plan), _plan.name),
+    ];
   }
 
   /// The package for the plan on screen, if the store has offered one.
@@ -430,12 +555,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
     final bool dark = p.isDark;
     final bool store = _store.offering != null;
     final double homeBar = MediaQuery.viewPaddingOf(context).bottom;
+    final opening = _opening(l, _variant, widget.app);
+    final List<String>? trial = _trialSteps;
+    // A short phone — an SE, or a test's 800 by 600 — sets the headline and
+    // the air around it a size smaller, so the perks keep room for all three
+    // under the line the door adds and the trial's days over the links.
+    final bool short =
+        MediaQuery.sizeOf(context).height -
+            MediaQuery.paddingOf(context).vertical <
+        700;
     return Scaffold(
       backgroundColor: p.surface,
       // One screen, no scrolling. What is for sale is read at a glance or
-      // it is not read: the three perks sit in whatever height the plans
-      // and the button leave them, and a phone too short for their lines
-      // shows their titles alone rather than a scrollbar.
+      // it is not read: the three perks sit in whatever height the opening,
+      // the plans and the button leave them, and a phone too short for
+      // their lines shows their titles alone rather than a scrollbar.
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -514,45 +648,86 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 22),
+                  SizedBox(height: short ? 14 : 22),
                   _Headline(
-                    text: l.everyCardForYou,
-                    mark: l.everyCardForYouMark,
+                    key: const ValueKey('paywall-headline'),
+                    text: opening.title,
+                    mark: opening.mark,
+                    size: short ? 34 : 40,
+                  ),
+                  // What the door was reached for, in a line: the record,
+                  // the whole day, the days, or what the habit adds up to.
+                  Padding(
+                    padding: EdgeInsets.only(top: short ? 8 : 10),
+                    child: FitText(
+                      opening.line,
+                      key: const ValueKey('paywall-line'),
+                      maxLines: 3,
+                      minSize: 12.5,
+                      style: AppText.body(
+                        size: short ? 14 : 15,
+                        height: 1.38,
+                        color: p.ink.withValues(alpha: 0.62),
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: LayoutBuilder(
                       builder: (context, room) {
                         final perks = _perks(l);
-                        final bool full =
-                            room.maxHeight >=
-                            perks.length * _Perk.fullHeight +
-                                (perks.length - 1) * _Perk.gap;
+                        // Never right up against the line above or the
+                        // plans below, however short the phone.
+                        final double air = math.min(
+                          _Perk.leastAir,
+                          room.maxHeight / 2,
+                        );
+                        final double height = room.maxHeight - 2 * air;
+                        final _PerkSize size = _PerkSize.values.firstWhere(
+                          (s) => height >= _Perk.needs(s, perks.length),
+                          orElse: () => _PerkSize.tight,
+                        );
+                        // A phone too short even for three small titles
+                        // keeps as many as there is room for, in order,
+                        // rather than overflow: the record first.
+                        final int shown =
+                            height >= _Perk.needs(size, perks.length)
+                            ? perks.length
+                            : math.min(
+                                perks.length,
+                                (height + _Perk.gapAt(size)) ~/
+                                    (_Perk.heightAt(size) + _Perk.gapAt(size)),
+                              );
                         // Spread through the room rather than huddled in
                         // the middle of it: three things, each with air
                         // around it, is what three things looks like.
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            for (final (int i, perk) in perks.indexed) ...[
-                              if (i > 0 && !full)
-                                const SizedBox(height: _Perk.leastGap),
-                              RiseIn.staggered(
-                                i,
-                                step: const Duration(milliseconds: 50),
-                                child: _Perk(
-                                  icon: perk.icon,
-                                  title: perk.title,
-                                  sub: perk.sub,
-                                  // Three points, three hues off the
-                                  // wheel — the same wheel the reader's
-                                  // own record is drawn in.
-                                  colour: kSpectrum[(i * 4) % kSpectrum.length],
-                                  compact: !full,
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: air),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              for (final (int i, perk)
+                                  in perks.take(shown).indexed) ...[
+                                if (i > 0 && size != _PerkSize.full)
+                                  SizedBox(height: _Perk.gapAt(size)),
+                                RiseIn.staggered(
+                                  i,
+                                  step: const Duration(milliseconds: 50),
+                                  child: _Perk(
+                                    icon: perk.icon,
+                                    title: perk.title,
+                                    sub: perk.sub,
+                                    // Three points, three hues off the
+                                    // wheel — the same wheel the reader's
+                                    // own record is drawn in.
+                                    colour:
+                                        kSpectrum[(i * 4) % kSpectrum.length],
+                                    size: size,
+                                  ),
                                 ),
-                              ),
+                              ],
                             ],
-                          ],
+                          ),
                         );
                       },
                     ),
@@ -590,7 +765,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 18),
+                  SizedBox(height: short ? 14 : 18),
                   // Sixty high on a five-point edge: the face and its edge
                   // together are sixty-five.
                   ChunkyButton(
@@ -638,17 +813,27 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ),
                     )
                   else ...[
-                    // What today costs, in a line. The thing that stops
-                    // people starting is not the price, it is not knowing
-                    // when they will be charged.
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        _terms,
-                        textAlign: TextAlign.center,
-                        style: _smallPrint(context),
+                    // What today costs, and when that changes. The thing
+                    // that stops people starting is not the price, it is
+                    // not knowing when they will be charged: with a trial,
+                    // its days; without one, a line.
+                    if (trial != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: short ? 10 : 12),
+                        child: _TrialTimeline(
+                          key: const ValueKey('paywall-trial'),
+                          steps: trial,
+                        ),
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          _terms,
+                          textAlign: TextAlign.center,
+                          style: _smallPrint(context),
+                        ),
                       ),
-                    ),
                     // What Apple requires beside a subscription, on one
                     // line so the screen still does not scroll: a way back
                     // to something already paid for, which only means
@@ -798,6 +983,128 @@ class _SmallLink extends StatelessWidget {
   );
 }
 
+/// The free trial under the button, as the days it will go by: today, the
+/// day the reader is reminded, and the day the plan is charged.
+///
+/// Small print, in the small print's size, because these are the terms; a
+/// dot for each step on a hairline, the first one filled because it is the
+/// one the reader is on. Centred as a block under the button, its steps
+/// aligned on their dots, and as wide as its longest step.
+class _TrialTimeline extends StatelessWidget {
+  const _TrialTimeline({super.key, required this.steps});
+
+  final List<String> steps;
+
+  /// Above and below each step's words, inside the step, so the rail runs
+  /// unbroken from one dot to the next.
+  static const double _pad = 2;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    final TextStyle style = _smallPrintStyle(context);
+    // The dot sits on the middle of a step's first line, wherever the
+    // phone's text size puts that line.
+    final double line =
+        MediaQuery.textScalerOf(context).scale(style.fontSize!) * style.height!;
+    return Center(
+      child: IntrinsicWidth(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final (int i, String step) in steps.indexed)
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      width: 9,
+                      child: CustomPaint(
+                        painter: _RailPainter(
+                          dotAt: _pad + line / 2,
+                          first: i == 0,
+                          last: i == steps.length - 1,
+                          ink: ink,
+                          ground: context.p.surface,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 9),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: _pad),
+                        child: Text(
+                          step,
+                          style: i == 0
+                              ? style.copyWith(
+                                  color: ink.withValues(alpha: 0.62),
+                                )
+                              : style,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One step's piece of the trial's rail: the hairline through it, and its
+/// dot — filled for today, an open ring for the days to come.
+class _RailPainter extends CustomPainter {
+  const _RailPainter({
+    required this.dotAt,
+    required this.first,
+    required this.last,
+    required this.ink,
+    required this.ground,
+  });
+
+  /// How far down the step its dot sits.
+  final double dotAt;
+  final bool first;
+  final bool last;
+  final Color ink;
+  final Color ground;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double x = size.width / 2;
+    final Offset dot = Offset(x, dotAt);
+    final Paint rail = Paint()
+      ..strokeWidth = 1
+      ..color = ink.withValues(alpha: 0.16);
+    if (!first) canvas.drawLine(Offset(x, 0), dot, rail);
+    if (!last) canvas.drawLine(dot, Offset(x, size.height), rail);
+    if (first) {
+      canvas.drawCircle(dot, 3.5, Paint()..color = ink.withValues(alpha: 0.62));
+      return;
+    }
+    canvas
+      ..drawCircle(dot, 3.5, Paint()..color = ground)
+      ..drawCircle(
+        dot,
+        3,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.2
+          ..color = ink.withValues(alpha: 0.38),
+      );
+  }
+
+  @override
+  bool shouldRepaint(_RailPainter old) =>
+      old.dotAt != dotAt ||
+      old.first != first ||
+      old.last != last ||
+      old.ink != ink ||
+      old.ground != ground;
+}
+
 /// The three lights behind the top of the paywall: yellow, teal and violet,
 /// blurred into one another and drifting fourteen points right and ten up
 /// and back, seven seconds each way. Still when the phone asks for no
@@ -895,12 +1202,12 @@ class _Light extends StatelessWidget {
   }
 }
 
-/// The headline, as large as two lines allow, with the word for "you"
-/// painted in the three colours of the lights.
+/// The headline, as large as two lines allow, with the word it leans on —
+/// "really", "yours." — painted in the three colours of the lights.
 ///
 /// Drawn twice, one over the other: the whole line with that word's place
 /// kept but left clear, and over it the word alone through the gradient.
-/// The gradient is measured on the word itself, so it runs across "you."
+/// The gradient is measured on the word itself, so it runs across "yours."
 /// and not across the line, whatever the language puts around it.
 class _Headline extends StatelessWidget {
   final String text;
@@ -908,7 +1215,15 @@ class _Headline extends StatelessWidget {
   /// The part painted in the gradient; nothing is when it is not found.
   final String mark;
 
-  const _Headline({required this.text, required this.mark});
+  /// The size it is set at when two lines hold it.
+  final double size;
+
+  const _Headline({
+    super.key,
+    required this.text,
+    required this.mark,
+    this.size = _size,
+  });
 
   static const double _size = 40;
   static const double _least = 28;
@@ -954,7 +1269,7 @@ class _Headline extends StatelessWidget {
           maxLines: lines,
         )..layout(maxWidth: width);
 
-        double size = _size;
+        double size = this.size;
         while (size > _least) {
           final TextPainter painter = laidOut(size, lines: 2);
           final bool fits = !painter.didExceedMaxLines;
@@ -1045,52 +1360,94 @@ class _Headline extends StatelessWidget {
   }
 }
 
+/// How much of a perk there is room for, most first.
+enum _PerkSize {
+  /// Its title and its line, beside its tile.
+  full,
+
+  /// Its title alone, beside its tile: most phones, once the door's line
+  /// and the trial's days have taken theirs.
+  compact,
+
+  /// Its title alone, a size down, beside a smaller tile: a short phone's.
+  tight,
+}
+
 class _Perk extends StatelessWidget {
   final IconData icon;
   final String title;
   final String sub;
   final Color colour;
-
-  /// The title alone, for a phone too short for three perks with their lines.
-  final bool compact;
+  final _PerkSize size;
 
   const _Perk({
     required this.icon,
     required this.title,
     required this.sub,
     required this.colour,
-    this.compact = false,
+    this.size = _PerkSize.full,
   });
 
   /// A title and three lines under it, which is what the longest line takes
   /// at the smallest size the text is allowed to shrink to.
   static const double fullHeight = 91;
   static const double gap = 22;
+
+  /// The title alone, beside its tile, which is the taller of the two.
+  static const double compactHeight = 46;
   static const double leastGap = 6;
+
+  /// The same, a size down.
+  static const double tightHeight = 26;
+  static const double tightGap = 4;
+
+  /// The least room kept above the first perk and below the last.
+  static const double leastAir = 4;
+
+  static double heightAt(_PerkSize size) => switch (size) {
+    _PerkSize.full => fullHeight,
+    _PerkSize.compact => compactHeight,
+    _PerkSize.tight => tightHeight,
+  };
+
+  /// The least air between two perks at [size]; the room left over is
+  /// spread between them.
+  static double gapAt(_PerkSize size) => switch (size) {
+    _PerkSize.full => gap,
+    _PerkSize.compact => leastGap,
+    _PerkSize.tight => tightGap,
+  };
+
+  /// The height [n] perks need at [size].
+  static double needs(_PerkSize size, int n) =>
+      n * heightAt(size) + (n - 1) * gapAt(size);
 
   @override
   Widget build(BuildContext context) {
+    final bool full = size == _PerkSize.full;
+    final bool tight = size == _PerkSize.tight;
+    final double tile = tight ? tightHeight : compactHeight;
     return Row(
-      crossAxisAlignment: compact
-          ? CrossAxisAlignment.center
-          : CrossAxisAlignment.start,
+      crossAxisAlignment: full
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
       children: [
         // The tile is the app's own, as it was: the hue at a fifth for a
         // ground and the glyph in the hue.
         Container(
-          width: 46,
-          height: 46,
+          width: tile,
+          height: tile,
           decoration: BoxDecoration(
             color: colour.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(tight ? 8.5 : 15),
           ),
           alignment: Alignment.center,
-          child: Icon(icon, size: 23, color: colour),
+          child: Icon(icon, size: tight ? 14 : 23, color: colour),
         ),
-        const SizedBox(width: 18),
+        SizedBox(width: tight ? 12 : 18),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: compact ? 0 : 3),
+            padding: EdgeInsets.only(top: full ? 3 : 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -1098,16 +1455,16 @@ class _Perk extends StatelessWidget {
                 FitText(
                   title,
                   maxLines: 1,
-                  minSize: 13,
+                  minSize: tight ? 12 : 13,
                   style: AppText.body(
-                    size: 18,
+                    size: tight ? 15 : 18,
                     weight: FontWeight.w600,
                     height: 1.2,
                     spacing: -0.2,
                     color: context.p.ink,
                   ),
                 ),
-                if (!compact) ...[
+                if (full) ...[
                   const SizedBox(height: 6),
                   FitText(
                     sub,
