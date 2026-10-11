@@ -1,7 +1,9 @@
 package com.astuto.app
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -70,5 +72,45 @@ class MainActivity : FlutterActivity() {
             }
         }
         widgetChannel = channel
+
+        // Where this install came from, for measurement (lib/measure/
+        // install.dart): which app installed it — Google Play, or something
+        // else — and whether the phone is one of Firebase Test Lab's, which
+        // is where Google Play's pre-launch robots run. The same channel an
+        // iPhone answers TestFlight on.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "astut/install")
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "installSource" -> result.success(
+                        mapOf("installer" to installer(), "testLab" to inTestLab())
+                    )
+                    else -> result.notImplemented()
+                }
+            }
+    }
+
+    /// The package that installed the app: com.android.vending for Google
+    /// Play, another store's, or null for an install by hand.
+    private fun installer(): String? = try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            packageManager.getInstallSourceInfo(packageName).installingPackageName
+        } else {
+            installerBeforeR()
+        }
+    } catch (e: Exception) {
+        null
+    }
+
+    /// The same, asked the only way a phone older than Android 11 knows.
+    @Suppress("DEPRECATION")
+    private fun installerBeforeR(): String? =
+        packageManager.getInstallerPackageName(packageName)
+
+    /// Firebase Test Lab marks its phones with this setting, and the Play
+    /// pre-launch report's robots run there.
+    private fun inTestLab(): Boolean = try {
+        Settings.System.getString(contentResolver, "firebase.test.lab") == "true"
+    } catch (e: Exception) {
+        false
     }
 }

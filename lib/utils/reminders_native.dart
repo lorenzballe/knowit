@@ -6,6 +6,7 @@ import 'package:timezone/timezone.dart' as tz;
 import '../models/reminder.dart';
 
 import '../analytics.dart';
+import '../measure/session.dart';
 
 /// The daily nudge, on a phone.
 ///
@@ -71,6 +72,8 @@ Future<void> _init() async {
 /// app or brought it forward.
 void _sayOpened(String? payload, {required bool launched}) {
   if (payload == null || !payload.startsWith('reminder:')) return;
+  // The sitting it opens began with a reminder.
+  Session.instance.cameFrom('notification');
   final parts = payload.split(':');
   Analytics.capture('reminder opened', {
     'slot': parts.length > 1 ? int.tryParse(parts[1]) : null,

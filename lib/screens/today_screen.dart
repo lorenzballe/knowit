@@ -4,6 +4,8 @@ import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
 
+import '../measure/card_read.dart';
+import '../measure/session.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -103,6 +105,9 @@ class _TodayScreenState extends State<TodayScreen> {
     });
   }
 
+  /// How the card just thrown was read, until the day moves past it.
+  CardStint? _thrown;
+
   /// The card after the fifth, thrown.
   void _throwMagic() {
     if (!mounted || !_magic) return;
@@ -192,9 +197,28 @@ class _TodayScreenState extends State<TodayScreen> {
                       action: plusActionOf(context),
                       onAction: () => _offer(context),
                     ),
-              onAdvance: () => app.todayIndex >= app.todaysDeck.length
-                  ? _throwMagic()
-                  : app.advance(),
+              // How each card was read: a card thrown on is said with the
+              // day moving on past it ('card advanced'); one left standing
+              // for another tab or the background is said as it is left.
+              onRead: (stint) {
+                if (stint.thrown) {
+                  _thrown = stint;
+                } else {
+                  app.cardClosed(stint, where: 'today');
+                }
+              },
+              // The first card of a start standing on screen: how long the
+              // reader waited for it.
+              onStand: (_) => FirstCard.shown(app.firstCardFacts),
+              onAdvance: () {
+                final CardStint? thrown = _thrown;
+                _thrown = null;
+                if (app.todayIndex >= app.todaysDeck.length) {
+                  _throwMagic();
+                  return null;
+                }
+                return app.advance(read: thrown?.facts ?? const {});
+              },
               isSaved: app.isSaved,
               onSave: (pill) => app.toggleSaved(pill.id),
               isLiked: app.isLiked,
