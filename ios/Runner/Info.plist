@@ -79,6 +79,13 @@
 	     not here. -->
 	<key>com.posthog.posthog.AUTO_INIT</key>
 	<false/>
+	<!-- The app has one route and reads its links itself: a widget's
+	     astute://widget link is taken in AppDelegate (WidgetOpens) and handed
+	     over on a channel. Left on, Flutter also pushed each link as a named
+	     route the app does not have, and threw "Null check operator used on
+	     a null value" from _onUnknownRoute on about half the widget taps. -->
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 	<!-- Google sign-in comes back to the app through this scheme: it is the
 	     REVERSED_CLIENT_ID out of GoogleService-Info.plist, and without it
 	     the browser has nowhere to return to. -->

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 
@@ -192,26 +193,43 @@ class _PlaceItInputState extends State<PlaceItInput> {
               _t = (_t - 0.05).clamp(0, 1);
               _moved = true;
             }),
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onHorizontalDragStart: widget.onAnswer == null
+            // Each touch of the ruler after the first mark is the mark moved
+            // again before it is locked in: the reader thinking twice,
+            // counted for how the card was read, and nothing more.
+            child: Listener(
+              onPointerDown: widget.onAnswer == null
                   ? null
-                  : (d) => _drag(d.localPosition.dx, box.maxWidth),
-              onHorizontalDragUpdate: widget.onAnswer == null
-                  ? null
-                  : (d) => _drag(d.localPosition.dx, box.maxWidth),
-              onTapDown: widget.onAnswer == null
-                  ? null
-                  : (d) => _drag(d.localPosition.dx, box.maxWidth),
-              child: SizedBox(
-                height: 64,
-                width: box.maxWidth,
-                child: CustomPaint(
-                  painter: RulerPainter(
-                    ruler: _ruler,
-                    ink: pill.ink,
-                    ground: pill.color,
-                    marks: [RulerMark(_t, pill.ink, big: true, faint: !_moved)],
+                  : (_) {
+                      final CardRead? read = CardRead.of(context);
+                      if (_moved) {
+                        read?.changed();
+                      } else {
+                        read?.changeable();
+                      }
+                    },
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onHorizontalDragStart: widget.onAnswer == null
+                    ? null
+                    : (d) => _drag(d.localPosition.dx, box.maxWidth),
+                onHorizontalDragUpdate: widget.onAnswer == null
+                    ? null
+                    : (d) => _drag(d.localPosition.dx, box.maxWidth),
+                onTapDown: widget.onAnswer == null
+                    ? null
+                    : (d) => _drag(d.localPosition.dx, box.maxWidth),
+                child: SizedBox(
+                  height: 64,
+                  width: box.maxWidth,
+                  child: CustomPaint(
+                    painter: RulerPainter(
+                      ruler: _ruler,
+                      ink: pill.ink,
+                      ground: pill.color,
+                      marks: [
+                        RulerMark(_t, pill.ink, big: true, faint: !_moved),
+                      ],
+                    ),
                   ),
                 ),
               ),

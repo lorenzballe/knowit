@@ -1,6 +1,7 @@
 import 'dart:async' show Timer;
 
-import 'package:flutter/foundation.dart' show ValueListenable, kIsWeb;
+import 'package:flutter/foundation.dart'
+    show ValueListenable, kIsWeb, visibleForTesting;
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,9 @@ import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
 import 'l10n/l10n.dart';
+import 'measure/install.dart';
+import 'measure/screens.dart';
+import 'measure/session.dart';
 import 'models/pill.dart';
 import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
@@ -66,7 +70,12 @@ TopSeed launchCrowd() => TopSeed(
 
 Future<void> main() async {
   Analytics.launched();
+  Session.instance.launched();
   WidgetsFlutterBinding.ensureInitialized();
+  // Where this install came from — the App Store, TestFlight, Google Play,
+  // a test lab's robot — asked of the phone now, and answered while the
+  // rest starts: by the time measurement is up it has long been said.
+  final Future<String> installChannel = readInstallChannel();
   // Settled before anything is built, since the profile and a failed
   // sign-in both read it. An iPhone release build asks the phone where it
   // was installed from, and waits for the answer no longer than
@@ -80,6 +89,13 @@ Future<void> main() async {
   // runApp so that the reader's opt-out is read before the first event could
   // be sent, and not one launch later.
   await Analytics.start();
+  if (Analytics.ready) {
+    // Stamped before the first event, so a reviewer's phone or a robot is
+    // told apart from its very first one.
+    await Analytics.installedFrom(await installChannel);
+    // How smoothly the phone draws, counted per session (see Session).
+    Session.instance.frames.listen();
+  }
   // Said once measurement is up: a Firebase that would not start is the
   // cause of half the bug reports this app could ever get.
   Analytics.capture('cloud started', {
@@ -118,7 +134,38 @@ void _saidStarted() {
         ? null
         : (view.physicalSize.width / view.devicePixelRatio).round(),
   });
+  _stampDisplay();
 }
+
+/// The phone's settings that change what the reader sees, stamped on every
+/// event: the text size as a band, and whether they asked for less motion.
+/// Again whenever the app comes back, since either can be changed while it
+/// is away.
+void _stampDisplay() {
+  final dispatcher = WidgetsBinding.instance.platformDispatcher;
+  Analytics.register(
+    'text_scale_bucket',
+    textScaleBucket(dispatcher.textScaleFactor),
+  );
+  Analytics.register(
+    'reduce_motion',
+    dispatcher.accessibilityFeatures.disableAnimations,
+  );
+}
+
+/// A text size as a band: `smaller` under the phone's default, `default`,
+/// `large` up to 1.3×, `larger` up to 1.6×, and `largest` past it — where
+/// a card's back has to scroll.
+@visibleForTesting
+String textScaleBucket(double scale) => scale < 0.95
+    ? 'smaller'
+    : scale <= 1.05
+    ? 'default'
+    : scale <= 1.3
+    ? 'large'
+    : scale <= 1.6
+    ? 'larger'
+    : 'largest';
 
 /// On the web a list should follow the mouse the way it follows a finger.
 class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
@@ -145,6 +192,10 @@ class AstutoApp extends StatefulWidget {
 
 class _AstutoAppState extends State<AstutoApp> {
   final AppState _app = AppState();
+
+  /// Tells the screens which full-screen route is on top, and nothing more:
+  /// every screen names itself (see ScreenView).
+  final ScreenObserver _screens = ScreenObserver();
 
   @override
   void initState() {
@@ -177,6 +228,7 @@ class _AstutoAppState extends State<AstutoApp> {
       theme: buildAstutoTheme(Brightness.light),
       darkTheme: buildAstutoTheme(Brightness.dark),
       themeMode: _app.themeMode,
+      navigatorObservers: [_screens],
       home: AstutoRoot(app: _app),
       scrollBehavior: const _DragAnywhereScrollBehavior(),
       builder: (context, child) => _PhoneFrame(child: child),
@@ -314,9 +366,16 @@ class _AstutoRootState extends State<AstutoRoot> {
     _account.watch(_app);
     _lifecycle = AppLifecycleListener(
       onPause: () {
-        // How long the app was open this time: the one number a daily
-        // habit is measured by, said before the flush that carries it.
-        Analytics.capture('app paused', {'ms_in_app': Analytics.msSinceLaunch});
+        // The sitting, said once as it ends: how long the app was open this
+        // time — the one number a daily habit is measured by — how it was
+        // opened, how much was read in it and whether the phone kept up.
+        // Every screen visit, card and shelf still open is said first, and
+        // all of it before the flush that carries it.
+        Analytics.capture('app paused', Session.instance.end());
+        // The reader's profile, written once for the sitting rather than at
+        // every card it changed on.
+        if (_app.ready) Analytics.person(set: _app.readerFacts);
+        Analytics.flushPerson();
         _account.flush();
         Trace.instance.flush();
         // The home screen is what the reader sees next, so the widgets
@@ -331,6 +390,11 @@ class _AstutoRootState extends State<AstutoRoot> {
       // Coming back to the foreground re-arms tomorrow's nudge with today's
       // streak in it, and quietly — no prompt ever comes from here.
       onResume: () {
+        // A new sitting, and the screen in front a new visit in it; what
+        // the phone may have changed while away is stamped again.
+        Session.instance.begin();
+        _stampDisplay();
+        if (_app.ready) _app.refreshAnalytics();
         _app.refreshDailyReminder();
         _app.refreshHomeWidget();
         _takeWidgetOpen();
@@ -381,6 +445,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _takeWidgetOpen() async {
     final WidgetOpen? open = await takeWidgetOpen();
     if (open == null || !mounted) return;
+    Session.instance.cameFrom('widget');
     Analytics.capture('app opened from widget', {
       'widget': open.from,
       'pill_id': open.card,
@@ -399,6 +464,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         ? 'none'
         : (List.of(placed)..sort()).join(',');
     Analytics.register('widgets_placed', placed.length);
+    Analytics.register('widget_on_home', placed.isNotEmpty);
     try {
       final prefs = await SharedPreferences.getInstance();
       if (prefs.getString(_kWidgetsSaid) == summary) return;
@@ -564,7 +630,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         } else {
           _stage = _Stage.shell;
         }
-        Analytics.screen(_stage.screen);
+        // Which screen this is, the stage says itself (see _stageScreen).
       }
     });
     _noteTrialStart();
@@ -634,7 +700,6 @@ class _AstutoRootState extends State<AstutoRoot> {
       ..reset()
       ..start();
     setState(() => _stage = stage);
-    Analytics.screen(stage.screen);
     // Arriving on the tabs can be the sheet's moment: the onboarding's offer
     // closing on a trial just started.
     _considerReminderAsk();
@@ -663,6 +728,14 @@ class _AstutoRootState extends State<AstutoRoot> {
       // Which road it took — the phone's own sheet or Firebase's browser.
       // Two rounds were spent working that out by hand once already.
       'route': _account.lastRoute,
+      // Why it failed, as Apple, Google or Firebase put it: an error code
+      // and its sentence, never anything the reader typed. Without it, 71
+      // failed sign-ins in a row from App Review's phones said only
+      // "failed", and the one place the reason showed was a snackbar on a
+      // phone nobody here was holding.
+      'error': outcome == SignInOutcome.failed && _account.lastError != null
+          ? Analytics.short(_account.lastError!)
+          : null,
     });
     switch (outcome) {
       case SignInOutcome.signedIn:
@@ -736,7 +809,15 @@ class _AstutoRootState extends State<AstutoRoot> {
           child: child,
         ),
       ),
-      child: KeyedSubtree(key: ValueKey(_stage), child: _stageScreen()),
+      child: KeyedSubtree(
+        key: ValueKey(_stage),
+        // Each step of the first run is a screen of its own, named for the
+        // funnel. The offer is the paywall, which names itself under the
+        // step's name, and the tabs name their own three.
+        child: _stage == _Stage.shell || _stage == _Stage.offer
+            ? _stageScreen()
+            : ScreenView(name: _stage.screen, child: _stageScreen()),
+      ),
     );
   }
 
@@ -794,6 +875,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         return PaywallScreen(
           app: _app,
           source: 'onboarding',
+          screen: _Stage.offer.screen,
           onClose: _finishOnboarding,
         );
 
@@ -816,13 +898,13 @@ class _AstutoRootState extends State<AstutoRoot> {
             _considerReminderAsk();
           },
           onSignedOut: () {
+            // Back at the first screen, as a stranger: AppState.signOut has
+            // already told the funnel to forget who this was, and the intro
+            // says itself.
             setState(() {
               _stageResolved = true;
               _stage = _Stage.intro;
             });
-            // Back at the first screen, as a stranger: AppState.signOut has
-            // already told the funnel to forget who this was.
-            Analytics.screen(_Stage.intro.screen);
           },
         );
     }
@@ -1033,6 +1115,7 @@ class _AstutoShellState extends State<AstutoShell>
           deck: read,
           title: context.l10n.tabToday,
           initialIndex: at,
+          source: 'widget',
         ),
       ),
     );
@@ -1130,19 +1213,22 @@ class _AstutoShellState extends State<AstutoShell>
     return false;
   }
 
-  /// Says which of the three the reader is now on.
+  /// The three tabs, by the names their screens go by.
+  static const List<String> _tabNames = ['today', 'explore', 'profile'];
+
+  /// Says which of the three the reader is now on, and how they got there.
   ///
-  /// The tabs are one route, so the navigator has nothing to observe: pushing
-  /// a PostHog route observer at this app would report "/" three times and
-  /// call it a session. The shell knows, so the shell says.
+  /// The tabs are one route, so the navigator cannot tell them apart:
+  /// pushing a PostHog route observer at this app would report "/" three
+  /// times and call it a session. Each tab is a ScreenView instead, shown
+  /// only while it is the one in front, and says `$screen` itself when the
+  /// reader arrives; this says the arrival.
   void _noteTab(int tab, {required String by}) {
-    const List<String> names = ['today', 'explore', 'profile'];
-    if (tab < 0 || tab >= names.length) return;
-    Analytics.screen(names[tab]);
-    Analytics.capture('tab opened', {'tab': names[tab], 'by': by});
+    if (tab < 0 || tab >= _tabNames.length) return;
+    Analytics.capture('tab opened', {'tab': _tabNames[tab], 'by': by});
     // Explore's top list, read again on the way in when it is ten minutes
     // old; the call says so itself when it is not.
-    if (names[tab] == 'explore') {
+    if (_tabNames[tab] == 'explore') {
       Tallies.instance.refresh();
       Served.instance.explore();
     }
@@ -1167,6 +1253,13 @@ class _AstutoShellState extends State<AstutoShell>
         account: widget.account,
         onSignedOut: widget.onSignedOut,
       ),
+    ];
+    // Each tab is a screen of its own, in front only while it is the tab
+    // the reader is on: the one beside it is built before it is reached,
+    // and neither it nor what is on it has been seen.
+    final List<Widget> tabs = [
+      for (int i = 0; i < screens.length; i++)
+        ScreenView(name: _tabNames[i], showing: _tab == i, child: screens[i]),
     ];
 
     // The status bar follows the one palette, like everything else.
@@ -1233,7 +1326,7 @@ class _AstutoShellState extends State<AstutoShell>
                   // query the Scaffold hands a body it has extended. The
                   // page is taller than the screen it draws; the screens
                   // are exactly where they were.
-                  for (final screen in screens)
+                  for (final screen in tabs)
                     ClipRect(
                       child: _KeepAlive(
                         child: Builder(

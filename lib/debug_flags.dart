@@ -86,7 +86,7 @@ Future<void> readDebugTools() async {
   final bool ask = platform == ToolsPlatform.iOS && kDebugTools && !kDebugMode;
   debugToolsOn = debugToolsFor(
     platform: platform,
-    testFlight: ask && await fromTestFlight(),
+    testFlight: ask && await testFlightOnce(),
     debugMode: kDebugMode,
     define: kDebugTools,
     debugInAddress:
@@ -95,8 +95,16 @@ Future<void> readDebugTools() async {
   );
 }
 
-/// Where the phone answers (ios/Runner/AppDelegate.swift).
-const MethodChannel _install = MethodChannel('astut/install');
+/// Where the phone answers (ios/Runner/AppDelegate.swift, and on Android
+/// MainActivity.kt, which says where the app was installed from).
+const MethodChannel kInstallChannel = MethodChannel('astut/install');
+
+/// The phone's answer about TestFlight, asked at most once a run and
+/// shared: the developer tools and the measurement of where this install
+/// came from (lib/measure/install.dart) both want it, and the second need
+/// not wait for it again.
+Future<bool> testFlightOnce() => _testFlight ??= fromTestFlight();
+Future<bool>? _testFlight;
 
 /// How long launch waits for that answer. It is a file name the phone already
 /// knows, so it comes at once or not at all; this bounds the "not at all",
@@ -110,7 +118,7 @@ const Duration kTestFlightWait = Duration(milliseconds: 300);
 @visibleForTesting
 Future<bool> fromTestFlight() async {
   try {
-    final bool? said = await _install
+    final bool? said = await kInstallChannel
         .invokeMethod<bool>('isTestFlight')
         .timeout(kTestFlightWait);
     return said ?? false;

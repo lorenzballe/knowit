@@ -36,6 +36,8 @@ import '../widgets/subject_icon.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
+import '../measure/screens.dart';
+import '../measure/shelves.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -78,6 +80,20 @@ class ExploreScreenState extends State<ExploreScreen> {
   /// The top list's window: the last seven days, or the last thirty.
   bool _topMonth = false;
 
+  /// What the shelves put in front of the reader in each stay on the tab.
+  final ShelfSight _sight = ShelfSight();
+  late final ShelfStay _stay = ShelfStay(
+    _sight,
+    // A new stay: the shelves built already are built again, so what is on
+    // them is counted for this stay too.
+    onArrive: () {
+      if (mounted) setState(() {});
+    },
+  );
+
+  /// Counts the shelves as the page is built, for each one's place on it.
+  int _shelfCount = 0;
+
   @override
   void initState() {
     super.initState();
@@ -89,6 +105,12 @@ class ExploreScreenState extends State<ExploreScreen> {
     // bets laid, the guesses set.
     ExplorePlay.instance.load();
     _shelves.addListener(_scrolled);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _stay.watch(ScreenPresence.maybeOf(context));
   }
 
   /// What the server found for the query being typed, and for which query,
@@ -129,6 +151,7 @@ class ExploreScreenState extends State<ExploreScreen> {
 
   @override
   void dispose() {
+    _stay.dispose();
     _searchSettle?.cancel();
     _field.dispose();
     _focus.dispose();
@@ -158,6 +181,7 @@ class ExploreScreenState extends State<ExploreScreen> {
   /// midnight picked its own — so a card that is not on the shelf here
   /// opens first, with the shelf after it.
   void openFromWidget(String pillId) {
+    _sight.forgetTouch();
     showBest();
     final List<Pill> shelf = _todaysShelf();
     final int at = shelf.indexWhere((p) => p.id == pillId);
@@ -201,8 +225,11 @@ class ExploreScreenState extends State<ExploreScreen> {
   }
 
   /// What the shelves put in front of the reader, once per card per shelf
-  /// per visit: a card shown and not opened is a thing the dealer can learn
-  /// from, the way a feed learns from what you scrolled past.
+  /// for as long as the tab lives: a card shown and not opened is a thing
+  /// the dealer can learn from, the way a feed learns from what you
+  /// scrolled past. Only while the reader is looking: the tab is built
+  /// beside Today before anyone opens it, and a card on a shelf nobody had
+  /// looked at was being counted as passed over.
   final Set<String> _shown = {};
 
   /// How far down the shelves the reader went, in tenths, said once per
@@ -229,10 +256,24 @@ class ExploreScreenState extends State<ExploreScreen> {
     Trace.instance.note('explore scrolled', {'depth': tenth * 10});
   }
 
-  void _seen(String shelf, Pill pill) {
+  /// A card a shelf built, which is a card it showed. [on] is the shelf it
+  /// sits on, where that is not the name it is noted under.
+  void _seen(String shelf, Pill pill, {String? on}) {
+    if (!_sight.looking) return;
+    _sight.tile(on ?? shelf, pill.id);
     if (!_shown.add('$shelf:${pill.id}')) return;
     Trace.instance.note('card shown', {'pill_id': pill.id, 'shelf': shelf});
   }
+
+  /// One shelf, watched for whether it is on screen: [shelf] is the name its
+  /// cards are noted under, and it is numbered as it is built.
+  Widget _watch(String shelf, Widget child) => ShelfWatch(
+    key: ValueKey('watch-$shelf'),
+    sight: _sight,
+    shelf: shelf,
+    position: ++_shelfCount,
+    child: child,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +288,8 @@ class ExploreScreenState extends State<ExploreScreen> {
             focus: _focus,
             onOpenSearch: () {
               Analytics.capture('explore search opened');
+              // What is opened from the search was not opened from a shelf.
+              _sight.forgetTouch();
               setState(() => _searching = true);
               _focus.requestFocus();
             },
@@ -303,6 +346,10 @@ class ExploreScreenState extends State<ExploreScreen> {
     _dealToday();
     bool unread(Pill p) => !_readWhenDealt.contains(p.id);
     bool read(Pill p) => widget.app.seenIds.contains(p.id);
+    // The shelves are numbered afresh as they are built, and looked at again
+    // once they are laid out: counts arriving can move every one of them.
+    _shelfCount = 0;
+    _sight.measureSoon();
 
     // Explore as the server assembled it, when it has: the same shelves,
     // from the newest bank, and one more that is the reader's own. Without
@@ -459,468 +506,553 @@ class ExploreScreenState extends State<ExploreScreen> {
 
     return Stack(
       children: [
-        ListView(
-          controller: _shelves,
-          padding: const EdgeInsets.only(bottom: 30),
-          children: [
-            if (fresh.isEmpty && asking.isEmpty)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
-                child: Text(
-                  context.l10n.nothingInYet(_subject ?? context.l10n.here),
-                  style: AppText.body(size: 14, color: context.p.inkMuted),
+        NotificationListener<ScrollNotification>(
+          onNotification: _sight.scrolled,
+          child: ListView(
+            controller: _shelves,
+            padding: const EdgeInsets.only(bottom: 30),
+            children: [
+              if (fresh.isEmpty && asking.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+                  child: Text(
+                    context.l10n.nothingInYet(_subject ?? context.l10n.here),
+                    style: AppText.body(size: 14, color: context.p.inkMuted),
+                  ),
                 ),
-              ),
-            if (served?.fromCache == true)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 4, 20, 14),
-                child: Text(
-                  context.l10n.exploreOffline,
-                  key: const ValueKey('explore-offline'),
-                  style: AppText.body(size: 12.5, color: context.p.inkMuted),
+              if (served?.fromCache == true)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 14),
+                  child: Text(
+                    context.l10n.exploreOffline,
+                    key: const ValueKey('explore-offline'),
+                    style: AppText.body(size: 12.5, color: context.p.inkMuted),
+                  ),
                 ),
-              ),
-            if (fresh.isNotEmpty)
-              _Shelf(
-                title: context.l10n.todaysShelf,
-                line: context.l10n.sameForEveryone,
-                child: _BigRow(
-                  pills: fresh,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('today', p),
-                ),
-              ),
-            const SizedBox(height: 24),
-            _Shelf(
-              title: _subject != null
-                  ? context.l10n.topIn(_subject!)
-                  : _topMonth
-                  ? context.l10n.topOfTheMonth
-                  : context.l10n.topOfTheWeek,
-              line: _topMonth
-                  ? context.l10n.topLineMonth
-                  : context.l10n.topLineWeek,
-              trailing: _WindowSwitch(
-                month: _topMonth,
-                onPick: (month) {
-                  Analytics.capture('explore top window', {
-                    'window': month ? 'month' : 'week',
-                    'subject': _subject ?? 'all',
-                  });
-                  setState(() => _topMonth = month);
-                },
-              ),
-              child: top.isEmpty
-                  ? const _TopGhost()
-                  : _TopRow(
-                      ranked: top,
+              if (fresh.isNotEmpty)
+                _watch(
+                  'today',
+                  _Shelf(
+                    title: context.l10n.todaysShelf,
+                    line: context.l10n.sameForEveryone,
+                    child: _BigRow(
+                      pills: fresh,
                       isRead: read,
-                      onShown: (p) => _seen('top', p),
-                      onOpen: (i) {
-                        Analytics.capture('explore top opened', {
-                          'rank': i + 1,
-                          'readers': top[i].$2,
-                          'window': _topMonth ? 'month' : 'week',
+                      onOpen: _open,
+                      onShown: (p) => _seen('today', p),
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 24),
+              _watch(
+                'top',
+                _Shelf(
+                  title: _subject != null
+                      ? context.l10n.topIn(_subject!)
+                      : _topMonth
+                      ? context.l10n.topOfTheMonth
+                      : context.l10n.topOfTheWeek,
+                  line: _topMonth
+                      ? context.l10n.topLineMonth
+                      : context.l10n.topLineWeek,
+                  trailing: _WindowSwitch(
+                    month: _topMonth,
+                    onPick: (month) {
+                      Analytics.capture('explore top window', {
+                        'window': month ? 'month' : 'week',
+                        'subject': _subject ?? 'all',
+                      });
+                      setState(() => _topMonth = month);
+                    },
+                  ),
+                  child: top.isEmpty
+                      ? const _TopGhost()
+                      : _TopRow(
+                          ranked: top,
+                          isRead: read,
+                          onShown: (p) => _seen('top', p),
+                          onOpen: (i) {
+                            Analytics.capture('explore top opened', {
+                              'rank': i + 1,
+                              'readers': top[i].$2,
+                              'window': _topMonth ? 'month' : 'week',
+                              'subject': _subject ?? 'all',
+                            });
+                            _open([for (final t in top) t.$1], top[i].$1);
+                          },
+                        ),
+                ),
+              ),
+              if (loved.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'loved',
+                  _Shelf(
+                    title: _subject != null
+                        ? context.l10n.lovedIn(_subject!)
+                        : context.l10n.lovedSinceTheStart,
+                    line: context.l10n.lovedLine,
+                    child: _SmallRow(
+                      pills: loved,
+                      isRead: read,
+                      onShown: (p) => _seen('loved', p),
+                      onOpen: (shelf, pill) {
+                        Analytics.capture('explore loved opened', {
+                          'rank': shelf.indexOf(pill) + 1,
                           'subject': _subject ?? 'all',
                         });
-                        _open([for (final t in top) t.$1], top[i].$1);
+                        _open(shelf, pill);
                       },
                     ),
-            ),
-            if (loved.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                title: _subject != null
-                    ? context.l10n.lovedIn(_subject!)
-                    : context.l10n.lovedSinceTheStart,
-                line: context.l10n.lovedLine,
-                child: _SmallRow(
-                  pills: loved,
-                  isRead: read,
-                  onShown: (p) => _seen('loved', p),
-                  onOpen: (shelf, pill) {
-                    Analytics.capture('explore loved opened', {
-                      'rank': shelf.indexOf(pill) + 1,
-                      'subject': _subject ?? 'all',
-                    });
-                    _open(shelf, pill);
-                  },
+                  ),
                 ),
-              ),
-            ],
-            if (asking.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('shelf-asking'),
-                title: _subject != null
-                    ? context.l10n.askingIn(_subject!)
-                    : context.l10n.askingTitle,
-                line: context.l10n.askingLine,
-                child: _RowList(
-                  pills: asking,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('asking', p),
+              ],
+              if (asking.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'asking',
+                  _Shelf(
+                    key: const ValueKey('shelf-asking'),
+                    title: _subject != null
+                        ? context.l10n.askingIn(_subject!)
+                        : context.l10n.askingTitle,
+                    line: context.l10n.askingLine,
+                    child: _RowList(
+                      pills: asking,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('asking', p),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-            if (mine.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                title: title,
-                line: line,
-                child: _SmallRow(
-                  pills: mine,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('mine', p),
+              ],
+              if (mine.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'mine',
+                  _Shelf(
+                    title: title,
+                    line: line,
+                    child: _SmallRow(
+                      pills: mine,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('mine', p),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-            // ── The mix ──────────────────────────────────────────────────
-            // Under everything that was always here, the shelves that each
-            // have a form of their own, in three movements: cards to read
-            // (the month, myths, numbers, things to try, a side to pick,
-            // the hardest, origins, pictures, stories), cards to play (true
-            // or false, what came back, the tricks in a number, working it
-            // out, a chart unmasked, how sure, what if), and ways in by time
-            // (a few cards, sixty seconds, your minutes, the day's edition,
-            // an age, a fact), with one card from anywhere at the very end.
-            // Every one is free: Explore is what brings a reader back.
-            if (mix.month.length >= 3) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-month'),
-                title: l.monthOf(kTopics[mix.monthSubjectKey]?.name ?? ''),
-                line: l.monthShelfLine,
-                child: MonthShelf(
-                  pills: mix.month,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('month', p),
+              ],
+              // ── The mix ──────────────────────────────────────────────────
+              // Under everything that was always here, the shelves that each
+              // have a form of their own, in three movements: cards to read
+              // (the month, myths, numbers, things to try, a side to pick,
+              // the hardest, origins, pictures, stories), cards to play (true
+              // or false, what came back, the tricks in a number, working it
+              // out, a chart unmasked, how sure, what if), and ways in by time
+              // (a few cards, sixty seconds, your minutes, the day's edition,
+              // an age, a fact), with one card from anywhere at the very end.
+              // Every one is free: Explore is what brings a reader back.
+              if (mix.month.length >= 3) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'month',
+                  _Shelf(
+                    key: const ValueKey('mix-month'),
+                    title: l.monthOf(kTopics[mix.monthSubjectKey]?.name ?? ''),
+                    line: l.monthShelfLine,
+                    child: MonthShelf(
+                      pills: mix.month,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('month', p),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-            if (mix.myths case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: MythDeck(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('theme-${t.key}', p),
-                ),
-              ),
-            ],
-            if (mix.numbers case final ThemedShelf t)
-              ..._signature(context, t, read),
-            if (mix.practical case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: UseTodayList(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('theme-${t.key}', p),
-                ),
-              ),
-            ],
-            if (mix.debates case final ThemedShelf t)
-              ..._signature(context, t, read),
-            if (mix.sharpest case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: SharpRow(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('theme-${t.key}', p),
-                ),
-              ),
-            ],
-            if (mix.origins case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: OriginRow(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('theme-${t.key}', p),
-                ),
-              ),
-            ],
-            if (mix.seen case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: SeenRow(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('theme-${t.key}', p),
-                ),
-              ),
-            ],
-            if (mix.stories case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: StoryRow(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('theme-${t.key}', p),
-                ),
-              ),
-            ],
-            if (mix.trueFalse case final ThemedShelf t) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: ValueKey('theme-${t.key}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TrueFalseRow(
+              ],
+              if (mix.myths case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: MythDeck(
                       pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.numbers case final ThemedShelf t)
+                ..._signature(context, t, read),
+              if (mix.practical case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: UseTodayList(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.debates case final ThemedShelf t)
+                ..._signature(context, t, read),
+              if (mix.sharpest case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: SharpRow(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.origins case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: OriginRow(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.seen case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: SeenRow(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.stories case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: StoryRow(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.trueFalse case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TrueFalseRow(
+                          pills: t.pills,
+                          isRead: read,
+                          onOpen: _open,
+                          answerOf: _answerOf,
+                          onCommit: _commit,
+                          onShown: (p) => _seen('theme-${t.key}', p),
+                        ),
+                        // Three true and one false, under the row: the same
+                        // kind of card, played as a set.
+                        if (mix.spot case final SpotTheFalse spot) ...[
+                          const SizedBox(height: 16),
+                          SpotTheFalseBlock(
+                            spot: spot,
+                            onOpen: _open,
+                            // The pick is the one answer given; the reveal
+                            // tells all four, so all four count as read and
+                            // the day never deals one whose answer was shown.
+                            onCommit: (pill, response) async {
+                              await _commit(pill, response);
+                              for (final Pill other in spot.cards) {
+                                if (other.id != pill.id) {
+                                  await widget.app.markReadElsewhere(other.id);
+                                }
+                              }
+                            },
+                            onShown: (p) =>
+                                _seen('spot-false', p, on: 'theme-${t.key}'),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              if (cameBack.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'came-back',
+                  _Shelf(
+                    key: const ValueKey('mix-came-back'),
+                    title: l.cameBack,
+                    line: l.cardsCameBack(cameBack.length),
+                    child: CameBackRow(
+                      cards: cameBack,
+                      onOpen: _openDue,
+                      onShown: (p) => _seen('came-back', p),
+                    ),
+                  ),
+                ),
+              ],
+              // Two questions to ask of a number, each named like any other
+              // shelf, with what the reader has done with the move beside it.
+              if (mix.sampling.length >= 3) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'move-sampling',
+                  _Shelf(
+                    key: const ValueKey('mix-move-sampling'),
+                    title: l.moveSampling,
+                    line: l.moveSamplingLine,
+                    trailing: moveBadge(Principle.sampling),
+                    child: MoveRow(
+                      pills: mix.sampling,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('move-sampling', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.compared.length >= 3) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'move-counterfactual',
+                  _Shelf(
+                    key: const ValueKey('mix-move-compared'),
+                    title: l.moveComparedToWhat,
+                    line: l.moveComparedToWhatLine,
+                    trailing: moveBadge(Principle.counterfactual),
+                    child: MoveRow(
+                      pills: mix.compared,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('move-counterfactual', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (!mix.work.isEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'work',
+                  _Shelf(
+                    key: const ValueKey('mix-work'),
+                    title: l.themeWorkItOut,
+                    line: l.themeWorkItOutLine,
+                    trailing: const WorkWallet(),
+                    child: WorkItOut(
+                      deal: mix.work,
                       isRead: read,
                       onOpen: _open,
                       answerOf: _answerOf,
                       onCommit: _commit,
-                      onShown: (p) => _seen('theme-${t.key}', p),
+                      onShown: (p) => _seen('work', p),
                     ),
-                    // Three true and one false, under the row: the same
-                    // kind of card, played as a set.
-                    if (mix.spot case final SpotTheFalse spot) ...[
-                      const SizedBox(height: 16),
-                      SpotTheFalseBlock(
-                        spot: spot,
-                        onOpen: _open,
-                        // The pick is the one answer given; the reveal
-                        // tells all four, so all four count as read and
-                        // the day never deals one whose answer was shown.
-                        onCommit: (pill, response) async {
-                          await _commit(pill, response);
-                          for (final Pill other in spot.cards) {
-                            if (other.id != pill.id) {
-                              await widget.app.markReadElsewhere(other.id);
-                            }
-                          }
-                        },
-                        onShown: (p) => _seen('spot-false', p),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ],
-            if (cameBack.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-came-back'),
-                title: l.cameBack,
-                line: l.cardsCameBack(cameBack.length),
-                child: CameBackRow(
-                  cards: cameBack,
-                  onOpen: _openDue,
-                  onShown: (p) => _seen('came-back', p),
-                ),
-              ),
-            ],
-            // Two questions to ask of a number, each named like any other
-            // shelf, with what the reader has done with the move beside it.
-            if (mix.sampling.length >= 3) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-move-sampling'),
-                title: l.moveSampling,
-                line: l.moveSamplingLine,
-                trailing: moveBadge(Principle.sampling),
-                child: MoveRow(
-                  pills: mix.sampling,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('move-sampling', p),
-                ),
-              ),
-            ],
-            if (mix.compared.length >= 3) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-move-compared'),
-                title: l.moveComparedToWhat,
-                line: l.moveComparedToWhatLine,
-                trailing: moveBadge(Principle.counterfactual),
-                child: MoveRow(
-                  pills: mix.compared,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('move-counterfactual', p),
-                ),
-              ),
-            ],
-            if (!mix.work.isEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-work'),
-                title: l.themeWorkItOut,
-                line: l.themeWorkItOutLine,
-                trailing: const WorkWallet(),
-                child: WorkItOut(
-                  deal: mix.work,
-                  isRead: read,
-                  onOpen: _open,
-                  answerOf: _answerOf,
-                  onCommit: _commit,
-                  onShown: (p) => _seen('work', p),
-                ),
-              ),
-            ],
-            if (mix.unmask.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-unmask'),
-                title: l.unmaskTitle,
-                line: l.unmaskLine,
-                child: UnmaskRow(
-                  pills: mix.unmask,
-                  onOpen: _open,
-                  onShown: (p) => _seen('unmask', p),
-                ),
-              ),
-            ],
-            if (mix.howSure.length >= 3) ...[
-              const SizedBox(height: 28),
-              HowSureShelf(
-                key: const ValueKey('mix-how-sure'),
-                pills: mix.howSure,
-                isRead: read,
-                onOpen: _open,
-                onShown: (p) => _seen('how-sure', p),
-              ),
-            ],
-            if (mix.whatIf.length >= 3) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-what-if'),
-                title: l.whatIfTrue,
-                line: l.whatIfTrueLine,
-                child: WhatIfRow(
-                  pills: mix.whatIf,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('what-if', p),
-                ),
-              ),
-            ],
-            if (mix.series.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-series'),
-                title: l.fewCards,
-                line: l.fewCardsLine,
-                child: SeriesRow(
-                  series: mix.series,
-                  onOpen: _open,
-                  onShown: (p) => _seen('series', p),
-                ),
-              ),
-            ],
-            if (mix.sixty.length == 8) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-sixty'),
-                title: l.sixtyTitle,
-                line: l.sixtyLine,
-                child: SixtySeconds(
-                  pills: mix.sixty,
-                  onOpen: _open,
-                  onShown: (p) => _seen('sixty', p),
-                ),
-              ),
-            ],
-            if (mix.moodPool.isNotEmpty) ...[
-              const SizedBox(height: 28),
-              MoodMinutes(
-                key: const ValueKey('mix-mood'),
-                cardsFor: (tone, minutes) => _moodMemo.putIfAbsent(
-                  '${tone.name}-$minutes',
-                  () => forTheTime(
-                    mix.moodPool,
-                    tone: tone,
-                    minutes: minutes,
-                    day: day,
                   ),
                 ),
-                isRead: read,
-                onOpen: _open,
-                onShown: (p) => _seen('mood', p),
-              ),
-            ],
-            // The day as an edition: the same front page for everybody.
-            if (mix.front case final FrontPage page) ...[
-              const SizedBox(height: 32),
-              FrontPageView(
-                page: page,
-                onOpen: _open,
-                onShown: (p) => _seen('front-page', p),
-              ),
-            ],
-            if (mix.eras.length >= 2) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-through-time'),
-                title: l.throughTime,
-                line: l.throughTimeLine,
-                child: ThroughTime(
-                  eras: mix.eras,
-                  pool: mix.eraPool,
-                  day: day,
-                  startAt: day % mix.eras.length,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('through-time', p),
+              ],
+              if (mix.unmask.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'unmask',
+                  _Shelf(
+                    key: const ValueKey('mix-unmask'),
+                    title: l.unmaskTitle,
+                    line: l.unmaskLine,
+                    child: UnmaskRow(
+                      pills: mix.unmask,
+                      onOpen: _open,
+                      onShown: (p) => _seen('unmask', p),
+                    ),
+                  ),
                 ),
-              ),
+              ],
+              if (mix.howSure.length >= 3) ...[
+                const SizedBox(height: 28),
+                _watch(
+                  'how-sure',
+                  HowSureShelf(
+                    key: const ValueKey('mix-how-sure'),
+                    pills: mix.howSure,
+                    isRead: read,
+                    onOpen: _open,
+                    onShown: (p) => _seen('how-sure', p),
+                  ),
+                ),
+              ],
+              if (mix.whatIf.length >= 3) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'what-if',
+                  _Shelf(
+                    key: const ValueKey('mix-what-if'),
+                    title: l.whatIfTrue,
+                    line: l.whatIfTrueLine,
+                    child: WhatIfRow(
+                      pills: mix.whatIf,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('what-if', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.series.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'series',
+                  _Shelf(
+                    key: const ValueKey('mix-series'),
+                    title: l.fewCards,
+                    line: l.fewCardsLine,
+                    child: SeriesRow(
+                      series: mix.series,
+                      onOpen: _open,
+                      onShown: (p) => _seen('series', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.sixty.length == 8) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'sixty',
+                  _Shelf(
+                    key: const ValueKey('mix-sixty'),
+                    title: l.sixtyTitle,
+                    line: l.sixtyLine,
+                    child: SixtySeconds(
+                      pills: mix.sixty,
+                      onOpen: _open,
+                      onShown: (p) => _seen('sixty', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.moodPool.isNotEmpty) ...[
+                const SizedBox(height: 28),
+                _watch(
+                  'mood',
+                  MoodMinutes(
+                    key: const ValueKey('mix-mood'),
+                    cardsFor: (tone, minutes) => _moodMemo.putIfAbsent(
+                      '${tone.name}-$minutes',
+                      () => forTheTime(
+                        mix.moodPool,
+                        tone: tone,
+                        minutes: minutes,
+                        day: day,
+                      ),
+                    ),
+                    isRead: read,
+                    onOpen: _open,
+                    onShown: (p) => _seen('mood', p),
+                  ),
+                ),
+              ],
+              // The day as an edition: the same front page for everybody.
+              if (mix.front case final FrontPage page) ...[
+                const SizedBox(height: 32),
+                _watch(
+                  'front-page',
+                  FrontPageView(
+                    page: page,
+                    onOpen: _open,
+                    onShown: (p) => _seen('front-page', p),
+                  ),
+                ),
+              ],
+              if (mix.eras.length >= 2) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'through-time',
+                  _Shelf(
+                    key: const ValueKey('mix-through-time'),
+                    title: l.throughTime,
+                    line: l.throughTimeLine,
+                    child: ThroughTime(
+                      eras: mix.eras,
+                      pool: mix.eraPool,
+                      day: day,
+                      startAt: day % mix.eras.length,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('through-time', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (mix.didYouKnow.length >= 4) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'did-you-know',
+                  DidYouKnow(
+                    key: const ValueKey('mix-did-you-know'),
+                    pills: mix.didYouKnow,
+                    onOpen: _open,
+                    onRead: (p) => widget.app.markReadElsewhere(p.id),
+                    onShown: (p) => _seen('did-you-know', p),
+                  ),
+                ),
+              ],
+              if (mix.surprise.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'surprise',
+                  _Shelf(
+                    key: const ValueKey('mix-surprise'),
+                    title: l.notSureTitle,
+                    line: l.notSureLine,
+                    child: SurpriseMe(pool: mix.surprise, onOpen: _open),
+                  ),
+                ),
+              ],
             ],
-            if (mix.didYouKnow.length >= 4) ...[
-              const SizedBox(height: 24),
-              DidYouKnow(
-                key: const ValueKey('mix-did-you-know'),
-                pills: mix.didYouKnow,
-                onOpen: _open,
-                onRead: (p) => widget.app.markReadElsewhere(p.id),
-                onShown: (p) => _seen('did-you-know', p),
-              ),
-            ],
-            if (mix.surprise.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _Shelf(
-                key: const ValueKey('mix-surprise'),
-                title: l.notSureTitle,
-                line: l.notSureLine,
-                child: SurpriseMe(pool: mix.surprise, onOpen: _open),
-              ),
-            ],
-          ],
+          ),
         ),
         // The shelves run under the tab bar rather than stopping short of
         // it, so the last one has to say it is not the end.
@@ -1041,6 +1173,7 @@ class ExploreScreenState extends State<ExploreScreen> {
           title: context.l10n.cameBack,
           initialIndex: shelf.indexOf(pill),
           answering: true,
+          source: 'came back',
         ),
       ),
     );
@@ -1054,17 +1187,20 @@ class ExploreScreenState extends State<ExploreScreen> {
     bool Function(Pill) read,
   ) => [
     const SizedBox(height: 24),
-    _Shelf(
-      key: ValueKey('signature-${t.theme.name}'),
-      title: _themeTitle(context, t),
-      line: _themeLine(context, t),
-      child: SignatureRow(
-        shelf: t,
-        isRead: read,
-        onOpen: _open,
-        answerOf: (p) => widget.app.answerFor(p.id),
-        onLean: _lean,
-        onShown: (p) => _seen('signature-${t.theme.name}', p),
+    _watch(
+      'signature-${t.theme.name}',
+      _Shelf(
+        key: ValueKey('signature-${t.theme.name}'),
+        title: _themeTitle(context, t),
+        line: _themeLine(context, t),
+        child: SignatureRow(
+          shelf: t,
+          isRead: read,
+          onOpen: _open,
+          answerOf: (p) => widget.app.answerFor(p.id),
+          onLean: _lean,
+          onShown: (p) => _seen('signature-${t.theme.name}', p),
+        ),
       ),
     ),
   ];
@@ -1174,6 +1310,8 @@ class ExploreScreenState extends State<ExploreScreen> {
   }
 
   void _open(List<Pill> shelf, Pill pill) {
+    // Opened from the shelf a finger was last on, which the shelf counts.
+    _sight.opened();
     openDeckViewer(
       context,
       widget.app,
@@ -1182,6 +1320,7 @@ class ExploreScreenState extends State<ExploreScreen> {
       initialIndex: shelf.indexOf(pill),
       // Nothing here was dealt: a card read here is read.
       countsAsRead: true,
+      source: 'explore',
     );
   }
 }

@@ -299,6 +299,9 @@ void main() {
         final app = await _ready({'knowit.name': 'Marco Rossi'});
 
         await app.toggleSaved(app.todaysDeck.first.id);
+        // The profile waits to be written with whatever else moved, as it
+        // is when the app leaves the screen.
+        await Analytics.flushPerson(force: true);
 
         expect(sink.person['is_plus'], false);
         expect(sink.person['saved_count'], 1);

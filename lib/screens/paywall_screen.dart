@@ -21,6 +21,7 @@ import '../widgets/fit_text.dart';
 import '../data/topics.dart';
 import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
+import '../widgets/ui.dart' show ScreenView;
 import 'purchase_success_screen.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
@@ -297,11 +298,16 @@ class PaywallScreen extends StatefulWidget {
   /// absent, the screen pops itself.
   final VoidCallback? onClose;
 
+  /// The name the screen goes by in the funnel: `paywall`, or the
+  /// onboarding's own step when it is that step.
+  final String screen;
+
   const PaywallScreen({
     super.key,
     required this.app,
     required this.source,
     this.onClose,
+    this.screen = 'paywall',
   });
 
   @override
@@ -326,7 +332,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   void initState() {
     super.initState();
-    Analytics.screen('paywall');
     Analytics.capture('paywall shown', {
       'source': widget.source,
       // Which opening the door gave, and whether the reader has numbers of
@@ -553,7 +558,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      ScreenView(name: widget.screen, child: _page(context));
+
+  Widget _page(BuildContext context) {
     final l = context.l10n;
     final p = context.p;
     final bool dark = p.isDark;

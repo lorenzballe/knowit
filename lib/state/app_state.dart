@@ -18,6 +18,8 @@ import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
 import '../data/topics.dart';
 import '../l10n/app_localizations.dart';
+import '../measure/card_read.dart';
+import '../measure/session.dart';
 import '../models/pill.dart';
 import '../models/reminder.dart';
 import '../models/trial.dart';
@@ -307,6 +309,11 @@ class AppState extends ChangeNotifier {
       debugPrintStack(stackTrace: stack, label: '$error');
       await _startNewDay();
     }
+    try {
+      await _noteInstalled();
+    } catch (_) {
+      installedOn = dateKey(today);
+    }
 
     ready = true;
     notifyListeners();
@@ -510,6 +517,43 @@ class AppState extends ChangeNotifier {
   /// and the debug section.
   String dealtBy = 'phone';
 
+  /// How long the day took to be dealt, when it was dealt since the app
+  /// started; null for a day the phone had already.
+  int? msToDeal;
+
+  static const _kInstalledOn = 'knowit.installedOn';
+
+  /// The day the app was first opened on this phone, as a date key. An
+  /// install older than this record gets the earliest day the phone
+  /// remembers anything of, which is the nearest thing to it there is.
+  String installedOn = '';
+
+  Future<void> _noteInstalled() async {
+    final String? kept = _prefs.getString(_kInstalledOn);
+    if (kept != null && _dateOf(kept) != null) {
+      installedOn = kept;
+      return;
+    }
+    final List<String> days = [
+      dateKey(today),
+      for (final String day in [
+        ...readDays.keys,
+        ...dayLog.keys,
+        ...completedDates,
+        ...rungDates.values,
+        ...deckHistory.keys,
+        for (final Judgement j in judgements) ?j.on,
+      ])
+        if (_dateOf(day) != null) day,
+    ]..sort();
+    installedOn = days.first;
+    await _prefs.setString(_kInstalledOn, installedOn);
+  }
+
+  /// Says the reader's facts to PostHog again: the ones that move without
+  /// the app's own state moving, like the phone switching to dark at dusk.
+  void refreshAnalytics() => _syncAnalytics();
+
   /// Today's cards back from the phone: whole, as they were stored, or
   /// looked up in the bank by id for a day stored by an older build.
   List<Pill> _storedCards(List<String> ids) {
@@ -567,6 +611,9 @@ class AppState extends ChangeNotifier {
   /// entertaining: on Astute+ a card that came due takes an asking slot
   /// before any fresh question does.
   Future<void> _startNewDay() async {
+    // How long the day takes to arrive, server or phone: the reader waits
+    // for it on the splash.
+    final Stopwatch dealing = Stopwatch()..start();
     // The server's day first: dealt from what the reader did, not only from
     // what they said. It is usually on the phone already — asked for the
     // evening before, or dealt by the nightly pass and read from the
@@ -612,11 +659,14 @@ class AppState extends ChangeNotifier {
     );
     await _prefs.setStringList(_kOwnIds, ownIdsToday.toList());
     await _noteDealt(today, todaysDeck);
+    msToDeal = dealing.elapsedMilliseconds;
     Analytics.capture('day started', {
       'cards': todaysDeck.length,
       // Who dealt it: the server, the server's copy on the phone, or the
       // phone itself. The whole claim of the server is this number.
       'dealt_by': dealtBy,
+      // And how long it took to arrive, waited for and written down.
+      'ms_to_deal': msToDeal,
       // How much of the day is the reader's own, and how much of it is a
       // re-asking. The whole claim of the plan is the first number; the
       // whole claim of the review ladder is the second.
@@ -784,6 +834,9 @@ class AppState extends ChangeNotifier {
       'principle': p == null || !p.principle.isReal ? null : p.principle.name,
       'difficulty': p?.difficulty.name,
       'challenge': p == null ? null : challengeKind(p.challenge),
+      // What the card asks the reader to do with it: the scene played on it,
+      // the way it is answered, or `read` (see interactionOf).
+      'interaction': p == null ? null : interactionOf(p),
       'graded': p?.isGraded,
       'era': tag(p?.era),
       'region': tag(p?.region),
@@ -843,19 +896,50 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> advance() async {
+  /// A card's stint that ended without the day moving on: a card of the day
+  /// left standing for another tab, a pushed screen or the background, and
+  /// every card read in the viewer, however it left. [where] is where it was
+  /// read — `today`, or the screen the viewer was opened from.
+  void cardClosed(CardStint stint, {required String where}) {
+    Analytics.capture('card closed', {
+      // In sight in this stint, first: the trace keeps one duration per
+      // event, and for this one it is how long the card held the reader.
+      'ms_on_card': stint.msOn,
+      ...cardFacts(stint.pill.id),
+      'where': where,
+      ...stint.facts,
+    });
+  }
+
+  /// What 'first card shown' says about the day it showed: how long the day
+  /// took to be dealt, by whom, and which of its cards came up first — the
+  /// first of a fresh day, or one further in.
+  Map<String, Object?> get firstCardFacts => {
+    'ms_to_deal': msToDeal,
+    'dealt_by': msToDeal == null ? null : dealtBy,
+    'position': todayIndex + 1,
+  };
+
+  /// Moves the day on past the card on top. [read] is how the deck saw it
+  /// read in its last stint (see CardRead): the time on its front and its
+  /// back, the turns, the hint, the answer taken back, how much of the back
+  /// was in sight, how it was thrown.
+  Future<void> advance({Map<String, Object?> read = const {}}) async {
     if (todayCompleted) return;
     final Pill card = todaysDeck[todayIndex];
     final DateTime? upAt = _cardUpAt;
     Analytics.capture('card advanced', {
       // Which of the day's cards this was, so the drop-off inside a day can
       // be read as a curve rather than as a single completion rate — and
-      // what kind of card it was, and how long it held the reader.
+      // what kind of card it was, and how long it held the reader. That
+      // time is from the card coming up, background and all; the read's
+      // own times below count only the card in sight.
       ...cardFacts(card.id),
       'review': reviewIdsToday.contains(card.id),
       'ms_on_card': upAt == null
           ? null
           : DateTime.now().difference(upAt).inMilliseconds,
+      ...read,
     });
     final bool firstTime = seenIds.add(card.id);
     todayIndex += 1;
@@ -1303,6 +1387,7 @@ class AppState extends ChangeNotifier {
 
     await _saveAnswers();
     await _noteDay();
+    Session.instance.answered();
     Analytics.capture('card answered', {
       ...cardFacts(pillId),
       'graded': graded,
@@ -2312,7 +2397,51 @@ class AppState extends ChangeNotifier {
     'app_language': _strings.localeName,
     'onboarded': onboarded,
     'freezes': freezes,
+    'last_day_completed': ?lastCompletionDate,
   };
+
+  /// What the profile says once and never again (`$set_once`): when the app
+  /// was installed, and the first day the reader finished — as far back as
+  /// the phone remembers, which is its last thirty finished days.
+  Map<String, Object> get analyticsProfileOnce => {
+    'install_date': installedOn,
+    if (completedDates.isNotEmpty)
+      'first_day_completed': (List.of(completedDates)..sort()).first,
+  };
+
+  /// What the profile says about the reader as a reader, worked out from
+  /// everything they did: the subjects they read most, how sure they say
+  /// they are against how often they are right, how many cards they have
+  /// answered, and the hour they were last here. Written when the app
+  /// leaves the screen, not at every card (see main.dart).
+  Map<String, Object?> get readerFacts {
+    final Map<String, int> read = {};
+    for (final String id in seenIds) {
+      final String? topic = pillById(id)?.topic;
+      if (topic != null) read[topic] = (read[topic] ?? 0) + 1;
+    }
+    final List<String> top =
+        (read.entries.toList()..sort(
+              (a, b) => b.value != a.value
+                  ? b.value.compareTo(a.value)
+                  : a.key.compareTo(b.key),
+            ))
+            .take(3)
+            .map((e) => e.key)
+            .toList();
+    // Below the floor the journey keeps, there is nothing to say: one
+    // answer at 90% and missed is not a reader ninety points too sure.
+    final ({double sure, double right})? said = sureAgainstRight;
+    return {
+      'top_subjects': top.isEmpty ? null : top.join(','),
+      'top_subject': top.firstOrNull,
+      'answers_count': answers.length,
+      'avg_sure': said?.sure.round(),
+      'pct_right': said?.right.round(),
+      'calibration_gap': said == null ? null : (said.sure - said.right).round(),
+      'last_active_local_hour': DateTime.now().hour,
+    };
+  }
 
   /// The facts every event carries as well, so a funnel can be cut by them
   /// without a join.
@@ -2327,20 +2456,64 @@ class AppState extends ChangeNotifier {
     'app_language',
   ];
 
+  /// Every event's facts that are not the profile's: how long ago the app
+  /// was installed, how long the streak is as a band, what the phone lets
+  /// the app do about notifications, and whether the app is dark.
+  Map<String, Object> get everyEventFacts => {
+    'days_since_install': daysSinceInstall,
+    'streak_bucket': streakBucket(liveStreak),
+    'notifications': notificationsAllowed
+        ? 'granted'
+        : pushAsked
+        ? 'denied'
+        : 'not asked',
+    'dark_mode':
+        themeMode == ThemeMode.dark ||
+        (themeMode == ThemeMode.system &&
+            PlatformDispatcher.instance.platformBrightness == Brightness.dark),
+  };
+
+  /// A streak as a band, for cutting a chart by: `0`, `1-2`, `3-6`, `7-13`,
+  /// `14-29` or `30+` days.
+  static String streakBucket(int days) => switch (days) {
+    <= 0 => '0',
+    <= 2 => '1-2',
+    <= 6 => '3-6',
+    <= 13 => '7-13',
+    <= 29 => '14-29',
+    _ => '30+',
+  };
+
+  /// Whole days since [installedOn].
+  int get daysSinceInstall {
+    final DateTime? installed = _dateOf(installedOn);
+    if (installed == null) return 0;
+    final DateTime day = DateTime(today.year, today.month, today.day);
+    return day.difference(installed).inDays.clamp(0, 1 << 20);
+  }
+
   Map<String, Object>? _profileSent;
+  final Map<String, Object> _registered = {};
 
   /// Keeps PostHog's picture of the reader current. Sent only when something
-  /// in it moved, so reading a card is not a profile update.
+  /// in it moved, so reading a card is not a profile update — and even then
+  /// only handed over, to be written with whatever else moved when the app
+  /// leaves the screen (see Analytics.person).
   void _syncAnalytics() {
     if (!ready || !Analytics.ready) return;
     final Map<String, Object> profile = analyticsProfile;
+    final Map<String, Object> stamped = {
+      for (final String key in _everyEvent) key: ?profile[key],
+      ...everyEventFacts,
+    };
+    for (final MapEntry<String, Object> e in stamped.entries) {
+      if (_registered[e.key] == e.value) continue;
+      _registered[e.key] = e.value;
+      Analytics.register(e.key, e.value);
+    }
     if (mapEquals(profile, _profileSent)) return;
     _profileSent = profile;
-    for (final String key in _everyEvent) {
-      final Object? value = profile[key];
-      if (value != null) Analytics.register(key, value);
-    }
-    Analytics.person(set: profile);
+    Analytics.person(set: profile, setOnce: analyticsProfileOnce);
   }
 
   @override
@@ -2506,9 +2679,12 @@ class AppState extends ChangeNotifier {
     Trace.instance.plus = active;
     await _prefs.setBool(_kPlus, active);
     // What the store said, not what a screen hoped: this is the one place
-    // the plan actually changes, so it is the one place it is counted.
+    // the plan actually changes, so it is the one place it is counted —
+    // and the one place the profile is told at once, beside the store's
+    // own word on the trial (Subscription.planFacts).
     Analytics.capture('plan changed', {'is_plus': active});
     Analytics.register('is_plus', active);
+    Analytics.person(set: {'is_plus': active}, now: true);
     notifyListeners();
   }
 
@@ -2536,6 +2712,9 @@ class AppState extends ChangeNotifier {
     // And this phone is no longer that reader. What the next person does
     // here is theirs, counted as somebody new.
     unawaited(Analytics.reset());
+    // Somebody new has none of the last reader's facts stamped on them yet.
+    _registered.clear();
+    _profileSent = null;
     streak = 0;
     bestStreak = 0;
     lastCompletionDate = null;
