@@ -1190,10 +1190,15 @@ defaulted one, so `onboarding`, `sixth card`, `journey`, `archive` and
 `calibration` can be told apart. A default is how a fifth of the traffic ends
 up labelled `unknown` by the end of the first week.
 
-**Screens are named by hand.** The three tabs are one route and the rest are
-unnamed pushes, so a navigator observer would report `/` and call it a
-session. `ScreenView` in `lib/widgets/ui.dart` names each one where it is
-built, which means a screen reachable from two places is still one name.
+**Screens are named by hand.** The three tabs and the steps of the first run
+are one route and the rest are unnamed pushes, so a navigator observer
+reporting routes would say `/` and call it a session. `ScreenView`
+(`lib/measure/screens.dart`, exported by `lib/widgets/ui.dart`) names each
+one where it is built, which means a screen reachable from two places is
+still one name; a `ScreenObserver` on the navigator only tells each screen
+when something has been pushed over it. A visit sends `$screen` as it begins
+and `screen left` as it ends: the time in front, how far down it was
+scrolled, the drags and taps, and where the reader came from and went.
 
 **The reader's switch** sits at the foot of the settings, above the debug
 section, on by default and off in one tap, in all thirteen languages. It is
@@ -1238,6 +1243,16 @@ which reminder or widget brought the reader in — for a widget, the card
 tapped and where it lives — and which widgets they have placed. The
 profile in PostHog is kept to counts and choices — plan, streak, rung, what
 is set up — and a handful of them ride on every event.
+
+How each card was read is said as it leaves: the time on its front and its
+back, the turns, the hint, an answer taken back before it was committed, how
+much of the back was in sight. Explore says which shelves were actually on
+screen and for how long, not only which cards were opened. Each sitting is
+summed up as the app leaves the screen, with how it was opened and how
+smoothly the phone drew; and every install says where it came from, so the
+review and test phones can be filtered out. Every event, its properties,
+where it goes and what it costs in PostHog's quota is in
+`docs/TRACKING.md`.
 
 On the web the plugin brings no library of its own, so
 `lib/utils/analytics_boot_web.dart` puts posthog-js on the page and starts it.

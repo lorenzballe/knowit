@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 
 import '../analytics.dart';
+import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 import 'hold_to_keep.dart';
@@ -717,6 +718,7 @@ class _AskFaceState extends State<_AskFace> {
                         'pill_id': widget.pill.id,
                         'topic': widget.pill.topic,
                       });
+                      CardRead.of(context)?.hinted();
                     },
                     child: Row(
                       children: [
@@ -832,6 +834,9 @@ class _NumberInputState extends State<_NumberInput> {
 
   final _controller = TextEditingController();
 
+  /// How long the typed answer was a keystroke ago.
+  int _typed = 0;
+
   @override
   void dispose() {
     _controller.dispose();
@@ -839,6 +844,16 @@ class _NumberInputState extends State<_NumberInput> {
   }
 
   bool get _ready => TypeNumber.parse(_controller.text) != null;
+
+  /// Digits taken back are the reader changing their mind before they
+  /// commit — counted, never read: what was typed stays here.
+  void _edited(String text) {
+    final CardRead? read = CardRead.of(context);
+    read?.changeable();
+    if (text.length < _typed) read?.changed();
+    _typed = text.length;
+    setState(() {});
+  }
 
   void _submit() {
     if (!_ready || widget.onAnswer == null) return;
@@ -867,7 +882,7 @@ class _NumberInputState extends State<_NumberInput> {
                   child: LayoutBuilder(
                     builder: (context, room) => TextField(
                       controller: _controller,
-                      onChanged: (_) => setState(() {}),
+                      onChanged: _edited,
                       onSubmitted: (_) => _submit(),
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,

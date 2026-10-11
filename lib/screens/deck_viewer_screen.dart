@@ -40,6 +40,10 @@ class DeckViewerScreen extends StatefulWidget {
   /// read (see [AppState.markReadElsewhere]).
   final bool countsAsRead;
 
+  /// Where the cards were opened from, as their 'card closed' says it:
+  /// `explore`, `came back`, `journey`, `widget`.
+  final String source;
+
   const DeckViewerScreen({
     super.key,
     required this.app,
@@ -48,6 +52,7 @@ class DeckViewerScreen extends StatefulWidget {
     this.initialIndex = 0,
     this.answering = false,
     this.countsAsRead = false,
+    this.source = 'viewer',
   });
 
   @override
@@ -153,6 +158,12 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                   child: PillCardStack(
                     deck: widget.deck,
                     index: _index,
+                    // Every card read here is said once per stint, however
+                    // it left: thrown on, or still open when the viewer
+                    // closed.
+                    onRead: (stint) =>
+                        widget.app.cardClosed(stint, where: widget.source),
+                    readBefore: (id) => widget.app.seenIds.contains(id),
                     onAdvance: () {
                       _read(_index);
                       setState(
@@ -218,6 +229,7 @@ Future<void> openDeckViewer(
   String title, {
   int initialIndex = 0,
   bool countsAsRead = false,
+  String source = 'viewer',
 }) {
   return Navigator.of(context).push(
     MaterialPageRoute(
@@ -227,6 +239,7 @@ Future<void> openDeckViewer(
         title: title,
         initialIndex: initialIndex,
         countsAsRead: countsAsRead,
+        source: source,
       ),
     ),
   );

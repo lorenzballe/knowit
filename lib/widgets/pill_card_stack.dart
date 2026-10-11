@@ -4,8 +4,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../analytics.dart';
+import '../measure/card_read.dart';
+import '../measure/screens.dart';
 import '../models/pill.dart';
+import '../sync/trace.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
 
@@ -81,6 +83,18 @@ class PillCardStack extends StatefulWidget {
   /// down is a throw like any other.
   final ValueChanged<Pill>? onDislike;
 
+  /// How each card on top was read, told when its stint ends (see
+  /// [CardRead]): thrown, or left standing when its screen went out of
+  /// sight. A throw is told just before [onAdvance] is called.
+  final ValueChanged<CardStint>? onRead;
+
+  /// Told each time a card stands on top with the reader looking at it.
+  final ValueChanged<Pill>? onStand;
+
+  /// Whether the reader had read this card before it was put in front of
+  /// them here, for a deck of cards read back.
+  final bool Function(String id)? readBefore;
+
   /// How many cards the stack holds: the deck, and the one after it.
   int get count => deck.length + (trailing != null ? 1 : 0);
 
@@ -102,6 +116,9 @@ class PillCardStack extends StatefulWidget {
     this.onDislike,
     this.answering = true,
     this.onMotion,
+    this.onRead,
+    this.onStand,
+    this.readBefore,
   });
 
   @override
@@ -134,6 +151,32 @@ class _PillCardStackState extends State<PillCardStack>
   /// held the reader before they wanted the back.
   DateTime? _upAt;
 
+  /// How the card on top is being read, while it stands there in sight.
+  CardRead? _read;
+
+  /// True from a card being let go to the deck having moved on.
+  bool _throwing = false;
+
+  /// The cards that have stood on top here, so one come back to is said to
+  /// be read again.
+  final Set<String> _stood = {};
+
+  /// The screen this deck is drawn on, which says when it goes out of
+  /// sight. Null for a deck pumped on its own, which is always in sight.
+  ScreenPresence? _presence;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final ScreenPresence? presence = ScreenPresence.maybeOf(context);
+    if (!identical(presence, _presence)) {
+      _presence?.removeListener(_stand);
+      _presence = presence;
+      presence?.addListener(_stand);
+    }
+    _stand();
+  }
+
   @override
   void didUpdateWidget(covariant PillCardStack old) {
     super.didUpdateWidget(old);
@@ -143,12 +186,56 @@ class _PillCardStackState extends State<PillCardStack>
       _answeredHere = false;
       _upAt = DateTime.now();
     }
+    _stand();
   }
 
   @override
   void dispose() {
+    _presence?.removeListener(_stand);
+    final CardRead? read = _read;
+    if (read != null) _close(read, 'gone');
     _controller.dispose();
     super.dispose();
+  }
+
+  Pill? get _top =>
+      widget.index < widget.deck.length ? widget.deck[widget.index] : null;
+
+  /// Starts and ends the stints as the card on top and its screen change: a
+  /// card stands while it is on top and in sight, and stops standing when
+  /// the screen goes — for another tab, a pushed screen, the background.
+  void _stand() {
+    final Pill? top = _top;
+    final bool inSight = _presence?.showing ?? true;
+    final CardRead? read = _read;
+    if (read != null && (!inSight || read.pill.id != top?.id)) {
+      _close(read, inSight ? 'gone' : _leftFor(_presence?.left));
+    }
+    if (_read != null || top == null || !inSight || !mounted || _throwing) {
+      return;
+    }
+    _read = CardRead(
+      top,
+      reread:
+          _stood.contains(top.id) || (widget.readBefore?.call(top.id) ?? false),
+      back: _flipped,
+    );
+    _stood.add(top.id);
+    widget.onStand?.call(top);
+  }
+
+  /// A card's way out, from why its screen went out of sight.
+  static String _leftFor(String? left) => switch (left) {
+    'push' => 'push',
+    'background' => 'background',
+    'switch' => 'tab',
+    _ => 'closed',
+  };
+
+  void _close(CardRead read, String exit) {
+    if (identical(_read, read)) _read = null;
+    if (read.ended) return;
+    widget.onRead?.call(read.end(exit));
   }
 
   void _onPanStart(DragStartDetails d) {
@@ -201,6 +288,22 @@ class _PillCardStackState extends State<PillCardStack>
       } else {
         HapticFeedback.lightImpact();
       }
+      // The card's read ends as it is let go, not when it has flown: the
+      // flight is the deck's, not the reader's. Flung, carried off past the
+      // line, or thrown down, which says less like this. No card stands
+      // again until the throw is over.
+      _throwing = true;
+      final CardRead? read = _read;
+      if (read != null && leaving != null) {
+        _close(
+          read,
+          down
+              ? 'thrown down'
+              : thrown.distance > 620
+              ? 'thrown'
+              : 'swiped',
+        );
+      }
       final double length = heading.distance;
       await _animateTo(
         length == 0 ? const Offset(480, 0) : heading * (1100 / length),
@@ -236,6 +339,15 @@ class _PillCardStackState extends State<PillCardStack>
           _flipped = false;
         });
       }
+      // The card now on top stands, face up, once the deck is built with it
+      // — the new index lands with the next frame, not with the await — and
+      // even where the deck wrapped round to the one that was just thrown.
+      _throwing = false;
+      WidgetsBinding.instance
+        ..addPostFrameCallback((_) {
+          if (mounted) _stand();
+        })
+        ..ensureVisualUpdate();
     } else if (_dragTotalMove < 7) {
       // Barely moved: put it back where it was and turn it over, with
       // nothing to settle first — the card never went anywhere.
@@ -269,13 +381,14 @@ class _PillCardStackState extends State<PillCardStack>
     }
     HapticFeedback.selectionClick();
     setState(() => _flipped = !_flipped);
-    // The turn itself: a card read, or read back. How long the front held
-    // them first is the one number the day's other events do not carry.
+    _read?.turned(toBack: _flipped);
+    // The turn itself, for the reader's own trace: a card turned over is a
+    // card read, and the dealer hears it. PostHog hears it once, with the
+    // rest of how the card was read, when the card leaves (CardRead).
     if (_flipped) {
       final DateTime? upAt = _upAt;
-      Analytics.capture('card flipped', {
+      Trace.instance.note('card flipped', {
         'pill_id': top.id,
-        'topic': top.topic,
         'ms_to_flip': upAt == null
             ? null
             : DateTime.now().difference(upAt).inMilliseconds,
@@ -377,6 +490,7 @@ class _PillCardStackState extends State<PillCardStack>
                           _answeredHere = true;
                           _flipped = true;
                         });
+                        _read?.turned(toBack: true);
                       },
               ),
               back: !isTop
@@ -437,20 +551,30 @@ class _PillCardStackState extends State<PillCardStack>
 
       // Same reason as above: one shape at every depth. The card underneath
       // is not listening because it is inside an IgnorePointer, not because
-      // it was given a different widget to be.
+      // it was given a different widget to be. Every depth has its read
+      // handed down too — none, for a card nobody is reading yet.
       layers.add(
         Positioned.fill(
           key: ValueKey(pill?.id ?? 'trailing'),
           child: IgnorePointer(
             ignoring: !isTop,
-            child: GestureDetector(
-              onTap: _turnOver,
-              onPanStart: _onPanStart,
-              onPanUpdate: _onPanUpdate,
-              onPanEnd: _onPanEnd,
-              // Only the card on top moves on its own: a living scene on the
-              // card waiting behind it holds still until it rises.
-              child: TickerMode(enabled: isTop, child: card),
+            child: Listener(
+              onPointerDown: isTop ? (_) => _read?.touched() : null,
+              child: GestureDetector(
+                onTap: _turnOver,
+                onPanStart: _onPanStart,
+                onPanUpdate: _onPanUpdate,
+                onPanEnd: _onPanEnd,
+                // Only the card on top moves on its own: a living scene on
+                // the card waiting behind it holds still until it rises.
+                child: TickerMode(
+                  enabled: isTop,
+                  child: CardReadScope(
+                    read: isTop ? () => _read : null,
+                    child: card,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -461,15 +585,25 @@ class _PillCardStackState extends State<PillCardStack>
     // height it is given, minus a little black at each end so the deck
     // reads as sitting in a space rather than jammed into one, and stops
     // at a card's tallest proportion.
-    return Center(
-      child: LayoutBuilder(
-        builder: (context, box) => SizedBox(
-          width: box.maxWidth,
-          height: math.min(
-            math.max(0, box.maxHeight - _air * 2),
-            box.maxWidth * _cardAspect,
+    //
+    // A card's own scrolling — a back too long for a very large text size —
+    // is the card's, measured by the card, and goes no further: the screen
+    // the deck is on does not scroll when a card does.
+    return NotificationListener<ScrollMetricsNotification>(
+      onNotification: (_) => true,
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (_) => true,
+        child: Center(
+          child: LayoutBuilder(
+            builder: (context, box) => SizedBox(
+              width: box.maxWidth,
+              height: math.min(
+                math.max(0, box.maxHeight - _air * 2),
+                box.maxWidth * _cardAspect,
+              ),
+              child: Stack(children: layers),
+            ),
           ),
-          child: Stack(children: layers),
         ),
       ),
     );

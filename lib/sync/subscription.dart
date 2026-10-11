@@ -375,6 +375,37 @@ class Subscription extends ChangeNotifier {
 
   String? _entitlementSaid;
 
+  /// What the store said about the reader, as if it had just said it.
+  @visibleForTesting
+  void noteForTest(EntitlementInfo? plus, {required bool active}) =>
+      _noteEntitlement(plus, active);
+
+  /// The plan as every event and the reader's profile carry it:
+  ///
+  /// - `plan`: `free`, or the plan held — `year`, `month`, or `plus` for a
+  ///   product the app cannot place;
+  /// - `is_trial`: true while a free trial is running, cancelled or not;
+  /// - `plan_period`: the store's word for the period, as RevenueCat names
+  ///   it — `trial`, `intro`, `normal` or `prepaid` — or `none` with no
+  ///   entitlement.
+  static Map<String, Object> planFacts(
+    EntitlementInfo? plus, {
+    required bool active,
+  }) {
+    final String product = (plus?.productIdentifier ?? '').toLowerCase();
+    return {
+      'plan': !active
+          ? 'free'
+          : product.contains('year') || product.contains('annual')
+          ? 'year'
+          : product.contains('month')
+          ? 'month'
+          : 'plus',
+      'is_trial': active && plus?.periodType == PeriodType.trial,
+      'plan_period': active ? (plus?.periodType.name ?? 'unknown') : 'none',
+    };
+  }
+
   /// Says what the store holds for the reader whenever any of it moves: a
   /// trial started, turned into a paid year, set not to renew, hit a billing
   /// problem, or ran out. Those are the moments a subscription business is
@@ -390,10 +421,16 @@ class Subscription extends ChangeNotifier {
     if (state == _entitlementSaid) return;
     final bool first = _entitlementSaid == null;
     _entitlementSaid = state;
-    Analytics.register(
-      'plan_period',
-      active ? (plus?.periodType.name ?? 'unknown') : 'none',
-    );
+    final Map<String, Object> plan = planFacts(plus, active: active);
+    for (final MapEntry<String, Object> e in plan.entries) {
+      Analytics.register(e.key, e.value);
+    }
+    // On the profile as well, at once: a cohort — everyone in a trial — can
+    // only be made of what a profile says, and a trial that started is
+    // worth knowing before the app next leaves the screen. Written only
+    // where it changed, so a launch that finds the plan as it was says
+    // nothing.
+    Analytics.person(set: plan, now: true);
     // A reader who never subscribed has nothing to report at launch.
     if (first && plus == null) return;
     Analytics.capture(first ? 'entitlement read' : 'entitlement changed', {

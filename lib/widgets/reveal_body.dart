@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 
+import '../measure/card_read.dart';
+import '../measure/screens.dart' show seenOf;
 import '../models/pill.dart';
 import '../sync/reports.dart';
 import '../theme.dart';
@@ -907,7 +909,12 @@ class _CardRevealState extends State<CardReveal> {
     if (widget.pill.hasCounterpoint) _Aside.counter,
   ];
 
-  void _open(_Aside aside) => setState(() => _aside = aside);
+  void _open(_Aside aside) {
+    // Went further than the answer: what was opened is how deep the back
+    // was read.
+    if (aside != _Aside.none) CardRead.of(context)?.opened(aside.name);
+    setState(() => _aside = aside);
+  }
 
   List<_Block> _blocks(
     _Fit f,
@@ -1222,11 +1229,7 @@ class _CardRevealState extends State<CardReveal> {
     // short unbreakable word, so it wraps where the flag would.
     out.add(
       _Block(
-        m.height(
-          '$source\u00A0WW',
-          sourceStyle,
-          width - widget.cornerRoom,
-        ),
+        m.height('$source\u00A0WW', sourceStyle, width - widget.cornerRoom),
         Padding(
           padding: EdgeInsets.only(right: widget.cornerRoom),
           child: Text.rich(
@@ -1424,20 +1427,40 @@ class _CardRevealState extends State<CardReveal> {
             else
               Expanded(child: SizedBox(height: b.height)),
         ];
+        // How much of the back has been in sight: all of it, on a back
+        // that fits, as nearly every one does.
+        CardRead.of(context)?.backLaidOut(scrolls: fit.scrolls);
         if (!fit.scrolls) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: children,
           );
         }
-        return SingleChildScrollView(
-          child: Padding(
-            // Room to scroll the last line clear of the buttons in the
-            // corner.
-            padding: const EdgeInsets.only(bottom: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: children,
+        void seen(ScrollMetrics metrics) {
+          final double? share = seenOf(metrics);
+          if (share != null) CardRead.of(context)?.backSeen(share);
+        }
+
+        return NotificationListener<ScrollMetricsNotification>(
+          onNotification: (note) {
+            seen(note.metrics);
+            return false;
+          },
+          child: NotificationListener<ScrollUpdateNotification>(
+            onNotification: (note) {
+              seen(note.metrics);
+              return false;
+            },
+            child: SingleChildScrollView(
+              child: Padding(
+                // Room to scroll the last line clear of the buttons in the
+                // corner.
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: children,
+                ),
+              ),
             ),
           ),
         );

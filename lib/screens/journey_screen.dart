@@ -1288,8 +1288,12 @@ class _SubjectsTile extends StatelessWidget {
     if (deck.isEmpty) return;
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) =>
-            DeckViewerScreen(app: app, deck: deck, title: style.name),
+        builder: (_) => DeckViewerScreen(
+          app: app,
+          deck: deck,
+          title: style.name,
+          source: 'journey',
+        ),
       ),
     );
   }
@@ -2092,6 +2096,7 @@ class _WeekAsksTile extends StatelessWidget {
                       deck: asks,
                       title: l.yourJourney,
                       initialIndex: i,
+                      source: 'journey',
                     ),
                   ),
                 ),

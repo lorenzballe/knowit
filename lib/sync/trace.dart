@@ -102,7 +102,9 @@ class Trace extends ChangeNotifier {
     'pill shared': 'share',
     'pill opened': 'open',
     'card read elsewhere': 'read',
+    'card closed': 'close',
     'card shown': 'seen',
+    'explore shelf seen': 'shelf',
     'tab opened': 'tab',
     'explore filtered': 'xf',
     'explore searched': 'xs',
@@ -116,12 +118,36 @@ class Trace extends ChangeNotifier {
 
   /// The fields kept, and the short name each goes out under. Card tags are
   /// not among them: the server has the bank and reads them off the id.
+  ///
+  /// Several fields share `ms`, each the one duration its event is about.
+  /// An event that carries two — a card's summary has the time it held the
+  /// reader and the time to its turn — keeps the first it lists, which is
+  /// why 'card advanced' and 'card closed' list `ms_on_card` first.
   static const Map<String, String> _fields = {
     'pill_id': 'c',
     'ms_on_card': 'ms',
     'ms_to_answer': 'ms',
     'ms_to_flip': 'ms',
     'ms_in_app': 'ms',
+    'ms_visible': 'ms',
+    // How a card was read (see lib/measure/card_read.dart): the time on its
+    // front and on its back, how often it was turned, how often the answer
+    // was taken back before it was committed, how much of the back was in
+    // sight and which of its tucked parts were opened, whether it was read
+    // before, and how it left.
+    'ms_front': 'mf',
+    'ms_back': 'mb',
+    'flips': 'fl',
+    'options_changed': 'oc',
+    'back_scroll_pct': 'bs',
+    'extras_opened': 'xt',
+    'reread': 're',
+    'exit': 'x',
+    // What a shelf of Explore put in front of the reader.
+    'position': 'p',
+    'tiles_seen': 'ts',
+    'tiles_opened': 'tk',
+    'scrolled_sideways': 'sw',
     'response_index': 'a',
     'response_value': 'v',
     'hint_available': 'h',
@@ -171,7 +197,7 @@ class Trace extends ChangeNotifier {
     for (final MapEntry<String, Object?> e in properties.entries) {
       final String? key = _fields[e.key];
       final Object? value = e.value;
-      if (key == null || value == null) continue;
+      if (key == null || value == null || compact.containsKey(key)) continue;
       // Numbers, flags and short enums only. Anything longer is prose or a
       // list, and neither belongs in the reader's account.
       if (value is num || value is bool) {
@@ -258,6 +284,10 @@ class Trace extends ChangeNotifier {
 
   /// How many events are waiting to be written.
   int get waiting => _queue.length;
+
+  /// The events waiting, as they will be written, for a test to read.
+  @visibleForTesting
+  List<Map<String, Object?>> get queued => List.unmodifiable(_queue);
 
   static String _day(DateTime utc) {
     String two(int n) => n.toString().padLeft(2, '0');

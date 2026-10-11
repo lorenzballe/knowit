@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import '../l10n/l10n.dart';
 import '../theme.dart';
+import '../widgets/ui.dart' show ScreenView;
 
 /// The screen after the store's purchase sheet closes — design 129a,
 /// "check → plus → logo", carried over as it was drawn.
@@ -121,7 +122,10 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
   void _start() => Navigator.of(context).pop();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      ScreenView(name: 'purchase success', child: _page(context));
+
+  Widget _page(BuildContext context) {
     final l = context.l10n;
     final bool still = MediaQuery.disableAnimationsOf(context);
     final EdgeInsets pad = MediaQuery.viewPaddingOf(context);

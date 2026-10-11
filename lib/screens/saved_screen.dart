@@ -87,7 +87,9 @@ class _SavedScreenState extends State<SavedScreen> {
         : all.where((p) => p.topic == kTopics[_topic]!.name).toList();
 
     return ScreenView(
-      name: 'saved',
+      // The two shelves of the reader's own are two screens: what they kept
+      // to find again, and what they held to like.
+      name: _liked ? 'liked' : 'saved',
       child: SafeArea(
         bottom: false,
         child: Padding(
