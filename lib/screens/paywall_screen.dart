@@ -161,15 +161,19 @@ enum PaywallVariant {
 /// What the year comes to a month, in the store's own currency once it has
 /// answered: an American reader saw "\$29.99" on the tile and "€2,49 a month"
 /// under it. The store's figure first, then a twelfth of its price, then the
-/// price written into the app.
-String yearPerMonth() {
+/// price written into the app. A twelfth worked out here is written the way
+/// the reader's language writes money ([locale]), so an Italian reads
+/// "2,50 €" under "29,99 €" rather than "€2.50".
+String yearPerMonth({String? locale}) {
   final StoreProduct? year = Subscription.instance.yearly?.storeProduct;
   if (year == null) return _euros(kYearlyCents ~/ 12);
   final String? perMonth = year.pricePerMonthString;
   if (perMonth != null && perMonth.isNotEmpty) return perMonth;
   try {
-    return NumberFormat.simpleCurrency(name: year.currencyCode)
-        .format(year.price / 12);
+    return NumberFormat.simpleCurrency(
+      locale: locale,
+      name: year.currencyCode,
+    ).format(year.price / 12);
   } catch (_) {
     return _euros(kYearlyCents ~/ 12);
   }
@@ -743,7 +747,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           label: l.planYearly,
                           price: _priceFor(Plan.year),
                           per: l.perYearShort,
-                          note: l.aMonth(yearPerMonth()),
+                          note: l.aMonth(
+                            yearPerMonth(
+                              locale: Localizations.localeOf(context)
+                                  .toString(),
+                            ),
+                          ),
                           badge: switch (yearlySaving()) {
                             final int saving => l.savePercent(saving),
                             null => null,
