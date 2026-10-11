@@ -138,9 +138,12 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ],
                     // The day, sent as five squares, once it is done: the
                     // way the app travels, kept at the foot of the tiles.
+                    // The finished day sends it too, on either plan.
                     if (app.dayClosed) ...[
                       const SizedBox(height: 18),
-                      Center(child: ShareDay(app: app)),
+                      Center(
+                        child: ShareDay(app: app, from: 'journey'),
+                      ),
                     ],
                   ],
                 ),

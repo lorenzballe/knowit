@@ -25,11 +25,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tabProfile => 'プロフィール';
 
   @override
-  String signInNotConnected(String provider) {
-    return '$providerでのログインはまだ接続されていません。カードはこの端末に保存されます。';
-  }
-
-  @override
   String couldNotSignInCarryOn(String label) {
     return '$labelでログインできませんでした。アカウントなしで続けられます。';
   }
@@ -982,10 +977,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get continueWithGoogle => 'Googleで続ける';
 
   @override
-  String get continueWithEmail => 'メールで続ける';
+  String get continueWithoutAccount => 'アカウントなしで続ける';
 
   @override
-  String get termsLine => '登録すると利用規約とプライバシーポリシーに同意したことになります';
+  String get termsLine => '続けると利用規約とプライバシーポリシーに同意したことになります';
 
   @override
   String get skip => 'スキップ';
@@ -1167,9 +1162,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String youSaidItIs(String given, String answer) {
     return 'あなたの答え$given · 正解は$answer';
   }
-
-  @override
-  String get almostEveryoneGetsThisWrong => 'ほとんどの人が間違えます';
 
   @override
   String lineYouSaidSure(String line, int pct) {

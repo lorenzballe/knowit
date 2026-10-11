@@ -25,11 +25,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tabProfile => '我的';
 
   @override
-  String signInNotConnected(String provider) {
-    return '$provider 登录尚未接入。你的卡片会保存在这台设备上。';
-  }
-
-  @override
   String couldNotSignInCarryOn(String label) {
     return '无法通过 $label 登录。你可以不用账号继续。';
   }
@@ -976,10 +971,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get continueWithGoogle => '使用 Google 继续';
 
   @override
-  String get continueWithEmail => '使用邮箱继续';
+  String get continueWithoutAccount => '不使用账号继续';
 
   @override
-  String get termsLine => '注册即表示你同意我们的服务条款和隐私政策';
+  String get termsLine => '继续即表示你同意我们的服务条款和隐私政策';
 
   @override
   String get skip => '跳过';
@@ -1161,9 +1156,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String youSaidItIs(String given, String answer) {
     return '你说 $given · 答案是 $answer';
   }
-
-  @override
-  String get almostEveryoneGetsThisWrong => '几乎所有人都会答错';
 
   @override
   String lineYouSaidSure(String line, int pct) {

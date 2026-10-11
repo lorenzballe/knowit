@@ -9,6 +9,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../l10n/l10n.dart';
 import '../utils/share_image.dart';
+import '../utils/share_link.dart';
 import 'ui.dart';
 
 /// Opens the share sheet for the reader's own track record.
@@ -107,7 +108,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
         'I was right ${s.wasRight.round()}% of the time.\n'
         '${s.verdict}.\n\n'
         'How close would yours be?\n'
-        '— Astute · astutetheapp.com';
+        '— Astute · ${ShareRef.record.link}';
   }
 
   void _toast(String message) {

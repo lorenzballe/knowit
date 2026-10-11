@@ -77,7 +77,6 @@ class IntroScreen extends StatefulWidget {
     required this.onContinue,
     required this.onApple,
     required this.onGoogle,
-    required this.onNotConnected,
   });
 
   /// Skip, and where every button lands once it is done.
@@ -87,10 +86,6 @@ class IntroScreen extends StatefulWidget {
   /// provider's sheet, which should leave them exactly where they were.
   final Future<bool> Function() onApple;
   final Future<bool> Function() onGoogle;
-
-  /// A provider that has no backend behind it yet. Says so, then carries on
-  /// — the next screen only needs a deck, not an account.
-  final void Function(String provider) onNotConnected;
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -130,11 +125,13 @@ class _IntroScreenState extends State<IntroScreen> {
   void _prev() =>
       _go(_scene == 0 ? _sceneCount - 1 : _scene - 1, by: 'swipe back');
 
-  /// Skip, from the corner: said with the scene it left from.
-  void _skipIntro() {
+  /// Skip, from the corner or from under the sign-in: said with the scene
+  /// it left from, and [by] which of the two.
+  void _skipIntro({String by = 'corner'}) {
     Analytics.capture('intro skipped', {
       'at_scene': _scene + 1,
       'ms_on_scene': _sceneClock.elapsedMilliseconds,
+      'by': by,
     });
     widget.onContinue();
   }
@@ -293,10 +290,11 @@ class _IntroScreenState extends State<IntroScreen> {
                         onGoogle: () async {
                           if (await widget.onGoogle()) widget.onContinue();
                         },
-                        onEmail: () {
-                          widget.onNotConnected('Email');
-                          widget.onContinue();
-                        },
+                        // Where Skip goes, said in words under the two that
+                        // ask for an account. It used to say "Continue with
+                        // Email", which had nothing behind it: it said so in
+                        // a snackbar and carried on without one anyway.
+                        onWithoutAccount: () => _skipIntro(by: 'no account'),
                       ),
                     ),
                   ],
@@ -549,12 +547,12 @@ class _SignInBlock extends StatelessWidget {
   const _SignInBlock({
     required this.onApple,
     required this.onGoogle,
-    required this.onEmail,
+    required this.onWithoutAccount,
   });
 
   final VoidCallback onApple;
   final VoidCallback onGoogle;
-  final VoidCallback onEmail;
+  final VoidCallback onWithoutAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -574,11 +572,11 @@ class _SignInBlock extends StatelessWidget {
         const SizedBox(height: 11),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: onEmail,
+          onTap: onWithoutAccount,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 13, 0, 7),
             child: Text(
-              context.l10n.continueWithEmail,
+              context.l10n.continueWithoutAccount,
               style: AppText.body(
                 size: 16,
                 weight: FontWeight.w500,

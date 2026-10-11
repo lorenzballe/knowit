@@ -5,14 +5,6 @@
  "tabToday": "Today",
  "tabExplore": "Explore",
  "tabProfile": "Profile",
- "signInNotConnected": "{provider} sign-in is not connected yet. Your cards are kept on this device.",
- "@signInNotConnected": {
-  "placeholders": {
-   "provider": {
-    "type": "String"
-   }
-  }
- },
  "couldNotSignInCarryOn": "Could not sign in with {label}. You can carry on without an account.",
  "@couldNotSignInCarryOn": {
   "placeholders": {
@@ -908,8 +900,14 @@
  },
  "continueWithApple": "Continue with Apple",
  "continueWithGoogle": "Continue with Google",
- "continueWithEmail": "Continue with Email",
- "termsLine": "By signing up you agree to our Terms of Service & Privacy Policy",
+ "continueWithoutAccount": "Continue without an account",
+ "@continueWithoutAccount": {
+  "description": "The intro's third way on, under Continue with Apple and Continue with Google: it goes where Skip goes and makes no account."
+ },
+ "termsLine": "By continuing you agree to our Terms of Service & Privacy Policy",
+ "@termsLine": {
+  "description": "Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up."
+ },
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
  "barMoveCaps": "WHAT TO KEEP",
@@ -1092,7 +1090,6 @@
    }
   }
  },
- "almostEveryoneGetsThisWrong": "Almost everyone gets this wrong",
  "lineYouSaidSure": "{line} · you said {pct}% sure",
  "@lineYouSaidSure": {
   "placeholders": {

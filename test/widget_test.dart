@@ -727,7 +727,7 @@ void main() {
 
   group('Astute+ is three things, and the free plan shows their shape', () {
     testWidgets(
-      'the archive is Astute+ only: the free plan meets the paywall',
+      'the archive opens on the free plan: the week, not the paywall',
       (tester) async {
         SharedPreferences.setMockInitialValues({
           ..._installed(),
@@ -740,8 +740,12 @@ void main() {
 
         await _openSetting(tester, 'Archive');
 
-        expect(_paywallHeadline, findsOneWidget);
-        expect(find.text('The archive'), findsNothing);
+        // The lock is on the days before this week, inside; the free week
+        // and that lock are walked through in
+        // test/share_archive_signin_test.dart.
+        expect(find.text('The archive'), findsOneWidget);
+        expect(find.text('Yesterday'), findsOneWidget);
+        expect(find.byType(PaywallScreen), findsNothing);
       },
     );
 
@@ -4174,7 +4178,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.textContaining('Almost everyone gets this wrong'),
+        find.textContaining(
+          'You said ${challenge.options[wrong]} · '
+          'it is ${challenge.correctOption}',
+        ),
         findsOneWidget,
       );
       expect(find.textContaining('The trap:'), findsOneWidget);
@@ -5031,7 +5038,6 @@ void main() {
               onContinue: () {},
               onApple: () async => false,
               onGoogle: () async => false,
-              onNotConnected: (_) {},
             ),
           ),
         ),
@@ -5104,7 +5110,6 @@ void main() {
                 onContinue: () {},
                 onApple: () async => false,
                 onGoogle: () async => false,
-                onNotConnected: (_) {},
               ),
             ),
           ),
@@ -5270,7 +5275,6 @@ void main() {
                 onContinue: () {},
                 onApple: () async => false,
                 onGoogle: () async => false,
-                onNotConnected: (_) {},
               ),
             ),
           ),
@@ -5424,7 +5428,6 @@ void main() {
               onContinue: () {},
               onApple: () async => false,
               onGoogle: () async => false,
-              onNotConnected: (_) {},
             ),
           ),
         ),
