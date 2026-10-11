@@ -19,6 +19,16 @@ import '../analytics.dart';
 /// visibly behind a lock. Astute+ keeps every day.
 const int kFreeArchiveDays = 7;
 
+/// How many days [day] is before [today], counted on the calendar rather
+/// than the clock. Two midnights a week apart across a change of the
+/// clocks are six days and twenty-three hours apart, which `inDays` calls
+/// six: the free week held eight days, and yesterday read as today.
+int _daysBefore(DateTime today, DateTime day) => DateTime.utc(
+  today.year,
+  today.month,
+  today.day,
+).difference(DateTime.utc(day.year, day.month, day.day)).inDays;
+
 /// Everything ever dealt — artboard 70e, with the search that was already
 /// here kept over it.
 ///
@@ -83,13 +93,16 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     final today = DateTime(now.year, now.month, now.day);
     final seen = <String>{dateKey(today)};
     final out = <DateTime>[today];
-    for (final key in widget.app.completedDates.reversed) {
+    // Newest first by the dates themselves, which sort as strings, and not
+    // by where they sit in the list: after a sign-in it is this phone's
+    // days with the other phone's added at the end.
+    final keys = widget.app.completedDates.toList()..sort();
+    for (final key in keys.reversed) {
       if (!seen.add(key)) continue;
       final parts = key.split('-').map(int.tryParse).toList();
       if (parts.length != 3 || parts.contains(null)) continue;
       final day = DateTime(parts[0]!, parts[1]!, parts[2]!);
-      if (!widget.app.isPlus &&
-          today.difference(day).inDays >= kFreeArchiveDays) {
+      if (!widget.app.isPlus && _daysBefore(today, day) >= kFreeArchiveDays) {
         continue;
       }
       out.add(day);
@@ -107,7 +120,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
       final parts = key.split('-').map(int.tryParse).toList();
       if (parts.length != 3 || parts.contains(null)) continue;
       final day = DateTime(parts[0]!, parts[1]!, parts[2]!);
-      if (today.difference(day).inDays >= kFreeArchiveDays) hidden++;
+      if (_daysBefore(today, day) >= kFreeArchiveDays) hidden++;
     }
     return hidden;
   }
@@ -424,8 +437,7 @@ class _Day extends StatelessWidget {
 
   String get _label {
     final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final gap = today.difference(DateTime(day.year, day.month, day.day)).inDays;
+    final gap = _daysBefore(now, day);
     if (gap == 0) return 'Today';
     if (gap == 1) return 'Yesterday';
     return '${_weekdays[day.weekday - 1]} ${day.day} '

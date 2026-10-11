@@ -25,11 +25,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tabProfile => '프로필';
 
   @override
-  String signInNotConnected(String provider) {
-    return '$provider 로그인은 아직 연결되지 않았습니다. 카드는 이 기기에 보관됩니다.';
-  }
-
-  @override
   String couldNotSignInCarryOn(String label) {
     return '$label(으)로 로그인할 수 없습니다. 계정 없이 계속할 수 있어요.';
   }
@@ -926,10 +921,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get continueWithGoogle => 'Google로 계속';
 
   @override
-  String get continueWithEmail => '이메일로 계속';
+  String get continueWithoutAccount => '계정 없이 계속';
 
   @override
-  String get termsLine => '가입하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
+  String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
 
   @override
   String get skip => '건너뛰기';
@@ -1111,9 +1106,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String youSaidItIs(String given, String answer) {
     return '내 답 $given · 정답 $answer';
   }
-
-  @override
-  String get almostEveryoneGetsThisWrong => '거의 모두가 틀리는 문제';
 
   @override
   String lineYouSaidSure(String line, int pct) {

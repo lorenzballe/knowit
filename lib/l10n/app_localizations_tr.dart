@@ -25,11 +25,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tabProfile => 'Profil';
 
   @override
-  String signInNotConnected(String provider) {
-    return '$provider ile giriş henüz bağlı değil. Kartların bu cihazda kalır.';
-  }
-
-  @override
   String couldNotSignInCarryOn(String label) {
     return '$label ile giriş yapılamadı. Hesapsız devam edebilirsin.';
   }
@@ -944,11 +939,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get continueWithGoogle => 'Google ile devam et';
 
   @override
-  String get continueWithEmail => 'E-posta ile devam et';
+  String get continueWithoutAccount => 'Hesapsız devam et';
 
   @override
   String get termsLine =>
-      'Kaydolarak Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul etmiş olursun';
+      'Devam ederek Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul etmiş olursun';
 
   @override
   String get skip => 'Atla';
@@ -1134,10 +1129,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String youSaidItIs(String given, String answer) {
     return '$given dedin · $answer';
   }
-
-  @override
-  String get almostEveryoneGetsThisWrong =>
-      'Neredeyse herkes bunu yanlış bilir';
 
   @override
   String lineYouSaidSure(String line, int pct) {

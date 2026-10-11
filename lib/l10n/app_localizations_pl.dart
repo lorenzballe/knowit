@@ -25,11 +25,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get tabProfile => 'Profil';
 
   @override
-  String signInNotConnected(String provider) {
-    return 'Logowanie przez $provider nie jest jeszcze podłączone. Twoje karty zostają na tym urządzeniu.';
-  }
-
-  @override
   String couldNotSignInCarryOn(String label) {
     return 'Nie udało się zalogować przez $label. Możesz działać dalej bez konta.';
   }
@@ -991,11 +986,11 @@ class AppLocalizationsPl extends AppLocalizations {
   String get continueWithGoogle => 'Kontynuuj z Google';
 
   @override
-  String get continueWithEmail => 'Kontynuuj z e-mailem';
+  String get continueWithoutAccount => 'Kontynuuj bez konta';
 
   @override
   String get termsLine =>
-      'Rejestrując się, akceptujesz nasz Regulamin i Politykę prywatności';
+      'Kontynuując, akceptujesz nasz Regulamin i Politykę prywatności';
 
   @override
   String get skip => 'Pomiń';
@@ -1189,9 +1184,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String youSaidItIs(String given, String answer) {
     return 'Powiedziałeś $given · to $answer';
   }
-
-  @override
-  String get almostEveryoneGetsThisWrong => 'Prawie każdy się tu myli';
 
   @override
   String lineYouSaidSure(String line, int pct) {

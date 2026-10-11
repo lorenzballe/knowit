@@ -18,6 +18,7 @@ import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/premium.dart';
 import '../data/topics.dart';
+import '../widgets/share_day.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
 
@@ -321,7 +322,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
           child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
         // The way on is the journey: where the day just went, on the
-        // ladder, is the one thing worth a button at the end of it.
+        // ladder. Beside it, the day sent as five squares.
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
           child: _Actions(app: app),
@@ -1335,9 +1336,13 @@ class _JourneyButtonState extends State<_JourneyButton> {
   }
 }
 
-/// The way on: the journey, which is Astute+. Only the one button — the
-/// offer is the sixth card on the shelf, and the day is shared from the
-/// foot of the journey, not from a second button here.
+/// The way on: the journey, which is Astute+, and beside it the day sent as
+/// five squares, which is not. The day used to be sent only from the foot
+/// of the journey, so a reader on the free plan never found it, and a day
+/// in somebody's chat is how the app travels. Beside the journey rather
+/// than under it: a second row would come out of the shelf, and on a small
+/// phone the cards are what this screen is for. The offer stays the sixth
+/// card on the shelf; nothing in this row sells.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app});
 
@@ -1345,7 +1350,7 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _JourneyButton(
+    final Widget journey = _JourneyButton(
       locked: !app.isPlus,
       onPressed: () => requirePlus(
         context,
@@ -1359,6 +1364,89 @@ class _Actions extends StatelessWidget {
           ),
         ),
         source: 'journey',
+      ),
+    );
+    // Once the day is closed, the same test the journey's foot makes: the
+    // squares are the closed day's.
+    if (!app.dayClosed) return journey;
+    return Row(
+      children: [
+        Expanded(child: journey),
+        const SizedBox(width: 10),
+        _ShareDayButton(app: app),
+      ],
+    );
+  }
+}
+
+/// The day, sent from where it was finished: the journey's button again,
+/// outlined rather than filled because it is the second thing on the row,
+/// and as tall, so the two read as one row. No gate, on either plan.
+class _ShareDayButton extends StatefulWidget {
+  const _ShareDayButton({required this.app});
+
+  final AppState app;
+
+  /// The widest it gets. Where a language's word or a large text size runs
+  /// long, this label gives way before the journey's does.
+  static const double maxWidth = 168;
+
+  @override
+  State<_ShareDayButton> createState() => _ShareDayButtonState();
+}
+
+class _ShareDayButtonState extends State<_ShareDayButton> {
+  bool _down = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    return Semantics(
+      button: true,
+      label: context.l10n.shareMyDay,
+      child: GestureDetector(
+        key: const ValueKey('shelf-share-day'),
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => setState(() => _down = true),
+        onTapUp: (_) => setState(() => _down = false),
+        onTapCancel: () => setState(() => _down = false),
+        onTap: () => ShareDay.send(context, widget.app, from: 'done view'),
+        child: AnimatedScale(
+          scale: _down ? 0.98 : 1,
+          duration: const Duration(milliseconds: 90),
+          child: Container(
+            height: 52,
+            constraints: const BoxConstraints(
+              maxWidth: _ShareDayButton.maxWidth,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: context.p.lineStrong),
+            ),
+            child: ExcludeSemantics(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.ios_share_rounded, size: 16, color: ink),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      context.l10n.shareMyDay,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: 14.5,
+                        weight: FontWeight.w700,
+                        color: ink,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

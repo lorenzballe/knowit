@@ -11,6 +11,7 @@ import '../analytics.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 import '../utils/share_image.dart';
+import '../utils/share_link.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
 
@@ -68,7 +69,7 @@ class _ShareSheetState extends State<_ShareSheet> {
     }
 
     return '$buffer\n${pill.barMove}\n\nSource: ${pill.source}\n'
-        '— Astute · astutetheapp.com';
+        '— Astute · ${ShareRef.card.link}';
   }
 
   void _toast(String message) {

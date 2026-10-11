@@ -162,8 +162,10 @@ Under the dots the app names what opens tomorrow: the deck is dealt from
 the date and the reading history, both settled by tonight, so the subject
 it names is the one that will actually be on top in the morning. A card
 that came due and found no room in the five waits here too. The way on is
-**Your journey** — the day just went somewhere on the ladder, and that is
-the one thing worth a button at the end of it; Explore is a tab already.
+**Your journey** — the day just went somewhere on the ladder; Explore is a
+tab already. Beside it, on the same row so the cards keep their room,
+**Share day** sends the day as five squares, on either plan: it used to
+wait only at the foot of the journey, which the free plan never reaches.
 The evenings there is something to say about the plan, it is said on the
 card after the fifth rather than on this screen (see *The sixth card*):
 the shelf is the day's five, and a line added over them would take room
@@ -238,7 +240,8 @@ and when most are read. And how far it reaches: **in time** (from the
 oldest era a card read is set in to this year), **in place** (the regions
 of the world), **topics** (the strands inside the subjects) and **words**
 (the terms the bank uses on three cards or more, the three met last).
-Once the day is done, the day as five squares to send sits at the foot.
+Once the day is done, the day as five squares to send sits at the foot (the
+finished day sends it too, on either plan).
 
 Everything is counted from what the app writes down, with a date where it
 has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
@@ -388,7 +391,12 @@ search field over an empty screen is a question with no reason to be asked;
 the days give it one. Only days the reader was here for: a run of empty rows
 back to the launch date would be a longer list saying less. Today's five are
 the real deck; an earlier day is dealt again from its own date, which is
-deterministic, because a finished day's cards have never been stored.
+deterministic, because a finished day's cards have never been stored. On the
+free plan the days go back a week, counted on the calendar so a change of
+the clocks cannot stretch it. Both ways in, the profile's row and the link
+on Saved, open it on either plan; the row after the week names the days
+before it, counted, with the lock, and is the one place here that opens the
+plans (`source: archive`).
 
 The three tabs slide under the finger, the way they do in every app with
 three of them side by side; the bar is the other way to the same place.
@@ -437,7 +445,10 @@ having its last line sliced in half.
 
 Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging
-readers to advertise it.
+readers to advertise it. Every shared link says which share it left in —
+`https://astutetheapp.com/?ref=share_card`, `share_day` or `share_record`,
+all three in `ShareRef` (`lib/utils/share_link.dart`) — so the site can count
+what each one brings back.
 
 ### The mix: a form for every kind of card
 
@@ -806,7 +817,8 @@ no room waits after the five, on the finished day, on either plan.
 the edition, the streak, how the questions went and how sure the reader
 was, and the day's line. Nothing a friend could be spoiled by, because
 it names no card. On a phone it goes to the share sheet; in a browser it is
-copied.
+copied. It is sent from the finished day, beside the journey's button, or
+from the foot of the journey, and `day shared` says which (`from`).
 
 The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from
@@ -1168,7 +1180,8 @@ up and *advanced* with how long it held the reader; answered with how long it
 took. The day says which slot each card fills; the end of the day how many
 were right and wrong. A streak that breaks is said once, milestones and
 records when they happen. The first run is measured step by step and scene by
-scene, with how long each held the reader and where it was skipped. The
+scene, with how long each held the reader and where it was skipped — from
+the corner, or by continuing without an account (`intro skipped`, `by`). The
 paywall says which plan was picked, how long it was open, how it was left and
 which link was opened; the store says what it put on sale and every change to
 the subscription — trial, renewal switched off, billing issue, expiry. Then
@@ -1240,9 +1253,11 @@ These are declared in the UI rather than faked:
 - **Notification delivery.** The permission is asked for and the token is
   registered, so a phone can be reached — but nothing sends yet. Deciding who
   gets what, and when in their own timezone, is the work that remains.
-- **Email sign-in.** Apple and Google are wired; the email button says plainly
-  that it is not connected. Firebase's email link needs a domain of ours with
-  universal links, since Dynamic Links was retired.
+- **Email sign-in.** Not offered. Apple and Google are wired; the intro's
+  third line is *Continue without an account*, which goes where Skip goes,
+  rather than an email button with nothing behind it, and the line under
+  them says continuing, not signing up. Firebase's email link needs a domain
+  of ours with universal links, since Dynamic Links was retired.
 - **The nightly pipeline has not run for real.** The pipeline that grows
   the bank is built and tested against a canned model; the first real night
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
@@ -1361,7 +1376,10 @@ stay out of the tally entirely.
 Committing is what turns the card over; a stray tap will not, or the answer
 could be reached without ever guessing. Getting it wrong on purpose is the part
 that teaches, so the reveal names the trap before it explains. Your first
-answer stands.
+answer stands. A wrong pick is said the way a wrong number is — what was
+picked, and what it is — and never as what other readers did: how each card
+is answered is counted on the server, for the tools that check cards, and
+none of it reaches the phone.
 
 ## What you got wrong comes back
 

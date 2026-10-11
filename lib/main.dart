@@ -603,10 +603,6 @@ class _AstutoRootState extends State<AstutoRoot> {
           onContinue: () => _go(_Stage.subjects),
           onApple: () => _signIn('Apple', _account.signInWithApple),
           onGoogle: () => _signIn('Google', _account.signInWithGoogle),
-          onNotConnected: (provider) => _say(
-            '$provider sign-in is not connected yet. Your cards are '
-            'kept on this device.',
-          ),
         );
 
       case _Stage.subjects:

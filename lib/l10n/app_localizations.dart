@@ -150,12 +150,6 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get tabProfile;
 
-  /// No description provided for @signInNotConnected.
-  ///
-  /// In en, this message translates to:
-  /// **'{provider} sign-in is not connected yet. Your cards are kept on this device.'**
-  String signInNotConnected(String provider);
-
   /// No description provided for @couldNotSignInCarryOn.
   ///
   /// In en, this message translates to:
@@ -1374,16 +1368,16 @@ abstract class AppLocalizations {
   /// **'Continue with Google'**
   String get continueWithGoogle;
 
-  /// No description provided for @continueWithEmail.
+  /// The intro's third way on, under Continue with Apple and Continue with Google: it goes where Skip goes and makes no account.
   ///
   /// In en, this message translates to:
-  /// **'Continue with Email'**
-  String get continueWithEmail;
+  /// **'Continue without an account'**
+  String get continueWithoutAccount;
 
-  /// No description provided for @termsLine.
+  /// Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up.
   ///
   /// In en, this message translates to:
-  /// **'By signing up you agree to our Terms of Service & Privacy Policy'**
+  /// **'By continuing you agree to our Terms of Service & Privacy Policy'**
   String get termsLine;
 
   /// No description provided for @skip.
@@ -1691,12 +1685,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You said {given} · it is {answer}'**
   String youSaidItIs(String given, String answer);
-
-  /// No description provided for @almostEveryoneGetsThisWrong.
-  ///
-  /// In en, this message translates to:
-  /// **'Almost everyone gets this wrong'**
-  String get almostEveryoneGetsThisWrong;
 
   /// No description provided for @lineYouSaidSure.
   ///

@@ -538,15 +538,23 @@ class _Verdict extends StatelessWidget {
         right
             ? context.l10n.closeEnoughItIs(answerLabel)
             : context.l10n.youSaidItIsCounted(given, answerLabel, band),
-      // A wrong number is a slip; a wrong pick is usually the trap working.
       TypeNumber(:final answerLabel) =>
         right
             ? context.l10n.youGotIt
             : context.l10n.youSaidItIs(given, answerLabel),
-      _ =>
+      // A wrong pick is said the way a wrong number is: what was picked,
+      // and what it is. It used to be "almost everyone gets this wrong",
+      // which is a claim about other readers that nothing on the phone can
+      // back — how each card is answered is counted on the server, for the
+      // tools that check cards (functions/src/scorecard.ts), and none of it
+      // reaches a card's back.
+      PickOne(:final correctOption) =>
         right
             ? context.l10n.youGotIt
-            : context.l10n.almostEveryoneGetsThisWrong,
+            : context.l10n.youSaidItIs(given, correctOption),
+      // Never marked, so never given a verdict: the back says the reader's
+      // own line instead.
+      NoChallenge() || TakeASide() => '',
     };
   }
 

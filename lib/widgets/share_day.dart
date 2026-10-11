@@ -5,14 +5,19 @@ import '../analytics.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../utils/share_link.dart';
 import '../utils/share_text.dart';
 
 /// The day as five squares and a line, for a chat. Nothing in it that
 /// spoils a card: which ones asked and how those went, never what.
 class ShareDay extends StatelessWidget {
-  const ShareDay({super.key, required this.app});
+  const ShareDay({super.key, required this.app, required this.from});
 
   final AppState app;
+
+  /// Where the day was sent from — the journey, or the finished day itself
+  /// — so the numbers can say which of the two readers actually use.
+  final String from;
 
   /// How the text is handed over. The platform's sheet in the app; under a
   /// test, which has no sheet and where the desktop stand-in never
@@ -34,11 +39,18 @@ class ShareDay extends StatelessWidget {
       'Astute #${d.edition}${d.streak > 0 ? ' · \u{1f525}${d.streak}' : ''}',
       d.squares,
       if (verdict.isNotEmpty) verdict,
-      'astutetheapp.com',
+      ShareRef.day.link,
     ].join('\n');
   }
 
-  Future<void> _share(BuildContext context) async {
+  /// Sends the day, from [from]: the platform's sheet, or the clipboard
+  /// where there is none. The finished day has a button of its own, drawn
+  /// the way the buttons on that screen are, and sends through this.
+  static Future<void> send(
+    BuildContext context,
+    AppState app, {
+    required String from,
+  }) async {
     HapticFeedback.lightImpact();
     final String line = text(context, app);
     final messenger = ScaffoldMessenger.of(context);
@@ -48,6 +60,7 @@ class ShareDay extends StatelessWidget {
       'streak_days': app.streak,
       'edition': app.daySummary.edition,
       'as': shared ? 'sheet' : 'copied',
+      'from': from,
     });
     if (shared) return;
     // No sheet to hand it to — a browser, a desktop — so it is copied,
@@ -70,7 +83,7 @@ class ShareDay extends StatelessWidget {
       child: GestureDetector(
         key: const ValueKey('share-day'),
         behavior: HitTestBehavior.opaque,
-        onTap: () => _share(context),
+        onTap: () => send(context, app, from: from),
         child: Container(
           height: 34,
           padding: const EdgeInsets.symmetric(horizontal: 12),
