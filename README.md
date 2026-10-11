@@ -171,6 +171,18 @@ says has had them, and "charged today" otherwise. The card after the fifth
 says them the same way, and plainly *Get Astute+* to a reader past the
 trial. The mix, the streak, the freezes, the friends, the sharing and the
 search are free: they are how the app spreads.
+The paywall opens on the door it was reached from (`PaywallVariant`): the
+journey on the record — whether the gap between sure and right is
+closing, told in the reader's own two numbers once twelve answers said
+how sure; the card after the fifth on all five being theirs, against the
+free day's two; the archive on the days read, newest first; every other
+door on what the habit adds up to. 'paywall shown' carries the variant
+and whether the reader has those numbers. The perks lead with the record,
+which only the journey shows, then five of your own cards, then what
+you've read. Under the button a trial is told as its days — today, the
+reminder two days before it ends, the day the store charges its own
+price — in place of "no charge today"; a short phone takes the headline
+and the perks down a size rather than scroll.
 
 ## Today, done
 

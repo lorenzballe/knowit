@@ -1076,12 +1076,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get perkArchiveTitle => 'Todo o teu arquivo';
-
-  @override
-  String get perkArchiveLine => 'Cada dia que leste, para sempre.';
-
-  @override
   String get plusIsActive => 'ASTUTE+ ESTÁ ATIVO';
 
   @override
@@ -1095,14 +1089,100 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get noChargeTodayCancel =>
-      'Sem cobrança hoje · cancela quando quiseres';
-
-  @override
   String get chargedTodayCancel => 'Cobrado hoje · cancela quando quiseres';
 
   @override
-  String get everyCardForYouMark => 'ti.';
+  String get paywallRecordTitle => 'Vê quanto sabes de verdade.';
+
+  @override
+  String get paywallRecordMark => 'de verdade.';
+
+  @override
+  String get paywallRecordLine =>
+      'Todos os dias dizes quanta certeza tens. O Astute+ mostra-te se a distância entre certeza e acerto está a diminuir, e as jogadas que continuas a falhar.';
+
+  @override
+  String paywallRecordOver(int sure, int right) {
+    return 'Dizes ter $sure% de certeza e acertas $right% das vezes. O Astute+ mostra-te se essa distância está a diminuir, e as jogadas que continuas a falhar.';
+  }
+
+  @override
+  String paywallRecordUnder(int sure, int right) {
+    return 'Dizes ter $sure% de certeza e acertas $right% das vezes: sabes mais do que pensas. O Astute+ mostra-te se essa distância está a diminuir.';
+  }
+
+  @override
+  String paywallRecordEven(int sure, int right) {
+    return 'Dizes ter $sure% de certeza e acertas $right% das vezes: quase iguais. O Astute+ mostra-te se isso se mantém, e as jogadas que continuas a falhar.';
+  }
+
+  @override
+  String get paywallOutcomeTitle => 'Que ninguém te engane.';
+
+  @override
+  String get paywallOutcomeMark => 'engane.';
+
+  @override
+  String get paywallOutcomeLine =>
+      'Cinco cartas por dia ao teu nível. As que falhas voltam até ficarem. E vês-te mudar, semana a semana.';
+
+  @override
+  String get paywallFiveTitle => 'As cinco, tuas.';
+
+  @override
+  String get paywallFiveMark => 'tuas.';
+
+  @override
+  String get paywallFiveLine =>
+      'Grátis, duas das cinco são para ti, três após uma semana seguida. O Astute+ escolhe as cinco dos teus fios, ao teu nível, e traz de volta as que falhas.';
+
+  @override
+  String get paywallReadTitle => 'O que leste, dia a dia.';
+
+  @override
+  String get paywallReadMark => 'dia a dia.';
+
+  @override
+  String get paywallReadLine =>
+      'Os dias que leste ultimamente, do mais recente. Toca num dia para abrir as suas cinco cartas, e numa carta para a releres.';
+
+  @override
+  String get perkGapTitle => 'Vê a distância a diminuir';
+
+  @override
+  String get perkGapLine =>
+      'A tua viagem, semana a semana: certeza contra acerto, e as jogadas que continuas a falhar.';
+
+  @override
+  String get perkOwnFiveTitle => 'Cinco cartas tuas';
+
+  @override
+  String get perkOwnFiveLine =>
+      'Todos os dias, ao teu nível, e as que falhas voltam.';
+
+  @override
+  String get perkReadTitle => 'O que leste';
+
+  @override
+  String get perkReadLine =>
+      'Os teus últimos dias, cada um com as suas cinco cartas, prontos a reabrir.';
+
+  @override
+  String get trialToday => 'Hoje · todo o Astute+, grátis';
+
+  @override
+  String trialReminder(int day) {
+    return 'Dia $day · avisamos-te';
+  }
+
+  @override
+  String trialCharge(int day, String price, String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {
+      'year': 'por um ano',
+      'other': 'por mês',
+    });
+    return 'Dia $day · $price $_temp0, se não cancelares';
+  }
 
   @override
   String get trialStartedNoPayment =>
@@ -1641,16 +1721,6 @@ class AppLocalizationsPt extends AppLocalizations {
       'Cinco cartas por dia escolhidas para ti: da tua mistura, ao teu nível, nunca uma já lida. A partir de amanhã.';
 
   @override
-  String get everyCardForYou => 'Cada carta, escolhida para ti.';
-
-  @override
-  String get perkOwnTitle => 'Cinco cartas por dia, todas tuas';
-
-  @override
-  String get perkOwnLine =>
-      'Dos teus fios, ao teu nível, nunca uma já lida. Grátis tens duas por dia.';
-
-  @override
   String get plusCardHeadline => 'As cinco, tuas.';
 
   @override
@@ -1666,10 +1736,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Uma semana seguida: amanhã três das cinco são tuas.';
-
-  @override
-  String get perkJourneyLine =>
-      'O teu nível, cada tema fio a fio, o que ficou, e as jogadas que continuas a falhar.';
 
   @override
   String get topOfTheWeek => 'Top da semana';

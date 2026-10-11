@@ -1067,12 +1067,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get perkArchiveTitle => 'Tüm arşivin';
-
-  @override
-  String get perkArchiveLine => 'Okuduğun her gün, kalıcı olarak.';
-
-  @override
   String get plusIsActive => 'ASTUTE+ ETKİN';
 
   @override
@@ -1086,15 +1080,100 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get noChargeTodayCancel =>
-      'Bugün ücret yok · istediğin zaman iptal et';
-
-  @override
   String get chargedTodayCancel =>
       'Bugün ücretlendirilir · istediğin zaman iptal et';
 
   @override
-  String get everyCardForYouMark => 'senin';
+  String get paywallRecordTitle => 'Gerçekten ne kadar bildiğini gör.';
+
+  @override
+  String get paywallRecordMark => 'Gerçekten';
+
+  @override
+  String get paywallRecordLine =>
+      'Her gün ne kadar emin olduğunu söylüyorsun. Astute+, emin olmakla doğru bilmek arasındaki farkın kapanıp kapanmadığını ve kaçırmaya devam ettiğin hamleleri gösterir.';
+
+  @override
+  String paywallRecordOver(int sure, int right) {
+    return 'Ortalama %$sure emin olduğunu söylüyorsun; doğru cevap oranın %$right. Astute+ bu farkın kapanıp kapanmadığını ve kaçırmaya devam ettiğin hamleleri gösterir.';
+  }
+
+  @override
+  String paywallRecordUnder(int sure, int right) {
+    return 'Ortalama %$sure emin olduğunu söylüyorsun; doğru cevap oranın %$right: sandığından fazlasını biliyorsun. Astute+ bu farkın kapanıp kapanmadığını gösterir.';
+  }
+
+  @override
+  String paywallRecordEven(int sure, int right) {
+    return 'Ortalama %$sure emin olduğunu söylüyorsun; doğru cevap oranın %$right: neredeyse başa baş. Astute+ bunun sürüp sürmediğini ve kaçırmaya devam ettiğin hamleleri gösterir.';
+  }
+
+  @override
+  String get paywallOutcomeTitle => 'Kimse seni kandıramasın.';
+
+  @override
+  String get paywallOutcomeMark => 'kandıramasın.';
+
+  @override
+  String get paywallOutcomeLine =>
+      'Seviyende günde beş kart. Kaçırdıkların, akılda kalana kadar geri gelir. Ve hafta hafta değiştiğini görürsün.';
+
+  @override
+  String get paywallFiveTitle => 'Beşi de senin.';
+
+  @override
+  String get paywallFiveMark => 'senin.';
+
+  @override
+  String get paywallFiveLine =>
+      'Ücretsizde beşten ikisi senin için, bir hafta tamamlayınca üçü. Astute+ beşini de konu dallarından, seviyende seçer ve kaçırdıklarını geri getirir.';
+
+  @override
+  String get paywallReadTitle => 'Okudukların, gün gün.';
+
+  @override
+  String get paywallReadMark => 'gün gün.';
+
+  @override
+  String get paywallReadLine =>
+      'Son zamanlarda okuduğun günler, en yenisi önce. Beş kartını açmak için bir güne, yeniden okumak için bir karta dokun.';
+
+  @override
+  String get perkGapTitle => 'Farkın kapandığını izle';
+
+  @override
+  String get perkGapLine =>
+      'Yolculuğun, hafta hafta: ne kadar emin, ne kadar doğru ve kaçırmaya devam ettiğin hamleler.';
+
+  @override
+  String get perkOwnFiveTitle => 'Sana ait beş kart';
+
+  @override
+  String get perkOwnFiveLine => 'Her gün, seviyende; kaçırdıkların geri gelir.';
+
+  @override
+  String get perkReadTitle => 'Okudukların';
+
+  @override
+  String get perkReadLine =>
+      'Son günlerin, her biri beş kartıyla, yeniden açılmaya hazır.';
+
+  @override
+  String get trialToday => 'Bugün · Astute+ tamamen ücretsiz';
+
+  @override
+  String trialReminder(int day) {
+    return '$day. gün · sana hatırlatırız';
+  }
+
+  @override
+  String trialCharge(int day, String price, String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {
+      'year': 'yıllık',
+      'other': 'aylık',
+    });
+    return '$day. gün · $_temp0 $price, iptal etmezsen';
+  }
 
   @override
   String get trialStartedNoPayment =>
@@ -1631,16 +1710,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.';
 
   @override
-  String get everyCardForYou => 'Her kart, senin için seçilmiş.';
-
-  @override
-  String get perkOwnTitle => 'Günde beş kart, hepsi senin';
-
-  @override
-  String get perkOwnLine =>
-      'Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
-
-  @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
 
   @override
@@ -1655,10 +1724,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => 'Bir hafta tamam: yarın beşten üçü senin.';
-
-  @override
-  String get perkJourneyLine =>
-      'Seviyen, dal dal her konu, aklında kalanlar ve kaçırmaya devam ettiğin hamleler.';
 
   @override
   String get topOfTheWeek => 'Haftanın en iyileri';

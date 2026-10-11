@@ -88,8 +88,9 @@ List<Pill> get _todaysFive {
   ).cards;
 }
 
-/// The paywall's headline, which is what a gate opens onto.
-final Finder _paywallHeadline = find.text('Every card, chosen for you.');
+/// The paywall's headline, which is what a gate opens onto. Each door has
+/// its own words (see paywall_doors_test.dart); any of them will do here.
+final Finder _paywallHeadline = find.byKey(const ValueKey('paywall-headline'));
 
 /// Opens the journey from the profile: its button is the way in — on
 /// Astute+; on the free plan it is the paywall, and this expects that too.
@@ -711,15 +712,18 @@ void main() {
     test(
       'the paywall\'s painted word is in its headline, in every language',
       () {
-        // The gradient falls on the word for "you" wherever the language puts
-        // it; a mark that is not in the line paints nothing at all, silently.
+        // The gradient falls on the word each headline leans on wherever the
+        // language puts it; a mark that is not in the line paints nothing at
+        // all, silently.
         for (final f in Directory('lib/l10n').listSync().whereType<File>()) {
           if (!f.path.endsWith('.arb')) continue;
           final strings = jsonDecode(f.readAsStringSync()) as Map;
-          final String line = strings['everyCardForYou'] as String;
-          final String mark = strings['everyCardForYouMark'] as String;
-          expect(mark, isNotEmpty, reason: f.path);
-          expect(line, contains(mark), reason: f.path);
+          for (final door in const ['Record', 'Outcome', 'Five', 'Read']) {
+            final String line = strings['paywall${door}Title'] as String;
+            final String mark = strings['paywall${door}Mark'] as String;
+            expect(mark, isNotEmpty, reason: '${f.path} $door');
+            expect(line, contains(mark), reason: '${f.path} $door');
+          }
         }
       },
     );
@@ -2100,9 +2104,9 @@ void main() {
     // test holds the paywall to.
     expect(_paywallHeadline, findsOneWidget);
     for (final perk in const [
-      'Five cards a day, all yours',
-      'Your journey',
-      'Your whole archive',
+      'Watch the gap close',
+      'Five of your own cards',
+      "What you've read",
     ]) {
       expect(find.text(perk), findsOneWidget);
     }
@@ -2127,10 +2131,14 @@ void main() {
     await _settle(tester);
 
     // Yearly leads and is preselected, so the call to action opens on it:
-    // the year starts with two weeks free, and says nothing is charged
-    // today.
+    // the year starts with two weeks free, and the days under the button
+    // say nothing is charged today and when that changes.
     expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
-    expect(find.text('No charge today · cancel any time'), findsOneWidget);
+    expect(find.text('Today · all of Astute+, free'), findsOneWidget);
+    expect(
+      find.text('Day 14 · €29,99 for a year, unless you cancel'),
+      findsOneWidget,
+    );
 
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 37%'), findsOneWidget);
@@ -2171,7 +2179,7 @@ void main() {
     expect(find.byType(Scrollable), findsNothing);
   });
 
-  testWidgets('the headline paints only the word for "you"', (tester) async {
+  testWidgets('the headline paints only the word it leans on', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2180,7 +2188,7 @@ void main() {
     await _settle(tester);
 
     // The whole line is one text, for a screen reader and for a finder; the
-    // gradient is a layer over "you." alone.
+    // gradient is a layer over "fools." alone.
     expect(_paywallHeadline, findsOneWidget);
     final masked = find.descendant(
       of: find.byType(PaywallScreen),

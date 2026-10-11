@@ -1043,12 +1043,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get perkArchiveTitle => 'あなたのアーカイブすべて';
-
-  @override
-  String get perkArchiveLine => '読んだ日をすべて、ずっと保存。';
-
-  @override
   String get plusIsActive => 'ASTUTE+ 有効';
 
   @override
@@ -1062,13 +1056,94 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get noChargeTodayCancel => '今日は請求なし · いつでもキャンセル可能';
-
-  @override
   String get chargedTodayCancel => '今日請求されます · いつでもキャンセル可能';
 
   @override
-  String get everyCardForYouMark => 'あなた';
+  String get paywallRecordTitle => '本当の実力を、知ろう。';
+
+  @override
+  String get paywallRecordMark => '本当の';
+
+  @override
+  String get paywallRecordLine =>
+      '毎日、どれだけ自信があるかを答えています。Astute+なら、自信と正解のずれが縮まっているか、そして何度も見逃している手がわかります。';
+
+  @override
+  String paywallRecordOver(int sure, int right) {
+    return '自信は平均$sure%、正解率は$right%。Astute+なら、そのずれが縮まっているか、そして何度も見逃している手がわかります。';
+  }
+
+  @override
+  String paywallRecordUnder(int sure, int right) {
+    return '自信は平均$sure%、正解率は$right%。思っているより知っています。Astute+なら、そのずれが縮まっているかがわかります。';
+  }
+
+  @override
+  String paywallRecordEven(int sure, int right) {
+    return '自信は平均$sure%、正解率は$right%。ほぼ一致しています。Astute+なら、それが続くか、そして何度も見逃している手がわかります。';
+  }
+
+  @override
+  String get paywallOutcomeTitle => '誰にもだまされない人に。';
+
+  @override
+  String get paywallOutcomeMark => 'だまされない';
+
+  @override
+  String get paywallOutcomeLine =>
+      'あなたのレベルで毎日5枚。間違えたカードは、身につくまで戻ってきます。そして、週ごとに自分の変化が見えます。';
+
+  @override
+  String get paywallFiveTitle => '5枚すべて、あなたのもの。';
+
+  @override
+  String get paywallFiveMark => 'あなたのもの。';
+
+  @override
+  String get paywallFiveLine =>
+      '無料版では5枚のうち2枚があなた向け、1週間続いた翌日は3枚。Astute+なら5枚すべてをあなたの系統から、あなたのレベルで選び、間違えたカードも戻ってきます。';
+
+  @override
+  String get paywallReadTitle => '読んだものを、日ごとに。';
+
+  @override
+  String get paywallReadMark => '日ごとに。';
+
+  @override
+  String get paywallReadLine =>
+      '最近読んだ日を新しい順に。日をタップすると5枚のカードが開き、カードをタップするともう一度読めます。';
+
+  @override
+  String get perkGapTitle => 'ずれが縮まるのを見る';
+
+  @override
+  String get perkGapLine => 'あなたの旅を週ごとに：自信の高さと正解率、そして何度も見逃している手。';
+
+  @override
+  String get perkOwnFiveTitle => 'あなただけの5枚';
+
+  @override
+  String get perkOwnFiveLine => '毎日、あなたのレベルで。間違えたカードは戻ってきます。';
+
+  @override
+  String get perkReadTitle => '読んだもの';
+
+  @override
+  String get perkReadLine => '最近の日々を、それぞれ5枚のカードとともに、もう一度開けます。';
+
+  @override
+  String get trialToday => '今日 · Astute+のすべてを無料で';
+
+  @override
+  String trialReminder(int day) {
+    return '$day日目 · お知らせします';
+  }
+
+  @override
+  String trialCharge(int day, String price, String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {'year': '年額', 'other': '月額'});
+    return '$day日目 · キャンセルしなければ$_temp0$price';
+  }
 
   @override
   String get trialStartedNoPayment => 'トライアル開始。このビルドでは支払いは接続されていません。';
@@ -1592,15 +1667,6 @@ class AppLocalizationsJa extends AppLocalizations {
       '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。';
 
   @override
-  String get everyCardForYou => 'すべてのカードを、あなたのために。';
-
-  @override
-  String get perkOwnTitle => '毎日5枚、すべてあなたのもの';
-
-  @override
-  String get perkOwnLine => 'あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日2枚。';
-
-  @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
 
   @override
@@ -1614,9 +1680,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => '1週間続いた：明日は5枚のうち3枚があなたのカード。';
-
-  @override
-  String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして何度も見逃している手。';
 
   @override
   String get topOfTheWeek => '今週のトップ';
