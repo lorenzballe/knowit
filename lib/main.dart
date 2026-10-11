@@ -663,6 +663,14 @@ class _AstutoRootState extends State<AstutoRoot> {
       // Which road it took — the phone's own sheet or Firebase's browser.
       // Two rounds were spent working that out by hand once already.
       'route': _account.lastRoute,
+      // Why it failed, as Apple, Google or Firebase put it: an error code
+      // and its sentence, never anything the reader typed. Without it, 71
+      // failed sign-ins in a row from App Review's phones said only
+      // "failed", and the one place the reason showed was a snackbar on a
+      // phone nobody here was holding.
+      'error': outcome == SignInOutcome.failed && _account.lastError != null
+          ? Analytics.short(_account.lastError!)
+          : null,
     });
     switch (outcome) {
       case SignInOutcome.signedIn:
