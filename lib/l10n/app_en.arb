@@ -5,14 +5,6 @@
  "tabToday": "Today",
  "tabExplore": "Explore",
  "tabProfile": "Profile",
- "signInNotConnected": "{provider} sign-in is not connected yet. Your cards are kept on this device.",
- "@signInNotConnected": {
-  "placeholders": {
-   "provider": {
-    "type": "String"
-   }
-  }
- },
  "couldNotSignInCarryOn": "Could not sign in with {label}. You can carry on without an account.",
  "@couldNotSignInCarryOn": {
   "placeholders": {
@@ -743,6 +735,79 @@
    }
   }
  },
+ "reminderAskTitle": "When should we remind you?",
+ "@reminderAskTitle": {
+  "description": "Title of the sheet that asks when to remind the reader. It comes before the system's own notification prompt, which iOS shows only once."
+ },
+ "reminderAskLine": "One notification a day, with a question from your cards.",
+ "@reminderAskLine": {
+  "description": "Under the sheet's title: what the reminder is. One notification a day, each carrying a question from the reader's cards (most days the first question of that day's five)."
+ },
+ "reminderAskTrialLine": "We’ll remind you two days before your trial ends.",
+ "@reminderAskTrialLine": {
+  "description": "On the reminder sheet, only for a reader in a free trial that will turn into a paid year: a notification also comes two days before it does."
+ },
+ "reminderAskMorning": "Morning",
+ "@reminderAskMorning": {
+  "description": "A choice on the reminder sheet, with 8:30 written beside it."
+ },
+ "reminderAskLunch": "Lunchtime",
+ "@reminderAskLunch": {
+  "description": "A choice on the reminder sheet, with 12:30 written beside it."
+ },
+ "reminderAskEvening": "Evening",
+ "@reminderAskEvening": {
+  "description": "A choice on the reminder sheet, with 19:00 written beside it."
+ },
+ "reminderAskOther": "Another time",
+ "@reminderAskOther": {
+  "description": "A choice on the reminder sheet that opens a clock, to pick any other time."
+ },
+ "reminderAskYes": "Remind me",
+ "@reminderAskYes": {
+  "description": "The reminder sheet's button: keeps the time chosen, then the system asks whether the app may send notifications."
+ },
+ "reminderAskNotNow": "Not now",
+ "@reminderAskNotNow": {
+  "description": "The reminder sheet's way out. Nothing is asked of the system; the sheet comes back after the next day the reader finishes, at most twice more."
+ },
+ "trialWarningTitle": "{days, plural, =0{Your Astute+ trial ends today.} =1{Your Astute+ trial ends tomorrow.} other{Your Astute+ trial ends in {days} days.}}",
+ "@trialWarningTitle": {
+  "description": "Title of the notification sent two days before a free trial turns into a paid year. {days} is how many calendar days are left: 0 is today, 1 tomorrow.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "trialWarningBody": "On {date} your year starts at {price}. To keep going, do nothing. To stop: {path}.",
+ "@trialWarningBody": {
+  "description": "Body of that notification. {date} is the day the trial ends, as the language writes a day and month; {price} is the store's own price for the year; {path} is the way to the subscription, made of the tab's and the row's own names, e.g. 'Profile → Manage subscription'.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   },
+   "price": {
+    "type": "String"
+   },
+   "path": {
+    "type": "String"
+   }
+  }
+ },
+ "trialEndsNotice": "{days, plural, =0{Your trial ends today} =1{Your trial ends tomorrow} other{Your trial ends in {days} days}}",
+ "@trialEndsNotice": {
+  "description": "One quiet line on the profile in a free trial's last two days, for a reader no notification will reach. {days} is how many calendar days are left: 0 is today, 1 tomorrow. Followed by ' · ' and trialNoticeManage.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "trialNoticeManage": "Manage",
+ "@trialNoticeManage": {
+  "description": "After the trial's line on the profile: opens the store's own screen for managing the subscription."
+ },
  "subjectsInTheMix": "{n} of {total} subjects in the mix",
  "@subjectsInTheMix": {
   "placeholders": {
@@ -791,11 +856,11 @@
   }
  },
  "swipeToSeeMore": "Swipe to see more",
- "tagline": "Five smart things a day, ready to use in conversation",
+ "tagline": "Learn the why behind things, and how far to trust what you know",
  "introTopicsTitle": "Nineteen topics, five cards",
- "introTopicsLine": "Written ahead by a model, and every one checked against its source.",
- "introQuestionTitle": "A question, then the answer",
- "introQuestionLine": "Every card carries the one line that makes it worth saying out loud.",
+ "introTopicsLine": "Written ahead by a model, and each one names its source.",
+ "introQuestionTitle": "A question, how sure, then why",
+ "introQuestionLine": "Say how sure you are first. In time you see what your “sure” is worth.",
  "introMixTitle": "You choose the mix",
  "introMixLine": "Turn a topic down to see less of it, or off for good.",
  "introThirtyTitle": "Two minutes a day",
@@ -835,8 +900,14 @@
  },
  "continueWithApple": "Continue with Apple",
  "continueWithGoogle": "Continue with Google",
- "continueWithEmail": "Continue with Email",
- "termsLine": "By signing up you agree to our Terms of Service & Privacy Policy",
+ "continueWithoutAccount": "Continue without an account",
+ "@continueWithoutAccount": {
+  "description": "The intro's third way on, under Continue with Apple and Continue with Google: it goes where Skip goes and makes no account."
+ },
+ "termsLine": "By continuing you agree to our Terms of Service & Privacy Policy",
+ "@termsLine": {
+  "description": "Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up."
+ },
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
  "barMoveCaps": "WHAT TO KEEP",
@@ -894,8 +965,6 @@
    }
   }
  },
- "perkArchiveTitle": "Your whole archive",
- "perkArchiveLine": "Every day you have read, kept for good.",
  "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try {days} days free, then {price}{suffix}",
  "@tryFreeThen": {
@@ -923,11 +992,106 @@
    }
   }
  },
- "noChargeTodayCancel": "No charge today · cancel any time",
  "chargedTodayCancel": "Charged today · cancel any time",
- "everyCardForYouMark": "you.",
- "@everyCardForYouMark": {
-  "description": "The part of everyCardForYou painted in the gradient: the word for 'you', exactly as it is written there."
+ "paywallRecordTitle": "See how much you really know.",
+ "paywallRecordMark": "really",
+ "@paywallRecordMark": {
+  "description": "The part of paywallRecordTitle painted in the gradient: the word for 'really', exactly as it is written there."
+ },
+ "paywallRecordLine": "Every day you say how sure you are. Astute+ shows whether the gap between sure and right is closing, and the moves you keep missing.",
+ "@paywallRecordLine": {
+  "description": "Under the paywall's headline when it was opened from the journey, for a reader without enough answers yet to have their own numbers."
+ },
+ "paywallRecordOver": "You say {sure}% sure and you're right {right}% of the time. Astute+ shows whether that gap is closing, and the moves you keep missing.",
+ "@paywallRecordOver": {
+  "description": "Under the paywall's headline, for a reader more sure than right. {sure} is how sure they say they are on average, {right} how often they are right, both in percent.",
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   }
+  }
+ },
+ "paywallRecordUnder": "You say {sure}% sure and you're right {right}% of the time: you know more than you think. Astute+ shows whether that gap is closing.",
+ "@paywallRecordUnder": {
+  "description": "Under the paywall's headline, for a reader more often right than sure. {sure} is how sure they say they are on average, {right} how often they are right, both in percent.",
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   }
+  }
+ },
+ "paywallRecordEven": "You say {sure}% sure and you're right {right}% of the time: a close match. Astute+ shows whether it holds, and the moves you keep missing.",
+ "@paywallRecordEven": {
+  "description": "Under the paywall's headline, for a reader whose confidence is within five points of how often they are right. {sure} and {right} in percent.",
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   }
+  }
+ },
+ "paywallOutcomeTitle": "Be the one nobody fools.",
+ "paywallOutcomeMark": "fools.",
+ "@paywallOutcomeMark": {
+  "description": "The part of paywallOutcomeTitle painted in the gradient: the word for being fooled, exactly as it is written there."
+ },
+ "paywallOutcomeLine": "Five cards a day at your level. The ones you miss come back until they stick. And you see yourself change, week by week.",
+ "paywallFiveTitle": "All five, yours.",
+ "paywallFiveMark": "yours.",
+ "@paywallFiveMark": {
+  "description": "The part of paywallFiveTitle painted in the gradient: the word for 'yours', exactly as it is written there."
+ },
+ "paywallFiveLine": "Free days pick two of the five for you, three after a week in a row. Astute+ picks all five from your strands, at your level, and brings back the ones you miss.",
+ "paywallReadTitle": "What you've read, day by day.",
+ "paywallReadMark": "day by day.",
+ "@paywallReadMark": {
+  "description": "The part of paywallReadTitle painted in the gradient: the words for 'day by day', exactly as they are written there."
+ },
+ "paywallReadLine": "The days you've read lately, newest first. Tap one to open its five cards, and a card to read it again.",
+ "@paywallReadLine": {
+  "description": "Under the paywall's headline when it was opened from the archive, which lists the days the reader finished, newest first."
+ },
+ "perkGapTitle": "Watch the gap close",
+ "perkGapLine": "Your journey, week by week: how sure against how right, and the moves you keep missing.",
+ "perkOwnFiveTitle": "Five of your own cards",
+ "perkOwnFiveLine": "Every day, at your level, with the ones you miss coming back.",
+ "perkReadTitle": "What you've read",
+ "perkReadLine": "Your recent days, each with its five cards, ready to open again.",
+ "trialToday": "Today · all of Astute+, free",
+ "@trialToday": {
+  "description": "First step of the trial timeline under the paywall's button."
+ },
+ "trialReminder": "Day {day} · we remind you",
+ "@trialReminder": {
+  "description": "Second step of the trial timeline: the day, counted from today, a reminder that the trial is ending is sent.",
+  "placeholders": {
+   "day": {
+    "type": "int"
+   }
+  }
+ },
+ "trialCharge": "Day {day} · {price} {plan, select, year{for a year} other{a month}}, unless you cancel",
+ "@trialCharge": {
+  "description": "Last step of the trial timeline: the day, counted from today, the plan is first charged. {price} is the store's price; {plan} is 'year' or 'month'.",
+  "placeholders": {
+   "day": {
+    "type": "int"
+   },
+   "price": {
+    "type": "String"
+   },
+   "plan": {
+    "type": "String"
+   }
+  }
  },
  "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
  "thatDidNotGoThrough": "That did not go through.",
@@ -1019,7 +1183,6 @@
    }
   }
  },
- "almostEveryoneGetsThisWrong": "Almost everyone gets this wrong",
  "lineYouSaidSure": "{line} · you said {pct}% sure",
  "@lineYouSaidSure": {
   "placeholders": {
@@ -1401,15 +1564,11 @@
  "forYouChip": "FOR YOU",
  "againChip": "AGAIN",
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
- "everyCardForYou": "Every card, chosen for you.",
- "perkOwnTitle": "Five cards a day, all yours",
- "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you two.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
  "archiveBeforeThisWeek": "Before this week",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
- "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the moves you keep missing.",
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
  "topIn": "Top in {subject}",

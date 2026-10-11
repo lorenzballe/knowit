@@ -4,7 +4,8 @@
 // count up, the light that follows the pointer across a card, the phone that
 // turns and plays a day's cards, today's question and the time to the next
 // one, the rows that scroll, the calibration chart, the cards that flip, the
-// plan picker, the questions that open, and the rail beside a long page.
+// plan picker, the questions that open, and the rail beside a long page —
+// and it counts the pages read and the store buttons pressed.
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
@@ -12,17 +13,98 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const onChange = (mq, fn) => (mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn));
 
-  // Download links go to Google Play on Android and the App Store on an
-  // iPhone or iPad; on a computer they go to the QR code at the foot of the
-  // landing page, to be scanned with the phone.
-  const PLAY = 'https://play.google.com/store/apps/details?id=com.astuto.app';
+  // Download links go to the App Store on an iPhone or iPad. Astute is not on
+  // Google Play yet, so on Android they go to /get, which says so; on a
+  // computer they go to the QR code at the foot of the landing page, to be
+  // scanned with the phone.
   const ua = navigator.userAgent;
   const android = /android/i.test(ua);
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
   $$('[data-store]').forEach(a => {
-    if (android) a.href = PLAY;
+    if (android) a.href = '/get';
     else if (!ios) a.href = '/#download';
   });
+
+  // What the site measures: the pages read and the store buttons pressed,
+  // through PostHog in the EU, with nothing kept on the device — no cookie,
+  // no storage, a new anonymous visitor on every page. A browser that sends
+  // Do Not Track or Global Privacy Control gets none of it: the library is
+  // not fetched, and every link goes out as it was written.
+  //
+  // A link shared from the app says where it came from (?ref=share_day,
+  // share_card, share_record). The ref rides on every event of the page, on
+  // the links to the site's other pages, so that a visit keeps it without
+  // anything being stored, and on the store links as their campaign: ct on
+  // the App Store's — the page's name when there is no ref — and the install
+  // referrer on Google Play's. Apple counts a ct only beside the account's
+  // provider token, which tool/site/chrome.py writes into every App Store
+  // link once it is set there.
+  if (navigator.doNotTrack !== '1' && navigator.globalPrivacyControl !== true) {
+    const POSTHOG_KEY = 'phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF';
+    const POSTHOG_HOST = 'https://eu.i.posthog.com';
+    // Served from the site, at a pinned version: the slim build, which has
+    // no autocapture, replay, surveys or flags in it to be switched on, and
+    // never fetches more script from anywhere.
+    const POSTHOG_JS = '/assets/vendor/posthog-js-1.434.14-slim.es.js';
+
+    const given = new URLSearchParams(location.search).get('ref');
+    const ref = given && /^[\w-]{1,40}$/.test(given) ? given : null;
+    // A campaign token is at most forty characters, at Apple as here.
+    const page = location.pathname.replace(/\.html$/, '').replace(/^\/+|\/+$/g, '').replace(/^index$/, '').replace(/[^\w-]+/g, '-').slice(0, 40) || 'home';
+    const storeOf = a => {
+      if (a.hostname === 'apps.apple.com' && /^\/(?:[a-z]{2}\/)?app\//.test(a.pathname)) return 'app_store';
+      if (a.hostname === 'play.google.com' && a.pathname === '/store/apps/details') return 'play';
+      return null;
+    };
+
+    // Written onto the links once, so what a long press copies is what a tap
+    // opens.
+    Array.from(document.links).forEach(a => {
+      const store = storeOf(a);
+      if (!store && !(ref && a.origin === location.origin && a.pathname !== location.pathname)) return;
+      const url = new URL(a.href);
+      if (store === 'app_store') url.searchParams.set('ct', ref || page);
+      else if (store === 'play') url.searchParams.set('referrer', 'utm_source=' + (ref || 'site'));
+      else url.searchParams.set('ref', ref);
+      a.href = url.href;
+    });
+
+    // Clicks made before the library has arrived wait for it. A store button
+    // usually takes the page away, so its event goes at once, as a beacon,
+    // which the browser delivers after the page has gone.
+    let posthog = null;
+    const waiting = [];
+    const capture = (event, properties, options) => (posthog ? posthog.capture(event, properties, options) : waiting.push([event, properties, options]));
+    const onStore = e => {
+      if (e.type === 'auxclick' && e.button !== 1) return;
+      const a = e.target.closest && e.target.closest('a[href]');
+      const store = a && storeOf(a);
+      if (store) capture('store clicked', { store, page: location.pathname, ref }, { send_instantly: true, transport: 'sendBeacon' });
+    };
+    document.addEventListener('click', onStore, true);
+    document.addEventListener('auxclick', onStore, true);
+
+    import(POSTHOG_JS).then(({ default: ph }) => {
+      ph.init(POSTHOG_KEY, {
+        api_host: POSTHOG_HOST,
+        // In memory only: no cookie, no localStorage, nothing on the device.
+        persistence: 'memory',
+        capture_pageview: true,
+        // A page view and a store click are the whole of it.
+        capture_pageleave: false,
+        autocapture: false,
+        disable_session_recording: true,
+        person_profiles: 'identified_only',
+        // No feature flags and no remote settings: nothing the project's
+        // dashboard turns on can reach this page.
+        advanced_disable_flags: true,
+      });
+      // Before the page view, which goes out on the next tick.
+      if (ref) ph.register({ ref });
+      posthog = ph;
+      waiting.splice(0).forEach(([event, properties, options]) => ph.capture(event, properties, options));
+    }).catch(() => {});
+  }
 
   // The nav frosts once the page has moved; a line along the top shows how
   // far down the page is; the nudge to scroll goes once someone has.

@@ -1,6 +1,10 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Astute — iOS build & TestFlight on Codemagic (no Mac).
 #
+# Two workflows, one build: "iOS · TestFlight" for testers, with the profile's
+# developer tools on TestFlight installs, and "iOS · App Store (for review)",
+# the same build made without them — the one to submit (see the foot).
+#
 # Signing, two ways, and nothing to set up for the first.
 #
 # As it always ran: every distribution certificate in the account is revoked
@@ -17,14 +21,15 @@ workflows:
     name: iOS · TestFlight
     instance_type: mac_mini_m2
     max_build_duration: 60
-    integrations:
+    integrations: &ios_integrations
       app_store_connect: chiaveapipercodemagic
     environment:
       # CERTIFICATE_PRIVATE_KEY lives here. A variable set in the Codemagic UI
       # reaches a codemagic.yaml build only through a group imported by name.
       groups:
         - signing
-      vars:
+      # Shared with the review build below, which adds DEBUG_TOOLS=false.
+      vars: &ios_vars
         APP_STORE_APPLE_ID: 6806852300
         BUNDLE_ID: "com.astuto.app"
         # The home-screen widget is its own bundle inside the app's, signed
@@ -52,11 +57,11 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
-    cache:
+    cache: &ios_cache
       cache_paths:
         - $HOME/.pub-cache
         - $HOME/Library/Caches/CocoaPods
-    scripts:
+    scripts: &ios_scripts
       - name: Get Flutter packages
         script: flutter pub get
 
@@ -197,14 +202,15 @@ workflows:
           flutter build ipa --release \
             --build-number=$(($LATEST + 1)) \
             --dart-define=REVENUECAT_IOS_KEY=$REVENUECAT_IOS_KEY \
+            --dart-define=DEBUG_TOOLS=${DEBUG_TOOLS:-true} \
             --dart-define=POSTHOG_KEY=$POSTHOG_KEY \
             --dart-define=POSTHOG_HOST=$POSTHOG_HOST \
             --export-options-plist=/Users/builder/export_options.plist
-    artifacts:
+    artifacts: &ios_artifacts
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
-    publishing:
+    publishing: &ios_publishing
       app_store_connect:
         auth: integration
         submit_to_testflight: true
@@ -214,3 +220,35 @@ workflows:
         notify:
           success: true
           failure: true
+
+  # The build to submit for review. It is the TestFlight build in every
+  # respect but one: made with DEBUG_TOOLS=false, so the profile's developer
+  # tools are not in it at all. On a phone the TestFlight build shows them
+  # only to installs from TestFlight (lib/debug_flags.dart), but the copy
+  # Apple's reviewers install is a sandbox install too, and a reviewer who
+  # finds "Turn Astute+ on" has found a way round the purchase. It goes to
+  # TestFlight like the other, and is the one to pick for the version in App
+  # Store Connect.
+  #
+  # Before sending one for review, keep the signing key (see the top of this
+  # file): without it, the next build of either workflow revokes the
+  # certificate this one was signed with, and Apple refuses the build still
+  # waiting for review (ITMS-90035).
+  ios-app-store:
+    name: iOS · App Store (for review)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations: *ios_integrations
+    environment:
+      groups:
+        - signing
+      vars:
+        <<: *ios_vars
+        DEBUG_TOOLS: "false"
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    cache: *ios_cache
+    scripts: *ios_scripts
+    artifacts: *ios_artifacts
+    publishing: *ios_publishing

@@ -5,6 +5,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
+import '../models/trial.dart';
 import 'review_access.dart';
 
 /// The one entitlement Astute sells. Everything gated asks this by name.
@@ -133,6 +134,50 @@ class Subscription extends ChangeNotifier {
     _offering = offering;
     _yearlyEligibility = yearlyEligibility;
     notifyListeners();
+  }
+
+  /// Stands in for what the store holds for the reader, for the tests: the
+  /// Astute+ entitlement as RevenueCat hands it over, or none, as an answer.
+  @visibleForTesting
+  void holdForTest(EntitlementInfo? plus) {
+    _ready = true;
+    _plus = plus;
+    _isPlus = plus?.isActive ?? false;
+    notifyListeners();
+  }
+
+  /// The Astute+ entitlement as the store last described it, active or not.
+  EntitlementInfo? _plus;
+
+  /// The free trial the reader is in, while the store has it set to turn
+  /// into a paid year; null otherwise — no trial, one cancelled (it runs to
+  /// its end and charges nothing), or one already turned into the year.
+  ///
+  /// The price is the year's, and only when the trial is the year's own: the
+  /// one plan sold with free days, and the one the warning before the charge
+  /// names. Read again whenever the offering arrives, which can be after the
+  /// entitlement on a slow launch.
+  FreeTrial? get trial {
+    final EntitlementInfo? plus = _plus;
+    if (plus == null || !plus.isActive || !plus.willRenew) return null;
+    if (plus.periodType != PeriodType.trial) return null;
+    final DateTime? ends = DateTime.tryParse(plus.expirationDate ?? '');
+    if (ends == null) return null;
+    return FreeTrial(endsAt: ends.toLocal(), price: _yearPriceFor(plus));
+  }
+
+  /// The year's price, if [plus] was unlocked by the year on sale. A Google
+  /// Play product is named with its base plan after a colon, so both ways of
+  /// naming it are tried.
+  String? _yearPriceFor(EntitlementInfo plus) {
+    final StoreProduct? year = yearly?.storeProduct;
+    if (year == null) return null;
+    final String? basePlan = plus.productPlanIdentifier;
+    final bool same =
+        year.identifier == plus.productIdentifier ||
+        (basePlan != null &&
+            year.identifier == '${plus.productIdentifier}:$basePlan');
+    return same ? year.priceString : null;
   }
 
   /// True once the store has answered at least once. Until then the app
@@ -310,9 +355,19 @@ class Subscription extends ChangeNotifier {
 
   void _apply(CustomerInfo info) {
     _ready = true;
+    final EntitlementInfo? plus = info.entitlements.all[kPlusEntitlement];
     final bool active = info.entitlements.active.containsKey(kPlusEntitlement);
-    _noteEntitlement(info.entitlements.all[kPlusEntitlement], active);
-    if (active == _isPlus) return;
+    _noteEntitlement(plus, active);
+    // A trial moves without the plan moving: cancelled, it stays active to
+    // its end and only stops renewing; turned into the year, it stays active
+    // too. Either is something the app has to hear, to warn before a charge
+    // or to stop warning about one that will not come.
+    final FreeTrial? trialBefore = trial;
+    _plus = plus;
+    if (active == _isPlus) {
+      if (trial != trialBefore) notifyListeners();
+      return;
+    }
     _isPlus = active;
     notifyListeners();
     _checkTrialEligibility();

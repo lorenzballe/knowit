@@ -52,7 +52,6 @@ void _noSkip() {}
 
 void _noop() {}
 Future<bool> _no() async => false;
-void _ignore(String _) {}
 
 void main() {
   const Size phone = Size(402, 874);
@@ -76,7 +75,6 @@ void main() {
             onContinue: () {},
             onApple: () async => false,
             onGoogle: () async => false,
-            onNotConnected: (_) {},
           ),
         ),
       ),
@@ -122,12 +120,7 @@ void main() {
             size: small,
             padding: EdgeInsets.only(top: 47, bottom: 34),
           ),
-          child: IntroScreen(
-            onContinue: _noop,
-            onApple: _no,
-            onGoogle: _no,
-            onNotConnected: _ignore,
-          ),
+          child: IntroScreen(onContinue: _noop, onApple: _no, onGoogle: _no),
         ),
       ),
     );

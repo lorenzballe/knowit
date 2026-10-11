@@ -25,11 +25,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tabProfile => '프로필';
 
   @override
-  String signInNotConnected(String provider) {
-    return '$provider 로그인은 아직 연결되지 않았습니다. 카드는 이 기기에 보관됩니다.';
-  }
-
-  @override
   String couldNotSignInCarryOn(String label) {
     return '$label(으)로 로그인할 수 없습니다. 계정 없이 계속할 수 있어요.';
   }
@@ -829,6 +824,65 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => '몇 시에 알려 드릴까요?';
+
+  @override
+  String get reminderAskLine => '하루에 한 번, 카드 속 질문 하나를 알림으로 보내 드려요.';
+
+  @override
+  String get reminderAskTrialLine => '체험이 끝나기 이틀 전에 알려 드려요.';
+
+  @override
+  String get reminderAskMorning => '아침';
+
+  @override
+  String get reminderAskLunch => '점심';
+
+  @override
+  String get reminderAskEvening => '저녁';
+
+  @override
+  String get reminderAskOther => '다른 시간';
+
+  @override
+  String get reminderAskYes => '알림 받기';
+
+  @override
+  String get reminderAskNotNow => '나중에';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ 체험이 $days일 후에 끝나요.',
+      one: 'Astute+ 체험이 내일 끝나요.',
+      zero: 'Astute+ 체험이 오늘 끝나요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$date부터 연간 구독이 $price에 시작돼요. 계속하려면 아무것도 하지 않아도 돼요. 해지하려면: $path';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '체험이 $days일 후에 끝나요',
+      one: '체험이 내일 끝나요',
+      zero: '체험이 오늘 끝나요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => '관리';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$total개 주제 중 $n개가 믹스에';
   }
@@ -870,19 +924,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get swipeToSeeMore => '밀어서 더 보기';
 
   @override
-  String get tagline => '하루 다섯 가지 똑똑한 이야기, 대화에서 바로 쓸 수 있게';
+  String get tagline => '왜 그런지 배우고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요';
 
   @override
   String get introTopicsTitle => '열아홉 개 주제, 다섯 장의 카드';
 
   @override
-  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처와 대조합니다.';
+  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처를 밝힙니다.';
 
   @override
-  String get introQuestionTitle => '질문, 그리고 답';
+  String get introQuestionTitle => '질문, 확신 정도, 그리고 이유';
 
   @override
-  String get introQuestionLine => '모든 카드에는 소리 내어 말할 가치가 있는 한 문장이 있습니다.';
+  String get introQuestionLine => '답을 보기 전에 확신 정도를 고릅니다. 차츰 내 ‘확신’의 가치가 보입니다.';
 
   @override
   String get introMixTitle => '믹스는 당신이 정합니다';
@@ -926,10 +980,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get continueWithGoogle => 'Google로 계속';
 
   @override
-  String get continueWithEmail => '이메일로 계속';
+  String get continueWithoutAccount => '계정 없이 계속';
 
   @override
-  String get termsLine => '가입하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
+  String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
 
   @override
   String get skip => '건너뛰기';
@@ -992,12 +1046,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get perkArchiveTitle => '당신의 모든 기록';
-
-  @override
-  String get perkArchiveLine => '읽은 모든 날을 영원히.';
-
-  @override
   String get plusIsActive => 'ASTUTE+ 활성화됨';
 
   @override
@@ -1011,13 +1059,94 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get noChargeTodayCancel => '오늘은 결제 없음 · 언제든 취소 가능';
-
-  @override
   String get chargedTodayCancel => '오늘 결제됨 · 언제든 취소 가능';
 
   @override
-  String get everyCardForYouMark => '당신을';
+  String get paywallRecordTitle => '진짜 얼마나 아는지 확인하세요.';
+
+  @override
+  String get paywallRecordMark => '진짜';
+
+  @override
+  String get paywallRecordLine =>
+      '매일 얼마나 확신하는지 답합니다. Astute+는 확신과 정답 사이의 차이가 좁혀지는지, 그리고 계속 놓치는 수를 보여줍니다.';
+
+  @override
+  String paywallRecordOver(int sure, int right) {
+    return '확신은 평균 $sure%, 정답률은 $right%입니다. Astute+는 그 차이가 좁혀지는지, 그리고 계속 놓치는 수를 보여줍니다.';
+  }
+
+  @override
+  String paywallRecordUnder(int sure, int right) {
+    return '확신은 평균 $sure%, 정답률은 $right%입니다. 생각보다 더 많이 알고 있어요. Astute+는 그 차이가 좁혀지는지 보여줍니다.';
+  }
+
+  @override
+  String paywallRecordEven(int sure, int right) {
+    return '확신은 평균 $sure%, 정답률은 $right%입니다. 거의 일치해요. Astute+는 그것이 유지되는지, 그리고 계속 놓치는 수를 보여줍니다.';
+  }
+
+  @override
+  String get paywallOutcomeTitle => '누구에게도 속지 않는 사람이 되세요.';
+
+  @override
+  String get paywallOutcomeMark => '속지 않는';
+
+  @override
+  String get paywallOutcomeLine =>
+      '매일 당신의 수준에 맞는 카드 다섯 장. 틀린 카드는 몸에 밸 때까지 다시 옵니다. 그리고 매주 달라지는 자신을 보게 됩니다.';
+
+  @override
+  String get paywallFiveTitle => '다섯 장 모두, 당신의 것.';
+
+  @override
+  String get paywallFiveMark => '당신의 것.';
+
+  @override
+  String get paywallFiveLine =>
+      '무료로는 다섯 장 중 두 장을 당신을 위해 고르고, 일주일 연속이면 다음 날 세 장입니다. Astute+는 다섯 장 모두를 당신의 갈래에서 당신의 수준으로 고르고, 틀린 카드를 다시 가져옵니다.';
+
+  @override
+  String get paywallReadTitle => '읽은 것을, 하루하루.';
+
+  @override
+  String get paywallReadMark => '하루하루.';
+
+  @override
+  String get paywallReadLine =>
+      '최근에 읽은 날들을 최신순으로. 날짜를 탭하면 그날의 카드 다섯 장이 열리고, 카드를 탭하면 다시 읽을 수 있어요.';
+
+  @override
+  String get perkGapTitle => '차이가 좁혀지는 걸 지켜보세요';
+
+  @override
+  String get perkGapLine => '당신의 여정을 매주: 얼마나 확신했나, 얼마나 맞았나, 그리고 계속 놓치는 수.';
+
+  @override
+  String get perkOwnFiveTitle => '나만의 카드 다섯 장';
+
+  @override
+  String get perkOwnFiveLine => '매일 당신의 수준으로, 틀린 카드는 다시 옵니다.';
+
+  @override
+  String get perkReadTitle => '읽은 것';
+
+  @override
+  String get perkReadLine => '최근의 날들을 각각 카드 다섯 장과 함께 다시 열어 볼 수 있어요.';
+
+  @override
+  String get trialToday => '오늘 · Astute+ 전체를 무료로';
+
+  @override
+  String trialReminder(int day) {
+    return '$day일째 · 미리 알려드려요';
+  }
+
+  @override
+  String trialCharge(int day, String price, String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {'year': '연', 'other': '월'});
+    return '$day일째 · 취소하지 않으면 $_temp0 $price';
+  }
 
   @override
   String get trialStartedNoPayment => '체험이 시작됐어요. 이 빌드에는 결제가 연결되어 있지 않습니다.';
@@ -1111,9 +1240,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String youSaidItIs(String given, String answer) {
     return '내 답 $given · 정답 $answer';
   }
-
-  @override
-  String get almostEveryoneGetsThisWrong => '거의 모두가 틀리는 문제';
 
   @override
   String lineYouSaidSure(String line, int pct) {
@@ -1549,15 +1675,6 @@ class AppLocalizationsKo extends AppLocalizations {
       '매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 읽은 카드는 다시 없이. 내일부터.';
 
   @override
-  String get everyCardForYou => '모든 카드를, 당신을 위해.';
-
-  @override
-  String get perkOwnTitle => '매일 다섯 장, 전부 당신의 것';
-
-  @override
-  String get perkOwnLine => '당신이 고른 갈래에서, 당신의 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.';
-
-  @override
   String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
 
   @override
@@ -1571,9 +1688,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => '일주일 달성: 내일은 다섯 장 중 세 장이 당신의 카드.';
-
-  @override
-  String get perkJourneyLine => '당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 계속 놓치는 수.';
 
   @override
   String get topOfTheWeek => '이번 주 인기 카드';

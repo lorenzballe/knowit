@@ -250,7 +250,6 @@ void main() {
           onContinue: () {},
           onApple: () async => false,
           onGoogle: () async => false,
-          onNotConnected: (_) {},
         ),
         'mix': MixScreen(onDone: (_) {}, onSkip: () {}),
         'genres': GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),

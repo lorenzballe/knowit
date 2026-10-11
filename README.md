@@ -37,12 +37,32 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   the cards that flip, the plan picker and the questions. Today's question
   is shown live from `/widget/days.json`, the file the widget reads, with
   the edition in the first screen's kicker and the time to the next one. It
-  presents Astute on both stores, with Apple's and Google's own badges: a
-  phone's Download goes straight to its own store, a computer's to a code to
-  scan with the phone, which opens `/get` and from there the right store. It
+  presents Astute on the App Store, with Apple's own badge, and says Android
+  is coming: no page links to Google Play until the listing is live. An
+  iPhone's Download goes straight to the App Store, an Android phone's to
+  `/get`, which says the app is not there yet, and a computer's to a code to
+  scan with the phone, which opens `/get` and from there the App Store. It
   reads fully without JavaScript, and without motion for anyone who has
   asked their system for less. The screens in `site/assets/` are
   `tool/shots/` at 840×1826, as WebP.
+- **What the site measures**: the pages read and the store buttons pressed,
+  `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
+  PostHog project as the app, from `site/assets/main.js`. Nothing is kept on
+  the device: persistence is in memory, so there is no cookie and no
+  storage, and every page is a new anonymous visitor; no autocapture, no
+  replay, no flags or remote settings. A browser sending Do Not Track or
+  Global Privacy Control does not even fetch the library. posthog-js is the
+  slim build, vendored at a pinned version under `site/assets/vendor/`
+  (Apache-2.0 and MIT, its source-map comment dropped), so the site talks to
+  no PostHog host but `eu.i.posthog.com`. The app's share links carry
+  `?ref=share_day`, `share_card` or `share_record`: the ref goes on every
+  event, on the links to the site's other pages, so a visit keeps it, and
+  onto the store links as their campaign — `ct` on the App Store's, the
+  page's name when there is no ref, and the install referrer on Google
+  Play's, once there are any. Apple counts a `ct` only beside the account's
+  provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
+  is empty until the owner sets it; the comment there says where it is. The
+  web app under `/app/` has its own PostHog, below, and none of this.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself, and on a wide screen a
@@ -51,7 +71,8 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   markers each page carries; the deploy stops if a page has drifted. Astute
   is published by TheBaleCompany, and every page says so.
 - `robots.txt`, `sitemap.xml`, `manifest.webmanifest` (which names both
-  store listings) and `assets/og.png`, the picture a shared link shows.
+  store listings, the Play one ahead of its day) and `assets/og.png`, the
+  picture a shared link shows.
 - `/app/` is the app, built for the web: the live preview.
 - `/cards/cards.json` is the card bank the app refreshes from, and
   `/widget/days.json` today's shelf the iPhone widgets fall back on, with
@@ -150,6 +171,18 @@ says has had them, and "charged today" otherwise. The card after the fifth
 says them the same way, and plainly *Get Astute+* to a reader past the
 trial. The mix, the streak, the freezes, the friends, the sharing and the
 search are free: they are how the app spreads.
+The paywall opens on the door it was reached from (`PaywallVariant`): the
+journey on the record — whether the gap between sure and right is
+closing, told in the reader's own two numbers once twelve answers said
+how sure; the card after the fifth on all five being theirs, against the
+free day's two; the archive on the days read, newest first; every other
+door on what the habit adds up to. 'paywall shown' carries the variant
+and whether the reader has those numbers. The perks lead with the record,
+which only the journey shows, then five of your own cards, then what
+you've read. Under the button a trial is told as its days — today, the
+reminder two days before it ends, the day the store charges its own
+price — in place of "no charge today"; a short phone takes the headline
+and the perks down a size rather than scroll.
 
 ## Today, done
 
@@ -162,8 +195,10 @@ Under the dots the app names what opens tomorrow: the deck is dealt from
 the date and the reading history, both settled by tonight, so the subject
 it names is the one that will actually be on top in the morning. A card
 that came due and found no room in the five waits here too. The way on is
-**Your journey** — the day just went somewhere on the ladder, and that is
-the one thing worth a button at the end of it; Explore is a tab already.
+**Your journey** — the day just went somewhere on the ladder; Explore is a
+tab already. Beside it, on the same row so the cards keep their room,
+**Share day** sends the day as five squares, on either plan: it used to
+wait only at the foot of the journey, which the free plan never reaches.
 The evenings there is something to say about the plan, it is said on the
 card after the fifth rather than on this screen (see *The sixth card*):
 the shelf is the day's five, and a line added over them would take room
@@ -238,7 +273,8 @@ and when most are read. And how far it reaches: **in time** (from the
 oldest era a card read is set in to this year), **in place** (the regions
 of the world), **topics** (the strands inside the subjects) and **words**
 (the terms the bank uses on three cards or more, the three met last).
-Once the day is done, the day as five squares to send sits at the foot.
+Once the day is done, the day as five squares to send sits at the foot (the
+finished day sends it too, on either plan).
 
 Everything is counted from what the app writes down, with a date where it
 has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
@@ -388,7 +424,12 @@ search field over an empty screen is a question with no reason to be asked;
 the days give it one. Only days the reader was here for: a run of empty rows
 back to the launch date would be a longer list saying less. Today's five are
 the real deck; an earlier day is dealt again from its own date, which is
-deterministic, because a finished day's cards have never been stored.
+deterministic, because a finished day's cards have never been stored. On the
+free plan the days go back a week, counted on the calendar so a change of
+the clocks cannot stretch it. Both ways in, the profile's row and the link
+on Saved, open it on either plan; the row after the week names the days
+before it, counted, with the lock, and is the one place here that opens the
+plans (`source: archive`).
 
 The three tabs slide under the finger, the way they do in every app with
 three of them side by side; the bar is the other way to the same place.
@@ -437,7 +478,10 @@ having its last line sliced in half.
 
 Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging
-readers to advertise it.
+readers to advertise it. Every shared link says which share it left in —
+`https://astutetheapp.com/?ref=share_card`, `share_day` or `share_record`,
+all three in `ShareRef` (`lib/utils/share_link.dart`) — so the site can count
+what each one brings back.
 
 ### The mix: a form for every kind of card
 
@@ -599,7 +643,16 @@ anything is certain to run.
 
 Notifications are asked for once, after a first day is finished. iOS gives an
 app one prompt and no second chance, so spending it on a launch screen throws
-the channel away on someone who does not yet know what the app is.
+the channel away on someone who does not yet know what the app is. The app's
+own sheet asks first, and asks *when* rather than whether
+(`lib/widgets/reminder_ask.dart`): morning 08:30, lunchtime 12:30, evening
+19:00 or a time of the reader's own, starting on the time already set. It
+rises at a quiet moment — the shelf, once the card after the fifth has been
+thrown (straight after the fifth on Astute+), a launch onto a finished day,
+or the screens of a trial's purchase closing — and never over an offer or a
+paywall. A time chosen, the system's prompt follows; "Not now" spends
+nothing, and the sheet comes back after the next finished day, twice more at
+most.
 
 ## Project structure
 
@@ -806,7 +859,8 @@ no room waits after the five, on the finished day, on either plan.
 the edition, the streak, how the questions went and how sure the reader
 was, and the day's line. Nothing a friend could be spoiled by, because
 it names no card. On a phone it goes to the share sheet; in a browser it is
-copied.
+copied. It is sent from the finished day, beside the journey's button, or
+from the foot of the journey, and `day shared` says which (`from`).
 
 The archive keeps what each day was actually dealt: the calendar is
 re-dealt from the start whenever the pool grows, and a day dealt again from
@@ -1008,8 +1062,13 @@ dashboards, and has to agree with three names here.
   plan on sale, the buy button unlocks locally only on the web preview and
   in debug builds, so their gated screens can be seen; a store build says
   the purchase did not go through. And the developer tools at the foot of
-  the profile, which can switch Astute+ on, stay out of any build that goes
-  to review or to readers: build it with `--dart-define=DEBUG_TOOLS=false`.
+  the profile, which can switch Astute+ on, never reach a reader on an
+  iPhone: it shows them only on an install from TestFlight or Xcode. The
+  Android build for Google Play has to be made with
+  `--dart-define=DEBUG_TOOLS=false`. Apple's reviewers install with a
+  sandbox receipt too, so the build sent for review comes from the other
+  Codemagic workflow, *iOS · App Store (for review)*, made with
+  `DEBUG_TOOLS=false` (see *Debug tools*, under *What is not real yet*).
 - **A way out of the account**, which Apple requires inside any app that
   makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
   account rows. Whoever signed in with Apple or Google confirms with the
@@ -1168,7 +1227,8 @@ up and *advanced* with how long it held the reader; answered with how long it
 took. The day says which slot each card fills; the end of the day how many
 were right and wrong. A streak that breaks is said once, milestones and
 records when they happen. The first run is measured step by step and scene by
-scene, with how long each held the reader and where it was skipped. The
+scene, with how long each held the reader and where it was skipped — from
+the corner, or by continuing without an account (`intro skipped`, `by`). The
 paywall says which plan was picked, how long it was open, how it was left and
 which link was opened; the store says what it put on sale and every change to
 the subscription — trial, renewal switched off, billing issue, expiry. Then
@@ -1183,6 +1243,22 @@ On the web the plugin brings no library of its own, so
 `lib/utils/analytics_boot_web.dart` puts posthog-js on the page and starts it.
 Nothing waits on it: a blocked CDN or a dead network costs the preview its
 numbers and not its first paint.
+
+**What the App Store is told.** `ios/Runner/PrivacyInfo.xcprivacy` says the
+same in Apple's terms, for the privacy report Xcode makes from an archive and
+the answers App Store Connect asks for: the account id; a device id (the
+notification token, and PostHog's id for the install); the email and the
+name a sign-in brings, and the name chosen in the app; the friend codes,
+which Apple counts as contacts; what the reader does, for the backup, the
+dealer and PostHog; the reasons written on cards and the notes on reports;
+purchases; the country and city PostHog works out from the IP address; and
+crashes, timings and other diagnostics. All of it is linked to the account,
+and none of it is used to track. It also says why the app reads
+`UserDefaults`: its own, through shared_preferences (`CA92.1`), and the App
+Group it writes the widget's data into (`1C8F.1`). The widget has a manifest
+of its own, which collects nothing and gives the same two reasons. Something
+new sent anywhere goes into the manifest and into `site/privacy.html`
+together.
 
 ## The mix, one layer down
 
@@ -1240,9 +1316,11 @@ These are declared in the UI rather than faked:
 - **Notification delivery.** The permission is asked for and the token is
   registered, so a phone can be reached — but nothing sends yet. Deciding who
   gets what, and when in their own timezone, is the work that remains.
-- **Email sign-in.** Apple and Google are wired; the email button says plainly
-  that it is not connected. Firebase's email link needs a domain of ours with
-  universal links, since Dynamic Links was retired.
+- **Email sign-in.** Not offered. Apple and Google are wired; the intro's
+  third line is *Continue without an account*, which goes where Skip goes,
+  rather than an email button with nothing behind it, and the line under
+  them says continuing, not signing up. Firebase's email link needs a domain
+  of ours with universal links, since Dynamic Links was retired.
 - **The nightly pipeline has not run for real.** The pipeline that grows
   the bank is built and tested against a canned model; the first real night
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
@@ -1284,10 +1362,22 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. It is on in release builds on purpose,
-because TestFlight builds are release builds and that is where it is needed.
-One line in `lib/debug_flags.dart`, or `--dart-define=DEBUG_TOOLS=false`,
-turns it off.
+or not running at all. It is needed in release builds, because TestFlight
+builds are release builds, and the build testers get is the very binary then
+submitted to the App Store. So an iPhone decides at launch (`readDebugTools`
+in `lib/debug_flags.dart`, from `main()`): it asks `AppDelegate.swift` on
+`astut/install` whether the install carries a sandbox receipt, which
+TestFlight's and Xcode's do and the App Store's does not, and shows the
+section only if it does. No answer within 300 ms is a no. Apple's reviewers
+install with a sandbox receipt as well, which is why `codemagic.yaml` has a
+second workflow, `ios-app-store` (*iOS · App Store (for review)*): the same
+build made with `DEBUG_TOOLS=false`, the one to submit. Every
+debug build has it. `--dart-define=DEBUG_TOOLS=false` takes it out of any
+build, except that the site, built that way, still shows it for a visit
+whose address says `?debug`. Android asks nothing, so the build for Google
+Play must be made with `DEBUG_TOOLS=false`. The decision itself is
+`debugToolsFor`, a pure function tested case by case in
+`test/debug_tools_test.dart`.
 
 ## What the evidence says, and what follows from it
 
@@ -1361,7 +1451,10 @@ stay out of the tally entirely.
 Committing is what turns the card over; a stray tap will not, or the answer
 could be reached without ever guessing. Getting it wrong on purpose is the part
 that teaches, so the reveal names the trap before it explains. Your first
-answer stands.
+answer stands. A wrong pick is said the way a wrong number is — what was
+picked, and what it is — and never as what other readers did: how each card
+is answered is counted on the server, for the tools that check cards, and
+none of it reaches the phone.
 
 ## What you got wrong comes back
 
@@ -1461,13 +1554,26 @@ card they were sure and wrong about; day fourteen, what two weeks came to —
 never "we miss you", and after a fortnight it stops. Re-planned at every
 launch, in the phone's language.
 
+**The trial says when it charges.** A reader in the year's free trial, set
+to renew, has one more notification in the plan: two days before the trial
+ends, at their hour — "Your Astute+ trial ends in 2 days." — with the date,
+the store's own price for the year and the way to stop it, Profile → Manage
+subscription (`AppState.trialWarning`). It is re-planned whenever the
+store's word moves: a trial started, cancelled or turned into the year. It
+stays when the daily nudge is switched off, is given once, and comes late
+rather than never when its hour has passed and the trial has not. A reader
+it cannot reach gets one quiet line under their plan on the profile in the
+trial's last two days instead, which opens the store's own screen.
+
 **The stars, asked once.** The store's own rating sheet (`in_app_review`)
 is asked for one time ever: at the end of a seventh day in a row, a moment
-after the shelf lands, never in the session the notification prompt was
-shown (`AppState.shouldAskForReview`). Nothing of the app's is asked
-first — Google forbids a question before its sheet, Apple allows only its
-own — and Apple decides whether to show it at all. Without it, the stars of
-a launch week come mostly from the readers who left.
+after the shelf lands, never in the session the question about
+notifications was put — the app's sheet or the system's prompt — nor while
+that question waits to come back (`AppState.shouldAskForReview`). Nothing
+of the app's is asked first — Google forbids a question before its sheet,
+Apple allows only its own — and Apple decides whether to show it at all.
+Without it, the stars of a launch week come mostly from the readers who
+left.
 
 **The rung, where the day happened.** The ladder lives on the profile,
 where nobody looks at the end of a day. So the finished day's one button

@@ -150,12 +150,6 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get tabProfile;
 
-  /// No description provided for @signInNotConnected.
-  ///
-  /// In en, this message translates to:
-  /// **'{provider} sign-in is not connected yet. Your cards are kept on this device.'**
-  String signInNotConnected(String provider);
-
   /// No description provided for @couldNotSignInCarryOn.
   ///
   /// In en, this message translates to:
@@ -1206,6 +1200,84 @@ abstract class AppLocalizations {
   /// **'Daily nudge moved to {time}.'**
   String dailyNudgeMovedTo(String time);
 
+  /// Title of the sheet that asks when to remind the reader. It comes before the system's own notification prompt, which iOS shows only once.
+  ///
+  /// In en, this message translates to:
+  /// **'When should we remind you?'**
+  String get reminderAskTitle;
+
+  /// Under the sheet's title: what the reminder is. One notification a day, each carrying a question from the reader's cards (most days the first question of that day's five).
+  ///
+  /// In en, this message translates to:
+  /// **'One notification a day, with a question from your cards.'**
+  String get reminderAskLine;
+
+  /// On the reminder sheet, only for a reader in a free trial that will turn into a paid year: a notification also comes two days before it does.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll remind you two days before your trial ends.'**
+  String get reminderAskTrialLine;
+
+  /// A choice on the reminder sheet, with 8:30 written beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get reminderAskMorning;
+
+  /// A choice on the reminder sheet, with 12:30 written beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunchtime'**
+  String get reminderAskLunch;
+
+  /// A choice on the reminder sheet, with 19:00 written beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get reminderAskEvening;
+
+  /// A choice on the reminder sheet that opens a clock, to pick any other time.
+  ///
+  /// In en, this message translates to:
+  /// **'Another time'**
+  String get reminderAskOther;
+
+  /// The reminder sheet's button: keeps the time chosen, then the system asks whether the app may send notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get reminderAskYes;
+
+  /// The reminder sheet's way out. Nothing is asked of the system; the sheet comes back after the next day the reader finishes, at most twice more.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get reminderAskNotNow;
+
+  /// Title of the notification sent two days before a free trial turns into a paid year. {days} is how many calendar days are left: 0 is today, 1 tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Your Astute+ trial ends today.} =1{Your Astute+ trial ends tomorrow.} other{Your Astute+ trial ends in {days} days.}}'**
+  String trialWarningTitle(int days);
+
+  /// Body of that notification. {date} is the day the trial ends, as the language writes a day and month; {price} is the store's own price for the year; {path} is the way to the subscription, made of the tab's and the row's own names, e.g. 'Profile → Manage subscription'.
+  ///
+  /// In en, this message translates to:
+  /// **'On {date} your year starts at {price}. To keep going, do nothing. To stop: {path}.'**
+  String trialWarningBody(String date, String price, String path);
+
+  /// One quiet line on the profile in a free trial's last two days, for a reader no notification will reach. {days} is how many calendar days are left: 0 is today, 1 tomorrow. Followed by ' · ' and trialNoticeManage.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Your trial ends today} =1{Your trial ends tomorrow} other{Your trial ends in {days} days}}'**
+  String trialEndsNotice(int days);
+
+  /// After the trial's line on the profile: opens the store's own screen for managing the subscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get trialNoticeManage;
+
   /// No description provided for @subjectsInTheMix.
   ///
   /// In en, this message translates to:
@@ -1269,7 +1341,7 @@ abstract class AppLocalizations {
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
-  /// **'Five smart things a day, ready to use in conversation'**
+  /// **'Learn the why behind things, and how far to trust what you know'**
   String get tagline;
 
   /// No description provided for @introTopicsTitle.
@@ -1281,19 +1353,19 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsLine.
   ///
   /// In en, this message translates to:
-  /// **'Written ahead by a model, and every one checked against its source.'**
+  /// **'Written ahead by a model, and each one names its source.'**
   String get introTopicsLine;
 
   /// No description provided for @introQuestionTitle.
   ///
   /// In en, this message translates to:
-  /// **'A question, then the answer'**
+  /// **'A question, how sure, then why'**
   String get introQuestionTitle;
 
   /// No description provided for @introQuestionLine.
   ///
   /// In en, this message translates to:
-  /// **'Every card carries the one line that makes it worth saying out loud.'**
+  /// **'Say how sure you are first. In time you see what your “sure” is worth.'**
   String get introQuestionLine;
 
   /// No description provided for @introMixTitle.
@@ -1374,16 +1446,16 @@ abstract class AppLocalizations {
   /// **'Continue with Google'**
   String get continueWithGoogle;
 
-  /// No description provided for @continueWithEmail.
+  /// The intro's third way on, under Continue with Apple and Continue with Google: it goes where Skip goes and makes no account.
   ///
   /// In en, this message translates to:
-  /// **'Continue with Email'**
-  String get continueWithEmail;
+  /// **'Continue without an account'**
+  String get continueWithoutAccount;
 
-  /// No description provided for @termsLine.
+  /// Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up.
   ///
   /// In en, this message translates to:
-  /// **'By signing up you agree to our Terms of Service & Privacy Policy'**
+  /// **'By continuing you agree to our Terms of Service & Privacy Policy'**
   String get termsLine;
 
   /// No description provided for @skip.
@@ -1482,18 +1554,6 @@ abstract class AppLocalizations {
   /// **'Source · {source}'**
   String sourceLabel(String source);
 
-  /// No description provided for @perkArchiveTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Your whole archive'**
-  String get perkArchiveTitle;
-
-  /// No description provided for @perkArchiveLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Every day you have read, kept for good.'**
-  String get perkArchiveLine;
-
   /// No description provided for @plusIsActive.
   ///
   /// In en, this message translates to:
@@ -1512,23 +1572,155 @@ abstract class AppLocalizations {
   /// **'Subscribe for {price}{suffix}'**
   String subscribeFor(String price, String suffix);
 
-  /// No description provided for @noChargeTodayCancel.
-  ///
-  /// In en, this message translates to:
-  /// **'No charge today · cancel any time'**
-  String get noChargeTodayCancel;
-
   /// No description provided for @chargedTodayCancel.
   ///
   /// In en, this message translates to:
   /// **'Charged today · cancel any time'**
   String get chargedTodayCancel;
 
-  /// The part of everyCardForYou painted in the gradient: the word for 'you', exactly as it is written there.
+  /// No description provided for @paywallRecordTitle.
   ///
   /// In en, this message translates to:
-  /// **'you.'**
-  String get everyCardForYouMark;
+  /// **'See how much you really know.'**
+  String get paywallRecordTitle;
+
+  /// The part of paywallRecordTitle painted in the gradient: the word for 'really', exactly as it is written there.
+  ///
+  /// In en, this message translates to:
+  /// **'really'**
+  String get paywallRecordMark;
+
+  /// Under the paywall's headline when it was opened from the journey, for a reader without enough answers yet to have their own numbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day you say how sure you are. Astute+ shows whether the gap between sure and right is closing, and the moves you keep missing.'**
+  String get paywallRecordLine;
+
+  /// Under the paywall's headline, for a reader more sure than right. {sure} is how sure they say they are on average, {right} how often they are right, both in percent.
+  ///
+  /// In en, this message translates to:
+  /// **'You say {sure}% sure and you\'re right {right}% of the time. Astute+ shows whether that gap is closing, and the moves you keep missing.'**
+  String paywallRecordOver(int sure, int right);
+
+  /// Under the paywall's headline, for a reader more often right than sure. {sure} is how sure they say they are on average, {right} how often they are right, both in percent.
+  ///
+  /// In en, this message translates to:
+  /// **'You say {sure}% sure and you\'re right {right}% of the time: you know more than you think. Astute+ shows whether that gap is closing.'**
+  String paywallRecordUnder(int sure, int right);
+
+  /// Under the paywall's headline, for a reader whose confidence is within five points of how often they are right. {sure} and {right} in percent.
+  ///
+  /// In en, this message translates to:
+  /// **'You say {sure}% sure and you\'re right {right}% of the time: a close match. Astute+ shows whether it holds, and the moves you keep missing.'**
+  String paywallRecordEven(int sure, int right);
+
+  /// No description provided for @paywallOutcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the one nobody fools.'**
+  String get paywallOutcomeTitle;
+
+  /// The part of paywallOutcomeTitle painted in the gradient: the word for being fooled, exactly as it is written there.
+  ///
+  /// In en, this message translates to:
+  /// **'fools.'**
+  String get paywallOutcomeMark;
+
+  /// No description provided for @paywallOutcomeLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day at your level. The ones you miss come back until they stick. And you see yourself change, week by week.'**
+  String get paywallOutcomeLine;
+
+  /// No description provided for @paywallFiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All five, yours.'**
+  String get paywallFiveTitle;
+
+  /// The part of paywallFiveTitle painted in the gradient: the word for 'yours', exactly as it is written there.
+  ///
+  /// In en, this message translates to:
+  /// **'yours.'**
+  String get paywallFiveMark;
+
+  /// No description provided for @paywallFiveLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Free days pick two of the five for you, three after a week in a row. Astute+ picks all five from your strands, at your level, and brings back the ones you miss.'**
+  String get paywallFiveLine;
+
+  /// No description provided for @paywallReadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What you\'ve read, day by day.'**
+  String get paywallReadTitle;
+
+  /// The part of paywallReadTitle painted in the gradient: the words for 'day by day', exactly as they are written there.
+  ///
+  /// In en, this message translates to:
+  /// **'day by day.'**
+  String get paywallReadMark;
+
+  /// Under the paywall's headline when it was opened from the archive, which lists the days the reader finished, newest first.
+  ///
+  /// In en, this message translates to:
+  /// **'The days you\'ve read lately, newest first. Tap one to open its five cards, and a card to read it again.'**
+  String get paywallReadLine;
+
+  /// No description provided for @perkGapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch the gap close'**
+  String get perkGapTitle;
+
+  /// No description provided for @perkGapLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Your journey, week by week: how sure against how right, and the moves you keep missing.'**
+  String get perkGapLine;
+
+  /// No description provided for @perkOwnFiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Five of your own cards'**
+  String get perkOwnFiveTitle;
+
+  /// No description provided for @perkOwnFiveLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day, at your level, with the ones you miss coming back.'**
+  String get perkOwnFiveLine;
+
+  /// No description provided for @perkReadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What you\'ve read'**
+  String get perkReadTitle;
+
+  /// No description provided for @perkReadLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recent days, each with its five cards, ready to open again.'**
+  String get perkReadLine;
+
+  /// First step of the trial timeline under the paywall's button.
+  ///
+  /// In en, this message translates to:
+  /// **'Today · all of Astute+, free'**
+  String get trialToday;
+
+  /// Second step of the trial timeline: the day, counted from today, a reminder that the trial is ending is sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day} · we remind you'**
+  String trialReminder(int day);
+
+  /// Last step of the trial timeline: the day, counted from today, the plan is first charged. {price} is the store's price; {plan} is 'year' or 'month'.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day} · {price} {plan, select, year{for a year} other{a month}}, unless you cancel'**
+  String trialCharge(int day, String price, String plan);
 
   /// No description provided for @trialStartedNoPayment.
   ///
@@ -1691,12 +1883,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You said {given} · it is {answer}'**
   String youSaidItIs(String given, String answer);
-
-  /// No description provided for @almostEveryoneGetsThisWrong.
-  ///
-  /// In en, this message translates to:
-  /// **'Almost everyone gets this wrong'**
-  String get almostEveryoneGetsThisWrong;
 
   /// No description provided for @lineYouSaidSure.
   ///
@@ -2376,24 +2562,6 @@ abstract class AppLocalizations {
   /// **'Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.'**
   String get magicLine;
 
-  /// No description provided for @everyCardForYou.
-  ///
-  /// In en, this message translates to:
-  /// **'Every card, chosen for you.'**
-  String get everyCardForYou;
-
-  /// No description provided for @perkOwnTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Five cards a day, all yours'**
-  String get perkOwnTitle;
-
-  /// No description provided for @perkOwnLine.
-  ///
-  /// In en, this message translates to:
-  /// **'From your strands, at your level, never one you have read. Free days give you two.'**
-  String get perkOwnLine;
-
   /// No description provided for @plusCardHeadline.
   ///
   /// In en, this message translates to:
@@ -2423,12 +2591,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A week kept: tomorrow three of the five are yours.'**
   String get weekKeptThreeOwn;
-
-  /// No description provided for @perkJourneyLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Your level, every subject strand by strand, what stayed, and the moves you keep missing.'**
-  String get perkJourneyLine;
 
   /// No description provided for @topOfTheWeek.
   ///
