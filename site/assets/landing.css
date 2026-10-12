@@ -1,8 +1,8 @@
 /* astutetheapp.com — the landing page, section by section. What every
    page shares is in site.css; this is the rest: the first screen and its
    phone, today's question, the day's row, the two cream sheets, the cards
-   that flip, the subjects, the screens, the widgets, friends, the plans,
-   the questions and the last word. Every state the script switches is on
+   that flip, the subjects, the screens, the widgets, the plans, the
+   questions and the last word. Every state the script switches is on
    an attribute, not an inline style, so the page reads the same without
    it. */
 
@@ -100,10 +100,22 @@
   background-image: linear-gradient(160deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 48%), radial-gradient(120% 90% at 100% 100%, rgba(0, 0, 0, .08), transparent 60%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 30px 60px -30px rgba(0, 0, 0, .7);
 }
-.topic { display: flex; align-items: center; gap: 6px; margin: 0; font: 700 10px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
-.topic::before { content: ""; width: 10px; height: 10px; border: 1.5px solid currentColor; border-radius: 50%; flex: none; }
-.topic.lg { font-size: 11px; opacity: .85; }
-.topic.lg::before { width: 11px; height: 11px; }
+/* A card's subject, named as the app's cards name it (pill_card.dart): its
+   own mark, 16 across, in the card's ink; 8 after it, the name in capitals
+   at 11, spaced 1.4, in the ink at 72%. The marks are the app's own paths
+   (lib/data/subject_icons.dart), stamped once into each page by
+   tool/site/chrome.py and drawn here with the app's stroke. */
+.label { display: flex; align-items: center; gap: 8px; flex: none; margin: 0; font: 600 11px/16px var(--font-text); letter-spacing: 1.4px; text-transform: uppercase; white-space: nowrap; color: rgb(var(--ink) / .72); }
+.mark { flex: none; width: 16px; height: 16px; color: rgb(var(--ink)); fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+
+/* A card's question, as the app sets one on a card's front (_FrontFace): in
+   the room under the subject, in the middle of it, left-aligned, as large as
+   the room holds between the two sizes the card allows (data-fit, measured
+   by main.js and carried in the page as --fs), weight 600, lines at 1.08,
+   the tracking tightening as the type grows: -0.4 less 2.8% of the size.
+   The optical size follows the type size, as the app's does. */
+[data-fit] { display: flex; flex-direction: column; justify-content: center; min-height: 0; margin: 0; font: 600 var(--fs, 22px)/1.08 var(--font-display); letter-spacing: calc(-.4px - var(--fs, 22px) * .028); font-optical-sizing: auto; font-variation-settings: 'SOFT' 30, 'WONK' 0; text-wrap: pretty; }
+[data-fit] > span { display: block; }
 
 /* Things come into view as they are reached: they rise, and sharpen. */
 .js [data-reveal] {
@@ -253,7 +265,7 @@
   .orb.o3 { --x: 84px; --y: -22px; --r: 10deg; }
   .orb.o2 { --x: -142px; --y: 480px; --r: -7deg; }
   .orb.o4 { --x: 142px; --y: 462px; --r: 8deg; }
-  .orb-q, .o2 .orb-topic, .o4 .orb-topic { visibility: hidden; }
+  .orb-q, .o2 .label, .o4 .label { visibility: hidden; }
 }
 .orb-bob { width: 100%; height: 100%; perspective: 900px; animation: bob var(--bob, 7s) ease-in-out var(--bd, 0s) infinite; }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
@@ -273,13 +285,13 @@
   backface-visibility: hidden;
 }
 .orb-back { transform: rotateY(180deg); }
-.orb-topic { display: flex; align-items: center; gap: 6px; margin: 0; font: 700 10px/1 var(--font-text); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; opacity: .82; }
-.orb-topic svg, .pill-topic svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-.orb-topic svg { width: 14px; height: 14px; }
 .orb-hard { margin-left: 2px; padding: 3px 6px 3px 7px; border-radius: 999px; background: rgb(var(--ink) / .13); font: 700 8px/1 var(--font-text); letter-spacing: .12em; }
-.orb-q { margin: auto 0 0; font: 600 16px/1.16 var(--font-display); letter-spacing: -.015em; font-variation-settings: 'opsz' 30; text-wrap: pretty; }
-.orb-a { margin: auto 0 0; font: 600 20px/1.08 var(--font-display); letter-spacing: -.02em; font-variation-settings: 'opsz' 40; text-wrap: balance; }
-.orb-move { margin-top: 12px; padding: 10px 11px 11px; border-radius: 12px; background: rgb(var(--ink) / .1); }
+/* The question in the room under the subject (the card's question, above);
+   turned over, the answer sits in the middle and the line to keep at the
+   foot. */
+.orb-q { flex: 1 1 0; margin: 10px 0 4px; }
+.orb-a { margin: auto 0; font: 600 22px/1.06 var(--font-display); letter-spacing: -.02em; font-variation-settings: 'opsz' 40; text-wrap: balance; }
+.orb-move { padding: 10px 11px 11px; border-radius: 12px; background: rgb(var(--ink) / .1); }
 .orb-move p { margin: 0; font: 500 11.5px/1.35 var(--font-text); }
 .orb-move .k { margin-bottom: 5px; font: 700 8.5px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .65; }
 .orb-back > * { opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .5s var(--ease); }
@@ -405,16 +417,15 @@
   box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
 }
 .pill-back { transform: rotateY(180deg); }
-.pill-topic { display: flex; align-items: center; gap: 8px; flex: none; height: 16px; font: 600 11px/1 var(--font-text); letter-spacing: 1.4px; text-transform: uppercase; color: rgb(var(--ink) / .72); }
-.pill-topic svg { width: 16px; height: 16px; color: rgb(var(--ink)); }
 .pill-tools { position: absolute; right: 20px; bottom: 18px; display: flex; gap: 4px; pointer-events: none; }
 .pill-tools svg { width: 40px; height: 40px; padding: 8.5px; fill: none; stroke: rgb(var(--ink) / .9); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* The front: the question in the top half, the answers under it, then how
-   sure, in the same place. */
+   sure, in the same place. The question sits in the middle of its half, as
+   large as the half holds between the app's own sizes for a card this big,
+   21 and 34 (the card's question, above). */
 .pill-ask { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.pill-qbox { flex: none; height: 48%; display: flex; align-items: flex-end; }
-.pill-q { font: 600 28px/1.14 var(--font-display); letter-spacing: -.8px; font-variation-settings: 'opsz' 28; text-wrap: pretty; }
+.pill-q { flex: none; height: calc(48% - 14px); margin-top: 14px; }
 .pill-input { display: grid; margin-top: 22px; }
 .pill-pick, .pill-sure { grid-area: 1 / 1; transition: opacity .3s ease, transform .45s var(--ease), visibility 0s; }
 .pill-opt, .pill-levels button {
@@ -637,12 +648,13 @@
   padding: clamp(24px, 3.4vw, 40px);
   border-radius: 32px;
   background-color: var(--bg, #F2F1EC);
-  color: var(--ink, #10100C);
+  color: rgb(var(--ink, 16 16 12));
   text-decoration: none;
   box-shadow: 0 50px 90px -45px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .22);
 }
-.today-card:hover, .today-card:focus-visible { color: var(--ink, #10100C); }
-.today-q { display: block; margin: auto 0 0; font: 500 clamp(28px, 3.8vw, 50px)/1.08 var(--font-display); letter-spacing: -.025em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
+.today-card:hover, .today-card:focus-visible { color: rgb(var(--ink, 16 16 12)); }
+.today-q { flex: 1 1 0; }
+.today-q.spill { flex-basis: auto; }
 .today-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 0; font: 600 15px/1.2 var(--font-text); }
 .today-foot .go { display: inline-flex; align-items: center; gap: 8px; }
 .today-foot .go b { font-weight: 600; transition: translate .25s ease; }
@@ -715,10 +727,11 @@
 .step h3 { margin: 0 0 10px; font: 500 25px/1.1 var(--font-display); letter-spacing: -.015em; font-variation-settings: 'opsz' 144; }
 .step p { margin: 0 0 22px; font: 400 15px/1.5 var(--font-text); color: var(--cream-60); }
 .step-art { margin-top: auto; }
-.mini-card { border-radius: 18px; padding: 16px; height: 168px; display: flex; flex-direction: column; color: #fff; background-color: #2B5CFF; }
-.mini-card .q { margin: auto 0 0; font: 600 18px/1.12 var(--font-display); letter-spacing: -.015em; font-variation-settings: 'opsz' 144; }
+.mini-card { border-radius: 18px; padding: 16px; height: 168px; display: flex; flex-direction: column; color: rgb(var(--ink)); background-color: var(--c); }
+.mini-q { flex: 1 1 0; margin-top: 10px; }
 .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; height: 168px; }
-.mini-grid div { border-radius: 14px; padding: 12px; display: flex; align-items: flex-end; font: 700 10px/1 var(--font-text); letter-spacing: .12em; text-transform: uppercase; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25); }
+/* The mix in small, each subject with its mark, as the app's mix draws them. */
+.mini-grid div { border-radius: 14px; padding: 12px; display: flex; align-items: flex-end; gap: 7px; font: 700 10px/16px var(--font-text); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; background: var(--c); color: rgb(var(--ink)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25); }
 .mini-conf { height: 168px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; }
 .mini-conf .k { margin: 0; }
 .mini-conf div { display: flex; gap: 6px; }
@@ -815,16 +828,17 @@
   padding: 26px;
   display: flex;
   flex-direction: column;
-  color: #fff;
+  background-color: var(--c);
+  color: rgb(var(--ink));
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 .face.back { transform: rotateY(180deg); gap: 14px; }
-.face .q { margin: auto 0; font: 500 clamp(24px, 2.4vw, 30px)/1.12 var(--font-display); letter-spacing: -.02em; font-variation-settings: 'opsz' 144; }
+.face-q { flex: 1 1 0; margin: 14px 0; }
 .face.back .q { margin: 0; font: 600 19px/1.15 var(--font-display); letter-spacing: -.01em; }
 .face .hint { margin: 0; font: 700 10px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
 .face .a { margin: 0; font: 400 16px/1.5 var(--font-text); }
-.face .move { margin-top: auto; border-radius: 16px; background: rgba(255, 255, 255, .16); padding: 14px 16px; }
+.face .move { margin-top: auto; border-radius: 16px; background: rgb(var(--ink) / .13); padding: 14px 16px; }
 .face .move .k { margin: 0 0 6px; font: 700 10px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .8; color: inherit; }
 .face .move p { margin: 0; font: 600 15px/1.4 var(--font-text); }
 
@@ -836,11 +850,11 @@
 .marquee:hover { animation-play-state: paused; }
 .marquee-track { display: flex; gap: 16px; padding-right: 16px; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.deck-card { flex: none; width: 250px; height: 310px; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; transition: translate .35s var(--ease); }
-.deck-card .q { margin: auto 0 0; font: 600 22px/1.14 var(--font-display); letter-spacing: -.015em; font-variation-settings: 'opsz' 144; }
+.deck-card { flex: none; width: 250px; height: 310px; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; background-color: var(--c); color: rgb(var(--ink)); transition: translate .35s var(--ease); }
+.deck-q { flex: 1 1 0; margin-top: 12px; }
 @media (hover: hover) { .deck-card:hover { translate: 0 -6px; } }
 .chips { list-style: none; max-width: 900px; margin: 0 auto; padding: 48px var(--gutter) 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.chips li { display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 20px; font: 600 15px/1 var(--font-text); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3); }
+.chips li { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px 0 14px; border-radius: 20px; background: var(--c); color: rgb(var(--ink)); font: 600 15px/1 var(--font-text); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3); }
 
 /* ── Inside: the screens in a row ───────────────────────────────────── */
 
@@ -885,42 +899,6 @@
 .so { margin: 44px 0 0; max-width: 680px; font: 500 clamp(20px, 2vw, 26px)/1.4 var(--font-display); font-variation-settings: 'opsz' 144; letter-spacing: -.015em; color: var(--night); text-wrap: pretty; }
 .so::before { content: ""; display: block; width: 40px; height: 2px; background: var(--night); margin-bottom: 18px; }
 @media (max-width: 600px) { .evidence li { grid-template-columns: 56px minmax(0, 1fr); } .evidence .n { font-size: 36px; } }
-
-/* ── Friends ────────────────────────────────────────────────────────── */
-
-.ticket {
-  position: relative;
-  margin-top: 32px;
-  display: inline-grid;
-  grid-template-columns: 1fr auto;
-  border-radius: 20px;
-  background: rgba(242, 241, 236, .05);
-  border: 1px solid rgba(242, 241, 236, .12);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
-}
-.ticket-main { padding: 20px 26px 22px; display: flex; flex-direction: column; gap: 10px; }
-.ticket .k { font: 700 11px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; color: var(--cream-60); }
-.ticket .code { font: 500 34px/1 var(--font-display); letter-spacing: .04em; font-variation-settings: 'opsz' 144; font-variant-numeric: tabular-nums; }
-.ticket-stub { position: relative; padding: 20px 22px; border-left: 1px dashed rgba(242, 241, 236, .28); display: grid; place-items: center; gap: 8px; color: var(--cream-60); }
-.ticket-stub::before, .ticket-stub::after { content: ""; position: absolute; left: -7px; width: 13px; height: 13px; border-radius: 50%; background: var(--night); border: 1px solid rgba(242, 241, 236, .12); }
-.ticket-stub::before { top: -7px; border-top-color: transparent; border-left-color: transparent; }
-.ticket-stub::after { bottom: -7px; border-bottom-color: transparent; border-left-color: transparent; }
-.ticket-stub svg { width: 20px; height: 20px; }
-.board { border-radius: 28px; background: rgba(242, 241, 236, .04); border: 1px solid rgba(242, 241, 236, .1); padding: 8px; font-variant-numeric: tabular-nums; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
-.board-row { display: grid; grid-template-columns: minmax(0, 1.7fr) 1fr 1fr 1.3fr; gap: 12px; align-items: center; padding: 14px 16px; font: 500 16px/1 var(--font-text); border-top: 1px solid rgba(242, 241, 236, .08); border-radius: 16px; transition: background .2s ease; }
-.board-row:hover { background: rgba(242, 241, 236, .04); }
-.board-row.you { background: rgba(242, 241, 236, .05); }
-.board-head { padding: 14px 16px 12px; font: 700 10px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; color: var(--cream-50); border-top: 0; }
-.board-head:hover { background: none; }
-.board .r { text-align: right; }
-.board .who { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.board .rank { width: 20px; flex: none; font: 600 12px/1 var(--font-text); color: var(--cream-40); text-align: center; }
-.board .av { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font: 700 13px/1 var(--font-text); flex: none; }
-.board .cal { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; font-weight: 600; }
-.board .cal i { width: 44px; height: 4px; border-radius: 2px; background: rgba(242, 241, 236, .12); position: relative; overflow: hidden; }
-.board .cal i::after { content: ""; position: absolute; top: 0; height: 100%; left: 50%; width: calc(var(--c, 0) / 10 * 50%); background: var(--cream); border-radius: 2px; }
-.board .cal.neg i::after { left: auto; right: 50%; }
-.board-note { font: 400 14px/1.5 var(--font-text); color: var(--cream-50); margin: 16px 8px 0; text-wrap: pretty; }
 
 /* ── Astute+ ────────────────────────────────────────────────────────── */
 
@@ -1027,6 +1005,8 @@
 [data-faq-panel] > div { overflow: hidden; min-height: 0; }
 .faq-a { margin: 0 0 26px; font: 400 16px/1.6 var(--font-text); color: var(--cream-70); max-width: 640px; text-wrap: pretty; }
 .faq-a a { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; }
+/* The badges under the answer about Android, before the next question. */
+.faq-a + .stores { margin: -8px 0 30px; }
 .faq-more {
   margin-top: 40px;
   padding: 24px 28px;

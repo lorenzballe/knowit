@@ -154,11 +154,8 @@ async function renderRecord(user) {
   text('st-gap', gap === null ? '–' : (gap > 0 ? '+' : gap < 0 ? '−' : '') + Math.abs(gap));
   if (reader && reader.name && !user.displayName) text('acc-name', reader.name);
   const note = $('#acc-record-note');
-  if (reader) {
-    note.innerHTML = 'Your friend code is <b class="code">' + code + '</b>. Friends type it in the app to see your board.';
-  } else {
-    note.textContent = 'No record here yet. On your phone, sign in to Astute with this same account and it is kept here from then on.';
-  }
+  note.hidden = Boolean(reader);
+  if (!reader) note.textContent = 'No record here yet. On your phone, sign in to Astute with this same account and it is kept here from then on.';
 }
 
 // The plan, from RevenueCat: the same customer the app talks to, so a
@@ -316,7 +313,7 @@ function flash(message) {
 async function deleteAccount() {
   const user = current;
   if (!user) return;
-  if (!window.confirm('Delete your account, its backup and your board for friends? The app on your phone starts again from the beginning. This cannot be undone.')) return;
+  if (!window.confirm('Delete your account and its backup? The app on your phone starts again from the beginning. This cannot be undone.')) return;
   const button = $('#acc-delete');
   button.disabled = true;
   clearError();

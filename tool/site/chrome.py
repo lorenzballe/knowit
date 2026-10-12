@@ -3,7 +3,7 @@
     python3 tool/site/chrome.py          # rewrite them in site/*.html
     python3 tool/site/chrome.py --check  # exit 1 if any page has drifted
 
-Six pages share the same header and footer. Kept by hand they drift — a
+Seven pages share the same header and footer. Kept by hand they drift — a
 link added to one, a line changed on another — so they are written here
 once and put onto every page between the markers the pages carry:
 <!-- @header -->…<!-- /@header --> and <!-- @footer -->…<!-- /@footer -->.
@@ -15,17 +15,37 @@ chrome, the hero, the plans, the redirect on /get — so that the provider
 token below is set in one place and reaches all of them. The site's script
 adds the campaign (ct) to each as the page loads.
 
-Astute is on the App Store only. Android is coming, and until it is on
-Google Play no page links there: its badge, /assets/badges/google-play.svg,
-goes back beside Apple's on the day the listing is live, at
-https://play.google.com/store/apps/details?id=com.astuto.app.
+And it writes the store badges, Apple's and Google's side by side, wherever
+the site offers the app: in the chrome, and in a page between the markers
+<!-- @stores -->…<!-- /@stores -->. Each badge is the store's own artwork,
+from the files the stores publish (site/assets/badges/): app-store.svg as
+Apple serves it from its marketing guidelines, google-play.svg from Google's
+badge files. The header carries one copy of each, as a symbol built here
+from those files, and every badge on the page draws from it, inline: drawn
+as part of the page, the artwork stays sharp at any size and any zoom, where
+an image of it can be painted soft.
+
+Beside them the header carries the subjects' own marks, one symbol each, so
+that every card on the site names its subject as the app's cards do, with
+the mark beside the name (<use href="#subject-space"/>). They are read from
+the app's lib/data/subject_icons.dart, path for path, so a mark redrawn in
+the app is redrawn here the next time this runs, and --check fails until it
+has.
+
+Android is coming to Google Play. Its badge links to the listing,
+https://play.google.com/store/apps/details?id=com.astuto.app, ahead of the
+day it opens: it went up while nobody was seeing the site yet.
 """
 import re
 import sys
 from pathlib import Path
 
-SITE = Path(__file__).resolve().parents[2] / 'site'
+ROOT = Path(__file__).resolve().parents[2]
+SITE = ROOT / 'site'
+BADGES = SITE / 'assets' / 'badges'
+SUBJECT_ICONS = ROOT / 'lib' / 'data' / 'subject_icons.dart'
 APP_STORE = 'https://apps.apple.com/app/id6806852300'
+GOOGLE_PLAY = 'https://play.google.com/store/apps/details?id=com.astuto.app'
 
 # Apple's campaign links carry the account's provider token (pt) beside the
 # campaign (ct). With it, App Store Connect counts what each campaign the site
@@ -40,11 +60,78 @@ APP_STORE_LINK = APP_STORE + (
     f'?pt={APP_STORE_PROVIDER_TOKEN}&mt=8' if APP_STORE_PROVIDER_TOKEN else ''
 )
 
-BADGES = f'''<a href="{APP_STORE_LINK}"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>'''
+# Each badge: the store's file, the frame of the artwork in it, and what the
+# badge says, for whoever cannot see it. Apple's file is framed on its badge;
+# Google's leaves a pixel of empty canvas on either side, and its frame here
+# is the badge's own edge, so that the two stand at exactly one height and
+# the gap between them is the gap that shows.
+BADGE_ART = {
+    'app-store': ('app-store.svg', '0 0 119.66407 40', 'Download on the App Store'),
+    'google-play': ('google-play.svg', '-0.11 0 239.17 70.87', 'Get it on Google Play'),
+}
+
+
+def symbol(key):
+    """A store's badge file as a symbol the page draws from: the same paths
+    in the same colours, with its title and ids left out (a page draws each
+    badge more than once), and its classes written onto the shapes as the
+    styles they stand for, since a style sheet in the page's own SVG would
+    reach the whole page."""
+    name, frame, _ = BADGE_ART[key]
+    svg = (BADGES / name).read_text()
+    rules = {}
+    for sheet in re.findall(r'<style[^>]*>(.*?)</style>', svg, re.S):
+        for selectors, body in re.findall(r'([^{}]+)\{([^}]*)\}', sheet):
+            decls = ' '.join(d.strip() + ';' for d in body.split(';') if d.strip())
+            for sel in selectors.split(','):
+                sel = sel.strip()
+                if sel.startswith('.'):
+                    rules[sel[1:]] = (rules.get(sel[1:], '') + ' ' + decls).strip()
+    art = svg[svg.index('>', svg.index('<svg')) + 1:svg.rindex('</svg>')]
+    art = re.sub(r'<title>.*?</title>|<defs>.*?</defs>|<style[^>]*>.*?</style>', '', art, flags=re.S)
+    art = re.sub(r'\s(?:id|data-name)="[^"]*"', '', art)
+    art = re.sub(r'class="([^"]*)"', lambda m: 'style="' + ' '.join(rules[c] for c in m.group(1).split()) + '"', art)
+    art = re.sub(r'>\s+<', '><', art).strip()
+    return f'<symbol id="badge-{key}" viewBox="{frame}">{art}</symbol>'
+
+
+def subject_marks():
+    """The subjects' marks from the app's kSubjectIcons, as symbols named for
+    the subject (subject-pop-culture). Only the path: the stroke, its weight
+    and its colour are the page's to give (site.css, .mark), as the app gives
+    them in subjectIconSvg()."""
+    dart = SUBJECT_ICONS.read_text()
+    table = dart[dart.index('kSubjectIcons'):]
+    table = table[:table.index('};')]
+    marks = re.findall(r"'([^']+)':\s*'([^']+)'", table)
+    assert len(marks) >= 20, 'kSubjectIcons not where it was'
+    return ''.join(
+        f'<symbol id="subject-{name.lower().replace(" ", "-")}" viewBox="0 0 24 24"><path d="{path}"/></symbol>'
+        for name, path in marks)
+
+
+def sprite():
+    return ('<svg class="symbols" width="0" height="0" aria-hidden="true" focusable="false">'
+            + ''.join(symbol(key) for key in BADGE_ART) + subject_marks() + '</svg>')
+
+
+def badge(key, href):
+    """One badge, a link drawn from its symbol; sized by the page's CSS, at
+    52 pixels high when there is none."""
+    _, frame, label = BADGE_ART[key]
+    _, _, w, h = (float(n) for n in frame.split())
+    return (f'<a class="store store-{key}" href="{href}" aria-label="{label}">'
+            f'<svg viewBox="{frame}" width="{round(52 * w / h)}" height="52" aria-hidden="true" focusable="false">'
+            f'<use href="#badge-{key}"/></svg></a>')
+
+
+def stores():
+    return badge('app-store', APP_STORE_LINK) + badge('google-play', GOOGLE_PLAY)
 
 
 def header(p, home):
     return f'''<!-- @header -->
+{sprite()}
 <header class="site-nav">
   <div class="progress" aria-hidden="true"></div>
   <nav aria-label="Main">
@@ -73,9 +160,7 @@ def header(p, home):
     </div>
     <div class="menu-foot">
       <p>Free on iPhone · Android coming soon · App in 13 languages · No ads</p>
-      <div class="stores small">
-        {BADGES}
-      </div>
+      <div class="stores small">{stores()}</div>
     </div>
   </div>
 </header>
@@ -93,9 +178,7 @@ def footer(p, home):
           <span>Astute</span>
         </a>
         <p>Five cards a day. A little sharper. Free on iPhone and coming to Android, the app in thirteen languages, and no ads.</p>
-        <div class="stores small">
-        {BADGES}
-        </div>
+        <div class="stores small">{stores()}</div>
       </div>
       <nav class="foot-cols" aria-label="Footer">
         <div>
@@ -137,6 +220,7 @@ def stamp(text, landing):
     p, home = ('', '#top') if landing else ('/', '/')
     text = re.sub(r'<!-- @header -->.*?<!-- /@header -->', lambda m: header(p, home), text, flags=re.S)
     text = re.sub(r'<!-- @footer -->.*?<!-- /@footer -->', lambda m: footer(p, home), text, flags=re.S)
+    text = re.sub(r'<!-- @stores -->.*?<!-- /@stores -->', lambda m: '<!-- @stores -->' + stores() + '<!-- /@stores -->', text, flags=re.S)
     return APP_STORE_ANY.sub(lambda m: APP_STORE_LINK, text)
 
 

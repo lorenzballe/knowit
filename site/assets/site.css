@@ -317,20 +317,32 @@ body.menu-open { overflow: hidden; }
 
 /* ── The store badges, Apple's and Google's own artwork ─────────────── */
 
-/* Both are the stores' own vector artwork, at one height; the gap is the
-   clear space Apple asks for, a quarter of the badge's height at most. */
-.stores { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-.stores a { display: block; border-radius: 10px; line-height: 0; }
-.stores img { display: block; height: 52px; width: auto; }
-.stores.large img { height: 56px; }
-.stores.small img { height: 44px; }
+/* Both are the stores' own artwork, unaltered, in the black both stores
+   prefer when two badges stand together, drawn inline from the copy the
+   header carries (tool/site/chrome.py) so they stay sharp at any size. One
+   height for the pair, --bh; between them a little more than the quarter of
+   that height Apple and Google ask to keep clear. On a narrow phone the
+   pair shrinks to stay on one line, never below the 40 pixels Apple sets as
+   the least on a screen. */
+.stores { --bh: clamp(40px, 12.4vw, 52px); display: flex; flex-wrap: wrap; gap: calc(var(--bh) * .3); align-items: center; }
+.stores.large { --bh: clamp(40px, 12.4vw, 56px); }
+.stores.small { --bh: 44px; }
 .stores.center { justify-content: center; }
-/* Where Google's badge goes once Astute is on Google Play: until then, a
-   line saying so, and no badge for a listing that is not there yet. */
-.stores-soon { font: 500 13px/1.3 var(--font-text); color: var(--cream-50); }
-@media (hover: hover) {
-  .stores a { transition: translate .25s var(--ease), box-shadow .25s var(--ease); }
-  .stores a:hover { translate: 0 -2px; box-shadow: 0 16px 30px -14px rgba(0, 0, 0, .85); }
+.store { display: block; flex: none; line-height: 0; border-radius: calc(var(--bh) * .24); }
+.store-google-play { border-radius: calc(var(--bh) * .125); }
+/* The artwork's own black and no stroke, whatever the page around it sets. */
+.store svg { display: block; width: auto; height: var(--bh); fill: #000; stroke: none; }
+.store-app-store svg { aspect-ratio: 119.66407 / 40; }
+.store-google-play svg { aspect-ratio: 239.17 / 70.87; }
+/* The ring follows each badge's own corners, clear of the artwork. */
+.store:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* Under the pointer a badge rises a little off the page, on its own shadow;
+   pressed, it settles. The artwork itself never moves out of true. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .store { transition: translate .3s var(--ease), box-shadow .3s var(--ease); }
+  .store:hover { translate: 0 -2px; box-shadow: 0 14px 26px -12px rgba(0, 0, 0, .9), 0 4px 10px -6px rgba(0, 0, 0, .6); }
+  .store:active { translate: 0 0; box-shadow: 0 6px 14px -10px rgba(0, 0, 0, .8); transition-duration: .08s; }
 }
 
 /* ── The plan picker: two tiles, a badge, and a line of reassurance ─── */
@@ -528,9 +540,12 @@ body.menu-open { overflow: hidden; }
   box-shadow: 0 50px 90px -45px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .25);
 }
 .lost-face.back { transform: rotateY(180deg); }
-.lost-face .topic { display: flex; align-items: center; gap: 6px; margin: 0; font: 700 11px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
-.lost-face .topic span { width: 11px; height: 11px; border: 1.5px solid currentColor; border-radius: 50%; }
-.lost-face .q { margin: auto 0; font: 600 32px/1.1 var(--font-display); letter-spacing: -.02em; font-variation-settings: 'opsz' 144; }
+/* Named and set as the app's cards are: the label at 11, spaced 1.4, at 72%;
+   the question in the middle of the card, at 600 on lines of 1.08, the
+   tracking -0.4 less 2.8% of its size. */
+.lost-face .topic { display: flex; align-items: center; gap: 8px; margin: 0; font: 600 11px/16px var(--font-text); letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255, 255, 255, .72); }
+.lost-face .topic span { width: 14px; height: 14px; margin: 1px; border: 1.6px solid #fff; border-radius: 50%; }
+.lost-face .q { margin: auto 0; font: 600 32px/1.08 var(--font-display); letter-spacing: calc(-.4px - 32px * .028); font-optical-sizing: auto; font-variation-settings: 'SOFT' 30, 'WONK' 0; }
 .lost-face .a { margin: 0; font: 400 18px/1.5 var(--font-text); }
 .lost-face .hint { margin: 0; font: 700 10px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
 .lost-face .chunky {
