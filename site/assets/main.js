@@ -14,9 +14,9 @@
   const onChange = (mq, fn) => (mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn));
 
   // Download links go to the App Store on an iPhone or iPad. Astute is not on
-  // Google Play yet, so on Android they go to /get, which says so; on a
-  // computer they go to the QR code at the foot of the landing page, to be
-  // scanned with the phone.
+  // Google Play yet, so on Android they go to /get, which has both badges and
+  // says Android is coming; on a computer they go to the QR code at the foot
+  // of the landing page, to be scanned with the phone.
   const ua = navigator.userAgent;
   const android = /android/i.test(ua);
   const ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
@@ -34,11 +34,12 @@
   // A link shared from the app says where it came from (?ref=share_day,
   // share_card, share_record). The ref rides on every event of the page, on
   // the links to the site's other pages, so that a visit keeps it without
-  // anything being stored, and on the store links as their campaign: ct on
-  // the App Store's — the page's name when there is no ref — and the install
-  // referrer on Google Play's. Apple counts a ct only beside the account's
-  // provider token, which tool/site/chrome.py writes into every App Store
-  // link once it is set there.
+  // anything being stored, and on the store links as their campaign — the
+  // page's name when there is no ref: ct on the App Store's, and on Google
+  // Play's the campaign of its install referrer, which is a query string of
+  // its own and so goes in encoded. Apple counts a ct only beside the
+  // account's provider token, which tool/site/chrome.py writes into every
+  // App Store link once it is set there.
   if (navigator.doNotTrack !== '1' && navigator.globalPrivacyControl !== true) {
     const POSTHOG_KEY = 'phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF';
     const POSTHOG_HOST = 'https://eu.i.posthog.com';
@@ -64,7 +65,7 @@
       if (!store && !(ref && a.origin === location.origin && a.pathname !== location.pathname)) return;
       const url = new URL(a.href);
       if (store === 'app_store') url.searchParams.set('ct', ref || page);
-      else if (store === 'play') url.searchParams.set('referrer', 'utm_source=' + (ref || 'site'));
+      else if (store === 'play') url.searchParams.set('referrer', 'utm_source=site&utm_campaign=' + (ref || page));
       else url.searchParams.set('ref', ref);
       a.href = url.href;
     });
@@ -278,6 +279,48 @@
   // Where there is no pointer to hover with, a tap turns a card round.
   if (!finePointer) $$('.orb').forEach(orb => orb.addEventListener('click', () => orb.classList.toggle('turned')));
 
+  // Every card's question is set as the app's cards set theirs: in the middle
+  // of the room under the subject, as large as that room holds between the
+  // two sizes the card allows (data-fit="min max"), with the tracking
+  // tightening as it grows (the CSS, from --fs). The page carries the size
+  // measured for each at the width it was measured at (--fs, data-fit-w), so
+  // it reads right before this runs and without it; this checks each once
+  // the fonts are in and measures again any that do not fit, or whose card
+  // is now another size. A question that will not fit even at the smallest
+  // size lets its card grow where the card can, and is never clipped. A card
+  // with no room at all (hidden) is left until it has some.
+  const fitted = new Map();
+  const fitQuestion = el => {
+    const text = el.firstElementChild;
+    if (!text || !text.textContent) return;
+    el.classList.remove('spill');
+    const w = el.clientWidth, h = el.clientHeight;
+    if (!w || !h) return;
+    const fits = () => text.offsetHeight <= el.clientHeight + 0.5 && text.scrollWidth <= text.clientWidth + 1;
+    if (!el.dataset.fitted && Math.abs(w - Number(el.dataset.fitW || -9)) <= 2 && fits()) return;
+    el.dataset.fitted = '1';
+    const key = el.dataset.fit + '|' + w + '|' + h + '|' + text.textContent;
+    if (!fitted.has(key)) {
+      const [min, max] = el.dataset.fit.split(' ').map(Number);
+      const at = s => { el.style.setProperty('--fs', s + 'px'); return fits(); };
+      let lo = min, hi = max;
+      if (at(max)) lo = max;
+      else while (hi - lo > 0.25) { const mid = (lo + hi) / 2; if (at(mid)) lo = mid; else hi = mid; }
+      fitted.set(key, lo);
+    }
+    el.style.setProperty('--fs', fitted.get(key) + 'px');
+    el.classList.toggle('spill', !fits());
+  };
+  const fitQuestions = () => $$('[data-fit]').forEach(fitQuestion);
+  // Measured with the fonts in; anything measured before they came is
+  // measured again.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitted.clear(); fitQuestions(); });
+  else window.addEventListener('load', fitQuestions);
+  // Cards that change width with the window (the two that flip, today's)
+  // are measured again when it settles.
+  let refit = 0;
+  window.addEventListener('resize', () => { cancelAnimationFrame(refit); refit = requestAnimationFrame(fitQuestions); });
+
   const demo = $('[data-demo]');
   // The phone turns to face whoever reaches for it: under the pointer, and
   // for good once a finger has touched it.
@@ -397,8 +440,13 @@
         back.inert = false;
         if (held) $('.pill-next', card).focus({ preventScroll: true });
         $('.pill-front', card).inert = true;
-        // Written once the back can be read, so that it is announced.
-        $('.v-line', card).textContent = (right ? 'You got it' : 'Almost everyone gets this wrong') + ' · you said ' + level + '% sure';
+        // Written once the back can be read, so that it is announced. The
+        // app's own line: right, or what was picked beside what it is — and
+        // never a claim about how other readers did, which nothing here
+        // could back.
+        const opts = $$('.pill-opt', card);
+        const said = right ? 'You got it' : 'You said ' + opts[Number(card.dataset.taken)].textContent + ' · it is ' + opts[Number(card.dataset.answer)].textContent;
+        $('.v-line', card).textContent = said + ' · you said ' + level + '% sure';
         setTimeout(() => back.classList.add('in'), still ? 0 : 380);
         say(at === 0 ? 'Tap the card for the next one' : '');
       }, still ? 0 : 160);
@@ -512,9 +560,13 @@
         const day = data && data.days && data.days[key];
         if (!day || !day.question) return;
         if (/^#[0-9a-f]{6}$/i.test(day.color)) today.style.setProperty('--bg', day.color);
-        if (/^#[0-9a-f]{6}$/i.test(day.ink)) today.style.setProperty('--ink', day.ink);
+        // The ink as the cards take it, three channels, so the subject's name
+        // can be set in it at three quarters.
+        if (/^#[0-9a-f]{6}$/i.test(day.ink)) today.style.setProperty('--ink', [1, 3, 5].map(i => parseInt(day.ink.slice(i, i + 2), 16)).join(' '));
         $('#today-topic').textContent = day.topic || '';
-        $('#today-question').textContent = day.question;
+        // The subject's own mark, by its name: Pop culture is #subject-pop-culture.
+        $('#today-mark').setAttribute('href', '#subject-' + String(day.topic || '').toLowerCase().replace(/[^a-z]+/g, '-'));
+        $('#today-question span').textContent = day.question;
         $('#today-edition').textContent = day.edition ? 'Edition ' + day.edition : '';
         $('#today-date').textContent = new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }).format(now);
         const kicker = $('#hero-kicker');
@@ -533,6 +585,7 @@
           setInterval(tick, 30000);
         }
         today.hidden = false;
+        fitQuestion($('#today-question'));
       })
       .catch(() => {});
   }
