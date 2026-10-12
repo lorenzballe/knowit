@@ -54,7 +54,16 @@ test('a place that is not one is no place: nothing is dealt on it', () => {
 
 // ── A bank with cards about places in it ─────────────────────────────────
 
-const bank = Bank.bundled();
+// The bundled bank without its own cards about places: these tests bring
+// their own, and read the same whatever places the bank has grown.
+const bundled = Bank.bundled();
+const bank = new Bank({
+  version: bundled.version,
+  built: bundled.built,
+  cards: bundled.cards.filter((c) => !isPlaceCard(c)),
+  editions: Object.fromEntries([...bundled.editions].map(([k, v]) => [String(k), v])),
+  commons: Object.fromEntries([...bundled.commons].map(([k, v]) => [String(k), v])),
+});
 const DAY = '2026-10-05'; // a Monday: an ordinary day of the week
 const NOW = Date.UTC(2026, 9, 5, 7, 0);
 
@@ -75,21 +84,21 @@ function placed(base: string, id: string, place: Record<string, unknown>, questi
 }
 
 const local: Card[] = [
-  placed('history-1', 'history-modena-1', MODENA, 'Why does the Ghirlandina lean the way it does?'),
-  placed('history-1848-5', 'history-modena-2', MODENA),
-  placed('history-british-1', 'history-modena-3', MODENA),
-  placed('food-beer-1', 'food-bologna-1', BOLOGNA),
-  placed('history-2', 'history-emilia-1', EMILIA),
-  placed('history-1848-9', 'history-emilia-2', EMILIA),
-  placed('food-beer-2', 'food-lombardy-1', LOMBARDY),
-  placed('history-6', 'history-italy-1', ITALY),
-  placed('history-1848-10', 'history-italy-2', ITALY),
+  placed('history-1', 'history-fixture-modena-1', MODENA, 'Why does the Ghirlandina lean the way it does?'),
+  placed('history-1848-5', 'history-fixture-modena-2', MODENA),
+  placed('history-british-1', 'history-fixture-modena-3', MODENA),
+  placed('food-beer-1', 'food-fixture-bologna-1', BOLOGNA),
+  placed('history-2', 'history-fixture-emilia-1', EMILIA),
+  placed('history-1848-9', 'history-fixture-emilia-2', EMILIA),
+  placed('food-beer-2', 'food-fixture-lombardy-1', LOMBARDY),
+  placed('history-6', 'history-fixture-italy-1', ITALY),
+  placed('history-1848-10', 'history-fixture-italy-2', ITALY),
   // Tempting every shared path: a Thinking question (the question of the
   // day's pool), reads of every kind (the common cards'), a debate.
-  placed('thinking-1', 'thinking-italy-1', ITALY),
-  placed('food-beer-7', 'food-italy-1', ITALY),
-  placed('history-clothes-10', 'history-italy-3', ITALY),
-  placed('history-food-10', 'history-provence-1', FRANCE),
+  placed('thinking-1', 'thinking-fixture-italy-1', ITALY),
+  placed('food-beer-7', 'food-fixture-italy-1', ITALY),
+  placed('history-clothes-10', 'history-fixture-italy-3', ITALY),
+  placed('history-food-10', 'history-fixture-provence-1', FRANCE),
 ];
 const localIds = new Set(local.map((c) => c.id));
 
@@ -168,7 +177,7 @@ test('Explore for everybody never shows one, however many readers kept it', () =
 
 test('search finds one only for a reader who lives there', () => {
   const asked = 'ghirlandina';
-  assert.deepEqual(search(withPlaces, asked, 30, placeFromJson(IN_MODENA)).map((c) => c.id), ['history-modena-1']);
+  assert.deepEqual(search(withPlaces, asked, 30, placeFromJson(IN_MODENA)).map((c) => c.id), ['history-fixture-modena-1']);
   assert.deepEqual(search(withPlaces, asked, 30, placeFromJson(IN_PALERMO)), []);
   assert.deepEqual(search(withPlaces, asked), []);
   // A reader with no place finds what they always found.
@@ -191,10 +200,10 @@ test('nearest first: the city, then the region, then the country, never one read
   const fitOf = (id: string) => placeFit(cardPlaceFromJson(withPlaces.byId.get(id)?.place), placeFromJson(IN_MODENA));
   // Formigine is within Modena's reach and not Bologna's.
   assert.deepEqual(order.slice(0, 3).map(fitOf), ['city', 'city', 'city']);
-  assert.deepEqual(new Set(order.slice(0, 3)), new Set(['history-modena-1', 'history-modena-2', 'history-modena-3']));
+  assert.deepEqual(new Set(order.slice(0, 3)), new Set(['history-fixture-modena-1', 'history-fixture-modena-2', 'history-fixture-modena-3']));
   assert.deepEqual(order.slice(3, 5).map(fitOf), ['region', 'region']);
   assert.deepEqual(order.slice(5).map(fitOf), ['country', 'country', 'country', 'country', 'country']);
-  assert.ok(!order.some((id) => ['food-bologna-1', 'food-lombardy-1', 'history-provence-1'].includes(id)));
+  assert.ok(!order.some((id) => ['food-fixture-bologna-1', 'food-fixture-lombardy-1', 'history-fixture-provence-1'].includes(id)));
   // Everything read: an ordinary day, card for card the day a bank without
   // them deals.
   const done = reader(IN_MODENA, { seenIds: seen });
@@ -214,7 +223,7 @@ test('no place, one that cannot be read, or one with no cards yet is an ordinary
   }
   // A reader in a city with no card of its own still has their region's.
   const piacenza = dealDay(withPlaces, reader(IN_PIACENZA), DAY, 'r');
-  assert.ok(['history-emilia-1', 'history-emilia-2'].includes(piacenza.local as string));
+  assert.ok(['history-fixture-emilia-1', 'history-fixture-emilia-2'].includes(piacenza.local as string));
 });
 
 test('it takes a slot that would have come at random, never one of the reader\'s own; on Astute+ the last of theirs', () => {
@@ -240,12 +249,12 @@ test('it takes a slot that would have come at random, never one of the reader\'s
 
 test('a debate about home is the day\'s only debate', () => {
   // A reader who has read every card about Modena but its debate.
-  const p = reader(IN_MODENA, { seenIds: ['history-modena-1', 'history-modena-2'] }, true);
+  const p = reader(IN_MODENA, { seenIds: ['history-fixture-modena-1', 'history-fixture-modena-2'] }, true);
   for (const date of days) {
     const d = dealDay(withPlaces, p, date, 'r');
-    assert.equal(d.local, 'history-modena-3');
+    assert.equal(d.local, 'history-fixture-modena-3');
     assert.equal(d.cards.filter(isDebate).length, 1, date);
-    assert.equal(d.cards[d.cards.length - 1].id, 'history-modena-3', 'a debate to close');
+    assert.equal(d.cards[d.cards.length - 1].id, 'history-fixture-modena-3', 'a debate to close');
   }
 });
 
@@ -261,18 +270,18 @@ test('the reader and the date decide it, the same on every server', () => {
   }
   // Among Modena's three, the days are not all the same card.
   assert.ok(picks.size > 1, [...picks].join(','));
-  assert.ok([...picks].every((id) => id.startsWith('history-modena-')));
+  assert.ok([...picks].every((id) => id.startsWith('history-fixture-modena-')));
 });
 
 test('the shelf of where you live: nearest first, read ones last in their fit, and nothing without a place', () => {
-  const p = reader(IN_MODENA, { seenIds: ['history-modena-2'] });
+  const p = reader(IN_MODENA, { seenIds: ['history-fixture-modena-2'] });
   const shelf = whereYouLive(withPlaces, p, DAY);
   const fits = shelf.map((c) => placeFit(cardPlaceFromJson(c.place), p.place));
   assert.deepEqual(fits, ['city', 'city', 'city', 'region', 'region', 'country', 'country', 'country', 'country', 'country']);
-  assert.equal(shelf[2].id, 'history-modena-2', 'the one read comes after its fit\'s unread');
+  assert.equal(shelf[2].id, 'history-fixture-modena-2', 'the one read comes after its fit\'s unread');
   assert.ok(shelf.length <= LOCAL_SHELF);
   assert.deepEqual(whereYouLive(withPlaces, reader(undefined), DAY), []);
-  assert.deepEqual(whereYouLive(withPlaces, reader(IN_PARIS), DAY).map((c) => c.id), ['history-provence-1']);
+  assert.deepEqual(whereYouLive(withPlaces, reader(IN_PARIS), DAY).map((c) => c.id), ['history-fixture-provence-1']);
   assert.deepEqual(placeCards(withPlaces, null), []);
 
   // On the reader's own Explore, and on no other shelf of it.
@@ -283,7 +292,7 @@ test('the shelf of where you live: nearest first, read ones last in their fit, a
   // A reader in Palermo has nothing of their city's or their region's yet,
   // and their country's all the same.
   const palermo = buildPersonalExplore(withPlaces, reader(IN_PALERMO), DAY, NOW).local;
-  assert.deepEqual(new Set(palermo.map((c) => c.id)), new Set(['history-italy-1', 'history-italy-2', 'thinking-italy-1', 'food-italy-1', 'history-italy-3']));
+  assert.deepEqual(new Set(palermo.map((c) => c.id)), new Set(['history-fixture-italy-1', 'history-fixture-italy-2', 'thinking-fixture-italy-1', 'food-fixture-italy-1', 'history-fixture-italy-3']));
   // A place the bank has nothing for yet: an empty shelf, which the phone hides.
   assert.deepEqual(buildPersonalExplore(withPlaces, reader(IN_BERLIN), DAY, NOW).local, []);
   assert.deepEqual(buildPersonalExplore(bank, reader(IN_MODENA), DAY, NOW).local, []);
@@ -292,7 +301,7 @@ test('the shelf of where you live: nearest first, read ones last in their fit, a
 test('a card about a place comes back as a review only to a reader who still lives there', () => {
   // A question about Modena whose principle no other card shares, so a
   // review of it can only be itself.
-  const lonely: Card = { ...placed('history-1848-5', 'history-modena-lonely', MODENA), principle: 'onlyHere' };
+  const lonely: Card = { ...placed('history-1848-5', 'history-fixture-modena-lonely', MODENA), principle: 'onlyHere' };
   const lonelyBank = new Bank({ version: 1, cards: [...bank.cards, lonely] });
   const answers = { [lonely.id]: { r: '0', c: 70, s: 0, d: '2026-10-01' } };
   const at = (place: unknown) => buildProfile({ topicWeights: { history: 1 }, answers, place }, new Map(), { tz: 120, plus: true }, lonelyBank, NOW);

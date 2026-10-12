@@ -48,21 +48,21 @@ const Map<String, Object> _france = {'country': 'FR'};
 
 /// The cards about places, as (the card copied, its new id, its place).
 const List<(String, String, Map<String, Object>)> _local = [
-  ('history-1', 'history-modena-1', _modena),
-  ('history-1848-5', 'history-modena-2', _modena),
-  ('history-british-1', 'history-modena-3', _modena),
-  ('food-beer-1', 'food-bologna-1', _bologna),
-  ('history-2', 'history-emilia-1', _emilia),
-  ('history-1848-9', 'history-emilia-2', _emilia),
-  ('food-beer-2', 'food-lombardy-1', _lombardy),
-  ('history-6', 'history-italy-1', _italy),
-  ('history-1848-10', 'history-italy-2', _italy),
+  ('history-1', 'history-fixture-modena-1', _modena),
+  ('history-1848-5', 'history-fixture-modena-2', _modena),
+  ('history-british-1', 'history-fixture-modena-3', _modena),
+  ('food-beer-1', 'food-fixture-bologna-1', _bologna),
+  ('history-2', 'history-fixture-emilia-1', _emilia),
+  ('history-1848-9', 'history-fixture-emilia-2', _emilia),
+  ('food-beer-2', 'food-fixture-lombardy-1', _lombardy),
+  ('history-6', 'history-fixture-italy-1', _italy),
+  ('history-1848-10', 'history-fixture-italy-2', _italy),
   // Tempting every road for everybody: a Thinking question (the question
   // of the day's pool), reads (the edition's cards'), a debate.
-  ('thinking-1', 'thinking-italy-1', _italy),
-  ('food-beer-7', 'food-italy-1', _italy),
-  ('history-clothes-10', 'history-italy-3', _italy),
-  ('history-food-10', 'history-provence-1', _france),
+  ('thinking-1', 'thinking-fixture-italy-1', _italy),
+  ('food-beer-7', 'food-fixture-italy-1', _italy),
+  ('history-clothes-10', 'history-fixture-italy-3', _italy),
+  ('history-food-10', 'history-fixture-provence-1', _france),
 ];
 
 final Set<String> _localIds = {for (final c in _local) c.$2};
@@ -73,9 +73,22 @@ const String _ghirlandina = 'Why does the Ghirlandina lean the way it does?';
 /// The bank the app ships with, and the cards about places beside it. Each
 /// asks its own question, so a line that quotes one can be told from a line
 /// that quotes the card it was copied from.
-BankBundle _withPlaces() {
+/// The bank the app ships with, less its own cards about places: these
+/// tests bring their own, and read the same whatever places it has grown.
+Map<String, Object?> _shippedWithoutPlaces() {
   final Map<String, Object?> doc =
       jsonDecode(kEmbeddedBank) as Map<String, Object?>;
+  doc['cards'] = [
+    for (final Object? c in doc['cards'] as List<Object?>)
+      if ((c as Map<String, Object?>)['place'] == null) c,
+  ];
+  return doc;
+}
+
+final BankBundle _plain = BankBundle.parse(jsonEncode(_shippedWithoutPlaces()));
+
+BankBundle _withPlaces() {
+  final Map<String, Object?> doc = _shippedWithoutPlaces();
   final List<Object?> cards = doc['cards'] as List<Object?>;
   final Map<String, Map<String, Object?>> byId = {
     for (final Object? c in cards)
@@ -88,7 +101,7 @@ BankBundle _withPlaces() {
         ...byId[base]!,
         'id': id,
         'place': place,
-        'question': id == 'history-modena-1'
+        'question': id == 'history-fixture-modena-1'
             ? _ghirlandina
             : '${byId[base]!['question']} ($id)',
       },
@@ -139,7 +152,7 @@ final List<DateTime> _days = [
 /// [run] against the bank as it ships, then against the bank with the cards
 /// about places in it.
 (T, T) _both<T>(T Function() run) {
-  PillBank.reset();
+  PillBank.adopt(_plain);
   resetCalendar();
   final T plain = run();
   PillBank.adopt(_placed);
@@ -172,14 +185,14 @@ void main() {
         PillBank.cards.length + PillBank.placeCards.length,
       );
       // Still known by id: a deck dealt with one still opens.
-      expect(PillBank.byId('history-modena-1')?.place?.city, 'Modena');
-      PillBank.reset();
+      expect(PillBank.byId('history-fixture-modena-1')?.place?.city, 'Modena');
+      PillBank.adopt(_plain);
       expect(PillBank.placeCards, isEmpty);
       expect(PillBank.live.length, PillBank.cards.length);
     });
 
     test('carries the place through JSON, and refuses one it cannot read', () {
-      final Pill modena = PillBank.byId('history-modena-1')!;
+      final Pill modena = PillBank.byId('history-fixture-modena-1')!;
       final Map<String, Object?> json = cardToJson(modena);
       expect(json['place'], _modena);
       expect(cardToJson(cardFromJson(json)), json);
@@ -254,7 +267,7 @@ void main() {
 
     test('found by the search only for a reader who lives there', () {
       expect(_ids(searchPills('ghirlandina', home: _inModena)), [
-        'history-modena-1',
+        'history-fixture-modena-1',
       ]);
       expect(searchPills('ghirlandina', home: _inPalermo), isEmpty);
       expect(searchPills('ghirlandina'), isEmpty);
@@ -269,9 +282,12 @@ void main() {
     });
 
     test('never on a widget, a reminder or the lock screen', () async {
-      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
-      final AppState app = AppState(clock: () => DateTime(2026, 10, 12, 9))
-        ..place = _inModena;
+      // Kept as the place capture keeps it, so the launch reads it back.
+      SharedPreferences.setMockInitialValues({
+        'knowit.onboarded': true,
+        'knowit.place': jsonEncode(_inModena.toJson()),
+      });
+      final AppState app = AppState(clock: () => DateTime(2026, 10, 12, 9));
       await app.init();
       expect(
         app.todaysDeck.where((p) => p.isAboutAPlace),
@@ -305,9 +321,9 @@ void main() {
         'sent it; only on the reader\'s own Where you live', () {
       Map<String, Object?> card(String id) => cardToJson(PillBank.byId(id)!);
       final List<Map<String, Object?>> mixed = [
-        card('history-modena-1'),
+        card('history-fixture-modena-1'),
         card('history-1'),
-        card('history-italy-1'),
+        card('history-fixture-italy-1'),
       ];
       final ServedExplore? got = ServedExplore.parse(
         {
@@ -336,7 +352,7 @@ void main() {
       ]) {
         expect(_ids(shelf), ['history-1']);
       }
-      expect(_ids(got.local), ['history-modena-1', 'history-italy-1']);
+      expect(_ids(got.local), ['history-fixture-modena-1', 'history-fixture-italy-1']);
     });
   });
 
@@ -370,9 +386,9 @@ void main() {
       // France are not where the reader lives.
       expect(
         order.toSet().intersection({
-          'food-bologna-1',
-          'food-lombardy-1',
-          'history-provence-1',
+          'food-fixture-bologna-1',
+          'food-fixture-lombardy-1',
+          'history-fixture-provence-1',
         }),
         isEmpty,
       );
@@ -422,12 +438,12 @@ void main() {
         final Deal deal = dealDay(
           date: date,
           own: kPillsPerDay,
-          exclude: {'history-modena-1', 'history-modena-2'},
+          exclude: {'history-fixture-modena-1', 'history-fixture-modena-2'},
           home: _inModena,
         );
-        expect(deal.local?.id, 'history-modena-3');
+        expect(deal.local?.id, 'history-fixture-modena-3');
         expect(deal.cards.where((p) => p.challenge is TakeASide), hasLength(1));
-        expect(deal.cards.last.id, 'history-modena-3');
+        expect(deal.cards.last.id, 'history-fixture-modena-3');
       }
     });
 
@@ -441,14 +457,14 @@ void main() {
         picks.add(a!.id);
       }
       expect(picks.length, greaterThan(1));
-      expect(picks.every((id) => id.startsWith('history-modena-')), isTrue);
+      expect(picks.every((id) => id.startsWith('history-fixture-modena-')), isTrue);
     });
 
     test('a place with no card of its own takes its region\'s; one with '
         'nothing written for it is an ordinary day', () {
       expect(
         dealDay(date: _monday, home: _inPiacenza).local?.id,
-        anyOf('history-emilia-1', 'history-emilia-2'),
+        anyOf('history-fixture-emilia-1', 'history-fixture-emilia-2'),
       );
       for (final Place? home in [null, _inBerlin]) {
         final (plain, placed) = _both(
@@ -465,7 +481,7 @@ void main() {
         'and nothing without a place', () {
       final List<Pill> shelf = whereYouLive(
         _inModena,
-        read: {'history-modena-2'},
+        read: {'history-fixture-modena-2'},
         seed: '2026-10',
       );
       expect(
@@ -476,17 +492,17 @@ void main() {
           ...List.filled(5, PlaceFit.country),
         ],
       );
-      expect(shelf[2].id, 'history-modena-2');
+      expect(shelf[2].id, 'history-fixture-modena-2');
       expect(shelf.length, lessThanOrEqualTo(kWhereYouLiveShelf));
       expect(whereYouLive(null, seed: '2026-10'), isEmpty);
       expect(whereYouLive(_inBerlin, seed: '2026-10'), isEmpty);
       // Palermo has nothing of its city's or region's yet: its country's.
       expect(_ids(whereYouLive(_inPalermo, seed: '2026-10')).toSet(), {
-        'history-italy-1',
-        'history-italy-2',
-        'history-italy-3',
-        'thinking-italy-1',
-        'food-italy-1',
+        'history-fixture-italy-1',
+        'history-fixture-italy-2',
+        'history-fixture-italy-3',
+        'thinking-fixture-italy-1',
+        'food-fixture-italy-1',
       });
     });
   });
@@ -534,9 +550,9 @@ void main() {
     testWidgets('says why the card is there, quietly, on a small and a '
         'large phone', (tester) async {
       final Map<String, String> lines = {
-        'history-modena-2': 'Near you · Modena',
-        'history-emilia-1': 'Your region · Emilia-Romagna',
-        'history-italy-3': 'Your country · Italy',
+        'history-fixture-modena-2': 'Near you · Modena',
+        'history-fixture-emilia-1': 'Your region · Emilia-Romagna',
+        'history-fixture-italy-3': 'Your country · Italy',
       };
       for (final (Size phone, Size card) in phones.values) {
         for (final MapEntry<String, String> e in lines.entries) {
@@ -561,7 +577,7 @@ void main() {
       tester,
     ) async {
       final (Size phone, Size card) = phones['small']!;
-      final Pill modena = PillBank.byId('history-modena-1')!;
+      final Pill modena = PillBank.byId('history-fixture-modena-1')!;
       await pump(tester, modena, phone: phone, card: card, home: _inPalermo);
       expect(find.text('Modena'), findsOneWidget);
       expect(find.textContaining('Near you'), findsNothing);
