@@ -398,7 +398,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      '你的账号、它的备份以及好友能看到的看板将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
+      '你的账号及其备份将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
 
   @override
   String get deleteAccountConfirm => '永久删除';
@@ -1535,82 +1535,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '到目前为止答了$answered题。今天：$question';
-  }
-
-  @override
-  String get friends => '朋友';
-
-  @override
-  String friendsN(int n) {
-    return '朋友 · $n';
-  }
-
-  @override
-  String get yourFriendCode => '你的好友码';
-
-  @override
-  String get codeCopied => '已复制代码。';
-
-  @override
-  String get addAFriend => '添加朋友';
-
-  @override
-  String get theirCode => '对方的代码';
-
-  @override
-  String get add => '添加';
-
-  @override
-  String get noFriendsYet => '还没有人。和朋友交换代码，比较连续天数和自信校准 — 永远不会看到答案。';
-
-  @override
-  String get friendsNeedAnAccount => '比较需要手机应用和账户。你的代码会被保留。';
-
-  @override
-  String get noReaderWithCode => '没有使用该代码的读者。';
-
-  @override
-  String get thatsYourOwnCode => '这是你自己的代码。';
-
-  @override
-  String pointsOff(int n) {
-    return '偏差$n分';
-  }
-
-  @override
-  String get notMeasuredYet => '尚未测量';
-
-  @override
-  String get thisWeekByCalibration => '本周，按校准排序';
-
-  @override
-  String get notYetToday => '今天还没有';
-
-  @override
-  String nOfSeven(int n) {
-    return '7天中$n天';
-  }
-
-  @override
-  String get you => '你';
-
-  @override
-  String get todaysQuestion => '今日一题';
-
-  @override
-  String get right => '答对';
-
-  @override
-  String get wrong => '答错';
-
-  @override
-  String rightAtSure(int sure) {
-    return '答对，自信度$sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return '答错，自信度$sure%';
   }
 
   @override

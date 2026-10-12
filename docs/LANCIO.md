@@ -3,7 +3,7 @@
 > Dove siamo e cosa manca, in ordine. Si aggiorna man mano che le cose si fanno.
 
 ## Dove siamo
-- **L'app è costruita:** onboarding, Oggi, Esplora con ricerca, Salvate, Profilo, percorso, amici, paywall, widget, promemoria, 13 lingue.
+- **L'app è costruita:** onboarding, Oggi, Esplora con ricerca, Salvate, Profilo, percorso, paywall, widget, promemoria, 13 lingue. Gli amici sono stati tolti prima del lancio.
 - **Abbonamenti:** RevenueCat collegato a iOS e Android (prodotti, offerta, entitlement `astuto_pro`, ripristino, prova gratuita).
 - **Server:** Cloud Functions online, regole del database testate. Analisi con PostHog. Privacy, termini e supporto sul sito.
 - **Carte:** 5.042 nella banca, ma quasi tutte "da leggere". 557 affermazioni ancora da verificare (`tool/cards/UNVERIFIED.md`).

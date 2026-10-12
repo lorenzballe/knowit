@@ -2,113 +2,87 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
-import 'package:astuto/screens/friends_screen.dart';
+import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/board.dart';
 import 'package:astuto/sync/reader_store.dart';
+import 'package:astuto/theme.dart';
 
+/// Friends came out before the launch. What these check is that nothing of
+/// them is left to find, and that the one thing still owed to a reader who
+/// used them — their board taken down with their account — is still done.
 void main() {
-  group('A friend code', () {
-    test('is six letters nobody can misread, the same every time', () {
-      final code = friendCodeOf('some-firebase-uid');
-      expect(code, hasLength(6));
-      expect(friendCodeOf('some-firebase-uid'), code);
-      expect(friendCodeOf('another-uid'), isNot(code));
-      for (final unit in code.codeUnits) {
-        expect(kCodeAlphabet, contains(String.fromCharCode(unit)));
-      }
-      // Never a letter that looks like a digit, or a digit like a letter.
-      expect(kCodeAlphabet, isNot(contains('O')));
-      expect(kCodeAlphabet, isNot(contains('0')));
-      expect(kCodeAlphabet, isNot(contains('I')));
-      expect(kCodeAlphabet, isNot(contains('1')));
-    });
+  Map<String, Object> marco() => {
+    'knowit.onboarded': true,
+    'knowit.name': 'Marco',
+    'knowit.streak': 4,
+    'knowit.lastCompletionDate': dateKey(
+      DateTime.now().subtract(const Duration(days: 1)),
+    ),
+    // Added on a build that still had friends.
+    'knowit.friendCodes': <String>['K7MP2X'],
+  };
 
-    test('survives being typed badly', () {
-      expect(parseFriendCode(' ab-cd ef '), 'ABCDEF');
-      expect(parseFriendCode('ABCDE'), isNull, reason: 'too short');
-      expect(parseFriendCode('ABCDE0'), isNull, reason: 'not in the alphabet');
-    });
+  test('a board was filed under six letters nobody can misread', () {
+    // Still worked out, because deleting an account finds the board an
+    // older build published by it.
+    final code = friendCodeOf('some-firebase-uid');
+    expect(code, hasLength(6));
+    expect(friendCodeOf('some-firebase-uid'), code);
+    expect(friendCodeOf('another-uid'), isNot(code));
+    for (final unit in code.codeUnits) {
+      expect(kCodeAlphabet, contains(String.fromCharCode(unit)));
+    }
   });
 
-  test('a board says the shape of the habit and nothing of the cards', () {
-    const board = Board(
-      uid: 'u',
-      code: 'ABCDEF',
-      name: 'Lena',
-      streak: 12,
-      weeks: 3,
-      days: 4,
-      gap: 8.4,
-      edition: 40,
-      squares: '⬜🟩⬜🟥⬜',
-      right: 1,
-      asked: 2,
-      updated: '2026-10-10',
-    );
-    final back = Board.fromJson(board.toJson())!;
-    expect(back.name, 'Lena');
-    expect(back.streak, 12);
-    expect(back.gap, 8.4);
-    expect(back.squares, board.squares);
-    expect(board.toJson().keys, isNot(contains('question')));
-    expect(board.toJson().keys, isNot(contains('answers')));
-  });
-
-  test('backing up also publishes the board, squares only once done', () async {
-    SharedPreferences.setMockInitialValues({
-      'knowit.onboarded': true,
-      'knowit.name': 'Marco',
-      'knowit.streak': 4,
-      'knowit.lastCompletionDate': dateKey(
-        DateTime.now().subtract(const Duration(days: 1)),
-      ),
-    });
+  test('backing up writes the backup and publishes no board', () async {
+    SharedPreferences.setMockInitialValues(marco());
     final app = AppState();
     await app.init();
+    final readers = MemoryReaderStore();
     final boards = MemoryBoardStore();
     final account = Account(
       uidOverride: 'u1',
-      storeOverride: MemoryReaderStore(),
+      storeOverride: readers,
       boardsOverride: boards,
     );
 
     await account.push(app);
-    final Board mine = boards.boards[friendCodeOf('u1')]!;
-    expect(mine.name, 'Marco');
-    expect(mine.streak, 4);
-    expect(mine.squares, isEmpty, reason: 'today is not done yet');
-    expect(account.friendCode, friendCodeOf('u1'));
-
-    for (var i = 0; i < kPillsPerDay; i++) {
-      await app.advance();
-    }
-    await account.push(app);
-    final Board done = boards.boards[friendCodeOf('u1')]!;
-    expect(done.streak, 5);
-    expect(done.squares.runes.length, kPillsPerDay);
-    expect(done.edition, editionOf(DateTime.now()));
+    expect((await readers.read('u1'))?.name, 'Marco');
+    expect(boards.boards, isEmpty);
+    // The codes are not shown anywhere, and the backup carries them as it
+    // found them.
+    expect((await readers.read('u1'))?.friendCodes, ['K7MP2X']);
   });
 
   test(
-    'deleting the account takes the backup, the board and the phone',
+    'deleting the account takes the backup, an old board and the phone',
     () async {
-      SharedPreferences.setMockInitialValues({
-        'knowit.onboarded': true,
-        'knowit.name': 'Marco',
-        'knowit.streak': 4,
-        'knowit.lastCompletionDate': dateKey(
-          DateTime.now().subtract(const Duration(days: 1)),
-        ),
-      });
+      SharedPreferences.setMockInitialValues(marco());
       final app = AppState();
       await app.init();
       final readers = MemoryReaderStore();
-      final boards = MemoryBoardStore();
+      final String code = friendCodeOf('u1');
+      // What a build that still had friends left behind.
+      final boards = MemoryBoardStore({
+        code: Board(
+          uid: 'u1',
+          code: code,
+          name: 'Marco',
+          streak: 4,
+          weeks: 1,
+          days: 3,
+          gap: 12,
+          edition: 40,
+          squares: '',
+          right: 0,
+          asked: 0,
+          updated: dateKey(DateTime.now()),
+        ),
+      });
       final account = Account(
         uidOverride: 'u1',
         storeOverride: readers,
@@ -116,22 +90,21 @@ void main() {
       );
       await account.push(app);
       expect(await readers.read('u1'), isNotNull);
-      expect(boards.boards[friendCodeOf('u1')], isNotNull);
 
       // Apple asks for this inside the app, for any app that makes accounts.
       final DeleteOutcome outcome = await account.deleteAccount(app);
       expect(outcome, DeleteOutcome.deleted);
       expect(account.deleting, isFalse);
 
-      // Nothing of the reader is left where it was kept, or for a friend to
-      // read, or on this phone.
+      // Nothing of the reader is left where it was kept, or on this phone.
       expect(await readers.read('u1'), isNull);
-      expect(boards.boards[friendCodeOf('u1')], isNull);
+      expect(boards.boards[code], isNull);
       expect(app.name, 'You');
       expect(app.streak, 0);
       expect(app.onboarded, isFalse);
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getString('knowit.name'), isNull);
+      expect(prefs.getStringList('knowit.friendCodes'), isNull);
     },
   );
 
@@ -145,90 +118,36 @@ void main() {
     expect(empty.toJson()['uid'], 'u1');
   });
 
-  group('The friends screen', () {
-    Widget host(AppState app, Account account) => MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: FriendsScreen(app: app, account: account, onBack: () {}),
+  testWidgets('the profile has no way to friends, even for a reader who had '
+      'some', (tester) async {
+    // Tall enough that every row of the profile is built at once.
+    tester.view.physicalSize = const Size(400, 3200);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    SharedPreferences.setMockInitialValues(marco());
+    final app = AppState();
+    await app.init();
+    final account = Account(
+      uidOverride: 'me',
+      boardsOverride: MemoryBoardStore(),
     );
 
-    testWidgets('shows a friend as a habit, never as answers', (tester) async {
-      final code = friendCodeOf('friend');
-      SharedPreferences.setMockInitialValues({
-        'knowit.onboarded': true,
-        'knowit.friendCodes': <String>[code],
-      });
-      final app = AppState();
-      await app.init();
-      final boards = MemoryBoardStore({
-        code: Board(
-          uid: 'friend',
-          code: code,
-          name: 'Lena',
-          streak: 12,
-          weeks: 3,
-          days: 4,
-          gap: 8.4,
-          edition: editionOf(DateTime.now()),
-          squares: '⬜🟩⬜🟥⬜',
-          right: 1,
-          asked: 2,
-          updated: dateKey(DateTime.now()),
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        home: Scaffold(
+          body: ProfileScreen(app: app, account: account, onSignedOut: () {}),
         ),
-      });
-      final account = Account(uidOverride: 'me', boardsOverride: boards);
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      await tester.pumpWidget(host(app, account));
-      await tester.pumpAndSettle();
-
-      expect(find.text(friendCodeOf('me')), findsOneWidget);
-      expect(find.text('Lena'), findsWidgets);
-      expect(find.text('🔥12 · 3 weeks kept · 8 points off'), findsOneWidget);
-      expect(find.text('⬜🟩⬜🟥⬜'), findsOneWidget);
-      // The week, by calibration: the friend is measured and the reader is
-      // not, so the friend leads.
-      expect(
-        find.text('This week, by calibration'.toUpperCase()),
-        findsOneWidget,
-      );
-      expect(find.text('You'), findsOneWidget);
-      expect(find.text('not measured yet'), findsOneWidget);
-    });
-
-    testWidgets('a code typed badly still adds, and your own does not', (
-      tester,
-    ) async {
-      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
-      final app = AppState();
-      await app.init();
-      final account = Account(
-        uidOverride: 'me',
-        boardsOverride: MemoryBoardStore(),
-      );
-      await tester.pumpWidget(host(app, account));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('Nobody yet'), findsOneWidget);
-
-      await tester.enterText(
-        find.byKey(const ValueKey('friend-code')),
-        friendCodeOf('me').toLowerCase(),
-      );
-      await tester.tap(find.text('Add'));
-      await tester.pumpAndSettle();
-      expect(find.text("That's your own code."), findsOneWidget);
-      expect(app.friendCodes, isEmpty);
-
-      await tester.enterText(
-        find.byKey(const ValueKey('friend-code')),
-        'ab-cdef',
-      );
-      await tester.tap(find.text('Add'));
-      await tester.pumpAndSettle();
-      expect(app.friendCodes, ['ABCDEF']);
-      expect(find.text('No reader with that code.'), findsOneWidget);
-
-      final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.friendCodes'), ['ABCDEF']);
-    });
+    // The rows either side of where the friends were are there.
+    expect(find.text('Liked'), findsOneWidget);
+    expect(find.text('Archive'), findsOneWidget);
+    expect(find.textContaining('Friend'), findsNothing);
+    expect(find.textContaining('friend'), findsNothing);
   });
 }

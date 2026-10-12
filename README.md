@@ -169,8 +169,8 @@ says the free days the store gives this reader (`Subscription.trialDays`):
 as many as the year's introductory offer holds, none for a reader Apple
 says has had them, and "charged today" otherwise. The card after the fifth
 says them the same way, and plainly *Get Astute+* to a reader past the
-trial. The mix, the streak, the freezes, the friends, the sharing and the
-search are free: they are how the app spreads.
+trial. The mix, the streak, the freezes, the sharing and the search are
+free: they are how the app spreads.
 The paywall opens on the door it was reached from (`PaywallVariant`): the
 journey on the record — whether the gap between sure and right is
 closing, told in the reader's own two numbers once twelve answers said
@@ -881,20 +881,21 @@ again. And a card thrown straight down, hard, is *less like this*, said
 once with the way back; a throw that drifts downward on its way sideways is
 not it. Likes and throws travel with the account.
 
-## Friends
+## Friends, taken out
 
-What a friend sees of a reader is the shape of the habit — the streak, the
-weeks kept, how far off the confidence runs, and today's five as squares
-once the day is done — and never a question's text or an answer. A board
-published by a build that still dealt the question of the day carries how
-it went, and the friends screen still shows it; this build publishes none. A board is
-published with every backup, under six letters worked from the account id
-(`friendCodeOf`, no O or 0, no I or 1) that nobody can read the id back
-from; a friend types them and sees the board. The week is compared by
-calibration, closest first: not who read the most, but whose confidence is
-nearest their record, which is the one race this app is for. Boards live at
-`boards/{code}` in Firestore, readable by anyone signed in and written only
-by their owner.
+There were friends: a code to give and one to type, and a board each reader
+published with every backup — the streak, the weeks kept, how far off the
+confidence ran, the day's five as squares — for the friends who had the
+code. They came out before the launch: a board with nobody on it makes the
+app look empty, and comparing needed an account. They may come back as a
+private challenge for two, through an invite link.
+
+So the profile has no row for them, there is no friends screen, and backing
+up publishes no board. The codes a reader added stay on the phone and in the
+backup (`friendCodes`), shown nowhere. A board an older build published
+stays at `boards/{code}` in Firestore (the code is `friendCodeOf`, six
+letters worked from the account id) until its reader deletes the account,
+which still takes it down.
 
 ## The home-screen widgets
 

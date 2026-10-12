@@ -400,7 +400,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      '계정과 백업, 친구에게 보이는 보드가 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
+      '계정과 백업이 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
 
   @override
   String get deleteAccountConfirm => '영구 삭제';
@@ -1549,83 +1549,6 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '지금까지 $answered문제 답함. 오늘: $question';
-  }
-
-  @override
-  String get friends => '친구';
-
-  @override
-  String friendsN(int n) {
-    return '친구 · $n';
-  }
-
-  @override
-  String get yourFriendCode => '내 친구 코드';
-
-  @override
-  String get codeCopied => '코드를 복사했어요.';
-
-  @override
-  String get addAFriend => '친구 추가';
-
-  @override
-  String get theirCode => '친구의 코드';
-
-  @override
-  String get add => '추가';
-
-  @override
-  String get noFriendsYet =>
-      '아직 아무도 없어요. 친구와 코드를 교환하고 연속 기록과 확신 정확도를 비교하세요 — 답은 절대 보이지 않아요.';
-
-  @override
-  String get friendsNeedAnAccount => '비교하려면 휴대폰 앱과 계정이 필요해요. 코드는 저장돼요.';
-
-  @override
-  String get noReaderWithCode => '그 코드를 가진 독자가 없어요.';
-
-  @override
-  String get thatsYourOwnCode => '그건 당신의 코드예요.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n점 어긋남';
-  }
-
-  @override
-  String get notMeasuredYet => '아직 측정 전';
-
-  @override
-  String get thisWeekByCalibration => '이번 주, 확신 정확도 순';
-
-  @override
-  String get notYetToday => '오늘은 아직';
-
-  @override
-  String nOfSeven(int n) {
-    return '7일 중 $n일';
-  }
-
-  @override
-  String get you => '나';
-
-  @override
-  String get todaysQuestion => '오늘의 질문';
-
-  @override
-  String get right => '정답';
-
-  @override
-  String get wrong => '오답';
-
-  @override
-  String rightAtSure(int sure) {
-    return '정답, 확신 $sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return '오답, 확신 $sure%';
   }
 
   @override
