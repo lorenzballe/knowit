@@ -865,6 +865,80 @@ class AppLocalizationsTr extends AppLocalizations {
   String get reminderAskNotNow => 'Şimdi değil';
 
   @override
+  String get placeAskTitle => 'Yaşadığın yer hakkında kartlar';
+
+  @override
+  String get placeAskLine =>
+      'Astute arada bir sana yaşadığın yer hakkında bir kart verecek — tarihi, bilimi, sürprizleri.';
+
+  @override
+  String get placeOnlyCity => 'Yalnızca şehrin saklanır, tam konumun asla.';
+
+  @override
+  String get placeAskPreviewLine => 'Yakınında · Modena';
+
+  @override
+  String get placeAskPreviewQuestion => 'Ghirlandina eğik. Ne kadar?';
+
+  @override
+  String get placeAskYes => 'Konumumu kullan';
+
+  @override
+  String get placeAskNotNow => 'Şimdi değil';
+
+  @override
+  String get placeRowTitle => 'Yaşadığın yer';
+
+  @override
+  String get placeRowOff => 'Kapalı';
+
+  @override
+  String get placeRowOffLine => 'Yaşadığın yer hakkında kartlar için aç.';
+
+  @override
+  String get placeSwitchOn => 'Aç';
+
+  @override
+  String get placeUseNow => 'Konumumu şimdi kullan';
+
+  @override
+  String get placeRemove => 'Kaldır';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Yaşadığın yer: $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Kaldırıldı. Astute artık nerede yaşadığını saklamıyor.';
+
+  @override
+  String get placeNotFound =>
+      'Şu anda nerede olduğun bulunamadı. Astute başka bir gün yeniden deneyecek.';
+
+  @override
+  String get placeDeniedNote =>
+      'Sorun değil. İstediğin zaman Profil\'den açabilirsin.';
+
+  @override
+  String get placeServicesOff =>
+      'Bu telefonda konum kapalı. Ayarlar\'dan aç ve yeniden dene.';
+
+  @override
+  String get placeNotHere => 'Bu cihaz nerede olduğunu söyleyemiyor.';
+
+  @override
+  String get placeSettingsTitle => 'Astute için konum kapalı';
+
+  @override
+  String get placeSettingsBody =>
+      'Yaşadığın yer hakkında kartlar almak için Ayarlar\'da Astute\'un konumunu kullanmasına izin ver. Yalnızca şehrin saklanır.';
+
+  @override
+  String get placeSettingsOpen => 'Ayarları aç';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

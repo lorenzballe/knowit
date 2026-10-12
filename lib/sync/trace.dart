@@ -114,6 +114,11 @@ class Trace extends ChangeNotifier {
     'mix set': 'mix',
     'genres set': 'genres',
     'plan changed': 'plan',
+    // Where the reader lives, set or changed, and removed: the place to the
+    // city (see _fieldsOf), never the point. What the dealer deals from is
+    // the backup's `place`; this is when it moved.
+    'place set': 'place',
+    'place removed': 'unplace',
   };
 
   /// The fields kept, and the short name each goes out under. Card tags are
@@ -186,16 +191,25 @@ class Trace extends ChangeNotifier {
     'with_note': 'nt',
   };
 
+  /// Events that keep fields of their own and nothing else, because a name
+  /// means something different on them: `region` on a card is the card's
+  /// tag, which the server reads off its id, and on `place set` it is where
+  /// the reader lives. Country, region and city only — the point never.
+  static const Map<String, Map<String, String>> _fieldsOf = {
+    'place set': {'country': 'co', 'region': 'rg', 'city': 'ci'},
+  };
+
   /// Writes an event down, if it is one the trace keeps.
   void note(String event, Map<String, Object?> properties) {
     final String? code = kept[event];
     if (code == null) return;
+    final Map<String, String> fields = _fieldsOf[event] ?? _fields;
     final Map<String, Object?> compact = {
       't': _clock().millisecondsSinceEpoch,
       'e': code,
     };
     for (final MapEntry<String, Object?> e in properties.entries) {
-      final String? key = _fields[e.key];
+      final String? key = fields[e.key];
       final Object? value = e.value;
       if (key == null || value == null || compact.containsKey(key)) continue;
       // Numbers, flags and short enums only. Anything longer is prose or a

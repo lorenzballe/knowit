@@ -504,6 +504,11 @@ class Account extends ChangeNotifier {
       }
       await auth?.signOut();
       await Subscription.instance.logOut();
+      // Where the reader lived leaves PostHog's profile too, while that
+      // profile is still theirs: the wipe below forgets who they were. Not
+      // before the sign-in has gone, or the change would be backed up into
+      // the document just deleted.
+      if (app.place != null) await app.clearPlace();
       await app.signOut();
       return DeleteOutcome.deleted;
     } on FirebaseAuthException catch (error, stack) {

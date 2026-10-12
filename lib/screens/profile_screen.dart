@@ -10,9 +10,11 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
+import '../models/place.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
+import '../sync/place_finder.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
 import '../sync/account.dart';
@@ -20,6 +22,7 @@ import '../sync/subscription.dart';
 import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
+import '../widgets/place_ask.dart';
 import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
@@ -413,6 +416,15 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
+          // Where the reader lives: the city kept, or off, and the way to
+          // change either. Only where a place can be read, or one is kept —
+          // the web has neither, and a switch that leads nowhere is not one.
+          if (PlaceFinder.instance.canAsk || app.place != null) ...[
+            const SizedBox(height: 22),
+            Eyebrow(context.l10n.placeRowTitle),
+            const SizedBox(height: 11),
+            _PlaceRow(app: app),
+          ],
           const SizedBox(height: 24),
           // Your own shelf, which is a thing you own and not a place to go
           // looking — so it lives here, with the rest of what is yours,
@@ -678,6 +690,78 @@ class ProfileScreen extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// Where the reader lives, as the app keeps it: the city — or the region or
+/// the country, when the phone named no city — or Off. A tap on a place
+/// offers to read it again or remove it; a tap on Off is the sheet that
+/// asks, the same one Explore's shelf opens.
+class _PlaceRow extends StatelessWidget {
+  const _PlaceRow({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Palette p = context.p;
+    final Place? place = app.place;
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        key: const ValueKey('place-row'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => place == null
+            ? askForPlace(context, app, from: 'profile')
+            : showPlaceOptions(context, app),
+        child: PaperCard(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          radius: 18,
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      place == null ? l.placeRowOff : placeName(place),
+                      style: AppText.body(
+                        size: 14.5,
+                        weight: FontWeight.w500,
+                        height: 1.2,
+                        color: p.ink,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      place == null ? l.placeRowOffLine : l.placeOnlyCity,
+                      style: AppText.body(
+                        size: 12,
+                        height: 1.3,
+                        color: p.inkMuted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 14),
+              if (place == null)
+                Text(
+                  l.placeSwitchOn,
+                  style: AppText.body(
+                    size: 13,
+                    weight: FontWeight.w600,
+                    color: p.link,
+                  ),
+                )
+              else
+                Icon(Icons.chevron_right_rounded, size: 20, color: p.inkFaint),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -870,6 +870,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderAskNotNow => 'Not now';
 
   @override
+  String get placeAskTitle => 'Cards about where you live';
+
+  @override
+  String get placeAskLine =>
+      'Now and then, Astute will deal you a card about the place you live — its history, its science, its surprises.';
+
+  @override
+  String get placeOnlyCity =>
+      'Only your city is kept, never your exact position.';
+
+  @override
+  String get placeAskPreviewLine => 'Near you · Modena';
+
+  @override
+  String get placeAskPreviewQuestion => 'The Ghirlandina leans. By how much?';
+
+  @override
+  String get placeAskYes => 'Use my location';
+
+  @override
+  String get placeAskNotNow => 'Not now';
+
+  @override
+  String get placeRowTitle => 'Where you live';
+
+  @override
+  String get placeRowOff => 'Off';
+
+  @override
+  String get placeRowOffLine =>
+      'Switch it on for cards about the place you live.';
+
+  @override
+  String get placeSwitchOn => 'Switch on';
+
+  @override
+  String get placeUseNow => 'Use my location now';
+
+  @override
+  String get placeRemove => 'Remove';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Where you live: $place';
+  }
+
+  @override
+  String get placeRemoved => 'Removed. Astute no longer keeps where you live.';
+
+  @override
+  String get placeNotFound =>
+      'Couldn’t find where you are just now. Astute will try again another day.';
+
+  @override
+  String get placeDeniedNote =>
+      'No problem. You can switch it on in Profile whenever you like.';
+
+  @override
+  String get placeServicesOff =>
+      'Location is off on this phone. Switch it on in Settings, then try again.';
+
+  @override
+  String get placeNotHere => 'This device can’t say where you are.';
+
+  @override
+  String get placeSettingsTitle => 'Location is off for Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'To get cards about the place you live, allow location for Astute in Settings. Only your city is kept.';
+
+  @override
+  String get placeSettingsOpen => 'Open Settings';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

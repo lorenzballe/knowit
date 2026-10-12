@@ -1254,6 +1254,138 @@ abstract class AppLocalizations {
   /// **'Not now'**
   String get reminderAskNotNow;
 
+  /// Title of the sheet that asks whether Astute may use the reader's location. It comes before the system's own location prompt, and only a yes on it leads there.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards about where you live'**
+  String get placeAskTitle;
+
+  /// Under the sheet's title: what the reader gets. Now and then — at most one a day — a card about their city, region or country.
+  ///
+  /// In en, this message translates to:
+  /// **'Now and then, Astute will deal you a card about the place you live — its history, its science, its surprises.'**
+  String get placeAskLine;
+
+  /// The promise, on the sheet and in Profile: the phone's position is turned into a city on the phone and dropped. Only the country, the region, the city and a point rounded to about 10 km are kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Only your city is kept, never your exact position.'**
+  String get placeOnlyCity;
+
+  /// A small example card on the sheet: the line a card about the reader's own city carries. Modena is the example city; write it as your language does.
+  ///
+  /// In en, this message translates to:
+  /// **'Near you · Modena'**
+  String get placeAskPreviewLine;
+
+  /// The example card's question. The Ghirlandina is the bell tower of Modena's cathedral, which leans a little.
+  ///
+  /// In en, this message translates to:
+  /// **'The Ghirlandina leans. By how much?'**
+  String get placeAskPreviewQuestion;
+
+  /// The sheet's button: keeps the yes, then the system asks whether the app may use the location while it is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get placeAskYes;
+
+  /// The sheet's way out. Nothing is asked of the system; the sheet comes back once, after the seventh finished day.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get placeAskNotNow;
+
+  /// In Profile: the setting for the place the reader lives, and the title of its sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you live'**
+  String get placeRowTitle;
+
+  /// In Profile, under Where you live, when Astute keeps no place.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get placeRowOff;
+
+  /// In Profile, under Off: what switching it on gives.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch it on for cards about the place you live.'**
+  String get placeRowOffLine;
+
+  /// In Profile, beside Where you live when it is off: opens the sheet that asks.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch on'**
+  String get placeSwitchOn;
+
+  /// In the Where you live sheet: reads where the reader is again, now.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location now'**
+  String get placeUseNow;
+
+  /// In the Where you live sheet: forgets the place on the phone, in the backup and in measurement.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get placeRemove;
+
+  /// A short message once the place is read. {place} is the city, or the region or country when there is no city.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you live: {place}'**
+  String placeSetTo(String place);
+
+  /// A short message after the place is removed.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed. Astute no longer keeps where you live.'**
+  String get placeRemoved;
+
+  /// A short message when the phone could not say where the reader is (no fix, no name for it). The app tries again on a later day by itself.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn’t find where you are just now. Astute will try again another day.'**
+  String get placeNotFound;
+
+  /// A short message after the reader said no to the system's location prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'No problem. You can switch it on in Profile whenever you like.'**
+  String get placeDeniedNote;
+
+  /// A short message when location services are switched off for the whole phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Location is off on this phone. Switch it on in Settings, then try again.'**
+  String get placeServicesOff;
+
+  /// A short message where nothing can say where the reader is: the web.
+  ///
+  /// In en, this message translates to:
+  /// **'This device can’t say where you are.'**
+  String get placeNotHere;
+
+  /// Title of the dialog shown when the system will no longer ask for the location itself: the reader can only allow it in the phone's settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Location is off for Astute'**
+  String get placeSettingsTitle;
+
+  /// The body of that dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'To get cards about the place you live, allow location for Astute in Settings. Only your city is kept.'**
+  String get placeSettingsBody;
+
+  /// The dialog's button: opens the app's page in the phone's settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get placeSettingsOpen;
+
   /// Title of the notification sent two days before a free trial turns into a paid year. {days} is how many calendar days are left: 0 is today, 1 tomorrow.
   ///
   /// In en, this message translates to:
