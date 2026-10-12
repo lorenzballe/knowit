@@ -1,0 +1,65 @@
+{
+  "about": "How a card's place fits a reader's place. Shared by test/place_test.dart and functions/src/place.test.ts so that the phone and the server deal local cards the same way. Readers' points are already rounded to one decimal, as the app keeps them.",
+  "cases": [
+    {
+      "name": "a city card reaches a reader in the city",
+      "card": {"country": "IT", "region": "IT-45", "city": "Modena", "lat": 44.647, "lon": 10.925, "km": 20},
+      "reader": {"country": "IT", "region": "IT-45", "city": "Modena", "lat": 44.6, "lon": 10.9},
+      "fit": "city"
+    },
+    {
+      "name": "a city card reaches a reader in a town ten kilometres out",
+      "card": {"country": "IT", "region": "IT-45", "city": "Modena", "lat": 44.647, "lon": 10.925, "km": 20},
+      "reader": {"country": "IT", "region": "IT-45", "city": "Formigine", "lat": 44.6, "lon": 10.8},
+      "fit": "city"
+    },
+    {
+      "name": "a city card does not reach the next city along",
+      "card": {"country": "IT", "region": "IT-45", "city": "Modena", "lat": 44.647, "lon": 10.925, "km": 20},
+      "reader": {"country": "IT", "region": "IT-45", "city": "Bologna", "lat": 44.5, "lon": 11.3},
+      "fit": "none"
+    },
+    {
+      "name": "a city card is never dealt on a guess: no point, no card",
+      "card": {"country": "IT", "region": "IT-45", "city": "Modena", "lat": 44.647, "lon": 10.925, "km": 20},
+      "reader": {"country": "IT", "region": "IT-45", "city": "Modena"},
+      "fit": "none"
+    },
+    {
+      "name": "a region card reaches anyone in the region",
+      "card": {"country": "IT", "region": "IT-45"},
+      "reader": {"country": "IT", "region": "IT-45", "city": "Piacenza", "lat": 45.1, "lon": 9.7},
+      "fit": "region"
+    },
+    {
+      "name": "a region card does not reach the region next door",
+      "card": {"country": "IT", "region": "IT-45"},
+      "reader": {"country": "IT", "region": "IT-25", "city": "Milan", "lat": 45.5, "lon": 9.2},
+      "fit": "none"
+    },
+    {
+      "name": "a country card reaches anyone in the country",
+      "card": {"country": "IT"},
+      "reader": {"country": "IT", "region": "IT-82", "city": "Palermo", "lat": 38.1, "lon": 13.4},
+      "fit": "country"
+    },
+    {
+      "name": "a country card reaches a reader whose region has no code",
+      "card": {"country": "IT"},
+      "reader": {"country": "IT"},
+      "fit": "country"
+    },
+    {
+      "name": "no card reaches across a border",
+      "card": {"country": "IT"},
+      "reader": {"country": "FR", "city": "Nice", "lat": 43.7, "lon": 7.3},
+      "fit": "none"
+    },
+    {
+      "name": "a card reaches no reader who gave no place",
+      "card": {"country": "IT"},
+      "reader": null,
+      "fit": "none"
+    }
+  ]
+}

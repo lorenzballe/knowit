@@ -161,7 +161,11 @@ void main() {
       expect(day, isNotNull);
       expect(day!['cards'], 5);
       expect(day['reviews'], 0);
-      expect(day['own'], kOwnCardsFree, reason: 'a first day like any other');
+      expect(
+        day['own'],
+        ownCardsFor(plus: false, streak: 0, sunday: isSunday(DateTime.now())),
+        reason: 'a first day like any other, one more on a Sunday',
+      );
       expect(day.containsKey('welcome'), isFalse);
       expect(day['is_plus'], false);
     });
@@ -242,13 +246,14 @@ void main() {
       expect(sink.last('pill said')!['topic'], pill.topic);
     });
 
-    test('a friend is a count, never a code', () async {
-      final app = await _ready();
-      sink.events.clear();
+    test('friends are not counted: the app has none', () async {
+      final app = await _ready({
+        'knowit.friendCodes': <String>['ABC123'],
+      });
 
-      await app.addFriend('ABC123');
-
-      expect(sink.last('friend added'), {'friends': 1});
+      // Codes added on a build that had friends stay on the phone, and are
+      // neither counted on the profile PostHog keeps nor said anywhere.
+      expect(app.analyticsProfile.keys, isNot(contains('friends_count')));
       expect(
         sink.events.map((e) => '${e.$2}').join(' '),
         isNot(contains('ABC123')),

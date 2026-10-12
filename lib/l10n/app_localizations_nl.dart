@@ -403,7 +403,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'Je account, de back-up ervan en het bord dat je vrienden zien worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: een abonnement beheer je in de App Store-instellingen.';
+      'Je account en de back-up ervan worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: een abonnement beheer je in de App Store-instellingen.';
 
   @override
   String get deleteAccountConfirm => 'Definitief verwijderen';
@@ -870,6 +870,82 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get reminderAskNotNow => 'Niet nu';
+
+  @override
+  String get placeAskTitle => 'Kaarten over waar je woont';
+
+  @override
+  String get placeAskLine =>
+      'Af en toe geeft Astute je een kaart over de plek waar je woont — de geschiedenis, de wetenschap, de verrassingen.';
+
+  @override
+  String get placeOnlyCity =>
+      'Alleen je stad wordt bewaard, nooit je precieze locatie.';
+
+  @override
+  String get placeAskPreviewLine => 'Bij jou in de buurt · Modena';
+
+  @override
+  String get placeAskPreviewQuestion => 'De Ghirlandina helt over. Hoeveel?';
+
+  @override
+  String get placeAskYes => 'Gebruik mijn locatie';
+
+  @override
+  String get placeAskNotNow => 'Niet nu';
+
+  @override
+  String get placeRowTitle => 'Waar je woont';
+
+  @override
+  String get placeRowOff => 'Uit';
+
+  @override
+  String get placeRowOffLine =>
+      'Zet het aan voor kaarten over de plek waar je woont.';
+
+  @override
+  String get placeSwitchOn => 'Aanzetten';
+
+  @override
+  String get placeUseNow => 'Gebruik nu mijn locatie';
+
+  @override
+  String get placeRemove => 'Verwijderen';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Waar je woont: $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Verwijderd. Astute bewaart niet meer waar je woont.';
+
+  @override
+  String get placeNotFound =>
+      'Het lukte nu niet om te zien waar je bent. Astute probeert het een andere dag opnieuw.';
+
+  @override
+  String get placeDeniedNote =>
+      'Geen probleem. Je kunt het altijd aanzetten in Profiel.';
+
+  @override
+  String get placeServicesOff =>
+      'Locatie staat uit op deze telefoon. Zet het aan in de instellingen en probeer het opnieuw.';
+
+  @override
+  String get placeNotHere => 'Dit apparaat kan niet zeggen waar je bent.';
+
+  @override
+  String get placeSettingsTitle => 'Locatie staat uit voor Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Sta Astute in de instellingen toe je locatie te gebruiken, voor kaarten over de plek waar je woont. Alleen je stad wordt bewaard.';
+
+  @override
+  String get placeSettingsOpen => 'Open instellingen';
 
   @override
   String trialWarningTitle(int days) {
@@ -1521,84 +1597,6 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '$answered beantwoord tot nu toe. Vandaag: $question';
-  }
-
-  @override
-  String get friends => 'Vrienden';
-
-  @override
-  String friendsN(int n) {
-    return 'Vrienden · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'Je vriendencode';
-
-  @override
-  String get codeCopied => 'Code gekopieerd.';
-
-  @override
-  String get addAFriend => 'Een vriend toevoegen';
-
-  @override
-  String get theirCode => 'Hun code';
-
-  @override
-  String get add => 'Toevoegen';
-
-  @override
-  String get noFriendsYet =>
-      'Nog niemand. Wissel codes uit met een vriend en vergelijk reeksen en kalibratie — nooit antwoorden.';
-
-  @override
-  String get friendsNeedAnAccount =>
-      'Vergelijken vraagt de telefoon-app en een account. Je codes blijven bewaard.';
-
-  @override
-  String get noReaderWithCode => 'Geen lezer met die code.';
-
-  @override
-  String get thatsYourOwnCode => 'Dat is je eigen code.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n punten ernaast';
-  }
-
-  @override
-  String get notMeasuredYet => 'nog niet gemeten';
-
-  @override
-  String get thisWeekByCalibration => 'Deze week, op kalibratie';
-
-  @override
-  String get notYetToday => 'vandaag nog niet';
-
-  @override
-  String nOfSeven(int n) {
-    return '$n van 7';
-  }
-
-  @override
-  String get you => 'Jij';
-
-  @override
-  String get todaysQuestion => 'De vraag van vandaag';
-
-  @override
-  String get right => 'goed';
-
-  @override
-  String get wrong => 'fout';
-
-  @override
-  String rightAtSure(int sure) {
-    return 'goed, $sure% zeker';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return 'fout, $sure% zeker';
   }
 
   @override
@@ -3238,4 +3236,35 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get yourPick => 'Jouw keuze';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Bij jou in de buurt · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Jouw regio · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Jouw land · $place';
+  }
+
+  @override
+  String get sundayOneMore => 'Zondag: één kaart extra, voor jou gekozen';
+
+  @override
+  String get whereYouLive => 'Waar je woont';
+
+  @override
+  String get whereYouLiveLine => 'Eerst je stad, dan je regio, dan je land';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Kaarten over je stad, je regio en je land: hooguit één per dag, en deze plank. Alleen de stad wordt bewaard, nooit waar je precies bent.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Aanzetten';
 }

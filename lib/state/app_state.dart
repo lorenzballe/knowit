@@ -13,6 +13,7 @@ import '../analytics.dart';
 import '../data/card_json.dart';
 import '../data/daily.dart';
 import '../data/genres.dart';
+import '../data/local_cards.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
@@ -21,9 +22,10 @@ import '../l10n/app_localizations.dart';
 import '../measure/card_read.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
+import '../models/place.dart';
 import '../models/reminder.dart';
 import '../models/trial.dart';
-import '../sync/board.dart';
+import '../sync/place_finder.dart';
 import '../sync/reader_snapshot.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
@@ -49,17 +51,23 @@ class AppState extends ChangeNotifier {
     ReminderArmer? arm,
     Future<void> Function()? disarm,
     HomeWidgetPusher? pushWidget,
+    DateTime Function()? clock,
   }) : _hasPermission = hasPermission ?? hasReminderPermission,
        _askPermission = askPermission ?? ensureReminderPermission,
        _arm = arm ?? armReminders,
        _disarm = disarm ?? disarmReminders,
-       _pushWidget = pushWidget ?? pushHomeWidget;
+       _pushWidget = pushWidget ?? pushHomeWidget,
+       _clock = clock ?? DateTime.now;
 
   final PermissionProbe _hasPermission;
   final PermissionProbe _askPermission;
   final ReminderArmer _arm;
   final Future<void> Function() _disarm;
   final HomeWidgetPusher _pushWidget;
+
+  /// What day it is where the reader is: the phone's clock, or a test's,
+  /// so a Sunday or a midnight can be opened on whenever the tests run.
+  final DateTime Function() _clock;
 
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
@@ -111,6 +119,12 @@ class AppState extends ChangeNotifier {
   static const _kTrialPrice = 'knowit.trialPrice';
   static const _kTrialWarnedFor = 'knowit.trialWarnedFor';
   static const _kTrialWarnedAt = 'knowit.trialWarnedAt';
+  static const _kPlace = 'knowit.place';
+  static const _kPlaceRemovedAt = 'knowit.placeRemovedAt';
+  static const _kLocationPermission = 'knowit.locationPermission';
+  static const _kPlaceAsks = 'knowit.placeAsks';
+  static const _kPlaceDeferredAfter = 'knowit.placeDeferredAfter';
+  static const _kPlaceCheckedAt = 'knowit.placeCheckedAt';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -139,7 +153,10 @@ class AppState extends ChangeNotifier {
   /// Cards thrown down: less of this. Quiet, and only a lean on the deal.
   List<String> dislikedIds = [];
 
-  /// The friends whose boards the reader looks at, by code.
+  /// The codes of the friends the reader added while the app had friends.
+  /// Nothing shows them any more; they are only kept, and carried in the
+  /// backup as they were, so a reader's circle is not lost should friends
+  /// come back in another shape.
   List<String> friendCodes = [];
   int todayIndex = 0;
   int pillsRead = 0;
@@ -264,6 +281,34 @@ class AppState extends ChangeNotifier {
   /// quietly unsubscribe the reader's other phone.
   List<String> pushTokens = [];
 
+  /// Where the reader lives, as much of it as Astute keeps (see [Place]):
+  /// read on the phone with their consent, backed up with the account, and
+  /// what both dealers read to give them cards about it. Null until they
+  /// say yes, and again once they remove it. See docs/PLACES.md.
+  Place? place;
+
+  /// When the reader last removed their place, so that a backup holding an
+  /// older one cannot bring it back when two phones' records are merged.
+  DateTime? placeRemovedAt;
+
+  /// The reader's word on their location, as the app last heard it:
+  /// [kLocationNotAsked], [kLocationGranted], [kLocationDenied] — the
+  /// system's prompt was answered no, or the permission was taken back in
+  /// the phone's settings — or [kLocationOff], the place removed in Profile.
+  String locationPermission = kLocationNotAsked;
+
+  /// How many times the app's own sheet about the place has been put to the
+  /// reader, from wherever it was opened.
+  int placeAsks = 0;
+
+  /// The last day the reader had finished when they last said "Not now" to
+  /// that sheet, so it asks again only after a day finished since.
+  String? placeDeferredAfter;
+
+  /// When the phone was last asked where the reader is, whatever it said:
+  /// the weekly read waits a week from here.
+  DateTime? placeCheckedAt;
+
   late DateTime today;
   late List<Pill> todaysDeck;
 
@@ -297,7 +342,7 @@ class AppState extends ChangeNotifier {
     // The newest bank the last run downloaded, before a card is dealt from
     // the one built in. Adopting later, mid-day, would re-deal the table.
     PillBank.restore(_prefs);
-    today = DateTime.now();
+    today = _clock();
 
     // Stored state is read defensively. A value written by an older build,
     // or corrupted on disk, must not leave the app stuck on the splash: it
@@ -321,6 +366,9 @@ class AppState extends ChangeNotifier {
     // this never prompts — it only re-arms what is already permitted.
     unawaited(refreshDailyReminder());
     unawaited(refreshHomeWidget());
+    // Nor on the phone's location, which is read again here only for a
+    // reader who allowed it, and at most once a week.
+    unawaited(refreshPlaceIfDue());
     // Nor on the bank: whatever it downloads is for tomorrow's start.
     unawaited(PillBank.refresh(_prefs));
   }
@@ -361,6 +409,12 @@ class AppState extends ChangeNotifier {
     pushDeferredAfter = _prefs.getString(_kPushDeferredAfter);
     reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
+    place = Place.fromJson(_decodeJson(_prefs.getString(_kPlace)));
+    placeRemovedAt = _instantOf(_prefs.getString(_kPlaceRemovedAt));
+    locationPermission = _locationWord(_prefs.getString(_kLocationPermission));
+    placeAsks = _prefs.getInt(_kPlaceAsks) ?? 0;
+    placeDeferredAfter = _prefs.getString(_kPlaceDeferredAfter);
+    placeCheckedAt = _instantOf(_prefs.getString(_kPlaceCheckedAt));
     final DateTime? trialEnds = _instantOf(_prefs.getString(_kTrialEnds));
     trial = trialEnds == null
         ? null
@@ -477,9 +531,24 @@ class AppState extends ChangeNotifier {
 
   /// How many of a day's cards are the reader's own: all five on Astute+;
   /// on the free plan two, and three on the morning after a full week kept
-  /// — the streak's own reward, tasted once a week. The rest are dealt at
-  /// random.
-  int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
+  /// — the streak's own reward, tasted once a week — and on a Sunday one
+  /// more than the day would have had. The rest are dealt at random.
+  int get ownCardsToday => ownCardsOn(today);
+
+  /// How many of [day]'s cards are the reader's own, as that morning will
+  /// deal them: Sunday is the day's own, and the streak is as it stands.
+  int ownCardsOn(DateTime day) =>
+      ownCardsFor(plus: isPlus, streak: liveStreak, sunday: isSunday(day));
+
+  /// True on the reader's Sunday when today's five hold the one more card
+  /// chosen for them, which Today says in a line of its own. Read off the
+  /// deal itself, whoever dealt it, so the line never promises a card a
+  /// day does not have; never on Astute+, whose five are all the reader's
+  /// own every day.
+  bool get sundayExtraToday =>
+      !isPlus &&
+      isSunday(today) &&
+      ownIdsToday.length > ownCardsFor(plus: false, streak: liveStreak);
 
   /// The onboarding's answers, read as a person rather than a form: a
   /// starting level a notch above for every subject, the strands picked by
@@ -585,7 +654,8 @@ class AppState extends ChangeNotifier {
   /// they kept on — the mix is everybody's — and what came due waits after
   /// the day instead; what is not their own is dealt at random, from the
   /// mix as they set it and nothing else. On both, the first three days
-  /// lean to the top of the mix.
+  /// lean to the top of the mix, and a reader who has said where they live
+  /// gets a card about it when one is left (docs/PLACES.md §5).
   Deal _deal(
     DateTime date, {
     required Set<String> exclude,
@@ -603,6 +673,7 @@ class AppState extends ChangeNotifier {
     exclude: exclude,
     reviews: isPlus ? reviews : const [],
     own: own,
+    home: place,
   );
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.
@@ -621,7 +692,12 @@ class AppState extends ChangeNotifier {
     // phone deals as it always did, from the same calendar.
     final ServedDay? served = await Served.instance.dayFor(today);
     final Set<String> dealtReviews;
-    if (served != null && served.cards.length >= kPillsPerDay) {
+    // A served day with a card about a place the reader does not live in —
+    // a server older than the cards about places, or a place changed since
+    // it dealt — is not the reader's day: the phone deals its own.
+    if (served != null &&
+        served.cards.length >= kPillsPerDay &&
+        served.cards.every((p) => reachesReader(p, place))) {
       todaysDeck = served.cards;
       ownIdsToday = served.own.intersection(
         todaysDeck.map((p) => p.id).toSet(),
@@ -672,6 +748,10 @@ class AppState extends ChangeNotifier {
       // whole claim of the review ladder is the second.
       'own': ownIdsToday.length,
       'reviews': reviewIdsToday.length,
+      // Whether the day holds a card about where the reader lives, and
+      // whether it is the Sunday that gives them one more of their own.
+      'local': todaysDeck.any((p) => p.isAboutAPlace),
+      'sunday': sundayExtraToday,
       'topics': pickedTopics.length,
       'streak_days': streak,
       'rung': standing.at,
@@ -717,7 +797,7 @@ class AppState extends ChangeNotifier {
       day,
       exclude: const {},
       reviews: const [],
-      own: ownCardsFor(plus: isPlus, streak: 0),
+      own: ownCardsFor(plus: isPlus, streak: 0, sunday: isSunday(day)),
     ).cards;
   }
 
@@ -819,12 +899,17 @@ class AppState extends ChangeNotifier {
     String? tag(String? value) =>
         value == null || value.trim().isEmpty ? null : value;
     final int at = todaysDeck.indexWhere((c) => c.id == pillId);
+    // Today's own copy where there is one: a served card the bank on the
+    // phone has not got yet is still a card about a place.
+    final CardPlace? where = (at < 0 ? p : todaysDeck[at])?.place;
     final String? slot = at < 0
         ? null
         : reviewIdsToday.contains(pillId)
         ? 'review'
         : ownIdsToday.contains(pillId)
         ? 'own'
+        : where != null
+        ? 'local'
         : 'random';
     return {
       'pill_id': pillId,
@@ -846,6 +931,10 @@ class AppState extends ChangeNotifier {
       'abstraction': tag(p?.abstraction),
       'shelf_life': tag(p?.shelfLife),
       'has_figure': p?.figure.trim().isNotEmpty,
+      // On a card about a place, how near it is to the reader: their city,
+      // their region, their country, or `none` for one that reached them
+      // some other way. Never the place itself.
+      'place_fit': where == null ? null : placeFit(where, place).name,
       'position': at < 0 ? null : at + 1,
       'of': at < 0 ? null : todaysDeck.length,
       'slot': slot,
@@ -1040,7 +1129,9 @@ class AppState extends ChangeNotifier {
     judgements: judgements,
     answers: answers,
     completedDates: completedDates,
-    cards: {for (final p in PillBank.cards) p.id: p},
+    // Every card the reader could have met, those about their home with
+    // the rest: the journey is what they read, wherever it was about.
+    cards: {for (final p in PillBank.live) p.id: p},
     liveScore: score.total,
     otherDays: rungDates.values,
   );
@@ -1169,7 +1260,7 @@ class AppState extends ChangeNotifier {
   /// Cards answered, paired with the pill, for the ones that can be marked.
   Iterable<MapEntry<Pill, Answer>> get _graded sync* {
     for (final e in answers.entries) {
-      final pill = PillBank.cards.where((p) => p.id == e.key).firstOrNull;
+      final pill = PillBank.live.where((p) => p.id == e.key).firstOrNull;
       if (pill != null && pill.isGraded) yield MapEntry(pill, e.value);
     }
   }
@@ -1262,7 +1353,7 @@ class AppState extends ChangeNotifier {
   Map<String, double> get leanedWeights {
     if (likedIds.isEmpty && dislikedIds.isEmpty) return topicWeights;
     final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
-    final byId = {for (final p in PillBank.cards) p.id: p};
+    final byId = {for (final p in PillBank.live) p.id: p};
     final lean = <String, double>{};
     void nudge(Iterable<String> ids, double by) {
       for (final id in ids) {
@@ -1489,9 +1580,12 @@ class AppState extends ChangeNotifier {
       ..sort((a, b) => a.value.dueOn!.compareTo(b.value.dueOn!));
 
     for (final e in entries) {
-      final original = PillBank.cards.where((p) => p.id == e.key).firstOrNull;
+      final original = PillBank.live.where((p) => p.id == e.key).firstOrNull;
       if (original == null) continue;
       final pick = _freshInstanceOf(original, claimed, on);
+      // A card about a place comes back only to a reader who still lives
+      // there; one who moved meets its principle in another card, or not.
+      if (!reachesReader(pick, place)) continue;
       claimed.add(pick.id);
       due.add((card: pick, last: e.value));
     }
@@ -1511,7 +1605,7 @@ class AppState extends ChangeNotifier {
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
-      own: ownCardsFor(plus: isPlus, streak: liveStreak),
+      own: ownCardsOn(tomorrow),
     ).cards;
   }
 
@@ -1531,15 +1625,23 @@ class AppState extends ChangeNotifier {
   /// it for a reader who has been away since tonight, which is the reader a
   /// reminder is for. The calendar's question only when there is no deck
   /// to open on.
+  ///
+  /// Never the card about where the reader lives: a reminder lands on a
+  /// lock screen and the widget sits on a home screen, where anyone can
+  /// read them, and that card would say where the reader's home is.
   Pill leadOn(DateTime day) {
-    final List<Pill> deck = dateKey(day) == dateKey(today)
-        ? todaysDeck
-        : _deal(
-            day,
-            exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
-            reviews: _reviewsDue(day),
-            own: ownCardsFor(plus: isPlus, streak: liveStreak),
-          ).cards;
+    final List<Pill> deck = [
+      for (final Pill p
+          in dateKey(day) == dateKey(today)
+              ? todaysDeck
+              : _deal(
+                  day,
+                  exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+                  reviews: _reviewsDue(day),
+                  own: ownCardsOn(day),
+                ).cards)
+        if (!p.isAboutAPlace) p,
+    ];
     if (deck.isEmpty) return questionOfTheDay(day);
     return deck.firstWhere((p) => p.asksSomething, orElse: () => deck.first);
   }
@@ -1774,45 +1876,6 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Friends ───────────────────────────────────────────────────────────
-
-  Future<void> addFriend(String code) async {
-    if (friendCodes.contains(code)) return;
-    friendCodes = [...friendCodes, code];
-    await _prefs.setStringList(_kFriendCodes, friendCodes);
-    // The count, never the codes. A friend code names a person.
-    Analytics.capture('friend added', {'friends': friendCodes.length});
-    notifyListeners();
-  }
-
-  Future<void> removeFriend(String code) async {
-    if (!friendCodes.contains(code)) return;
-    friendCodes = friendCodes.where((c) => c != code).toList();
-    await _prefs.setStringList(_kFriendCodes, friendCodes);
-    Analytics.capture('friend removed', {'friends': friendCodes.length});
-    notifyListeners();
-  }
-
-  /// What a friend gets to see of this reader. The squares only once the
-  /// day is done: half a grid says the wrong thing.
-  Board board(String uid) {
-    final DaySummary d = daySummary;
-    return Board(
-      uid: uid,
-      code: friendCodeOf(uid),
-      name: name,
-      streak: liveStreak,
-      weeks: keptWeeks,
-      days: thisWeek.days,
-      gap: confidenceGap,
-      edition: d.edition,
-      squares: dayClosed ? d.squares : '',
-      right: d.right,
-      asked: d.asked,
-      updated: dateKey(today),
-    );
-  }
-
   // ── Onboarding & settings ─────────────────────────────────────────────
 
   Future<void> setTopics(Set<String> topics) async {
@@ -2037,8 +2100,10 @@ class AppState extends ChangeNotifier {
         if (gap == 2 && freezes > 0) {
           title = l.nudgeFreezeTitle;
           body = l.nudgeFreezeBody(lead.question);
-        } else if (gap == 7 && misses.isNotEmpty) {
-          final Miss miss = misses.first;
+        } else if (gap == 7 && misses.any((m) => !m.pill.isAboutAPlace)) {
+          // A card about the reader's home is never quoted on a lock
+          // screen, where anyone can read where it is.
+          final Miss miss = misses.firstWhere((m) => !m.pill.isAboutAPlace);
           title = l.nudgeSureTitle;
           body = l.nudgeSureBody(miss.pill.question, miss.confidence);
         } else if (gap == 14) {
@@ -2214,12 +2279,21 @@ class AppState extends ChangeNotifier {
   /// its shelf — so the widgets turn over at midnight on their own, and go
   /// quiet after a fortnight rather than lying. Nothing about the reader
   /// beyond the streak: the widget is on the home screen, where anyone can
-  /// read it.
+  /// read it. So no card about where the reader lives is ever handed over:
+  /// it would say where their home is to anyone who picked up the phone.
+  /// The five widget shows the day's others, and the card it would have
+  /// opened on gives way to the next.
   Map<String, Object?> homeWidgetData() {
     // The card the widget shows today: the next to read, or, the five read,
     // the one the morning opened on, for a widget with no shelf to turn to.
     final bool fiveRead = todayIndex >= todaysDeck.length;
-    final Pill card = fiveRead ? leadOn(today) : todaysDeck[todayIndex];
+    final Pill card = fiveRead
+        ? leadOn(today)
+        : todaysDeck
+                  .skip(todayIndex)
+                  .where((p) => !p.isAboutAPlace)
+                  .firstOrNull ??
+              leadOn(today);
     final List<Pill> tomorrows = tomorrowsDeck;
 
     final ahead = <String, String>{};
@@ -2234,7 +2308,10 @@ class AppState extends ChangeNotifier {
       // which is what the deck will show — so a tap on it lands on it.
       final Pill opens = i == 0
           ? card
-          : (i == 1 ? tomorrows : _deckAhead(day)).firstOrNull ?? leadOn(day);
+          : (i == 1 ? tomorrows : _deckAhead(day))
+                    .where((p) => !p.isAboutAPlace)
+                    .firstOrNull ??
+                leadOn(day);
       final String key = dateKey(day);
       ahead[key] = opens.question;
       aheadId[key] = opens.id;
@@ -2276,16 +2353,24 @@ class AppState extends ChangeNotifier {
     // with its id, so a tap opens it, and its question, for the large one.
     List<Map<String, Object>> five(List<Pill> deck, int read) => [
       for (final (int i, Pill p) in deck.indexed)
-        {
-          'id': p.id,
-          'topic': p.topic,
-          'color': hexOf(p.color),
-          'ink': hexOf(p.ink),
-          'read': i < read,
-          'question': p.question,
-        },
+        if (!p.isAboutAPlace)
+          {
+            'id': p.id,
+            'topic': p.topic,
+            'color': hexOf(p.color),
+            'ink': hexOf(p.ink),
+            'read': i < read,
+            'question': p.question,
+          },
     ];
     final int readToday = todayIndex.clamp(0, todaysDeck.length);
+    // The widget says all five are read once every card it shows is. On a
+    // day whose card about home is left off, that is not yet the day's
+    // five, so until it is, the line it would show says how many are.
+    final bool homeLeftOff =
+        todaysDeck.any((p) => p.isAboutAPlace) &&
+        readToday < todaysDeck.length &&
+        !dayClosed;
 
     return {
       'edition': editionOf(today),
@@ -2315,7 +2400,7 @@ class AppState extends ChangeNotifier {
       'fiveRead': readToday,
       'fiveTitle': l.widgetFiveTitle,
       'fiveReadText': l.widgetFiveRead(readToday),
-      'fiveDone': l.widgetFiveDone,
+      'fiveDone': homeLeftOff ? l.widgetFiveRead(readToday) : l.widgetFiveDone,
       'fiveWaiting': l.widgetFiveWaiting,
       'shelf': shelf,
       'shelfTitle': l.widgetShelfTitle,
@@ -2343,7 +2428,7 @@ class AppState extends ChangeNotifier {
         : _pickedOn(day);
     return [
       for (final Pill p in picked)
-        if (!seenIds.contains(p.id)) p,
+        if (!seenIds.contains(p.id) && !p.isAboutAPlace) p,
     ].take(kWidgetShelf).toList();
   }
 
@@ -2372,7 +2457,7 @@ class AppState extends ChangeNotifier {
     day,
     exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
     reviews: _reviewsDue(day),
-    own: ownCardsFor(plus: isPlus, streak: liveStreak),
+    own: ownCardsOn(day),
   ).cards;
 
   /// The reader as PostHog's profile holds them: the slow-moving facts
@@ -2390,7 +2475,6 @@ class AppState extends ChangeNotifier {
     'saved_count': savedIds.length,
     'liked_count': likedIds.length,
     'disliked_count': dislikedIds.length,
-    'friends_count': friendCodes.length,
     'reminders_on': notificationsOn,
     'reminder_hour': int.tryParse(notifyTime.split(':').first) ?? -1,
     'theme': themeMode.name,
@@ -2398,6 +2482,13 @@ class AppState extends ChangeNotifier {
     'onboarded': onboarded,
     'freezes': freezes,
     'last_day_completed': ?lastCompletionDate,
+    // Where the reader lives, to the city and no closer: the country, the
+    // region (its ISO code where the app knows the country's regions, else
+    // the name the phone gave), the city. Never the point.
+    'location_permission': locationPermission,
+    'place_country': ?place?.country,
+    'place_region': ?(place?.region ?? place?.regionName),
+    'place_city': ?place?.city,
   };
 
   /// What the profile says once and never again (`$set_once`): when the app
@@ -2747,6 +2838,12 @@ class AppState extends ChangeNotifier {
     _trialWarnedAt = null;
     reviewAsked = false;
     pushTokens = [];
+    place = null;
+    placeRemovedAt = null;
+    locationPermission = kLocationNotAsked;
+    placeAsks = 0;
+    placeDeferredAfter = null;
+    placeCheckedAt = null;
     ownIdsToday = {};
     reviewIdsToday = {};
     answers = {};
@@ -2843,6 +2940,197 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── Where the reader lives ────────────────────────────────────────────
+
+  /// The reader's word on their location (see [locationPermission]), as
+  /// PostHog's `location_permission` carries it.
+  static const String kLocationNotAsked = 'not_asked';
+  static const String kLocationGranted = 'granted';
+  static const String kLocationDenied = 'denied';
+  static const String kLocationOff = 'off';
+
+  /// The profile's properties a place fills, and takes back when removed.
+  static const List<String> kPlaceProfileKeys = [
+    'place_country',
+    'place_region',
+    'place_city',
+  ];
+
+  /// A reader moves rarely, and a week is soon enough to notice: the phone
+  /// is asked again no more often than this.
+  static const Duration kPlaceRefreshEvery = Duration(days: 7);
+
+  /// A read that found nothing — no fix indoors, no name for the point — is
+  /// tried again a day later rather than at every return to the app.
+  static const Duration kPlaceRetryEvery = Duration(days: 1);
+
+  /// The app's own sheet first asks once [kPlaceFirstAskDay] days are
+  /// finished: the reminder is asked after the first, and two questions on
+  /// one evening is one too many. "Not now" is asked once more, once
+  /// [kPlaceLastAskDay] are, and that is the end of it: Profile keeps the
+  /// switch.
+  static const int kPlaceFirstAskDay = 2;
+  static const int kPlaceLastAskDay = 7;
+  static const int kPlaceAsksAllowed = 2;
+
+  /// True when the app's sheet about the place is waiting to be put: the
+  /// reader has no place, has never been asked by the system, and has
+  /// finished their second day — or said "Not now" once, has finished a
+  /// seventh, and a day since. main.dart chooses the moment.
+  bool get shouldAskForPlace {
+    if (place != null || locationPermission != kLocationNotAsked) return false;
+    final int days = completedDates.length;
+    if (placeAsks == 0) return days >= kPlaceFirstAskDay;
+    if (placeAsks >= kPlaceAsksAllowed) return false;
+    final String? last = lastCompletionDate;
+    final String? after = placeDeferredAfter;
+    return days >= kPlaceLastAskDay &&
+        last != null &&
+        (after == null || last.compareTo(after) > 0);
+  }
+
+  /// The sheet was put to the reader, from wherever: it counts towards the
+  /// two the app ever asks of its own accord.
+  Future<void> notedPlaceAsked() async {
+    placeAsks += 1;
+    await _prefs.setInt(_kPlaceAsks, placeAsks);
+  }
+
+  /// The reader answered the sheet "Not now". Nothing of the system's is
+  /// spent; the sheet waits for a seventh day, and a day finished after
+  /// this one.
+  Future<void> notedPlaceDeferred() async {
+    placeDeferredAfter = lastCompletionDate;
+    final String? after = placeDeferredAfter;
+    if (after == null) {
+      await _prefs.remove(_kPlaceDeferredAfter);
+    } else {
+      await _prefs.setString(_kPlaceDeferredAfter, after);
+    }
+    notifyListeners();
+  }
+
+  /// What the reader and the system have said about their location: one of
+  /// the four words of [locationPermission].
+  Future<void> notedLocationPermission(String word) async {
+    if (locationPermission == word) return;
+    locationPermission = word;
+    await _prefs.setString(_kLocationPermission, word);
+    notifyListeners();
+  }
+
+  Future<Place?>? _placeReading;
+
+  /// Asks the phone where the reader is, and keeps the place it names —
+  /// [from] says who asked: the sheet's moment (`day done`), `explore`,
+  /// `profile`, the weekly `refresh`, or `settings` for a permission given
+  /// there. Two asks at once are one read. Null when the phone could not
+  /// say; the weekly read tries again a day later.
+  Future<Place?> readPlace({required String from, DateTime? now}) =>
+      _placeReading ??= _readPlace(
+        from,
+        now ?? DateTime.now(),
+      ).whenComplete(() => _placeReading = null);
+
+  Future<Place?> _readPlace(String from, DateTime now) async {
+    placeCheckedAt = now;
+    await _prefs.setString(_kPlaceCheckedAt, now.toUtc().toIso8601String());
+    final Place? found = await PlaceFinder.instance.find();
+    // A reader who removed it while the phone was still looking keeps it
+    // removed.
+    if (found == null || locationPermission == kLocationOff) return null;
+    await setPlace(found, from: from);
+    return found;
+  }
+
+  /// Keeps [next] as where the reader lives: on the phone, in the backup
+  /// (where the server reads it to deal), and, to the city, on PostHog's
+  /// profile. Said as `place set` — except for a weekly read that found
+  /// the reader where they were, which is no news.
+  Future<void> setPlace(Place next, {required String from}) async {
+    final bool changed = !next.samePlaceAs(place);
+    place = next;
+    placeRemovedAt = null;
+    await _prefs.setString(_kPlace, jsonEncode(next.toJson()));
+    await _prefs.remove(_kPlaceRemovedAt);
+    if (changed || from != 'refresh') {
+      // Country, region and city: the point stays out of every event, and
+      // out of the trace, which keeps these three under short names.
+      Analytics.capture('place set', {
+        'country': next.country,
+        'region': next.region ?? next.regionName,
+        'city': next.city,
+        'changed': changed,
+        'from': from,
+      });
+    }
+    notifyListeners();
+  }
+
+  /// Forgets where the reader lives, everywhere it was kept: on the phone
+  /// at once, in the backup with the next write (which replaces the whole
+  /// document, `place` and all), and on PostHog's profile, which is told
+  /// to drop it with the event that says so. The phone is not asked again
+  /// until the reader switches it back on.
+  Future<void> clearPlace() async {
+    place = null;
+    final DateTime removed = DateTime.now();
+    placeRemovedAt = removed;
+    locationPermission = kLocationOff;
+    await _prefs.remove(_kPlace);
+    await _prefs.setString(_kPlaceRemovedAt, removed.toUtc().toIso8601String());
+    await _prefs.setString(_kLocationPermission, kLocationOff);
+    unawaited(Analytics.forgetPerson(kPlaceProfileKeys));
+    Analytics.capture('place removed', {r'$unset': kPlaceProfileKeys});
+    notifyListeners();
+  }
+
+  /// Reads the place again when it is due, so that a move is noticed: at
+  /// launch and at every return to the app, for a reader who allowed it,
+  /// at most once every [kPlaceRefreshEvery] — or a day after a read that
+  /// found nothing. It never prompts.
+  ///
+  /// It also hears what changed in the phone's settings. A permission taken
+  /// back there stops the reading, and the place already kept stays until
+  /// the reader removes it; one given there, by a reader who said yes on
+  /// the app's sheet and no to the system's, starts it.
+  Future<void> refreshPlaceIfDue({DateTime? now}) async {
+    final String said = locationPermission;
+    if (said != kLocationGranted && said != kLocationDenied) return;
+    final PlaceFinder finder = PlaceFinder.instance;
+    if (!finder.canAsk || _placeReading != null) return;
+    final DateTime clock = now ?? DateTime.now();
+    final LocationAccess access = await finder.access();
+    // Location switched off for the whole phone: next time.
+    if (access == LocationAccess.unavailable) return;
+    if (access != LocationAccess.granted) {
+      if (said == kLocationGranted) {
+        await notedLocationPermission(kLocationDenied);
+      }
+      return;
+    }
+    if (said == kLocationDenied) {
+      await notedLocationPermission(kLocationGranted);
+      await readPlace(from: 'settings', now: clock);
+      return;
+    }
+    final DateTime? last = placeCheckedAt;
+    final Duration every = place == null
+        ? kPlaceRetryEvery
+        : kPlaceRefreshEvery;
+    // A clock moved back before the last read counts as due, once.
+    if (last != null) {
+      final Duration since = clock.difference(last);
+      if (!since.isNegative && since < every) return;
+    }
+    await readPlace(from: 'refresh', now: clock);
+  }
+
+  static String _locationWord(String? raw) => switch (raw) {
+    kLocationGranted || kLocationDenied || kLocationOff => raw!,
+    _ => kLocationNotAsked,
+  };
+
   /// What this phone knows about the reader, for the account to hold.
   ReaderSnapshot snapshot() => ReaderSnapshot(
     name: name,
@@ -2870,6 +3158,8 @@ class AppState extends ChangeNotifier {
     genresOff: genresOff.toList(),
     strandsOff: strandsOff.toList(),
     pushTokens: List<String>.from(pushTokens),
+    place: place,
+    placeRemovedAt: placeRemovedAt,
   );
 
   /// Takes on a snapshot that has already been merged, and stores it.
@@ -2903,6 +3193,19 @@ class AppState extends ChangeNotifier {
     genresOff = s.genresOff.toSet();
     strandsOff = s.strandsOff.toSet();
     pushTokens = List<String>.from(s.pushTokens);
+    place = s.place;
+    placeRemovedAt = s.placeRemovedAt;
+    // A place removed on another phone stops this one reading it again; a
+    // place set on another phone since this one removed it is the reader's
+    // newer word, and this phone's "off" no longer stands.
+    if (place == null &&
+        placeRemovedAt != null &&
+        (locationPermission == kLocationGranted ||
+            locationPermission == kLocationDenied)) {
+      locationPermission = kLocationOff;
+    } else if (place != null && locationPermission == kLocationOff) {
+      locationPermission = kLocationNotAsked;
+    }
 
     await _prefs.setString(_kName, name);
     await _prefs.setInt(_kStreak, streak);
@@ -2925,6 +3228,22 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
     await _prefs.setString(_kTopicLevels, jsonEncode(topicLevels));
     await _prefs.setStringList(_kPushTokens, pushTokens);
+    final Place? kept = place;
+    final DateTime? removed = placeRemovedAt;
+    if (kept == null) {
+      await _prefs.remove(_kPlace);
+    } else {
+      await _prefs.setString(_kPlace, jsonEncode(kept.toJson()));
+    }
+    if (removed == null) {
+      await _prefs.remove(_kPlaceRemovedAt);
+    } else {
+      await _prefs.setString(
+        _kPlaceRemovedAt,
+        removed.toUtc().toIso8601String(),
+      );
+    }
+    await _prefs.setString(_kLocationPermission, locationPermission);
     await _saveAnswers();
     await _noteClimb();
     notifyListeners();

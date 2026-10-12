@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'diagram.dart';
+import 'place.dart';
 import 'scene.dart';
 
 export 'diagram.dart';
@@ -454,6 +455,12 @@ class Pill {
   /// [Scene]).
   final Scene? scene;
 
+  /// Where the card belongs, for a card about a place: a country, a region,
+  /// or a city with the reach around it. Such a card is dealt only to the
+  /// readers who live there (lib/data/local_cards.dart, docs/PLACES.md) and
+  /// never to anybody else, by any road. Null on a card for everybody.
+  final CardPlace? place;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -492,6 +499,7 @@ class Pill {
     this.figure = '',
     this.diagram,
     this.scene,
+    this.place,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card
@@ -516,6 +524,10 @@ class Pill {
     if (isTagged) 'numeracy:$numeracy',
     if (abstraction.isNotEmpty) 'abstraction:$abstraction',
   ];
+
+  /// Whether the card is about a place, and so goes only to the readers who
+  /// live there.
+  bool get isAboutAPlace => place != null;
 
   bool get asksSomething => challenge is! NoChallenge;
   bool get hasHint => hint.isNotEmpty;

@@ -381,6 +381,28 @@ class Analytics {
     if (now) await flushPerson(force: true);
   }
 
+  /// Takes [keys] off the reader's profile as far as the phone goes: a
+  /// value still waiting is not written, and one written before is no
+  /// longer remembered as written, so it goes out again if it comes back.
+  /// PostHog's own copy is dropped by `$unset` on an event, which the
+  /// caller sends (see AppState.clearPlace): this only keeps the phone from
+  /// writing it back.
+  static Future<void> forgetPerson(Iterable<String> keys) => _guard(() async {
+    if (_sink == null) return;
+    final List<String> gone = keys.toList();
+    // At once, before anything is awaited: a flush already on its way must
+    // not find them.
+    for (final String key in gone) {
+      _personWaiting.remove(key);
+      _personOnceWaiting.remove(key);
+    }
+    await _loadPerson();
+    for (final String key in gone) {
+      _personSent.remove(key);
+    }
+    await _savePerson();
+  });
+
   /// Writes what is waiting to the profile, leaving out what it already
   /// says. Without [force], at most once every [personEvery].
   static Future<void> flushPerson({bool force = false}) => _guard(() async {

@@ -400,7 +400,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      '계정과 백업, 친구에게 보이는 보드가 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
+      '계정과 백업이 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
 
   @override
   String get deleteAccountConfirm => '영구 삭제';
@@ -849,6 +849,76 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get reminderAskNotNow => '나중에';
+
+  @override
+  String get placeAskTitle => '내가 사는 곳에 관한 카드';
+
+  @override
+  String get placeAskLine =>
+      '가끔 Astute가 당신이 사는 곳에 관한 카드를 보내 드려요. 그곳의 역사, 과학, 뜻밖의 이야기까지요.';
+
+  @override
+  String get placeOnlyCity => '도시 이름만 저장하고, 정확한 위치는 절대 저장하지 않아요.';
+
+  @override
+  String get placeAskPreviewLine => '가까운 곳 · 모데나';
+
+  @override
+  String get placeAskPreviewQuestion => '기를란디나 탑이 기울어 있어요. 얼마나 기울었을까요?';
+
+  @override
+  String get placeAskYes => '내 위치 사용';
+
+  @override
+  String get placeAskNotNow => '나중에';
+
+  @override
+  String get placeRowTitle => '사는 곳';
+
+  @override
+  String get placeRowOff => '꺼짐';
+
+  @override
+  String get placeRowOffLine => '켜면 사는 곳에 관한 카드를 받을 수 있어요.';
+
+  @override
+  String get placeSwitchOn => '켜기';
+
+  @override
+  String get placeUseNow => '지금 내 위치 사용';
+
+  @override
+  String get placeRemove => '삭제';
+
+  @override
+  String placeSetTo(String place) {
+    return '사는 곳: $place';
+  }
+
+  @override
+  String get placeRemoved => '삭제했어요. Astute는 이제 사는 곳을 저장하지 않아요.';
+
+  @override
+  String get placeNotFound => '지금은 위치를 찾지 못했어요. 다른 날 다시 시도할게요.';
+
+  @override
+  String get placeDeniedNote => '괜찮아요. 언제든 프로필에서 켤 수 있어요.';
+
+  @override
+  String get placeServicesOff => '이 휴대폰의 위치 서비스가 꺼져 있어요. 설정에서 켠 다음 다시 시도하세요.';
+
+  @override
+  String get placeNotHere => '이 기기에서는 위치를 알 수 없어요.';
+
+  @override
+  String get placeSettingsTitle => 'Astute의 위치 접근이 꺼져 있어요';
+
+  @override
+  String get placeSettingsBody =>
+      '사는 곳에 관한 카드를 받으려면 설정에서 Astute의 위치 접근을 허용하세요. 도시 이름만 저장해요.';
+
+  @override
+  String get placeSettingsOpen => '설정 열기';
 
   @override
   String trialWarningTitle(int days) {
@@ -1479,83 +1549,6 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '지금까지 $answered문제 답함. 오늘: $question';
-  }
-
-  @override
-  String get friends => '친구';
-
-  @override
-  String friendsN(int n) {
-    return '친구 · $n';
-  }
-
-  @override
-  String get yourFriendCode => '내 친구 코드';
-
-  @override
-  String get codeCopied => '코드를 복사했어요.';
-
-  @override
-  String get addAFriend => '친구 추가';
-
-  @override
-  String get theirCode => '친구의 코드';
-
-  @override
-  String get add => '추가';
-
-  @override
-  String get noFriendsYet =>
-      '아직 아무도 없어요. 친구와 코드를 교환하고 연속 기록과 확신 정확도를 비교하세요 — 답은 절대 보이지 않아요.';
-
-  @override
-  String get friendsNeedAnAccount => '비교하려면 휴대폰 앱과 계정이 필요해요. 코드는 저장돼요.';
-
-  @override
-  String get noReaderWithCode => '그 코드를 가진 독자가 없어요.';
-
-  @override
-  String get thatsYourOwnCode => '그건 당신의 코드예요.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n점 어긋남';
-  }
-
-  @override
-  String get notMeasuredYet => '아직 측정 전';
-
-  @override
-  String get thisWeekByCalibration => '이번 주, 확신 정확도 순';
-
-  @override
-  String get notYetToday => '오늘은 아직';
-
-  @override
-  String nOfSeven(int n) {
-    return '7일 중 $n일';
-  }
-
-  @override
-  String get you => '나';
-
-  @override
-  String get todaysQuestion => '오늘의 질문';
-
-  @override
-  String get right => '정답';
-
-  @override
-  String get wrong => '오답';
-
-  @override
-  String rightAtSure(int sure) {
-    return '정답, 확신 $sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return '오답, 확신 $sure%';
   }
 
   @override
@@ -3116,4 +3109,35 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get yourPick => '내 선택';
+
+  @override
+  String placeNearYou(String place) {
+    return '당신 근처 · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return '당신의 지역 · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return '당신의 나라 · $place';
+  }
+
+  @override
+  String get sundayOneMore => '일요일: 당신을 위해 고른 카드가 한 장 더';
+
+  @override
+  String get whereYouLive => '당신이 사는 곳';
+
+  @override
+  String get whereYouLiveLine => '먼저 당신의 도시, 그다음 지역, 그리고 나라';
+
+  @override
+  String get whereYouLiveAsk =>
+      '당신의 도시, 지역, 나라에 관한 카드: 하루에 많아야 한 장, 그리고 이 선반. 도시만 저장하고, 당신이 정확히 어디 있는지는 절대 저장하지 않아요.';
+
+  @override
+  String get whereYouLiveSwitchOn => '켜기';
 }

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import '../models/pill.dart';
+import '../models/place.dart';
 
 /// Everything about a reader that should survive a new phone.
 ///
@@ -37,6 +38,8 @@ class ReaderSnapshot {
     this.genresOff = const [],
     this.strandsOff = const [],
     this.pushTokens = const [],
+    this.place,
+    this.placeRemovedAt,
   });
 
   final String name;
@@ -51,7 +54,8 @@ class ReaderSnapshot {
   final List<String> likedIds;
   final List<String> dislikedIds;
 
-  /// Whose boards the reader looks at.
+  /// The friend codes the reader added while the app had friends. Nothing
+  /// reads them any more; the backup carries them as they were.
   final List<String> friendCodes;
 
   /// The day each rung of the ladder was first reached, by rung id.
@@ -86,6 +90,18 @@ class ReaderSnapshot {
   /// Where to send a notification, one entry per phone the reader uses.
   final List<String> pushTokens;
 
+  /// Where the reader lives: a person's, not a phone's, so it travels. Kept
+  /// at `readers/{uid}.place`, which is where the server reads it to deal
+  /// cards about it — and, like every field here, gone from the document
+  /// with the first write after it is removed, since a write replaces the
+  /// whole of it.
+  final Place? place;
+
+  /// When the reader removed their place, if they did and have not set one
+  /// since: the word a merge weighs against an older place, so that one
+  /// phone's removal is not undone by another phone's copy.
+  final DateTime? placeRemovedAt;
+
   bool get isEmpty =>
       streak == 0 &&
       pillsRead == 0 &&
@@ -118,6 +134,9 @@ class ReaderSnapshot {
     'genresOff': genresOff,
     'strandsOff': strandsOff,
     'pushTokens': pushTokens,
+    'place': ?place?.toJson(),
+    if (placeRemovedAt != null)
+      'placeRemovedAt': placeRemovedAt!.toUtc().toIso8601String(),
   };
 
   static ReaderSnapshot fromJson(Map<String, dynamic>? raw) {
@@ -221,8 +240,41 @@ class ReaderSnapshot {
       genresOff: strings(raw['genresOff']),
       strandsOff: strings(raw['strandsOff']),
       pushTokens: strings(raw['pushTokens']),
+      place: Place.fromJson(raw['place']),
+      placeRemovedAt: raw['placeRemovedAt'] is String
+          ? DateTime.tryParse(raw['placeRemovedAt'] as String)
+          : null,
     );
   }
+}
+
+/// Where the reader lives, of two records of it: whichever phone heard
+/// last. A place is weighed by when its phone read it (`at`), a removal by
+/// when it was made, and the newer of all of them stands — so a place set
+/// on one phone reaches the other, and a removal made on one is not undone
+/// by the other's older copy. Equal or undated, this phone's word wins.
+({Place? place, DateTime? removedAt}) _newerPlace(
+  ReaderSnapshot local,
+  ReaderSnapshot remote,
+) {
+  DateTime when(Place? place, DateTime? removedAt) =>
+      place?.at ??
+      removedAt ??
+      DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
+  final bool localSaid = local.place != null || local.placeRemovedAt != null;
+  final bool remoteSaid = remote.place != null || remote.placeRemovedAt != null;
+  final bool remoteIsNewer =
+      remoteSaid &&
+      (!localSaid ||
+          when(
+            remote.place,
+            remote.placeRemovedAt,
+          ).isAfter(when(local.place, local.placeRemovedAt)));
+  final ReaderSnapshot from = remoteIsNewer ? remote : local;
+  return (
+    place: from.place,
+    removedAt: from.place == null ? from.placeRemovedAt : null,
+  );
 }
 
 /// Folds what is on this phone into what the account already holds.
@@ -320,6 +372,9 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
   // this phone is where the reader just was.
   final bool localChoseMix = local.topicWeights.isNotEmpty;
 
+  // Where the reader lives: the newer word, a removal included.
+  final ({Place? place, DateTime? removedAt}) home = _newerPlace(local, remote);
+
   return ReaderSnapshot(
     name: local.name != 'You' ? local.name : remote.name,
     streak: streak,
@@ -354,5 +409,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     strandsOff: localChoseMix ? local.strandsOff : remote.strandsOff,
     // A reader with two phones should be reachable on both.
     pushTokens: union(local.pushTokens, remote.pushTokens),
+    place: home.place,
+    placeRemovedAt: home.removedAt,
   );
 }

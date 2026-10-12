@@ -3,6 +3,13 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- So a scheduled reminder survives a restart. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Where the reader lives, to the city: asked for at runtime, after the
+         app's own sheet, and only while the app is open. Approximate only:
+         geolocator asks for exactly the location permissions declared here,
+         and the city needs no more than the phone's approximate position,
+         so neither ACCESS_FINE_LOCATION nor a background permission is
+         asked for, or declared. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:label="Astute"
         android:name="${applicationName}"

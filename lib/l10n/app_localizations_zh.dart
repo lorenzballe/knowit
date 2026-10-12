@@ -398,7 +398,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      '你的账号、它的备份以及好友能看到的看板将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
+      '你的账号及其备份将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
 
   @override
   String get deleteAccountConfirm => '永久删除';
@@ -841,6 +841,75 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reminderAskNotNow => '暂不';
+
+  @override
+  String get placeAskTitle => '关于你住的地方的卡片';
+
+  @override
+  String get placeAskLine => 'Astute 会不时给你发一张关于你住的地方的卡片 — 它的历史、科学，还有意想不到的故事。';
+
+  @override
+  String get placeOnlyCity => '只保存你所在的城市，从不保存你的精确位置。';
+
+  @override
+  String get placeAskPreviewLine => '你附近 · 摩德纳';
+
+  @override
+  String get placeAskPreviewQuestion => '吉尔兰迪纳塔是斜的。斜了多少？';
+
+  @override
+  String get placeAskYes => '使用我的位置';
+
+  @override
+  String get placeAskNotNow => '暂不';
+
+  @override
+  String get placeRowTitle => '你住的地方';
+
+  @override
+  String get placeRowOff => '已关闭';
+
+  @override
+  String get placeRowOffLine => '开启后，你会收到关于你住的地方的卡片。';
+
+  @override
+  String get placeSwitchOn => '开启';
+
+  @override
+  String get placeUseNow => '现在使用我的位置';
+
+  @override
+  String get placeRemove => '移除';
+
+  @override
+  String placeSetTo(String place) {
+    return '你住的地方：$place';
+  }
+
+  @override
+  String get placeRemoved => '已移除。Astute 不再保存你住的地方。';
+
+  @override
+  String get placeNotFound => '暂时无法确定你在哪里。Astute 会改天再试。';
+
+  @override
+  String get placeDeniedNote => '没关系。你随时可以在“我的”里开启。';
+
+  @override
+  String get placeServicesOff => '这台手机的定位服务已关闭。请在设置中开启后再试。';
+
+  @override
+  String get placeNotHere => '这台设备无法确定你的位置。';
+
+  @override
+  String get placeSettingsTitle => 'Astute 的定位权限已关闭';
+
+  @override
+  String get placeSettingsBody =>
+      '要收到关于你住的地方的卡片，请在设置中允许 Astute 使用你的位置。只会保存你所在的城市。';
+
+  @override
+  String get placeSettingsOpen => '打开设置';
 
   @override
   String trialWarningTitle(int days) {
@@ -1466,82 +1535,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '到目前为止答了$answered题。今天：$question';
-  }
-
-  @override
-  String get friends => '朋友';
-
-  @override
-  String friendsN(int n) {
-    return '朋友 · $n';
-  }
-
-  @override
-  String get yourFriendCode => '你的好友码';
-
-  @override
-  String get codeCopied => '已复制代码。';
-
-  @override
-  String get addAFriend => '添加朋友';
-
-  @override
-  String get theirCode => '对方的代码';
-
-  @override
-  String get add => '添加';
-
-  @override
-  String get noFriendsYet => '还没有人。和朋友交换代码，比较连续天数和自信校准 — 永远不会看到答案。';
-
-  @override
-  String get friendsNeedAnAccount => '比较需要手机应用和账户。你的代码会被保留。';
-
-  @override
-  String get noReaderWithCode => '没有使用该代码的读者。';
-
-  @override
-  String get thatsYourOwnCode => '这是你自己的代码。';
-
-  @override
-  String pointsOff(int n) {
-    return '偏差$n分';
-  }
-
-  @override
-  String get notMeasuredYet => '尚未测量';
-
-  @override
-  String get thisWeekByCalibration => '本周，按校准排序';
-
-  @override
-  String get notYetToday => '今天还没有';
-
-  @override
-  String nOfSeven(int n) {
-    return '7天中$n天';
-  }
-
-  @override
-  String get you => '你';
-
-  @override
-  String get todaysQuestion => '今日一题';
-
-  @override
-  String get right => '答对';
-
-  @override
-  String get wrong => '答错';
-
-  @override
-  String rightAtSure(int sure) {
-    return '答对，自信度$sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return '答错，自信度$sure%';
   }
 
   @override
@@ -3110,4 +3103,35 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourPick => '你的选择';
+
+  @override
+  String placeNearYou(String place) {
+    return '你附近 · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return '你的地区 · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return '你的国家 · $place';
+  }
+
+  @override
+  String get sundayOneMore => '星期日：多一张为你挑选的卡片';
+
+  @override
+  String get whereYouLive => '你住的地方';
+
+  @override
+  String get whereYouLiveLine => '先是你的城市，然后是地区，再是国家';
+
+  @override
+  String get whereYouLiveAsk =>
+      '关于你的城市、地区和国家的卡片：每天最多一张，还有这个书架。只保存城市，从不保存你的确切位置。';
+
+  @override
+  String get whereYouLiveSwitchOn => '开启';
 }

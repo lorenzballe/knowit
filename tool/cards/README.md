@@ -97,6 +97,13 @@ gate holds to a vocabulary (`schema.json`; the rules for choosing are §19 of
 | `also` | other strands the card is about, in any subject | the mix's switches, through any of them; the taste |
 | `source_kind` | paper, statistics, primary document, institution, reference work, book, standard, news archive, company, arithmetic | the plan, which asks for the kind a subject has least of |
 | `quote` | the passage of the reference that states the claim, verbatim | the critic; a program, against the page |
+| `place` | the country, the region or the city (with its point and reach) a card is about, for a card about where readers live | the dealers, which give it only to readers who live there: one a day, and Explore's "Where you live" (docs/PLACES.md); the calendar never names one |
+
+`check.py` holds a place to what the schema cannot say: a country ISO 3166-1
+assigns, in capitals; a region whose code starts with its country, and for a
+card about a region one the app can find readers in (`lib/models/place.dart`);
+a city with its region, `lat`, `lon` and `km`; and the card's own `region`
+the part of the world its country is in.
 
 Thinking cards have no genre or strand: Thinking is the principle in the
 open, and it is never off anybody's deck. Everything else has both, and

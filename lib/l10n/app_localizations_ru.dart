@@ -420,7 +420,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'Аккаунт, его резервная копия и доска, которую видят друзья, удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: ею управляют в настройках App Store.';
+      'Аккаунт и его резервная копия удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: ею управляют в настройках App Store.';
 
   @override
   String get deleteAccountConfirm => 'Удалить навсегда';
@@ -914,6 +914,81 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get reminderAskNotNow => 'Не сейчас';
+
+  @override
+  String get placeAskTitle => 'Карточки о том, где ты живёшь';
+
+  @override
+  String get placeAskLine =>
+      'Время от времени Astute будет давать тебе карточку о месте, где ты живёшь, — о его истории, науке и неожиданностях.';
+
+  @override
+  String get placeOnlyCity =>
+      'Сохраняется только твой город, а не точное местоположение.';
+
+  @override
+  String get placeAskPreviewLine => 'Рядом с тобой · Модена';
+
+  @override
+  String get placeAskPreviewQuestion => 'Гирландина наклонена. Насколько?';
+
+  @override
+  String get placeAskYes => 'Использовать моё местоположение';
+
+  @override
+  String get placeAskNotNow => 'Не сейчас';
+
+  @override
+  String get placeRowTitle => 'Где ты живёшь';
+
+  @override
+  String get placeRowOff => 'Выключено';
+
+  @override
+  String get placeRowOffLine =>
+      'Включи, чтобы получать карточки о месте, где ты живёшь.';
+
+  @override
+  String get placeSwitchOn => 'Включить';
+
+  @override
+  String get placeUseNow => 'Использовать местоположение сейчас';
+
+  @override
+  String get placeRemove => 'Удалить';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Где ты живёшь: $place';
+  }
+
+  @override
+  String get placeRemoved => 'Удалено. Astute больше не хранит, где ты живёшь.';
+
+  @override
+  String get placeNotFound =>
+      'Сейчас не удалось определить, где ты. Astute попробует в другой день.';
+
+  @override
+  String get placeDeniedNote =>
+      'Ничего страшного. Это можно включить в профиле в любой момент.';
+
+  @override
+  String get placeServicesOff =>
+      'На этом телефоне выключена геолокация. Включи её в настройках и попробуй ещё раз.';
+
+  @override
+  String get placeNotHere => 'Это устройство не может определить, где ты.';
+
+  @override
+  String get placeSettingsTitle => 'Геолокация для Astute выключена';
+
+  @override
+  String get placeSettingsBody =>
+      'Чтобы получать карточки о месте, где ты живёшь, разреши Astute доступ к геолокации в настройках. Сохраняется только твой город.';
+
+  @override
+  String get placeSettingsOpen => 'Открыть настройки';
 
   @override
   String trialWarningTitle(int days) {
@@ -1586,84 +1661,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'Пока $answered ответов. Сегодня: $question';
-  }
-
-  @override
-  String get friends => 'Друзья';
-
-  @override
-  String friendsN(int n) {
-    return 'Друзья · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'Ваш код друга';
-
-  @override
-  String get codeCopied => 'Код скопирован.';
-
-  @override
-  String get addAFriend => 'Добавить друга';
-
-  @override
-  String get theirCode => 'Его код';
-
-  @override
-  String get add => 'Добавить';
-
-  @override
-  String get noFriendsYet =>
-      'Пока никого. Обменяйтесь кодами с другом и сравнивайте серии и калибровку — никогда ответы.';
-
-  @override
-  String get friendsNeedAnAccount =>
-      'Для сравнения нужны приложение на телефоне и аккаунт. Ваши коды сохраняются.';
-
-  @override
-  String get noReaderWithCode => 'Нет читателя с таким кодом.';
-
-  @override
-  String get thatsYourOwnCode => 'Это ваш собственный код.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n пунктов отклонения';
-  }
-
-  @override
-  String get notMeasuredYet => 'ещё не измерена';
-
-  @override
-  String get thisWeekByCalibration => 'На этой неделе, по калибровке';
-
-  @override
-  String get notYetToday => 'сегодня ещё нет';
-
-  @override
-  String nOfSeven(int n) {
-    return '$n из 7';
-  }
-
-  @override
-  String get you => 'Вы';
-
-  @override
-  String get todaysQuestion => 'Вопрос дня';
-
-  @override
-  String get right => 'верно';
-
-  @override
-  String get wrong => 'неверно';
-
-  @override
-  String rightAtSure(int sure) {
-    return 'верно, уверенность $sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return 'неверно, уверенность $sure%';
   }
 
   @override
@@ -3377,4 +3374,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get yourPick => 'Ваш выбор';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Рядом с тобой · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Твой регион · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Твоя страна · $place';
+  }
+
+  @override
+  String get sundayOneMore =>
+      'Воскресенье: ещё одна карточка, выбранная для тебя';
+
+  @override
+  String get whereYouLive => 'Там, где ты живёшь';
+
+  @override
+  String get whereYouLiveLine =>
+      'Сначала твой город, потом регион, потом страна';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Карточки о твоём городе, регионе и стране: не больше одной в день, и эта полка. Хранится только город, никогда — где именно ты находишься.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Включить';
 }

@@ -13,6 +13,7 @@
 library;
 
 import '../models/pill.dart';
+import '../models/place.dart';
 import 'topics.dart';
 
 /// The kinds a card can be, as the bank names them.
@@ -88,6 +89,7 @@ Map<String, Object?> cardToJson(Pill p) {
     out['mature'] = p.mature;
     out['language'] = p.language;
   }
+  if (p.place != null) out['place'] = p.place!.toJson();
   if (p.buildsOn.isNotEmpty) out['builds_on'] = p.buildsOn;
   if (p.figure.isNotEmpty) out['figure'] = p.figure;
   if (p.diagram != null) out['diagram'] = p.diagram!.raw;
@@ -173,6 +175,16 @@ Pill cardFromJson(Map<String, Object?> raw) {
     throw FormatException('unknown principle "$principleName"', id);
   }
 
+  // A place the app cannot read refuses the card, and the bundle with it:
+  // read as no place, a card about Modena would be dealt to everybody.
+  final Object? rawPlace = raw['place'];
+  final CardPlace? place = rawPlace == null
+      ? null
+      : CardPlace.fromJson(rawPlace);
+  if (rawPlace != null && place == null) {
+    throw FormatException('a place the app cannot read', id);
+  }
+
   return Pill(
     id: id,
     topic: style.name,
@@ -211,5 +223,6 @@ Pill cardFromJson(Map<String, Object?> raw) {
     figure: text('figure'),
     diagram: Diagram.fromJson(raw['diagram'], id: id),
     scene: Scene.fromJson(raw['scene'], id: id),
+    place: place,
   );
 }

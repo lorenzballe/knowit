@@ -9,10 +9,12 @@ import 'package:flutter/services.dart';
 import '../analytics.dart';
 import '../measure/card_read.dart';
 import '../models/pill.dart';
+import '../models/place.dart';
 import '../theme.dart';
 import 'hold_to_keep.dart';
 import 'motion.dart';
 import 'place_it.dart';
+import 'place_line.dart';
 import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
@@ -43,6 +45,10 @@ class PillCard extends StatelessWidget {
   /// others came at random — the free day says which is which.
   final bool isOwn;
 
+  /// Where the reader lives, for the line a card about a place carries on
+  /// its front (see [placeLineOf]); null when they have not said.
+  final Place? home;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -52,6 +58,7 @@ class PillCard extends StatelessWidget {
     this.onAnswer,
     this.isReview = false,
     this.isOwn = false,
+    this.home,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -187,6 +194,9 @@ class PillCard extends StatelessWidget {
                 ),
             ],
           ),
+          if (!flipped)
+            if (placeLineOf(context, pill.place, home) case final String why)
+              _PlaceLine(text: why, ink: pill.ink),
           Expanded(
             child: flipped
                 ? _BackFace(
@@ -247,6 +257,50 @@ class PillCard extends StatelessWidget {
                       ),
                     ),
                   },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Why a card about a place is in front of the reader, under its subject:
+/// "Near you · Modena". Quiet on purpose — the card is the question, and
+/// this is the one fact about it the reader did not choose — so it takes
+/// the subject row's ink at the same strength, sentence case, a pin beside
+/// it, and wraps rather than being cut in a language that runs long.
+class _PlaceLine extends StatelessWidget {
+  const _PlaceLine({required this.text, required this.ink});
+
+  final String text;
+  final Color ink;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color muted = ink.withValues(alpha: 0.66);
+    return Padding(
+      key: const ValueKey('place-line'),
+      padding: const EdgeInsets.only(top: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 1.5),
+            child: ExcludeSemantics(
+              child: Icon(Icons.place_rounded, size: 13, color: muted),
+            ),
+          ),
+          const SizedBox(width: 5),
+          Flexible(
+            child: Text(
+              text,
+              style: AppText.body(
+                size: 12.5,
+                weight: FontWeight.w500,
+                height: 1.25,
+                color: muted,
+              ),
+            ),
           ),
         ],
       ),

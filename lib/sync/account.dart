@@ -78,31 +78,10 @@ class Account extends ChangeNotifier {
   ReaderStore? get _readers =>
       storeOverride ?? (Cloud.ready ? FirestoreReaderStore() : null);
 
+  /// Where a board published by a build that still had friends is kept,
+  /// so deleting the account can take it down with the rest.
   BoardStore? get _boards =>
       boardsOverride ?? (Cloud.ready ? FirestoreBoardStore() : null);
-
-  /// The six letters a friend types to find this reader, or null where
-  /// there is no account to be found by.
-  String? get friendCode {
-    final String? who = uid;
-    return who == null ? null : friendCodeOf(who);
-  }
-
-  /// Whether boards can be read at all here.
-  bool get canCompare => _boards != null && uid != null;
-
-  /// A friend's board, by their code. Null when there is none, or nowhere
-  /// to look.
-  Future<Board?> board(String code) async {
-    final BoardStore? boards = _boards;
-    if (boards == null) return null;
-    try {
-      return await boards.read(code);
-    } catch (error) {
-      debugPrint('Could not read a board: $error');
-      return null;
-    }
-  }
 
   User? get user => _firebase?.currentUser;
 
@@ -346,15 +325,8 @@ class Account extends ChangeNotifier {
       debugPrint('Could not push the snapshot: $error');
       Analytics.error(error, stack, where: 'backup');
     }
-    // And the board, which is the part of the record a friend can see.
-    final BoardStore? boards = _boards;
-    if (boards == null) return;
-    try {
-      await boards.publish(app.board(who));
-    } catch (error, stack) {
-      debugPrint('Could not publish the board: $error');
-      Analytics.error(error, stack, where: 'board');
-    }
+    // No board goes up with it any more. Friends came out before the
+    // launch, and a board nobody can look at is a write for nothing.
   }
 
   /// Gives this phone an account of its own, before anyone signs in.
@@ -436,9 +408,9 @@ class Account extends ChangeNotifier {
   /// standing. Whoever signed in with Apple or Google says so once more: a
   /// sign-in is the one thing Firebase will not delete on an old session,
   /// and Apple's fresh authorisation is also what revokes the app's access
-  /// to the Apple ID. Then the backup and the board go, while this phone is
-  /// still their owner; then the sign-in itself; then the store's hold on
-  /// the account, and this phone.
+  /// to the Apple ID. Then the backup goes, and the board a build that still
+  /// had friends published, while this phone is still their owner; then the
+  /// sign-in itself; then the store's hold on the account, and this phone.
   Future<DeleteOutcome> deleteAccount(AppState app) async {
     if (_deleting || _busy) return DeleteOutcome.cancelled;
     lastError = null;
@@ -504,6 +476,11 @@ class Account extends ChangeNotifier {
       }
       await auth?.signOut();
       await Subscription.instance.logOut();
+      // Where the reader lived leaves PostHog's profile too, while that
+      // profile is still theirs: the wipe below forgets who they were. Not
+      // before the sign-in has gone, or the change would be backed up into
+      // the document just deleted.
+      if (app.place != null) await app.clearPlace();
       await app.signOut();
       return DeleteOutcome.deleted;
     } on FirebaseAuthException catch (error, stack) {

@@ -1,0 +1,49 @@
+{
+  "id": "history-reggio-emilia-1",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.what_came_after",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: the first tricolour, adopted by the Cispadane Republic at Reggio Emilia, had vertical bands like today's?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Cispadane flag ran in horizontal bands, red at the top, white in the middle and green at the bottom, with the republic's emblem, a quiver of arrows, on the white. The bands turned vertical when the Cispadane merged into the Cisalpine Republic. The first tricolour had the right colours, lying on its side.",
+  "move": "A symbol's first version is rarely the one that lasted.",
+  "ask": "Which tradition do I picture as unchanged since its first day?",
+  "trap": "True, picturing today's flag carried back to its first day.",
+  "keywords": [
+    "tricolour",
+    "cispadane republic",
+    "reggio emilia",
+    "italian flag",
+    "cisalpine republic"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ANPI, Storia del Tricolore, 2011",
+  "source_kind": "institution",
+  "reference": "https://www.anpi.it/patria-indipendente/media/uploads/patria/2011/Inserto_Storia_del_Tricolore.pdf",
+  "quote": "Il vessillo di Reggio Emilia era a bande orizzontali, con il rosso in alto, il bianco al centro e il verde in basso.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+  }
+}

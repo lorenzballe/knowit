@@ -1,0 +1,54 @@
+{
+  "id": "medicine-modena-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.doctors_who_were_right",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Hippocrates listed what a doctor should ask a patient. Bernardino Ramazzini, professor at Modena, added a question. Which?",
+  "options": [
+    "What do you eat?",
+    "Where were you born?",
+    "What work do you do?"
+  ],
+  "correct": 2,
+  "answer": "What work do you do. Hippocrates' list already covered the pains, their cause, how long, the bowels and the food. Ramazzini went into Modena's workshops and talked with workers about their ailments, then put the trade into the diagnosis in De Morbis Artificum, the founding book of occupational medicine. The workshop came to the bedside.",
+  "move": "Ask what someone does all day before explaining what ails them.",
+  "ask": "What does my own work do to my body that no doctor has asked about?",
+  "end": "ask",
+  "trap": "Diet, because it sounds like the doctor's classic question.",
+  "keywords": [
+    "bernardino ramazzini",
+    "occupational medicine",
+    "de morbis artificum",
+    "hippocrates",
+    "medical history"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CDC Stacks, Ramazzini's 1700 preface",
+  "source_kind": "institution",
+  "reference": "https://stacks.cdc.gov/view/cdc/189151/cdc_189151_DS1.pdf",
+  "quote": "So says Hippocrates in his work 'Affections.' I may venture to add one more question: what occupation does he follow?",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+  }
+}

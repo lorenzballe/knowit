@@ -10,7 +10,9 @@ against the same Firestore the app writes to.
     src/profile.ts   the reader: the backup, the trace and the presence read
                      into a level per subject, a taste, and the mix as leaned
     src/deal.ts      the day, by the phone's own rules, from that profile
-    src/explore.ts   Explore for everybody, and the shelf that is one reader's
+    src/place.ts     where a reader lives, and which cards belong there: the
+                     twin of lib/models/place.dart, held to tool/places/
+    src/explore.ts   Explore for everybody, and the shelves that are one reader's
     src/search.ts    the pool asked a question
     src/scorecard.ts how every card does with the readers: counted, flagged,
                      and the cards readers say are untrue held out of the deal
@@ -35,7 +37,10 @@ Explore. What the server dealt is what the server dealt.
 
 ## What it reads
 
-- `readers/{uid}` — the backup the phone keeps (`lib/sync/reader_snapshot.dart`).
+- `readers/{uid}` — the backup the phone keeps (`lib/sync/reader_snapshot.dart`),
+  and in it `place`, where the reader lives (`Place.toJson()`): the day's
+  card about it and Explore's "Where you live" are dealt from that, and a
+  search reads that field alone. Missing or malformed, there is no place.
 - `readers/{uid}/activity/{UTC day}` — the trace (`lib/sync/trace.dart`): the
   gestures, compacted. The last 21 days.
 - `presence/{uid}` — when the reader was last here, their clock's offset,
@@ -75,6 +80,8 @@ ones that shape a reader's day:
 | deal.ts      | `EXPLORER_SHARE` 0.5   | about every other day that has one of the reader's own reads — on the free plan, the morning after a week kept — that read is from a strand never met, on level alone; seeded by reader and date, so every server agrees |
 | deal.ts      | fit 1.5/1.0/0.7, 0.5–3.0 | the phone's own ladder (`lib/data/pills_repository.dart`): a read below the level first, a hard ask only once the level is there |
 | deal.ts      | `OWN_FREE` 2, `OWN_REWARDED` 3 | the free day from the first morning, and the morning after a week kept; the rest of a free day at random (`dealRandom`, see the root README) |
+| deal.ts      | `OWN_SUNDAY` +1        | on the reader's own Sunday (their date, so their clock) one card at random becomes one of their own; Astute+, all five their own already, gets nothing more |
+| deal.ts      | `localCard`, one a day  | the card about where the reader lives (docs/PLACES.md §5): city, then region, then country, never one read; it takes a slot at random, or on Astute+ the last of the reader's own |
 | serve.ts     | `TRACE_DAYS` 21, `ACTIVE_DAYS` 14, `PREPARE_TOMORROW_FROM` 17 | three weeks of trace kept, two weeks of absence before a reader is left alone, tomorrow dealt from five in the afternoon |
 | explore.ts   | the crowd, `popularity` | the launch crowd, the phone's numbers bit for bit (`lib/sync/tally.dart`)              |
 

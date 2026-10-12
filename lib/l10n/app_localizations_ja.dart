@@ -399,7 +399,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'アカウントとそのバックアップ、友達に見えるボードが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。サブスクリプションは App Store の設定で管理してください。';
+      'アカウントとそのバックアップが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。サブスクリプションは App Store の設定で管理してください。';
 
   @override
   String get deleteAccountConfirm => '完全に削除';
@@ -846,6 +846,75 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get reminderAskNotNow => '今はしない';
+
+  @override
+  String get placeAskTitle => 'あなたの住む場所のカード';
+
+  @override
+  String get placeAskLine => 'ときどき、あなたの住む場所についてのカードを配ります。その歴史や科学、意外な一面まで。';
+
+  @override
+  String get placeOnlyCity => '保存するのは都市名だけ。正確な位置は保存しません。';
+
+  @override
+  String get placeAskPreviewLine => 'あなたの近く · モデナ';
+
+  @override
+  String get placeAskPreviewQuestion => 'ギルランディーナの塔は傾いている。どれくらい？';
+
+  @override
+  String get placeAskYes => '位置情報を使う';
+
+  @override
+  String get placeAskNotNow => '今はしない';
+
+  @override
+  String get placeRowTitle => '住んでいる場所';
+
+  @override
+  String get placeRowOff => 'オフ';
+
+  @override
+  String get placeRowOffLine => 'オンにすると、住んでいる場所のカードが届きます。';
+
+  @override
+  String get placeSwitchOn => 'オンにする';
+
+  @override
+  String get placeUseNow => '今の位置情報を使う';
+
+  @override
+  String get placeRemove => '削除';
+
+  @override
+  String placeSetTo(String place) {
+    return '住んでいる場所：$place';
+  }
+
+  @override
+  String get placeRemoved => '削除しました。Astuteは住んでいる場所をもう保存していません。';
+
+  @override
+  String get placeNotFound => '今は現在地がわかりませんでした。別の日にもう一度試します。';
+
+  @override
+  String get placeDeniedNote => '大丈夫です。プロフィールからいつでもオンにできます。';
+
+  @override
+  String get placeServicesOff => 'この端末の位置情報サービスがオフです。設定でオンにしてから、もう一度お試しください。';
+
+  @override
+  String get placeNotHere => 'この端末では現在地がわかりません。';
+
+  @override
+  String get placeSettingsTitle => 'Astuteの位置情報がオフです';
+
+  @override
+  String get placeSettingsBody =>
+      '住んでいる場所のカードを受け取るには、設定でAstuteに位置情報の使用を許可してください。保存するのは都市名だけです。';
+
+  @override
+  String get placeSettingsOpen => '設定を開く';
 
   @override
   String trialWarningTitle(int days) {
@@ -1475,83 +1544,6 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'これまで$answered問回答。今日：$question';
-  }
-
-  @override
-  String get friends => '友だち';
-
-  @override
-  String friendsN(int n) {
-    return '友だち · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'あなたの友だちコード';
-
-  @override
-  String get codeCopied => 'コードをコピーしました。';
-
-  @override
-  String get addAFriend => '友だちを追加';
-
-  @override
-  String get theirCode => '相手のコード';
-
-  @override
-  String get add => '追加';
-
-  @override
-  String get noFriendsYet =>
-      'まだ誰もいません。友だちとコードを交換して、連続日数と確信度の精度を比べましょう — 答えは決して見えません。';
-
-  @override
-  String get friendsNeedAnAccount => '比べるにはスマホ版アプリとアカウントが必要です。コードは保存されています。';
-
-  @override
-  String get noReaderWithCode => 'そのコードの読者はいません。';
-
-  @override
-  String get thatsYourOwnCode => 'それはあなた自身のコードです。';
-
-  @override
-  String pointsOff(int n) {
-    return '$nポイントのずれ';
-  }
-
-  @override
-  String get notMeasuredYet => 'まだ測定されていません';
-
-  @override
-  String get thisWeekByCalibration => '今週、確信度の精度順';
-
-  @override
-  String get notYetToday => '今日はまだ';
-
-  @override
-  String nOfSeven(int n) {
-    return '7日中$n日';
-  }
-
-  @override
-  String get you => 'あなた';
-
-  @override
-  String get todaysQuestion => '今日の問題';
-
-  @override
-  String get right => '正解';
-
-  @override
-  String get wrong => '不正解';
-
-  @override
-  String rightAtSure(int sure) {
-    return '正解、確信度$sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return '不正解、確信度$sure%';
   }
 
   @override
@@ -3102,4 +3094,35 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get yourPick => 'あなたの選択';
+
+  @override
+  String placeNearYou(String place) {
+    return 'あなたの近く · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'あなたの地域 · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'あなたの国 · $place';
+  }
+
+  @override
+  String get sundayOneMore => '日曜日：あなたのために選んだカードがもう1枚';
+
+  @override
+  String get whereYouLive => 'あなたの住む場所';
+
+  @override
+  String get whereYouLiveLine => 'まずあなたの街、次に地域、それから国';
+
+  @override
+  String get whereYouLiveAsk =>
+      'あなたの街、地域、国についてのカード。多くても1日1枚、そしてこの棚。保存するのは街だけで、あなたが正確にどこにいるかは決して保存しません。';
+
+  @override
+  String get whereYouLiveSwitchOn => 'オンにする';
 }

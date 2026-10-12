@@ -164,6 +164,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     onRead: (stint) =>
                         widget.app.cardClosed(stint, where: widget.source),
                     readBefore: (id) => widget.app.seenIds.contains(id),
+                    home: widget.app.place,
                     onAdvance: () {
                       _read(_index);
                       setState(

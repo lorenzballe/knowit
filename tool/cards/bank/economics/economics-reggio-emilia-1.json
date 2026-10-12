@@ -1,0 +1,53 @@
+{
+  "id": "economics-reggio-emilia-1",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.debt",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Italy makes about 4 million wheels of Parmigiano Reggiano a year; Credem, a Reggio bank, holds 500,000 as collateral. What percentage is that?",
+  "value": 12.5,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "12.5%: one wheel in eight of a year's output sits in the bank's vaults as collateral.",
+  "move": "Turn a big count into a share of the whole before judging it.",
+  "ask": "Which big number in the news would mean more to me as a share?",
+  "trap": "Under 1%, picturing a bank vault as a small side business.",
+  "hint": "Divide the wheels in the vaults by the wheels made in a year.",
+  "steps": [
+    "500,000 ÷ 4,000,000 = 0.125",
+    "0.125 × 100 = 12.5%",
+    "12.5%: one wheel in eight of a year's output sits in the bank's vaults as collateral."
+  ],
+  "keywords": [
+    "credem",
+    "parmigiano reggiano",
+    "collateral",
+    "bank loans",
+    "cheese warehouse"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "CNN Business, Italy's cheese bank, 2026",
+  "source_kind": "news_archive",
+  "reference": "https://abc17news.com/money/cnn-business-consumer/2026/05/01/inside-italys-secret-cheese-bank-where-parmigiano-reggiano-becomes-financial-gold/",
+  "quote": "in Italy about 4 million wheels of Parmigiano Reggiano are made, and we keep 500,000 wheels for customers who use them as collateral",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "space-bologna-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.sizes",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "San Petronio's meridian line is 66.8 m long, exactly 1/600,000 of the Earth's circumference. What circumference is that, in thousands of km?",
+  "value": 40.08,
+  "unit": "thousand km",
+  "tolerance": 0.05,
+  "answer": "About 40.08 thousand km: the church floor is a scale model of the Earth's meridian.",
+  "move": "Keep the units beside every step when the zeros pile up.",
+  "ask": "Where in my own sums do I lose a zero without noticing?",
+  "trap": "About 4,000 km, after dropping a zero along the way.",
+  "hint": "Multiply the line by 600,000, then turn metres into kilometres.",
+  "steps": [
+    "66.8 m × 600,000 = 40,080,000 m",
+    "40,080,000 m ÷ 1,000 = 40,080 km",
+    "About 40.08 thousand km: the church floor is a scale model of the Earth's meridian."
+  ],
+  "keywords": [
+    "san petronio",
+    "meridian line",
+    "giovanni domenico cassini",
+    "earth's circumference",
+    "bologna"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "University of Bologna, Scienza Giovane",
+  "source_kind": "institution",
+  "reference": "https://scienzagiovane.unibo.it/English/scientists/cassini-2.html",
+  "quote": "It is the longest sundial line in the world: 66.8 metres, equal exactly to 1/600,000 of the earth's circumference.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+  }
+}

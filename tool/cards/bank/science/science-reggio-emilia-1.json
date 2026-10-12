@@ -1,0 +1,46 @@
+{
+  "id": "science-reggio-emilia-1",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.falsification",
+  "also": [
+    "medicine.medical_history.germ_theory"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Spallanzani, born at Scandiano, boiled broth longer than his rival and sealed it in glass: nothing grew. Why did the argument go on?",
+  "answer": "Because his rival had an answer ready. John Needham claimed the long boiling had destroyed a life force that broth needs to breed life, so a clear flask proved nothing. Spallanzani's sealed flasks stayed clear until opened to the air; the excuse survived until Pasteur's swan-necked flasks, open to air, stayed clear too.",
+  "move": "A claim that explains away every result has stopped being testable.",
+  "ask": "Which of my beliefs have I protected with an excuse no test could reach?",
+  "keywords": [
+    "lazzaro spallanzani",
+    "spontaneous generation",
+    "john needham",
+    "louis pasteur",
+    "sealed flasks"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OpenStax Microbiology, Spontaneous Generation",
+  "source_kind": "book",
+  "reference": "https://courses.lumenlearning.com/suny-mcc-microbiology/chapter/spontaneous-generation/",
+  "quote": "Heated but sealed flasks remained clear, without any signs of spontaneous growth, unless the flasks were subsequently opened to the air.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+  }
+}

@@ -417,7 +417,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'Twoje konto, jego kopia zapasowa i tablica widoczna dla znajomych zostaną usunięte na zawsze, a to urządzenie zacznie od początku. Nie anuluje to Astute+: subskrypcją zarządzasz w ustawieniach App Store.';
+      'Twoje konto i jego kopia zapasowa zostaną usunięte na zawsze, a to urządzenie zacznie od początku. Nie anuluje to Astute+: subskrypcją zarządzasz w ustawieniach App Store.';
 
   @override
   String get deleteAccountConfirm => 'Usuń na zawsze';
@@ -910,6 +910,82 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get reminderAskNotNow => 'Nie teraz';
+
+  @override
+  String get placeAskTitle => 'Karty o miejscu, w którym mieszkasz';
+
+  @override
+  String get placeAskLine =>
+      'Od czasu do czasu Astute da ci kartę o miejscu, w którym mieszkasz — o jego historii, nauce i niespodziankach.';
+
+  @override
+  String get placeOnlyCity =>
+      'Zapisujemy tylko twoje miasto, nigdy dokładną lokalizację.';
+
+  @override
+  String get placeAskPreviewLine => 'W pobliżu · Modena';
+
+  @override
+  String get placeAskPreviewQuestion => 'Ghirlandina jest pochylona. O ile?';
+
+  @override
+  String get placeAskYes => 'Użyj mojej lokalizacji';
+
+  @override
+  String get placeAskNotNow => 'Nie teraz';
+
+  @override
+  String get placeRowTitle => 'Gdzie mieszkasz';
+
+  @override
+  String get placeRowOff => 'Wyłączone';
+
+  @override
+  String get placeRowOffLine =>
+      'Włącz, aby dostawać karty o miejscu, w którym mieszkasz.';
+
+  @override
+  String get placeSwitchOn => 'Włącz';
+
+  @override
+  String get placeUseNow => 'Użyj teraz mojej lokalizacji';
+
+  @override
+  String get placeRemove => 'Usuń';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Gdzie mieszkasz: $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Usunięto. Astute nie przechowuje już, gdzie mieszkasz.';
+
+  @override
+  String get placeNotFound =>
+      'Nie udało się teraz ustalić, gdzie jesteś. Astute spróbuje ponownie innego dnia.';
+
+  @override
+  String get placeDeniedNote =>
+      'Nie ma sprawy. Możesz to włączyć w Profilu, kiedy zechcesz.';
+
+  @override
+  String get placeServicesOff =>
+      'Lokalizacja jest wyłączona w tym telefonie. Włącz ją w ustawieniach i spróbuj ponownie.';
+
+  @override
+  String get placeNotHere => 'To urządzenie nie może określić, gdzie jesteś.';
+
+  @override
+  String get placeSettingsTitle => 'Lokalizacja wyłączona dla Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Aby dostawać karty o miejscu, w którym mieszkasz, zezwól w ustawieniach, by Astute używało lokalizacji. Zapisujemy tylko twoje miasto.';
+
+  @override
+  String get placeSettingsOpen => 'Otwórz ustawienia';
 
   @override
   String trialWarningTitle(int days) {
@@ -1578,84 +1654,6 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'Dotąd $answered odpowiedzi. Dziś: $question';
-  }
-
-  @override
-  String get friends => 'Znajomi';
-
-  @override
-  String friendsN(int n) {
-    return 'Znajomi · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'Twój kod znajomego';
-
-  @override
-  String get codeCopied => 'Kod skopiowany.';
-
-  @override
-  String get addAFriend => 'Dodaj znajomego';
-
-  @override
-  String get theirCode => 'Jego kod';
-
-  @override
-  String get add => 'Dodaj';
-
-  @override
-  String get noFriendsYet =>
-      'Jeszcze nikogo. Wymień się kodem ze znajomym i porównujcie serie i kalibrację — nigdy odpowiedzi.';
-
-  @override
-  String get friendsNeedAnAccount =>
-      'Porównywanie wymaga aplikacji na telefonie i konta. Twoje kody zostają.';
-
-  @override
-  String get noReaderWithCode => 'Brak czytelnika z tym kodem.';
-
-  @override
-  String get thatsYourOwnCode => 'To twój własny kod.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n punktów obok';
-  }
-
-  @override
-  String get notMeasuredYet => 'jeszcze nie zmierzona';
-
-  @override
-  String get thisWeekByCalibration => 'W tym tygodniu, według kalibracji';
-
-  @override
-  String get notYetToday => 'dziś jeszcze nie';
-
-  @override
-  String nOfSeven(int n) {
-    return '$n z 7';
-  }
-
-  @override
-  String get you => 'Ty';
-
-  @override
-  String get todaysQuestion => 'Pytanie dnia';
-
-  @override
-  String get right => 'dobrze';
-
-  @override
-  String get wrong => 'źle';
-
-  @override
-  String rightAtSure(int sure) {
-    return 'dobrze, pewność $sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return 'źle, pewność $sure%';
   }
 
   @override
@@ -3369,4 +3367,37 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get yourPick => 'Twój wybór';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Blisko ciebie · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Twój region · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Twój kraj · $place';
+  }
+
+  @override
+  String get sundayOneMore =>
+      'Niedziela: jedna karta więcej, wybrana dla ciebie';
+
+  @override
+  String get whereYouLive => 'Tam, gdzie mieszkasz';
+
+  @override
+  String get whereYouLiveLine =>
+      'Najpierw twoje miasto, potem region, potem kraj';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Karty o twoim mieście, regionie i kraju: najwyżej jedna dziennie, i ta półka. Zapisujemy tylko miasto, nigdy to, gdzie dokładnie jesteś.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Włącz';
 }

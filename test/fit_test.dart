@@ -19,7 +19,6 @@ import 'package:astuto/screens/archive_screen.dart';
 import 'package:astuto/screens/comeback_screen.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/explore_screen.dart';
-import 'package:astuto/screens/friends_screen.dart';
 import 'package:astuto/screens/genres_screen.dart';
 import 'package:astuto/screens/how_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
@@ -159,7 +158,6 @@ void main() {
     }),
     'knowit.likedIds': PillBank.cards.take(2).map((p) => p.id).toList(),
     'knowit.savedIds': PillBank.cards.skip(2).take(3).map((p) => p.id).toList(),
-    'knowit.friendCodes': ['K7MP2X'],
   };
 
   Future<AppState> appWith(Map<String, Object> prefs) async {
@@ -236,7 +234,6 @@ void main() {
           account: account,
           onSignedOut: () {},
         ),
-        'friends': FriendsScreen(app: app, account: account, onBack: () {}),
         'saved': SavedScreen(app: app, onBackToToday: () {}),
         'liked': SavedScreen(
           app: app,

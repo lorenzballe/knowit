@@ -1,0 +1,43 @@
+{
+  "id": "history-modena-3",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When the Pope took Ferrara from the Este dukes, why could he not take Modena and Reggio as well?",
+  "answer": "Because they were the Emperor's to grant. Ferrara was a papal fief, and the Pope refused Cesare d'Este, who descended from an illegitimate son. Modena and Reggio were imperial fiefs, and Emperor Rudolf II renewed the Este investiture. So Cesare moved his court to Modena: a capital made by a title deed.",
+  "move": "Before asking who had the stronger army, ask who held the title.",
+  "ask": "Which of my plans rests on a right I have never checked I hold?",
+  "keywords": [
+    "este",
+    "devolution of ferrara",
+    "cesare d'este",
+    "imperial fief",
+    "rudolf ii"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Eurostudium, Sapienza University of Rome",
+  "source_kind": "paper",
+  "reference": "https://rosa.uniroma1.it/rosa01/eurostudium/article/download/2001/1818/3717",
+  "quote": "Roma ne pretese la restituzione. Nonostante la rinnovata investitura delle città di Modena, Reggio, Carpi, Comacchio, Este e Rovigo da parte del sovrano del Sacro Romano Impero Rodolfo II",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+  }
+}

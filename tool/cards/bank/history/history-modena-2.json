@@ -1,0 +1,53 @@
+{
+  "id": "history-modena-2",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "also": [
+    "history.learn_from_the_past.who_wrote_it"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "King Arthur, labelled ARTUS DE BRETANIA, rides over the Porta della Pescheria of Modena cathedral. When was he carved?",
+  "options": [
+    "Before the first Arthurian romances",
+    "After Chrétien de Troyes's romances",
+    "During a Renaissance restoration"
+  ],
+  "correct": 0,
+  "answer": "Before the first Arthurian romances. Vladimir Agrigoroaei dates the carving to the early twelfth century, before Geoffrey of Monmouth wrote the history that spread Arthur's fame, and so well before Chrétien de Troyes's romances; others place it slightly later. The tale reached Modena by word of mouth. The stone is older than the book.",
+  "move": "The oldest surviving text is rarely the oldest telling.",
+  "ask": "Which story do I date by the first time I saw it written down?",
+  "trap": "After the romances, assuming carvings illustrate stories already written down.",
+  "keywords": [
+    "king arthur",
+    "modena cathedral",
+    "porta della pescheria",
+    "arthurian legend",
+    "oral tradition"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Agrigoroaei, L'Artus de Modène, HAL",
+  "source_kind": "paper",
+  "reference": "https://halshs.archives-ouvertes.fr/halshs-01234948",
+  "quote": "qui date du début du XII e siècle, d'avant la rédaction de l'Historia de Geoffroi de Monmouth",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+  }
+}

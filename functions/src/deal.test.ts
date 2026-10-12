@@ -1,10 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { Bank, asks, graded, editionOf, expiredOn, localDate, localHour, shiftDate } from './bank.js';
+import { Bank, asks, graded, editionOf, expiredOn, isSunday, localDate, localHour, shiftDate } from './bank.js';
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
-import { arrangeDay, commonOfEdition, dealDay, dealOwn, explorerDay, questionOfEdition, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, PILLS_PER_DAY } from './deal.js';
+import { arrangeDay, commonOfEdition, dealDay, dealOwn, explorerDay, ownCardsFor, questionOfEdition, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, OWN_SUNDAY, PILLS_PER_DAY } from './deal.js';
 import { ALL_TIME_SEED, askingCards, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
 import { search } from './search.js';
 import { askableDate, datesToPrepare } from './serve.js';
@@ -282,6 +282,76 @@ test('a day has a shape: never two debates, the debate last', () => {
     assert.ok(d.cards.filter((c) => c.kind === 'debate').length <= 1);
     assert.ok(d.cards.filter((c) => graded(c)).length >= 1);
   }
+});
+
+// ── Sunday ───────────────────────────────────────────────────────────────
+
+const SUNDAY_MIX: Snapshot = { topicWeights: { space: 1, science: 0.5 }, pickedTopics: ['space', 'science', 'thinking'] };
+
+test('on the reader\'s Sunday one card at random becomes one of their own', () => {
+  assert.equal(isSunday('2026-10-04'), true);
+  assert.equal(isSunday('2026-10-03'), false);
+  assert.equal(isSunday('2026-10-05'), false);
+  assert.equal(OWN_SUNDAY, 1);
+  assert.equal(ownCardsFor(false, 0, true), OWN_FREE + 1);
+  assert.equal(ownCardsFor(false, 7, true), OWN_REWARDED + 1);
+  assert.equal(ownCardsFor(false, 0, false), OWN_FREE);
+  // Astute+ is all the reader's own every day: a Sunday has nothing to add.
+  assert.equal(ownCardsFor(true, 0, true), PILLS_PER_DAY);
+  assert.equal(ownCardsFor(true, 0), PILLS_PER_DAY);
+
+  const saturday = dealDay(bank, profileOf(SUNDAY_MIX), '2026-10-03', 'reader-1');
+  const sunday = dealDay(bank, profileOf(SUNDAY_MIX), '2026-10-04', 'reader-1');
+  const monday = dealDay(bank, profileOf(SUNDAY_MIX), '2026-10-05', 'reader-1');
+  assert.equal(saturday.own.length, OWN_FREE);
+  assert.equal(sunday.own.length, OWN_FREE + OWN_SUNDAY);
+  assert.equal(sunday.ownCount, OWN_FREE + OWN_SUNDAY);
+  assert.equal(monday.own.length, OWN_FREE);
+  // Still five, two of them asking: the one more of their own is in place
+  // of one at random, not on top of the five.
+  assert.equal(sunday.cards.length, PILLS_PER_DAY);
+  assert.equal(sunday.cards.filter(asks).length, 2);
+  assert.equal(sunday.cards.filter((c) => !sunday.own.includes(c.id)).length, PILLS_PER_DAY - OWN_FREE - OWN_SUNDAY);
+  // The same again: deterministic in the reader and the date.
+  assert.deepEqual(dealDay(bank, profileOf(SUNDAY_MIX), '2026-10-04', 'reader-1').cards.map((c) => c.id), sunday.cards.map((c) => c.id));
+
+  // A week kept up to Saturday: the Sunday after has the week's one more and Sunday's.
+  const week = Array.from({ length: 7 }, (_, i) => shiftDate('2026-09-27', i));
+  const kept = profileOf({ ...SUNDAY_MIX, completedDates: week, streak: 7, lastCompletionDate: '2026-10-03' });
+  assert.equal(dealDay(bank, kept, '2026-10-04', 'r').own.length, OWN_REWARDED + OWN_SUNDAY);
+  // Astute+: five of the reader's own on a Sunday, as on every day.
+  const plus = dealDay(bank, profileOf(SUNDAY_MIX, [], true), '2026-10-04', 'r');
+  assert.equal(plus.own.length, PILLS_PER_DAY);
+  assert.equal(plus.ownCount, PILLS_PER_DAY);
+});
+
+test('Sunday is the reader\'s own: their clock decides it at the edge of the day', () => {
+  const ownAt = (nowMs: number, tz: number) => {
+    const p = buildProfile(SUNDAY_MIX, new Map(), { tz }, bank, nowMs);
+    const date = localDate(nowMs, tz);
+    return { date, own: dealDay(bank, p, date, 'r').own.length };
+  };
+  // Saturday at 22:30 UTC: already Sunday in Rome, still Saturday in London's
+  // UTC and in New York.
+  const lateSaturday = Date.UTC(2026, 9, 3, 22, 30);
+  assert.deepEqual(ownAt(lateSaturday, 120), { date: '2026-10-04', own: OWN_FREE + 1 });
+  assert.deepEqual(ownAt(lateSaturday, 0), { date: '2026-10-03', own: OWN_FREE });
+  assert.deepEqual(ownAt(lateSaturday, -240), { date: '2026-10-03', own: OWN_FREE });
+  // Sunday afternoon in UTC is Monday in Tokyo; Monday at dawn in UTC is
+  // still Sunday evening in Los Angeles.
+  assert.deepEqual(ownAt(Date.UTC(2026, 9, 4, 15, 30), 540), { date: '2026-10-05', own: OWN_FREE });
+  assert.deepEqual(ownAt(Date.UTC(2026, 9, 5, 5, 0), -420), { date: '2026-10-04', own: OWN_FREE + 1 });
+  // A minute either side of the reader's midnight, at both ends of their Sunday.
+  assert.deepEqual(ownAt(Date.UTC(2026, 9, 3, 21, 59), 120), { date: '2026-10-03', own: OWN_FREE });
+  assert.deepEqual(ownAt(Date.UTC(2026, 9, 3, 22, 0), 120), { date: '2026-10-04', own: OWN_FREE + 1 });
+  assert.deepEqual(ownAt(Date.UTC(2026, 9, 4, 21, 59), 120), { date: '2026-10-04', own: OWN_FREE + 1 });
+  assert.deepEqual(ownAt(Date.UTC(2026, 9, 4, 22, 0), 120), { date: '2026-10-05', own: OWN_FREE });
+  // The evening before, the nightly pass deals the reader's Sunday as a Sunday.
+  const saturdayEvening = Date.UTC(2026, 9, 3, 16, 0);
+  const [, tomorrow] = datesToPrepare({ tz: 120 }, saturdayEvening);
+  assert.equal(tomorrow, '2026-10-04');
+  const p = buildProfile(SUNDAY_MIX, new Map(), { tz: 120 }, bank, saturdayEvening);
+  assert.equal(dealDay(bank, p, tomorrow, 'r').own.length, OWN_FREE + 1);
 });
 
 // ── Explore ──────────────────────────────────────────────────────────────

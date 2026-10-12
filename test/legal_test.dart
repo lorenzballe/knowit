@@ -34,6 +34,60 @@ void main() {
     );
   });
 
+  test('the policy says what the app says about where a reader lives, in '
+      'both its languages, word for word', () {
+    final String policy = File('site/privacy.html').readAsStringSync();
+    String plain(String html) => html
+        .replaceAll(RegExp(r'<[^>]+>'), '')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    expect(kPlacePolicy.keys, unorderedEquals(kPlacePolicyAnchors.keys));
+    for (final MapEntry<String, String> said in kPlacePolicy.entries) {
+      final String anchor = kPlacePolicyAnchors[said.key]!;
+      final RegExpMatch? paragraph = RegExp(
+        '<p id="$anchor">(.*?)</p>',
+        dotAll: true,
+      ).firstMatch(policy);
+      expect(paragraph, isNotNull, reason: anchor);
+      expect(plain(paragraph!.group(1)!), said.value, reason: anchor);
+      expect(placePolicyUrl(said.key), '$kPrivacyUrl#$anchor');
+    }
+    // The promises themselves, so that a rewrite cannot quietly drop one:
+    // what is kept and how finely, that it is asked for and can be refused,
+    // that the position stays on the phone, that PostHog gets the city at
+    // most, and how it goes.
+    final String en = kPlacePolicy['en']!;
+    for (final String promise in const [
+      'your country, your region, your city and a point rounded to about '
+          '10 km',
+      'It asks first',
+      'you can say no',
+      'Your exact position never leaves your phone',
+      'PostHog receives your city at most, never a coordinate',
+      'Profile → Where you live',
+      'it is deleted with your account',
+      'consent',
+    ]) {
+      expect(en, contains(promise), reason: promise);
+    }
+    final String it = kPlacePolicy['it']!;
+    for (final String promise in const [
+      'il paese, la regione, la città e un punto arrotondato a circa 10 km',
+      'Prima lo chiede',
+      'puoi dire di no',
+      'La tua posizione esatta non lascia mai il telefono',
+      'A PostHog arriva al massimo la città, mai una coordinata',
+      'Profilo → Dove vivi',
+      'viene eliminata con il tuo account',
+      'consenso',
+    ]) {
+      expect(it, contains(promise), reason: promise);
+    }
+    // And the way out is listed with the reader's other choices.
+    expect(policy, contains('<li><strong>Where you live.</strong>'));
+    expect(policy, contains('<li><strong>Dove vivi.</strong>'));
+  });
+
   test('the site has every page the stores ask for', () {
     // The App Store wants a support page and a privacy policy; the paywall
     // and the listing link the terms. Each one at the address its link uses.

@@ -70,7 +70,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
   }
 
   List<Pill> get _results {
-    var found = searchPills(_query);
+    var found = searchPills(_query, home: widget.app.place);
     if (_topicFilter != null) {
       final name = kTopics[_topicFilter]!.name;
       found = found.where((p) => p.topic == name).toList();
