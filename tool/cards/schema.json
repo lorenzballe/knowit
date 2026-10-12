@@ -68,6 +68,20 @@
       "enum": ["none", "world", "europe", "americas", "africa", "middle_east", "asia", "oceania"],
       "description": "Where it is set. `none` when the card has no place; `world` when it is everywhere at once."
     },
+    "place": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["country"],
+      "properties": {
+        "country": {"type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2 of the country the card is about: `IT`."},
+        "region": {"type": "string", "pattern": "^[A-Z]{2}-[A-Z0-9]{1,3}$", "description": "ISO 3166-2 of the region, for a card about a region or about a city in it: `IT-45`."},
+        "city": {"type": "string", "minLength": 2, "maxLength": 60, "description": "The city in English, for a card about a city: `Modena`. A city card has `region`, `lat`, `lon` and `km` too."},
+        "lat": {"type": "number", "minimum": -90, "maximum": 90, "description": "The city's centre."},
+        "lon": {"type": "number", "minimum": -180, "maximum": 180, "description": "The city's centre."},
+        "km": {"type": "number", "minimum": 3, "maximum": 80, "description": "How far from the centre a reader still counts as being from here: about 15 for a town, 20 to 30 for a city and the towns around it."}
+      },
+      "description": "Where the card belongs, for a card about a place rather than one for everyone. It is dealt only to readers who live there (lib/models/place.dart, docs/PLACES.md): a country card to anyone in the country, a region card to anyone in the region, a city card to anyone within `km` of its centre. It never becomes anyone else's question of the day, common card or shelf."
+    },
     "hook": {
       "enum": ["misconception", "puzzle", "story", "number", "mechanism", "paradox", "practical", "origin"],
       "description": "What pulls the reader in: a belief to overturn, a thing to work out, something that happened, a figure that surprises, how it works, two truths that clash, something to use today, where a thing came from."
