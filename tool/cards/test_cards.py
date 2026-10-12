@@ -242,7 +242,126 @@ class TheGate(unittest.TestCase):
         self.assertTrue(any("consecutive" in p for p in check.check_editions({"1": "thinking-a", "3": "thinking-b"}, cards)))
 
 
+MODENA = {"country": "IT", "region": "IT-45", "city": "Modena", "lat": 44.647, "lon": 10.925, "km": 20}
+
+
+def place_card(place: dict, **over) -> dict:
+    """A card about a place: a good read card, set in Europe, with [place]."""
+    return read_card(**{"id": "space-modena-1", "region": "europe", "place": place, **over})
+
+
+class ThePlaces(unittest.TestCase):
+    """A card about a place: what the schema cannot say about where it belongs."""
+
+    def setUp(self):
+        self.schema = check.load_schema()
+        self.banned = check.load_banned()
+
+    def check(self, card, strict=False):
+        return check.check_card(card, strict=strict, schema=self.schema, banned=self.banned)
+
+    def test_a_city_a_region_and_a_country_pass(self):
+        for place in (MODENA, {"country": "IT", "region": "IT-45"}, {"country": "IT"}):
+            self.assertEqual(self.check(place_card(place), strict=True), [], place)
+        # A city abroad: its region has a code even where the app cannot
+        # name it yet, because a city card reaches readers by the point.
+        paris = {"country": "FR", "region": "FR-IDF", "city": "Paris", "lat": 48.857, "lon": 2.352, "km": 25}
+        self.assertEqual(self.check(place_card(paris)), [])
+
+    def test_a_city_card_has_its_region_its_point_and_its_reach(self):
+        for missing in ("region", "lat", "lon", "km"):
+            place = {k: v for k, v in MODENA.items() if k != missing}
+            self.assertIn(f"a city card has region, lat, lon and km: no {missing}", self.check(place_card(place)), missing)
+        # A point without a city reaches nobody it would not reach anyway.
+        self.assertTrue(any("belong to a city" in p for p in self.check(place_card({"country": "IT", "region": "IT-45", "km": 20}))))
+
+    def test_a_region_is_inside_its_country(self):
+        self.assertTrue(any("starts with 'IT-'" in p for p in self.check(place_card({"country": "IT", "region": "FR-IDF"}))))
+        self.assertTrue(any("starts with 'IT-'" in p for p in self.check(place_card(dict(MODENA, region="SM-01")))))
+
+    def test_a_region_card_names_a_region_a_reader_can_be_found_in(self):
+        # A province is not a region, and the app names no French region yet:
+        # either card would be written for nobody.
+        self.assertTrue(any("reach nobody" in p for p in self.check(place_card({"country": "IT", "region": "IT-MO"}))))
+        self.assertTrue(any("reach nobody" in p for p in self.check(place_card({"country": "FR", "region": "FR-IDF"}))))
+        regions = check.known_regions()
+        self.assertEqual(len(regions), 20, "Italy's twenty, as lib/models/place.dart names them")
+        self.assertTrue(all(code.startswith("IT-") for code in regions))
+        self.assertIn("IT-45", regions)
+
+    def test_the_country_is_iso_alpha_2_in_capitals(self):
+        # The schema says the shape; the gate says it again for a machine
+        # without jsonschema, and says which codes are countries at all.
+        self.assertTrue(any("place/country" in p for p in self.check(place_card({"country": "it"}))))
+        self.assertTrue(any("in capitals" in p for p in check.check_place(place_card({"country": "it"}))))
+        self.assertTrue(any("in capitals" in p for p in check.check_place(place_card({"country": "ITA"}))))
+        self.assertTrue(any("not a country" in p for p in self.check(place_card({"country": "UK"}))))
+        self.assertTrue(any("not a country" in p for p in self.check(place_card({"country": "XX"}))))
+        self.assertEqual(check.check_place(place_card("IT")), ["place is an object with a country"])
+        self.assertTrue(any("place" in p for p in self.check(place_card({"region": "IT-45"}))))
+        self.assertTrue(any("additional" in p.lower() for p in self.check(place_card({"country": "IT", "province": "MO"}))))
+
+    def test_the_card_is_set_in_its_place_s_part_of_the_world(self):
+        self.assertIn("a card about IT is set in europe, not 'asia'", self.check(place_card({"country": "IT"}, region="asia")))
+        self.assertTrue(any("set in europe" in p for p in self.check(place_card({"country": "IT"}, region="none"))))
+        self.assertTrue(any("set in europe" in p for p in self.check(place_card({"country": "IT"}, region="world"))))
+        # A country on two continents may be tagged with either.
+        for region in ("europe", "middle_east"):
+            self.assertEqual(self.check(place_card({"country": "TR"}, region=region)), [], region)
+        self.assertEqual(self.check(place_card({"country": "JP"}, region="asia")), [])
+        self.assertEqual(self.check(place_card({"country": "US"}, region="americas")), [])
+
+    def test_every_country_has_its_part_of_the_world(self):
+        self.assertEqual(len(check.COUNTRIES), 249, "every code ISO 3166-1 assigns")
+        for code, continents in check.CONTINENTS_OF.items():
+            self.assertTrue(continents <= set(check.TAGS["region"]), code)
+        self.assertEqual(check.CONTINENTS_OF["IT"], {"europe"})
+
+    def test_place_sits_after_the_tags_in_a_file(self):
+        keys = list(check.ordered(place_card({"country": "IT"}, reference="x", written="2026-09-18")))
+        self.assertEqual(keys.index("place"), keys.index("language") + 1)
+        self.assertLess(keys.index("place"), keys.index("source"))
+
+    def test_the_bundle_carries_the_place(self):
+        out = bundle.build([place_card(MODENA)], {}, {}, version=1, built="2026-10-12T00:00:00Z")
+        self.assertEqual(out["cards"][0]["place"], MODENA)
+        self.assertEqual(json.loads(json.dumps(out))["cards"][0]["place"], MODENA)
+
+
 class TheCalendar(unittest.TestCase):
+    def test_a_card_about_a_place_never_joins_the_calendar(self):
+        bank = check.load_bank()
+        editions = json.loads(check.EDITIONS.read_text())
+        commons = json.loads(check.COMMONS.read_text())
+        # Cards about a place of every kind the calendar draws from: Thinking
+        # questions for the question of the day, reads for the common cards.
+        thinking = [c for c in bank if c["topic"] == "thinking" and c["kind"] in check.GRADED and not c.get("disabled")]
+        reads = [c for c in bank if c["kind"] == "read" and not c.get("disabled")]
+        places = [dict(check.public(c), id=f"{c['id']}-in-modena", place=MODENA, region="europe") for c in thinking[:40] + reads[:200]]
+        placed = {c["id"] for c in places}
+        until = len(editions) + 120
+        with_places = bundle.extend_editions(editions, bank + places, until=until)
+        self.assertFalse(placed & set(with_places.values()))
+        # The pool left as it was, the calendar is the one a bank without
+        # them writes, edition for edition: adding them changes nothing.
+        self.assertEqual(with_places, bundle.extend_editions(editions, bank, until=until))
+        self.assertEqual(json.dumps(with_places, indent=2), json.dumps(bundle.extend_editions(editions, bank, until=until), indent=2))
+        with_commons = bundle.extend_commons(commons, bank + places, until=until)
+        self.assertFalse(placed & {cid for ids in with_commons.values() for cid in ids})
+        self.assertEqual(with_commons, bundle.extend_commons(commons, bank, until=until))
+        # What is written already stays written, byte for byte.
+        for k, v in editions.items():
+            self.assertEqual(with_places[k], v)
+        for k, v in commons.items():
+            self.assertEqual(with_commons[k], v)
+        # And a calendar that names one is refused.
+        cards = [thinking_card(id="thinking-a"), thinking_card(id="thinking-b", place={"country": "IT"}, region="europe"),
+                 read_card(id="space-r"), read_card(id="space-p", place={"country": "IT"}, region="europe")]
+        self.assertEqual(check.check_editions({"1": "thinking-a"}, cards), [])
+        self.assertTrue(any("about a place" in p for p in check.check_editions({"1": "thinking-b"}, cards)))
+        self.assertEqual(check.check_commons({"1": ["space-r"]}, cards), [])
+        self.assertTrue(any("about a place" in p for p in check.check_commons({"1": ["space-p"]}, cards)))
+
     def test_extends_deterministically_and_keeps_its_distance(self):
         bank = check.load_bank()
         editions = json.loads(check.EDITIONS.read_text())

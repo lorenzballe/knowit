@@ -3320,4 +3320,36 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get yourPick => 'Tu elección';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Cerca de ti · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Tu región · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Tu país · $place';
+  }
+
+  @override
+  String get sundayOneMore => 'Domingo: una tarjeta más elegida para ti';
+
+  @override
+  String get whereYouLive => 'Donde vives';
+
+  @override
+  String get whereYouLiveLine =>
+      'Primero tu ciudad, luego tu región, luego tu país';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Tarjetas sobre tu ciudad, tu región y tu país: como mucho una al día, y esta estantería. Solo se guarda la ciudad, nunca dónde estás exactamente.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Activar';
 }

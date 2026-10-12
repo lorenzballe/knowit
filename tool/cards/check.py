@@ -71,9 +71,39 @@ KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
-    *TAG_KEYS, "builds_on", "figure", "diagram", "scene",
+    *TAG_KEYS, "place", "builds_on", "figure", "diagram", "scene",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
+
+# A card about a place (`place` in schema.json) goes only to the readers who
+# live there: lib/models/place.dart is how the app tells, and docs/PLACES.md
+# the whole design. The schema says the shape; the rest of what makes a
+# place one the app can deal on is said here.
+PLACE_DART = HERE.parent.parent / "lib" / "models" / "place.dart"
+
+# Every country ISO 3166-1 assigns, under the part of the world a card set in
+# it is tagged with (`region`). A country that spans two is under both: a
+# card about Istanbul is European, one about Ankara the Middle East's, and
+# the gate cannot tell which from the country alone.
+_CONTINENTS = {
+    "europe": "AD AL AM AT AX AZ BA BE BG BY CH CY CZ DE DK EE ES FI FO FR GB GE GG GI GR HR HU IE IM IS IT JE KZ"
+              " LI LT LU LV MC MD ME MK MT NL NO PL PT RO RS RU SE SI SJ SK SM TR UA VA",
+    "middle_east": "AE BH CY EG IL IQ IR JO KW LB OM PS QA SA SY TR YE",
+    "africa": "AO BF BI BJ BW CD CF CG CI CM CV DJ DZ EG EH ER ET GA GH GM GN GQ GW KE KM LR LS LY MA MG ML MR MU"
+              " MW MZ NA NE NG RE RW SC SD SH SL SN SO SS ST SZ TD TF TG TN TZ UG YT ZA ZM ZW",
+    "americas": "AG AI AR AW BB BL BM BO BQ BR BS BZ CA CL CO CR CU CW DM DO EC FK GD GF GL GP GS GT GY HN HT JM KN"
+                " KY LC MF MQ MS MX NI PA PE PM PR PY SR SV SX TC TT US UY VC VE VG VI",
+    "asia": "AF AM AZ BD BN BT CC CN CX GE HK ID IN IO JP KG KH KP KR KZ LA LK MM MN MO MV MY NP PH PK RU SG TH TJ"
+            " TL TM TW UZ VN",
+    "oceania": "AS AU CK FJ FM GU HM KI MH MP NC NF NR NU NZ PF PG PN PW SB TK TO TV UM VU WF WS",
+    # Antarctica and Bouvet Island belong to no continent the tags name.
+    "world": "AQ BV",
+}
+CONTINENTS_OF: dict[str, frozenset[str]] = {}
+for _continent, _codes in _CONTINENTS.items():
+    for _code in _codes.split():
+        CONTINENTS_OF[_code] = CONTINENTS_OF.get(_code, frozenset()) | {_continent}
+COUNTRIES = frozenset(CONTINENTS_OF)
 
 # The longest a quoted passage may run. Forty words is the rule; a few over
 # is a sentence that would not break, not a page copied in.
@@ -298,6 +328,10 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
 
     problems.extend(check_tags(card))
 
+    # Where the card belongs, for a card about a place.
+    if "place" in card:
+        problems.extend(check_place(card))
+
     # The picture, which the app refuses whole if it is malformed.
     if "diagram" in card:
         problems.extend(check_diagram(card["diagram"]))
@@ -353,6 +387,60 @@ def check_tags(card: dict) -> list[str]:
         problems.append(f"the quote runs to {words(quote)} words; a passage, not a page")
     if quote and topic == "thinking":
         problems.append("a thinking card is arithmetic; it quotes nobody")
+    return problems
+
+
+_known_regions: dict[Path, frozenset[str]] = {}
+
+
+def known_regions(path: Path = PLACE_DART) -> frozenset[str]:
+    """The ISO 3166-2 regions the app can place a reader in: the codes
+    lib/models/place.dart names (Italy's twenty, for now). A phone names
+    any other region with no code, so a card about one reaches nobody."""
+    if path not in _known_regions:
+        text = path.read_text(encoding="utf-8")
+        codes = frozenset(re.findall(r"^\s*'([A-Z]{2}-[A-Z0-9]{1,3})':\s*\[", text, flags=re.MULTILINE))
+        if not codes:
+            raise ValueError(f"no region codes in {path}")
+        _known_regions[path] = codes
+    return _known_regions[path]
+
+
+def is_place_card(card: dict) -> bool:
+    """Whether a card is about a place, and so is dealt only to readers who live there."""
+    return card.get("place") is not None
+
+
+def check_place(card: dict) -> list[str]:
+    """What makes a card's place one the app can deal on, beyond its shape:
+    a real country written as the app writes it, a region inside it that a
+    reader can be found in, a city with the point and the reach that find
+    them, and the card's own part of the world agreeing with all of it."""
+    place = card.get("place")
+    if not isinstance(place, dict) or not isinstance(place.get("country"), str):
+        return ["place is an object with a country"]
+    problems: list[str] = []
+    country = place["country"]
+    if not re.fullmatch(r"[A-Z]{2}", country):
+        problems.append(f"place.country {country!r} is ISO 3166-1 alpha-2 in capitals, like 'IT'")
+    elif country not in COUNTRIES:
+        problems.append(f"place.country {country!r} is not a country ISO 3166-1 assigns")
+    region = place.get("region")
+    if region is not None and not str(region).startswith(f"{country}-"):
+        problems.append(f"place.region {region!r} is not in {country}: its code starts with {country + '-'!r}")
+    point = [key for key in ("lat", "lon", "km") if key in place]
+    if "city" in place:
+        missing = [key for key in ("region", "lat", "lon", "km") if key not in place]
+        if missing:
+            problems.append(f"a city card has region, lat, lon and km: no {', '.join(missing)}")
+    else:
+        if point:
+            problems.append(f"{', '.join(point)} belong to a city: a card about a region or a country reaches it whole")
+        if region is not None and region not in known_regions():
+            problems.append(f"place.region {region!r} is not one the app can place a reader in (lib/models/place.dart): the card would reach nobody")
+    continents = CONTINENTS_OF.get(country)
+    if continents is not None and card.get("region") not in continents:
+        problems.append(f"a card about {country} is set in {' or '.join(sorted(continents))}, not {card.get('region')!r}")
     return problems
 
 
@@ -528,6 +616,8 @@ def check_editions(editions: dict, cards: list[dict]) -> list[str]:
             problems.append(f"edition {e} is {cid}, which cannot be marked")
         if card.get("disabled"):
             problems.append(f"edition {e} is {cid}, which is retired")
+        if is_place_card(card):
+            problems.append(f"edition {e} is {cid}, which is about a place: a question for everybody never is")
         if cid in last_seen and e - last_seen[cid] < EDITION_GAP:
             problems.append(f"{cid} comes back at edition {e}, {e - last_seen[cid]} days after {last_seen[cid]}")
         last_seen[cid] = e
@@ -556,6 +646,8 @@ def check_commons(commons: dict, cards: list[dict]) -> list[str]:
                 problems.append(f"edition {e}'s common {cid} asks; a common card tells")
             if card.get("disabled"):
                 problems.append(f"edition {e}'s common {cid} is retired")
+            if is_place_card(card):
+                problems.append(f"edition {e}'s common {cid} is about a place: a card for everybody never is")
             if card["topic"] in topics:
                 problems.append(f"edition {e} holds two common cards of {card['topic']}")
             topics.add(card["topic"])

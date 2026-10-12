@@ -4901,6 +4901,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your pick'**
   String get yourPick;
+
+  /// On the front of a card about the reader's city, in small type under the subject: why the card is in front of them. {place} is the city's name, in English for now.
+  ///
+  /// In en, this message translates to:
+  /// **'Near you · {place}'**
+  String placeNearYou(String place);
+
+  /// On the front of a card about the reader's region, in small type under the subject. {place} is the region's name, in English for now: Emilia-Romagna.
+  ///
+  /// In en, this message translates to:
+  /// **'Your region · {place}'**
+  String placeYourRegion(String place);
+
+  /// On the front of a card about the reader's country, in small type under the subject. {place} is the country's name, in English for now: Italy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your country · {place}'**
+  String placeYourCountry(String place);
+
+  /// A small line on Today on the reader's Sunday, on the free plan: one of the five cards that would have come at random is chosen for them instead.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday: one more card chosen for you'**
+  String get sundayOneMore;
+
+  /// Title of the Explore shelf of cards about the reader's city, region and country.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you live'**
+  String get whereYouLive;
+
+  /// Under the title of the Where you live shelf: the order its cards come in.
+  ///
+  /// In en, this message translates to:
+  /// **'Your city first, then your region, then your country'**
+  String get whereYouLiveLine;
+
+  /// On the Where you live shelf for a reader who has not said where they live: what switching it on gives, and the promise about what is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards about your city, your region and your country: one a day at most, and this shelf. Only your city is kept, never where you are exactly.'**
+  String get whereYouLiveAsk;
+
+  /// The button on the Where you live shelf that asks the reader where they live.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch it on'**
+  String get whereYouLiveSwitchOn;
 }
 
 class _AppLocalizationsDelegate

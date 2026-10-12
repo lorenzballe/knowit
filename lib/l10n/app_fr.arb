@@ -796,5 +796,13 @@
   "wrongLastTime": "Ratée la dernière fois",
   "youLose": "Tu perds {n}.",
   "youWin": "Tu gagnes {n}.",
-  "yourPick": "Ton choix"
+  "yourPick": "Ton choix",
+  "placeNearYou": "Près de chez toi · {place}",
+  "placeYourRegion": "Ta région · {place}",
+  "placeYourCountry": "Ton pays · {place}",
+  "sundayOneMore": "Dimanche : une carte de plus choisie pour toi",
+  "whereYouLive": "Là où tu vis",
+  "whereYouLiveLine": "D'abord ta ville, puis ta région, puis ton pays",
+  "whereYouLiveAsk": "Des cartes sur ta ville, ta région et ton pays : une par jour au plus, et cette étagère. Seule la ville est gardée, jamais l'endroit exact où tu es.",
+  "whereYouLiveSwitchOn": "Activer"
 }

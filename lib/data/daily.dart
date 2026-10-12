@@ -7,7 +7,13 @@
 ///
 /// On the free plan two of the five are the reader's own and three are
 /// dealt at random from the subjects they kept on, from the first morning.
-/// The morning after a full week kept, three are their own.
+/// The morning after a full week kept, three are their own; and on their
+/// Sunday one more than the day would have had.
+///
+/// A reader who lets the app know where they live also gets, at most once
+/// a day, a card about it: their city, their region or their country,
+/// nearest first (docs/PLACES.md §5). It takes a slot that would have come
+/// at random, and on Astute+, where none does, the last of their own.
 ///
 /// Nothing in a day is everybody's any more. The question of the day and
 /// the edition's cards are still kept in the calendar the bank carries, for
@@ -18,6 +24,8 @@ library;
 import 'dart:math';
 
 import '../models/pill.dart';
+import '../models/place.dart';
+import 'local_cards.dart';
 import 'pill_bank.dart';
 import 'pills_repository.dart';
 import 'topics.dart';
@@ -46,10 +54,31 @@ const int kOwnCardsRewarded = 3;
 /// free thing, and two free things read as one too many: the one way to
 /// try all five is now the trial, and the free day is the same from the
 /// first morning, so what Astute+ adds is there to see from the start.
-int ownCardsFor({required bool plus, required int streak}) {
+///
+/// On the reader's [sunday] one more is theirs ([kOwnCardsSunday]): one
+/// card at random becomes one chosen for them, inside the five, and Today
+/// says so. Astute+ has nothing more to give that day — its five are all
+/// the reader's own every day — so a Sunday leaves it as it is.
+int ownCardsFor({
+  required bool plus,
+  required int streak,
+  bool sunday = false,
+}) {
   if (plus) return kPillsPerDay;
-  return streak > 0 && streak % 7 == 0 ? kOwnCardsRewarded : kOwnCardsFree;
+  final int base = streak > 0 && streak % 7 == 0
+      ? kOwnCardsRewarded
+      : kOwnCardsFree;
+  return min(kPillsPerDay, base + (sunday ? kOwnCardsSunday : 0));
 }
+
+/// How many more of a free day's five are the reader's own on their Sunday.
+const int kOwnCardsSunday = 1;
+
+/// Whether [date] is a Sunday where the reader is. The app's dates are the
+/// phone's own, so this is the reader's Sunday, from their midnight to
+/// their next; the server reads it off the date it is asked to deal, which
+/// is the same local date.
+bool isSunday(DateTime date) => date.weekday == DateTime.sunday;
 
 /// Which edition a date is: the first day is 1, and every day after it one
 /// more. Days before the calendar started come out at zero and below, and
@@ -206,13 +235,17 @@ List<Pill> _tell(int edition) {
 /// A day, dealt: the cards in the order they are read, and which of them
 /// are the reader's own.
 class Deal {
-  const Deal({required this.cards, required this.own});
+  const Deal({required this.cards, required this.own, this.local});
 
   final List<Pill> cards;
 
   /// The ids of the cards dealt from the reader's mix: the ones a free day
   /// marks, and the ones Astute+ makes all five of.
   final Set<String> own;
+
+  /// The card about where the reader lives, when the day has one. Never one
+  /// of [own]: it is there because of where they live, and says so itself.
+  final Pill? local;
 }
 
 /// A day: [own] cards of the reader's own, and the rest at random.
@@ -230,6 +263,15 @@ class Deal {
 /// sharpened as the reading of the reader says; [mix] is the mix as they
 /// set it, for the part dealt at random. Without [mix], [weights] serves
 /// both.
+///
+/// [home] is where the reader lives, when they have said. The day then
+/// carries at most one card about it ([localCardFor]), dealt before the
+/// rest so the day can make room: it takes a slot that would have come at
+/// random, and on a day that is all the reader's own — Astute+ — the last
+/// of their own, because a card about home is theirs too. When it asks it
+/// is one of the day's questions, and when it is a debate the day has no
+/// other. With no place, or nothing left for it, the day is the day it
+/// always was, card for card.
 Deal dealDay({
   required DateTime date,
   Set<String>? topics,
@@ -243,6 +285,7 @@ Deal dealDay({
   List<Pill> reviews = const [],
   int count = kPillsPerDay,
   int own = kOwnCardsFree,
+  Place? home,
 }) {
   final int asks = asksInADay(count);
   final int ownCount = own.clamp(0, count);
@@ -254,7 +297,20 @@ Deal dealDay({
       .toList();
   final taken = <String>{...exclude, ...review.map((p) => p.id)};
 
-  final int ownAsks = min(asks, ownCount);
+  final Pill? local = localCardFor(
+    date,
+    home: home,
+    exclude: taken,
+    topics: topics,
+    genresOff: genresOff,
+    strandsOff: strandsOff,
+  );
+  final int ownSlots = local != null && ownCount >= count
+      ? count - 1
+      : ownCount;
+  final int localAsks = local != null && local.asksSomething ? 1 : 0;
+
+  final int ownAsks = min(max(0, asks - localAsks), ownSlots);
   final rest = pillsForDate(
     date,
     topics: topics,
@@ -264,33 +320,36 @@ Deal dealDay({
     genresOff: genresOff,
     strandsOff: strandsOff,
     strandsDealt: {
-      for (final p in review)
+      for (final p in [...review, ?local])
         if (p.strand.isNotEmpty) p.strand,
     },
     exclude: taken,
-    count: max(0, ownCount - review.length),
+    count: max(0, ownSlots - review.length),
     asking: max(0, ownAsks - review.length),
+    debatesDealt: local?.challenge is TakeASide ? 1 : 0,
   );
   final mine = [...review, ...rest];
+  final held = [...mine, ?local];
 
   final chance = pillsAtRandom(
     date,
-    count: max(0, count - mine.length),
-    asking: max(0, asks - mine.where((p) => p.asksSomething).length),
+    count: max(0, count - held.length),
+    asking: max(0, asks - held.where((p) => p.asksSomething).length),
     topics: topics,
     weights: mix ?? weights,
     genresOff: genresOff,
     strandsOff: strandsOff,
-    exclude: {...taken, ...mine.map((p) => p.id)},
-    topicsDealt: {for (final p in mine) p.topic},
+    exclude: {...taken, ...held.map((p) => p.id)},
+    topicsDealt: {for (final p in held) p.topic},
     strandsDealt: {
-      for (final p in mine)
+      for (final p in held)
         if (p.strand.isNotEmpty) p.strand,
     },
   );
   return Deal(
-    cards: arrangeDay([...mine, ...chance]),
+    cards: arrangeDay([...held, ...chance]),
     own: {for (final p in mine) p.id},
+    local: local,
   );
 }
 

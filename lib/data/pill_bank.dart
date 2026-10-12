@@ -144,6 +144,8 @@ class PillBank {
   static BankBundle? _current;
   static Map<String, Pill>? _index;
   static List<Pill>? _dealable;
+  static List<Pill>? _local;
+  static List<Pill>? _live;
 
   /// The app's own copy, parsed once and kept: it is the floor the bank can
   /// never fall below.
@@ -151,14 +153,34 @@ class PillBank {
 
   static BankBundle get _bundle => _current ??= embedded;
 
-  /// Every card the dealer may put on the table today. A retired card stays
-  /// in [byId] — a deck that was dealt yesterday still has to open — but is
-  /// never dealt again.
-  static List<Pill> get cards => _dealable ??= _bundle.retired.isEmpty
-      ? List.unmodifiable(_bundle.cards)
-      : List.unmodifiable(
-          _bundle.cards.where((p) => !_bundle.retired.contains(p.id)),
-        );
+  /// Every card the dealer may put on anybody's table today. A retired card
+  /// stays in [byId] — a deck that was dealt yesterday still has to open —
+  /// but is never dealt again. A card about a place is not here either: it
+  /// goes only to the readers who live there, from [placeCards], so every
+  /// deal, shelf, search and widget that reads this — the question of the
+  /// day, the edition's cards, the cards at random and the reader's own,
+  /// every shelf of Explore — can never hand it to anybody else.
+  static List<Pill> get cards => _dealable ??= List.unmodifiable(
+    _bundle.cards.where(
+      (p) => !_bundle.retired.contains(p.id) && !p.isAboutAPlace,
+    ),
+  );
+
+  /// The cards about a place still dealt, to the readers who live there
+  /// (lib/data/local_cards.dart).
+  static List<Pill> get placeCards => _local ??= List.unmodifiable(
+    _bundle.cards.where(
+      (p) => !_bundle.retired.contains(p.id) && p.isAboutAPlace,
+    ),
+  );
+
+  /// Every card still dealt to somebody, about a place or not, in the
+  /// bank's order: for what a reader has already met — their saved cards,
+  /// their journey, their answers — where a card about their home counts
+  /// like any other.
+  static List<Pill> get live => _live ??= List.unmodifiable(
+    _bundle.cards.where((p) => !_bundle.retired.contains(p.id)),
+  );
 
   /// The question of the day, by edition, as the bank froze it. Editions
   /// past the end of the calendar are dealt by the app itself.
@@ -187,6 +209,8 @@ class PillBank {
     _current = bundle;
     _index = null;
     _dealable = null;
+    _local = null;
+    _live = null;
   }
 
   /// Back to the copy the app shipped with. Tests, and nothing else.

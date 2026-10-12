@@ -161,7 +161,11 @@ void main() {
       expect(day, isNotNull);
       expect(day!['cards'], 5);
       expect(day['reviews'], 0);
-      expect(day['own'], kOwnCardsFree, reason: 'a first day like any other');
+      expect(
+        day['own'],
+        ownCardsFor(plus: false, streak: 0, sunday: isSunday(DateTime.now())),
+        reason: 'a first day like any other, one more on a Sunday',
+      );
       expect(day.containsKey('welcome'), isFalse);
       expect(day['is_plus'], false);
     });

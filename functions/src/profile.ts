@@ -21,7 +21,8 @@
 // carry, and the mix as leaned by what they did — plus what to keep out,
 // what came due, and which day of theirs this is.
 
-import { Bank, Card, GENRES, TOPICS, Genre, genreOf, graded, asks, traitsOf } from './bank.js';
+import { Bank, Card, GENRES, TOPICS, Genre, genreOf, graded, asks, isPlaceCard, traitsOf } from './bank.js';
+import { Place, cardPlaceFromJson, placeFit, placeFromJson } from './place.js';
 import { seedOf } from './rng.js';
 
 /** An answer as the phone backs it up (lib/models/pill.dart, Answer.toJson). */
@@ -47,6 +48,12 @@ export interface Snapshot {
   completedDates?: string[];
   streak?: number;
   lastCompletionDate?: string;
+  /**
+   * Where the reader lives, as the phone keeps it (`Place.toJson()` in
+   * lib/models/place.dart): read through `placeFromJson`, so a missing or
+   * malformed one is no place and the day has no card about one.
+   */
+  place?: unknown;
 }
 
 /** One event of the trace (lib/sync/trace.dart): the short names. */
@@ -91,6 +98,8 @@ export interface Profile {
   met: Set<string>;
   /** Every strand the reader has met at all, by a card seen on the phone or in the trace: the explorer avoids these. */
   metStrands: Set<string>;
+  /** Where the reader lives, from the backup, or null: what the day's card about a place, and Explore's shelf of them, are dealt from. */
+  place: Place | null;
   /** How the trace was read, for the record. */
   signals: { events: number; days: number; medianMs: number };
 }
@@ -390,6 +399,7 @@ export function buildProfile(snapshot: Snapshot, activity: Map<string, Event[]>,
     recentStrands: traced.recentStrands,
     met: traced.met,
     metStrands: metStrandsOf(bank, [...(snapshot.seenIds ?? []), ...traced.met]),
+    place: placeFromJson(snapshot.place),
     signals: { events: traced.events, days: traced.days, medianMs: traced.medianMs },
   };
 }
@@ -421,6 +431,8 @@ export function reviewsDue(profile: Profile, bank: Bank, date: string): Card[] {
     // A card taken out of the deal — retired, or in quarantine — is not
     // brought back as a review; a sibling of its principle still can be.
     if (pick.disabled) continue;
+    // Nor a card about a place to a reader who no longer lives there.
+    if (isPlaceCard(pick) && placeFit(cardPlaceFromJson(pick.place), profile.place) === 'none') continue;
     claimed.add(pick.id);
     out.push(pick);
   }

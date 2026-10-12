@@ -3186,4 +3186,35 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get yourPick => '내 선택';
+
+  @override
+  String placeNearYou(String place) {
+    return '당신 근처 · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return '당신의 지역 · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return '당신의 나라 · $place';
+  }
+
+  @override
+  String get sundayOneMore => '일요일: 당신을 위해 고른 카드가 한 장 더';
+
+  @override
+  String get whereYouLive => '당신이 사는 곳';
+
+  @override
+  String get whereYouLiveLine => '먼저 당신의 도시, 그다음 지역, 그리고 나라';
+
+  @override
+  String get whereYouLiveAsk =>
+      '당신의 도시, 지역, 나라에 관한 카드: 하루에 많아야 한 장, 그리고 이 선반. 도시만 저장하고, 당신이 정확히 어디 있는지는 절대 저장하지 않아요.';
+
+  @override
+  String get whereYouLiveSwitchOn => '켜기';
 }

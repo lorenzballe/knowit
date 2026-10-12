@@ -820,7 +820,12 @@ a subject the day already holds only when every other subject on the mix
 is in it too. Nothing else about the reader goes into those three: no
 level, no taste, no review. The morning after the streak reaches a
 multiple of seven, three of the five are the reader's own — nothing to
-redeem, the deck simply has one more (`ownCardsFor`). With Astute+ all
+redeem, the deck simply has one more (`ownCardsFor`). On the reader's
+Sunday (their date, so their clock) one more again: a card that would have
+come at random is chosen for them, inside the five, and Today says so in a
+line under the day's name. A reader who has said where they live also gets
+at most one card a day about it, in place of one at random
+(docs/PLACES.md §5). With Astute+ all
 five are the reader's own: at the level the app has measured rather than
 the one they said, leaned by what they held and threw down, with a card
 that came due for review in an asking slot. `dealDay` returns a `Deal`:

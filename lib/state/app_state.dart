@@ -13,6 +13,7 @@ import '../analytics.dart';
 import '../data/card_json.dart';
 import '../data/daily.dart';
 import '../data/genres.dart';
+import '../data/local_cards.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
@@ -51,17 +52,23 @@ class AppState extends ChangeNotifier {
     ReminderArmer? arm,
     Future<void> Function()? disarm,
     HomeWidgetPusher? pushWidget,
+    DateTime Function()? clock,
   }) : _hasPermission = hasPermission ?? hasReminderPermission,
        _askPermission = askPermission ?? ensureReminderPermission,
        _arm = arm ?? armReminders,
        _disarm = disarm ?? disarmReminders,
-       _pushWidget = pushWidget ?? pushHomeWidget;
+       _pushWidget = pushWidget ?? pushHomeWidget,
+       _clock = clock ?? DateTime.now;
 
   final PermissionProbe _hasPermission;
   final PermissionProbe _askPermission;
   final ReminderArmer _arm;
   final Future<void> Function() _disarm;
   final HomeWidgetPusher _pushWidget;
+
+  /// What day it is where the reader is: the phone's clock, or a test's,
+  /// so a Sunday or a midnight can be opened on whenever the tests run.
+  final DateTime Function() _clock;
 
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
@@ -333,7 +340,7 @@ class AppState extends ChangeNotifier {
     // The newest bank the last run downloaded, before a card is dealt from
     // the one built in. Adopting later, mid-day, would re-deal the table.
     PillBank.restore(_prefs);
-    today = DateTime.now();
+    today = _clock();
 
     // Stored state is read defensively. A value written by an older build,
     // or corrupted on disk, must not leave the app stuck on the splash: it
@@ -522,9 +529,24 @@ class AppState extends ChangeNotifier {
 
   /// How many of a day's cards are the reader's own: all five on Astute+;
   /// on the free plan two, and three on the morning after a full week kept
-  /// — the streak's own reward, tasted once a week. The rest are dealt at
-  /// random.
-  int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
+  /// — the streak's own reward, tasted once a week — and on a Sunday one
+  /// more than the day would have had. The rest are dealt at random.
+  int get ownCardsToday => ownCardsOn(today);
+
+  /// How many of [day]'s cards are the reader's own, as that morning will
+  /// deal them: Sunday is the day's own, and the streak is as it stands.
+  int ownCardsOn(DateTime day) =>
+      ownCardsFor(plus: isPlus, streak: liveStreak, sunday: isSunday(day));
+
+  /// True on the reader's Sunday when today's five hold the one more card
+  /// chosen for them, which Today says in a line of its own. Read off the
+  /// deal itself, whoever dealt it, so the line never promises a card a
+  /// day does not have; never on Astute+, whose five are all the reader's
+  /// own every day.
+  bool get sundayExtraToday =>
+      !isPlus &&
+      isSunday(today) &&
+      ownIdsToday.length > ownCardsFor(plus: false, streak: liveStreak);
 
   /// The onboarding's answers, read as a person rather than a form: a
   /// starting level a notch above for every subject, the strands picked by
@@ -630,7 +652,8 @@ class AppState extends ChangeNotifier {
   /// they kept on — the mix is everybody's — and what came due waits after
   /// the day instead; what is not their own is dealt at random, from the
   /// mix as they set it and nothing else. On both, the first three days
-  /// lean to the top of the mix.
+  /// lean to the top of the mix, and a reader who has said where they live
+  /// gets a card about it when one is left (docs/PLACES.md §5).
   Deal _deal(
     DateTime date, {
     required Set<String> exclude,
@@ -648,6 +671,7 @@ class AppState extends ChangeNotifier {
     exclude: exclude,
     reviews: isPlus ? reviews : const [],
     own: own,
+    home: place,
   );
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.
@@ -666,7 +690,12 @@ class AppState extends ChangeNotifier {
     // phone deals as it always did, from the same calendar.
     final ServedDay? served = await Served.instance.dayFor(today);
     final Set<String> dealtReviews;
-    if (served != null && served.cards.length >= kPillsPerDay) {
+    // A served day with a card about a place the reader does not live in —
+    // a server older than the cards about places, or a place changed since
+    // it dealt — is not the reader's day: the phone deals its own.
+    if (served != null &&
+        served.cards.length >= kPillsPerDay &&
+        served.cards.every((p) => reachesReader(p, place))) {
       todaysDeck = served.cards;
       ownIdsToday = served.own.intersection(
         todaysDeck.map((p) => p.id).toSet(),
@@ -717,6 +746,10 @@ class AppState extends ChangeNotifier {
       // whole claim of the review ladder is the second.
       'own': ownIdsToday.length,
       'reviews': reviewIdsToday.length,
+      // Whether the day holds a card about where the reader lives, and
+      // whether it is the Sunday that gives them one more of their own.
+      'local': todaysDeck.any((p) => p.isAboutAPlace),
+      'sunday': sundayExtraToday,
       'topics': pickedTopics.length,
       'streak_days': streak,
       'rung': standing.at,
@@ -762,7 +795,7 @@ class AppState extends ChangeNotifier {
       day,
       exclude: const {},
       reviews: const [],
-      own: ownCardsFor(plus: isPlus, streak: 0),
+      own: ownCardsFor(plus: isPlus, streak: 0, sunday: isSunday(day)),
     ).cards;
   }
 
@@ -864,12 +897,17 @@ class AppState extends ChangeNotifier {
     String? tag(String? value) =>
         value == null || value.trim().isEmpty ? null : value;
     final int at = todaysDeck.indexWhere((c) => c.id == pillId);
+    // Today's own copy where there is one: a served card the bank on the
+    // phone has not got yet is still a card about a place.
+    final CardPlace? where = (at < 0 ? p : todaysDeck[at])?.place;
     final String? slot = at < 0
         ? null
         : reviewIdsToday.contains(pillId)
         ? 'review'
         : ownIdsToday.contains(pillId)
         ? 'own'
+        : where != null
+        ? 'local'
         : 'random';
     return {
       'pill_id': pillId,
@@ -891,6 +929,10 @@ class AppState extends ChangeNotifier {
       'abstraction': tag(p?.abstraction),
       'shelf_life': tag(p?.shelfLife),
       'has_figure': p?.figure.trim().isNotEmpty,
+      // On a card about a place, how near it is to the reader: their city,
+      // their region, their country, or `none` for one that reached them
+      // some other way. Never the place itself.
+      'place_fit': where == null ? null : placeFit(where, place).name,
       'position': at < 0 ? null : at + 1,
       'of': at < 0 ? null : todaysDeck.length,
       'slot': slot,
@@ -1085,7 +1127,9 @@ class AppState extends ChangeNotifier {
     judgements: judgements,
     answers: answers,
     completedDates: completedDates,
-    cards: {for (final p in PillBank.cards) p.id: p},
+    // Every card the reader could have met, those about their home with
+    // the rest: the journey is what they read, wherever it was about.
+    cards: {for (final p in PillBank.live) p.id: p},
     liveScore: score.total,
     otherDays: rungDates.values,
   );
@@ -1214,7 +1258,7 @@ class AppState extends ChangeNotifier {
   /// Cards answered, paired with the pill, for the ones that can be marked.
   Iterable<MapEntry<Pill, Answer>> get _graded sync* {
     for (final e in answers.entries) {
-      final pill = PillBank.cards.where((p) => p.id == e.key).firstOrNull;
+      final pill = PillBank.live.where((p) => p.id == e.key).firstOrNull;
       if (pill != null && pill.isGraded) yield MapEntry(pill, e.value);
     }
   }
@@ -1307,7 +1351,7 @@ class AppState extends ChangeNotifier {
   Map<String, double> get leanedWeights {
     if (likedIds.isEmpty && dislikedIds.isEmpty) return topicWeights;
     final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
-    final byId = {for (final p in PillBank.cards) p.id: p};
+    final byId = {for (final p in PillBank.live) p.id: p};
     final lean = <String, double>{};
     void nudge(Iterable<String> ids, double by) {
       for (final id in ids) {
@@ -1534,9 +1578,12 @@ class AppState extends ChangeNotifier {
       ..sort((a, b) => a.value.dueOn!.compareTo(b.value.dueOn!));
 
     for (final e in entries) {
-      final original = PillBank.cards.where((p) => p.id == e.key).firstOrNull;
+      final original = PillBank.live.where((p) => p.id == e.key).firstOrNull;
       if (original == null) continue;
       final pick = _freshInstanceOf(original, claimed, on);
+      // A card about a place comes back only to a reader who still lives
+      // there; one who moved meets its principle in another card, or not.
+      if (!reachesReader(pick, place)) continue;
       claimed.add(pick.id);
       due.add((card: pick, last: e.value));
     }
@@ -1556,7 +1603,7 @@ class AppState extends ChangeNotifier {
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
-      own: ownCardsFor(plus: isPlus, streak: liveStreak),
+      own: ownCardsOn(tomorrow),
     ).cards;
   }
 
@@ -1576,15 +1623,23 @@ class AppState extends ChangeNotifier {
   /// it for a reader who has been away since tonight, which is the reader a
   /// reminder is for. The calendar's question only when there is no deck
   /// to open on.
+  ///
+  /// Never the card about where the reader lives: a reminder lands on a
+  /// lock screen and the widget sits on a home screen, where anyone can
+  /// read them, and that card would say where the reader's home is.
   Pill leadOn(DateTime day) {
-    final List<Pill> deck = dateKey(day) == dateKey(today)
-        ? todaysDeck
-        : _deal(
-            day,
-            exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
-            reviews: _reviewsDue(day),
-            own: ownCardsFor(plus: isPlus, streak: liveStreak),
-          ).cards;
+    final List<Pill> deck = [
+      for (final Pill p
+          in dateKey(day) == dateKey(today)
+              ? todaysDeck
+              : _deal(
+                  day,
+                  exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+                  reviews: _reviewsDue(day),
+                  own: ownCardsOn(day),
+                ).cards)
+        if (!p.isAboutAPlace) p,
+    ];
     if (deck.isEmpty) return questionOfTheDay(day);
     return deck.firstWhere((p) => p.asksSomething, orElse: () => deck.first);
   }
@@ -2082,8 +2137,10 @@ class AppState extends ChangeNotifier {
         if (gap == 2 && freezes > 0) {
           title = l.nudgeFreezeTitle;
           body = l.nudgeFreezeBody(lead.question);
-        } else if (gap == 7 && misses.isNotEmpty) {
-          final Miss miss = misses.first;
+        } else if (gap == 7 && misses.any((m) => !m.pill.isAboutAPlace)) {
+          // A card about the reader's home is never quoted on a lock
+          // screen, where anyone can read where it is.
+          final Miss miss = misses.firstWhere((m) => !m.pill.isAboutAPlace);
           title = l.nudgeSureTitle;
           body = l.nudgeSureBody(miss.pill.question, miss.confidence);
         } else if (gap == 14) {
@@ -2259,12 +2316,21 @@ class AppState extends ChangeNotifier {
   /// its shelf — so the widgets turn over at midnight on their own, and go
   /// quiet after a fortnight rather than lying. Nothing about the reader
   /// beyond the streak: the widget is on the home screen, where anyone can
-  /// read it.
+  /// read it. So no card about where the reader lives is ever handed over:
+  /// it would say where their home is to anyone who picked up the phone.
+  /// The five widget shows the day's others, and the card it would have
+  /// opened on gives way to the next.
   Map<String, Object?> homeWidgetData() {
     // The card the widget shows today: the next to read, or, the five read,
     // the one the morning opened on, for a widget with no shelf to turn to.
     final bool fiveRead = todayIndex >= todaysDeck.length;
-    final Pill card = fiveRead ? leadOn(today) : todaysDeck[todayIndex];
+    final Pill card = fiveRead
+        ? leadOn(today)
+        : todaysDeck
+                  .skip(todayIndex)
+                  .where((p) => !p.isAboutAPlace)
+                  .firstOrNull ??
+              leadOn(today);
     final List<Pill> tomorrows = tomorrowsDeck;
 
     final ahead = <String, String>{};
@@ -2279,7 +2345,10 @@ class AppState extends ChangeNotifier {
       // which is what the deck will show — so a tap on it lands on it.
       final Pill opens = i == 0
           ? card
-          : (i == 1 ? tomorrows : _deckAhead(day)).firstOrNull ?? leadOn(day);
+          : (i == 1 ? tomorrows : _deckAhead(day))
+                    .where((p) => !p.isAboutAPlace)
+                    .firstOrNull ??
+                leadOn(day);
       final String key = dateKey(day);
       ahead[key] = opens.question;
       aheadId[key] = opens.id;
@@ -2321,16 +2390,24 @@ class AppState extends ChangeNotifier {
     // with its id, so a tap opens it, and its question, for the large one.
     List<Map<String, Object>> five(List<Pill> deck, int read) => [
       for (final (int i, Pill p) in deck.indexed)
-        {
-          'id': p.id,
-          'topic': p.topic,
-          'color': hexOf(p.color),
-          'ink': hexOf(p.ink),
-          'read': i < read,
-          'question': p.question,
-        },
+        if (!p.isAboutAPlace)
+          {
+            'id': p.id,
+            'topic': p.topic,
+            'color': hexOf(p.color),
+            'ink': hexOf(p.ink),
+            'read': i < read,
+            'question': p.question,
+          },
     ];
     final int readToday = todayIndex.clamp(0, todaysDeck.length);
+    // The widget says all five are read once every card it shows is. On a
+    // day whose card about home is left off, that is not yet the day's
+    // five, so until it is, the line it would show says how many are.
+    final bool homeLeftOff =
+        todaysDeck.any((p) => p.isAboutAPlace) &&
+        readToday < todaysDeck.length &&
+        !dayClosed;
 
     return {
       'edition': editionOf(today),
@@ -2360,7 +2437,7 @@ class AppState extends ChangeNotifier {
       'fiveRead': readToday,
       'fiveTitle': l.widgetFiveTitle,
       'fiveReadText': l.widgetFiveRead(readToday),
-      'fiveDone': l.widgetFiveDone,
+      'fiveDone': homeLeftOff ? l.widgetFiveRead(readToday) : l.widgetFiveDone,
       'fiveWaiting': l.widgetFiveWaiting,
       'shelf': shelf,
       'shelfTitle': l.widgetShelfTitle,
@@ -2388,7 +2465,7 @@ class AppState extends ChangeNotifier {
         : _pickedOn(day);
     return [
       for (final Pill p in picked)
-        if (!seenIds.contains(p.id)) p,
+        if (!seenIds.contains(p.id) && !p.isAboutAPlace) p,
     ].take(kWidgetShelf).toList();
   }
 
@@ -2417,7 +2494,7 @@ class AppState extends ChangeNotifier {
     day,
     exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
     reviews: _reviewsDue(day),
-    own: ownCardsFor(plus: isPlus, streak: liveStreak),
+    own: ownCardsOn(day),
   ).cards;
 
   /// The reader as PostHog's profile holds them: the slow-moving facts

@@ -29,7 +29,9 @@ and the contract every part of it keeps.
 - **Le carte.** Ogni carta ha un `place`: un paese, una regione o una
   città con un raggio. Esce solo a chi vive lì: al massimo una al giorno
   tra le cinque, più uno scaffale di Esplora, "Dove vivi". Mai come
-  domanda del giorno per tutti.
+  domanda del giorno per tutti, mai nei widget né nelle notifiche. Prende
+  il posto di una carta a caso; con Astute+, che non ne ha, di una delle
+  carte scelte per il lettore.
 - **Chi le scrive.** Solo per i luoghi dove vivono lettori veri, man mano
   che arrivano: mai in anticipo per posti da cui non legge nessuno. Ogni
   mattina un giro automatico guarda i lettori veri in PostHog, conta quali
@@ -161,6 +163,61 @@ asks for (`tool/cards/RULES.md`), and a `place`
   "Your region · Emilia-Romagna", "Your country · Italy".
 - **On both dealers.** The server (`functions/src/deal.ts`, `explore.ts`)
   and the phone's own (`lib/state/app_state.dart`) deal it the same way.
+
+### How it is built
+
+- **Closed by default.** The bank keeps cards about a place out of what it
+  deals to everybody: `PillBank.cards` on the phone and `Bank.live` on the
+  server leave them out, so the calendar, the cards at random, the
+  reader's own, every shelf for everybody, the home-screen widgets and any
+  shelf added later cannot reach one by forgetting a filter. They are dealt
+  from `PillBank.placeCards` / `Bank.local` only, starting from the
+  reader's place (`lib/data/local_cards.dart`, `localCard` and `placeCards`
+  in `functions/src/deal.ts`). What the reader has already met — Saved,
+  Liked, the journey, their answers — reads `PillBank.live`, where a card
+  about home counts like any other. `bundle.py` never writes one into the
+  calendar, and `check.py` refuses a calendar that names one.
+- **The slot.** The day's card about home is dealt before the rest, so the
+  day can make room for it. It takes a slot that would have come at
+  random; a day with none — Astute+, all five the reader's own — gives up
+  the last of the reader's own instead (four of theirs and the card about
+  home), because otherwise the readers who pay would be the only ones never
+  to get one. When it asks, it is one of the day's two questions and the
+  reader's own ask one fewer; when it is a debate, it is the day's only
+  one, and closes it. It is never one of the reader's own (no "For you"
+  mark: its own line says why it is there).
+- **Which card.** The nearest fit first. Inside it, a card on the reader's
+  mix and ready before one waiting for a card it builds on, before one
+  under a genre turned off, before one off their subjects; among equals the
+  server draws by reader and date (`local:{uid}:{date}`), the phone by date
+  and reading history, as it draws its cards at random.
+- **Where the place comes from.** The phone deals from `AppState.place`;
+  the server from `readers/{uid}.place` in the backup, through
+  `placeFromJson`: missing or malformed, there is no place and no card.
+  A served day holding a card about a place the reader is not in (a server
+  older than the cards, a place changed since) is refused, and the phone
+  deals its own.
+- **Search.** The server reads the `place` field alone, not the whole
+  backup; a card about a place is in the results only when it fits.
+- **Reviews.** A card about home that comes due is brought back only to a
+  reader who still lives there; one who moved meets its principle in
+  another card, or not at all.
+- **Where you live.** Up to twelve cards: city, region, country, and inside
+  each the unread before the read (which stay, marked), in the month's
+  order. The server writes it into the reader's own Explore
+  (`readers/{uid}/explore/current`, `local`); the phone falls back on its
+  own bank. It narrows with the subject row. Without a place it is one
+  tile with a button, on "All" only; with a place nothing has been written
+  for, it is not there.
+- **On the card.** Under the subject, on the front only, in the card's own
+  ink: names from the card's `place`, in English for now (the region from
+  its ISO code, `regionDisplayName`; the country from its,
+  `countryDisplayName`). A card that reached a reader some other way — kept
+  from before a move, sent by a friend — names its place and claims nothing.
+- **Never on a screen anyone can read.** The widgets are handed no card
+  about home: the five widget shows the day's other four, and the card it
+  opens on gives way to the next. Reminders never quote one. The top lists
+  count it when the readers who live there keep it, and never show it.
 
 ## 6. Writing them
 

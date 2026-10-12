@@ -3264,4 +3264,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get yourPick => 'Senin seçimin';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Yakınında · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Bölgen · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Ülken · $place';
+  }
+
+  @override
+  String get sundayOneMore => 'Pazar: senin için seçilmiş bir kart daha';
+
+  @override
+  String get whereYouLive => 'Yaşadığın yer';
+
+  @override
+  String get whereYouLiveLine => 'Önce şehrin, sonra bölgen, sonra ülken';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Şehrin, bölgen ve ülken hakkında kartlar: günde en fazla bir tane, bir de bu raf. Yalnızca şehir saklanır, tam olarak nerede olduğun asla.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Aç';
 }

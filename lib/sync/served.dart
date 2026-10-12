@@ -277,6 +277,7 @@ class ServedExplore {
     this.because,
     this.mine = const [],
     this.forYou = const [],
+    this.local = const [],
     this.fromCache = false,
   });
 
@@ -303,9 +304,19 @@ class ServedExplore {
   final String? because;
   final List<Pill> mine;
   final List<Pill> forYou;
+
+  /// Where you live: the cards about the reader's place, nearest first, as
+  /// the server found them from the place in the reader's backup. Empty
+  /// without one, or before any card is written for it.
+  final List<Pill> local;
   final bool fromCache;
 
   /// Reads explore/latest, and the reader's own shelf when there is one.
+  ///
+  /// A card about a place is kept only on the shelf of where the reader
+  /// lives. On any other it is dropped here, whatever sent it — a server
+  /// from before such cards existed would have put them anywhere — so no
+  /// shelf for everybody ever shows one.
   static ServedExplore? parse(
     Object? global,
     Object? personal, {
@@ -313,9 +324,13 @@ class ServedExplore {
   }) {
     if (global is! Map) return null;
     try {
-      List<Pill> pills(Object? v) => [
+      List<Pill> cards(Object? v) => [
         for (final c in (v is List ? v : const []))
           if (c is Map) cardFromJson(Map<String, Object?>.from(c)),
+      ];
+      List<Pill> pills(Object? v) => [
+        for (final Pill p in cards(v))
+          if (!p.isAboutAPlace) p,
       ];
       List<ServedRank> ranked(Object? v) => [
         for (final r in (v is List ? v : const []))
@@ -324,7 +339,7 @@ class ServedExplore {
               cardFromJson(Map<String, Object?>.from(r['card'] as Map)),
               (r['readers'] as num).round(),
             ),
-      ];
+      ].where((r) => !r.pill.isAboutAPlace).toList();
       List<(String, int)> ids(Object? v) => [
         for (final r in (v is List ? v : const []))
           if (r is Map && r['id'] is String && r['readers'] is num)
@@ -364,6 +379,10 @@ class ServedExplore {
         because: p?['because'] is String ? p!['because'] as String : null,
         mine: pills(p?['mine']),
         forYou: pills(p?['forYou']),
+        local: [
+          for (final Pill c in cards(p?['local']))
+            if (c.isAboutAPlace) c,
+        ],
         fromCache: fromCache,
       );
     } catch (error) {

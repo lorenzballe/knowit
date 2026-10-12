@@ -3314,4 +3314,35 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get yourPick => 'Jouw keuze';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Bij jou in de buurt · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Jouw regio · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Jouw land · $place';
+  }
+
+  @override
+  String get sundayOneMore => 'Zondag: één kaart extra, voor jou gekozen';
+
+  @override
+  String get whereYouLive => 'Waar je woont';
+
+  @override
+  String get whereYouLiveLine => 'Eerst je stad, dan je regio, dan je land';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Kaarten over je stad, je regio en je land: hooguit één per dag, en deze plank. Alleen de stad wordt bewaard, nooit waar je precies bent.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Aanzetten';
 }
