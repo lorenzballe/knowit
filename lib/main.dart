@@ -1,4 +1,4 @@
-import 'dart:async' show Timer;
+import 'dart:async' show Timer, unawaited;
 
 import 'package:flutter/foundation.dart'
     show ValueListenable, kIsWeb, visibleForTesting;
@@ -37,6 +37,7 @@ import 'sync/tally.dart';
 import 'sync/trace.dart';
 import 'utils/home_widget.dart';
 import 'utils/reminders.dart' show remindersSupported;
+import 'utils/upright.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
 import 'widgets/reminder_ask.dart';
@@ -72,6 +73,8 @@ Future<void> main() async {
   Analytics.launched();
   Session.instance.launched();
   WidgetsFlutterBinding.ensureInitialized();
+  // Upright on a phone, said before the first frame and not waited for.
+  unawaited(holdUpright());
   // Where this install came from — the App Store, TestFlight, Google Play,
   // a test lab's robot — asked of the phone now, and answered while the
   // rest starts: by the time measurement is up it has long been said.

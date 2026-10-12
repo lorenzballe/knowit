@@ -53,11 +53,14 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<!-- Astute is read upright, a card at a time, on a phone held in one
+	     hand: on an iPhone it does not turn on its side. An iPad keeps every
+	     orientation, because iPadOS puts every app in a window it resizes
+	     and refuses an iPad app that will not turn; there the app is a
+	     phone-wide column whichever way the iPad is held (_PhoneFrame). -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
