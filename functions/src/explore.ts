@@ -3,13 +3,16 @@
 // The shelves the phone used to compute for itself, put together once for
 // everybody — today's shelf, a question from every subject, the top of the
 // week and the month, loved since the start — and once per reader, from
-// their profile, the shelf that is theirs. Every card on a shelf travels
+// their profile, the shelves that are theirs: their subject, what the
+// profile puts first, and where they live. Every card on a shelf travels
 // whole, so a phone reads one document and draws, and a card the phone's
-// own bank has not got yet still shows.
+// own bank has not got yet still shows. A card about a place is only ever
+// on the last of these, for a reader who lives there.
 
-import { Bank, Card, asks, graded, isDebate, dateKey, topicName } from './bank.js';
+import { Bank, Card, asks, graded, isDebate, isPlaceCard, dateKey, topicName } from './bank.js';
 import { Profile } from './profile.js';
-import { fit, leanOf } from './deal.js';
+import { fit, leanOf, placeCards } from './deal.js';
+import { fitRank } from './place.js';
 import { keyed, unit } from './rng.js';
 
 // ── The launch crowd (lib/sync/tally.dart, TopSeed) ──────────────────────
@@ -137,7 +140,9 @@ export function topList(bank: Bank, tallies: Tallies, todayUtc: string, days: nu
     for (const [id, n] of tallies.get(day) ?? []) merged.set(id, (merged.get(id) ?? 0) + n);
     for (const [id, n] of merged) {
       const c = bank.byId.get(id);
-      if (!c || c.disabled || (where && !where(c))) continue;
+      // The counts are everybody's, and a card about a place is counted
+      // when the readers who live there keep it; the list never shows it.
+      if (!c || c.disabled || isPlaceCard(c) || (where && !where(c))) continue;
       readers.set(id, (readers.get(id) ?? 0) + n);
       if (!latest.has(id)) latest.set(id, i);
     }
@@ -218,6 +223,29 @@ export interface PersonalExplore {
   mine: Card[];
   /** What the profile puts first across every subject, unread: what a feed would call "for you". */
   forYou: Card[];
+  /** Where you live: the cards about the reader's place, nearest first. Empty without a place or before any is written for it. */
+  local: Card[];
+}
+
+/** How many cards the shelf of where the reader lives holds. */
+export const LOCAL_SHELF = 12;
+
+/**
+ * Where you live: the cards about the reader's place, nearest first —
+ * their city's, then their region's, then their country's — and inside
+ * each the ones not read yet before the ones read, in the month's order.
+ * Read ones stay, marked on the phone: this shelf is the reader's home,
+ * not a list of finds. Empty without a place, and before any card has been
+ * written for it; the phone then shows no shelf, or without a place the
+ * tile that offers to switch one on.
+ */
+export function whereYouLive(bank: Bank, profile: Profile, monthKey: string, limit = LOCAL_SHELF): Card[] {
+  const seed = monthSeed(monthKey);
+  return placeCards(bank, profile.place)
+    .map(({ card, fit: f }) => ({ card, near: fitRank(f), read: profile.seen.has(card.id) ? 1 : 0, key: keyed(`${seed}${card.id}`) }))
+    .sort((a, b) => b.near - a.near || a.read - b.read || a.key - b.key || (a.card.id < b.card.id ? -1 : a.card.id > b.card.id ? 1 : 0))
+    .slice(0, limit)
+    .map((k) => k.card);
 }
 
 export function buildPersonalExplore(bank: Bank, profile: Profile, monthKey: string, nowMs: number): PersonalExplore {
@@ -249,5 +277,5 @@ export function buildPersonalExplore(bank: Bank, profile: Profile, monthKey: str
     if (c.strand) strands.add(c.strand);
     perTopic.set(c.topic, (perTopic.get(c.topic) ?? 0) + 1);
   }
-  return { at: nowMs, version: bank.version, because, mine, forYou };
+  return { at: nowMs, version: bank.version, because, mine, forYou, local: whereYouLive(bank, profile, monthKey) };
 }

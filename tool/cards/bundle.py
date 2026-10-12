@@ -15,6 +15,10 @@ frozen — an edition, once written, never changes, whatever the pool does
 afterwards — and this extends it a year past today so the app is never
 without one. (Before the calendar existed the app computed it from the pool
 on the fly, and a card added anywhere re-dealt every day since the epoch.)
+
+A card about a place travels like any other, its `place` with it, for the
+phones and the server to deal only to the readers who live there; the
+calendar never names one.
 """
 from __future__ import annotations
 
@@ -56,11 +60,16 @@ def extend_editions(editions: dict[str, str], cards: list[dict], until: int) -> 
     The pool is Thinking's graded cards only. The question of the day is
     everybody's, whatever their mix, and it costs nobody's mix anything only
     because Thinking is on every deck; a subject's graded cards are dealt
-    from the mix, to the readers who kept that subject on.
+    from the mix, to the readers who kept that subject on. A card about a
+    place is never in it: it goes to the readers who live there and nobody
+    else (docs/PLACES.md). Left out of the pool, it leaves the pool's size
+    alone too, so the editions it would have changed are the ones a bank
+    without it writes.
     """
     graded = sorted(
         c["id"] for c in cards
         if c["kind"] in check.GRADED and c["topic"] == "thinking" and not c.get("disabled")
+        and not check.is_place_card(c)
     )
     if not graded:
         raise SystemExit("no graded card to make a question of the day from")
@@ -82,9 +91,13 @@ def extend_commons(commons: dict[str, list[str]], cards: list[dict], until: int)
     reading cards, never two of one subject, out for three quarters of a lap
     of the reading pool at COMMON_SPARES an edition. Frozen here, like the
     question, so a phone dealing its own day and a server dealing it for
-    the reader hand out the same three.
+    the reader hand out the same three. A card about a place is never one:
+    a common card is everybody's.
     """
-    pool = sorted(c["id"] for c in cards if c["kind"] == "read" and not c.get("disabled"))
+    pool = sorted(
+        c["id"] for c in cards
+        if c["kind"] == "read" and not c.get("disabled") and not check.is_place_card(c)
+    )
     if len(pool) < check.COMMON_SPARES:
         raise SystemExit("too few reading cards to make an edition's common cards from")
     topic_of = {c["id"]: c["topic"] for c in cards}

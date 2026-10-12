@@ -219,7 +219,7 @@ class Miss {
 /// The cards worth going back to: wrong, and said with some certainty.
 /// Newest first, because the point is what you believed lately.
 List<Miss> missesFrom(Iterable<Judgement> judgements, {int from = 70}) {
-  final byId = {for (final p in PillBank.cards) p.id: p};
+  final byId = {for (final p in PillBank.live) p.id: p};
   final out = <Miss>[];
   for (final j in judgements.toList().reversed) {
     if (j.correct || j.confidence < from) continue;

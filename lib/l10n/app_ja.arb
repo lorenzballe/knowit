@@ -774,5 +774,13 @@
   "wrongLastTime": "前回は不正解",
   "youLose": "{n}失いました。",
   "youWin": "{n}獲得！",
-  "yourPick": "あなたの選択"
+  "yourPick": "あなたの選択",
+  "placeNearYou": "あなたの近く · {place}",
+  "placeYourRegion": "あなたの地域 · {place}",
+  "placeYourCountry": "あなたの国 · {place}",
+  "sundayOneMore": "日曜日：あなたのために選んだカードがもう1枚",
+  "whereYouLive": "あなたの住む場所",
+  "whereYouLiveLine": "まずあなたの街、次に地域、それから国",
+  "whereYouLiveAsk": "あなたの街、地域、国についてのカード。多くても1日1枚、そしてこの棚。保存するのは街だけで、あなたが正確にどこにいるかは決して保存しません。",
+  "whereYouLiveSwitchOn": "オンにする"
 }

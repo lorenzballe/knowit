@@ -3245,4 +3245,36 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get yourPick => 'A tua escolha';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Perto de ti · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'A tua região · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'O teu país · $place';
+  }
+
+  @override
+  String get sundayOneMore => 'Domingo: mais uma carta escolhida para ti';
+
+  @override
+  String get whereYouLive => 'Onde vives';
+
+  @override
+  String get whereYouLiveLine =>
+      'Primeiro a tua cidade, depois a região, depois o país';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Cartas sobre a tua cidade, a tua região e o teu país: no máximo uma por dia, e esta estante. Só se guarda a cidade, nunca onde estás exatamente.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Ativar';
 }

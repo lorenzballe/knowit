@@ -3377,4 +3377,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get yourPick => 'Ваш выбор';
+
+  @override
+  String placeNearYou(String place) {
+    return 'Рядом с тобой · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'Твой регион · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'Твоя страна · $place';
+  }
+
+  @override
+  String get sundayOneMore =>
+      'Воскресенье: ещё одна карточка, выбранная для тебя';
+
+  @override
+  String get whereYouLive => 'Там, где ты живёшь';
+
+  @override
+  String get whereYouLiveLine =>
+      'Сначала твой город, потом регион, потом страна';
+
+  @override
+  String get whereYouLiveAsk =>
+      'Карточки о твоём городе, регионе и стране: не больше одной в день, и эта полка. Хранится только город, никогда — где именно ты находишься.';
+
+  @override
+  String get whereYouLiveSwitchOn => 'Включить';
 }

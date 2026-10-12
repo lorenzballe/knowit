@@ -243,6 +243,71 @@ String? regionCode(String country, String? name) {
   return regions[_regionHandle(name)];
 }
 
+/// A region's name to show a reader, from its ISO 3166-2 code: the first
+/// of the names [regionCode] knows it by, which is the English one. Null
+/// for a region this app cannot name. English for now, like the cards about
+/// it; a reader's own language comes with their translation.
+String? regionDisplayName(String code) {
+  final int dash = code.indexOf('-');
+  if (dash < 0) return null;
+  return _regionLists[code.substring(0, dash)]?[code]?.first;
+}
+
+/// A country's name to show a reader, in English for now, from its ISO
+/// 3166-1 code: the countries Astute's readers come from, and their
+/// neighbours. Any other is shown by its code, which is still its name on
+/// every number plate and every web address.
+String countryDisplayName(String code) => _countryNames[code] ?? code;
+
+const Map<String, String> _countryNames = {
+  'AL': 'Albania',
+  'AR': 'Argentina',
+  'AT': 'Austria',
+  'AU': 'Australia',
+  'BE': 'Belgium',
+  'BR': 'Brazil',
+  'CA': 'Canada',
+  'CH': 'Switzerland',
+  'CN': 'China',
+  'CZ': 'Czechia',
+  'DE': 'Germany',
+  'DK': 'Denmark',
+  'ES': 'Spain',
+  'FI': 'Finland',
+  'FR': 'France',
+  'GB': 'United Kingdom',
+  'GR': 'Greece',
+  'HR': 'Croatia',
+  'IE': 'Ireland',
+  'IN': 'India',
+  'IT': 'Italy',
+  'JP': 'Japan',
+  'KR': 'South Korea',
+  'LU': 'Luxembourg',
+  'MC': 'Monaco',
+  'MT': 'Malta',
+  'MX': 'Mexico',
+  'NL': 'Netherlands',
+  'NO': 'Norway',
+  'NZ': 'New Zealand',
+  'PL': 'Poland',
+  'PT': 'Portugal',
+  'RO': 'Romania',
+  'RU': 'Russia',
+  'SE': 'Sweden',
+  'SI': 'Slovenia',
+  'SM': 'San Marino',
+  'TR': 'Türkiye',
+  'TW': 'Taiwan',
+  'UA': 'Ukraine',
+  'US': 'United States',
+  'VA': 'Vatican City',
+};
+
+/// The regions this app can name, by country, each under every name it
+/// goes by, the English first.
+const Map<String, Map<String, List<String>>> _regionLists = {'IT': _italy};
+
 /// The regions this app can name, by every name they go by, folded the way
 /// [_regionHandle] folds a phone's.
 final Map<String, Map<String, String>> _regionsByName = {

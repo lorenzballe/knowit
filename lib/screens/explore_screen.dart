@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
 
 import '../data/explore_mix.dart';
+import '../data/local_cards.dart';
 import '../data/pills_repository.dart';
 import '../data/pill_bank.dart';
 import '../data/themed_shelves.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
+import '../models/place.dart';
 import '../state/app_state.dart';
 import '../state/explore_play.dart';
 import '../sync/served.dart';
@@ -29,6 +31,7 @@ import '../widgets/explore/spot_the_false.dart';
 import '../widgets/explore/surprise_me.dart';
 import '../widgets/explore/through_time.dart';
 import '../widgets/explore/unmask_chart.dart';
+import '../widgets/explore/where_you_live.dart';
 import '../widgets/explore/work_it_out.dart';
 import '../widgets/scaled_text.dart';
 import '../widgets/signature_shelves.dart';
@@ -144,7 +147,7 @@ class ExploreScreenState extends State<ExploreScreen> {
       Analytics.capture('explore searched', {
         'query_length': asked.length,
         'words': asked.split(RegExp(r'\s+')).length,
-        'results': (hits ?? searchPills(asked)).length,
+        'results': (hits ?? searchPills(asked, home: widget.app.place)).length,
       });
     });
   }
@@ -362,9 +365,11 @@ class ExploreScreenState extends State<ExploreScreen> {
               .where((e) => e.value.name == _subject)
               .map((e) => e.key)
               .firstOrNull;
+    // A card about a place is counted when the readers who live there keep
+    // it, and the counts are everybody's: no list here ever shows one.
     List<(Pill, int)> resolve(List<(String, int)> ids) => [
       for (final (id, n) in ids)
-        if (pillById(id) case final Pill p) (p, n),
+        if (pillById(id) case final Pill p when !p.isAboutAPlace) (p, n),
     ];
 
     final List<Pill> fresh = _todaysShelf();
@@ -408,6 +413,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 where: (id) {
                   final Pill? pill = pillById(id);
                   return pill != null &&
+                      !pill.isAboutAPlace &&
                       (_subject == null || pill.topic == _subject);
                 },
               ))
@@ -444,6 +450,29 @@ class ExploreScreenState extends State<ExploreScreen> {
               .take(8)
               .toList();
 
+    // Where you live: the cards about the reader's place, nearest first —
+    // the server's, from the place their backup holds, or the phone's own
+    // from the bank it carries — and only ever ones about where they live
+    // now. Read ones stay on it, marked: it is their home, not a list of
+    // finds. Without a place the shelf is one tile that offers to switch it
+    // on; with a place nobody has written about yet, it is not there.
+    final Place? home = widget.app.place;
+    final List<Pill> local = home == null
+        ? const []
+        : [
+            for (final Pill p
+                in served != null && served.local.isNotEmpty
+                    ? served.local
+                    : whereYouLive(
+                        home,
+                        read: _readWhenDealt,
+                        seed: monthSeed(DateTime.now()),
+                      ))
+              if (reachesReader(p, home) &&
+                  (_subject == null || p.topic == _subject))
+                p,
+          ];
+
     // Loved since the start, and not read yet: where somebody who arrived
     // late finds the best of what came before them, and somebody who has
     // been here two years still finds the next one they missed.
@@ -462,6 +491,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 where: (id) {
                   final Pill? pill = pillById(id);
                   return pill != null &&
+                      !pill.isAboutAPlace &&
                       unread(pill) &&
                       (_subject == null || pill.topic == _subject);
                 },
@@ -638,6 +668,39 @@ class ExploreScreenState extends State<ExploreScreen> {
                       isRead: read,
                       onOpen: _open,
                       onShown: (p) => _seen('mine', p),
+                    ),
+                  ),
+                ),
+              ],
+              if (home == null && _subject == null) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'where-you-live',
+                  _Shelf(
+                    key: const ValueKey('shelf-where-you-live'),
+                    title: l.whereYouLive,
+                    line: l.whereYouLiveLine,
+                    child: WhereYouLiveAsk(
+                      // The lead connects the place capture's own sheet
+                      // here: askForPlace(context, widget.app, from:
+                      // 'explore'), in lib/widgets/place_ask.dart.
+                      onSwitchOn: () {},
+                    ),
+                  ),
+                ),
+              ] else if (local.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'where-you-live',
+                  _Shelf(
+                    key: const ValueKey('shelf-where-you-live'),
+                    title: l.whereYouLive,
+                    line: l.whereYouLiveLine,
+                    child: _SmallRow(
+                      pills: local,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('where-you-live', p),
                     ),
                   ),
                 ),
@@ -1266,8 +1329,14 @@ class ExploreScreenState extends State<ExploreScreen> {
     final List<Pill> rows = _query.trim().isEmpty
         ? const []
         : _serverHitsFor == _query.trim() && _serverHits != null
-        ? _serverHits!
-        : searchPills(_query);
+        // What the server found, less a card about a place this reader no
+        // longer lives in: the server knows the place their backup holds,
+        // and the phone the one they have now.
+        ? [
+            for (final Pill p in _serverHits!)
+              if (reachesReader(p, widget.app.place)) p,
+          ]
+        : searchPills(_query, home: widget.app.place);
     if (_query.trim().isEmpty) {
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),

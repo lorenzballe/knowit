@@ -3015,5 +3015,52 @@
    }
   }
  },
- "yourPick": "Your pick"
+ "yourPick": "Your pick",
+ "placeNearYou": "Near you · {place}",
+ "@placeNearYou": {
+  "description": "On the front of a card about the reader's city, in small type under the subject: why the card is in front of them. {place} is the city's name, in English for now.",
+  "placeholders": {
+   "place": {
+    "type": "String"
+   }
+  }
+ },
+ "placeYourRegion": "Your region · {place}",
+ "@placeYourRegion": {
+  "description": "On the front of a card about the reader's region, in small type under the subject. {place} is the region's name, in English for now: Emilia-Romagna.",
+  "placeholders": {
+   "place": {
+    "type": "String"
+   }
+  }
+ },
+ "placeYourCountry": "Your country · {place}",
+ "@placeYourCountry": {
+  "description": "On the front of a card about the reader's country, in small type under the subject. {place} is the country's name, in English for now: Italy.",
+  "placeholders": {
+   "place": {
+    "type": "String"
+   }
+  }
+ },
+ "sundayOneMore": "Sunday: one more card chosen for you",
+ "@sundayOneMore": {
+  "description": "A small line on Today on the reader's Sunday, on the free plan: one of the five cards that would have come at random is chosen for them instead."
+ },
+ "whereYouLive": "Where you live",
+ "@whereYouLive": {
+  "description": "Title of the Explore shelf of cards about the reader's city, region and country."
+ },
+ "whereYouLiveLine": "Your city first, then your region, then your country",
+ "@whereYouLiveLine": {
+  "description": "Under the title of the Where you live shelf: the order its cards come in."
+ },
+ "whereYouLiveAsk": "Cards about your city, your region and your country: one a day at most, and this shelf. Only your city is kept, never where you are exactly.",
+ "@whereYouLiveAsk": {
+  "description": "On the Where you live shelf for a reader who has not said where they live: what switching it on gives, and the promise about what is kept."
+ },
+ "whereYouLiveSwitchOn": "Switch it on",
+ "@whereYouLiveSwitchOn": {
+  "description": "The button on the Where you live shelf that asks the reader where they live."
+ }
 }

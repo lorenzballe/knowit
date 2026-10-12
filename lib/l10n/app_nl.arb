@@ -774,5 +774,13 @@
   "wrongLastTime": "Vorige keer fout",
   "youLose": "Je verliest {n}.",
   "youWin": "Je wint {n}.",
-  "yourPick": "Jouw keuze"
+  "yourPick": "Jouw keuze",
+  "placeNearYou": "Bij jou in de buurt · {place}",
+  "placeYourRegion": "Jouw regio · {place}",
+  "placeYourCountry": "Jouw land · {place}",
+  "sundayOneMore": "Zondag: één kaart extra, voor jou gekozen",
+  "whereYouLive": "Waar je woont",
+  "whereYouLiveLine": "Eerst je stad, dan je regio, dan je land",
+  "whereYouLiveAsk": "Kaarten over je stad, je regio en je land: hooguit één per dag, en deze plank. Alleen de stad wordt bewaard, nooit waar je precies bent.",
+  "whereYouLiveSwitchOn": "Aanzetten"
 }

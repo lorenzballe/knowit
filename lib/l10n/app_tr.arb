@@ -774,5 +774,13 @@
   "wrongLastTime": "Geçen sefer yanlış",
   "youLose": "{n} kaybettin.",
   "youWin": "{n} kazandın.",
-  "yourPick": "Senin seçimin"
+  "yourPick": "Senin seçimin",
+  "placeNearYou": "Yakınında · {place}",
+  "placeYourRegion": "Bölgen · {place}",
+  "placeYourCountry": "Ülken · {place}",
+  "sundayOneMore": "Pazar: senin için seçilmiş bir kart daha",
+  "whereYouLive": "Yaşadığın yer",
+  "whereYouLiveLine": "Önce şehrin, sonra bölgen, sonra ülken",
+  "whereYouLiveAsk": "Şehrin, bölgen ve ülken hakkında kartlar: günde en fazla bir tane, bir de bu raf. Yalnızca şehir saklanır, tam olarak nerede olduğun asla.",
+  "whereYouLiveSwitchOn": "Aç"
 }

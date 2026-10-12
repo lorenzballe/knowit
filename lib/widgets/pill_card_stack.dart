@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../measure/card_read.dart';
 import '../measure/screens.dart';
 import '../models/pill.dart';
+import '../models/place.dart';
 import '../sync/trace.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
@@ -95,6 +96,10 @@ class PillCardStack extends StatefulWidget {
   /// them here, for a deck of cards read back.
   final bool Function(String id)? readBefore;
 
+  /// Where the reader lives, so a card about a place can say on its front
+  /// why it is here; null when they have not said.
+  final Place? home;
+
   /// How many cards the stack holds: the deck, and the one after it.
   int get count => deck.length + (trailing != null ? 1 : 0);
 
@@ -119,6 +124,7 @@ class PillCardStack extends StatefulWidget {
     this.onRead,
     this.onStand,
     this.readBefore,
+    this.home,
   });
 
   @override
@@ -473,6 +479,7 @@ class _PillCardStackState extends State<PillCardStack>
                 flipped: false,
                 isReview: widget.reviewIds.contains(pill.id),
                 isOwn: widget.ownIds.contains(pill.id),
+                home: widget.home,
                 given: controls ? given : null,
                 saved: controls && widget.isSaved(pill.id),
                 onSave: controls ? () => widget.onSave(pill) : null,
@@ -500,6 +507,7 @@ class _PillCardStackState extends State<PillCardStack>
                       flipped: true,
                       isReview: widget.reviewIds.contains(pill.id),
                       isOwn: widget.ownIds.contains(pill.id),
+                      home: widget.home,
                       given: given,
                       saved: widget.isSaved(pill.id),
                       onSave: () => widget.onSave(pill),

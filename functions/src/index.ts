@@ -15,7 +15,7 @@
 //   the counts, written to explore/latest. Hourly for the crowd under the
 //   top list and today's shelf, which turn with the UTC day.
 // - `search` (callable): the whole pool asked a question, so a phone need
-//   not hold it.
+//   not hold it; a card about a place answers only a reader who lives there.
 // - `onReaderDeleted`: when a reader deletes their account and the phone
 //   removes readers/{uid}, everything under it — the trace, the days, the
 //   profile, the shelf, the reports — and their presence go with it.
@@ -40,7 +40,7 @@ import { logger } from 'firebase-functions';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { search as searchBank } from './search.js';
-import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readReader, serveDay, serveExplore } from './serve.js';
+import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readPlace, readReader, serveDay, serveExplore } from './serve.js';
 import { currentWithheld, runScorecard, withheld } from './scorecard.js';
 
 initializeApp();
@@ -85,11 +85,14 @@ export const dealDay = onCall({ enforceAppCheck: false }, async (request) => {
 // ── The pool, asked a question ───────────────────────────────────────────
 
 export const search = onCall({ enforceAppCheck: false }, async (request) => {
-  if (!request.auth?.uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
+  const uid = request.auth?.uid;
+  if (!uid) throw new HttpsError('unauthenticated', 'Sign in, even anonymously.');
   const data = (request.data ?? {}) as { q?: unknown };
   const q = typeof data.q === 'string' ? data.q.slice(0, 80) : '';
-  const bank = await dealingBank();
-  const cards = searchBank(bank, q);
+  // The reader's place, read beside the bank: a card about a place is found
+  // only by the readers who live there.
+  const [bank, place] = await Promise.all([dealingBank(), readPlace(db, uid).catch(() => null)]);
+  const cards = searchBank(bank, q, 30, place);
   return { q, cards, version: bank.version };
 });
 

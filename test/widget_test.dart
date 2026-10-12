@@ -68,9 +68,14 @@ Future<void> _finishDay(WidgetTester tester) async {
   }
 }
 
+/// How many of a fresh free day's five are the reader's own today: two, as
+/// every free day, and three when the tests happen to run on a Sunday.
+int get _ownToday =>
+    ownCardsFor(plus: false, streak: 0, sunday: isSunday(DateTime.now()));
+
 /// What a fresh install on the free plan is dealt today: every subject,
 /// nothing read — two of the reader's own and three at random, as every
-/// free day.
+/// free day (and on a Sunday, one of the three the reader's own).
 List<Pill> get _todaysFive {
   // A first day as the app deals it to a reader who never set the mix:
   // read by ReaderProfile as having said nothing, so it opens on the
@@ -84,7 +89,7 @@ List<Pill> get _todaysFive {
     weights: untold.weightsOn(0, const {}),
     mix: const {},
     levels: untold.levelsUnder(const {}),
-    own: kOwnCardsFree,
+    own: _ownToday,
   ).cards;
 }
 
@@ -1788,7 +1793,7 @@ void main() {
       _todaysFive.map((p) => p.id).toList(),
     );
     expect(app.todaysDeck, hasLength(kPillsPerDay));
-    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    expect(app.ownIdsToday, hasLength(_ownToday));
     // And the phone writes down what it was dealt, for the archive.
     final prefs = await SharedPreferences.getInstance();
     final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
@@ -2259,7 +2264,7 @@ void main() {
     await app.init();
     // A first day is like every free day: two of the five the reader's
     // own, and three at random.
-    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    expect(app.ownIdsToday, hasLength(_ownToday));
     expect(app.todaysDeck, hasLength(kPillsPerDay));
 
     // Reading through, the reader's own carry the mark and the cards at
@@ -2284,7 +2289,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
     }
-    expect(marked, kOwnCardsFree);
+    expect(marked, _ownToday);
   });
 
   testWidgets(
@@ -2337,7 +2342,7 @@ void main() {
     final app = AppState();
     await app.init();
     // A first day: two of the reader's own, three at random.
-    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    expect(app.ownIdsToday, hasLength(_ownToday));
     var marked = 0;
     for (var i = 0; i < kPillsPerDay; i++) {
       final Pill front = app.todaysDeck[i];
@@ -2359,7 +2364,7 @@ void main() {
       );
       await _settle(tester);
     }
-    expect(marked, kOwnCardsFree);
+    expect(marked, _ownToday);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {

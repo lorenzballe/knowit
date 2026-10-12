@@ -70,7 +70,7 @@ class _SavedScreenState extends State<SavedScreen> {
   Widget build(BuildContext context) {
     // Most recently kept first, rather than whatever order the pool happens
     // to be in.
-    final byId = {for (final p in PillBank.cards) p.id: p};
+    final byId = {for (final p in PillBank.live) p.id: p};
     final all = [
       for (final id in _liked ? app.likedIds : app.savedIds)
         if (byId[id] != null) byId[id]!,

@@ -39,6 +39,8 @@ export interface Card {
   disabled?: boolean;
   /** The day a person or the re-check last confirmed the card against its source: reports from before it are answered. */
   checked?: string;
+  /** Where the card belongs, for a card about a place: dealt only to readers who live there (place.ts). */
+  place?: unknown;
   [key: string]: unknown;
 }
 
@@ -71,6 +73,16 @@ export const GRADED: ReadonlySet<Kind> = new Set(['pickOne', 'number', 'estimate
 export const asks = (c: Card): boolean => c.kind !== 'read';
 export const graded = (c: Card): boolean => GRADED.has(c.kind);
 export const isDebate = (c: Card): boolean => c.kind === 'debate';
+
+/**
+ * Whether a card is about a place: a country, a region, a city. Such a card
+ * goes to the readers who live there and nowhere else — never a question
+ * of the day, a common card, a card at random, a reader's own, or a shelf
+ * for everybody (docs/PLACES.md §5). Any `place` at all makes it one, so a
+ * place the dealer cannot read keeps the card from everybody rather than
+ * giving it to everybody.
+ */
+export const isPlaceCard = (c: Card): boolean => c.place !== undefined && c.place !== null;
 
 /** Every strand a card is about: its own, and the ones it is also about. */
 export function strandsOf(c: Card): string[] {
@@ -120,14 +132,30 @@ export class Bank {
     this.commons = new Map(Object.entries(doc.commons ?? {}).map(([k, v]) => [Number(k), v]));
   }
 
-  /** The cards still dealt: a retired card answers by id but is never dealt again. */
+  /**
+   * The cards still dealt to everybody: a retired card answers by id but is
+   * never dealt again, and a card about a place is dealt only to the
+   * readers who live there, from [local]. Everything that deals, lists or
+   * searches for anyone reads this, so a card about Modena cannot reach a
+   * shelf for everybody by being forgotten somewhere.
+   */
   get live(): Card[] {
-    return this.cards.filter((c) => !c.disabled);
+    return this.cards.filter((c) => !c.disabled && !isPlaceCard(c));
   }
 
   /** The cards that may be dealt on [date]: live, and not past their expiry. */
   liveOn(date: string): Card[] {
     return this.live.filter((c) => !expiredOn(c, date));
+  }
+
+  /** The cards about a place that are still dealt, to the readers who live there. */
+  get local(): Card[] {
+    return this.cards.filter((c) => !c.disabled && isPlaceCard(c));
+  }
+
+  /** The cards about a place that may be dealt on [date]. */
+  localOn(date: string): Card[] {
+    return this.local.filter((c) => !expiredOn(c, date));
   }
 
   static parse(text: string): Bank {
@@ -215,6 +243,17 @@ export function shiftDate(key: string, days: number): string {
   if (!p) throw new Error(`not a date: ${key}`);
   const t = new Date(Date.UTC(p.y, p.m - 1, p.d + days));
   return dateKey(t.getUTCFullYear(), t.getUTCMonth() + 1, t.getUTCDate());
+}
+
+/**
+ * Whether a date key is a Sunday. The key is already the reader's own day
+ * (the phone asks for its local date, and the nightly pass works it out
+ * from their clock), so this is their Sunday, not the server's.
+ */
+export function isSunday(key: string): boolean {
+  const p = parseDate(key);
+  if (!p) throw new Error(`not a date: ${key}`);
+  return new Date(Date.UTC(p.y, p.m - 1, p.d)).getUTCDay() === 0;
 }
 
 /** The reader's local date key at [nowMs], their clock [tzMinutes] from UTC. */

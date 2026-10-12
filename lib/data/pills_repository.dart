@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:math' as math;
 
 import '../models/pill.dart';
+import '../models/place.dart';
 import 'pill_bank.dart';
 import 'topics.dart';
 
@@ -76,6 +77,10 @@ List<Pill> pillsForDate(
   /// How many of the [count] should ask, when the caller has already dealt
   /// some asking cards of its own. Null takes the day's usual share.
   int? asking,
+
+  /// Debates already on the table today: one at most, and the card about
+  /// the reader's place may be it.
+  int debatesDealt = 0,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
   final pool = PillBank.cards.where((p) => dealableOn(p, date)).toList();
@@ -151,9 +156,10 @@ List<Pill> pillsForDate(
   // At most one debate a day. A debate is ungraded on purpose, so it feeds
   // nothing back into calibration — and now that the pool holds twenty of
   // them, a day picked purely at random can come out as four opinions in a
-  // row and measure nothing at all.
+  // row and measure nothing at all. The day's card about the reader's
+  // place may already be it.
   const maxDebates = 1;
-  var debates = 0;
+  var debates = debatesDealt;
   final strands = {...strandsDealt};
 
   // Takes up to [n] cards a tier at a time, and inside a tier the ones on
@@ -246,9 +252,9 @@ List<Pill> pillsAtRandom(
   if (count <= 0) return const [];
   // Summed rather than chained, so the order the history is held in
   // cannot change the seed.
-  var seed = _stableHash(dateKey(date));
+  var seed = stableHash(dateKey(date));
   for (final id in exclude) {
-    seed = (seed + _stableHash(id)) & 0x1FFFFFFF;
+    seed = (seed + stableHash(id)) & 0x1FFFFFFF;
   }
   final rng = Random(seed);
   final pool = PillBank.cards.where((p) => dealableOn(p, date)).toList()
@@ -344,8 +350,10 @@ List<Pill> pillsAtRandom(
 }
 
 /// A hash that is the same on every run and every platform, which
-/// `String.hashCode` does not promise.
-int _stableHash(String text) {
+/// `String.hashCode` does not promise: the shelves' order key too, and the
+/// server's `keyed` (functions/src/rng.ts), so the dealers in other files
+/// seed and order the way this one does.
+int stableHash(String text) {
   var hash = 0;
   for (final unit in text.codeUnits) {
     hash = (hash * 31 + unit) & 0x1FFFFFFF;
@@ -420,10 +428,18 @@ List<Pill> _oneTopicFirst(List<Pill> pills) {
 }
 
 /// Free-text search across the whole pool — question, answer and topic.
-List<Pill> searchPills(String query) {
+///
+/// A card about a place is in the pool only for a reader who lives there
+/// ([home]): searching for Modena from Palermo finds nothing that was
+/// written for Modena. Everything else is in the bank's order, so a reader
+/// with no place finds exactly what they always found.
+List<Pill> searchPills(String query, {Place? home}) {
   final q = query.trim().toLowerCase();
-  if (q.isEmpty) return List<Pill>.from(PillBank.cards);
-  return PillBank.cards.where((p) {
+  final Iterable<Pill> pool = PillBank.live.where(
+    (p) => p.place == null || placeFit(p.place!, home) != PlaceFit.none,
+  );
+  if (q.isEmpty) return pool.toList();
+  return pool.where((p) {
     final hay =
         '${p.question} ${p.answer} ${p.topic} ${p.barMove} '
         '${p.keywords.join(' ')}';

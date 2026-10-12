@@ -3110,4 +3110,35 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yourPick => '你的选择';
+
+  @override
+  String placeNearYou(String place) {
+    return '你附近 · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return '你的地区 · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return '你的国家 · $place';
+  }
+
+  @override
+  String get sundayOneMore => '星期日：多一张为你挑选的卡片';
+
+  @override
+  String get whereYouLive => '你住的地方';
+
+  @override
+  String get whereYouLiveLine => '先是你的城市，然后是地区，再是国家';
+
+  @override
+  String get whereYouLiveAsk =>
+      '关于你的城市、地区和国家的卡片：每天最多一张，还有这个书架。只保存城市，从不保存你的确切位置。';
+
+  @override
+  String get whereYouLiveSwitchOn => '开启';
 }

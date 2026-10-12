@@ -1282,7 +1282,7 @@ class _SubjectsTile extends StatelessWidget {
   /// The cards read of a subject, from its mark on the wheel.
   void _open(BuildContext context, String key) {
     final TopicStyle style = kTopics[key]!;
-    final List<Pill> deck = PillBank.cards
+    final List<Pill> deck = PillBank.live
         .where((p) => p.topic == style.name && app.seenIds.contains(p.id))
         .toList();
     if (deck.isEmpty) return;
@@ -1302,7 +1302,7 @@ class _SubjectsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final List<String> keys = _wheel;
-    final Map<String, Pill> byId = {for (final p in PillBank.cards) p.id: p};
+    final Map<String, Pill> byId = {for (final p in PillBank.live) p.id: p};
     Map<String, int> countIn(Iterable<String> ids) {
       final out = <String, int>{};
       for (final id in ids) {
@@ -1556,7 +1556,7 @@ class _HowHardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Map<String, Pill> byId = {for (final p in PillBank.cards) p.id: p};
+    final Map<String, Pill> byId = {for (final p in PillBank.live) p.id: p};
     double? mean(Iterable<String> ids) {
       var n = 0;
       var sum = 0.0;
@@ -2397,7 +2397,7 @@ const Map<String, int> _eraStarts = {
 };
 
 Iterable<Pill> _readCards(AppState app) =>
-    PillBank.cards.where((p) => app.seenIds.contains(p.id));
+    PillBank.live.where((p) => app.seenIds.contains(p.id));
 
 /// How far back in time the cards read reach: from the oldest era one is
 /// set in to this year.
@@ -2563,7 +2563,7 @@ class _WordsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Map<String, int> bank = inBank;
-    final Map<String, Pill> byId = {for (final p in PillBank.cards) p.id: p};
+    final Map<String, Pill> byId = {for (final p in PillBank.live) p.id: p};
     bool term(String k) => (bank[k] ?? 0) >= 3;
     final met = <String>{
       for (final p in _readCards(app))

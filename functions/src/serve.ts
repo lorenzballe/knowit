@@ -5,11 +5,12 @@
 // a database and are tested without one.
 
 import type { Firestore } from 'firebase-admin/firestore';
-import { FieldValue } from 'firebase-admin/firestore';
+import { FieldPath, FieldValue } from 'firebase-admin/firestore';
 import { Bank, Card, localDate, localHour, shiftDate } from './bank.js';
 import { Deal, dealDay } from './deal.js';
 import { Event, Presence, Profile, Snapshot, buildProfile, facts } from './profile.js';
 import { PersonalExplore, buildPersonalExplore } from './explore.js';
+import { Place, placeFromJson } from './place.js';
 
 /** How many days of the trace the profile is read from. */
 export const TRACE_DAYS = 21;
@@ -57,6 +58,7 @@ export function dayDocument(deal: Deal, bank: Bank, profile: Profile, nowMs: num
     cards: deal.cards,
     own: deal.own,
     reviews: deal.reviews,
+    local: deal.local,
     ownCount: deal.ownCount,
     day: deal.day,
     bank: bank.version,
@@ -92,6 +94,17 @@ export async function serveExplore(db: Firestore, bank: Bank, reader: Reader, no
   const doc = buildPersonalExplore(bank, profile, localDate(nowMs, profile.tz), nowMs);
   await db.collection('readers').doc(reader.uid).collection('explore').doc('current').set(doc);
   return doc;
+}
+
+/**
+ * Where the reader lives, and nothing else of their backup: a search needs
+ * to know whose cards about a place it may find, and the rest of a reader's
+ * document is many times the size of the one field. Null when there is no
+ * place, or none that can be read.
+ */
+export async function readPlace(db: Firestore, uid: string): Promise<Place | null> {
+  const snap = await db.collection('readers').where(FieldPath.documentId(), '==', uid).select('place').limit(1).get();
+  return snap.empty ? null : placeFromJson(snap.docs[0].get('place'));
 }
 
 /** The dates a reader should find dealt at [nowMs]: their today, and their tomorrow from the late afternoon. */

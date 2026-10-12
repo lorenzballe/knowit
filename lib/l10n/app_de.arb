@@ -774,5 +774,13 @@
   "wrongLastTime": "Letztes Mal falsch",
   "youLose": "Du verlierst {n}.",
   "youWin": "Du gewinnst {n}.",
-  "yourPick": "Deine Wahl"
+  "yourPick": "Deine Wahl",
+  "placeNearYou": "In deiner Nähe · {place}",
+  "placeYourRegion": "Deine Region · {place}",
+  "placeYourCountry": "Dein Land · {place}",
+  "sundayOneMore": "Sonntag: eine Karte mehr, für dich gewählt",
+  "whereYouLive": "Wo du wohnst",
+  "whereYouLiveLine": "Zuerst deine Stadt, dann deine Region, dann dein Land",
+  "whereYouLiveAsk": "Karten über deine Stadt, deine Region und dein Land: höchstens eine am Tag, und dieses Regal. Gespeichert wird nur die Stadt, nie, wo genau du bist.",
+  "whereYouLiveSwitchOn": "Einschalten"
 }

@@ -174,7 +174,15 @@ class _TodayScreenState extends State<TodayScreen> {
             frozen: app.streakWasFrozen,
             onBack: widget.onBack,
           ),
-          const SizedBox(height: 16),
+          // On the reader's Sunday, the one card more of their own is said
+          // once, quietly, where the day starts: under the day's name, and
+          // gone tomorrow.
+          if (app.sundayExtraToday) ...[
+            const SizedBox(height: 6),
+            _SundayLine(text: context.l10n.sundayOneMore),
+            const SizedBox(height: 12),
+          ] else
+            const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
           const SizedBox(height: 16),
           // The deck takes every pixel that is left.
@@ -226,6 +234,8 @@ class _TodayScreenState extends State<TodayScreen> {
               onDislike: (pill) => _dislike(context, pill),
               onShare: (pill) => showShareSheet(context, pill),
               onMotion: widget.onCardMotion,
+              // The card about where the reader lives says so on its front.
+              home: app.place,
               reviewIds: app.reviewIdsToday,
               // Which cards are the reader's own, on the day that has
               // others: Astute+ has no others to tell them from.
@@ -365,6 +375,33 @@ class _ReadingHeader extends StatelessWidget {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+/// Sunday's line under the day's name: one card that would have come at
+/// random was chosen for the reader instead. Small and muted, in line with
+/// the header above it, because it is a thing to notice and not a banner —
+/// and it wraps rather than being cut in a language that says it at length.
+class _SundayLine extends StatelessWidget {
+  const _SundayLine({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      key: const ValueKey('sunday-line'),
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Text(
+        text,
+        style: AppText.body(
+          size: 12.5,
+          weight: FontWeight.w500,
+          height: 1.3,
+          color: context.p.ink.withValues(alpha: 0.55),
+        ),
       ),
     );
   }

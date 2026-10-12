@@ -99,7 +99,12 @@ void main() {
       expect(alone.dealtBy, 'phone');
       expect(alone.todaysDeck, hasLength(kPillsPerDay));
       // A first day: two of the reader's own, three at random.
-      expect(alone.ownIdsToday, hasLength(kOwnCardsFree));
+      expect(
+        alone.ownIdsToday,
+        hasLength(
+          ownCardsFor(plus: false, streak: 0, sunday: isSunday(DateTime.now())),
+        ),
+      );
       for (final p in alone.todaysDeck) {
         expect(PillBank.byId(p.id), isNotNull, reason: 'dealt from the bank');
       }

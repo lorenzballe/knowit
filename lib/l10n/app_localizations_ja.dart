@@ -3102,4 +3102,35 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get yourPick => 'あなたの選択';
+
+  @override
+  String placeNearYou(String place) {
+    return 'あなたの近く · $place';
+  }
+
+  @override
+  String placeYourRegion(String place) {
+    return 'あなたの地域 · $place';
+  }
+
+  @override
+  String placeYourCountry(String place) {
+    return 'あなたの国 · $place';
+  }
+
+  @override
+  String get sundayOneMore => '日曜日：あなたのために選んだカードがもう1枚';
+
+  @override
+  String get whereYouLive => 'あなたの住む場所';
+
+  @override
+  String get whereYouLiveLine => 'まずあなたの街、次に地域、それから国';
+
+  @override
+  String get whereYouLiveAsk =>
+      'あなたの街、地域、国についてのカード。多くても1日1枚、そしてこの棚。保存するのは街だけで、あなたが正確にどこにいるかは決して保存しません。';
+
+  @override
+  String get whereYouLiveSwitchOn => 'オンにする';
 }
