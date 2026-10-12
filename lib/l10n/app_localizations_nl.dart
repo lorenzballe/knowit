@@ -872,6 +872,82 @@ class AppLocalizationsNl extends AppLocalizations {
   String get reminderAskNotNow => 'Niet nu';
 
   @override
+  String get placeAskTitle => 'Kaarten over waar je woont';
+
+  @override
+  String get placeAskLine =>
+      'Af en toe geeft Astute je een kaart over de plek waar je woont — de geschiedenis, de wetenschap, de verrassingen.';
+
+  @override
+  String get placeOnlyCity =>
+      'Alleen je stad wordt bewaard, nooit je precieze locatie.';
+
+  @override
+  String get placeAskPreviewLine => 'Bij jou in de buurt · Modena';
+
+  @override
+  String get placeAskPreviewQuestion => 'De Ghirlandina helt over. Hoeveel?';
+
+  @override
+  String get placeAskYes => 'Gebruik mijn locatie';
+
+  @override
+  String get placeAskNotNow => 'Niet nu';
+
+  @override
+  String get placeRowTitle => 'Waar je woont';
+
+  @override
+  String get placeRowOff => 'Uit';
+
+  @override
+  String get placeRowOffLine =>
+      'Zet het aan voor kaarten over de plek waar je woont.';
+
+  @override
+  String get placeSwitchOn => 'Aanzetten';
+
+  @override
+  String get placeUseNow => 'Gebruik nu mijn locatie';
+
+  @override
+  String get placeRemove => 'Verwijderen';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Waar je woont: $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Verwijderd. Astute bewaart niet meer waar je woont.';
+
+  @override
+  String get placeNotFound =>
+      'Het lukte nu niet om te zien waar je bent. Astute probeert het een andere dag opnieuw.';
+
+  @override
+  String get placeDeniedNote =>
+      'Geen probleem. Je kunt het altijd aanzetten in Profiel.';
+
+  @override
+  String get placeServicesOff =>
+      'Locatie staat uit op deze telefoon. Zet het aan in de instellingen en probeer het opnieuw.';
+
+  @override
+  String get placeNotHere => 'Dit apparaat kan niet zeggen waar je bent.';
+
+  @override
+  String get placeSettingsTitle => 'Locatie staat uit voor Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Sta Astute in de instellingen toe je locatie te gebruiken, voor kaarten over de plek waar je woont. Alleen je stad wordt bewaard.';
+
+  @override
+  String get placeSettingsOpen => 'Open instellingen';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

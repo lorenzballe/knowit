@@ -21,9 +21,11 @@ import '../l10n/app_localizations.dart';
 import '../measure/card_read.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
+import '../models/place.dart';
 import '../models/reminder.dart';
 import '../models/trial.dart';
 import '../sync/board.dart';
+import '../sync/place_finder.dart';
 import '../sync/reader_snapshot.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
@@ -111,6 +113,12 @@ class AppState extends ChangeNotifier {
   static const _kTrialPrice = 'knowit.trialPrice';
   static const _kTrialWarnedFor = 'knowit.trialWarnedFor';
   static const _kTrialWarnedAt = 'knowit.trialWarnedAt';
+  static const _kPlace = 'knowit.place';
+  static const _kPlaceRemovedAt = 'knowit.placeRemovedAt';
+  static const _kLocationPermission = 'knowit.locationPermission';
+  static const _kPlaceAsks = 'knowit.placeAsks';
+  static const _kPlaceDeferredAfter = 'knowit.placeDeferredAfter';
+  static const _kPlaceCheckedAt = 'knowit.placeCheckedAt';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -264,6 +272,34 @@ class AppState extends ChangeNotifier {
   /// quietly unsubscribe the reader's other phone.
   List<String> pushTokens = [];
 
+  /// Where the reader lives, as much of it as Astute keeps (see [Place]):
+  /// read on the phone with their consent, backed up with the account, and
+  /// what both dealers read to give them cards about it. Null until they
+  /// say yes, and again once they remove it. See docs/PLACES.md.
+  Place? place;
+
+  /// When the reader last removed their place, so that a backup holding an
+  /// older one cannot bring it back when two phones' records are merged.
+  DateTime? placeRemovedAt;
+
+  /// The reader's word on their location, as the app last heard it:
+  /// [kLocationNotAsked], [kLocationGranted], [kLocationDenied] — the
+  /// system's prompt was answered no, or the permission was taken back in
+  /// the phone's settings — or [kLocationOff], the place removed in Profile.
+  String locationPermission = kLocationNotAsked;
+
+  /// How many times the app's own sheet about the place has been put to the
+  /// reader, from wherever it was opened.
+  int placeAsks = 0;
+
+  /// The last day the reader had finished when they last said "Not now" to
+  /// that sheet, so it asks again only after a day finished since.
+  String? placeDeferredAfter;
+
+  /// When the phone was last asked where the reader is, whatever it said:
+  /// the weekly read waits a week from here.
+  DateTime? placeCheckedAt;
+
   late DateTime today;
   late List<Pill> todaysDeck;
 
@@ -321,6 +357,9 @@ class AppState extends ChangeNotifier {
     // this never prompts — it only re-arms what is already permitted.
     unawaited(refreshDailyReminder());
     unawaited(refreshHomeWidget());
+    // Nor on the phone's location, which is read again here only for a
+    // reader who allowed it, and at most once a week.
+    unawaited(refreshPlaceIfDue());
     // Nor on the bank: whatever it downloads is for tomorrow's start.
     unawaited(PillBank.refresh(_prefs));
   }
@@ -361,6 +400,12 @@ class AppState extends ChangeNotifier {
     pushDeferredAfter = _prefs.getString(_kPushDeferredAfter);
     reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
+    place = Place.fromJson(_decodeJson(_prefs.getString(_kPlace)));
+    placeRemovedAt = _instantOf(_prefs.getString(_kPlaceRemovedAt));
+    locationPermission = _locationWord(_prefs.getString(_kLocationPermission));
+    placeAsks = _prefs.getInt(_kPlaceAsks) ?? 0;
+    placeDeferredAfter = _prefs.getString(_kPlaceDeferredAfter);
+    placeCheckedAt = _instantOf(_prefs.getString(_kPlaceCheckedAt));
     final DateTime? trialEnds = _instantOf(_prefs.getString(_kTrialEnds));
     trial = trialEnds == null
         ? null
@@ -2398,6 +2443,13 @@ class AppState extends ChangeNotifier {
     'onboarded': onboarded,
     'freezes': freezes,
     'last_day_completed': ?lastCompletionDate,
+    // Where the reader lives, to the city and no closer: the country, the
+    // region (its ISO code where the app knows the country's regions, else
+    // the name the phone gave), the city. Never the point.
+    'location_permission': locationPermission,
+    'place_country': ?place?.country,
+    'place_region': ?(place?.region ?? place?.regionName),
+    'place_city': ?place?.city,
   };
 
   /// What the profile says once and never again (`$set_once`): when the app
@@ -2747,6 +2799,12 @@ class AppState extends ChangeNotifier {
     _trialWarnedAt = null;
     reviewAsked = false;
     pushTokens = [];
+    place = null;
+    placeRemovedAt = null;
+    locationPermission = kLocationNotAsked;
+    placeAsks = 0;
+    placeDeferredAfter = null;
+    placeCheckedAt = null;
     ownIdsToday = {};
     reviewIdsToday = {};
     answers = {};
@@ -2843,6 +2901,197 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── Where the reader lives ────────────────────────────────────────────
+
+  /// The reader's word on their location (see [locationPermission]), as
+  /// PostHog's `location_permission` carries it.
+  static const String kLocationNotAsked = 'not_asked';
+  static const String kLocationGranted = 'granted';
+  static const String kLocationDenied = 'denied';
+  static const String kLocationOff = 'off';
+
+  /// The profile's properties a place fills, and takes back when removed.
+  static const List<String> kPlaceProfileKeys = [
+    'place_country',
+    'place_region',
+    'place_city',
+  ];
+
+  /// A reader moves rarely, and a week is soon enough to notice: the phone
+  /// is asked again no more often than this.
+  static const Duration kPlaceRefreshEvery = Duration(days: 7);
+
+  /// A read that found nothing — no fix indoors, no name for the point — is
+  /// tried again a day later rather than at every return to the app.
+  static const Duration kPlaceRetryEvery = Duration(days: 1);
+
+  /// The app's own sheet first asks once [kPlaceFirstAskDay] days are
+  /// finished: the reminder is asked after the first, and two questions on
+  /// one evening is one too many. "Not now" is asked once more, once
+  /// [kPlaceLastAskDay] are, and that is the end of it: Profile keeps the
+  /// switch.
+  static const int kPlaceFirstAskDay = 2;
+  static const int kPlaceLastAskDay = 7;
+  static const int kPlaceAsksAllowed = 2;
+
+  /// True when the app's sheet about the place is waiting to be put: the
+  /// reader has no place, has never been asked by the system, and has
+  /// finished their second day — or said "Not now" once, has finished a
+  /// seventh, and a day since. main.dart chooses the moment.
+  bool get shouldAskForPlace {
+    if (place != null || locationPermission != kLocationNotAsked) return false;
+    final int days = completedDates.length;
+    if (placeAsks == 0) return days >= kPlaceFirstAskDay;
+    if (placeAsks >= kPlaceAsksAllowed) return false;
+    final String? last = lastCompletionDate;
+    final String? after = placeDeferredAfter;
+    return days >= kPlaceLastAskDay &&
+        last != null &&
+        (after == null || last.compareTo(after) > 0);
+  }
+
+  /// The sheet was put to the reader, from wherever: it counts towards the
+  /// two the app ever asks of its own accord.
+  Future<void> notedPlaceAsked() async {
+    placeAsks += 1;
+    await _prefs.setInt(_kPlaceAsks, placeAsks);
+  }
+
+  /// The reader answered the sheet "Not now". Nothing of the system's is
+  /// spent; the sheet waits for a seventh day, and a day finished after
+  /// this one.
+  Future<void> notedPlaceDeferred() async {
+    placeDeferredAfter = lastCompletionDate;
+    final String? after = placeDeferredAfter;
+    if (after == null) {
+      await _prefs.remove(_kPlaceDeferredAfter);
+    } else {
+      await _prefs.setString(_kPlaceDeferredAfter, after);
+    }
+    notifyListeners();
+  }
+
+  /// What the reader and the system have said about their location: one of
+  /// the four words of [locationPermission].
+  Future<void> notedLocationPermission(String word) async {
+    if (locationPermission == word) return;
+    locationPermission = word;
+    await _prefs.setString(_kLocationPermission, word);
+    notifyListeners();
+  }
+
+  Future<Place?>? _placeReading;
+
+  /// Asks the phone where the reader is, and keeps the place it names —
+  /// [from] says who asked: the sheet's moment (`day done`), `explore`,
+  /// `profile`, the weekly `refresh`, or `settings` for a permission given
+  /// there. Two asks at once are one read. Null when the phone could not
+  /// say; the weekly read tries again a day later.
+  Future<Place?> readPlace({required String from, DateTime? now}) =>
+      _placeReading ??= _readPlace(
+        from,
+        now ?? DateTime.now(),
+      ).whenComplete(() => _placeReading = null);
+
+  Future<Place?> _readPlace(String from, DateTime now) async {
+    placeCheckedAt = now;
+    await _prefs.setString(_kPlaceCheckedAt, now.toUtc().toIso8601String());
+    final Place? found = await PlaceFinder.instance.find();
+    // A reader who removed it while the phone was still looking keeps it
+    // removed.
+    if (found == null || locationPermission == kLocationOff) return null;
+    await setPlace(found, from: from);
+    return found;
+  }
+
+  /// Keeps [next] as where the reader lives: on the phone, in the backup
+  /// (where the server reads it to deal), and, to the city, on PostHog's
+  /// profile. Said as `place set` — except for a weekly read that found
+  /// the reader where they were, which is no news.
+  Future<void> setPlace(Place next, {required String from}) async {
+    final bool changed = !next.samePlaceAs(place);
+    place = next;
+    placeRemovedAt = null;
+    await _prefs.setString(_kPlace, jsonEncode(next.toJson()));
+    await _prefs.remove(_kPlaceRemovedAt);
+    if (changed || from != 'refresh') {
+      // Country, region and city: the point stays out of every event, and
+      // out of the trace, which keeps these three under short names.
+      Analytics.capture('place set', {
+        'country': next.country,
+        'region': next.region ?? next.regionName,
+        'city': next.city,
+        'changed': changed,
+        'from': from,
+      });
+    }
+    notifyListeners();
+  }
+
+  /// Forgets where the reader lives, everywhere it was kept: on the phone
+  /// at once, in the backup with the next write (which replaces the whole
+  /// document, `place` and all), and on PostHog's profile, which is told
+  /// to drop it with the event that says so. The phone is not asked again
+  /// until the reader switches it back on.
+  Future<void> clearPlace() async {
+    place = null;
+    final DateTime removed = DateTime.now();
+    placeRemovedAt = removed;
+    locationPermission = kLocationOff;
+    await _prefs.remove(_kPlace);
+    await _prefs.setString(_kPlaceRemovedAt, removed.toUtc().toIso8601String());
+    await _prefs.setString(_kLocationPermission, kLocationOff);
+    unawaited(Analytics.forgetPerson(kPlaceProfileKeys));
+    Analytics.capture('place removed', {r'$unset': kPlaceProfileKeys});
+    notifyListeners();
+  }
+
+  /// Reads the place again when it is due, so that a move is noticed: at
+  /// launch and at every return to the app, for a reader who allowed it,
+  /// at most once every [kPlaceRefreshEvery] — or a day after a read that
+  /// found nothing. It never prompts.
+  ///
+  /// It also hears what changed in the phone's settings. A permission taken
+  /// back there stops the reading, and the place already kept stays until
+  /// the reader removes it; one given there, by a reader who said yes on
+  /// the app's sheet and no to the system's, starts it.
+  Future<void> refreshPlaceIfDue({DateTime? now}) async {
+    final String said = locationPermission;
+    if (said != kLocationGranted && said != kLocationDenied) return;
+    final PlaceFinder finder = PlaceFinder.instance;
+    if (!finder.canAsk || _placeReading != null) return;
+    final DateTime clock = now ?? DateTime.now();
+    final LocationAccess access = await finder.access();
+    // Location switched off for the whole phone: next time.
+    if (access == LocationAccess.unavailable) return;
+    if (access != LocationAccess.granted) {
+      if (said == kLocationGranted) {
+        await notedLocationPermission(kLocationDenied);
+      }
+      return;
+    }
+    if (said == kLocationDenied) {
+      await notedLocationPermission(kLocationGranted);
+      await readPlace(from: 'settings', now: clock);
+      return;
+    }
+    final DateTime? last = placeCheckedAt;
+    final Duration every = place == null
+        ? kPlaceRetryEvery
+        : kPlaceRefreshEvery;
+    // A clock moved back before the last read counts as due, once.
+    if (last != null) {
+      final Duration since = clock.difference(last);
+      if (!since.isNegative && since < every) return;
+    }
+    await readPlace(from: 'refresh', now: clock);
+  }
+
+  static String _locationWord(String? raw) => switch (raw) {
+    kLocationGranted || kLocationDenied || kLocationOff => raw!,
+    _ => kLocationNotAsked,
+  };
+
   /// What this phone knows about the reader, for the account to hold.
   ReaderSnapshot snapshot() => ReaderSnapshot(
     name: name,
@@ -2870,6 +3119,8 @@ class AppState extends ChangeNotifier {
     genresOff: genresOff.toList(),
     strandsOff: strandsOff.toList(),
     pushTokens: List<String>.from(pushTokens),
+    place: place,
+    placeRemovedAt: placeRemovedAt,
   );
 
   /// Takes on a snapshot that has already been merged, and stores it.
@@ -2903,6 +3154,19 @@ class AppState extends ChangeNotifier {
     genresOff = s.genresOff.toSet();
     strandsOff = s.strandsOff.toSet();
     pushTokens = List<String>.from(s.pushTokens);
+    place = s.place;
+    placeRemovedAt = s.placeRemovedAt;
+    // A place removed on another phone stops this one reading it again; a
+    // place set on another phone since this one removed it is the reader's
+    // newer word, and this phone's "off" no longer stands.
+    if (place == null &&
+        placeRemovedAt != null &&
+        (locationPermission == kLocationGranted ||
+            locationPermission == kLocationDenied)) {
+      locationPermission = kLocationOff;
+    } else if (place != null && locationPermission == kLocationOff) {
+      locationPermission = kLocationNotAsked;
+    }
 
     await _prefs.setString(_kName, name);
     await _prefs.setInt(_kStreak, streak);
@@ -2925,6 +3189,22 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
     await _prefs.setString(_kTopicLevels, jsonEncode(topicLevels));
     await _prefs.setStringList(_kPushTokens, pushTokens);
+    final Place? kept = place;
+    final DateTime? removed = placeRemovedAt;
+    if (kept == null) {
+      await _prefs.remove(_kPlace);
+    } else {
+      await _prefs.setString(_kPlace, jsonEncode(kept.toJson()));
+    }
+    if (removed == null) {
+      await _prefs.remove(_kPlaceRemovedAt);
+    } else {
+      await _prefs.setString(
+        _kPlaceRemovedAt,
+        removed.toUtc().toIso8601String(),
+      );
+    }
+    await _prefs.setString(_kLocationPermission, locationPermission);
     await _saveAnswers();
     await _noteClimb();
     notifyListeners();

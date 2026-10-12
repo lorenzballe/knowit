@@ -843,6 +843,75 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reminderAskNotNow => '暂不';
 
   @override
+  String get placeAskTitle => '关于你住的地方的卡片';
+
+  @override
+  String get placeAskLine => 'Astute 会不时给你发一张关于你住的地方的卡片 — 它的历史、科学，还有意想不到的故事。';
+
+  @override
+  String get placeOnlyCity => '只保存你所在的城市，从不保存你的精确位置。';
+
+  @override
+  String get placeAskPreviewLine => '你附近 · 摩德纳';
+
+  @override
+  String get placeAskPreviewQuestion => '吉尔兰迪纳塔是斜的。斜了多少？';
+
+  @override
+  String get placeAskYes => '使用我的位置';
+
+  @override
+  String get placeAskNotNow => '暂不';
+
+  @override
+  String get placeRowTitle => '你住的地方';
+
+  @override
+  String get placeRowOff => '已关闭';
+
+  @override
+  String get placeRowOffLine => '开启后，你会收到关于你住的地方的卡片。';
+
+  @override
+  String get placeSwitchOn => '开启';
+
+  @override
+  String get placeUseNow => '现在使用我的位置';
+
+  @override
+  String get placeRemove => '移除';
+
+  @override
+  String placeSetTo(String place) {
+    return '你住的地方：$place';
+  }
+
+  @override
+  String get placeRemoved => '已移除。Astute 不再保存你住的地方。';
+
+  @override
+  String get placeNotFound => '暂时无法确定你在哪里。Astute 会改天再试。';
+
+  @override
+  String get placeDeniedNote => '没关系。你随时可以在“我的”里开启。';
+
+  @override
+  String get placeServicesOff => '这台手机的定位服务已关闭。请在设置中开启后再试。';
+
+  @override
+  String get placeNotHere => '这台设备无法确定你的位置。';
+
+  @override
+  String get placeSettingsTitle => 'Astute 的定位权限已关闭';
+
+  @override
+  String get placeSettingsBody =>
+      '要收到关于你住的地方的卡片，请在设置中允许 Astute 使用你的位置。只会保存你所在的城市。';
+
+  @override
+  String get placeSettingsOpen => '打开设置';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

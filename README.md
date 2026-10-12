@@ -1266,8 +1266,9 @@ notification token, and PostHog's id for the install); the email and the
 name a sign-in brings, and the name chosen in the app; the friend codes,
 which Apple counts as contacts; what the reader does, for the backup, the
 dealer and PostHog; the reasons written on cards and the notes on reports;
-purchases; the country and city PostHog works out from the IP address; and
-crashes, timings and other diagnostics. All of it is linked to the account,
+purchases; coarse location — where the reader lives, to the city, when they
+allow it (docs/PLACES.md), and the country and city PostHog works out from
+the IP address; and crashes, timings and other diagnostics. All of it is linked to the account,
 and none of it is used to track. It also says why the app reads
 `UserDefaults`: its own, through shared_preferences (`CA92.1`), and the App
 Group it writes the widget's data into (`1C8F.1`). The widget has a manifest

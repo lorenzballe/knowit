@@ -34,6 +34,12 @@ will find in six months.
 - **Coorti.** Sul profilo: `is_plus`, `is_trial`, `plan_period`, `plan`,
   `reminders_on`, `widgets_placed`, `install_channel`, le tre materie più
   lette, quanto il lettore si dice sicuro e quanto indovina.
+- **Dove vivi.** Con il consenso del lettore, il profilo PostHog ha paese,
+  regione e città (`place_country`, `place_region`, `place_city`) e il suo
+  sì o no (`location_permission`). Mai le coordinate: nessun evento, nessun
+  profilo, nessuna traccia, e un test lo controlla. Gli eventi sono cinque
+  (`place asked`, `place answered`, `location permission answered`, `place
+  set`, `place removed`) e pesano pochi eventi per lettore, in tutto.
 - **Cambiato:** `card flipped` non va più a PostHog (resta nella traccia):
   le girate ora sono dentro `card advanced` e `card closed`. Il profilo
   PostHog si scrive in un colpo solo, e solo dove è cambiato.
@@ -145,6 +151,8 @@ reader in the first weeks — with about three.
 | `answers_count` | `$set`, on leaving the screen | cards answered, ever |
 | `avg_sure`, `pct_right`, `calibration_gap` | `$set`, on leaving the screen | how sure the reader says they are, how often they are right, and the gap (sure − right), 0–100; absent below the journey's floor of answers |
 | `last_active_local_hour` | `$set`, on leaving the screen | 0–23, the phone's own clock |
+| `location_permission` | `$set` | the reader's word on their location: `not_asked`, `granted`, `denied` (the system's prompt said no, or the permission was taken back in the phone's settings), `off` (the place removed in Profile) |
+| `place_country`, `place_region`, `place_city` | `$set`; `$unset` on `place removed` | where the reader lives, once they allowed it: the ISO country (`IT`), the region's ISO 3166-2 code where the app knows the country's regions (`IT-45`) or else its English name as the phone gave it, and the city in English (`Modena`). Never a coordinate (see §6.12) |
 | `install_date` | `$set_once` | the first day the app was opened on this phone |
 | `first_day_completed` | `$set_once` | the earliest finished day the phone remembers |
 | `anonymous`, `sign_in_method` | `$identify` | whether the account is anonymous, and Apple or Google |
@@ -363,6 +371,29 @@ is in its card facts.
 (`Analytics.error`, with `where`); `$identify` at launch and sign-in; `$set`
 for the profile (§4); `$screen` (§6.2). Session replay is on, masked.
 
+### 6.12 Where you live
+
+The place a reader lives, asked for with their consent (docs/PLACES.md,
+`lib/widgets/place_ask.dart`): the app's own sheet after the second finished
+day, once more after the seventh for a reader who said "Not now", and from
+Explore's "Where you live" shelf and Profile whenever the reader asks. Only
+a yes on the sheet leads to the system's prompt.
+
+| Event | When | Properties | Where |
+| --- | --- | --- | --- |
+| `place asked` | the app's sheet is put | `from` (`day done`, `explore`, `profile`), `nth` (which sheet this is for the reader, counting every one) | P |
+| `place answered` | the sheet is answered, or swiped away | `choice` (`yes`, `not_now`) | P |
+| `location permission answered` | the system's prompt, put after a yes | `granted`, `precise` (iOS: the precise position or the approximate one; Android: always `false`, since only the approximate one is asked for; absent when not granted) | P |
+| `place set` | a place is read and kept: after a yes, from Profile's "Use my location now", by the weekly read when the reader has moved, or after the permission was given in the phone's settings | `country`, `region` (as `place_region`, §4), `city`, `changed` (the place kept is not the one kept before; none before counts as a change), `from` (`day done`, `explore`, `profile`, `refresh`, `settings`) | P, T:`place` |
+| `place removed` | Profile → Where you live → Remove, and the account deleted | `$unset`: `place_country`, `place_region`, `place_city`, which PostHog takes off the profile | P, T:`unplace` |
+
+The weekly read (`AppState.refreshPlaceIfDue`) that finds the reader where
+they were says nothing. **No event, property, profile field or trace field
+ever carries a latitude or a longitude**, raw or rounded: the point stays in
+the backup's `place`, rounded to a tenth of a degree, and
+`test/place_capture_test.dart` fails if one reaches the sink or the trace.
+Like every event, all five stop with *Profile → Usage data*.
+
 ## 7. The trace: codes and fields
 
 The trace keeps numbers, booleans and strings of up to 64 characters (enums,
@@ -387,6 +418,14 @@ New fields:
 | `tiles_seen`, `tiles_opened` | `ts`, `tk` | `shelf` |
 | `scrolled_sideways` | `sw` | `shelf` |
 | `ms_visible` | `ms` | `shelf` |
+
+Codes for where the reader lives: `place` (`place set`) and `unplace`
+(`place removed`). `place` keeps three fields of its own and nothing else —
+`co` (country), `rg` (region), `ci` (city) — through `Trace._fieldsOf`, a
+map per event: `region` on a card event is the card's tag, which the trace
+leaves to the bank, and the point is in no map at all. The dealer reads the
+place itself from the backup (`readers/{uid}.place`); these say when it
+moved.
 
 What the server could do with them, none of which it does yet:
 
@@ -438,6 +477,12 @@ Profile, Journey and Saved once each, one paywall.
 | Paywall, reminder, other | 4 | 4 | |
 | `$set` | 7 | 3 | coalesced, written only where changed |
 | **Total** | **99** | **135** | +36% |
+
+Where the reader lives adds nothing to a day: a handful of events per reader
+in all — at most two sheets of the app's own and their answers, one system
+prompt, one `place set` — then one `place set` per move and one `place
+removed` if it comes to that. The weekly read is silent unless the reader
+moved.
 
 A typical reader (one cold start, one return, the five cards, one short
 visit to Explore) goes from about 37 to about 40. The free plan then holds

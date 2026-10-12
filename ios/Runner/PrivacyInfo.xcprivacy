@@ -143,9 +143,15 @@
 			</array>
 		</dict>
 		<dict>
-			<!-- The country and city PostHog works out from the IP address
-			     its events arrive from. The app itself never asks where the
-			     phone is. -->
+			<!-- Where the reader lives, when they allow it: the phone's
+			     position is read once, named on the phone and dropped, and
+			     the country, region, city and a point rounded to a tenth of a
+			     degree (about 10 km) are kept with the account, to deal cards
+			     about that place (lib/sync/place_finder_native.dart). PostHog
+			     gets the country, region and city as the reader's profile, and
+			     works out a country and city of its own from the IP address
+			     its events arrive from. Never the exact position: nothing
+			     finer than a city leaves the phone. -->
 			<key>NSPrivacyCollectedDataType</key>
 			<string>NSPrivacyCollectedDataTypeCoarseLocation</string>
 			<key>NSPrivacyCollectedDataTypeLinked</key>
@@ -154,6 +160,8 @@
 			<false/>
 			<key>NSPrivacyCollectedDataTypePurposes</key>
 			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+				<string>NSPrivacyCollectedDataTypePurposeProductPersonalization</string>
 				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
 			</array>
 		</dict>

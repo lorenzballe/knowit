@@ -874,6 +874,82 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reminderAskNotNow => 'Ahora no';
 
   @override
+  String get placeAskTitle => 'Tarjetas sobre el lugar donde vives';
+
+  @override
+  String get placeAskLine =>
+      'De vez en cuando, Astute te repartirá una tarjeta sobre el lugar donde vives — su historia, su ciencia, sus sorpresas.';
+
+  @override
+  String get placeOnlyCity =>
+      'Solo se guarda tu ciudad, nunca tu ubicación exacta.';
+
+  @override
+  String get placeAskPreviewLine => 'Cerca de ti · Módena';
+
+  @override
+  String get placeAskPreviewQuestion =>
+      'La Ghirlandina está inclinada. ¿Cuánto?';
+
+  @override
+  String get placeAskYes => 'Usar mi ubicación';
+
+  @override
+  String get placeAskNotNow => 'Ahora no';
+
+  @override
+  String get placeRowTitle => 'Dónde vives';
+
+  @override
+  String get placeRowOff => 'Desactivado';
+
+  @override
+  String get placeRowOffLine =>
+      'Actívalo para recibir tarjetas sobre el lugar donde vives.';
+
+  @override
+  String get placeSwitchOn => 'Activar';
+
+  @override
+  String get placeUseNow => 'Usar mi ubicación ahora';
+
+  @override
+  String get placeRemove => 'Quitar';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Dónde vives: $place';
+  }
+
+  @override
+  String get placeRemoved => 'Quitado. Astute ya no guarda dónde vives.';
+
+  @override
+  String get placeNotFound =>
+      'Ahora mismo no se ha podido saber dónde estás. Astute lo volverá a intentar otro día.';
+
+  @override
+  String get placeDeniedNote =>
+      'No pasa nada. Puedes activarlo en Perfil cuando quieras.';
+
+  @override
+  String get placeServicesOff =>
+      'La ubicación está desactivada en este teléfono. Actívala en los ajustes y vuelve a intentarlo.';
+
+  @override
+  String get placeNotHere => 'Este dispositivo no puede decir dónde estás.';
+
+  @override
+  String get placeSettingsTitle => 'La ubicación está desactivada para Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Para recibir tarjetas sobre el lugar donde vives, permite que Astute use tu ubicación en los ajustes. Solo se guarda tu ciudad.';
+
+  @override
+  String get placeSettingsOpen => 'Abrir ajustes';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

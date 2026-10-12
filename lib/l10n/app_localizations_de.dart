@@ -873,6 +873,83 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderAskNotNow => 'Nicht jetzt';
 
   @override
+  String get placeAskTitle => 'Karten über deinen Wohnort';
+
+  @override
+  String get placeAskLine =>
+      'Ab und zu teilt Astute dir eine Karte über den Ort aus, an dem du lebst — seine Geschichte, seine Wissenschaft, seine Überraschungen.';
+
+  @override
+  String get placeOnlyCity =>
+      'Gespeichert wird nur deine Stadt, nie dein genauer Standort.';
+
+  @override
+  String get placeAskPreviewLine => 'In deiner Nähe · Modena';
+
+  @override
+  String get placeAskPreviewQuestion =>
+      'Die Ghirlandina steht schief. Wie sehr?';
+
+  @override
+  String get placeAskYes => 'Meinen Standort verwenden';
+
+  @override
+  String get placeAskNotNow => 'Nicht jetzt';
+
+  @override
+  String get placeRowTitle => 'Wo du lebst';
+
+  @override
+  String get placeRowOff => 'Aus';
+
+  @override
+  String get placeRowOffLine =>
+      'Schalte es ein, um Karten über deinen Wohnort zu bekommen.';
+
+  @override
+  String get placeSwitchOn => 'Einschalten';
+
+  @override
+  String get placeUseNow => 'Standort jetzt verwenden';
+
+  @override
+  String get placeRemove => 'Entfernen';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Wo du lebst: $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Entfernt. Astute speichert nicht mehr, wo du lebst.';
+
+  @override
+  String get placeNotFound =>
+      'Gerade ließ sich nicht feststellen, wo du bist. Astute versucht es an einem anderen Tag noch einmal.';
+
+  @override
+  String get placeDeniedNote =>
+      'Kein Problem. Du kannst es jederzeit im Profil einschalten.';
+
+  @override
+  String get placeServicesOff =>
+      'Die Ortungsdienste sind auf diesem Telefon aus. Schalte sie in den Einstellungen ein und versuch es noch einmal.';
+
+  @override
+  String get placeNotHere => 'Dieses Gerät kann nicht sagen, wo du bist.';
+
+  @override
+  String get placeSettingsTitle => 'Standort für Astute ausgeschaltet';
+
+  @override
+  String get placeSettingsBody =>
+      'Für Karten über deinen Wohnort erlaube Astute in den Einstellungen, deinen Standort zu verwenden. Gespeichert wird nur deine Stadt.';
+
+  @override
+  String get placeSettingsOpen => 'Einstellungen öffnen';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

@@ -872,6 +872,81 @@ class AppLocalizationsPt extends AppLocalizations {
   String get reminderAskNotNow => 'Agora não';
 
   @override
+  String get placeAskTitle => 'Cartas sobre o sítio onde vives';
+
+  @override
+  String get placeAskLine =>
+      'De vez em quando, o Astute vai dar-te uma carta sobre o sítio onde vives — a sua história, a sua ciência, as suas surpresas.';
+
+  @override
+  String get placeOnlyCity =>
+      'Só guardamos a tua cidade, nunca a tua localização exata.';
+
+  @override
+  String get placeAskPreviewLine => 'Perto de ti · Módena';
+
+  @override
+  String get placeAskPreviewQuestion => 'A Ghirlandina está inclinada. Quanto?';
+
+  @override
+  String get placeAskYes => 'Usar a minha localização';
+
+  @override
+  String get placeAskNotNow => 'Agora não';
+
+  @override
+  String get placeRowTitle => 'Onde vives';
+
+  @override
+  String get placeRowOff => 'Desligado';
+
+  @override
+  String get placeRowOffLine =>
+      'Liga para receberes cartas sobre o sítio onde vives.';
+
+  @override
+  String get placeSwitchOn => 'Ligar';
+
+  @override
+  String get placeUseNow => 'Usar a minha localização agora';
+
+  @override
+  String get placeRemove => 'Remover';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Onde vives: $place';
+  }
+
+  @override
+  String get placeRemoved => 'Removido. O Astute já não guarda onde vives.';
+
+  @override
+  String get placeNotFound =>
+      'Agora não foi possível saber onde estás. O Astute volta a tentar noutro dia.';
+
+  @override
+  String get placeDeniedNote =>
+      'Não faz mal. Podes ligar quando quiseres no Perfil.';
+
+  @override
+  String get placeServicesOff =>
+      'A localização está desligada neste telemóvel. Liga-a nas definições e tenta de novo.';
+
+  @override
+  String get placeNotHere => 'Este dispositivo não consegue dizer onde estás.';
+
+  @override
+  String get placeSettingsTitle => 'Localização desligada para o Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Para receberes cartas sobre o sítio onde vives, permite que o Astute use a localização nas definições. Só guardamos a tua cidade.';
+
+  @override
+  String get placeSettingsOpen => 'Abrir definições';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

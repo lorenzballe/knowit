@@ -875,6 +875,82 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderAskNotNow => 'Pas maintenant';
 
   @override
+  String get placeAskTitle => 'Des cartes sur l\'endroit où tu vis';
+
+  @override
+  String get placeAskLine =>
+      'De temps en temps, Astute te distribuera une carte sur l\'endroit où tu vis — son histoire, sa science, ses surprises.';
+
+  @override
+  String get placeOnlyCity =>
+      'Seule ta ville est conservée, jamais ta position exacte.';
+
+  @override
+  String get placeAskPreviewLine => 'Près de toi · Modène';
+
+  @override
+  String get placeAskPreviewQuestion => 'La Ghirlandina penche. De combien ?';
+
+  @override
+  String get placeAskYes => 'Utiliser ma position';
+
+  @override
+  String get placeAskNotNow => 'Pas maintenant';
+
+  @override
+  String get placeRowTitle => 'Où tu vis';
+
+  @override
+  String get placeRowOff => 'Désactivé';
+
+  @override
+  String get placeRowOffLine =>
+      'Active-le pour recevoir des cartes sur l\'endroit où tu vis.';
+
+  @override
+  String get placeSwitchOn => 'Activer';
+
+  @override
+  String get placeUseNow => 'Utiliser ma position maintenant';
+
+  @override
+  String get placeRemove => 'Supprimer';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Où tu vis : $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Supprimé. Astute ne conserve plus l\'endroit où tu vis.';
+
+  @override
+  String get placeNotFound =>
+      'Impossible de savoir où tu es pour l\'instant. Astute réessaiera un autre jour.';
+
+  @override
+  String get placeDeniedNote =>
+      'Pas de souci. Tu peux l\'activer quand tu veux dans Profil.';
+
+  @override
+  String get placeServicesOff =>
+      'La localisation est désactivée sur ce téléphone. Active-la dans les réglages, puis réessaie.';
+
+  @override
+  String get placeNotHere => 'Cet appareil ne peut pas dire où tu es.';
+
+  @override
+  String get placeSettingsTitle => 'Localisation désactivée pour Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Pour recevoir des cartes sur l\'endroit où tu vis, autorise Astute à utiliser ta position dans les réglages. Seule ta ville est conservée.';
+
+  @override
+  String get placeSettingsOpen => 'Ouvrir les réglages';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

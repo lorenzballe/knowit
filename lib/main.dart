@@ -29,6 +29,7 @@ import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
+import 'sync/place_finder.dart';
 import 'sync/push.dart';
 import 'sync/reports.dart';
 import 'sync/subscription.dart';
@@ -40,6 +41,7 @@ import 'utils/reminders.dart' show remindersSupported;
 import 'utils/upright.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
+import 'widgets/place_ask.dart';
 import 'widgets/reminder_ask.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
@@ -354,6 +356,21 @@ class _AstutoRootState extends State<AstutoRoot> {
   static const Duration _kReminderAskBeat = Duration(milliseconds: 1500);
   Timer? _reminderAskTimer;
 
+  /// Whether a question has been put in this sitting — the reminder sheet,
+  /// a system prompt, the store's rating sheet or the place sheet — and
+  /// whether the place sheet was that question. A sitting ends when the app
+  /// goes to the background; a system prompt only makes it inactive, so the
+  /// one the reminder sheet leads to is in the same sitting as the sheet.
+  /// The place sheet waits for a sitting nothing else has asked in, and
+  /// nothing else asks in the sitting it did.
+  bool _askedThisSitting = false;
+  bool _placeAskedThisSitting = false;
+
+  /// True while the place is being asked about: the sheet, the system's
+  /// prompt behind it, and the read after.
+  bool _askingForPlace = false;
+  Timer? _placeAskTimer;
+
   bool _askingForReview = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
@@ -385,6 +402,11 @@ class _AstutoRootState extends State<AstutoRoot> {
         // hear of everything since the last card: a card of today's shelf
         // read in Explore is not offered there again.
         if (_app.ready) _app.refreshHomeWidget();
+        // The sitting is over, and the questions put in it with it.
+        _askedThisSitting = false;
+        _placeAskedThisSitting = false;
+        _placeAskTimer?.cancel();
+        _placeAskTimer = null;
       },
       onDetach: () {
         _account.flush();
@@ -400,8 +422,14 @@ class _AstutoRootState extends State<AstutoRoot> {
         if (_app.ready) _app.refreshAnalytics();
         _app.refreshDailyReminder();
         _app.refreshHomeWidget();
+        // Where the reader lives, read again once a week for a reader who
+        // allowed it, and never with a prompt.
+        if (_app.ready) _app.refreshPlaceIfDue();
         _takeWidgetOpen();
         _sayWidgets();
+        // A new sitting can be the place sheet's moment: a finished day
+        // still on the screen.
+        _considerPlaceAsk();
       },
     );
     // A widget's tap: the one that started the app, and any that brings it
@@ -514,6 +542,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (_askingForPush) return;
     _askingForPush = true;
     _pushAskedThisSession = true;
+    _askedThisSitting = true;
     Analytics.capture('push permission asked');
     final String? token = await _push.ask();
     if (!mounted) return;
@@ -537,6 +566,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // The sheet is a question too, and the store's rating prompt never
     // follows one in the same session.
     _pushAskedThisSession = true;
+    _askedThisSitting = true;
     _trialAskDue = false;
     Analytics.capture('push preprompt shown', {'reason': reason});
     final String? at = await showReminderAsk(context, _app);
@@ -567,6 +597,8 @@ class _AstutoRootState extends State<AstutoRoot> {
   String? _reminderAskReason() {
     if (_stage != _Stage.shell || !_onTop || !_canOfferReminder) return null;
     if (_app.pushAsked || !_app.notificationsOn) return null;
+    // Not over the place sheet, nor in the sitting it was put in.
+    if (_askingForPlace || _placeAskedThisSitting) return null;
     if (_trialAskDue) return 'trial';
     if (_app.shouldAskForPush && _app.dayClosed && !_deckOnTable) {
       return 'day done';
@@ -593,6 +625,59 @@ class _AstutoRootState extends State<AstutoRoot> {
     });
   }
 
+  /// Why the place sheet would rise now — after a finished day — or null
+  /// when this is not its moment (AppState.shouldAskForPlace says whether
+  /// it is due at all).
+  ///
+  /// The same moment as the reminder sheet's — the finished day at rest,
+  /// with nothing pushed over the tabs and the card after the fifth thrown —
+  /// and the reminder goes first: the place sheet waits while that one is
+  /// due, and for a sitting in which nothing else, the system's prompts and
+  /// the store's rating sheet included, has been asked. Only on a phone,
+  /// where there is a place to read.
+  String? _placeAskReason() {
+    if (!_app.ready || _stage != _Stage.shell) return null;
+    if (!_onTop || _deckOnTable) return null;
+    if (_askingForPush || _askingForPlace || _askedThisSitting) return null;
+    if (_reminderAskReason() != null ||
+        (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (!_app.dayClosed || !_app.shouldAskForPlace) return null;
+    if (!PlaceFinder.instance.canAsk) return null;
+    return 'day done';
+  }
+
+  /// Raises the place sheet a beat after its moment arrives, as the
+  /// reminder sheet rises, and only if the moment is still there then.
+  void _considerPlaceAsk() {
+    if (!mounted || _askingForPlace) return;
+    if (_placeAskReason() == null) {
+      _placeAskTimer?.cancel();
+      _placeAskTimer = null;
+      return;
+    }
+    if (_placeAskTimer?.isActive ?? false) return;
+    _placeAskTimer = Timer(_kReminderAskBeat, () {
+      _placeAskTimer = null;
+      if (!mounted || _placeAskReason() == null) return;
+      _offerPlace();
+    });
+  }
+
+  Future<void> _offerPlace() async {
+    if (_askingForPlace) return;
+    _askingForPlace = true;
+    // Asked or not, this sitting has had its chance: a phone that turned
+    // out to have nothing to give is not asked again until the next one.
+    _askedThisSitting = true;
+    try {
+      _placeAskedThisSitting = await offerPlace(context, _app);
+    } finally {
+      _askingForPlace = false;
+    }
+  }
+
   /// Notes a trial that starts in this session — a purchase just made, or a
   /// phone that has just heard of one — rather than one it knew at launch.
   void _noteTrialStart() {
@@ -612,6 +697,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // stack: a paywall pushed over the tabs, and the moment it closes.
     _onTop = ModalRoute.isCurrentOf(context) ?? true;
     _considerReminderAsk();
+    _considerPlaceAsk();
   }
 
   void _onAppStateChanged() {
@@ -644,9 +730,13 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (_stage == _Stage.shell &&
         _app.shouldAskForReview &&
         !_pushAskedThisSession &&
+        !_placeAskedThisSitting &&
+        !_askingForPlace &&
         !_trialAskDue) {
       _askForReview();
     }
+    // Last, so that a rating sheet decided just now has this sitting.
+    _considerPlaceAsk();
   }
 
   /// The store's own rating sheet, once, at the end of a seventh day in a
@@ -656,6 +746,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _askForReview() async {
     if (_askingForReview) return;
     _askingForReview = true;
+    _askedThisSitting = true;
     await _app.notedReviewAsked();
     await Future<void>.delayed(const Duration(seconds: 2));
     if (!mounted) return;
@@ -675,6 +766,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   @override
   void dispose() {
     _reminderAskTimer?.cancel();
+    _placeAskTimer?.cancel();
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
@@ -706,6 +798,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // Arriving on the tabs can be the sheet's moment: the onboarding's offer
     // closing on a trial just started.
     _considerReminderAsk();
+    _considerPlaceAsk();
   }
 
   /// A step passed over rather than answered.
@@ -899,6 +992,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           onDeckOnTable: (onTable) {
             _deckOnTable = onTable;
             _considerReminderAsk();
+            _considerPlaceAsk();
           },
           onSignedOut: () {
             // Back at the first screen, as a stranger: AppState.signOut has

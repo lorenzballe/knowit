@@ -916,6 +916,81 @@ class AppLocalizationsRu extends AppLocalizations {
   String get reminderAskNotNow => 'Не сейчас';
 
   @override
+  String get placeAskTitle => 'Карточки о том, где ты живёшь';
+
+  @override
+  String get placeAskLine =>
+      'Время от времени Astute будет давать тебе карточку о месте, где ты живёшь, — о его истории, науке и неожиданностях.';
+
+  @override
+  String get placeOnlyCity =>
+      'Сохраняется только твой город, а не точное местоположение.';
+
+  @override
+  String get placeAskPreviewLine => 'Рядом с тобой · Модена';
+
+  @override
+  String get placeAskPreviewQuestion => 'Гирландина наклонена. Насколько?';
+
+  @override
+  String get placeAskYes => 'Использовать моё местоположение';
+
+  @override
+  String get placeAskNotNow => 'Не сейчас';
+
+  @override
+  String get placeRowTitle => 'Где ты живёшь';
+
+  @override
+  String get placeRowOff => 'Выключено';
+
+  @override
+  String get placeRowOffLine =>
+      'Включи, чтобы получать карточки о месте, где ты живёшь.';
+
+  @override
+  String get placeSwitchOn => 'Включить';
+
+  @override
+  String get placeUseNow => 'Использовать местоположение сейчас';
+
+  @override
+  String get placeRemove => 'Удалить';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Где ты живёшь: $place';
+  }
+
+  @override
+  String get placeRemoved => 'Удалено. Astute больше не хранит, где ты живёшь.';
+
+  @override
+  String get placeNotFound =>
+      'Сейчас не удалось определить, где ты. Astute попробует в другой день.';
+
+  @override
+  String get placeDeniedNote =>
+      'Ничего страшного. Это можно включить в профиле в любой момент.';
+
+  @override
+  String get placeServicesOff =>
+      'На этом телефоне выключена геолокация. Включи её в настройках и попробуй ещё раз.';
+
+  @override
+  String get placeNotHere => 'Это устройство не может определить, где ты.';
+
+  @override
+  String get placeSettingsTitle => 'Геолокация для Astute выключена';
+
+  @override
+  String get placeSettingsBody =>
+      'Чтобы получать карточки о месте, где ты живёшь, разреши Astute доступ к геолокации в настройках. Сохраняется только твой город.';
+
+  @override
+  String get placeSettingsOpen => 'Открыть настройки';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

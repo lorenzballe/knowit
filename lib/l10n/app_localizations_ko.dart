@@ -851,6 +851,76 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reminderAskNotNow => '나중에';
 
   @override
+  String get placeAskTitle => '내가 사는 곳에 관한 카드';
+
+  @override
+  String get placeAskLine =>
+      '가끔 Astute가 당신이 사는 곳에 관한 카드를 보내 드려요. 그곳의 역사, 과학, 뜻밖의 이야기까지요.';
+
+  @override
+  String get placeOnlyCity => '도시 이름만 저장하고, 정확한 위치는 절대 저장하지 않아요.';
+
+  @override
+  String get placeAskPreviewLine => '가까운 곳 · 모데나';
+
+  @override
+  String get placeAskPreviewQuestion => '기를란디나 탑이 기울어 있어요. 얼마나 기울었을까요?';
+
+  @override
+  String get placeAskYes => '내 위치 사용';
+
+  @override
+  String get placeAskNotNow => '나중에';
+
+  @override
+  String get placeRowTitle => '사는 곳';
+
+  @override
+  String get placeRowOff => '꺼짐';
+
+  @override
+  String get placeRowOffLine => '켜면 사는 곳에 관한 카드를 받을 수 있어요.';
+
+  @override
+  String get placeSwitchOn => '켜기';
+
+  @override
+  String get placeUseNow => '지금 내 위치 사용';
+
+  @override
+  String get placeRemove => '삭제';
+
+  @override
+  String placeSetTo(String place) {
+    return '사는 곳: $place';
+  }
+
+  @override
+  String get placeRemoved => '삭제했어요. Astute는 이제 사는 곳을 저장하지 않아요.';
+
+  @override
+  String get placeNotFound => '지금은 위치를 찾지 못했어요. 다른 날 다시 시도할게요.';
+
+  @override
+  String get placeDeniedNote => '괜찮아요. 언제든 프로필에서 켤 수 있어요.';
+
+  @override
+  String get placeServicesOff => '이 휴대폰의 위치 서비스가 꺼져 있어요. 설정에서 켠 다음 다시 시도하세요.';
+
+  @override
+  String get placeNotHere => '이 기기에서는 위치를 알 수 없어요.';
+
+  @override
+  String get placeSettingsTitle => 'Astute의 위치 접근이 꺼져 있어요';
+
+  @override
+  String get placeSettingsBody =>
+      '사는 곳에 관한 카드를 받으려면 설정에서 Astute의 위치 접근을 허용하세요. 도시 이름만 저장해요.';
+
+  @override
+  String get placeSettingsOpen => '설정 열기';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

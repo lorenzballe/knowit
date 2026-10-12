@@ -848,6 +848,75 @@ class AppLocalizationsJa extends AppLocalizations {
   String get reminderAskNotNow => '今はしない';
 
   @override
+  String get placeAskTitle => 'あなたの住む場所のカード';
+
+  @override
+  String get placeAskLine => 'ときどき、あなたの住む場所についてのカードを配ります。その歴史や科学、意外な一面まで。';
+
+  @override
+  String get placeOnlyCity => '保存するのは都市名だけ。正確な位置は保存しません。';
+
+  @override
+  String get placeAskPreviewLine => 'あなたの近く · モデナ';
+
+  @override
+  String get placeAskPreviewQuestion => 'ギルランディーナの塔は傾いている。どれくらい？';
+
+  @override
+  String get placeAskYes => '位置情報を使う';
+
+  @override
+  String get placeAskNotNow => '今はしない';
+
+  @override
+  String get placeRowTitle => '住んでいる場所';
+
+  @override
+  String get placeRowOff => 'オフ';
+
+  @override
+  String get placeRowOffLine => 'オンにすると、住んでいる場所のカードが届きます。';
+
+  @override
+  String get placeSwitchOn => 'オンにする';
+
+  @override
+  String get placeUseNow => '今の位置情報を使う';
+
+  @override
+  String get placeRemove => '削除';
+
+  @override
+  String placeSetTo(String place) {
+    return '住んでいる場所：$place';
+  }
+
+  @override
+  String get placeRemoved => '削除しました。Astuteは住んでいる場所をもう保存していません。';
+
+  @override
+  String get placeNotFound => '今は現在地がわかりませんでした。別の日にもう一度試します。';
+
+  @override
+  String get placeDeniedNote => '大丈夫です。プロフィールからいつでもオンにできます。';
+
+  @override
+  String get placeServicesOff => 'この端末の位置情報サービスがオフです。設定でオンにしてから、もう一度お試しください。';
+
+  @override
+  String get placeNotHere => 'この端末では現在地がわかりません。';
+
+  @override
+  String get placeSettingsTitle => 'Astuteの位置情報がオフです';
+
+  @override
+  String get placeSettingsBody =>
+      '住んでいる場所のカードを受け取るには、設定でAstuteに位置情報の使用を許可してください。保存するのは都市名だけです。';
+
+  @override
+  String get placeSettingsOpen => '設定を開く';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

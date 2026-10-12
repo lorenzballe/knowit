@@ -872,6 +872,82 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderAskNotNow => 'Non ora';
 
   @override
+  String get placeAskTitle => 'Carte sul posto in cui vivi';
+
+  @override
+  String get placeAskLine =>
+      'Ogni tanto Astute ti darà una carta sul posto in cui vivi — la sua storia, la sua scienza, le sue sorprese.';
+
+  @override
+  String get placeOnlyCity =>
+      'Conserviamo solo la tua città, mai la tua posizione esatta.';
+
+  @override
+  String get placeAskPreviewLine => 'Vicino a te · Modena';
+
+  @override
+  String get placeAskPreviewQuestion => 'La Ghirlandina pende. Di quanto?';
+
+  @override
+  String get placeAskYes => 'Usa la mia posizione';
+
+  @override
+  String get placeAskNotNow => 'Non ora';
+
+  @override
+  String get placeRowTitle => 'Dove vivi';
+
+  @override
+  String get placeRowOff => 'Disattivato';
+
+  @override
+  String get placeRowOffLine =>
+      'Attivalo per avere carte sul posto in cui vivi.';
+
+  @override
+  String get placeSwitchOn => 'Attiva';
+
+  @override
+  String get placeUseNow => 'Usa la mia posizione ora';
+
+  @override
+  String get placeRemove => 'Rimuovi';
+
+  @override
+  String placeSetTo(String place) {
+    return 'Dove vivi: $place';
+  }
+
+  @override
+  String get placeRemoved =>
+      'Rimosso. Astute non conserva più il posto in cui vivi.';
+
+  @override
+  String get placeNotFound =>
+      'Per ora non è stato possibile capire dove sei. Astute riproverà un altro giorno.';
+
+  @override
+  String get placeDeniedNote =>
+      'Nessun problema. Puoi attivarlo quando vuoi in Profilo.';
+
+  @override
+  String get placeServicesOff =>
+      'La localizzazione è spenta su questo telefono. Attivala nelle impostazioni e riprova.';
+
+  @override
+  String get placeNotHere => 'Questo dispositivo non può dire dove sei.';
+
+  @override
+  String get placeSettingsTitle => 'La posizione è disattivata per Astute';
+
+  @override
+  String get placeSettingsBody =>
+      'Per avere carte sul posto in cui vivi, consenti ad Astute di usare la posizione nelle impostazioni. Conserviamo solo la tua città.';
+
+  @override
+  String get placeSettingsOpen => 'Apri Impostazioni';
+
+  @override
   String trialWarningTitle(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,

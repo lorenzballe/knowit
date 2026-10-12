@@ -75,6 +75,21 @@
 	     Nothing here implements or bundles an algorithm of its own. -->
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<!-- Where the reader lives, asked for once, by the app's own sheet first
+	     (lib/widgets/place_ask.dart), and only "while using the app": the
+	     position is read once, named on the phone, and dropped; only the
+	     city is kept (docs/PLACES.md). -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Astute uses your location to deal you cards about the place you live — its history, its science, its surprises. Only your city is kept, never your exact position.</string>
+	<!-- The app never asks for "always". geolocator_apple, built here
+	     through Swift Package Manager, cannot be given its
+	     BYPASS_PERMISSION_LOCATION_ALWAYS flag, so its binary keeps a call to
+	     requestAlwaysAuthorization, made only when this file has no
+	     when-in-use description, which it has. Apple's upload check
+	     (ITMS-90683) sees the call all the same and asks for this key, so it
+	     carries the same honest sentence. -->
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Astute uses your location to deal you cards about the place you live — its history, its science, its surprises. Only your city is kept, never your exact position.</string>
 	<!-- PostHog is started from Dart, in lib/analytics.dart, because the key
 	     arrives as a dart-define at build time and this file cannot read
 	     one. Without
