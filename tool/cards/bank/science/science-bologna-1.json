@@ -1,0 +1,52 @@
+{
+  "id": "science-bologna-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in Bologna, Luigi Galvani made a frog's leg twitch with no metal touching it at all?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Volta argued the twitches came from the metals in Galvani's circuit, the frog merely detecting them. Galvani answered with experiments using no metal at all: touching a frog's nerve to its own muscle made it contract. Both were right. Volta went on to build the battery, and nerves do run on electricity.",
+  "move": "To test an objection, remove what it blames and see what remains.",
+  "ask": "Which argument have I conceded without testing the objection myself?",
+  "trap": "False, recalling Volta's verdict that the metals made the current.",
+  "keywords": [
+    "luigi galvani",
+    "alessandro volta",
+    "animal electricity",
+    "frog experiments",
+    "nerves"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Garrison-Morton medical bibliography, Galvani entry",
+  "source_kind": "reference_work",
+  "reference": "https://historyofmedicine.com/id/376",
+  "quote": "first account of Galvani's electrical experiments without the presence of metals",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+  }
+}

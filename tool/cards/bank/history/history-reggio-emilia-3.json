@@ -1,0 +1,46 @@
+{
+  "id": "history-reggio-emilia-3",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.forgotten_heroes",
+  "also": [
+    "history.ordinary_people.children"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Just after the Second World War, the village of Villa Cella, outside Reggio, built its own preschool. How did it pay?",
+  "answer": "By selling a tank, a few horses and an abandoned lorry. With that small sum the villagers chose to begin rebuilding their lives with a preschool, and built it themselves. From it grew the Reggio Emilia approach, which Loris Malaguzzi went on to shape. A way of teaching began with a tank.",
+  "move": "Behind a famous founder, look for the people who started it first.",
+  "ask": "Whose unseen work started something I credit to one famous name?",
+  "keywords": [
+    "reggio emilia approach",
+    "villa cella",
+    "loris malaguzzi",
+    "preschool",
+    "postwar italy"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Routledge chapter on the Reggio approach",
+  "source_kind": "book",
+  "reference": "https://www.taylorfrancis.com/books/9781135395384/chapters/10.4324/9780203935378-6",
+  "quote": "In the small village of Villa Cella, on the outskirts of Reggio Emilia, a small amount of money was given to the community following the sale of a tank, a few horses and an abandoned truck.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+  }
+}

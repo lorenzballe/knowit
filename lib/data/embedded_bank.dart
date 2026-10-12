@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 1,
- "version": 202610072011,
- "built": "2026-10-07T20:11:16Z",
+ "version": 202610121705,
+ "built": "2026-10-12T17:05:23Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -33307,6 +33307,59 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-03"
   },
   {
+   "id": "economics-reggio-emilia-1",
+   "topic": "economics",
+   "genre": "economics.money_and_banks",
+   "strand": "economics.money_and_banks.debt",
+   "kind": "number",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "Italy makes about 4 million wheels of Parmigiano Reggiano a year; Credem, a Reggio bank, holds 500,000 as collateral. What percentage is that?",
+   "value": 12.5,
+   "unit": "percent",
+   "tolerance": 0.1,
+   "answer": "12.5%: one wheel in eight of a year's output sits in the bank's vaults as collateral.",
+   "move": "Turn a big count into a share of the whole before judging it.",
+   "ask": "Which big number in the news would mean more to me as a share?",
+   "trap": "Under 1%, picturing a bank vault as a small side business.",
+   "hint": "Divide the wheels in the vaults by the wheels made in a year.",
+   "steps": [
+    "500,000 ÷ 4,000,000 = 0.125",
+    "0.125 × 100 = 12.5%",
+    "12.5%: one wheel in eight of a year's output sits in the bank's vaults as collateral."
+   ],
+   "keywords": [
+    "credem",
+    "parmigiano reggiano",
+    "collateral",
+    "bank loans",
+    "cheese warehouse"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "number",
+   "mood": "playful",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "dots",
+   "source": "CNN Business, Italy's cheese bank, 2026",
+   "source_kind": "news_archive",
+   "reference": "https://abc17news.com/money/cnn-business-consumer/2026/05/01/inside-italys-secret-cheese-bank-where-parmigiano-reggiano-becomes-financial-gold/",
+   "quote": "in Italy about 4 million wheels of Parmigiano Reggiano are made, and we keep 500,000 wheels for customers who use them as collateral",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+   }
+  },
+  {
    "id": "economics-rent-1",
    "topic": "economics",
    "genre": "economics.everyday_costs",
@@ -42287,6 +42340,57 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-03"
   },
   {
+   "id": "food-modena-1",
+   "topic": "food",
+   "genre": "food.food_claims",
+   "strand": "food.food_claims.labels",
+   "also": [
+    "economics.trade_routes.who_wins_from_trade"
+   ],
+   "kind": "debate",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Should balsamico, on its own, be a word only vinegar from Modena may use?",
+   "sides": [
+    "Yes, protect the word",
+    "No, it describes a style"
+   ],
+   "answer": "To most shoppers, balsamico means Modena: the word's fame was built by Modena's producers, working under strict rules. A German vinegar made from Baden wine and sold as balsamico trades on that reputation without meeting those rules. If a protected name can be copied in pieces, protecting the whole name protects very little.",
+   "move": "Whichever side you took, whether buyers hear a place or a kind decides it.",
+   "ask": "Which product names do I trust as a promise of origin when they promise only a style?",
+   "counterpoint": "The EU Court of Justice has ruled that protecting Aceto Balsamico di Modena does not extend to its non-geographical words, aceto and balsamico. Balsamico is an ordinary Italian adjective, balsam-like, and aceto simply means vinegar. A protected name tells buyers where a product comes from; reserving a common word would hand one region a description.",
+   "keywords": [
+    "balsamic vinegar",
+    "aceto balsamico di modena",
+    "protected names",
+    "court of justice",
+    "food labels"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "EU Court of Justice, Case C-432/18",
+   "source_kind": "primary_document",
+   "reference": "https://curia.europa.eu/jcms/upload/docs/application/pdf/2019-12/cp190150en.pdf",
+   "quote": "The protection of the name ‘Aceto Balsamico di Modena’ does not extend to the use of the non-geographical terms of that name such as ‘aceto’ and ‘balsamico’.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+   }
+  },
+  {
    "id": "food-organic-1",
    "topic": "food",
    "genre": "food.food_claims",
@@ -48106,6 +48210,102 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-27"
   },
   {
+   "id": "history-bologna-1",
+   "topic": "history",
+   "genre": "history.learn_from_the_past",
+   "strand": "history.learn_from_the_past.who_wrote_it",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Bologna's university dates its founding to 1088. Which document from that year records it?",
+   "options": [
+    "An imperial charter for scholars",
+    "None; the year was picked later",
+    "A papal bull from Urban II"
+   ],
+   "correct": 1,
+   "answer": "None. No founding document exists. In the 1880s the rector, the geologist Giovanni Capellini, wanted a centenary like those he had seen at younger European universities; after commissioning research, he adopted 1088 and staged the eighth centenary in 1888, with Giosuè Carducci's enthusiastic backing. The birthday was chosen for the party.",
+   "move": "A precise date is a claim; ask what document stands behind it.",
+   "ask": "Which exact date do I repeat without knowing where it came from?",
+   "trap": "An imperial charter, confused with Barbarossa's later privilege for scholars.",
+   "keywords": [
+    "university of bologna",
+    "1088",
+    "giovanni capellini",
+    "giosuè carducci",
+    "founding dates"
+   ],
+   "era": "nineteenth",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "timeline",
+   "source": "Unibo Magazine, Archiginnasio feature, 2006",
+   "source_kind": "institution",
+   "reference": "https://magazine.unibo.it/calendario/2006/aldrovandi_1/archiginnasiovai",
+   "quote": "Allora Capellini assunse il 1088 come data affidabile di nascita effettiva dell'Alma Mater e ne organizzò la solenne celebrazione dell'VIII Centenario nel 1888.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+   }
+  },
+  {
+   "id": "history-bologna-2",
+   "topic": "history",
+   "genre": "history.learn_from_the_past",
+   "strand": "history.learn_from_the_past.myths_about_the_past",
+   "also": [
+    "philosophy.paradoxes.ship_of_theseus"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Bologna's carved wooden anatomy theatre in the Archiginnasio looks centuries old. How much of it survived the Second World War intact?",
+   "answer": "Very little. An air raid on 29 January 1944 almost completely destroyed it. After the war it was rebuilt with exemplary care from all the original pieces dug out of the rubble, so the carved wood is largely old while the room it forms is postwar. Visitors stand inside a jigsaw put back together.",
+   "move": "Ask whether you are seeing old materials or an old arrangement.",
+   "ask": "Which thing I admire as original might be a careful rebuild?",
+   "keywords": [
+    "archiginnasio",
+    "anatomical theatre",
+    "1944 bombing",
+    "reconstruction",
+    "bologna"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "story",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Museionline, Teatro Anatomico",
+   "source_kind": "reference_work",
+   "reference": "https://www.museionline.info/bologna-musei-e-monumenti/teatro-anatomico-e-sala-dello-stabat-mater",
+   "quote": "Il teatro fu quasi completamente distrutto durante la seconda guerra mondiale, da un'incursione aerea del 29 gennaio 1944. Dopo la guerra il teatro fu ricostruito con esemplare rigore filologico, utilizzando tutti i pezzi originali recuperati tra le macerie dell'edificio.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+   }
+  },
+  {
    "id": "history-british-1",
    "topic": "history",
    "genre": "history.empires",
@@ -52506,6 +52706,145 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "history-modena-1",
+   "topic": "history",
+   "genre": "history.ancient_rome",
+   "strand": "history.ancient_rome.roman_politics",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Mark Antony's army ringed Mutina, now Modena, trapping Decimus Brutus inside. How did the consul Hirtius get letters to him?",
+   "answer": "By pigeon, and by swimmer. Frontinus says Hirtius starved pigeons in the dark, tied letters to their necks with a hair and freed them near the walls; craving light and food, they flew to the highest roofs, where Brutus caught them. Swimmers crossed the river with letters on lead strapped to their arms.",
+   "move": "A blockade covers only the routes its builders could imagine.",
+   "ask": "Which problem of mine am I guarding only along the route I expect?",
+   "keywords": [
+    "siege of mutina",
+    "carrier pigeons",
+    "decimus brutus",
+    "aulus hirtius",
+    "frontinus"
+   ],
+   "era": "ancient",
+   "region": "europe",
+   "hook": "story",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Frontinus, Stratagems, book 3",
+   "source_kind": "primary_document",
+   "reference": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Frontinus/Strategemata/3*.html",
+   "quote": "Hirtius also shut up pigeons in the dark, starved them, fastened letters to their necks by a hair, and then released them as near to the city walls as he could.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+   }
+  },
+  {
+   "id": "history-modena-2",
+   "topic": "history",
+   "genre": "history.middle_ages",
+   "strand": "history.middle_ages.cathedrals",
+   "also": [
+    "history.learn_from_the_past.who_wrote_it"
+   ],
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "survivorship",
+   "question": "King Arthur, labelled ARTUS DE BRETANIA, rides over the Porta della Pescheria of Modena cathedral. When was he carved?",
+   "options": [
+    "Before the first Arthurian romances",
+    "After Chrétien de Troyes's romances",
+    "During a Renaissance restoration"
+   ],
+   "correct": 0,
+   "answer": "Before the first Arthurian romances. Vladimir Agrigoroaei dates the carving to the early twelfth century, before Geoffrey of Monmouth wrote the history that spread Arthur's fame, and so well before Chrétien de Troyes's romances; others place it slightly later. The tale reached Modena by word of mouth. The stone is older than the book.",
+   "move": "The oldest surviving text is rarely the oldest telling.",
+   "ask": "Which story do I date by the first time I saw it written down?",
+   "trap": "After the romances, assuming carvings illustrate stories already written down.",
+   "keywords": [
+    "king arthur",
+    "modena cathedral",
+    "porta della pescheria",
+    "arthurian legend",
+    "oral tradition"
+   ],
+   "era": "medieval",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "timeline",
+   "source": "Agrigoroaei, L'Artus de Modène, HAL",
+   "source_kind": "paper",
+   "reference": "https://halshs.archives-ouvertes.fr/halshs-01234948",
+   "quote": "qui date du début du XII e siècle, d'avant la rédaction de l'Historia de Geoffroi de Monmouth",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+   }
+  },
+  {
+   "id": "history-modena-3",
+   "topic": "history",
+   "genre": "history.maps_and_borders",
+   "strand": "history.maps_and_borders.lost_countries",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "When the Pope took Ferrara from the Este dukes, why could he not take Modena and Reggio as well?",
+   "answer": "Because they were the Emperor's to grant. Ferrara was a papal fief, and the Pope refused Cesare d'Este, who descended from an illegitimate son. Modena and Reggio were imperial fiefs, and Emperor Rudolf II renewed the Este investiture. So Cesare moved his court to Modena: a capital made by a title deed.",
+   "move": "Before asking who had the stronger army, ask who held the title.",
+   "ask": "Which of my plans rests on a right I have never checked I hold?",
+   "keywords": [
+    "este",
+    "devolution of ferrara",
+    "cesare d'este",
+    "imperial fief",
+    "rudolf ii"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "origin",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "map",
+   "source": "Eurostudium, Sapienza University of Rome",
+   "source_kind": "paper",
+   "reference": "https://rosa.uniroma1.it/rosa01/eurostudium/article/download/2001/1818/3717",
+   "quote": "Roma ne pretese la restituzione. Nonostante la rinnovata investitura delle città di Modena, Reggio, Carpi, Comacchio, Este e Rovigo da parte del sovrano del Sacro Romano Impero Rodolfo II",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+   }
+  },
+  {
    "id": "history-mongol-1",
    "topic": "history",
    "genre": "history.empires",
@@ -54191,6 +54530,151 @@ const String kEmbeddedBank = r'''
    "source_kind": "primary_document",
    "reference": "Horrox (ed. and trans.), The Black Death, Manchester Medieval Sources, Manchester University Press, 1994",
    "written": "2026-09-27"
+  },
+  {
+   "id": "history-reggio-emilia-1",
+   "topic": "history",
+   "genre": "history.revolutions",
+   "strand": "history.revolutions.what_came_after",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "survivorship",
+   "question": "True or false: the first tricolour, adopted by the Cispadane Republic at Reggio Emilia, had vertical bands like today's?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 1,
+   "answer": "False. The Cispadane flag ran in horizontal bands, red at the top, white in the middle and green at the bottom, with the republic's emblem, a quiver of arrows, on the white. The bands turned vertical when the Cispadane merged into the Cisalpine Republic. The first tricolour had the right colours, lying on its side.",
+   "move": "A symbol's first version is rarely the one that lasted.",
+   "ask": "Which tradition do I picture as unchanged since its first day?",
+   "trap": "True, picturing today's flag carried back to its first day.",
+   "keywords": [
+    "tricolour",
+    "cispadane republic",
+    "reggio emilia",
+    "italian flag",
+    "cisalpine republic"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "ANPI, Storia del Tricolore, 2011",
+   "source_kind": "institution",
+   "reference": "https://www.anpi.it/patria-indipendente/media/uploads/patria/2011/Inserto_Storia_del_Tricolore.pdf",
+   "quote": "Il vessillo di Reggio Emilia era a bande orizzontali, con il rosso in alto, il bianco al centro e il verde in basso.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+   }
+  },
+  {
+   "id": "history-reggio-emilia-2",
+   "topic": "history",
+   "genre": "history.revolutions",
+   "strand": "history.revolutions.what_came_after",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Reggio's Sala del Tricolore, an oval hall ringed with tiers of galleries, was first designed as what?",
+   "options": [
+    "A theatre for the court",
+    "The city council's chamber",
+    "The duchy's archive"
+   ],
+   "correct": 2,
+   "answer": "The duchy's archive. Lodovico Bolognini's drawings and a wooden model, both kept by Reggio's State Archive, show the shelving planned for the general archive of the Duchy of Reggio. Once built, the hall proved unsuitable for papers and was put to other uses. Its tiers held a congress instead, the one that adopted the tricolour.",
+   "move": "Ask what a thing was built for before guessing from its shape.",
+   "ask": "What around me do I explain by its looks rather than its history?",
+   "trap": "A theatre, because the tiers of galleries look like boxes.",
+   "keywords": [
+    "sala del tricolore",
+    "lodovico bolognini",
+    "ducal archive",
+    "reggio emilia",
+    "architecture"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Archivio di Stato di Reggio Emilia",
+   "source_kind": "institution",
+   "reference": "https://archiviodistatoreggioemilia.cultura.gov.it/fileadmin/risorse/Download/Progetti/SALA_DEL_TRICOLORE.pdf",
+   "quote": "una volta costruita, si rivelò inadatta ad ospitare un archivio e venne adibita ad altri usi",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+   }
+  },
+  {
+   "id": "history-reggio-emilia-3",
+   "topic": "history",
+   "genre": "history.ordinary_people",
+   "strand": "history.ordinary_people.forgotten_heroes",
+   "also": [
+    "history.ordinary_people.children"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Just after the Second World War, the village of Villa Cella, outside Reggio, built its own preschool. How did it pay?",
+   "answer": "By selling a tank, a few horses and an abandoned lorry. With that small sum the villagers chose to begin rebuilding their lives with a preschool, and built it themselves. From it grew the Reggio Emilia approach, which Loris Malaguzzi went on to shape. A way of teaching began with a tank.",
+   "move": "Behind a famous founder, look for the people who started it first.",
+   "ask": "Whose unseen work started something I credit to one famous name?",
+   "keywords": [
+    "reggio emilia approach",
+    "villa cella",
+    "loris malaguzzi",
+    "preschool",
+    "postwar italy"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "story",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Routledge chapter on the Reggio approach",
+   "source_kind": "book",
+   "reference": "https://www.taylorfrancis.com/books/9781135395384/chapters/10.4324/9780203935378-6",
+   "quote": "In the small village of Villa Cella, on the outskirts of Reggio Emilia, a small amount of money was given to the community following the sale of a tank, a few horses and an abandoned truck.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+   }
   },
   {
    "id": "history-roads-1",
@@ -74941,6 +75425,55 @@ const String kEmbeddedBank = r'''
    "disabled": true
   },
   {
+   "id": "language-modena-1",
+   "topic": "language",
+   "genre": "language.word_origins",
+   "strand": "language.word_origins.latin_roots",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "True or false: the grapes that make Lambrusco belong to the botanical species Vitis labrusca?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 1,
+   "answer": "False. Genetic analysis places the Lambruscos inside Vitis vinifera, the species of nearly every wine grape, between its wild and cultivated forms. Their name fits: Latin labrusca meant a wild vine. But the species Vitis labrusca is the fox grape of North America, the parent of Concord. Same word, different continent.",
+   "move": "A shared name is a clue to history, not proof of kinship.",
+   "ask": "Which things do I lump together only because their names sound alike?",
+   "trap": "True, because the names are nearly identical.",
+   "keywords": [
+    "lambrusco",
+    "vitis labrusca",
+    "vitis vinifera",
+    "grape genetics",
+    "etymology"
+   ],
+   "era": "timeless",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Scientific Reports, Lambrusco genetics, 2024",
+   "source_kind": "paper",
+   "reference": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11137023/",
+   "quote": "several grape cultivars called Lambrusco, typical of an area south of the river Po in north-central Italy, clustered in a group intermediate between the two subspecies sylvestris and vinifera",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+   }
+  },
+  {
    "id": "language-nordic-1",
    "topic": "language",
    "genre": "language.untranslatable_words",
@@ -91687,6 +92220,60 @@ const String kEmbeddedBank = r'''
    "reference": "Schiller & Lowy, Explanations for the high potency of HPV prophylactic vaccines, Vaccine, 2018",
    "written": "2026-09-27",
    "disabled": true
+  },
+  {
+   "id": "medicine-modena-1",
+   "topic": "medicine",
+   "genre": "medicine.medical_history",
+   "strand": "medicine.medical_history.doctors_who_were_right",
+   "also": [
+    "medicine.diagnosis.symptoms"
+   ],
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Hippocrates listed what a doctor should ask a patient. Bernardino Ramazzini, professor at Modena, added a question. Which?",
+   "options": [
+    "What do you eat?",
+    "Where were you born?",
+    "What work do you do?"
+   ],
+   "correct": 2,
+   "answer": "What work do you do. Hippocrates' list already covered the pains, their cause, how long, the bowels and the food. Ramazzini went into Modena's workshops and talked with workers about their ailments, then put the trade into the diagnosis in De Morbis Artificum, the founding book of occupational medicine. The workshop came to the bedside.",
+   "move": "Ask what someone does all day before explaining what ails them.",
+   "ask": "What does my own work do to my body that no doctor has asked about?",
+   "end": "ask",
+   "trap": "Diet, because it sounds like the doctor's classic question.",
+   "keywords": [
+    "bernardino ramazzini",
+    "occupational medicine",
+    "de morbis artificum",
+    "hippocrates",
+    "medical history"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "origin",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "CDC Stacks, Ramazzini's 1700 preface",
+   "source_kind": "institution",
+   "reference": "https://stacks.cdc.gov/view/cdc/189151/cdc_189151_DS1.pdf",
+   "quote": "So says Hippocrates in his work 'Affections.' I may venture to add one more question: what occupation does he follow?",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+   }
   },
   {
    "id": "medicine-new-ones-1",
@@ -112111,6 +112698,60 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-27"
   },
   {
+   "id": "nature-bologna-1",
+   "topic": "nature",
+   "genre": "nature.weather",
+   "strand": "nature.weather.weather_or_climate",
+   "also": [
+    "nature.systems_thinking.unintended_fixes"
+   ],
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "availability",
+   "question": "Since the early 1990s, how has the number of fog episodes changed on the plain around Bologna?",
+   "options": [
+    "Roughly halved",
+    "Barely changed",
+    "Risen by a third"
+   ],
+   "correct": 0,
+   "answer": "Roughly halved. A study by Italy's National Research Council in Bologna counted about half as many fog episodes on the plain as in the early 1990s. Warmer winters are one cause; cleaner air may be another, leaving fewer particles for droplets to form on. The famous fog is partly a memory.",
+   "move": "Recheck a place's famous trait before repeating it.",
+   "ask": "Which fact about my own town am I still repeating from childhood?",
+   "end": "ask",
+   "trap": "Barely changed, since fog is the Po plain's signature.",
+   "keywords": [
+    "fog",
+    "po valley",
+    "air pollution",
+    "climate",
+    "bologna"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "bars",
+   "source": "Focus, on the CNR fog study",
+   "source_kind": "news_archive",
+   "reference": "https://www.focus.it/ambiente/ecologia/addio-alla-nebbia-in-val-padana-negli-ultimi-20-anni-si-e-dimezzata",
+   "quote": "sono diminuiti di circa il 50% gli episodi di nebbia",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+   }
+  },
+  {
    "id": "nature-bringing-back-1",
    "topic": "nature",
    "genre": "nature.extinction",
@@ -120405,6 +121046,52 @@ const String kEmbeddedBank = r'''
    "reference": "Turvey et al., First human-caused extinction of a cetacean species?, Biology Letters, 2007",
    "written": "2026-09-27",
    "disabled": true
+  },
+  {
+   "id": "nature-reggio-emilia-1",
+   "topic": "nature",
+   "genre": "nature.animal_senses",
+   "strand": "nature.animal_senses.echolocation",
+   "also": [
+    "science.how_science_knows.experiments"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Blinded, the bats Lazzaro Spallanzani studied at Scandiano still dodged every obstacle. What could he not explain?",
+   "answer": "What they were listening to. When Jurine plugged their ears, the bats collided with obstacles, and Spallanzani confirmed it. But he thought bats made no audible sound, so Cuvier's idea of touch through the wings held sway until 1938, when Donald Griffin brought bats to an ultrasound detector. They had been shouting all along.",
+   "move": "Not hearing a signal does not mean nothing is being sent.",
+   "ask": "What might I be missing only because I lack the means to notice it?",
+   "keywords": [
+    "lazzaro spallanzani",
+    "bats",
+    "echolocation",
+    "ultrasound",
+    "scandiano"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "AAAS, Discovering sonar in bats",
+   "source_kind": "institution",
+   "reference": "https://www.aaas.org/taxonomy/term/10/discovering-sonar-bats",
+   "quote": "In 1938, Harvard undergraduate Donald Griffin brought a cage of bats to Pierce's lab. The bats that were thought to be silent were in fact emitting intense sounds in the ultrasonic range.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+   }
   },
   {
    "id": "nature-root-networks-1",
@@ -159201,6 +159888,58 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-26"
   },
   {
+   "id": "science-bologna-1",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.experiments",
+   "also": [
+    "human_body.the_brain.neurons"
+   ],
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "True or false: in Bologna, Luigi Galvani made a frog's leg twitch with no metal touching it at all?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 0,
+   "answer": "True. Volta argued the twitches came from the metals in Galvani's circuit, the frog merely detecting them. Galvani answered with experiments using no metal at all: touching a frog's nerve to its own muscle made it contract. Both were right. Volta went on to build the battery, and nerves do run on electricity.",
+   "move": "To test an objection, remove what it blames and see what remains.",
+   "ask": "Which argument have I conceded without testing the objection myself?",
+   "trap": "False, recalling Volta's verdict that the metals made the current.",
+   "keywords": [
+    "luigi galvani",
+    "alessandro volta",
+    "animal electricity",
+    "frog experiments",
+    "nerves"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Garrison-Morton medical bibliography, Galvani entry",
+   "source_kind": "reference_work",
+   "reference": "https://historyofmedicine.com/id/376",
+   "quote": "first account of Galvani's electrical experiments without the presence of metals",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+   }
+  },
+  {
    "id": "science-cherry-picking-1",
    "topic": "science",
    "genre": "science.spot_bad_science",
@@ -168661,6 +169400,52 @@ const String kEmbeddedBank = r'''
    "written": "2026-09-26"
   },
   {
+   "id": "science-reggio-emilia-1",
+   "topic": "science",
+   "genre": "science.think_like_a_scientist",
+   "strand": "science.think_like_a_scientist.falsification",
+   "also": [
+    "medicine.medical_history.germ_theory"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Spallanzani, born at Scandiano, boiled broth longer than his rival and sealed it in glass: nothing grew. Why did the argument go on?",
+   "answer": "Because his rival had an answer ready. John Needham claimed the long boiling had destroyed a life force that broth needs to breed life, so a clear flask proved nothing. Spallanzani's sealed flasks stayed clear until opened to the air; the excuse survived until Pasteur's swan-necked flasks, open to air, stayed clear too.",
+   "move": "A claim that explains away every result has stopped being testable.",
+   "ask": "Which of my beliefs have I protected with an excuse no test could reach?",
+   "keywords": [
+    "lazzaro spallanzani",
+    "spontaneous generation",
+    "john needham",
+    "louis pasteur",
+    "sealed flasks"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "puzzle",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "OpenStax Microbiology, Spontaneous Generation",
+   "source_kind": "book",
+   "reference": "https://courses.lumenlearning.com/suny-mcc-microbiology/chapter/spontaneous-generation/",
+   "quote": "Heated but sealed flasks remained clear, without any signs of spontaneous growth, unless the flasks were subsequently opened to the air.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+   }
+  },
+  {
    "id": "science-relative-or-absolute-1",
    "topic": "science",
    "genre": "science.read_a_study",
@@ -172490,6 +173275,59 @@ const String kEmbeddedBank = r'''
    "source_kind": "book",
    "reference": "Kragh, Cosmology and Controversy: The Historical Development of Two Theories of the Universe, Princeton University Press, 1996",
    "written": "2026-10-03"
+  },
+  {
+   "id": "space-bologna-1",
+   "topic": "space",
+   "genre": "space.think_at_scale",
+   "strand": "space.think_at_scale.sizes",
+   "kind": "number",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "San Petronio's meridian line is 66.8 m long, exactly 1/600,000 of the Earth's circumference. What circumference is that, in thousands of km?",
+   "value": 40.08,
+   "unit": "thousand km",
+   "tolerance": 0.05,
+   "answer": "About 40.08 thousand km: the church floor is a scale model of the Earth's meridian.",
+   "move": "Keep the units beside every step when the zeros pile up.",
+   "ask": "Where in my own sums do I lose a zero without noticing?",
+   "trap": "About 4,000 km, after dropping a zero along the way.",
+   "hint": "Multiply the line by 600,000, then turn metres into kilometres.",
+   "steps": [
+    "66.8 m × 600,000 = 40,080,000 m",
+    "40,080,000 m ÷ 1,000 = 40,080 km",
+    "About 40.08 thousand km: the church floor is a scale model of the Earth's meridian."
+   ],
+   "keywords": [
+    "san petronio",
+    "meridian line",
+    "giovanni domenico cassini",
+    "earth's circumference",
+    "bologna"
+   ],
+   "era": "early_modern",
+   "region": "europe",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "University of Bologna, Scienza Giovane",
+   "source_kind": "institution",
+   "reference": "https://scienzagiovane.unibo.it/English/scientists/cassini-2.html",
+   "quote": "It is the longest sundial line in the world: 66.8 metres, equal exactly to 1/600,000 of the earth's circumference.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+   }
   },
   {
    "id": "space-colours-of-stars-1",
@@ -196222,6 +197060,49 @@ const String kEmbeddedBank = r'''
    "written": "2026-10-07"
   },
   {
+   "id": "technology-bologna-1",
+   "topic": "technology",
+   "genre": "technology.where_things_come_from",
+   "strand": "technology.where_things_come_from.factories",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "What did the Ducati family's company make when they founded it in Bologna in 1926?",
+   "answer": "Radio parts. Spurred by Adriano Ducati's success with a radio transmission, the family founded the Società Scientifica Radio Brevetti Ducati on 4 July 1926 to make components for radios. Motorcycles came only after the Second World War, when the Borgo Panigale works began building the Cucciolo, a small engine to clip onto a bicycle.",
+   "move": "Ask what a famous maker sold before the thing it is famous for.",
+   "ask": "What do I assume a company always made, just from its name today?",
+   "keywords": [
+    "ducati",
+    "radio components",
+    "borgo panigale",
+    "cucciolo",
+    "bologna industry"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "origin",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Ducati Heritage, The Ducati Brothers",
+   "source_kind": "company",
+   "reference": "https://www.ducati.com/ww/en/heritage/characters/the-ducati-brothers",
+   "quote": "Spurred on by the success of Adriano's transmission attempt, the Ducati family founded the “Società Scientifica Radio Brevetti Ducati” on 4 July 1926.",
+   "written": "2026-10-12",
+   "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+   }
+  },
+  {
    "id": "technology-cables-1",
    "topic": "technology",
    "genre": "technology.the_internet",
@@ -217710,7 +218591,12 @@ const String kEmbeddedBank = r'''
   "434": "thinking-z31",
   "435": "thinking-u1",
   "436": "thinking-h18",
-  "437": "thinking-h15"
+  "437": "thinking-h15",
+  "438": "thinking-s2",
+  "439": "thinking-z7",
+  "440": "thinking-z2",
+  "441": "thinking-h4",
+  "442": "thinking-c1"
  },
  "commons": {
   "1": [
@@ -222082,6 +222968,56 @@ const String kEmbeddedBank = r'''
    "human_body-cortisol-1",
    "sport-tech-doping-1",
    "psychology-self-deception-1"
+  ],
+  "438": [
+   "music-hearing-5",
+   "language-spin-3",
+   "art-censorship-2",
+   "economics-education-4",
+   "cinema-hidden-meanings-2",
+   "life-starting-again-2",
+   "pop_culture-binge-watching-2",
+   "sport-flow-1"
+  ],
+  "439": [
+   "psychology-naps-2",
+   "nature-invasive-species-1",
+   "art-power-patrons-1",
+   "cinema-heroes-and-villains-2",
+   "philosophy-meaning-3",
+   "pop_culture-why-brands-sell-feelings-2",
+   "space-what-we-can-see-3",
+   "life-inversion-1"
+  ],
+  "440": [
+   "cinema-editing-tricks-1",
+   "history-1848-1",
+   "food-hunger-or-habit-4",
+   "psychology-why-we-cry-6",
+   "art-who-gets-in-museums-2",
+   "music-frequencies-12",
+   "sport-referees-3",
+   "economics-real-or-nominal-2"
+  ],
+  "441": [
+   "psychology-gratitude-1",
+   "language-loaded-words-1",
+   "philosophy-certainty-11",
+   "space-ufo-claims-1",
+   "science-cleaning-11",
+   "music-frequencies-11",
+   "medicine-pain-and-mind-1",
+   "life-burnout-2"
+  ],
+  "442": [
+   "philosophy-zeno-3",
+   "psychology-focus-7",
+   "art-museums-2",
+   "economics-mobility-1",
+   "medicine-painkillers-11",
+   "nature-feedback-loops-1",
+   "pop_culture-why-brands-sell-feelings-4",
+   "human_body-brain-myths-3"
   ]
  }
 }

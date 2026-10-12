@@ -1,0 +1,43 @@
+{
+  "id": "technology-bologna-1",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the Ducati family's company make when they founded it in Bologna in 1926?",
+  "answer": "Radio parts. Spurred by Adriano Ducati's success with a radio transmission, the family founded the Società Scientifica Radio Brevetti Ducati on 4 July 1926 to make components for radios. Motorcycles came only after the Second World War, when the Borgo Panigale works began building the Cucciolo, a small engine to clip onto a bicycle.",
+  "move": "Ask what a famous maker sold before the thing it is famous for.",
+  "ask": "What do I assume a company always made, just from its name today?",
+  "keywords": [
+    "ducati",
+    "radio components",
+    "borgo panigale",
+    "cucciolo",
+    "bologna industry"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ducati Heritage, The Ducati Brothers",
+  "source_kind": "company",
+  "reference": "https://www.ducati.com/ww/en/heritage/characters/the-ducati-brothers",
+  "quote": "Spurred on by the success of Adriano's transmission attempt, the Ducati family founded the “Società Scientifica Radio Brevetti Ducati” on 4 July 1926.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+  }
+}

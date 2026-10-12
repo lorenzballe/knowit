@@ -1,0 +1,50 @@
+{
+  "id": "history-reggio-emilia-2",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.what_came_after",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Reggio's Sala del Tricolore, an oval hall ringed with tiers of galleries, was first designed as what?",
+  "options": [
+    "A theatre for the court",
+    "The city council's chamber",
+    "The duchy's archive"
+  ],
+  "correct": 2,
+  "answer": "The duchy's archive. Lodovico Bolognini's drawings and a wooden model, both kept by Reggio's State Archive, show the shelving planned for the general archive of the Duchy of Reggio. Once built, the hall proved unsuitable for papers and was put to other uses. Its tiers held a congress instead, the one that adopted the tricolour.",
+  "move": "Ask what a thing was built for before guessing from its shape.",
+  "ask": "What around me do I explain by its looks rather than its history?",
+  "trap": "A theatre, because the tiers of galleries look like boxes.",
+  "keywords": [
+    "sala del tricolore",
+    "lodovico bolognini",
+    "ducal archive",
+    "reggio emilia",
+    "architecture"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Archivio di Stato di Reggio Emilia",
+  "source_kind": "institution",
+  "reference": "https://archiviodistatoreggioemilia.cultura.gov.it/fileadmin/risorse/Download/Progetti/SALA_DEL_TRICOLORE.pdf",
+  "quote": "una volta costruita, si rivelò inadatta ad ospitare un archivio e venne adibita ad altri usi",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+  }
+}

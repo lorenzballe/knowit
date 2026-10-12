@@ -1,0 +1,50 @@
+{
+  "id": "history-bologna-1",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.who_wrote_it",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Bologna's university dates its founding to 1088. Which document from that year records it?",
+  "options": [
+    "An imperial charter for scholars",
+    "None; the year was picked later",
+    "A papal bull from Urban II"
+  ],
+  "correct": 1,
+  "answer": "None. No founding document exists. In the 1880s the rector, the geologist Giovanni Capellini, wanted a centenary like those he had seen at younger European universities; after commissioning research, he adopted 1088 and staged the eighth centenary in 1888, with Giosuè Carducci's enthusiastic backing. The birthday was chosen for the party.",
+  "move": "A precise date is a claim; ask what document stands behind it.",
+  "ask": "Which exact date do I repeat without knowing where it came from?",
+  "trap": "An imperial charter, confused with Barbarossa's later privilege for scholars.",
+  "keywords": [
+    "university of bologna",
+    "1088",
+    "giovanni capellini",
+    "giosuè carducci",
+    "founding dates"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Unibo Magazine, Archiginnasio feature, 2006",
+  "source_kind": "institution",
+  "reference": "https://magazine.unibo.it/calendario/2006/aldrovandi_1/archiginnasiovai",
+  "quote": "Allora Capellini assunse il 1088 come data affidabile di nascita effettiva dell'Alma Mater e ne organizzò la solenne celebrazione dell'VIII Centenario nel 1888.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+  }
+}
