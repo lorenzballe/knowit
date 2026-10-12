@@ -122,9 +122,12 @@ void main() {
     ]) {
       expect(File(badge).existsSync(), isTrue, reason: badge);
     }
+    // Google's badge stands beside Apple's, marked as coming: the listing is
+    // not open to everybody yet (tool/site/chrome.py, GOOGLE_PLAY_OPEN).
+    expect(home, contains('store-google-play store-soon'));
     // Every page is signed by TheBaleCompany. Astute is not on Google Play
     // yet, so every page says Android is coming and none links a listing
-    // that is not there; the day it is, Google's badge goes back and this
+    // that is not there; the day it is, the badge becomes the link and this
     // says so instead.
     for (final String page in const [
       'site/index.html',
