@@ -30,11 +30,12 @@ and the contract every part of it keeps.
   città con un raggio. Esce solo a chi vive lì: al massimo una al giorno
   tra le cinque, più uno scaffale di Esplora, "Dove vivi". Mai come
   domanda del giorno per tutti.
-- **Chi le scrive.** Le prime (Italia, le 20 regioni, le città principali
-  e la zona del proprietario) subito. Poi, ogni mattina, un giro
-  automatico guarda i lettori nuovi in PostHog e scrive le carte dei luoghi
-  che ancora non ne hanno, con le stesse regole e lo stesso controllo dei
-  fatti di tutte le altre.
+- **Chi le scrive.** Solo per i luoghi dove vivono lettori veri, man mano
+  che arrivano: mai in anticipo per posti da cui non legge nessuno. Ogni
+  mattina un giro automatico guarda i lettori veri in PostHog, conta quali
+  luoghi non hanno ancora abbastanza carte e ne scrive al massimo tre, con
+  le stesse regole e lo stesso controllo dei fatti di tutte le altre. Il
+  metodo è in `.claude/skills/astute-places/SKILL.md`.
 - **Il controllo resta al lettore.** In Profilo vede la sua città, può
   cambiarla o toglierla; senza posizione l'app funziona uguale.
 
@@ -42,7 +43,8 @@ and the contract every part of it keeps.
 
 `lib/models/place.dart` is the shape (`Place`), the matching (`placeFit`)
 and the region names (`regionCode`). `functions/src/place.ts` is its twin
-on the server. Both are held to `tool/places/fit_cases.json`.
+on the server, and `tool/places/places.py` the tools' copy of the
+matching. All three are held to `tool/places/fit_cases.json`.
 
 | Field | What | Example |
 | --- | --- | --- |
@@ -162,16 +164,31 @@ asks for (`tool/cards/RULES.md`), and a `place`
 
 ## 6. Writing them
 
-1. **Now: the seed.** Italy (country cards), its twenty regions, its
-   largest cities and the owner's own area: enough that the first Italian
-   readers find their home from day one.
-2. **Every morning: the concierge.** A scheduled Claude Code routine reads
-   the verdict table in PostHog. For every real reader whose place has no
-   cards yet, it writes them — city first, then the region if it has none —
-   through the same rules, gate and critic as every card. It opens a pull
-   request, merges it once the gate and the tests pass, and the site
-   publishes the cards to every phone within minutes, without a release.
-3. **Later: context.** The calendar (a city's feast day, a region's
+Cards are written for the places where real readers live, as they arrive;
+never in advance for places nobody reads from. The method, step by step, is
+the skill `.claude/skills/astute-places/SKILL.md`.
+
+1. **Who is real, and where.** The verdict table in PostHog (§3). Only
+   the phone's place counts for a city; the IP's city is the carrier's.
+2. **What is missing.** `tool/places/missing.py` counts the cards that
+   already reach each real reader, matched the way the dealers match them
+   (`tool/places/places.py`, held to `fit_cases.json` like the phone and
+   the server), and lists the gaps nearest first: a city wants six cards,
+   a region eight, a country ten. A town inside a bigger town's radius is
+   covered by its cards.
+3. **Every morning: the concierge.** A scheduled Claude Code routine runs
+   the skill: at most three places a day, researched from primary sources,
+   through the same gate and critic as every card. It opens a pull
+   request, merges it once the checks pass, and the site publishes the
+   cards to every phone within minutes, without a release. It reads its
+   sources over the web, so the cloud environment's network access must
+   allow it.
+4. **Private in a public repository.** A card's existence says someone
+   lives near it. City cards go to the nearest town of at least 20,000
+   people whose radius reaches the reader, never to a smaller village; no
+   reader, count or "someone lives here" appears in a file, commit or pull
+   request; the run's list of readers' places is never committed.
+5. **Later: context.** The calendar (a city's feast day, a region's
    anniversaries, the season), the land around (the sea, a river, the
    mountains within reach of the reader's point), the time of day. Each is
    a new field on the same `place`, dealt by the same slot.
