@@ -23,7 +23,6 @@ import '../measure/session.dart';
 import '../models/pill.dart';
 import '../models/reminder.dart';
 import '../models/trial.dart';
-import '../sync/board.dart';
 import '../sync/reader_snapshot.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
@@ -139,7 +138,10 @@ class AppState extends ChangeNotifier {
   /// Cards thrown down: less of this. Quiet, and only a lean on the deal.
   List<String> dislikedIds = [];
 
-  /// The friends whose boards the reader looks at, by code.
+  /// The codes of the friends the reader added while the app had friends.
+  /// Nothing shows them any more; they are only kept, and carried in the
+  /// backup as they were, so a reader's circle is not lost should friends
+  /// come back in another shape.
   List<String> friendCodes = [];
   int todayIndex = 0;
   int pillsRead = 0;
@@ -1774,45 +1776,6 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Friends ───────────────────────────────────────────────────────────
-
-  Future<void> addFriend(String code) async {
-    if (friendCodes.contains(code)) return;
-    friendCodes = [...friendCodes, code];
-    await _prefs.setStringList(_kFriendCodes, friendCodes);
-    // The count, never the codes. A friend code names a person.
-    Analytics.capture('friend added', {'friends': friendCodes.length});
-    notifyListeners();
-  }
-
-  Future<void> removeFriend(String code) async {
-    if (!friendCodes.contains(code)) return;
-    friendCodes = friendCodes.where((c) => c != code).toList();
-    await _prefs.setStringList(_kFriendCodes, friendCodes);
-    Analytics.capture('friend removed', {'friends': friendCodes.length});
-    notifyListeners();
-  }
-
-  /// What a friend gets to see of this reader. The squares only once the
-  /// day is done: half a grid says the wrong thing.
-  Board board(String uid) {
-    final DaySummary d = daySummary;
-    return Board(
-      uid: uid,
-      code: friendCodeOf(uid),
-      name: name,
-      streak: liveStreak,
-      weeks: keptWeeks,
-      days: thisWeek.days,
-      gap: confidenceGap,
-      edition: d.edition,
-      squares: dayClosed ? d.squares : '',
-      right: d.right,
-      asked: d.asked,
-      updated: dateKey(today),
-    );
-  }
-
   // ── Onboarding & settings ─────────────────────────────────────────────
 
   Future<void> setTopics(Set<String> topics) async {
@@ -2390,7 +2353,6 @@ class AppState extends ChangeNotifier {
     'saved_count': savedIds.length,
     'liked_count': likedIds.length,
     'disliked_count': dislikedIds.length,
-    'friends_count': friendCodes.length,
     'reminders_on': notificationsOn,
     'reminder_hour': int.tryParse(notifyTime.split(':').first) ?? -1,
     'theme': themeMode.name,

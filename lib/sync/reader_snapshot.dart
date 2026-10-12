@@ -51,7 +51,8 @@ class ReaderSnapshot {
   final List<String> likedIds;
   final List<String> dislikedIds;
 
-  /// Whose boards the reader looks at.
+  /// The friend codes the reader added while the app had friends. Nothing
+  /// reads them any more; the backup carries them as they were.
   final List<String> friendCodes;
 
   /// The day each rung of the ladder was first reached, by rung id.

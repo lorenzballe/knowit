@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// What a reader shows a friend: the streak, the weeks, how far off their
-/// confidence runs, and today's five as squares. Never a question and never
-/// an answer — two friends comparing boards are comparing habits, not
-/// copying homework.
+/// What a reader showed a friend while the app had friends: the streak, the
+/// weeks, how far off their confidence ran, and the day's five as squares.
+/// Never a question and never an answer.
+///
+/// Friends came out before the launch, and nothing publishes a board any
+/// more. What is left is the one a build that still had them published,
+/// which deleting the account takes down with the rest.
 class Board {
   const Board({
     required this.uid,
@@ -43,9 +46,7 @@ class Board {
   final String updated;
 
   /// How the question of the day went, and how sure they said they were:
-  /// published by builds that still dealt it, read so a friend on one still
-  /// shows it. Null until answered, and always null from this build, which
-  /// deals no card that is everybody's.
+  /// published by builds that still dealt it. Null until answered.
   final bool? questionRight;
   final int? questionSure;
 
@@ -81,34 +82,6 @@ class Board {
     'questionRight': questionRight,
     'questionSure': questionSure,
   };
-
-  static Board? fromJson(Map<String, dynamic>? raw) {
-    if (raw == null) return null;
-    final uid = raw['uid'];
-    if (uid is! String) return null;
-    int n(String key) => raw[key] is num ? (raw[key] as num).round() : 0;
-    String s(String key) => raw[key] is String ? raw[key] as String : '';
-    return Board(
-      uid: uid,
-      code: s('code'),
-      name: s('name'),
-      streak: n('streak'),
-      weeks: n('weeks'),
-      days: n('days'),
-      gap: raw['gap'] is num ? (raw['gap'] as num).toDouble() : null,
-      edition: n('edition'),
-      squares: s('squares'),
-      right: n('right'),
-      asked: n('asked'),
-      updated: s('updated'),
-      questionRight: raw['questionRight'] is bool
-          ? raw['questionRight'] as bool
-          : null,
-      questionSure: raw['questionSure'] is num
-          ? (raw['questionSure'] as num).round()
-          : null,
-    );
-  }
 }
 
 /// The letters a code is made of: no O and no 0, no I and no 1, so a code
@@ -133,23 +106,10 @@ String friendCodeOf(String uid) {
   return out.toString();
 }
 
-/// Tidies what somebody typed into the shape a code has, or null if it
-/// cannot be one.
-String? parseFriendCode(String typed) {
-  final cleaned = typed.trim().toUpperCase().replaceAll(RegExp(r'[\s-]'), '');
-  if (cleaned.length != 6) return null;
-  for (final unit in cleaned.codeUnits) {
-    if (!kCodeAlphabet.contains(String.fromCharCode(unit))) return null;
-  }
-  return cleaned;
-}
-
-/// Where boards live. An interface so the friends screen can be driven in a
-/// test without a project or a network.
+/// Where boards live. An interface so deleting an account can be driven in
+/// a test without a project or a network.
 abstract class BoardStore {
   Future<void> publish(Board board);
-
-  Future<Board?> read(String code);
 
   /// Takes a reader's board down, when they delete their account.
   Future<void> remove(String code, String uid);
@@ -168,13 +128,6 @@ class FirestoreBoardStore implements BoardStore {
 
   @override
   Future<void> publish(Board board) => _doc(board.code).set(board.toJson());
-
-  @override
-  Future<Board?> read(String code) async {
-    final snap = await _doc(code).get();
-    if (!snap.exists) return null;
-    return Board.fromJson(snap.data());
-  }
 
   /// Deleted where the rules allow its owner to; where the rules deployed
   /// are older and do not, emptied instead — the name and every number
@@ -198,9 +151,6 @@ class MemoryBoardStore implements BoardStore {
 
   @override
   Future<void> publish(Board board) async => boards[board.code] = board;
-
-  @override
-  Future<Board?> read(String code) async => boards[code];
 
   @override
   Future<void> remove(String code, String uid) async => boards.remove(code);

@@ -404,7 +404,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'Tu cuenta, su copia de seguridad y el tablero que ven tus amigos se eliminan para siempre, y este dispositivo vuelve a empezar desde el principio. Esto no cancela Astute+: la suscripción se gestiona en los ajustes del App Store.';
+      'Tu cuenta y su copia de seguridad se eliminan para siempre, y este dispositivo vuelve a empezar desde el principio. Esto no cancela Astute+: la suscripción se gestiona en los ajustes del App Store.';
 
   @override
   String get deleteAccountConfirm => 'Eliminar para siempre';
@@ -1523,84 +1523,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '$answered respondidas hasta ahora. Hoy: $question';
-  }
-
-  @override
-  String get friends => 'Amigos';
-
-  @override
-  String friendsN(int n) {
-    return 'Amigos · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'Tu código de amigo';
-
-  @override
-  String get codeCopied => 'Código copiado.';
-
-  @override
-  String get addAFriend => 'Añadir un amigo';
-
-  @override
-  String get theirCode => 'Su código';
-
-  @override
-  String get add => 'Añadir';
-
-  @override
-  String get noFriendsYet =>
-      'Nadie todavía. Intercambia códigos con un amigo y comparad rachas y calibración — nunca respuestas.';
-
-  @override
-  String get friendsNeedAnAccount =>
-      'Comparar requiere la app del teléfono y una cuenta. Tus códigos se guardan.';
-
-  @override
-  String get noReaderWithCode => 'Ningún lector con ese código.';
-
-  @override
-  String get thatsYourOwnCode => 'Ese es tu propio código.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n puntos de desvío';
-  }
-
-  @override
-  String get notMeasuredYet => 'aún sin medir';
-
-  @override
-  String get thisWeekByCalibration => 'Esta semana, por calibración';
-
-  @override
-  String get notYetToday => 'hoy todavía no';
-
-  @override
-  String nOfSeven(int n) {
-    return '$n de 7';
-  }
-
-  @override
-  String get you => 'Tú';
-
-  @override
-  String get todaysQuestion => 'La pregunta de hoy';
-
-  @override
-  String get right => 'correcta';
-
-  @override
-  String get wrong => 'incorrecta';
-
-  @override
-  String rightAtSure(int sure) {
-    return 'correcta, $sure% de seguridad';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return 'incorrecta, $sure% de seguridad';
   }
 
   @override

@@ -137,7 +137,7 @@ reader in the first weeks — with about three.
 | `$internal_or_test_user` | `$set`, at once | `true` for `test_lab` and `debug` installs only |
 | `rung`, `streak_days`, `best_streak`, `days_completed`, `weeks_kept`, `freezes` | `$set` | the habit |
 | `topics_count`, `genres_off`, `strands_off` | `$set` | what the mix leaves out, as counts |
-| `saved_count`, `liked_count`, `disliked_count`, `friends_count` | `$set` | what the reader keeps |
+| `saved_count`, `liked_count`, `disliked_count` | `$set` | what the reader keeps |
 | `reminders_on`, `reminder_hour`, `theme`, `app_language`, `onboarded` | `$set` | settings |
 | `widgets_placed`, `widgets` | `$set` | how many widgets are placed, and which, comma-separated |
 | `last_day_completed` | `$set` | date key, `2026-10-11` |
@@ -233,8 +233,7 @@ sent, which after a return from a pushed screen is the screen returned to.
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
 subjects`, `onboarding genres`, `onboarding offer`, `comeback` (first run and
 come-back); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
-`journey`, `path`, `week`, `friends`, `topics`, `how`, `paywall`, `purchase
-success`.
+`journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`.
 
 ### 6.3 The day on Today
 
@@ -347,15 +346,19 @@ is in its card facts.
 | `app opened from widget` | a widget's tap (sets `entry` to `widget`) | `widget`, `pill_id`, `where` | P |
 | `widgets placed` | the set of placed widgets changed | `count`, `widgets`, `kinds` | P |
 
-### 6.10 Settings, friends and account
+### 6.10 Settings and account
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
 | `theme set` | | `theme` | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
-| `friend added`, `friend removed`, `friend code copied`, `friend board read` | friends — counts only, never a code | `friends`, `found`, `their_streak`, `their_weeks` | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |
+
+Friends came out before the launch, and with them `friend added`, `friend
+removed`, `friend code copied`, `friend board read`, the `friends` screen and
+the `friends_count` on the profile. Readers profiled before keep the last
+`friends_count` they were sent; nothing updates it.
 
 ### 6.11 Errors and PostHog's own
 

@@ -399,7 +399,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'アカウントとそのバックアップ、友達に見えるボードが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。サブスクリプションは App Store の設定で管理してください。';
+      'アカウントとそのバックアップが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。サブスクリプションは App Store の設定で管理してください。';
 
   @override
   String get deleteAccountConfirm => '完全に削除';
@@ -1475,83 +1475,6 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'これまで$answered問回答。今日：$question';
-  }
-
-  @override
-  String get friends => '友だち';
-
-  @override
-  String friendsN(int n) {
-    return '友だち · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'あなたの友だちコード';
-
-  @override
-  String get codeCopied => 'コードをコピーしました。';
-
-  @override
-  String get addAFriend => '友だちを追加';
-
-  @override
-  String get theirCode => '相手のコード';
-
-  @override
-  String get add => '追加';
-
-  @override
-  String get noFriendsYet =>
-      'まだ誰もいません。友だちとコードを交換して、連続日数と確信度の精度を比べましょう — 答えは決して見えません。';
-
-  @override
-  String get friendsNeedAnAccount => '比べるにはスマホ版アプリとアカウントが必要です。コードは保存されています。';
-
-  @override
-  String get noReaderWithCode => 'そのコードの読者はいません。';
-
-  @override
-  String get thatsYourOwnCode => 'それはあなた自身のコードです。';
-
-  @override
-  String pointsOff(int n) {
-    return '$nポイントのずれ';
-  }
-
-  @override
-  String get notMeasuredYet => 'まだ測定されていません';
-
-  @override
-  String get thisWeekByCalibration => '今週、確信度の精度順';
-
-  @override
-  String get notYetToday => '今日はまだ';
-
-  @override
-  String nOfSeven(int n) {
-    return '7日中$n日';
-  }
-
-  @override
-  String get you => 'あなた';
-
-  @override
-  String get todaysQuestion => '今日の問題';
-
-  @override
-  String get right => '正解';
-
-  @override
-  String get wrong => '不正解';
-
-  @override
-  String rightAtSure(int sure) {
-    return '正解、確信度$sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return '不正解、確信度$sure%';
   }
 
   @override

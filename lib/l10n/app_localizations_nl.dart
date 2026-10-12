@@ -403,7 +403,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'Je account, de back-up ervan en het bord dat je vrienden zien worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: een abonnement beheer je in de App Store-instellingen.';
+      'Je account en de back-up ervan worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: een abonnement beheer je in de App Store-instellingen.';
 
   @override
   String get deleteAccountConfirm => 'Definitief verwijderen';
@@ -1521,84 +1521,6 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '$answered beantwoord tot nu toe. Vandaag: $question';
-  }
-
-  @override
-  String get friends => 'Vrienden';
-
-  @override
-  String friendsN(int n) {
-    return 'Vrienden · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'Je vriendencode';
-
-  @override
-  String get codeCopied => 'Code gekopieerd.';
-
-  @override
-  String get addAFriend => 'Een vriend toevoegen';
-
-  @override
-  String get theirCode => 'Hun code';
-
-  @override
-  String get add => 'Toevoegen';
-
-  @override
-  String get noFriendsYet =>
-      'Nog niemand. Wissel codes uit met een vriend en vergelijk reeksen en kalibratie — nooit antwoorden.';
-
-  @override
-  String get friendsNeedAnAccount =>
-      'Vergelijken vraagt de telefoon-app en een account. Je codes blijven bewaard.';
-
-  @override
-  String get noReaderWithCode => 'Geen lezer met die code.';
-
-  @override
-  String get thatsYourOwnCode => 'Dat is je eigen code.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n punten ernaast';
-  }
-
-  @override
-  String get notMeasuredYet => 'nog niet gemeten';
-
-  @override
-  String get thisWeekByCalibration => 'Deze week, op kalibratie';
-
-  @override
-  String get notYetToday => 'vandaag nog niet';
-
-  @override
-  String nOfSeven(int n) {
-    return '$n van 7';
-  }
-
-  @override
-  String get you => 'Jij';
-
-  @override
-  String get todaysQuestion => 'De vraag van vandaag';
-
-  @override
-  String get right => 'goed';
-
-  @override
-  String get wrong => 'fout';
-
-  @override
-  String rightAtSure(int sure) {
-    return 'goed, $sure% zeker';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return 'fout, $sure% zeker';
   }
 
   @override

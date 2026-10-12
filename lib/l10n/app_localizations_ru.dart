@@ -420,7 +420,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get deleteAccountBody =>
-      'Аккаунт, его резервная копия и доска, которую видят друзья, удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: ею управляют в настройках App Store.';
+      'Аккаунт и его резервная копия удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: ею управляют в настройках App Store.';
 
   @override
   String get deleteAccountConfirm => 'Удалить навсегда';
@@ -1586,84 +1586,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'Пока $answered ответов. Сегодня: $question';
-  }
-
-  @override
-  String get friends => 'Друзья';
-
-  @override
-  String friendsN(int n) {
-    return 'Друзья · $n';
-  }
-
-  @override
-  String get yourFriendCode => 'Ваш код друга';
-
-  @override
-  String get codeCopied => 'Код скопирован.';
-
-  @override
-  String get addAFriend => 'Добавить друга';
-
-  @override
-  String get theirCode => 'Его код';
-
-  @override
-  String get add => 'Добавить';
-
-  @override
-  String get noFriendsYet =>
-      'Пока никого. Обменяйтесь кодами с другом и сравнивайте серии и калибровку — никогда ответы.';
-
-  @override
-  String get friendsNeedAnAccount =>
-      'Для сравнения нужны приложение на телефоне и аккаунт. Ваши коды сохраняются.';
-
-  @override
-  String get noReaderWithCode => 'Нет читателя с таким кодом.';
-
-  @override
-  String get thatsYourOwnCode => 'Это ваш собственный код.';
-
-  @override
-  String pointsOff(int n) {
-    return '$n пунктов отклонения';
-  }
-
-  @override
-  String get notMeasuredYet => 'ещё не измерена';
-
-  @override
-  String get thisWeekByCalibration => 'На этой неделе, по калибровке';
-
-  @override
-  String get notYetToday => 'сегодня ещё нет';
-
-  @override
-  String nOfSeven(int n) {
-    return '$n из 7';
-  }
-
-  @override
-  String get you => 'Вы';
-
-  @override
-  String get todaysQuestion => 'Вопрос дня';
-
-  @override
-  String get right => 'верно';
-
-  @override
-  String get wrong => 'неверно';
-
-  @override
-  String rightAtSure(int sure) {
-    return 'верно, уверенность $sure%';
-  }
-
-  @override
-  String wrongAtSure(int sure) {
-    return 'неверно, уверенность $sure%';
   }
 
   @override
