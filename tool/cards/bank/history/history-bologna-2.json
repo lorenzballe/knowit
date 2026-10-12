@@ -1,0 +1,46 @@
+{
+  "id": "history-bologna-2",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "also": [
+    "philosophy.paradoxes.ship_of_theseus"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Bologna's carved wooden anatomy theatre in the Archiginnasio looks centuries old. How much of it survived the Second World War intact?",
+  "answer": "Very little. An air raid on 29 January 1944 almost completely destroyed it. After the war it was rebuilt with exemplary care from all the original pieces dug out of the rubble, so the carved wood is largely old while the room it forms is postwar. Visitors stand inside a jigsaw put back together.",
+  "move": "Ask whether you are seeing old materials or an old arrangement.",
+  "ask": "Which thing I admire as original might be a careful rebuild?",
+  "keywords": [
+    "archiginnasio",
+    "anatomical theatre",
+    "1944 bombing",
+    "reconstruction",
+    "bologna"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Museionline, Teatro Anatomico",
+  "source_kind": "reference_work",
+  "reference": "https://www.museionline.info/bologna-musei-e-monumenti/teatro-anatomico-e-sala-dello-stabat-mater",
+  "quote": "Il teatro fu quasi completamente distrutto durante la seconda guerra mondiale, da un'incursione aerea del 29 gennaio 1944. Dopo la guerra il teatro fu ricostruito con esemplare rigore filologico, utilizzando tutti i pezzi originali recuperati tra le macerie dell'edificio.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+  }
+}

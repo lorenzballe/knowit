@@ -1,0 +1,51 @@
+{
+  "id": "food-modena-1",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.labels",
+  "also": [
+    "economics.trade_routes.who_wins_from_trade"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should balsamico, on its own, be a word only vinegar from Modena may use?",
+  "sides": [
+    "Yes, protect the word",
+    "No, it describes a style"
+  ],
+  "answer": "To most shoppers, balsamico means Modena: the word's fame was built by Modena's producers, working under strict rules. A German vinegar made from Baden wine and sold as balsamico trades on that reputation without meeting those rules. If a protected name can be copied in pieces, protecting the whole name protects very little.",
+  "move": "Whichever side you took, whether buyers hear a place or a kind decides it.",
+  "ask": "Which product names do I trust as a promise of origin when they promise only a style?",
+  "counterpoint": "The EU Court of Justice has ruled that protecting Aceto Balsamico di Modena does not extend to its non-geographical words, aceto and balsamico. Balsamico is an ordinary Italian adjective, balsam-like, and aceto simply means vinegar. A protected name tells buyers where a product comes from; reserving a common word would hand one region a description.",
+  "keywords": [
+    "balsamic vinegar",
+    "aceto balsamico di modena",
+    "protected names",
+    "court of justice",
+    "food labels"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Court of Justice, Case C-432/18",
+  "source_kind": "primary_document",
+  "reference": "https://curia.europa.eu/jcms/upload/docs/application/pdf/2019-12/cp190150en.pdf",
+  "quote": "The protection of the name ‘Aceto Balsamico di Modena’ does not extend to the use of the non-geographical terms of that name such as ‘aceto’ and ‘balsamico’.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+  }
+}

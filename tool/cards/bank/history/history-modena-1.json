@@ -1,0 +1,43 @@
+{
+  "id": "history-modena-1",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roman_politics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Mark Antony's army ringed Mutina, now Modena, trapping Decimus Brutus inside. How did the consul Hirtius get letters to him?",
+  "answer": "By pigeon, and by swimmer. Frontinus says Hirtius starved pigeons in the dark, tied letters to their necks with a hair and freed them near the walls; craving light and food, they flew to the highest roofs, where Brutus caught them. Swimmers crossed the river with letters on lead strapped to their arms.",
+  "move": "A blockade covers only the routes its builders could imagine.",
+  "ask": "Which problem of mine am I guarding only along the route I expect?",
+  "keywords": [
+    "siege of mutina",
+    "carrier pigeons",
+    "decimus brutus",
+    "aulus hirtius",
+    "frontinus"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frontinus, Stratagems, book 3",
+  "source_kind": "primary_document",
+  "reference": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Frontinus/Strategemata/3*.html",
+  "quote": "Hirtius also shut up pigeons in the dark, starved them, fastened letters to their necks by a hair, and then released them as near to the city walls as he could.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+  }
+}

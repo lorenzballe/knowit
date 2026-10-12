@@ -1,0 +1,54 @@
+{
+  "id": "nature-bologna-1",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "also": [
+    "nature.systems_thinking.unintended_fixes"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Since the early 1990s, how has the number of fog episodes changed on the plain around Bologna?",
+  "options": [
+    "Roughly halved",
+    "Barely changed",
+    "Risen by a third"
+  ],
+  "correct": 0,
+  "answer": "Roughly halved. A study by Italy's National Research Council in Bologna counted about half as many fog episodes on the plain as in the early 1990s. Warmer winters are one cause; cleaner air may be another, leaving fewer particles for droplets to form on. The famous fog is partly a memory.",
+  "move": "Recheck a place's famous trait before repeating it.",
+  "ask": "Which fact about my own town am I still repeating from childhood?",
+  "end": "ask",
+  "trap": "Barely changed, since fog is the Po plain's signature.",
+  "keywords": [
+    "fog",
+    "po valley",
+    "air pollution",
+    "climate",
+    "bologna"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Focus, on the CNR fog study",
+  "source_kind": "news_archive",
+  "reference": "https://www.focus.it/ambiente/ecologia/addio-alla-nebbia-in-val-padana-negli-ultimi-20-anni-si-e-dimezzata",
+  "quote": "sono diminuiti di circa il 50% gli episodi di nebbia",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Bologna",
+    "lat": 44.494,
+    "lon": 11.343,
+    "km": 25
+  }
+}

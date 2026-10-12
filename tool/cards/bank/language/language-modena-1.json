@@ -1,0 +1,49 @@
+{
+  "id": "language-modena-1",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the grapes that make Lambrusco belong to the botanical species Vitis labrusca?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Genetic analysis places the Lambruscos inside Vitis vinifera, the species of nearly every wine grape, between its wild and cultivated forms. Their name fits: Latin labrusca meant a wild vine. But the species Vitis labrusca is the fox grape of North America, the parent of Concord. Same word, different continent.",
+  "move": "A shared name is a clue to history, not proof of kinship.",
+  "ask": "Which things do I lump together only because their names sound alike?",
+  "trap": "True, because the names are nearly identical.",
+  "keywords": [
+    "lambrusco",
+    "vitis labrusca",
+    "vitis vinifera",
+    "grape genetics",
+    "etymology"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scientific Reports, Lambrusco genetics, 2024",
+  "source_kind": "paper",
+  "reference": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11137023/",
+  "quote": "several grape cultivars called Lambrusco, typical of an area south of the river Po in north-central Italy, clustered in a group intermediate between the two subspecies sylvestris and vinifera",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Modena",
+    "lat": 44.647,
+    "lon": 10.925,
+    "km": 20
+  }
+}

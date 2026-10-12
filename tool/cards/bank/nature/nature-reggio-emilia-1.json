@@ -1,0 +1,46 @@
+{
+  "id": "nature-reggio-emilia-1",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "also": [
+    "science.how_science_knows.experiments"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Blinded, the bats Lazzaro Spallanzani studied at Scandiano still dodged every obstacle. What could he not explain?",
+  "answer": "What they were listening to. When Jurine plugged their ears, the bats collided with obstacles, and Spallanzani confirmed it. But he thought bats made no audible sound, so Cuvier's idea of touch through the wings held sway until 1938, when Donald Griffin brought bats to an ultrasound detector. They had been shouting all along.",
+  "move": "Not hearing a signal does not mean nothing is being sent.",
+  "ask": "What might I be missing only because I lack the means to notice it?",
+  "keywords": [
+    "lazzaro spallanzani",
+    "bats",
+    "echolocation",
+    "ultrasound",
+    "scandiano"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "AAAS, Discovering sonar in bats",
+  "source_kind": "institution",
+  "reference": "https://www.aaas.org/taxonomy/term/10/discovering-sonar-bats",
+  "quote": "In 1938, Harvard undergraduate Donald Griffin brought a cage of bats to Pierce's lab. The bats that were thought to be silent were in fact emitting intense sounds in the ultrasonic range.",
+  "written": "2026-10-12",
+  "place": {
+    "country": "IT",
+    "region": "IT-45",
+    "city": "Reggio Emilia",
+    "lat": 44.698,
+    "lon": 10.631,
+    "km": 20
+  }
+}
