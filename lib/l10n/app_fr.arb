@@ -412,6 +412,7 @@
   "continueFree": "Continuer gratuitement",
   "archiveBeforeThisWeek": "Avant cette semaine",
   "weekKeptThreeOwn": "Une semaine tenue : demain, trois des cinq sont à toi.",
+  "weekKeptSundayFourOwn": "Une semaine tenue, et demain c'est dimanche : quatre des cinq sont à toi.",
   "topOfTheWeek": "Top de la semaine",
   "topOfTheMonth": "Top du mois",
   "topIn": "Top en {subject}",

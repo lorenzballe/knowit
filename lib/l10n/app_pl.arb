@@ -412,6 +412,7 @@
   "continueFree": "Kontynuuj za darmo",
   "archiveBeforeThisWeek": "Sprzed tego tygodnia",
   "weekKeptThreeOwn": "Tydzień z rzędu: jutro trzy z pięciu są twoje.",
+  "weekKeptSundayFourOwn": "Tydzień z rzędu, a jutro niedziela: cztery z pięciu są twoje.",
   "topOfTheWeek": "Top tygodnia",
   "topOfTheMonth": "Top miesiąca",
   "topIn": "Top: {subject}",

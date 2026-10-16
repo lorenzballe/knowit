@@ -412,6 +412,7 @@
   "continueFree": "Продолжить бесплатно",
   "archiveBeforeThisWeek": "До этой недели",
   "weekKeptThreeOwn": "Неделя подряд: завтра три из пяти — твои.",
+  "weekKeptSundayFourOwn": "Неделя подряд, а завтра воскресенье: четыре из пяти — твои.",
   "topOfTheWeek": "Топ недели",
   "topOfTheMonth": "Топ месяца",
   "topIn": "Топ: {subject}",

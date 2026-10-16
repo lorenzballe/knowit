@@ -412,6 +412,7 @@
   "continueFree": "Gratis verdergaan",
   "archiveBeforeThisWeek": "Vóór deze week",
   "weekKeptThreeOwn": "Een week volgehouden: morgen zijn drie van de vijf van jou.",
+  "weekKeptSundayFourOwn": "Een week volgehouden, en morgen is het zondag: vier van de vijf zijn van jou.",
   "topOfTheWeek": "Top van de week",
   "topOfTheMonth": "Top van de maand",
   "topIn": "Top in {subject}",

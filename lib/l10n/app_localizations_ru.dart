@@ -1800,6 +1800,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get weekKeptThreeOwn => 'Неделя подряд: завтра три из пяти — твои.';
 
   @override
+  String get weekKeptSundayFourOwn =>
+      'Неделя подряд, а завтра воскресенье: четыре из пяти — твои.';
+
+  @override
   String get topOfTheWeek => 'Топ недели';
 
   @override

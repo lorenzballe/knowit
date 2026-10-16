@@ -1735,6 +1735,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Een week volgehouden: morgen zijn drie van de vijf van jou.';
 
   @override
+  String get weekKeptSundayFourOwn =>
+      'Een week volgehouden, en morgen is het zondag: vier van de vijf zijn van jou.';
+
+  @override
   String get topOfTheWeek => 'Top van de week';
 
   @override

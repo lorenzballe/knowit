@@ -1722,6 +1722,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get weekKeptThreeOwn => 'Bir hafta tamam: yarın beşten üçü senin.';
 
   @override
+  String get weekKeptSundayFourOwn =>
+      'Bir hafta tamam, yarın da pazar: beşten dördü senin.';
+
+  @override
   String get topOfTheWeek => 'Haftanın en iyileri';
 
   @override

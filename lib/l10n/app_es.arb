@@ -412,6 +412,7 @@
   "continueFree": "Continuar gratis",
   "archiveBeforeThisWeek": "Antes de esta semana",
   "weekKeptThreeOwn": "Una semana seguida: mañana tres de las cinco son tuyas.",
+  "weekKeptSundayFourOwn": "Una semana seguida, y mañana es domingo: cuatro de las cinco son tuyas.",
   "topOfTheWeek": "Top de la semana",
   "topOfTheMonth": "Top del mes",
   "topIn": "Top en {subject}",

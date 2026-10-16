@@ -1739,6 +1739,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une semaine tenue : demain, trois des cinq sont à toi.';
 
   @override
+  String get weekKeptSundayFourOwn =>
+      'Une semaine tenue, et demain c\'est dimanche : quatre des cinq sont à toi.';
+
+  @override
   String get topOfTheWeek => 'Top de la semaine';
 
   @override

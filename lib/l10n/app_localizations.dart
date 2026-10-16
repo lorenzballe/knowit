@@ -2592,6 +2592,12 @@ abstract class AppLocalizations {
   /// **'A week kept: tomorrow three of the five are yours.'**
   String get weekKeptThreeOwn;
 
+  /// The note the evening a week is kept on the free plan, when tomorrow is also Sunday: the week's extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them.
+  ///
+  /// In en, this message translates to:
+  /// **'A week kept, and tomorrow is Sunday: four of the five are yours.'**
+  String get weekKeptSundayFourOwn;
+
   /// No description provided for @topOfTheWeek.
   ///
   /// In en, this message translates to:

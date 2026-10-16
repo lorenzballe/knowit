@@ -412,6 +412,7 @@
   "continueFree": "無料で続ける",
   "archiveBeforeThisWeek": "今週より前のすべて",
   "weekKeptThreeOwn": "1週間続いた：明日は5枚のうち3枚があなたのカード。",
+  "weekKeptSundayFourOwn": "1週間続いて、明日は日曜日：5枚のうち4枚があなたのカード。",
   "topOfTheWeek": "今週のトップ",
   "topOfTheMonth": "今月のトップ",
   "topIn": "{subject}のトップ",

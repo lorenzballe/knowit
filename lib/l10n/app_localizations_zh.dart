@@ -1668,6 +1668,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
 
   @override
+  String get weekKeptSundayFourOwn => '坚持了一周，明天又是星期日：五张里有四张是你的。';
+
+  @override
   String get topOfTheWeek => '本周热门';
 
   @override

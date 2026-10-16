@@ -123,12 +123,13 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // A board is the part of a record a friend may see: streak, weeks,
-    // calibration, today's squares. Anyone signed in may read one — that is
-    // what a friend code is for — and only its owner may write it. Nothing
-    // in a board names a card or an answer.
+    // A board is what earlier builds published for friends: streak, weeks,
+    // calibration, today's squares. Friends are gone from the app, so a
+    // board is now its owner's alone to read, and only its owner may write
+    // it (an earlier build still does, on backing up). Nothing in a board
+    // names a card or an answer.
     match /boards/{code} {
-      allow read: if request.auth != null;
+      allow read: if isOwner(resource.data.uid);
       allow create: if request.auth != null &&
         request.resource.data.uid == request.auth.uid;
       allow update: if isOwner(resource.data.uid) &&

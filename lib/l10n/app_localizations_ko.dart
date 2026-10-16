@@ -1683,6 +1683,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get weekKeptThreeOwn => '일주일 달성: 내일은 다섯 장 중 세 장이 당신의 카드.';
 
   @override
+  String get weekKeptSundayFourOwn => '일주일 달성, 내일은 일요일: 다섯 장 중 네 장이 당신의 카드.';
+
+  @override
   String get topOfTheWeek => '이번 주 인기 카드';
 
   @override
