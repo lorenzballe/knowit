@@ -166,7 +166,9 @@ await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('boards/ABCDEF').set({ uid: 'alice' }));
-  await assertSucceeds(env.authenticatedContext('bob').firestore().doc('boards/ABCDEF').get());
+  // Friends are gone: a board is its owner's alone.
+  await assertSucceeds(env.authenticatedContext('alice').firestore().doc('boards/ABCDEF').get());
+  await assertFails(env.authenticatedContext('bob').firestore().doc('boards/ABCDEF').get());
   await assertFails(env.authenticatedContext('alice').firestore().doc('elsewhere/x').set({ a: 1 }));
 });
 

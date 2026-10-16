@@ -1729,6 +1729,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'A week kept: tomorrow three of the five are yours.';
 
   @override
+  String get weekKeptSundayFourOwn =>
+      'A week kept, and tomorrow is Sunday: four of the five are yours.';
+
+  @override
   String get topOfTheWeek => 'Top of the week';
 
   @override

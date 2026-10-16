@@ -6,6 +6,7 @@ import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
@@ -211,6 +212,46 @@ void main() {
       expect(find.byKey(const ValueKey('sunday-line')), findsNothing);
       expect(tester.takeException(), isNull);
       expect(_saturday.weekday, DateTime.saturday);
+    });
+  });
+
+  group('the evening a week is kept', () {
+    Future<(String, String)?> noteOn(WidgetTester tester, DateTime day) async {
+      // A week kept today: seven days, the last of them today, all read.
+      final AppState app = await _openedAt(
+        day,
+        prefs: {'knowit.streak': 7, 'knowit.lastCompletionDate': dateKey(day)},
+      );
+      app.todayIndex = app.todaysDeck.length;
+      (String, String)? note;
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Builder(
+            builder: (context) {
+              note = weekNoteOf(context, app);
+              return const SizedBox();
+            },
+          ),
+        ),
+      );
+      return note;
+    }
+
+    testWidgets('says four of the five when tomorrow is Sunday', (
+      tester,
+    ) async {
+      final (String, String)? saturday = await noteOn(tester, _saturday);
+      expect(saturday?.$1, 'week-reward');
+      expect(saturday?.$2, contains('four of the five'));
+    });
+
+    testWidgets('says three of the five on any other evening', (tester) async {
+      final (String, String)? sunday = await noteOn(tester, _sunday);
+      expect(sunday?.$2, contains('three of the five'));
+      final (String, String)? monday = await noteOn(tester, _monday);
+      expect(monday?.$2, contains('three of the five'));
     });
   });
 }

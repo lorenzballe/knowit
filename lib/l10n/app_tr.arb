@@ -412,6 +412,7 @@
   "continueFree": "Ücretsiz devam et",
   "archiveBeforeThisWeek": "Bu haftadan öncesi",
   "weekKeptThreeOwn": "Bir hafta tamam: yarın beşten üçü senin.",
+  "weekKeptSundayFourOwn": "Bir hafta tamam, yarın da pazar: beşten dördü senin.",
   "topOfTheWeek": "Haftanın en iyileri",
   "topOfTheMonth": "Ayın en iyileri",
   "topIn": "{subject}: en iyiler",

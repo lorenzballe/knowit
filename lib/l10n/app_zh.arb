@@ -412,6 +412,7 @@
   "continueFree": "免费继续",
   "archiveBeforeThisWeek": "本周之前的一切",
   "weekKeptThreeOwn": "坚持了一周：明天五张里有三张是你的。",
+  "weekKeptSundayFourOwn": "坚持了一周，明天又是星期日：五张里有四张是你的。",
   "topOfTheWeek": "本周热门",
   "topOfTheMonth": "本月热门",
   "topIn": "{subject}热门",

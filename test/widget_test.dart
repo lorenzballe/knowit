@@ -5616,7 +5616,8 @@ void main() {
 
       for (final Locale locale in AppLocalizations.supportedLocales) {
         final l = await AppLocalizations.delegate.load(locale);
-        final String longest = l.weekKeptThreeOwn;
+        // The Saturday before a Sunday says the longer of the two.
+        final String longest = l.weekKeptSundayFourOwn;
         await tester.pumpWidget(
           MaterialApp(
             locale: locale,

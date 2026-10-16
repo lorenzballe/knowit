@@ -1674,6 +1674,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get weekKeptThreeOwn => '1週間続いた：明日は5枚のうち3枚があなたのカード。';
 
   @override
+  String get weekKeptSundayFourOwn => '1週間続いて、明日は日曜日：5枚のうち4枚があなたのカード。';
+
+  @override
   String get topOfTheWeek => '今週のトップ';
 
   @override

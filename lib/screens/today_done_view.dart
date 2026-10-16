@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 
 import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
+import '../data/daily.dart';
 import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
@@ -53,7 +54,18 @@ String plusActionOf(BuildContext context) {
 (String, String)? weekNoteOf(BuildContext context, AppState app) {
   if (app.isPlus || !app.todayCompleted) return null;
   if (app.tomorrowIsRewarded) {
-    return ('week-reward', context.l10n.weekKeptThreeOwn);
+    // A Sunday after a week kept has the week's extra card and Sunday's.
+    final DateTime tomorrow = DateTime(
+      app.today.year,
+      app.today.month,
+      app.today.day + 1,
+    );
+    return (
+      'week-reward',
+      isSunday(tomorrow)
+          ? context.l10n.weekKeptSundayFourOwn
+          : context.l10n.weekKeptThreeOwn,
+    );
   }
   return null;
 }
