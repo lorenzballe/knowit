@@ -1659,6 +1659,14 @@
  "themeOriginsLine": "The beginnings of things you use every day",
  "themeStories": "True stories",
  "themeStoriesLine": "Things that really happened",
+ "storyHint": "Tap to go on · hold to pause",
+ "storyTapOn": "Tap to go on",
+ "storyPrevious": "Previous",
+ "storyClose": "Close the story",
+ "storySave": "Save",
+ "storySaved": "Saved",
+ "storyShare": "Share",
+ "storyOpenCard": "Open the card",
  "themeDebates": "Pick a side",
  "themeDebatesLine": "No right answer, only a better argument",
  "themeWorkItOut": "Work it out",
@@ -2637,8 +2645,6 @@
  "eraNineteenthWhen": "1800 to 1900",
  "eraRecent": "This century",
  "eraRecentWhen": "Since 2000",
- "eraRulerNow": "Now",
- "eraRulerOld": "Antiquity",
  "eraShortAncient": "Antiquity",
  "eraShortEarlyModern": "1500–1800",
  "eraShortMedieval": "Middle Ages",
@@ -2738,8 +2744,8 @@
    }
   }
  },
- "moveComparedToWhat": "Compared to what?",
- "moveComparedToWhatLine": "A change means nothing without something to compare it with",
+ "moveComparedToWhat": "A lot, or a little?",
+ "moveComparedToWhatLine": "“Up 30%” means nothing until you know: compared to what?",
  "askingTitle": "A question from every subject",
  "askingIn": "Questions in {subject}",
  "@askingIn": {
@@ -2750,19 +2756,8 @@
   }
  },
  "askingLine": "The same for everyone. Answer first, then see why",
- "moveSampling": "Who got counted?",
- "moveSamplingLine": "Who ends up in a study decides what it can tell you",
- "mythDeckHint": "{at} of {of} · swipe to turn it over",
- "@mythDeckHint": {
-  "placeholders": {
-   "at": {
-    "type": "int"
-   },
-   "of": {
-    "type": "int"
-   }
-  }
- },
+ "moveSampling": "Who's missing from the data?",
+ "moveSamplingLine": "Every statistic counts some people and misses others. Who was left out can flip the answer",
  "nOfM": "{at} of {of}",
  "@nOfM": {
   "placeholders": {
@@ -2904,7 +2899,7 @@
  "theAstute": "The Astute",
  "theLead": "The lead",
  "throughTime": "Through time",
- "throughTimeLine": "From the ancient world to this year. Drag, or type a year",
+ "throughTimeLine": "From the ancient world to this year. Type a year, or let chance pick",
  "leanHint": "Slide the “{or}” to where you stand",
  "@leanHint": {
   "description": "Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.",
@@ -2988,6 +2983,8 @@
   }
  },
  "yearGo": "Go to this year",
+ "yearRandom": "Random",
+ "yearRandomHint": "Goes to a year one of the cards names",
  "yearNearest": "Nearest to {year} first",
  "@yearNearest": {
   "placeholders": {

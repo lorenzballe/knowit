@@ -275,18 +275,6 @@ void main() {
       );
       await _shoot('asking$tone');
 
-      // Use it today: the thing to try, and nothing beside it to puzzle
-      // over.
-      await _reach(tester, find.byKey(const ValueKey('theme-practical-0')));
-      expect(
-        find.text(
-          'Something to try, or to drop into a conversation, before tonight',
-        ),
-        findsOneWidget,
-      );
-      expect(_keyed((k) => k.startsWith('tried-')), findsNothing);
-      await _shoot('use-today$tone');
-
       // What came back says what it is and why it is here.
       await _reach(tester, find.byKey(const ValueKey('mix-came-back')));
       final Finder remember = find.text('Do you still remember?');
@@ -297,23 +285,28 @@ void main() {
       await _shoot('came-back$tone');
 
       // The two questions to ask of a number, named at the size every
-      // shelf is named at, and no box round them.
+      // shelf is named at, and no box round them: who is missing from the
+      // data, and whether a change is a lot or a little.
       await _reach(tester, find.byKey(const ValueKey('mix-move-sampling')));
-      for (final title in ['Who got counted?', 'Compared to what?']) {
+      for (final title in [
+        "Who's missing from the data?",
+        'A lot, or a little?',
+      ]) {
         final Finder name = find.text(title, skipOffstage: false);
         expect(name, findsOneWidget);
         expect(tester.widget<Text>(name).style, named, reason: title);
       }
       expect(
-        find.text('Who ends up in a study decides what it can tell you'),
+        find.text(
+          'Every statistic counts some people and misses others. Who was '
+          'left out can flip the answer',
+        ),
         findsOneWidget,
       );
       await _shoot('sampling$tone');
       await _reach(tester, find.byKey(const ValueKey('mix-move-compared')));
       expect(
-        find.text(
-          'A change means nothing without something to compare it with',
-        ),
+        find.text('“Up 30%” means nothing until you know: compared to what?'),
         findsOneWidget,
       );
       await _shoot('compared$tone');
@@ -330,6 +323,18 @@ void main() {
       row.jumpTo(math.min(620, row.maxScrollExtent));
       await _settle(tester);
       await _shoot('work-further$tone');
+
+      // Use it today, the last thing on the page: the thing to try, and
+      // nothing beside it to puzzle over.
+      await _reach(tester, find.byKey(const ValueKey('theme-practical-0')));
+      expect(
+        find.text(
+          'Something to try, or to drop into a conversation, before tonight',
+        ),
+        findsOneWidget,
+      );
+      expect(_keyed((k) => k.startsWith('tried-')), findsNothing);
+      await _shoot('use-today$tone');
     });
 
     testWidgets('work it out, played$tone', (tester) async {
@@ -398,7 +403,7 @@ void main() {
     expect(find.text('Tu t\'en souviens encore ?'), findsOneWidget);
     await _shoot('fr-came-back');
     await _reach(tester, find.byKey(const ValueKey('mix-move-sampling')));
-    expect(find.text('Qui a été compté ?'), findsOneWidget);
+    expect(find.text('Qui manque dans les données ?'), findsOneWidget);
     await _shoot('fr-sampling');
     await _reach(tester, find.byKey(const ValueKey('mix-work')));
     final ScrollPosition row = _row(tester);

@@ -1913,6 +1913,30 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themeStoriesLine => 'То, что случилось на самом деле';
 
   @override
+  String get storyHint => 'Нажмите, чтобы продолжить · удерживайте для паузы';
+
+  @override
+  String get storyTapOn => 'Нажмите, чтобы продолжить';
+
+  @override
+  String get storyPrevious => 'Назад';
+
+  @override
+  String get storyClose => 'Закрыть историю';
+
+  @override
+  String get storySave => 'Сохранить';
+
+  @override
+  String get storySaved => 'Сохранено';
+
+  @override
+  String get storyShare => 'Поделиться';
+
+  @override
+  String get storyOpenCard => 'Открыть карточку';
+
+  @override
   String get themeDebates => 'Выберите сторону';
 
   @override
@@ -2845,12 +2869,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get eraRecentWhen => 'С 2000 года';
 
   @override
-  String get eraRulerNow => 'Сейчас';
-
-  @override
-  String get eraRulerOld => 'Древность';
-
-  @override
   String get eraShortAncient => 'Древность';
 
   @override
@@ -2986,11 +3004,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'По сравнению с чем?';
+  String get moveComparedToWhat => 'Много или мало?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Изменение ничего не значит, если его не с чем сравнить';
+      '«Рост на 30%» ничего не значит, пока вы не знаете: по сравнению с чем?';
 
   @override
   String get askingTitle => 'По вопросу из каждой темы';
@@ -3005,16 +3023,11 @@ class AppLocalizationsRu extends AppLocalizations {
       'Одни на всех. Сначала ответьте, потом узнайте почему';
 
   @override
-  String get moveSampling => 'Кого посчитали?';
+  String get moveSampling => 'Кого нет в данных?';
 
   @override
   String get moveSamplingLine =>
-      'От того, кто попал в исследование, зависит, что оно может сказать';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$at из $of · смахните, чтобы перевернуть';
-  }
+      'Любая статистика кого-то учитывает, а кого-то упускает. Тот, кого не посчитали, может перевернуть ответ';
 
   @override
   String nOfM(int at, int of) {
@@ -3203,7 +3216,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'От древнего мира до наших дней. Перетащите или введите год';
+      'От древнего мира до наших дней. Введите год или доверьтесь случаю';
 
   @override
   String leanHint(String or) {
@@ -3286,6 +3299,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get yearGo => 'Перейти к этому году';
+
+  @override
+  String get yearRandom => 'Наугад';
+
+  @override
+  String get yearRandomHint =>
+      'Переходит к году, который называет одна из карточек';
 
   @override
   String yearNearest(String year) {

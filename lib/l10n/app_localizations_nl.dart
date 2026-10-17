@@ -1847,6 +1847,30 @@ class AppLocalizationsNl extends AppLocalizations {
   String get themeStoriesLine => 'Dingen die echt gebeurd zijn';
 
   @override
+  String get storyHint => 'Tik om verder te gaan · houd vast om te pauzeren';
+
+  @override
+  String get storyTapOn => 'Tik om verder te gaan';
+
+  @override
+  String get storyPrevious => 'Vorige';
+
+  @override
+  String get storyClose => 'Verhaal sluiten';
+
+  @override
+  String get storySave => 'Bewaren';
+
+  @override
+  String get storySaved => 'Bewaard';
+
+  @override
+  String get storyShare => 'Delen';
+
+  @override
+  String get storyOpenCard => 'Open de kaart';
+
+  @override
   String get themeDebates => 'Kies een kant';
 
   @override
@@ -2719,12 +2743,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get eraRecentWhen => 'Sinds 2000';
 
   @override
-  String get eraRulerNow => 'Nu';
-
-  @override
-  String get eraRulerOld => 'Oudheid';
-
-  @override
   String get eraShortAncient => 'Oudheid';
 
   @override
@@ -2860,11 +2878,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'Vergeleken waarmee?';
+  String get moveComparedToWhat => 'Veel of weinig?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Een verandering zegt niets zonder iets om haar mee te vergelijken';
+      '‘30% meer’ zegt niets zolang je niet weet: vergeleken waarmee?';
 
   @override
   String get askingTitle => 'Uit elk vak een vraag';
@@ -2879,16 +2897,11 @@ class AppLocalizationsNl extends AppLocalizations {
       'Voor iedereen hetzelfde. Eerst antwoorden, dan het waarom';
 
   @override
-  String get moveSampling => 'Wie werd er geteld?';
+  String get moveSampling => 'Wie ontbreekt er in de data?';
 
   @override
   String get moveSamplingLine =>
-      'Wie in een onderzoek belandt, bepaalt wat het je kan vertellen';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$at van $of · veeg om om te draaien';
-  }
+      'Elke statistiek telt sommige mensen en mist andere. Wie er ontbreekt, kan het antwoord omdraaien';
 
   @override
   String nOfM(int at, int of) {
@@ -3065,7 +3078,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'Van de oudheid tot dit jaar. Sleep, of typ een jaartal';
+      'Van de oudheid tot dit jaar. Typ een jaartal, of laat het toeval kiezen';
 
   @override
   String leanHint(String or) {
@@ -3149,6 +3162,13 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get yearGo => 'Ga naar dit jaar';
+
+  @override
+  String get yearRandom => 'Willekeurig';
+
+  @override
+  String get yearRandomHint =>
+      'Gaat naar een jaar dat een van de kaarten noemt';
 
   @override
   String yearNearest(String year) {

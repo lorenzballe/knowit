@@ -77,13 +77,10 @@ void main() {
     final order = [
       // Cards to read.
       'mix-month',
-      'theme-myths-0',
       'signature-numbers',
-      'theme-practical-0',
       'signature-debates',
       'theme-sharpest-0',
       'theme-origins-0',
-      'theme-seen-0',
       'theme-stories-0',
       // Cards to play.
       'theme-trueOrFalse-0',
@@ -93,7 +90,8 @@ void main() {
       'mix-unmask',
       'mix-how-sure',
       'mix-what-if',
-      // Ways in by time, and one card from anywhere to end.
+      // Ways in by time, one card from anywhere, and something to use
+      // before tonight, last of all.
       'mix-series',
       'mix-sixty',
       'mix-mood',
@@ -101,16 +99,15 @@ void main() {
       'mix-through-time',
       'mix-did-you-know',
       'mix-surprise',
+      'theme-practical-0',
     ];
     // Every theme on the way down has a form of its own: none of the rows
     // of small cards that were all alike is left at the foot.
     const formed = {
-      'theme-myths-0',
       'theme-trueOrFalse-0',
       'theme-practical-0',
       'theme-stories-0',
       'theme-sharpest-0',
-      'theme-seen-0',
       'theme-origins-0',
     };
     final Set<String> themes = {};

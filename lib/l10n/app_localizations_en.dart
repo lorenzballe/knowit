@@ -1837,6 +1837,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeStoriesLine => 'Things that really happened';
 
   @override
+  String get storyHint => 'Tap to go on · hold to pause';
+
+  @override
+  String get storyTapOn => 'Tap to go on';
+
+  @override
+  String get storyPrevious => 'Previous';
+
+  @override
+  String get storyClose => 'Close the story';
+
+  @override
+  String get storySave => 'Save';
+
+  @override
+  String get storySaved => 'Saved';
+
+  @override
+  String get storyShare => 'Share';
+
+  @override
+  String get storyOpenCard => 'Open the card';
+
+  @override
   String get themeDebates => 'Pick a side';
 
   @override
@@ -2696,12 +2720,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eraRecentWhen => 'Since 2000';
 
   @override
-  String get eraRulerNow => 'Now';
-
-  @override
-  String get eraRulerOld => 'Antiquity';
-
-  @override
   String get eraShortAncient => 'Antiquity';
 
   @override
@@ -2836,11 +2854,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'Compared to what?';
+  String get moveComparedToWhat => 'A lot, or a little?';
 
   @override
   String get moveComparedToWhatLine =>
-      'A change means nothing without something to compare it with';
+      '“Up 30%” means nothing until you know: compared to what?';
 
   @override
   String get askingTitle => 'A question from every subject';
@@ -2854,16 +2872,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get askingLine => 'The same for everyone. Answer first, then see why';
 
   @override
-  String get moveSampling => 'Who got counted?';
+  String get moveSampling => 'Who\'s missing from the data?';
 
   @override
   String get moveSamplingLine =>
-      'Who ends up in a study decides what it can tell you';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$at of $of · swipe to turn it over';
-  }
+      'Every statistic counts some people and misses others. Who was left out can flip the answer';
 
   @override
   String nOfM(int at, int of) {
@@ -3040,7 +3053,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'From the ancient world to this year. Drag, or type a year';
+      'From the ancient world to this year. Type a year, or let chance pick';
 
   @override
   String leanHint(String or) {
@@ -3124,6 +3137,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yearGo => 'Go to this year';
+
+  @override
+  String get yearRandom => 'Random';
+
+  @override
+  String get yearRandomHint => 'Goes to a year one of the cards names';
 
   @override
   String yearNearest(String year) {
