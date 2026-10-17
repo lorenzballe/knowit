@@ -11,23 +11,24 @@ import '../../state/explore_play.dart';
 import '../../theme.dart';
 import 'parts.dart';
 
-/// Through time — artboard 141c's ruler, on the ages the bank's cards are
-/// set in, and a year to type.
+/// Through time — artboard 141c's ages, and two ways into them: a year to
+/// type, or one picked by chance.
 ///
-/// Drag along the ruler, or step with the arrows, and the shelf under it
-/// turns to that age: the ancient world, the Middle Ages, the centuries
-/// after, the last one, this one. The canvas ran its ruler back to the first
-/// light; the bank tags the ages people lived in, so that is where this one
-/// starts. The cards for an age are dealt afresh every day, and the ruler
-/// opens on a different age each morning.
+/// The shelf opens on an age — the ancient world, the Middle Ages, the
+/// centuries after, the last one, this one — a different one each morning,
+/// its cards dealt afresh every day. The bank tags the ages people lived
+/// in, so that is where it starts, not at the first light the canvas ran
+/// its ruler back to.
 ///
-/// A ruler alone only ever says roughly when. Under it is a year to type —
-/// the one you were born in, 1492, 44 BC — and the shelf travels there: the
-/// year rolls into place, the ruler slides to the age that holds it, and the
-/// cards are the ones whose questions name the years nearest it, looked for
-/// through every card of that age no other shelf holds. A year no card is
-/// near, or an age with nothing in it today, is said plainly, with the
-/// nearest there is.
+/// There was a ruler to drag through the ages, and arrows to step along
+/// it; neither said more than roughly when, and two ways of browsing beside
+/// a field was one more than anybody used. What is left is the year: type
+/// one — the one you were born in, 1492, 44 BC — or let chance pick one a
+/// card names, and the shelf travels there. The year rolls into place, the
+/// age that holds it is named over it, and the cards are the ones whose
+/// questions name the years nearest it, looked for through every card of
+/// that age no other shelf holds. A year no card is near, or an age with
+/// nothing in it today, is said plainly, with the nearest there is.
 class ThroughTime extends StatefulWidget {
   const ThroughTime({
     super.key,
@@ -38,24 +39,29 @@ class ThroughTime extends StatefulWidget {
     this.pool = const {},
     this.day = 0,
     this.onShown,
+    this.chance,
   });
 
   /// The cards for each age that has any, oldest first.
   final List<(String, List<Pill>)> eras;
 
-  /// For each age, every card a typed year can bring up, the day's first.
-  /// An age missing here looks only through its own cards.
+  /// For each age, every card a year can bring up, the day's first. An age
+  /// missing here looks only through its own cards.
   final Map<String, List<Pill>> pool;
 
   /// The day, which settles which of two cards as near to a year comes
   /// first.
   final int day;
 
-  /// The age the ruler opens on.
+  /// The age the shelf opens on.
   final int startAt;
   final bool Function(Pill) isRead;
   final void Function(List<Pill>, Pill) onOpen;
   final ValueChanged<Pill>? onShown;
+
+  /// What picks a year at random: the phone's own chance, or a seeded one
+  /// under test.
+  final math.Random? chance;
 
   /// Where the year travelled to today is kept, so the shelf is still there
   /// when it is scrolled back to.
@@ -72,8 +78,8 @@ class ThroughTime extends StatefulWidget {
 class _ThroughTimeState extends State<ThroughTime> {
   late int _at = widget.startAt.clamp(0, widget.eras.length - 1);
 
-  /// The year travelled to, as the ruler counts years (see [yearBc]), or
-  /// null while the ages are being browsed.
+  /// The year travelled to, as the shelf counts years (see [yearBc]), or
+  /// null before one has been.
   int? _year;
 
   /// Whether the year being typed is before Christ.
@@ -85,6 +91,8 @@ class _ThroughTimeState extends State<ThroughTime> {
   /// Counts the journeys, so the year rolls every time it lands, even on
   /// the same digits.
   int _rolls = 0;
+
+  late final math.Random _chance = widget.chance ?? math.Random();
 
   final TextEditingController _field = TextEditingController();
   final FocusNode _focus = FocusNode();
@@ -135,22 +143,6 @@ class _ThroughTimeState extends State<ThroughTime> {
     return best;
   }
 
-  /// Browsing by age lets go of the year: the ruler and the year say where
-  /// the shelf is, and they must not say two places.
-  void _go(int to) {
-    final int next = to.clamp(0, widget.eras.length - 1);
-    if (next == _at) return;
-    Analytics.capture('explore era', {'era': widget.eras[next].$1});
-    if (_year != null) ExplorePlay.instance.put(ThroughTime.yearKey, null);
-    _field.clear();
-    _focus.unfocus();
-    setState(() {
-      _at = next;
-      _year = null;
-      _zero = false;
-    });
-  }
-
   void _typed(String text) {
     if (_zero) setState(() => _zero = false);
     // Four digits are a year: no need to ask for it to be gone to.
@@ -161,6 +153,7 @@ class _ThroughTimeState extends State<ThroughTime> {
     }
   }
 
+  /// The year in the field, gone to.
   void _travel() {
     final int? n = int.tryParse(_field.text.trim());
     if (n == null) return;
@@ -168,13 +161,46 @@ class _ThroughTimeState extends State<ThroughTime> {
       setState(() => _zero = true);
       return;
     }
-    final int year = _bc ? yearBc(n) : n;
+    _go(_bc ? yearBc(n) : n, by: 'typed');
+  }
+
+  /// The years the cards name, each in the age its card is set in: what
+  /// chance picks from, so the year it lands on always brings up the card
+  /// that named it, first. None still to come.
+  List<int> _namedYears() {
+    final int now = DateTime.now().year;
+    final Set<int> years = {};
+    for (final (String era, List<Pill> dealt) in widget.eras) {
+      for (final Pill p in widget.pool[era] ?? dealt) {
+        final (int, int)? span = yearsNamed(p);
+        if (span == null) continue;
+        final int year = span.$1;
+        if (year <= now && eraOfYear(year) == era) years.add(year);
+      }
+    }
+    return years.toList()..sort();
+  }
+
+  /// A year one of the cards names, picked by chance, and gone to: never
+  /// the one the shelf is already on.
+  void _random() {
+    final List<int> years = _namedYears()..remove(_year);
+    if (years.isEmpty) return;
+    final int year = years[_chance.nextInt(years.length)];
+    _bc = year <= 0;
+    _field.text = '${year <= 0 ? 1 - year : year}';
+    _go(year, by: 'random');
+  }
+
+  /// The shelf goes to [year], typed or picked by chance.
+  void _go(int year, {required String by}) {
     final int to = _ageFor(year);
     _focus.unfocus();
     HapticFeedback.selectionClick();
     Analytics.capture('explore year', {
       'year': year,
       'era': widget.eras[to].$1,
+      'by': by,
     });
     ExplorePlay.instance.put(ThroughTime.yearKey, year);
     setState(() {
@@ -255,7 +281,6 @@ class _ThroughTimeState extends State<ThroughTime> {
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
-    final int n = widget.eras.length;
     final (String era, List<Pill> dealt) = widget.eras[_at];
     final (String name, String span) = _names(context, era);
     final int? year = _year;
@@ -265,32 +290,6 @@ class _ThroughTimeState extends State<ThroughTime> {
       widget.onShown?.call(p);
     }
     final String? note = _note(context, era, cards);
-
-    Widget arrow(IconData icon, int to, String key) {
-      final bool live = to >= 0 && to < n;
-      return Semantics(
-        key: ValueKey(key),
-        button: true,
-        enabled: live,
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: live ? () => _go(to) : null,
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 200),
-            opacity: live ? 1 : 0.3,
-            child: Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: ink.withValues(alpha: 0.08),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, size: 18, color: ink),
-            ),
-          ),
-        ),
-      );
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -328,41 +327,7 @@ class _ThroughTimeState extends State<ThroughTime> {
                 ),
               ),
               const SizedBox(width: 12),
-              arrow(Icons.chevron_left_rounded, _at - 1, 'era-back'),
-              const SizedBox(width: 6),
-              arrow(Icons.chevron_right_rounded, _at + 1, 'era-on'),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 29),
-          child: _Ruler(stops: n, at: _at, onPick: _go),
-        ),
-        const SizedBox(height: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              Text(
-                context.l10n.eraRulerOld,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  color: ink.withValues(alpha: 0.45),
-                ),
-              ),
-              const Spacer(),
-              Text(
-                context.l10n.eraRulerNow,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  color: ink.withValues(alpha: 0.45),
-                ),
-              ),
+              _Chance(onTap: _random),
             ],
           ),
         ),
@@ -851,101 +816,52 @@ class _RollingYearState extends State<_RollingYear>
   }
 }
 
-/// The ruler: a stop for every age, a line filled as far as the one chosen,
-/// and a thumb that can be dragged from one to the next.
-class _Ruler extends StatelessWidget {
-  const _Ruler({required this.stops, required this.at, required this.onPick});
+/// The other way to a year: a die and the word, level with the age's name,
+/// a fingertip high. Chance picks a year one of the cards names, so where
+/// it lands there is always something to read.
+class _Chance extends StatelessWidget {
+  const _Chance({required this.onTap});
 
-  final int stops;
-  final int at;
-  final ValueChanged<int> onPick;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
-    return LayoutBuilder(
-      builder: (context, box) {
-        final double w = box.maxWidth;
-        double x(int i) => stops < 2 ? 0 : w * i / (stops - 1);
-        int nearest(double dx) =>
-            stops < 2 ? 0 : (dx / w * (stops - 1)).round().clamp(0, stops - 1);
-        return GestureDetector(
-          key: const ValueKey('era-ruler'),
-          behavior: HitTestBehavior.opaque,
-          onTapDown: (d) => onPick(nearest(d.localPosition.dx)),
-          onHorizontalDragUpdate: (d) => onPick(nearest(d.localPosition.dx)),
-          child: SizedBox(
-            height: 44,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                for (int i = 0; i < stops; i++)
-                  Positioned(
-                    left: x(i) - 0.5,
-                    top: 6,
-                    width: 1,
-                    height: 14,
-                    child: ColoredBox(color: ink.withValues(alpha: 0.24)),
-                  ),
-                Positioned(
-                  left: -9,
-                  right: -9,
-                  top: 28,
-                  height: 4,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: ink.withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(9),
-                    ),
-                  ),
-                ),
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeOutCubic,
-                  left: -9,
-                  top: 28,
-                  height: 4,
-                  width: x(at) + 9,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: ink,
-                      borderRadius: BorderRadius.circular(9),
-                    ),
-                  ),
-                ),
-                for (int i = 0; i < stops; i++)
-                  Positioned(
-                    left: x(i) - 4,
-                    top: 26,
-                    width: 8,
-                    height: 8,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: i <= at ? ink : ink.withValues(alpha: 0.3),
-                      ),
-                    ),
-                  ),
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeOutCubic,
-                  left: x(at) - 11,
-                  top: 19,
-                  width: 22,
-                  height: 22,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: context.p.surface,
-                      border: Border.all(color: ink, width: 3),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    final l = context.l10n;
+    return Semantics(
+      key: const ValueKey('era-random'),
+      button: true,
+      hint: l.yearRandomHint,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 44),
+          padding: const EdgeInsets.fromLTRB(14, 10, 17, 10),
+          decoration: BoxDecoration(
+            color: ink.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(99),
           ),
-        );
-      },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ExcludeSemantics(
+                child: Icon(Icons.casino_rounded, size: 17, color: ink),
+              ),
+              const SizedBox(width: 7),
+              Text(
+                l.yearRandom,
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w700,
+                  height: 1.1,
+                  color: ink,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

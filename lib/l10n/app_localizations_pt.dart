@@ -1846,6 +1846,30 @@ class AppLocalizationsPt extends AppLocalizations {
   String get themeStoriesLine => 'Coisas que aconteceram mesmo';
 
   @override
+  String get storyHint => 'Toca para continuar · mantém premido para pausar';
+
+  @override
+  String get storyTapOn => 'Toca para continuar';
+
+  @override
+  String get storyPrevious => 'Anterior';
+
+  @override
+  String get storyClose => 'Fechar a história';
+
+  @override
+  String get storySave => 'Guardar';
+
+  @override
+  String get storySaved => 'Guardada';
+
+  @override
+  String get storyShare => 'Partilhar';
+
+  @override
+  String get storyOpenCard => 'Abrir a carta';
+
+  @override
   String get themeDebates => 'Escolhe um lado';
 
   @override
@@ -2728,12 +2752,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get eraRecentWhen => 'Desde 2000';
 
   @override
-  String get eraRulerNow => 'Agora';
-
-  @override
-  String get eraRulerOld => 'Antiguidade';
-
-  @override
   String get eraShortAncient => 'Antiguidade';
 
   @override
@@ -2867,11 +2885,11 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'Comparado com quê?';
+  String get moveComparedToWhat => 'Muito ou pouco?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Uma mudança não significa nada sem algo com que a comparar';
+      '«Mais 30%» não quer dizer nada enquanto não souberes: comparado com quê?';
 
   @override
   String get askingTitle => 'Uma pergunta de cada tema';
@@ -2886,16 +2904,11 @@ class AppLocalizationsPt extends AppLocalizations {
       'Iguais para todos. Primeiro responde, depois vê porquê';
 
   @override
-  String get moveSampling => 'Quem foi contado?';
+  String get moveSampling => 'Quem falta nos dados?';
 
   @override
   String get moveSamplingLine =>
-      'Quem acaba num estudo decide o que ele te pode dizer';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$at de $of · desliza para virar';
-  }
+      'Qualquer estatística conta umas pessoas e deixa outras de fora. Quem falta pode virar a resposta ao contrário';
 
   @override
   String nOfM(int at, int of) {
@@ -3072,7 +3085,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'Do mundo antigo a este ano. Arrasta, ou escreve um ano';
+      'Do mundo antigo a este ano. Escreve um ano, ou deixa o acaso escolher';
 
   @override
   String leanHint(String or) {
@@ -3155,6 +3168,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get yearGo => 'Ir para este ano';
+
+  @override
+  String get yearRandom => 'Ao acaso';
+
+  @override
+  String get yearRandomHint => 'Vai para um ano que uma das cartas refere';
 
   @override
   String yearNearest(String year) {

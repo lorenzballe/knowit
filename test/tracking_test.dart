@@ -7,6 +7,7 @@
 //   flutter test test/tracking_test.dart
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:ui' show FrameTiming;
 
 import 'package:flutter/foundation.dart';
@@ -17,6 +18,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
+import 'package:astuto/data/explore_mix.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/debug_flags.dart';
@@ -28,6 +30,7 @@ import 'package:astuto/measure/screens.dart';
 import 'package:astuto/measure/session.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
+import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/subscription.dart';
 import 'package:astuto/sync/trace.dart';
@@ -727,6 +730,128 @@ void main() {
       );
       expect(shelf['p'], 1);
       expect(shelf['tk'], 1);
+    });
+
+    testWidgets('a story played is said as it opens, when it is finished and '
+        'as it closes, with how many of its beats were seen', (tester) async {
+      _phone(tester);
+      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+
+      // Down to the true stories, and the first of them.
+      final Finder shelf = find.byKey(const ValueKey('theme-stories-0'));
+      final ScrollPosition list = tester
+          .state<ScrollableState>(
+            find
+                .descendant(
+                  of: find.byType(ExploreScreen),
+                  matching: find.byWidgetPredicate(
+                    (w) =>
+                        w is Scrollable &&
+                        w.axisDirection == AxisDirection.down,
+                  ),
+                )
+                .first,
+          )
+          .position;
+      for (var i = 0; i < 80 && shelf.evaluate().isEmpty; i++) {
+        list.jumpTo(math.min(list.pixels + 500, list.maxScrollExtent));
+        await tester.pump();
+      }
+      list.jumpTo(list.pixels + tester.getTopLeft(shelf).dy - 200);
+      await _settle(tester);
+      final Finder tile = find
+          .descendant(
+            of: shelf,
+            matching: find.byWidgetPredicate(
+              (w) =>
+                  w.key is ValueKey<String> &&
+                  (w.key! as ValueKey<String>).value.startsWith('explore-'),
+            ),
+          )
+          .first;
+      final String id = (tester.widget(tile).key! as ValueKey<String>).value
+          .substring('explore-'.length);
+      final Pill pill = PillBank.byId(id)!;
+      final int beats = storyBeatCount(pill);
+
+      await tester.tap(tile);
+      await _settle(tester);
+      final opened = sink.last('explore story opened')!;
+      expect(opened['pill_id'], id);
+      expect(opened['topic'], isNotNull);
+      expect(opened['beats'], beats);
+      expect(opened['authored'], pill.scene is StoryScene);
+      expect(opened['rank'], 1);
+
+      // Two beats on, and closed: three of them seen, not finished.
+      final Size screen =
+          tester.view.physicalSize / tester.view.devicePixelRatio;
+      for (var i = 0; i < 2; i++) {
+        await tester.tapAt(Offset(screen.width * 0.8, screen.height * 0.45));
+        await tester.pump(const Duration(milliseconds: 900));
+      }
+      await tester.tap(find.byKey(const ValueKey('story-close')));
+      await _settle(tester);
+      expect(sink.all('explore story finished'), isEmpty);
+      final closed = sink.last('explore story closed')!;
+      expect(closed['pill_id'], id);
+      expect(closed['beats'], beats);
+      expect(closed['beats_seen'], 3);
+      expect(closed['finished'], isFalse);
+      expect(closed['exit'], 'closed');
+      expect(closed['taps_back'], 0);
+      expect(closed['ms_in_story'], isA<int>());
+      // The story is a screen of its own, opened from Explore.
+      final story = sink
+          .all('screen left')
+          .firstWhere((e) => e['screen'] == 'story');
+      expect(story['from'], 'explore');
+      expect(story['left_to'], 'explore');
+
+      // Again, to the end this time, and pulled down to close.
+      await tester.tap(tile);
+      await _settle(tester);
+      for (var i = 0; i < 12; i++) {
+        if (find.byKey(const ValueKey('story-end')).evaluate().isNotEmpty) {
+          break;
+        }
+        if (pill.scene case final StoryScene s
+            when find.text(s.options[s.answer]).evaluate().isNotEmpty &&
+                find.text('YOU').evaluate().isEmpty) {
+          await tester.tap(find.text(s.options[s.answer]));
+          await tester.pump();
+          await tester.pump(const Duration(seconds: 2));
+        } else {
+          await tester.tapAt(Offset(screen.width * 0.8, screen.height * 0.45));
+          await tester.pump(const Duration(milliseconds: 900));
+        }
+      }
+      expect(find.byKey(const ValueKey('story-end')), findsOneWidget);
+      final finished = sink.last('explore story finished')!;
+      expect(finished['pill_id'], id);
+      expect(finished['ms_to_finish'], isA<int>());
+      expect(
+        finished['picked_right'],
+        pill.scene is StoryScene ? isTrue : isNull,
+      );
+      await tester.drag(
+        find.byKey(const ValueKey('story-player')),
+        const Offset(0, 400),
+      );
+      await _settle(tester);
+      final again = sink.last('explore story closed')!;
+      expect(again['finished'], isTrue);
+      expect(again['beats_seen'], beats);
+      expect(again['exit'], 'swiped down');
+      // Opening it read the card, as opening any card on Explore does.
+      expect(
+        sink.all('card read elsewhere').where((e) => e['pill_id'] == id),
+        hasLength(1),
+      );
     });
   });
 

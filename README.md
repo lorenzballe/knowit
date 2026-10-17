@@ -493,7 +493,8 @@ like what it holds, from artboards 131–141 (`lib/data/explore_mix.dart`
 deals them, `lib/widgets/explore/` draws them), dealt for the day from what
 the reader has not read, each card on one shelf only.
 
-The order is fixed, and reads in three movements.
+The order is fixed, and reads in three movements, with something to use
+before tonight at the very end.
 
 **Cards to read.**
 
@@ -501,13 +502,8 @@ The order is fixed, and reads in three movements.
    large on the lead cards: a star for Pop culture, a planet for Space. The
    subject turns on the first of the month, through every subject but
    Thinking before one comes back.
-2. **Myths, busted** (131e's deck, thrown aside one by one).
-3. **Numbers that surprise** (the figure itself).
-4. **Use it today** (131's list): something to try, or to drop into a
-   conversation, before tonight. Each row is the thing itself and opens its
-   card. The rings to tick one off as tried are gone: nobody could tell what
-   they were for.
-5. **Pick a side** (two halves). The "or" between the two sides is a
+2. **Numbers that surprise** (the figure itself).
+3. **Pick a side** (two halves). The "or" between the two sides is a
    handle: drag it towards a side and the side fills behind it, four steps
    from a little to all the way. Let go past the middle and that is the
    card's answer: the side, as the card's own buttons record it, and how
@@ -515,12 +511,32 @@ The order is fixed, and reads in three movements.
    calibration, which counts only cards with a right answer). The card
    says the lean back, on the shelf and on its own reveal. There are no
    counts of what other readers chose, so none is shown.
-6. **For the sharpest**, **Where it came from**, **Seen, not read** and
-   **True stories** (133e).
+4. **For the sharpest** and **Where it came from** (133e).
+5. **True stories** (133e), which play as stories now: a tap on one and it
+   grows out of its tile to the whole screen, on the card's own colour,
+   with its subject's mark and name at the head as on the card's front.
+   Bars across the top fill as each beat plays; a beat stays up as long as
+   it takes to read unhurried, a tap on the right goes on and on the left
+   back, a finger held down stops it, and a pull down sends it back into
+   its tile. The beats are the card's question, then its answer a sentence
+   at a time; a card written with a story to play (`story` scenes) plays
+   that instead — its scenes, its drawings turning one into the next, the
+   question it stops on, which waits for the reader's pick, and what
+   happened and why. It ends on the line to keep, with keeping the card,
+   sharing it and opening it whole. Opening a story is reading its card.
+   With animations off or a screen reader on, nothing moves on by itself.
+   The shelf deals the stories written to be played first, then cards
+   whose hook is a story set in an age (none timeless, no debates)
+   (`lib/widgets/explore/story_player.dart`).
+
+There was a deck of **Myths, busted** here, one claim at a time; True or
+false, further down, already asks the reader to call a claim, so it went.
+**Seen, not read**, cards with a little chart drawn at their foot, went too:
+Unmask the chart is the shelf of pictures, and it plays them.
 
 **Cards to play.**
 
-7. **True or false** (133e), answered on the shelf. The answer is kept like
+6. **True or false** (133e), answered on the shelf. The answer is kept like
    any other, and the card counts as read. Under the row, **spot the false
    one**: four claims from cards not read, three true and one false, from
    four subjects, dealt for the day. A tap chooses, a second word confirms;
@@ -528,47 +544,58 @@ The order is fixed, and reads in three movements.
    claim picked is answered — "false", which is that card's own answer —
    and all four count as read, so the day never deals one whose answer the
    reveal has already given away.
-8. **Do you still remember?** (133d): the cards answered days ago, back to
+7. **Do you still remember?** (133d): the cards answered days ago, back to
    see if the answer stuck, each saying how long it waited and how it went
    last time. Only there when something is due.
-9. **Who got counted?** and **Compared to what?**: two of the questions that
-   catch a trick in a number (138b), named like every other shelf, with what
-   the reader has done with the move level with the name. Who got counted
-   asks who ended up in a study, since that decides what it can tell you;
-   Compared to what asks for something to set a change against. They were a
-   move's name set large in a box of its own, which took more room than the
-   cards and still did not say what it meant.
-10. **Work it out** (133b). Every way of putting a number on something, on
-    one row: pick one, move it and check (138d), closer and closer (139d),
-    which is bigger (139c), bet a range (139a), place your bet (139b). Two
-    of each, in an order drawn for the day — a round of every way, then
-    another, never two of a kind side by side — every card the same size and
-    saying in its corner which game it is. There is no choosing a way first.
-    Bets come out of a hundred points a day. The figures are the cards' own
-    answers.
-11. **Unmask the chart** (138d). A real chart from a card plays its trick,
+8. **Who's missing from the data?** and **A lot, or a little?**: two of the
+   questions that catch a trick in a number (138b), named like every other
+   shelf, with what the reader has done with the move level with the name.
+   The first is about who a statistic left out, which can flip its answer;
+   the second asks what a change is set against, since "up 30%" means
+   nothing until you know compared to what. They were called "Who got
+   counted?" and "Compared to what?", which said the move to someone who
+   knew it already and nothing to anyone else; before that, a move's name
+   set large in a box of its own.
+9. **Work it out** (133b). Every way of putting a number on something, on
+   one row: pick one, move it and check (138d), closer and closer (139d),
+   which is bigger (139c), bet a range (139a), place your bet (139b). Two
+   of each, in an order drawn for the day — a round of every way, then
+   another, never two of a kind side by side — every card the same size and
+   saying in its corner which game it is. There is no choosing a way first.
+   Bets come out of a hundred points a day. The figures are the cards' own
+   answers.
+10. **Unmask the chart** (138d). A real chart from a card plays its trick,
     and then is redrawn honestly.
-12. **How sure am I, and why** (138c) and **What if it's true?** (138a).
+11. **How sure am I, and why** (138c) and **What if it's true?** (138a).
 
 **Ways in by time.**
 
-13. **In a few cards** (140d's series, odds that lie among them).
-14. **Sixty seconds** (140d): eight claims against the clock, the same
+12. **In a few cards** (140d's series, odds that lie among them).
+13. **Sixty seconds** (140d): eight claims against the clock, the same
     eight for everybody that day, and the score and the misses at the end.
-15. **Your mood, your minutes** (140b). Pick a tone and the time you have;
+14. **Your mood, your minutes** (140b). Pick a tone and the time you have;
     the cards are from the bank, not the reader's own.
-16. **Today's edition** (141f): the same front page for everybody, the lead,
+15. **Today's edition** (141f): the same front page for everybody, the lead,
     two columns, the day in numbers, a correction and a puzzle.
-17. **Through time** (141c's ruler). Pick an age and get its cards; they
-    change every day. Or type a year, before Christ or after: it rolls into
-    place, the ruler slides to the age that holds it, and the cards are the
-    ones whose questions name the nearest years, looked for through every
+16. **Through time** (141c). It opens on an age, a different one each day,
+    and has two ways in: type a year, before Christ or after, or let chance
+    pick one — **Random** goes to a year one of the cards names. The year
+    rolls into place, the age that holds it is named over it, and the cards
+    are the ones whose questions name the nearest years — a card naming the
+    year itself before one naming its decade — looked for through every
     card of that age no other shelf holds. A year no card is near, an age
     with nothing today, a year still to come and a year 0 are each said
-    plainly.
-18. **Did you know?** (141b): a pile to turn over, new to me or knew it.
-19. **Not sure where to start** (138f), at the very bottom: one card from
-    anywhere.
+    plainly. The ruler and its arrows went: they only ever said roughly
+    when, and two ways of browsing beside a field was one too many.
+17. **Did you know?** (141b): a pile to turn over, new to me or knew it.
+18. **Not sure where to start** (138f): one card from anywhere.
+
+**To end on.**
+
+19. **Use it today** (131's list), the last thing on the page: something to
+    try, or to drop into a conversation, before tonight. Each row is the
+    thing itself and opens its card. The rings to tick one off as tried are
+    gone: nobody could tell what they were for.
 
 The whole of Explore is free. It is what brings a reader back every day.
 The paid perks stay the three they are: five cards all the reader's own,

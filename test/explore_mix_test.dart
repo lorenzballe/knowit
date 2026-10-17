@@ -12,7 +12,6 @@ void main() {
 
   List<String> idsOf(ExploreMix m) => [
     ...m.month.map((p) => p.id),
-    ...?m.myths?.pills.map((p) => p.id),
     ...?m.numbers?.pills.map((p) => p.id),
     ...?m.trueFalse?.pills.map((p) => p.id),
     ...?m.practical?.pills.map((p) => p.id),
@@ -23,7 +22,6 @@ void main() {
     ...?m.sharpest?.pills.map((p) => p.id),
     ...m.didYouKnow.map((p) => p.id),
     ...m.compared.map((p) => p.id),
-    ...?m.seen?.pills.map((p) => p.id),
     ...m.sampling.map((p) => p.id),
     for (final s in m.series) ...s.cards.map((p) => p.id),
     ...?m.origins?.pills.map((p) => p.id),
@@ -82,8 +80,8 @@ void main() {
       for (final p in mix.trueFalse!.pills) {
         expect(isTrueOrFalse(p), isTrue, reason: p.id);
       }
-      for (final p in mix.myths!.pills) {
-        expect(p.hook, 'misconception', reason: p.id);
+      for (final p in mix.stories!.pills) {
+        expect(tellsAStory(p), isTrue, reason: p.id);
       }
       for (final p in mix.sharpest!.pills) {
         expect(p.difficulty, Difficulty.hard, reason: p.id);
@@ -161,6 +159,134 @@ void main() {
       }
       // Pop culture's month has nothing to show in Space.
       expect(m.month, isEmpty);
+    });
+  });
+
+  group('true stories', () {
+    Pill told(String question, String answer, {String era = 'twentieth'}) =>
+        Pill(
+          id: 't',
+          topic: 'History',
+          color: const Color(0xFFFFB020),
+          ink: const Color(0xFF10100C),
+          tint: const Color(0xFFFFB020),
+          question: question,
+          answer: answer,
+          barMove: '',
+          source: '',
+          era: era,
+          hook: 'story',
+        );
+
+    test('the written stories come first, then stories set in an age', () {
+      final ThemedShelf shelf = trueStories(bank, day: 20735)!;
+      final List<Pill> cards = shelf.pills;
+      expect(cards, hasLength(kThemeCards));
+      expect(cards.every(tellsAStory), isTrue);
+      // Every card written with a story to play before any that is not.
+      final int lastWritten = cards.lastIndexWhere(
+        (p) => p.scene is StoryScene,
+      );
+      final int firstTold = cards.indexWhere((p) => p.scene is! StoryScene);
+      expect(lastWritten, greaterThanOrEqualTo(0));
+      if (firstTold >= 0) expect(lastWritten, lessThan(firstTold));
+      // Never more than two from a subject.
+      final Map<String, int> bySubject = {};
+      for (final p in cards) {
+        bySubject[p.topic] = (bySubject[p.topic] ?? 0) + 1;
+      }
+      expect(
+        bySubject.values.every((n) => n <= 2),
+        isTrue,
+        reason: '$bySubject',
+      );
+    });
+
+    test('a story is a story: set in an age, and not a debate', () {
+      expect(tellsAStory(told('What sank?', 'A ship. It sank.')), isTrue);
+      expect(
+        tellsAStory(told('What sank?', 'A ship.', era: 'timeless')),
+        isFalse,
+      );
+      expect(tellsAStory(told('What sank?', 'A ship.', era: '')), isFalse);
+      final Pill debate = PillBank.cards.firstWhere(
+        (p) => p.challenge is TakeASide,
+      );
+      expect(tellsAStory(debate), isFalse);
+      // Read, the written ones are not dealt; the rest of the shelf is.
+      final Set<String> written = {
+        for (final p in bank)
+          if (p.scene is StoryScene) p.id,
+      };
+      final ThemedShelf later = trueStories(
+        bank.where((p) => !written.contains(p.id)),
+        day: 20735,
+      )!;
+      expect(later.pills.any((p) => p.scene is StoryScene), isFalse);
+      expect(later.pills.every((p) => p.hook == 'story'), isTrue);
+    });
+
+    test('a story is its question, then its answer a sentence at a time', () {
+      final Pill p = told(
+        'Why could Los Angeles dictate its own terms in 1984?',
+        'Because it was the only city bidding. After Montreal, Tehran '
+            'pulled out. Joseph E. Levine and D. W. Griffith were not '
+            'asked. The surplus, c. 1985, was "over \$200 million." It '
+            'still funds youth sport.',
+      );
+      expect(toldBeats(p), [
+        'Why could Los Angeles dictate its own terms in 1984?',
+        'Because it was the only city bidding.',
+        'After Montreal, Tehran pulled out.',
+        'Joseph E. Levine and D. W. Griffith were not asked.',
+        'The surplus, c. 1985, was "over \$200 million."',
+        'It still funds youth sport.',
+      ]);
+      expect(sentencesOf('It kept for months at 37 °C. Then it spoiled.'), [
+        'It kept for months at 37 °C.',
+        'Then it spoiled.',
+      ]);
+      expect(sentencesOf('W.K. Kellogg sold it. e.g. this'), [
+        'W.K. Kellogg sold it. e.g. this',
+      ]);
+    });
+
+    test('an answer of many sentences is told in five beats at most', () {
+      final Pill p = told(
+        'What happened?',
+        'One. Two happened next. Three. Four came after that one. Five. '
+            'Six was the last of them all.',
+      );
+      final List<String> beats = toldBeats(p);
+      expect(beats, hasLength(1 + kStoryAnswerBeats));
+      // Nothing lost: the same words, in the same order.
+      expect(
+        beats.skip(1).join(' '),
+        'One. Two happened next. Three. Four came after that one. Five. '
+        'Six was the last of them all.',
+      );
+      for (final Pill card in bank.where(tellsAStory)) {
+        expect(
+          toldBeats(card).length,
+          lessThanOrEqualTo(1 + kStoryAnswerBeats),
+          reason: card.id,
+        );
+        expect(storyBeatCount(card), greaterThanOrEqualTo(2), reason: card.id);
+        expect(storyMinutes(card), greaterThanOrEqualTo(1), reason: card.id);
+      }
+    });
+
+    test('a beat stays up as long as it takes to read, within bounds', () {
+      expect(beatMs('Hydrogen embrittlement.'), 3000);
+      expect(
+        beatMs('one two three four five six seven eight nine ten eleven'),
+        greaterThan(beatMs('one two three four five six')),
+      );
+      expect(beatMs(List.filled(200, 'word').join(' ')), 12000);
+      // A written story plays a beat for every stop: its scenes, the
+      // question and what happened.
+      final Pill written = bank.firstWhere((p) => p.scene is StoryScene);
+      expect(storyBeatCount(written), (written.scene! as StoryScene).stops);
     });
   });
 

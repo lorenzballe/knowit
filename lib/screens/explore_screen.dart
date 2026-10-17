@@ -19,15 +19,16 @@ import '../sync/served.dart';
 import '../sync/tally.dart';
 import '../sync/trace.dart';
 import '../theme.dart';
+import '../widgets/balanced_text.dart';
 import '../widgets/explore/did_you_know.dart';
 import '../widgets/explore/form_shelves.dart';
 import '../widgets/explore/front_page.dart';
 import '../widgets/explore/month_shelf.dart';
 import '../widgets/explore/mood_minutes.dart';
-import '../widgets/explore/myth_deck.dart';
 import '../widgets/explore/series_shelf.dart';
 import '../widgets/explore/sixty_seconds.dart';
 import '../widgets/explore/spot_the_false.dart';
+import '../widgets/explore/story_player.dart';
 import '../widgets/explore/surprise_me.dart';
 import '../widgets/explore/through_time.dart';
 import '../widgets/explore/unmask_chart.dart';
@@ -35,6 +36,7 @@ import '../widgets/explore/where_you_live.dart';
 import '../widgets/place_ask.dart';
 import '../widgets/explore/work_it_out.dart';
 import '../widgets/scaled_text.dart';
+import '../widgets/share_sheet.dart';
 import '../widgets/signature_shelves.dart';
 import '../widgets/subject_icon.dart';
 import 'deck_viewer_screen.dart';
@@ -709,13 +711,14 @@ class ExploreScreenState extends State<ExploreScreen> {
               // ── The mix ──────────────────────────────────────────────────
               // Under everything that was always here, the shelves that each
               // have a form of their own, in three movements: cards to read
-              // (the month, myths, numbers, things to try, a side to pick,
-              // the hardest, origins, pictures, stories), cards to play (true
-              // or false, what came back, the tricks in a number, working it
+              // (the month, numbers, a side to pick, the hardest, origins,
+              // stories played a beat at a time), cards to play (true or
+              // false, what came back, the tricks in a number, working it
               // out, a chart unmasked, how sure, what if), and ways in by time
               // (a few cards, sixty seconds, your minutes, the day's edition,
-              // an age, a fact), with one card from anywhere at the very end.
-              // Every one is free: Explore is what brings a reader back.
+              // a year, a fact), then one card from anywhere and something to
+              // use before tonight at the very end. Every one is free:
+              // Explore is what brings a reader back.
               if (mix.month.length >= 3) ...[
                 const SizedBox(height: 24),
                 _watch(
@@ -733,42 +736,8 @@ class ExploreScreenState extends State<ExploreScreen> {
                   ),
                 ),
               ],
-              if (mix.myths case final ThemedShelf t) ...[
-                const SizedBox(height: 24),
-                _watch(
-                  'theme-${t.key}',
-                  _Shelf(
-                    key: ValueKey('theme-${t.key}'),
-                    title: _themeTitle(context, t),
-                    line: _themeLine(context, t),
-                    child: MythDeck(
-                      pills: t.pills,
-                      isRead: read,
-                      onOpen: _open,
-                      onShown: (p) => _seen('theme-${t.key}', p),
-                    ),
-                  ),
-                ),
-              ],
               if (mix.numbers case final ThemedShelf t)
                 ..._signature(context, t, read),
-              if (mix.practical case final ThemedShelf t) ...[
-                const SizedBox(height: 24),
-                _watch(
-                  'theme-${t.key}',
-                  _Shelf(
-                    key: ValueKey('theme-${t.key}'),
-                    title: _themeTitle(context, t),
-                    line: _themeLine(context, t),
-                    child: UseTodayList(
-                      pills: t.pills,
-                      isRead: read,
-                      onOpen: _open,
-                      onShown: (p) => _seen('theme-${t.key}', p),
-                    ),
-                  ),
-                ),
-              ],
               if (mix.debates case final ThemedShelf t)
                 ..._signature(context, t, read),
               if (mix.sharpest case final ThemedShelf t) ...[
@@ -805,23 +774,6 @@ class ExploreScreenState extends State<ExploreScreen> {
                   ),
                 ),
               ],
-              if (mix.seen case final ThemedShelf t) ...[
-                const SizedBox(height: 24),
-                _watch(
-                  'theme-${t.key}',
-                  _Shelf(
-                    key: ValueKey('theme-${t.key}'),
-                    title: _themeTitle(context, t),
-                    line: _themeLine(context, t),
-                    child: SeenRow(
-                      pills: t.pills,
-                      isRead: read,
-                      onOpen: _open,
-                      onShown: (p) => _seen('theme-${t.key}', p),
-                    ),
-                  ),
-                ),
-              ],
               if (mix.stories case final ThemedShelf t) ...[
                 const SizedBox(height: 24),
                 _watch(
@@ -833,7 +785,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                     child: StoryRow(
                       pills: t.pills,
                       isRead: read,
-                      onOpen: _open,
+                      onPlay: _playStory,
                       onShown: (p) => _seen('theme-${t.key}', p),
                     ),
                   ),
@@ -1115,6 +1067,25 @@ class ExploreScreenState extends State<ExploreScreen> {
                   ),
                 ),
               ],
+              // Something to use before tonight, as the last thing on the
+              // page: what a reader leaves Explore with.
+              if (mix.practical case final ThemedShelf t) ...[
+                const SizedBox(height: 24),
+                _watch(
+                  'theme-${t.key}',
+                  _Shelf(
+                    key: ValueKey('theme-${t.key}'),
+                    title: _themeTitle(context, t),
+                    line: _themeLine(context, t),
+                    child: UseTodayList(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -1376,6 +1347,43 @@ class ExploreScreenState extends State<ExploreScreen> {
             child: _CardRow(pill: pill, onTap: () => _open(rows, pill)),
           ),
       ],
+    );
+  }
+
+  /// A true story, played full screen out of the tile it was opened from.
+  /// Opening it is reading the card, as opening a card from any shelf is,
+  /// and its last screen opens the card itself, in the story's place.
+  void _playStory(List<Pill> shelf, Pill pill, Rect? from) {
+    _sight.opened();
+    final AppState app = widget.app;
+    final String title = _subject ?? context.l10n.tabExplore;
+    app.markReadElsewhere(pill.id);
+    Navigator.of(context).push(
+      StoryRoute(
+        builder: (context) => ListenableBuilder(
+          listenable: app,
+          builder: (context, _) => StoryPlayer(
+            pill: pill,
+            from: from,
+            rank: shelf.indexOf(pill) + 1,
+            facts: app.cardFacts(pill.id),
+            saved: app.isSaved(pill.id),
+            onSave: () => app.toggleSaved(pill.id),
+            onShare: () => showShareSheet(context, pill),
+            onOpenCard: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute<void>(
+                builder: (_) => DeckViewerScreen(
+                  app: app,
+                  deck: [pill],
+                  title: title,
+                  countsAsRead: true,
+                  source: 'story',
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -1709,7 +1717,7 @@ class _Shelf extends StatelessWidget {
                   ],
                 ),
               SizedBox(height: trailing == null ? 3 : 4),
-              Text(
+              BalancedText(
                 line,
                 style: AppText.body(
                   size: 12,
@@ -2194,6 +2202,10 @@ class _Place extends StatelessWidget {
   static const double _card = 146;
   static const double _ring = 3;
 
+  /// Room round the numeral for the mask: a serif reaches past the box its
+  /// line gives it, and what the mask does not cover is painted in full ink.
+  static const double _bleed = 16;
+
   @override
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
@@ -2224,19 +2236,22 @@ class _Place extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            left: 0,
-            bottom: -13,
+            left: -_bleed,
+            bottom: -13 - _bleed,
             child: ShaderMask(
               blendMode: BlendMode.srcIn,
               shaderCallback: (rect) => LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: fade,
-              ).createShader(rect),
-              child: Text(
-                '$rank',
-                textScaler: TextScaler.noScaling,
-                style: numeral,
+              ).createShader(rect.deflate(_bleed)),
+              child: Padding(
+                padding: const EdgeInsets.all(_bleed),
+                child: Text(
+                  '$rank',
+                  textScaler: TextScaler.noScaling,
+                  style: numeral,
+                ),
               ),
             ),
           ),
