@@ -87,6 +87,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareThisPill => 'このカードを共有';
 
   @override
+  String get share => '共有';
+
+  @override
   String cardOf(int k, int n) {
     return '$n枚中$k枚目';
   }
@@ -1079,9 +1082,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get barMoveCaps => '持ち帰ること';
 
   @override
-  String get theBarMoveCaps => '会話のひと言';
-
-  @override
   String get widgetFootPlain => '5枚のカード、2分。';
 
   @override
@@ -1469,9 +1469,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '出典も一緒に';
-
-  @override
-  String get fiveADayALittleSharper => '1日5枚。少しだけ鋭く。';
 
   @override
   String get shareMyDay => 'シェア';

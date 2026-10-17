@@ -87,6 +87,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareThisPill => 'Bu kartı paylaş';
 
   @override
+  String get share => 'Paylaş';
+
+  @override
   String cardOf(int k, int n) {
     return '$n karttan $k.';
   }
@@ -1108,9 +1111,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get barMoveCaps => 'AKILDA KALAN';
 
   @override
-  String get theBarMoveCaps => 'MASADA SÖYLENECEK SÖZ';
-
-  @override
   String get widgetFootPlain => 'Beş kart, iki dakika.';
 
   @override
@@ -1507,9 +1507,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'Kaynak da onunla gider';
-
-  @override
-  String get fiveADayALittleSharper => 'Günde beş. Biraz daha keskin.';
 
   @override
   String get shareMyDay => 'Paylaş';

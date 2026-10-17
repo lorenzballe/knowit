@@ -216,6 +216,12 @@ abstract class AppLocalizations {
   /// **'Share this card'**
   String get shareThisPill;
 
+  /// The share sheet's main button: sends the card's picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
   /// No description provided for @cardOf.
   ///
   /// In en, this message translates to:
@@ -1644,12 +1650,6 @@ abstract class AppLocalizations {
   /// **'WHAT TO KEEP'**
   String get barMoveCaps;
 
-  /// No description provided for @theBarMoveCaps.
-  ///
-  /// In en, this message translates to:
-  /// **'THE BAR MOVE'**
-  String get theBarMoveCaps;
-
   /// The home-screen widget's foot on a morning with no streak to show.
   ///
   /// In en, this message translates to:
@@ -2285,12 +2285,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The source goes with it'**
   String get theSourceGoesWithIt;
-
-  /// No description provided for @fiveADayALittleSharper.
-  ///
-  /// In en, this message translates to:
-  /// **'Five a day. A little sharper.'**
-  String get fiveADayALittleSharper;
 
   /// No description provided for @shareMyDay.
   ///

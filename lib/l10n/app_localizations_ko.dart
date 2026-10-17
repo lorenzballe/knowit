@@ -87,6 +87,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get shareThisPill => '이 카드 공유';
 
   @override
+  String get share => '공유';
+
+  @override
   String cardOf(int k, int n) {
     return '$n장 중 $k번째';
   }
@@ -1083,9 +1086,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get barMoveCaps => '기억할 것';
 
   @override
-  String get theBarMoveCaps => '대화용 한 문장';
-
-  @override
   String get widgetFootPlain => '카드 다섯 장, 2분.';
 
   @override
@@ -1473,9 +1473,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '출처도 함께';
-
-  @override
-  String get fiveADayALittleSharper => '하루 다섯 장. 조금 더 예리하게.';
 
   @override
   String get shareMyDay => '공유';

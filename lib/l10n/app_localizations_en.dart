@@ -87,6 +87,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareThisPill => 'Share this card';
 
   @override
+  String get share => 'Share';
+
+  @override
   String cardOf(int k, int n) {
     return 'Card $k of $n';
   }
@@ -1114,9 +1117,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get barMoveCaps => 'WHAT TO KEEP';
 
   @override
-  String get theBarMoveCaps => 'THE BAR MOVE';
-
-  @override
   String get widgetFootPlain => 'Five cards, two minutes.';
 
   @override
@@ -1513,9 +1513,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'The source goes with it';
-
-  @override
-  String get fiveADayALittleSharper => 'Five a day. A little sharper.';
 
   @override
   String get shareMyDay => 'Share day';

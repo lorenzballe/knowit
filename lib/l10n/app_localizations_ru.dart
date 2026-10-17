@@ -89,6 +89,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get shareThisPill => 'Поделиться карточкой';
 
   @override
+  String get share => 'Поделиться';
+
+  @override
   String cardOf(int k, int n) {
     return 'Карточка $k из $n';
   }
@@ -1164,9 +1167,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get barMoveCaps => 'ЧТО ЗАПОМНИТЬ';
 
   @override
-  String get theBarMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';
-
-  @override
   String get widgetFootPlain => 'Пять карточек, две минуты.';
 
   @override
@@ -1575,9 +1575,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'Источник идёт вместе с ней';
-
-  @override
-  String get fiveADayALittleSharper => 'Пять в день. Чуть острее.';
 
   @override
   String get shareMyDay => 'Поделиться';

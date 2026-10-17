@@ -87,6 +87,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareThisPill => '分享这张卡片';
 
   @override
+  String get share => '分享';
+
+  @override
   String cardOf(int k, int n) {
     return '第 $k 张，共 $n 张';
   }
@@ -1073,9 +1076,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get barMoveCaps => '值得记住';
 
   @override
-  String get theBarMoveCaps => '饭桌上的那句话';
-
-  @override
   String get widgetFootPlain => '五张卡片，两分钟。';
 
   @override
@@ -1461,9 +1461,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '来源一并附上';
-
-  @override
-  String get fiveADayALittleSharper => '每天五张，更敏锐一点。';
 
   @override
   String get shareMyDay => '分享';

@@ -54,6 +54,10 @@
  "removeFromSaved": "Remove from saved",
  "saveThisPill": "Save this card",
  "shareThisPill": "Share this card",
+ "share": "Share",
+ "@share": {
+  "description": "The share sheet's main button: sends the card's picture."
+ },
  "cardOf": "Card {k} of {n}",
  "@cardOf": {
   "placeholders": {
@@ -1028,7 +1032,6 @@
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
  "barMoveCaps": "WHAT TO KEEP",
- "theBarMoveCaps": "THE BAR MOVE",
  "widgetFootPlain": "Five cards, two minutes.",
  "@widgetFootPlain": {
   "description": "The home-screen widget's foot on a morning with no streak to show."
@@ -1432,7 +1435,6 @@
  "copiedToClipboard": "Copied to clipboard.",
  "rendering": "Rendering…",
  "theSourceGoesWithIt": "The source goes with it",
- "fiveADayALittleSharper": "Five a day. A little sharper.",
  "shareMyDay": "Share day",
  "climbedTo": "Today took you up to {rung}",
  "@climbedTo": {
