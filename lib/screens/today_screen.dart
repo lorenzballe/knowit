@@ -143,6 +143,12 @@ class _TodayScreenState extends State<TodayScreen> {
     final app = widget.app;
     final bool done = app.todayCompleted;
     _markCompletion(done);
+    // Bought from the card itself: the offer has nothing left to offer and
+    // leaves the table, so the shelf comes up. It used to stay "on the
+    // table" with no card on it — the deck drops the card after the fifth
+    // on Astute+ — and Today was a blank page for the reader who had just
+    // paid.
+    if (_magic && app.isPlus) _magic = false;
 
     // The sixth card keeps the deck on the table after the fifth is gone:
     // the shelf comes up when it, too, has been thrown.
