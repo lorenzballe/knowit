@@ -91,11 +91,14 @@ void main() {
   test('the site has every page the stores ask for', () {
     // The App Store wants a support page and a privacy policy; the paywall
     // and the listing link the terms. Each one at the address its link uses.
+    // Google Play wants a page that says how to delete an account without
+    // the app, too.
     for (final String page in const [
       'site/index.html',
       'site/privacy.html',
       'site/terms.html',
       'site/support.html',
+      'site/delete-account.html',
       'site/404.html',
     ]) {
       expect(File(page).existsSync(), isTrue, reason: page);
@@ -137,6 +140,7 @@ void main() {
       'site/404.html',
       'site/get.html',
       'site/account.html',
+      'site/delete-account.html',
     ]) {
       final String text = File(page).readAsStringSync();
       expect(text, contains('© 2026 TheBaleCompany'), reason: page);
@@ -147,6 +151,54 @@ void main() {
         isNot(contains('play.google.com/store/apps/details')),
         reason: page,
       );
+    }
+  });
+
+  test('an account can be deleted without the app, and the site says how', () {
+    final String page = File('site/delete-account.html').readAsStringSync();
+    // The steps in the app, and the way by email, in both languages.
+    expect(page, contains('Profile'));
+    expect(page, contains('Delete account'));
+    expect(page, contains('Elimina account'));
+    expect(
+      'mailto:thebalecompany@gmail.com'.allMatches(page).length,
+      greaterThanOrEqualTo(2),
+    );
+    // What is deleted, what is not, and how long a request takes.
+    expect(page, contains('What is deleted'));
+    expect(page, contains('does not cancel an Astute+ subscription'));
+    expect(page, contains('within 30 days'));
+    // Found from where a reader looks: support, the policy, every footer
+    // and the sitemap.
+    for (final String from in const [
+      'site/support.html',
+      'site/privacy.html',
+      'site/index.html',
+    ]) {
+      expect(
+        File(from).readAsStringSync(),
+        contains('href="/delete-account'),
+        reason: from,
+      );
+    }
+    expect(
+      File('site/sitemap.xml').readAsStringSync(),
+      contains('https://astutetheapp.com/delete-account'),
+    );
+  });
+
+  test('the site says who writes the cards, as the app does', () {
+    // "Every card here is written by an AI model" on the app's How screen;
+    // the landing page and the terms say it too, and promise no more than
+    // the app does.
+    final String home = File('site/index.html').readAsStringSync();
+    expect(home, contains('Who writes the cards?'));
+    expect(home, contains('An AI model writes every card'));
+    final String terms = File('site/terms.html').readAsStringSync();
+    expect(terms, contains('written by an AI model'));
+    expect(terms, isNot(contains('We check them and cite')));
+    for (final String text in [home, terms]) {
+      expect(text, isNot(contains('every month')));
     }
   });
 
