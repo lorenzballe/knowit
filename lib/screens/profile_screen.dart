@@ -27,6 +27,7 @@ import '../widgets/place_ask.dart';
 import '../widgets/premium.dart';
 import '../widgets/profile_menu.dart';
 import '../widgets/record_share_sheet.dart';
+import '../widgets/sign_in_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'journey_screen.dart';
@@ -191,23 +192,19 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _signIn(
-    BuildContext context,
-    String label,
-    Future<SignInOutcome> Function(AppState) run,
-  ) async {
+  /// Apple and Google, on the sheet every door to an account opens. What
+  /// goes wrong is said on the sheet; what goes right, here, once it has
+  /// closed.
+  Future<void> _signIn(BuildContext context) async {
     final messenger = ScaffoldMessenger.maybeOf(context);
-    final l = context.l10n;
-    final outcome = await run(app);
-    final String? note = switch (outcome) {
-      SignInOutcome.signedIn => l.signedInRecordOnAccount,
-      SignInOutcome.failed => l.couldNotSignInWith(label),
-      SignInOutcome.unavailable => l.signInNotAvailableBuild,
-      SignInOutcome.cancelled => null,
-    };
-    if (note != null) {
-      messenger?.showSnackBar(SnackBar(content: Text(note)));
-    }
+    final String done = context.l10n.signedInRecordOnAccount;
+    final bool signedIn = await showSignInSheet(
+      context,
+      account: account,
+      app: app,
+      door: SignInDoor.profile,
+    );
+    if (signedIn) messenger?.showSnackBar(SnackBar(content: Text(done)));
   }
 
   Future<void> _confirmReset(BuildContext context) async {
@@ -353,7 +350,7 @@ class ProfileScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
-                          subject.name,
+                          context.l10n.subjectOf(subject.name),
                           style: AppText.body(
                             size: 12.5,
                             weight: FontWeight.w500,
@@ -591,23 +588,16 @@ class ProfileScreen extends StatelessWidget {
                     chevron: false,
                     onTap: () {},
                   )
-                else ...[
+                // What an account is for, rather than whose button it is:
+                // the sheet behind the row has Apple and Google, and says
+                // what goes wrong if anything does.
+                else
                   ProfileRow(
-                    key: const ValueKey('profile-apple'),
-                    leading: (size) =>
-                        Icon(Icons.apple, size: size, color: context.p.ink),
-                    label: context.l10n.signInWithApple,
-                    onTap: () =>
-                        _signIn(context, 'Apple', account.signInWithApple),
+                    key: const ValueKey('profile-keep-streak'),
+                    mark: ProfileMarks.enter,
+                    label: context.l10n.keepStreakOnNewPhone,
+                    onTap: () => _signIn(context),
                   ),
-                  ProfileRow(
-                    key: const ValueKey('profile-google'),
-                    leading: (size) => GoogleMark(size: size * 19 / 22),
-                    label: context.l10n.signInWithGoogle,
-                    onTap: () =>
-                        _signIn(context, 'Google', account.signInWithGoogle),
-                  ),
-                ],
               ],
             ),
           ),

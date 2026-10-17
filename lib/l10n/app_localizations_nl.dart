@@ -1104,7 +1104,66 @@ class AppLocalizationsNl extends AppLocalizations {
   String get continueWithGoogle => 'Doorgaan met Google';
 
   @override
-  String get continueWithoutAccount => 'Doorgaan zonder account';
+  String get startReading => 'Begin met lezen';
+
+  @override
+  String get haveAnAccount => 'Heb je al een account?';
+
+  @override
+  String get signInLink => 'Inloggen';
+
+  @override
+  String get signInWelcomeTitle => 'Welkom terug';
+
+  @override
+  String get signInWelcomeLine =>
+      'Log in, en je reeks, je bewaarde kaarten en je staat van dienst komen met je mee terug.';
+
+  @override
+  String get keepStreakOnNewPhone =>
+      'Neem je reeks mee naar een nieuwe telefoon';
+
+  @override
+  String get keepStreakTitle => 'Houd je reeks vast';
+
+  @override
+  String get keepStreakLine =>
+      'Log in, en een nieuwe telefoon gaat verder waar deze ophoudt: je reeks, je bewaarde kaarten, je staat van dienst.';
+
+  @override
+  String get signInNotNow => 'Niet nu';
+
+  @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': 'Denken',
+      'science': 'Wetenschap',
+      'space': 'Ruimte',
+      'psychology': 'Psychologie',
+      'economics': 'Economie',
+      'technology': 'Technologie',
+      'history': 'Geschiedenis',
+      'human_body': 'Lichaam',
+      'philosophy': 'Filosofie',
+      'pop_culture': 'Popcultuur',
+      'nature': 'Natuur',
+      'language': 'Taal',
+      'weird_facts': 'Rariteiten',
+      'sport': 'Sport',
+      'cinema': 'Film',
+      'music': 'Muziek',
+      'art': 'Kunst',
+      'medicine': 'Geneeskunde',
+      'food': 'Eten',
+      'life': 'Leven',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote =>
+      'De kaarten zijn voorlopig in het Engels; de app spreekt jouw taal.';
 
   @override
   String get termsLine =>

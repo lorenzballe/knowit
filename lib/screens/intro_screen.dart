@@ -14,11 +14,17 @@ import '../analytics.dart';
 /// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
 ///
-/// Swipe left or tap for the next scene, swipe right for the previous, or take
-/// any of the three buttons at the foot — they all lead to the same place,
-/// because no account is created here. The copy on the next screen makes that
-/// promise explicit: an account is asked for once there is a streak worth
-/// keeping.
+/// Swipe left or tap for the next scene, swipe right for the previous. The
+/// one button at the foot is "Start reading", and it asks for nothing: no
+/// account is made here. A reader who already has one finds a quiet "Sign
+/// in" under it; everyone else is offered an account once there is a streak
+/// worth keeping, after the first finished day, and in Profile.
+///
+/// It used to lead with Apple and Google, two large white buttons over a
+/// faint "Continue without an account". The largest button is the one most
+/// people press, and while sign-in was broken in review, the first thing
+/// the app did for a new reader was fail.
+///
 /// Where the words sit, scene after scene: the same place.
 ///
 /// The copy used to be anchored by its foot, above the dots, so a title set
@@ -71,21 +77,106 @@ const double kIntroUnderSkip = 12;
 /// it, and the last scene's drawing lines up on it.
 const double kIntroSide = 22;
 
+/// The least height the picture is worth drawing at. At a larger text size
+/// the words take the room the picture had, and a picture squeezed below
+/// this is a smudge: it goes, and the words and the buttons keep their size.
+const double kIntroLeastBand = 120;
+
+/// The intro's words at the reader's text size: the box the titles are
+/// centred in, and the room under it the subtitles take, each the largest
+/// any of the five scenes needs, so the words still sit in one place scene
+/// after scene. Measured the way FitText sets them, which is how they are
+/// drawn. At the default size it is the constants above to the point; it
+/// only grows.
+class _CopyRoom {
+  const _CopyRoom({required this.titleBox, required this.subtitles});
+
+  final double titleBox;
+  final double subtitles;
+
+  double get height => titleBox + kIntroSubtitleGap + subtitles;
+
+  static _CopyRoom of(BuildContext context, double width) {
+    final l = context.l10n;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextStyle base = DefaultTextStyle.of(context).style;
+    final TextDirection direction = Directionality.of(context);
+    double fitted(
+      String text,
+      TextStyle style, {
+      required int maxLines,
+      required double minSize,
+      required double width,
+    }) {
+      final TextStyle at = base.merge(style);
+      TextPainter laidOut(double size, int? lines) => TextPainter(
+        text: TextSpan(text: text, style: at.copyWith(fontSize: size)),
+        maxLines: lines,
+        textAlign: TextAlign.center,
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout(maxWidth: width);
+      double size = at.fontSize ?? 14;
+      while (size > minSize) {
+        final TextPainter painter = laidOut(size, maxLines);
+        final bool fits = !painter.didExceedMaxLines;
+        painter.dispose();
+        if (fits) break;
+        size -= 1;
+      }
+      final TextPainter painter = laidOut(
+        size,
+        size <= minSize ? null : maxLines,
+      );
+      final double height = painter.height;
+      painter.dispose();
+      return height;
+    }
+
+    double titleBox = kIntroTitleBox;
+    double subtitles = 2 * kIntroSubtitleSize * kIntroSubtitleLeading;
+    for (int i = 0; i < 5; i++) {
+      final (String title, String sub) = _SceneCopy.words(l, i);
+      titleBox = math.max(
+        titleBox,
+        fitted(
+          title,
+          _SceneCopy.titleStyle(wordmark: i == 0),
+          maxLines: i == 0 ? 1 : 2,
+          minSize: 24,
+          width: width,
+        ),
+      );
+      subtitles = math.max(
+        subtitles,
+        fitted(
+          sub,
+          _SceneCopy.subtitleStyle,
+          maxLines: 2,
+          minSize: 14,
+          width: math.min(_SceneCopy.subtitleWidth, width),
+        ),
+      );
+    }
+    return _CopyRoom(titleBox: titleBox, subtitles: subtitles);
+  }
+}
+
 class IntroScreen extends StatefulWidget {
   const IntroScreen({
     super.key,
     required this.onContinue,
-    required this.onApple,
-    required this.onGoogle,
+    required this.onSignIn,
   });
 
-  /// Skip, and where every button lands once it is done.
+  /// "Start reading", Skip, and where a sign-in lands once it is done.
   final VoidCallback onContinue;
 
-  /// Sign in. Each returns false only when the reader backed out of the
-  /// provider's sheet, which should leave them exactly where they were.
-  final Future<bool> Function() onApple;
-  final Future<bool> Function() onGoogle;
+  /// Offers Apple and Google on a sheet of their own, for a reader who
+  /// already has an account. True once they are signed in; anything else —
+  /// "Not now", a sheet swiped away, a sign-in that did not work — leaves
+  /// them exactly where they were.
+  final Future<bool> Function(BuildContext context) onSignIn;
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -125,8 +216,8 @@ class _IntroScreenState extends State<IntroScreen> {
   void _prev() =>
       _go(_scene == 0 ? _sceneCount - 1 : _scene - 1, by: 'swipe back');
 
-  /// Skip, from the corner or from under the sign-in: said with the scene
-  /// it left from, and [by] which of the two.
+  /// The way on, from the corner or from "Start reading": said with the
+  /// scene it left from, and [by] which of the two.
   void _skipIntro({String by = 'corner'}) {
     Analytics.capture('intro skipped', {
       'at_scene': _scene + 1,
@@ -178,24 +269,44 @@ class _IntroScreenState extends State<IntroScreen> {
                     Expanded(
                       child: LayoutBuilder(
                         builder: (context, room) {
+                          // The words at the reader's text size, and the
+                          // hint's line with them: at the default size the
+                          // constants above, and larger only where a larger
+                          // size needs it.
+                          final _CopyRoom copy = _CopyRoom.of(
+                            context,
+                            room.maxWidth - 2 * kIntroSide,
+                          );
+                          final double hintSlot = math.max(
+                            kIntroHintSlot,
+                            6 +
+                                MediaQuery.textScalerOf(context).scale(12.5) *
+                                    1.4,
+                          );
                           // The picture's band is as tall as the screen's
                           // width wants it, or as tall as the room above the
                           // buttons allows once the words, the dots and the
                           // hint have taken theirs: a short phone gets a
                           // smaller picture, never a picture over the words.
+                          // Squeezed below what it is worth drawing at — the
+                          // larger text sizes — it gives its room to the
+                          // words rather than shrink to a dot.
                           final double wanted =
                               room.maxWidth * _SceneStage.ratio;
                           final double spare =
                               room.maxHeight -
                               kIntroCopyGap -
-                              kIntroCopyHeight -
+                              copy.height -
                               kIntroDotsGap -
                               kIntroDotsHeight -
-                              kIntroHintSlot;
-                          final double band = math.max(
+                              hintSlot;
+                          final double fits = math.max(
                             0,
                             math.min(wanted, spare),
                           );
+                          final double band = fits < kIntroLeastBand
+                              ? 0
+                              : fits;
                           // How much of the band's top a drawing that
                           // spans the width has to leave under Skip, in the
                           // band's own units: Skip's foot is a fixed height
@@ -206,11 +317,74 @@ class _IntroScreenState extends State<IntroScreen> {
                               kIntroSpareAbove /
                               (kIntroSpareAbove + kIntroSpareBelow);
                           final double skipFoot =
-                              kIntroSkipTop + SkipCorner.height - kIntroTop;
+                              kIntroSkipTop +
+                              SkipCorner.heightOf(context) -
+                              kIntroTop;
                           final double underSkip = band <= 0
                               ? 0
                               : math.max(0, skipFoot + kIntroUnderSkip - over) /
                                     (band / _SceneStage.bandHeight);
+                          final List<Widget> words = [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: kIntroSide,
+                              ),
+                              // Pinned by the top: the copy going out and the
+                              // copy coming in share a top edge, so nothing
+                              // jumps.
+                              child: _Swap(
+                                scene: _scene,
+                                alignment: Alignment.topCenter,
+                                child: _SceneCopy(
+                                  index: _scene,
+                                  titleBox: copy.titleBox,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: kIntroDotsGap),
+                            _Dots(
+                              key: const ValueKey('intro-dots'),
+                              count: _sceneCount,
+                              active: _scene,
+                              onTap: (i) => _go(i, by: 'dot'),
+                            ),
+                            SizedBox(
+                              height: hintSlot,
+                              child: AnimatedOpacity(
+                                opacity: _moved == 0 && _scene == 0 ? 1 : 0,
+                                duration: const Duration(milliseconds: 350),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Text(
+                                    context.l10n.swipeToSeeMore,
+                                    textAlign: TextAlign.center,
+                                    style: AppText.body(
+                                      size: 12.5,
+                                      weight: FontWeight.w500,
+                                      color: Colors.white.withValues(
+                                        alpha: 0.4,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ];
+                          // The words alone, at the very largest sizes, can
+                          // be taller than the room: they scroll then, under
+                          // the buttons, rather than run into them.
+                          if (spare + kIntroCopyGap <
+                              SkipCorner.heightOf(context)) {
+                            return SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(height: SkipCorner.heightOf(context)),
+                                  ...words,
+                                ],
+                              ),
+                            );
+                          }
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -218,61 +392,32 @@ class _IntroScreenState extends State<IntroScreen> {
                               // The picture runs off both sides, so there
                               // is nothing to see the end of, and keeps the
                               // same size whatever the words under it say.
-                              SizedBox(
-                                height: band,
-                                child: _SceneStage(
-                                  key: const ValueKey('intro-stage'),
-                                  child: _Swap(
-                                    scene: _scene,
-                                    child: _IntroScene(
-                                      index: _scene,
-                                      underSkip: underSkip,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: kIntroCopyGap),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: kIntroSide,
-                                ),
-                                // Pinned by the top: the copy going out and
-                                // the copy coming in share a top edge, so
-                                // nothing jumps.
-                                child: _Swap(
-                                  scene: _scene,
-                                  alignment: Alignment.topCenter,
-                                  child: _SceneCopy(index: _scene),
-                                ),
-                              ),
-                              const SizedBox(height: kIntroDotsGap),
-                              _Dots(
-                                key: const ValueKey('intro-dots'),
-                                count: _sceneCount,
-                                active: _scene,
-                                onTap: (i) => _go(i, by: 'dot'),
-                              ),
-                              SizedBox(
-                                height: kIntroHintSlot,
-                                child: AnimatedOpacity(
-                                  opacity: _moved == 0 && _scene == 0 ? 1 : 0,
-                                  duration: const Duration(milliseconds: 350),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 6),
-                                    child: Text(
-                                      context.l10n.swipeToSeeMore,
-                                      textAlign: TextAlign.center,
-                                      style: AppText.body(
-                                        size: 12.5,
-                                        weight: FontWeight.w500,
-                                        color: Colors.white.withValues(
-                                          alpha: 0.4,
+                              // A drawing, not words to read: its few words
+                              // are part of the picture, drawn at the size
+                              // the picture is, and the title and the line
+                              // under it say what it shows.
+                              if (band > 0) ...[
+                                SizedBox(
+                                  height: band,
+                                  child: ExcludeSemantics(
+                                    child: MediaQuery.withNoTextScaling(
+                                      child: _SceneStage(
+                                        key: const ValueKey('intro-stage'),
+                                        child: _Swap(
+                                          scene: _scene,
+                                          child: _IntroScene(
+                                            index: _scene,
+                                            underSkip: underSkip,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                const SizedBox(height: kIntroCopyGap),
+                              ] else
+                                SizedBox(height: SkipCorner.heightOf(context)),
+                              ...words,
                               const Spacer(flex: kIntroSpareBelow),
                             ],
                           );
@@ -283,18 +428,14 @@ class _IntroScreenState extends State<IntroScreen> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: kIntroSide,
                       ),
-                      child: _SignInBlock(
-                        onApple: () async {
-                          if (await widget.onApple()) widget.onContinue();
+                      child: _StartBlock(
+                        // Where Skip goes, as the one button there is.
+                        onStart: () => _skipIntro(by: 'start reading'),
+                        onSignIn: () async {
+                          if (await widget.onSignIn(context)) {
+                            widget.onContinue();
+                          }
                         },
-                        onGoogle: () async {
-                          if (await widget.onGoogle()) widget.onContinue();
-                        },
-                        // Where Skip goes, said in words under the two that
-                        // ask for an account. It used to say "Continue with
-                        // Email", which had nothing behind it: it said so in
-                        // a snackbar and carried on without one anyway.
-                        onWithoutAccount: () => _skipIntro(by: 'no account'),
                       ),
                     ),
                   ],
@@ -466,58 +607,75 @@ class _Dots extends StatelessWidget {
 }
 
 class _SceneCopy extends StatelessWidget {
-  const _SceneCopy({required this.index});
+  const _SceneCopy({required this.index, this.titleBox = kIntroTitleBox});
 
   final int index;
 
+  /// The box the title is centred in: [kIntroTitleBox], or what the largest
+  /// title takes at the reader's text size (see [_CopyRoom]).
+  final double titleBox;
+
+  /// The widest a subtitle runs.
+  static const double subtitleWidth = 302;
+
+  /// Each scene's title and line. From the translations, like every other
+  /// word in the app: the titles and lines were sitting in the language
+  /// files in every language while the screen showed its own English copy.
+  static (String, String) words(AppLocalizations l, int index) =>
+      switch (index) {
+        0 => (l.appName, l.tagline),
+        1 => (l.introTopicsTitle, l.introTopicsLine),
+        2 => (l.introQuestionTitle, l.introQuestionLine),
+        3 => (l.introMixTitle, l.introMixLine),
+        _ => (l.introThirtyTitle, l.introThirtyLine),
+      };
+
+  /// The wordmark is Fraunces at 46; the rest are Figtree at 30. The canvas
+  /// sets the scene titles in Outfit, which the app does not ship. Figtree
+  /// at 700 is the closest face already bundled; adding a third family for
+  /// five lines is not worth the weight.
+  static TextStyle titleStyle({required bool wordmark}) => wordmark
+      ? AppText.display(
+          size: 46,
+          weight: FontWeight.w600,
+          height: 1,
+          spacing: -1.6,
+          color: Colors.white,
+        )
+      : AppText.body(
+          size: 30,
+          weight: FontWeight.w700,
+          height: 1.12,
+          spacing: -1.2,
+          color: Colors.white,
+        );
+
+  static final TextStyle subtitleStyle = AppText.body(
+    size: kIntroSubtitleSize,
+    height: kIntroSubtitleLeading,
+    color: Colors.white.withValues(alpha: 0.58),
+  );
+
   @override
   Widget build(BuildContext context) {
-    // From the translations, like every other word in the app. The titles
-    // and lines were sitting in the language files in every language while
-    // the screen showed its own English copy.
-    final l = context.l10n;
-    final (String title, String sub) = switch (index) {
-      0 => (l.appName, l.tagline),
-      1 => (l.introTopicsTitle, l.introTopicsLine),
-      2 => (l.introQuestionTitle, l.introQuestionLine),
-      3 => (l.introMixTitle, l.introMixLine),
-      _ => (l.introThirtyTitle, l.introThirtyLine),
-    };
+    final (String title, String sub) = words(context.l10n, index);
     final bool wordmark = index == 0;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // A box of one height with the title centred in it: the wordmark is
-        // Fraunces at 46 and the rest are Figtree at 30, and centred in the
-        // same box their middles land on the same line. A title takes two
-        // lines when it needs them, and a size smaller before a third.
+        // A box of one height with the title centred in it: centred in the
+        // same box, the wordmark's middle and every title's land on the same
+        // line. A title takes two lines when it needs them, and a size
+        // smaller before a third.
         SizedBox(
-          height: kIntroTitleBox,
+          height: titleBox,
           child: Center(
             child: FitText(
               title,
               textAlign: TextAlign.center,
               maxLines: wordmark ? 1 : 2,
               minSize: 24,
-              style: wordmark
-                  ? AppText.display(
-                      size: 46,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -1.6,
-                      color: Colors.white,
-                    )
-                  // The canvas sets the scene titles in Outfit, which the app
-                  // does not ship. Figtree at 700 is the closest face already
-                  // bundled; adding a third family for five lines is not
-                  // worth the weight.
-                  : AppText.body(
-                      size: 30,
-                      weight: FontWeight.w700,
-                      height: 1.12,
-                      spacing: -1.2,
-                      color: Colors.white,
-                    ),
+              style: titleStyle(wordmark: wordmark),
             ),
           ),
         ),
@@ -525,17 +683,13 @@ class _SceneCopy extends StatelessWidget {
         // Two lines, in whatever size two lines take: the same style on
         // every scene, so the second line lands where it did on the last.
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 302),
+          constraints: const BoxConstraints(maxWidth: subtitleWidth),
           child: FitText(
             sub,
             maxLines: 2,
             minSize: 14,
             textAlign: TextAlign.center,
-            style: AppText.body(
-              size: kIntroSubtitleSize,
-              height: kIntroSubtitleLeading,
-              color: Colors.white.withValues(alpha: 0.58),
-            ),
+            style: subtitleStyle,
           ),
         ),
       ],
@@ -543,50 +697,67 @@ class _SceneCopy extends StatelessWidget {
   }
 }
 
-class _SignInBlock extends StatelessWidget {
-  const _SignInBlock({
-    required this.onApple,
-    required this.onGoogle,
-    required this.onWithoutAccount,
-  });
+/// The foot of every scene: "Start reading", the way in for a reader who
+/// already has an account, and the terms.
+class _StartBlock extends StatelessWidget {
+  const _StartBlock({required this.onStart, required this.onSignIn});
 
-  final VoidCallback onApple;
-  final VoidCallback onGoogle;
-  final VoidCallback onWithoutAccount;
+  final VoidCallback onStart;
+  final VoidCallback onSignIn;
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Column(
       children: [
         _WhiteButton(
-          label: context.l10n.continueWithApple,
-          onTap: onApple,
-          leading: const Icon(Icons.apple, size: 21, color: Colors.black),
+          key: const ValueKey('intro-start'),
+          label: l.startReading,
+          onTap: onStart,
         ),
-        const SizedBox(height: 11),
-        _WhiteButton(
-          label: context.l10n.continueWithGoogle,
-          onTap: onGoogle,
-          leading: const _GoogleG(),
-        ),
-        const SizedBox(height: 11),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onWithoutAccount,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 13, 0, 7),
-            child: Text(
-              context.l10n.continueWithoutAccount,
-              style: AppText.body(
-                size: 16,
-                weight: FontWeight.w500,
-                color: Colors.white.withValues(alpha: 0.74),
+        const SizedBox(height: 4),
+        // Quiet, and the whole line is the target: a reader with an
+        // account looks for it, and nobody else trips on it.
+        Semantics(
+          button: true,
+          label: '${l.haveAnAccount} ${l.signInLink}',
+          excludeSemantics: true,
+          child: GestureDetector(
+            key: const ValueKey('intro-sign-in'),
+            behavior: HitTestBehavior.opaque,
+            onTap: onSignIn,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 44),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: l.haveAnAccount),
+                      const TextSpan(text: ' '),
+                      TextSpan(
+                        text: l.signInLink,
+                        style: AppText.body(
+                          size: 15,
+                          weight: FontWeight.w600,
+                          color: Colors.white.withValues(alpha: 0.92),
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                  style: AppText.body(
+                    size: 15,
+                    weight: FontWeight.w500,
+                    color: Colors.white.withValues(alpha: 0.6),
+                  ),
+                ),
               ),
             ),
           ),
         ),
         Text(
-          context.l10n.termsLine,
+          l.termsLine,
           textAlign: TextAlign.center,
           style: AppText.body(
             size: 12.5,
@@ -599,16 +770,14 @@ class _SignInBlock extends StatelessWidget {
   }
 }
 
+/// The white button the intro's foot is built on: a finger and a half
+/// high, and taller when a longer language or a larger text size needs a
+/// second line — the words wrap rather than end in dots.
 class _WhiteButton extends StatefulWidget {
-  const _WhiteButton({
-    required this.label,
-    required this.onTap,
-    required this.leading,
-  });
+  const _WhiteButton({super.key, required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;
-  final Widget leading;
 
   @override
   State<_WhiteButton> createState() => _WhiteButtonState();
@@ -619,66 +788,44 @@ class _WhiteButtonState extends State<_WhiteButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => setState(() => _down = true),
-      onTapCancel: () => setState(() => _down = false),
-      onTapUp: (_) => setState(() => _down = false),
-      onTap: widget.onTap,
-      child: AnimatedScale(
-        scale: _down ? 0.985 : 1,
-        duration: const Duration(milliseconds: 120),
-        child: AnimatedOpacity(
-          opacity: _down ? 0.86 : 1,
+    return Semantics(
+      button: true,
+      label: widget.label,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => setState(() => _down = true),
+        onTapCancel: () => setState(() => _down = false),
+        onTapUp: (_) => setState(() => _down = false),
+        onTap: widget.onTap,
+        child: AnimatedScale(
+          scale: _down ? 0.985 : 1,
           duration: const Duration(milliseconds: 120),
-          child: Container(
-            height: 57,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                widget.leading,
-                const SizedBox(width: 9),
-                // Flexible, so a longer label in another language shortens
-                // rather than running off the end of the button.
-                Flexible(
-                  child: Text(
-                    widget.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 17,
-                      weight: FontWeight.w600,
-                      spacing: -0.2,
-                      color: Colors.black,
-                    ),
-                  ),
+          child: AnimatedOpacity(
+            opacity: _down ? 0.86 : 1,
+            duration: const Duration(milliseconds: 120),
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 57),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                widget.label,
+                textAlign: TextAlign.center,
+                style: AppText.body(
+                  size: 17,
+                  weight: FontWeight.w600,
+                  spacing: -0.2,
+                  color: Colors.black,
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-/// The Google mark, drawn rather than shipped as an asset.
-class _GoogleG extends StatelessWidget {
-  const _GoogleG();
-
-  @override
-  Widget build(BuildContext context) {
-    // Google's own mark, keyed off its plate and scaled down — not a drawing
-    // of it. Four arcs and a bar never quite become a G at nineteen pixels.
-    return Image.asset(
-      'assets/brand/google-g.png',
-      width: 19,
-      height: 19,
-      filterQuality: FilterQuality.medium,
     );
   }
 }
@@ -1167,11 +1314,22 @@ class _FallingCardState extends State<_FallingCard>
 }
 
 /// Scene 2 — a pill card, its bar move and its source.
+///
+/// The card's own words — its question, what to keep — stay in English, as
+/// every real card is for now: a card drawn in Italian here would promise an
+/// Italian card on the first morning. Everything around them is the app's
+/// and speaks the reader's language: the subject, "tap to reveal", the
+/// label over what to keep, and "Source".
 class _SceneCard extends StatelessWidget {
   const _SceneCard();
 
+  /// The card's own question, as the bank has it.
+  static const String question =
+      'Why does cinema popcorn cost more than the ticket?';
+
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
@@ -1228,7 +1386,9 @@ class _SceneCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'ECONOMICS',
+                          l.subjectOf('Economics').toUpperCase(),
+                          maxLines: 1,
+                          softWrap: false,
                           style: AppText.label(
                             size: 10,
                             spacing: 1.5,
@@ -1236,7 +1396,7 @@ class _SceneCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Why does cinema popcorn cost more than the ticket?',
+                          question,
                           style: AppText.body(
                             size: 15.5,
                             weight: FontWeight.w600,
@@ -1246,7 +1406,7 @@ class _SceneCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'tap to reveal',
+                          l.tapToRevealLower,
                           style: AppText.body(
                             size: 11,
                             weight: FontWeight.w500,
@@ -1289,7 +1449,7 @@ class _SceneCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'WHAT TO KEEP',
+                      l.barMoveCaps,
                       style: AppText.label(
                         size: 9.5,
                         spacing: 1.4,
@@ -1338,7 +1498,7 @@ class _SceneCard extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Source · Stanford GSB',
+                  l.sourceLabel('Stanford GSB'),
                   style: AppText.body(
                     size: 11.5,
                     weight: FontWeight.w600,
@@ -1528,7 +1688,7 @@ class _SceneChips extends StatelessWidget {
               _Pop(
                 duration: const Duration(milliseconds: 620),
                 delay: Duration(milliseconds: (120 + i * 60)),
-                child: _chip(i),
+                child: _chip(context.l10n.subjectOf(_names[i]), i),
               ),
           ],
         ),
@@ -1536,7 +1696,7 @@ class _SceneChips extends StatelessWidget {
     );
   }
 
-  Widget _chip(int i) {
+  Widget _chip(String name, int i) {
     final Color base = _palette[i % _palette.length];
     // Yellow and orange want dark type on them; everything else takes white.
     final bool pale = base.computeLuminance() > 0.45;
@@ -1555,7 +1715,7 @@ class _SceneChips extends StatelessWidget {
         ],
       ),
       child: Text(
-        _names[i],
+        name,
         style: AppText.body(
           size: 13.5,
           weight: FontWeight.w600,
@@ -1677,7 +1837,8 @@ class _SceneTomorrow extends StatelessWidget {
                 key: const ValueKey('intro-first-card'),
                 delay: const Duration(milliseconds: 550),
                 child: _card(
-                  '${_subject.name.toUpperCase()} · ${l.introOneOfFive}',
+                  '${l.subjectOf(_subject.name).toUpperCase()} · '
+                  '${l.introOneOfFive}',
                   l.introDayOne,
                   l.introTapTomorrow,
                   height: at(_cardHeight),
@@ -1858,8 +2019,9 @@ class _SceneTomorrow extends StatelessWidget {
               Text(day, style: meta),
             ],
           ),
+          // The first card's question, in English as the cards are.
           Text(
-            'Why does cinema popcorn cost more than the ticket?',
+            _SceneCard.question,
             maxLines: 2,
             style: AppText.display(
               size: 16,

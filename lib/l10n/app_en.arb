@@ -1021,9 +1021,54 @@
  },
  "continueWithApple": "Continue with Apple",
  "continueWithGoogle": "Continue with Google",
- "continueWithoutAccount": "Continue without an account",
- "@continueWithoutAccount": {
-  "description": "The intro's third way on, under Continue with Apple and Continue with Google: it goes where Skip goes and makes no account."
+ "startReading": "Start reading",
+ "@startReading": {
+  "description": "The intro's one big button: into the app with no account."
+ },
+ "haveAnAccount": "Already have an account?",
+ "@haveAnAccount": {
+  "description": "The quiet line under Start reading, before the words that sign in."
+ },
+ "signInLink": "Sign in",
+ "@signInLink": {
+  "description": "The words that open the sign-in sheet, right after haveAnAccount."
+ },
+ "signInWelcomeTitle": "Welcome back",
+ "@signInWelcomeTitle": {
+  "description": "The sign-in sheet's title when it is opened from the intro, by a reader who already has an account."
+ },
+ "signInWelcomeLine": "Sign in, and your streak, your saved cards and your record come back with you.",
+ "@signInWelcomeLine": {
+  "description": "Under signInWelcomeTitle: what an account brings back."
+ },
+ "keepStreakOnNewPhone": "Keep your streak on a new phone",
+ "@keepStreakOnNewPhone": {
+  "description": "Profile's row that offers an account, and the title of the sheet it opens."
+ },
+ "keepStreakTitle": "Keep your streak",
+ "@keepStreakTitle": {
+  "description": "The title of the sheet that offers an account once, after the reader's first finished day."
+ },
+ "keepStreakLine": "Sign in, and a new phone picks up where this one leaves off: your streak, your saved cards, your record.",
+ "@keepStreakLine": {
+  "description": "Under keepStreakTitle and keepStreakOnNewPhone on the sign-in sheet: what an account keeps."
+ },
+ "signInNotNow": "Not now",
+ "@signInNotNow": {
+  "description": "The way past the sign-in sheet, without an account."
+ },
+ "subjectName": "{topic, select, thinking{Thinking} science{Science} space{Space} psychology{Psychology} economics{Economics} technology{Technology} history{History} human_body{Human body} philosophy{Philosophy} pop_culture{Pop culture} nature{Nature} language{Language} weird_facts{Weird facts} sport{Sport} cinema{Cinema} music{Music} art{Art} medicine{Medicine} food{Food} life{Life} other{{topic}}}",
+ "@subjectName": {
+  "description": "A subject's name, by its key. Shown on the mix, the cards, the shelves and wherever else a subject is named. Keep each short: the mix sets them on one line in half the screen's width.",
+  "placeholders": {
+   "topic": {
+    "type": "String"
+   }
+  }
+ },
+ "cardsInEnglishNote": "The cards are in English for now; the app speaks your language.",
+ "@cardsInEnglishNote": {
+  "description": "Said once in the first run, on the mix, to a reader whose phone is not in English: the cards themselves are written in English for now."
  },
  "termsLine": "By continuing you agree to our Terms of Service & Privacy Policy",
  "@termsLine": {

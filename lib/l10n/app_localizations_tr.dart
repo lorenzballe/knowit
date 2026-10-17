@@ -1095,7 +1095,65 @@ class AppLocalizationsTr extends AppLocalizations {
   String get continueWithGoogle => 'Google ile devam et';
 
   @override
-  String get continueWithoutAccount => 'Hesapsız devam et';
+  String get startReading => 'Okumaya başla';
+
+  @override
+  String get haveAnAccount => 'Hesabın var mı?';
+
+  @override
+  String get signInLink => 'Giriş yap';
+
+  @override
+  String get signInWelcomeTitle => 'Tekrar hoş geldin';
+
+  @override
+  String get signInWelcomeLine =>
+      'Giriş yap; serin, sakladığın kartlar ve sicilin seninle geri gelsin.';
+
+  @override
+  String get keepStreakOnNewPhone => 'Serini yeni bir telefona taşı';
+
+  @override
+  String get keepStreakTitle => 'Serini kaybetme';
+
+  @override
+  String get keepStreakLine =>
+      'Giriş yap, yeni bir telefon bu telefonun kaldığı yerden devam etsin: serin, sakladığın kartlar, sicilin.';
+
+  @override
+  String get signInNotNow => 'Şimdi değil';
+
+  @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': 'Düşünme',
+      'science': 'Bilim',
+      'space': 'Uzay',
+      'psychology': 'Psikoloji',
+      'economics': 'Ekonomi',
+      'technology': 'Teknoloji',
+      'history': 'Tarih',
+      'human_body': 'İnsan bedeni',
+      'philosophy': 'Felsefe',
+      'pop_culture': 'Popüler kültür',
+      'nature': 'Doğa',
+      'language': 'Dil',
+      'weird_facts': 'Tuhaf bilgiler',
+      'sport': 'Spor',
+      'cinema': 'Sinema',
+      'music': 'Müzik',
+      'art': 'Sanat',
+      'medicine': 'Tıp',
+      'food': 'Yemek',
+      'life': 'Yaşam',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote =>
+      'Kartlar şimdilik İngilizce; uygulama senin dilini konuşuyor.';
 
   @override
   String get termsLine =>

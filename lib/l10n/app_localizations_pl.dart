@@ -1148,7 +1148,65 @@ class AppLocalizationsPl extends AppLocalizations {
   String get continueWithGoogle => 'Kontynuuj z Google';
 
   @override
-  String get continueWithoutAccount => 'Kontynuuj bez konta';
+  String get startReading => 'Zacznij czytać';
+
+  @override
+  String get haveAnAccount => 'Masz już konto?';
+
+  @override
+  String get signInLink => 'Zaloguj się';
+
+  @override
+  String get signInWelcomeTitle => 'Witaj ponownie';
+
+  @override
+  String get signInWelcomeLine =>
+      'Zaloguj się, a twoja seria, zachowane karty i historia wrócą razem z tobą.';
+
+  @override
+  String get keepStreakOnNewPhone => 'Zabierz serię na nowy telefon';
+
+  @override
+  String get keepStreakTitle => 'Nie trać swojej serii';
+
+  @override
+  String get keepStreakLine =>
+      'Zaloguj się, a nowy telefon zacznie tam, gdzie skończył ten: twoja seria, zachowane karty, twoja historia.';
+
+  @override
+  String get signInNotNow => 'Nie teraz';
+
+  @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': 'Myślenie',
+      'science': 'Nauka',
+      'space': 'Kosmos',
+      'psychology': 'Psychologia',
+      'economics': 'Ekonomia',
+      'technology': 'Technologia',
+      'history': 'Historia',
+      'human_body': 'Ciało',
+      'philosophy': 'Filozofia',
+      'pop_culture': 'Popkultura',
+      'nature': 'Przyroda',
+      'language': 'Język',
+      'weird_facts': 'Ciekawostki',
+      'sport': 'Sport',
+      'cinema': 'Kino',
+      'music': 'Muzyka',
+      'art': 'Sztuka',
+      'medicine': 'Medycyna',
+      'food': 'Jedzenie',
+      'life': 'Życie',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote =>
+      'Karty są na razie po angielsku; aplikacja mówi w twoim języku.';
 
   @override
   String get termsLine =>

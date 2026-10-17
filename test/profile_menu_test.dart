@@ -30,6 +30,7 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/music_sound.dart';
 import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/board.dart';
+import 'package:astuto/sync/identity.dart';
 import 'package:astuto/sync/place_finder.dart';
 import 'package:astuto/sync/subscription.dart';
 import 'package:astuto/theme.dart';
@@ -140,6 +141,24 @@ class _User extends Fake implements User {
 
   @override
   String? get email => null;
+}
+
+/// Firebase, running, with nobody signed in to it yet.
+class _NoOne extends Fake implements FirebaseAuth {
+  @override
+  User? get currentUser => null;
+}
+
+/// Sheets that come back "cancelled" at once, as App Review's phones did on
+/// every try: no sheet was ever on the screen.
+class _NoSheet extends Identity {
+  @override
+  Future<IdentityResult> apple() async =>
+      const IdentityResult(IdentityOutcome.cancelled);
+
+  @override
+  Future<IdentityResult> google() async =>
+      const IdentityResult(IdentityOutcome.cancelled);
 }
 
 Future<void> _settle(WidgetTester tester) async {
@@ -506,25 +525,68 @@ void main() {
       ]);
     });
 
-    testWidgets('signed out, Apple and Google, through the same sign-in', (
+    testWidgets('signed out, one row says what an account is for, and opens '
+        'Apple and Google on the sheet every door to one opens', (
       tester,
     ) async {
+      final _Said said = _Said();
+      Analytics.useForTest(said);
       final AppState app = await _app(tester);
       await tester.pumpWidget(_host(app));
       await _settle(tester);
 
       expect(find.byKey(const ValueKey('profile-sign-out')), findsNothing);
-      final Finder apple = await _row(tester, 'profile-apple');
-      expect(_in(apple, find.text('Sign in with Apple')), findsOneWidget);
-      final Finder google = await _row(tester, 'profile-google');
-      expect(_in(google, find.text('Sign in with Google')), findsOneWidget);
-      // No Firebase under a test: the sign-in says so, as it always has.
-      await tester.tap(apple);
-      await _settle(tester);
+      final Finder row = await _row(tester, 'profile-keep-streak');
       expect(
-        find.text('Signing in is not available on this build.'),
+        _in(row, find.text('Keep your streak on a new phone')),
         findsOneWidget,
       );
+      await tester.tap(row);
+      await _settle(tester);
+      final Finder sheet = find.byKey(const ValueKey('sign-in-sheet'));
+      expect(_in(sheet, find.text('Sign in with Apple')), findsOneWidget);
+      expect(_in(sheet, find.text('Sign in with Google')), findsOneWidget);
+      // No Firebase under a test: the sign-in says so, on the sheet.
+      await tester.tap(find.byKey(const ValueKey('sign-in-google')));
+      await _settle(tester);
+      expect(
+        _in(sheet, find.text('Signing in is not available on this build.')),
+        findsOneWidget,
+      );
+      expect(said.of('sign in ended').single['from'], 'profile');
+      await tester.tap(find.byKey(const ValueKey('sign-in-not-now')));
+      await _settle(tester);
+      expect(sheet, findsNothing);
+    });
+
+    testWidgets('a "cancelled" that comes back before any sheet could show '
+        'is said as a failure, not passed over in silence', (tester) async {
+      final _Said said = _Said();
+      Analytics.useForTest(said);
+      final AppState app = await _app(tester);
+      final Account account = Account(
+        uidOverride: 'me',
+        authOverride: _NoOne(),
+        boardsOverride: MemoryBoardStore(),
+        identity: _NoSheet(),
+      );
+      await tester.pumpWidget(_host(app, account: account));
+      await _settle(tester);
+
+      await tester.tap(await _row(tester, 'profile-keep-streak'));
+      await _settle(tester);
+      await tester.tap(find.byKey(const ValueKey('sign-in-apple')));
+      await _settle(tester);
+      expect(
+        _in(
+          find.byKey(const ValueKey('sign-in-sheet')),
+          find.text('Could not sign in with Apple.'),
+        ),
+        findsOneWidget,
+      );
+      final Map<String, Object> ended = said.of('sign in ended').single;
+      expect(ended['outcome'], 'cancelled');
+      expect(ended['no_sheet'], isTrue);
     });
 
     testWidgets('signed in, Sign out in their place, and asked first', (
@@ -534,8 +596,7 @@ void main() {
       await tester.pumpWidget(_host(app, account: _account(signedIn: true)));
       await _settle(tester);
 
-      expect(find.byKey(const ValueKey('profile-apple')), findsNothing);
-      expect(find.byKey(const ValueKey('profile-google')), findsNothing);
+      expect(find.byKey(const ValueKey('profile-keep-streak')), findsNothing);
       await tester.tap(await _row(tester, 'profile-sign-out'));
       await _settle(tester);
       expect(find.text('Sign out?'), findsOneWidget);
@@ -627,8 +688,7 @@ void main() {
       ('profile-archive', 'Archive', 'Last 7 days'),
       ('place-row', 'Where you live', 'Modena'),
       ('profile-plan', 'Manage subscription', 'Free plan'),
-      ('profile-apple', 'Sign in with Apple', null),
-      ('profile-google', 'Sign in with Google', null),
+      ('profile-keep-streak', 'Keep your streak on a new phone', null),
       ('profile-how', 'How cards are written', null),
       ('profile-delete', 'Delete account', null),
     ];

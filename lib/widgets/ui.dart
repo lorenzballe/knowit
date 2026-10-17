@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/topics.dart';
@@ -111,13 +113,18 @@ class SkipCorner extends StatelessWidget {
 
   static const double height = 28;
 
+  /// The row's height at the reader's text size: [height], and taller only
+  /// where a larger size would otherwise cut the word in half.
+  static double heightOf(BuildContext context) =>
+      math.max(height, MediaQuery.textScalerOf(context).scale(14) * 1.3 + 8);
+
   /// How far the word ends from the right edge of the screen.
   static const double edge = 24;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
+      height: heightOf(context),
       child: Align(
         alignment: Alignment.centerRight,
         child: GestureDetector(

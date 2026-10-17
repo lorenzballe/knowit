@@ -51,7 +51,7 @@ void _nothing(Map<String, double> _) {}
 void _noSkip() {}
 
 void _noop() {}
-Future<bool> _no() async => false;
+Future<bool> _no(BuildContext _) async => false;
 
 void main() {
   const Size phone = Size(402, 874);
@@ -73,8 +73,7 @@ void main() {
           data: const MediaQueryData(size: phone, padding: insets),
           child: IntroScreen(
             onContinue: () {},
-            onApple: () async => false,
-            onGoogle: () async => false,
+            onSignIn: (_) async => false,
           ),
         ),
       ),
@@ -120,7 +119,7 @@ void main() {
             size: small,
             padding: EdgeInsets.only(top: 47, bottom: 34),
           ),
-          child: IntroScreen(onContinue: _noop, onApple: _no, onGoogle: _no),
+          child: IntroScreen(onContinue: _noop, onSignIn: _no),
         ),
       ),
     );
