@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202610171954,
- "built": "2026-10-17T19:54:08Z",
+ "version": 202610171959,
+ "built": "2026-10-17T19:59:45Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -40180,7 +40180,7 @@
       "text": "Rare steak",
       "note": "Pink all the way through the middle.",
       "pile": "right",
-      "verdict": "Germs sit on the outside of a whole cut, and searing kills them."
+      "verdict": "Surface germs die in the sear. Pregnant? The NHS says cook all meat through."
      },
      {
       "text": "Rare burger",
@@ -40222,7 +40222,7 @@
    },
    "source": "USDA FSIS; NHS; CDC",
    "source_kind": "institution",
-   "reference": "USDA FSIS, Molds on Food: Are They Dangerous?; USDA FSIS, Freezing and Food Safety; NHS, Can reheating rice cause food poisoning?; CDC, Say No to Raw Dough; Food Standards Agency, Rare burgers and steaks",
+   "reference": "USDA FSIS, Molds on Food: Are They Dangerous?; USDA FSIS, Freezing and Food Safety; NHS, Can reheating rice cause food poisoning?; CDC, Say No to Raw Dough; Food Standards Agency, Rare burgers and steaks; NHS, Foods to avoid in pregnancy",
    "written": "2026-10-07"
   },
   {
@@ -67393,7 +67393,7 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "Six supplements, and the reason each is taken. For which reasons do trials say the pill does its job?",
-   "answer": "The ones that work fill a gap someone really has. A baby forming a spine, a vegan with no animal foods, a breastfed infant: each lacks something specific. Healthy adults topping up a full tank get nothing measurable, which is why the big trials of fish oil and multivitamins came back flat.",
+   "answer": "The ones that work fill a gap someone really has. A baby forming a spine, a vegan with no animal foods, a breastfed infant: each lacks something specific. Healthy adults topping up a full tank gain little a trial can show: the big fish oil and multivitamin trials missed their main goals.",
    "move": "Ask what gap a pill fills before asking whether it works.",
    "ask": "Which pill do I take without knowing what I am short of?",
    "keywords": [
@@ -67429,7 +67429,7 @@
       "text": "Fish oil",
       "note": "Taken by healthy adults to protect the heart.",
       "pile": "right",
-      "verdict": "In a trial of nearly 26,000 adults, heart attacks were no rarer than on dummy pills."
+      "verdict": "Heart attacks, strokes and heart deaths together: no fewer than on dummy pills."
      },
      {
       "text": "Vitamin B12",
@@ -101921,7 +101921,7 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "Six worries about mixing medicines with food, drink or each other. Which are real risks, and which are overblown?",
-   "answer": "The real dangers are the quiet ones. Grapefruit, milk and a second packet of paracetamol all look harmless, and each changes how much drug reaches the blood. The famous fears, the pint and the old pill bottle, matter far less. A pharmacist knows which is which, and asking costs nothing.",
+   "answer": "The real dangers are the quiet ones: grapefruit, milk, a second paracetamol packet and pills past their date can all change the dose you get. The famous fear, a pint with antibiotics, matters less with most of them, though not all. A pharmacist knows which is which, and asking costs nothing.",
    "move": "Worry about what changes the dose, not about what sounds dangerous.",
    "ask": "What do I take alongside my medicines that I have never mentioned to a pharmacist?",
    "keywords": [
@@ -101956,8 +101956,8 @@
      {
       "text": "Expired tablets",
       "note": "Painkiller tablets two years past the date.",
-      "pile": "right",
-      "verdict": "US military tests found most kept working years on. Not insulin or liquids."
+      "pile": "left",
+      "verdict": "Stockpile tests found most still worked; home ones are untested. The FDA says don't."
      },
      {
       "text": "Two cold remedies",
@@ -101987,7 +101987,7 @@
    },
    "source": "NHS medicines guidance; Lyon et al., 2006",
    "source_kind": "institution",
-   "reference": "NHS, Can I drink alcohol while taking antibiotics?; NHS, Ciprofloxacin: how and when to take it; NHS, Paracetamol for adults; Lyon et al., Stability profiles of drug products extended beyond labeled expiration dates, Journal of Pharmaceutical Sciences 95:1549, 2006; Lilja et al., Clin Pharmacol Ther 64:477, 1998",
+   "reference": "NHS, Can I drink alcohol while taking antibiotics?; NHS, Ciprofloxacin: how and when to take it; NHS, Paracetamol for adults; Lyon et al., Stability profiles of drug products extended beyond labeled expiration dates, Journal of Pharmaceutical Sciences 95:1549, 2006; Lilja et al., Clin Pharmacol Ther 64:477, 1998; FDA, Don't Be Tempted to Use Expired Medicines",
    "written": "2026-10-07"
   },
   {
