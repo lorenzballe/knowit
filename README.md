@@ -1102,16 +1102,18 @@ dashboards, and has to agree with three names here.
   repository. An iPhone never asks — Apple's reviewers buy in the sandbox,
   and Apple does not allow codes that open what the app sells.
 - **Nothing to sell is not Astute+ for nothing.** When the store has put no
-  plan on sale, the buy button unlocks locally only on the web preview and
-  in debug builds, so their gated screens can be seen; a store build says
-  the purchase did not go through. And the developer tools at the foot of
-  the profile, which can switch Astute+ on, never reach a reader on an
-  iPhone: it shows them only on an install from TestFlight or Xcode. The
-  Android build for Google Play has to be made with
-  `--dart-define=DEBUG_TOOLS=false`. Apple's reviewers install with a
-  sandbox receipt too, so the build sent for review comes from the other
-  Codemagic workflow, *iOS · App Store (for review)*, made with
-  `DEBUG_TOOLS=false` (see *Debug tools*, under *What is not real yet*).
+  plan on sale, a store build shows no plan and no price at all, only that
+  the store could not be reached and a way to try again; only a debug
+  build shows the plans as sold and unlocks locally, so its gated screens
+  can be seen. And the developer tools at the foot of the profile, which
+  can switch Astute+ on, are in no build that does not ask for them with
+  `--dart-define=DEBUG_TOOLS=true`: not the App Store's, not Google
+  Play's, not the site's. Only the TestFlight builds ask, and an iPhone
+  shows them only on an install from TestFlight or Xcode. Apple's
+  reviewers install with a sandbox receipt too, so the build sent for
+  review comes from the other Codemagic workflow, *iOS · App Store (for
+  review)*, which does not ask (see *Debug tools*, under *What is not real
+  yet*).
 - **A way out of the account**, which Apple requires inside any app that
   makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
   account rows. Whoever signed in with Apple or Google confirms with the
@@ -1439,13 +1441,13 @@ TestFlight's and Xcode's do and the App Store's does not, and shows the
 section only if it does. No answer within 300 ms is a no. Apple's reviewers
 install with a sandbox receipt as well, which is why `codemagic.yaml` has a
 second workflow, `ios-app-store` (*iOS · App Store (for review)*): the same
-build made with `DEBUG_TOOLS=false`, the one to submit. Every
-debug build has it. `--dart-define=DEBUG_TOOLS=false` takes it out of any
-build, except that the site, built that way, still shows it for a visit
-whose address says `?debug`. Android asks nothing, so the build for Google
-Play must be made with `DEBUG_TOOLS=false`. The decision itself is
-`debugToolsFor`, a pure function tested case by case in
-`test/debug_tools_test.dart`.
+build made without the tools, the one to submit. No build has the section
+unless it is made with `--dart-define=DEBUG_TOOLS=true` — only the
+TestFlight workflows are, and a developer running the app passes it too —
+except that the site, built without it, still shows it for a visit whose
+address says `?debug`. Android asks nothing, so a Google Play build is
+simply made without the flag. The decision itself is `debugToolsFor`, a
+pure function tested case by case in `test/debug_tools_test.dart`.
 
 ## What the evidence says, and what follows from it
 

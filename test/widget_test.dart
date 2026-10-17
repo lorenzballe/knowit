@@ -14,6 +14,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/reader_profile.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/legal.dart';
 import 'package:astuto/main.dart';
@@ -5006,6 +5007,15 @@ void main() {
   });
 
   group('debug tools', () {
+    // A build made with the tools, as a TestFlight build is: no other build
+    // has them.
+    late bool before;
+    setUp(() {
+      before = debugToolsOn;
+      debugToolsOn = true;
+    });
+    tearDown(() => debugToolsOn = before);
+
     testWidgets('wiping puts the app back at the onboarding', (tester) async {
       SharedPreferences.setMockInitialValues({
         ..._installed(plus: true),

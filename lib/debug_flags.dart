@@ -3,18 +3,19 @@ import 'package:flutter/services.dart';
 
 /// Temporary developer tools, shown at the bottom of the profile.
 ///
-/// The switch a build is made with: `--dart-define=DEBUG_TOOLS=false` turns
-/// the tools off in it, everywhere but on the site (see [debugToolsFor]). On
-/// an iPhone it cannot decide alone, because the build that reaches testers
-/// through TestFlight is the very binary that is then submitted to the App
-/// Store: whatever it was built with, readers would get too. So the iPhone is
-/// asked at launch where it was installed from ([readDebugTools]). Android
-/// is asked nothing, which is why the build that goes to Google Play has to
-/// be made with `DEBUG_TOOLS=false`.
-const bool kDebugTools = bool.fromEnvironment(
-  'DEBUG_TOOLS',
-  defaultValue: true,
-);
+/// Off unless a build asks for them with `--dart-define=DEBUG_TOOLS=true`.
+/// They can switch Astute+ on without a purchase, so a build that forgets
+/// the flag is a build without them: the App Store review build, the Google
+/// Play build, the site and every test. Only the TestFlight builds ask
+/// (codemagic.yaml's "iOS · TestFlight", and .github/workflows/
+/// ios-testflight.yml), and on an iPhone even they show the tools only to an
+/// install from TestFlight ([readDebugTools]) — but the copy App Review
+/// installs carries a sandbox receipt too, so a TestFlight build is never
+/// the one submitted for review. The site, built without them, still shows
+/// them for a visit whose address says `?debug` (see [debugToolsFor]). A
+/// developer running the app asks for them the same way: `flutter run
+/// --dart-define=DEBUG_TOOLS=true`.
+const bool kDebugTools = bool.fromEnvironment('DEBUG_TOOLS');
 
 /// Where the app is running, as far as the developer tools are concerned.
 enum ToolsPlatform {
@@ -39,14 +40,14 @@ enum ToolsPlatform {
 
 /// Whether the developer tools are on, from everything that decides it.
 ///
-/// - `DEBUG_TOOLS=false` ([define]) turns them off, everywhere but on the
-///   site. Built that way, the site still turns them on for a visit whose
-///   address says `?debug` ([debugInAddress]): that is how they are used
-///   from a browser without being shown to everyone who opens it.
-/// - Otherwise a debug build ([debugMode]) has them.
-/// - An iPhone release build has them only when the phone says it was
-///   installed from TestFlight ([testFlight]), since the binary testers run
-///   is the one the App Store then gets.
+/// - A build made without `DEBUG_TOOLS=true` ([define]) — which is every
+///   build that does not ask — has none, everywhere but on the site, which
+///   still turns them on for a visit whose address says `?debug`
+///   ([debugInAddress]): that is how they are used from a browser without
+///   being shown to everyone who opens it.
+/// - A build made with them has them in debug ([debugMode]).
+/// - An iPhone release build made with them has them only when the phone
+///   says it was installed from TestFlight ([testFlight]).
 /// - Android, and anything else, has whatever it was built with.
 ///
 /// Pure, so every case can be tested without a phone

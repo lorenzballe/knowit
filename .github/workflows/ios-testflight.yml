@@ -167,8 +167,15 @@ jobs:
           set -e
           LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "0")
           echo "Latest TestFlight build: $LATEST; this one is $((LATEST + 1))"
+          # A TestFlight build, so it asks for the developer tools, which the
+          # app leaves out of any build that does not (lib/debug_flags.dart).
+          # On a phone they show only to installs from TestFlight — but the
+          # copy Apple's reviewers install is a sandbox install too, so a
+          # build of this workflow is never the one submitted for review:
+          # that is Codemagic's "iOS · App Store (for review)".
           flutter build ipa --release \
             --build-number=$((LATEST + 1)) \
+            --dart-define=DEBUG_TOOLS=true \
             --dart-define=REVENUECAT_IOS_KEY=$REVENUECAT_IOS_KEY \
             --dart-define=POSTHOG_KEY=$POSTHOG_KEY \
             --dart-define=POSTHOG_HOST=$POSTHOG_HOST \
