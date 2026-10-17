@@ -509,6 +509,21 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'Kartların';
+
+  @override
+  String get nothingYet => 'Henüz yok';
+
+  @override
+  String get lastSevenDays => 'Son 7 gün';
+
+  @override
+  String get accountSection => 'Hesap';
+
+  @override
+  String get aboutSection => 'Hakkında';
+
+  @override
   String get manageSubscription => 'Aboneliği yönet';
 
   @override

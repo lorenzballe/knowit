@@ -504,6 +504,21 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get yourCards => '내 카드';
+
+  @override
+  String get nothingYet => '아직 없어요';
+
+  @override
+  String get lastSevenDays => '최근 7일';
+
+  @override
+  String get accountSection => '계정';
+
+  @override
+  String get aboutSection => '정보';
+
+  @override
   String get manageSubscription => '구독 관리';
 
   @override

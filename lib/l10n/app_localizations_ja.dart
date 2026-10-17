@@ -502,6 +502,21 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'あなたのカード';
+
+  @override
+  String get nothingYet => 'まだありません';
+
+  @override
+  String get lastSevenDays => '過去7日間';
+
+  @override
+  String get accountSection => 'アカウント';
+
+  @override
+  String get aboutSection => 'このアプリについて';
+
+  @override
   String get manageSubscription => 'サブスクリプションを管理';
 
   @override

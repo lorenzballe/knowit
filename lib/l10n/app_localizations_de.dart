@@ -514,6 +514,21 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'Deine Karten';
+
+  @override
+  String get nothingYet => 'Noch nichts';
+
+  @override
+  String get lastSevenDays => 'Letzte 7 Tage';
+
+  @override
+  String get accountSection => 'Konto';
+
+  @override
+  String get aboutSection => 'Info';
+
+  @override
   String get manageSubscription => 'Abo verwalten';
 
   @override

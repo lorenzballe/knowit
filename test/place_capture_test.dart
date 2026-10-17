@@ -793,8 +793,15 @@ void main() {
       _tall(tester);
       await tester.pumpWidget(_profile(app));
       await _settle(tester);
-      expect(find.text('Off'), findsOneWidget);
-      expect(find.text('Switch on'), findsOneWidget);
+      // Off, as the row's value: what switching it on means is the sheet's
+      // to say.
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('place-row')),
+          matching: find.text('Off'),
+        ),
+        findsOneWidget,
+      );
 
       await tester.tap(find.byKey(const ValueKey('place-row')));
       await _settle(tester);
@@ -1053,14 +1060,22 @@ void main() {
       await tester.pumpWidget(_profile(app));
       await _settle(tester);
       expect(find.text('Modena'), findsOneWidget);
-      expect(
-        find.text('Only your city is kept, never your exact position.'),
-        findsOneWidget,
-      );
+      // The promise is the sheet's, where the choice is made, and no longer
+      // a line under the row.
+      const String promise =
+          'Only your city is kept, never your exact position.';
+      expect(find.text(promise), findsNothing);
       await tester.tap(find.byKey(const ValueKey('place-row')));
       await _settle(tester);
       expect(find.byKey(const ValueKey('place-options')), findsOneWidget);
       expect(find.text('Modena · Emilia-Romagna'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('place-options')),
+          matching: find.text(promise),
+        ),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('place-remove')));
       await _settle(tester);
 
@@ -1084,8 +1099,13 @@ void main() {
       for (final String key in AppState.kPlaceProfileKeys) {
         expect(written.containsKey(key), isFalse, reason: key);
       }
-      expect(find.text('Off'), findsOneWidget);
-      expect(find.text('Switch on'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('place-row')),
+          matching: find.text('Off'),
+        ),
+        findsOneWidget,
+      );
 
       // Nor is the phone asked again until the reader switches it back on.
       final int finds = phone.finds;

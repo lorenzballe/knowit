@@ -528,6 +528,21 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'Твои карточки';
+
+  @override
+  String get nothingYet => 'Пока ничего';
+
+  @override
+  String get lastSevenDays => 'Последние 7 дней';
+
+  @override
+  String get accountSection => 'Аккаунт';
+
+  @override
+  String get aboutSection => 'О приложении';
+
+  @override
   String get manageSubscription => 'Управлять подпиской';
 
   @override
