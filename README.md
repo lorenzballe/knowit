@@ -157,13 +157,12 @@ card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the moves you keep missing — the screen is Astute+; the profile keeps
 the record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
-fourteen days free, the only free trial there is, offered once at the end
-of the onboarding with "continue free" written under it — to a reader who
-set their mix. That is where most trials start, on the first day, and a
-trial asks for nothing today. One who skips the subjects goes straight to
-their first day: they have said nothing about what they want and seen no
-card. The card after the fifth offers it every evening, and the profile
-keeps the plans.
+fourteen days free, the only free trial there is. It is never offered in
+the first run: a new reader goes from the subjects to their first cards
+with no screen and no tap in between, and has not yet seen anything a plan
+would add to. The card after the fifth offers it every evening, the
+profile keeps the plans, and the features it opens offer it where they are
+locked.
 The paywall is sheet 111a, with the app's own three icon tiles; its button
 says the free days the store gives this reader (`Subscription.trialDays`):
 as many as the year's introductory offer holds, none for a reader Apple
@@ -180,9 +179,20 @@ door on what the habit adds up to. 'paywall shown' carries the variant
 and whether the reader has those numbers. The perks lead with the record,
 which only the journey shows, then five of your own cards, then what
 you've read. Under the button a trial is told as its days — today, the
-reminder two days before it ends, the day the store charges its own
-price — in place of "no charge today"; a short phone takes the headline
-and the perks down a size rather than scroll.
+reminder two days before it ends where the phone lets the app deliver it,
+the day the store charges its own price and that it renews until it is
+cancelled — and under them where and by when to cancel. A short phone
+takes the headline and the perks down a size, and leaves out today, which
+the button already says, rather than scroll; at the larger text sizes the
+page scrolls, everything at its full size.
+No price is shown until the store has given one. While it is being asked
+the paywall says so; when it cannot be reached it says that, with Try
+again (the store is asked again by itself after 3 s, 10 s, 30 s and two
+minutes, and whenever the app comes back). Restore purchases, the terms —
+Apple's licence on an iPhone, the site's own on Android — and the privacy
+policy are on screen either way. Only a debug build, which has no store to
+ask, shows the plans as sold (`Subscription.previewWithoutStore`). A free
+trial ends on "Free trial started.", not on a purchase.
 
 ## Today, done
 
@@ -1219,7 +1229,7 @@ changed — and `pill said`, a card that left the phone and was said to
 somebody, which is the one number this app is actually for.
 
 The paywall takes the gate that opened it as a required argument rather than a
-defaulted one, so `onboarding`, `sixth card`, `journey`, `archive` and
+defaulted one, so `sixth card`, `journey`, `archive`, `see the plans` and
 `calibration` can be told apart. A default is how a fifth of the traffic ends
 up labelled `unknown` by the end of the first week.
 

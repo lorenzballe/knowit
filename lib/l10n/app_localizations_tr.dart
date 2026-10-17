@@ -1230,10 +1230,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get chargedTodayCancel =>
-      'Bugün ücretlendirilir · istediğin zaman iptal et';
-
-  @override
   String get paywallRecordTitle => 'Gerçekten ne kadar bildiğini gör.';
 
   @override
@@ -1322,12 +1318,60 @@ class AppLocalizationsTr extends AppLocalizations {
       'year': 'yıllık',
       'other': 'aylık',
     });
-    return '$day. gün · $_temp0 $price, iptal etmezsen';
+    return '$day. gün · $_temp0 $price, iptal edene kadar otomatik yenilenir';
   }
 
   @override
-  String get trialStartedNoPayment =>
-      'Deneme başladı. Bu sürümde ödeme bağlı değil.';
+  String chargedTodayRenews(String price, String suffix) {
+    return '$price$suffix bugün ödenir, iptal edene kadar otomatik yenilenir';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return 'İstediğin zaman $where bölümünden iptal et; yenilemeden en az 24 saat önce.';
+  }
+
+  @override
+  String get cancelWhereIos => 'Ayarlar › adın › Abonelikler';
+
+  @override
+  String get cancelWhereAndroid =>
+      'Google Play › Ödemeler ve abonelikler › Abonelikler';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Fiyatlar App Store’dan alınıyor…',
+      'other': 'Fiyatlar Google Play’den alınıyor…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store’a ulaşılamadı',
+      'other': 'Google Play’e ulaşılamadı',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine =>
+      'Fiyatlar ve ücretsiz deneme mağazadan gelir. Bağlantını kontrol edip tekrar dene.';
+
+  @override
+  String get tryAgain => 'Tekrar dene';
+
+  @override
+  String get purchasePending =>
+      'Onay bekleniyor. Ödeme tamamlanır tamamlanmaz Astute+ açılacak.';
+
+  @override
+  String get oneMoment => 'Bir saniye…';
+
+  @override
+  String get closeLabel => 'Kapat';
 
   @override
   String get thatDidNotGoThrough => 'Bu gerçekleşmedi.';
@@ -1374,10 +1418,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get cancelAnyTime => 'İstediğin zaman iptal et';
-
-  @override
-  String get cancelAnyTimeNoPayment =>
-      'İstediğin zaman iptal et · Bu sürümde ödeme alınmaz';
 
   @override
   String get restorePurchases => 'Satın alımları geri yükle';
@@ -1798,9 +1838,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Karışımından, seviyende günde beş kart. Yolculuğun. Tüm arşivin.';
 
   @override
-  String get continueFree => 'Ücretsiz devam et';
-
-  @override
   String get archiveBeforeThisWeek => 'Bu haftadan öncesi';
 
   @override
@@ -2055,11 +2092,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get purchaseComplete => 'Satın alma tamamlandı.';
 
   @override
+  String get trialStartedTitle => 'Ücretsiz deneme başladı.';
+
+  @override
   String get successWelcome => 'Astute+’a hoş geldin. Bugünün beş kartı hazır.';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Astute+’a hoş geldin, $name. Bugünün beş kartı hazır.';
+  }
+
+  @override
+  String get successWelcomeTomorrow =>
+      'Astute+’a hoş geldin. Yarının beş kartı tamamen senin.';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Astute+’a hoş geldin, $name. Yarının beş kartı tamamen senin.';
   }
 
   @override

@@ -117,13 +117,6 @@ Future<void> _tapJourneyButton(WidgetTester tester) async {
   await _settle(tester);
 }
 
-/// Walks past the offer the onboarding ends on.
-Future<void> _continueFree(WidgetTester tester) async {
-  expect(find.byType(PaywallScreen), findsOneWidget);
-  await tester.tap(find.text('Continue free'));
-  await _settle(tester);
-}
-
 /// An install that is past the first run, on the free plan unless told
 /// otherwise.
 Map<String, Object> _installed({bool plus = false, List<String>? saved}) => {
@@ -429,8 +422,9 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four, and last: the offer, with the way past it written under it.
-    await _continueFree(tester);
+    // And then the first day, straight away: no offer and no question
+    // between the genres and the first card.
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
 
     // And the answers are kept, not just used once.
@@ -2026,8 +2020,8 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is the intro and the mix, the offer once, and '
-      'then the cards', (tester) async {
+  testWidgets('the onboarding is the intro, the mix and the genres, and then '
+      'the cards', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2046,17 +2040,16 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four: the offer, once, with the free trial first and the way past
-    // it under it — and the cards start straight after, because there is
-    // nothing else to ask.
-    expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
-    await _continueFree(tester);
+    // And the cards, straight after: nothing is sold to a reader who has
+    // not seen a card yet, and nothing else is asked.
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.textContaining('days free'), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
 
-  testWidgets('setting the genres ends on the offer too', (tester) async {
+  testWidgets('setting the genres ends on the first day too', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2065,16 +2058,18 @@ void main() {
     await tester.tap(find.text('Next'));
     await _settle(tester);
     expect(find.text('Your mix'), findsOneWidget);
-    // Answered rather than walked past: the same road, to the offer and
-    // then the cards.
+    // Answered rather than walked past: the same road, to the cards.
     await tester.tap(find.textContaining('genres on'));
     await _settle(tester);
-    await _continueFree(tester);
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
 
-  testWidgets('skipping the mix goes straight to the first day, with no '
-      'offer', (tester) async {
+  testWidgets('skipping the mix goes straight to the first day', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2083,8 +2078,9 @@ void main() {
     // The mix's own Skip, in its heading's row.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
-    // A reader who has said nothing and seen no card is not sold anything
-    // yet: the first day, straight away.
+    // Past the genres too, which narrow a mix nobody set: the first day,
+    // straight away.
+    expect(find.text('Your mix'), findsNothing);
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
     // And the first run is not asked again.
@@ -2136,28 +2132,34 @@ void main() {
 
     // Yearly leads and is preselected, so the call to action opens on it:
     // the year starts with two weeks free, and the days under the button
-    // say nothing is charged today and when that changes.
+    // say nothing is charged today, when that changes, and that it renews
+    // until it is cancelled. A debug build with no store shows the plans
+    // as sold; a store build shows only the store's (paywall_doors_test).
     expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
     expect(find.text('Today · all of Astute+, free'), findsOneWidget);
     expect(
-      find.text('Day 14 · €29,99 for a year, unless you cancel'),
+      find.text(
+        'Day 14 · €29,99 a year, renewing automatically until you cancel',
+      ),
       findsOneWidget,
     );
 
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 37%'), findsOneWidget);
 
-    // The month has no free week, so it does not promise one. With no store
-    // behind this build nothing is charged at all, and the line says that
-    // rather than "charged today".
+    // The month has no free week, so it does not promise one: it is
+    // charged today, and renews.
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
     expect(find.textContaining('Try 14 days free'), findsNothing);
     expect(
-      find.text('Cancel any time · No payment is taken in this build'),
+      find.text(
+        '€3,99/mo charged today, renewing automatically until you cancel',
+      ),
       findsOneWidget,
     );
+    expect(find.textContaining('No payment is taken'), findsNothing);
   });
 
   testWidgets('the paywall links the terms and the privacy policy', (
@@ -2171,14 +2173,19 @@ void main() {
     await _settle(tester);
 
     // Apple refuses a subscription without both beside it (3.1.2): the
-    // terms of use and the privacy policy, as links that open.
+    // terms of use and the privacy policy, as links that open — Apple's
+    // licence on an iPhone, the site's own terms everywhere else.
     expect(find.text('Terms of Use'), findsOneWidget);
     expect(find.text('Privacy Policy'), findsOneWidget);
-    expect(kTermsUrl, startsWith('https://www.apple.com/legal/'));
+    expect(
+      termsUrlFor(TargetPlatform.iOS),
+      startsWith('https://www.apple.com/legal/'),
+    );
+    expect(termsUrlFor(TargetPlatform.android), kSiteTermsUrl);
     expect(kPrivacyUrl, 'https://astutetheapp.com/privacy');
-    // Restoring means something only with a store behind the build, and
-    // this one has none.
-    expect(find.text('Restore purchases'), findsNothing);
+    // And the way back to a plan already paid for, which needs nothing
+    // from the store's offer and so is always there.
+    expect(find.text('Restore purchases'), findsOneWidget);
     // Still one screen with nothing to scroll.
     expect(find.byType(Scrollable), findsNothing);
   });
@@ -5079,10 +5086,7 @@ void main() {
           theme: buildAstutoTheme(Brightness.dark),
           home: MediaQuery(
             data: const MediaQueryData(padding: insets, size: Size(402, 874)),
-            child: IntroScreen(
-              onContinue: () {},
-              onSignIn: (_) async => false,
-            ),
+            child: IntroScreen(onContinue: () {}, onSignIn: (_) async => false),
           ),
         ),
       );

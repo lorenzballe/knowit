@@ -281,12 +281,14 @@ class _PhoneFrame extends StatelessWidget {
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
 /// The onboarding is the intro that says what the app is, then the subject
-/// run that fills the deck, then the offer, once, and then the first day.
+/// run that fills the deck, and then the first day. Nothing stands between
+/// the last of those and the first card: no offer, no sign-in, no
+/// permission. Astute+ is offered by the card after the fifth, in Profile
+/// and at the features it opens, once the reader has seen what it adds to.
 enum _Stage {
   intro,
   subjects,
   genres,
-  offer,
   comeback,
   shell;
 
@@ -297,7 +299,6 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
-    _Stage.offer => 'onboarding offer',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -430,6 +431,9 @@ class _AstutoRootState extends State<AstutoRoot> {
         if (_app.ready) _app.refreshAnalytics();
         _app.refreshDailyReminder();
         _app.refreshHomeWidget();
+        // A store that did not answer is asked again: the network that was
+        // missing at launch is often back by now.
+        unawaited(Subscription.instance.reloadOffering());
         // Where the reader lives, read again once a week for a reader who
         // allowed it, and never with a prompt.
         if (_app.ready) _app.refreshPlaceIfDue();
@@ -467,9 +471,16 @@ class _AstutoRootState extends State<AstutoRoot> {
     }
   }
 
-  /// The account comes first: the store is told who the reader is, so the
-  /// entitlement follows them to a new phone rather than staying on this one.
+  /// The store and the account, side by side. The store used to wait for
+  /// the account — the Firebase sign-in and the backup fold behind it — so
+  /// a phone whose account was slow to come up could not buy at all. Now
+  /// it starts at once, under the account the phone already has if it has
+  /// one, and is told who the reader is the moment the account is there:
+  /// the entitlement follows them to a new phone rather than staying here.
   Future<void> _startAccountAndStore() async {
+    final Subscription store = Subscription.instance
+      ..addListener(_onEntitlementChanged);
+    final Future<void> storeStarted = store.start(accountId: _account.uid);
     await _account.ensureAnonymous(_app);
     if (!mounted) return;
     _identify();
@@ -479,9 +490,9 @@ class _AstutoRootState extends State<AstutoRoot> {
     // account or a signal.
     Reports.instance.flush();
     await _sayWidgets();
-    final Subscription store = Subscription.instance
-      ..addListener(_onEntitlementChanged);
-    await store.start(accountId: _account.uid);
+    await storeStarted;
+    if (!mounted) return;
+    await store.switchTo(_account.uid);
   }
 
   /// Takes the widget whose tap brought the app forward, if one did, and
@@ -659,8 +670,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         (_reminderAskTimer?.isActive ?? false)) {
       return null;
     }
-    if (_accountAskReason() != null ||
-        (_accountAskTimer?.isActive ?? false)) {
+    if (_accountAskReason() != null || (_accountAskTimer?.isActive ?? false)) {
       return null;
     }
     if (!_app.dayClosed || !_app.shouldAskForPlace) return null;
@@ -819,8 +829,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       ..reset()
       ..start();
     setState(() => _stage = stage);
-    // Arriving on the tabs can be the sheet's moment: the onboarding's offer
-    // closing on a trial just started.
+    // The sheets wait for the tabs: arriving on them, each is asked whether
+    // this is its moment.
     _considerReminderAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
@@ -939,9 +949,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       child: KeyedSubtree(
         key: ValueKey(_stage),
         // Each step of the first run is a screen of its own, named for the
-        // funnel. The offer is the paywall, which names itself under the
-        // step's name, and the tabs name their own three.
-        child: _stage == _Stage.shell || _stage == _Stage.offer
+        // funnel, and the tabs name their own three.
+        child: _stage == _Stage.shell
             ? _stageScreen()
             : ScreenView(name: _stage.screen, child: _stageScreen()),
       ),
@@ -967,11 +976,8 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          // Skipping the mix skips the offer too, straight to the first
-          // day: a reader who has said nothing about what they want to
-          // read, and has not seen a card yet, does not know what Astute+
-          // would be selling them. The card after the fifth offers it
-          // every evening instead.
+          // Skipping the mix skips the genres under it too, straight to the
+          // first day: there is nothing to narrow in a mix nobody set.
           onSkip: () {
             _noteSkipped(_Stage.subjects);
             _finishOnboarding();
@@ -980,34 +986,22 @@ class _AstutoRootState extends State<AstutoRoot> {
 
       // The same answer, one layer finer: which six of each subject, and
       // which three inside those. The wheel decides how much; this decides
-      // what of it.
+      // what of it. And the last step of the first run: answered or passed
+      // over, it opens on the first day's cards. There used to be an offer
+      // of Astute+ here, the paywall with "continue free" under it — one
+      // more screen, and one more tap, between a new reader and the first
+      // card, for a plan they had not yet seen anything of.
       case _Stage.genres:
         return GenresScreen(
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            if (mounted) _go(_Stage.offer);
+            if (mounted) await _finishOnboarding();
           },
           onSkip: () {
             _noteSkipped(_Stage.genres);
-            _go(_Stage.offer);
+            _finishOnboarding();
           },
-        );
-
-      // The offer, once, straight after the mix: the reader has just said
-      // what they want to read about, and this is where the day made of
-      // exactly that is sold. What it sells first is the free trial, so
-      // nothing is paid today, and the way past it is written under it.
-      // Most trials start on the first day, which is why it is here and not
-      // only on the card after the fifth. Passing over the genres lands
-      // here too, because the subjects were set; passing over the subjects
-      // does not (see above).
-      case _Stage.offer:
-        return PaywallScreen(
-          app: _app,
-          source: 'onboarding',
-          screen: _Stage.offer.screen,
-          onClose: _finishOnboarding,
         );
 
       case _Stage.comeback:

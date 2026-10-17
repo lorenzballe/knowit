@@ -1199,9 +1199,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get chargedTodayCancel => '今日請求されます · いつでもキャンセル可能';
-
-  @override
   String get paywallRecordTitle => '本当の実力を、知ろう。';
 
   @override
@@ -1285,11 +1282,57 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String trialCharge(int day, String price, String plan) {
     String _temp0 = intl.Intl.selectLogic(plan, {'year': '年額', 'other': '月額'});
-    return '$day日目 · キャンセルしなければ$_temp0$price';
+    return '$day日目 · $_temp0$price、キャンセルするまで自動更新';
   }
 
   @override
-  String get trialStartedNoPayment => 'トライアル開始。このビルドでは支払いは接続されていません。';
+  String chargedTodayRenews(String price, String suffix) {
+    return '本日$price$suffixを請求し、キャンセルするまで自動更新されます';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return '$whereからいつでもキャンセルできます（更新の24時間前まで）。';
+  }
+
+  @override
+  String get cancelWhereIos => '設定 › あなたの名前 › サブスクリプション';
+
+  @override
+  String get cancelWhereAndroid => 'Google Play › お支払いと定期購入 › 定期購入';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Storeに価格を問い合わせています…',
+      'other': 'Google Playに価格を問い合わせています…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Storeに接続できませんでした',
+      'other': 'Google Playに接続できませんでした',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine => '価格と無料体験はストアから届きます。接続を確認して、もう一度お試しください。';
+
+  @override
+  String get tryAgain => 'もう一度試す';
+
+  @override
+  String get purchasePending => '承認待ちです。支払いが完了すると Astute+ が使えるようになります。';
+
+  @override
+  String get oneMoment => '少々お待ちください…';
+
+  @override
+  String get closeLabel => '閉じる';
 
   @override
   String get thatDidNotGoThrough => '処理できませんでした。';
@@ -1336,9 +1379,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cancelAnyTime => 'いつでもキャンセル可能';
-
-  @override
-  String get cancelAnyTimeNoPayment => 'いつでもキャンセル可能 · このビルドでは請求されません';
 
   @override
   String get restorePurchases => '購入を復元';
@@ -1748,9 +1788,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get plusCardLine => 'あなたのミックスから、あなたのレベルで毎日5枚。あなたの旅。アーカイブすべて。';
 
   @override
-  String get continueFree => '無料で続ける';
-
-  @override
   String get archiveBeforeThisWeek => '今週より前のすべて';
 
   @override
@@ -1986,11 +2023,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get purchaseComplete => '購入が完了しました。';
 
   @override
+  String get trialStartedTitle => '無料体験が始まりました。';
+
+  @override
   String get successWelcome => 'Astute+へようこそ。今日の5枚のカードが用意できました。';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Astute+へようこそ、$nameさん。今日の5枚のカードが用意できました。';
+  }
+
+  @override
+  String get successWelcomeTomorrow => 'Astute+へようこそ。明日の5枚は、すべてあなたのためのカードです。';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Astute+へようこそ、$nameさん。明日の5枚は、すべてあなたのためのカードです。';
   }
 
   @override

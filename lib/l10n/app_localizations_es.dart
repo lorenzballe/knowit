@@ -1242,9 +1242,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get chargedTodayCancel => 'Se cobra hoy · cancela cuando quieras';
-
-  @override
   String get paywallRecordTitle => 'Descubre cuánto sabes de verdad.';
 
   @override
@@ -1331,15 +1328,63 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String trialCharge(int day, String price, String plan) {
     String _temp0 = intl.Intl.selectLogic(plan, {
-      'year': 'por un año',
+      'year': 'al año',
       'other': 'al mes',
     });
-    return 'Día $day · $price $_temp0, salvo que canceles';
+    return 'Día $day · $price $_temp0, con renovación automática hasta que canceles';
   }
 
   @override
-  String get trialStartedNoPayment =>
-      'Prueba iniciada. No hay pago conectado en esta versión.';
+  String chargedTodayRenews(String price, String suffix) {
+    return '$price$suffix cobrados hoy, con renovación automática hasta que canceles';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return 'Cancela cuando quieras en $where, al menos 24 horas antes de la renovación.';
+  }
+
+  @override
+  String get cancelWhereIos => 'Ajustes › tu nombre › Suscripciones';
+
+  @override
+  String get cancelWhereAndroid =>
+      'Google Play › Pagos y suscripciones › Suscripciones';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Pidiendo los precios al App Store…',
+      'other': 'Pidiendo los precios a Google Play…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'No se pudo conectar con el App Store',
+      'other': 'No se pudo conectar con Google Play',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine =>
+      'Los precios y la prueba gratuita vienen de la tienda. Revisa tu conexión y vuelve a intentarlo.';
+
+  @override
+  String get tryAgain => 'Reintentar';
+
+  @override
+  String get purchasePending =>
+      'Esperando aprobación. Astute+ se abrirá en cuanto se complete el pago.';
+
+  @override
+  String get oneMoment => 'Un momento…';
+
+  @override
+  String get closeLabel => 'Cerrar';
 
   @override
   String get thatDidNotGoThrough => 'Eso no se completó.';
@@ -1386,10 +1431,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cancelAnyTime => 'Cancela cuando quieras';
-
-  @override
-  String get cancelAnyTimeNoPayment =>
-      'Cancela cuando quieras · No se cobra nada en esta versión';
 
   @override
   String get restorePurchases => 'Restaurar compras';
@@ -1813,9 +1854,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cinco tarjetas al día de tu mezcla, a tu nivel. Tu viaje. Todo tu archivo.';
 
   @override
-  String get continueFree => 'Continuar gratis';
-
-  @override
   String get archiveBeforeThisWeek => 'Antes de esta semana';
 
   @override
@@ -2073,12 +2111,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchaseComplete => 'Compra completada.';
 
   @override
+  String get trialStartedTitle => 'Prueba gratuita activada.';
+
+  @override
   String get successWelcome =>
       'Bienvenido a Astute+. Las cinco tarjetas de hoy están listas.';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Bienvenido a Astute+, $name. Las cinco tarjetas de hoy están listas.';
+  }
+
+  @override
+  String get successWelcomeTomorrow =>
+      'Bienvenido a Astute+. Las cinco de mañana son todas tuyas.';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Bienvenido a Astute+, $name. Las cinco de mañana son todas tuyas.';
   }
 
   @override

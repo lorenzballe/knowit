@@ -1800,12 +1800,6 @@ abstract class AppLocalizations {
   /// **'Subscribe for {price}{suffix}'**
   String subscribeFor(String price, String suffix);
 
-  /// No description provided for @chargedTodayCancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Charged today · cancel any time'**
-  String get chargedTodayCancel;
-
   /// No description provided for @paywallRecordTitle.
   ///
   /// In en, this message translates to:
@@ -1944,17 +1938,77 @@ abstract class AppLocalizations {
   /// **'Day {day} · we remind you'**
   String trialReminder(int day);
 
-  /// Last step of the trial timeline: the day, counted from today, the plan is first charged. {price} is the store's price; {plan} is 'year' or 'month'.
+  /// The last step of the free trial under the paywall's button: the day the plan is charged, at the store's price, and that it renews automatically.
   ///
   /// In en, this message translates to:
-  /// **'Day {day} · {price} {plan, select, year{for a year} other{a month}}, unless you cancel'**
+  /// **'Day {day} · {price} {plan, select, year{a year} other{a month}}, renewing automatically until you cancel'**
   String trialCharge(int day, String price, String plan);
 
-  /// No description provided for @trialStartedNoPayment.
+  /// Under the paywall's button, for a plan with no free days: what is charged today, and that it renews automatically.
   ///
   /// In en, this message translates to:
-  /// **'Trial started. No payment is connected in this build.'**
-  String get trialStartedNoPayment;
+  /// **'{price}{suffix} charged today, renewing automatically until you cancel'**
+  String chargedTodayRenews(String price, String suffix);
+
+  /// Under the paywall's terms: where the plan is cancelled, and by when. {where} is cancelWhereIos or cancelWhereAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel any time in {where}, at least 24 hours before it renews.'**
+  String cancelHow(String where);
+
+  /// Where a subscription is cancelled on an iPhone, as the Settings app names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings › your name › Subscriptions'**
+  String get cancelWhereIos;
+
+  /// Where a subscription is cancelled on Android, as the Play Store names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play › Payments & subscriptions › Subscriptions'**
+  String get cancelWhereAndroid;
+
+  /// On the paywall while the store is asked for its prices. apple is the App Store; other is Google Play.
+  ///
+  /// In en, this message translates to:
+  /// **'{store, select, apple{Asking the App Store for the prices…} other{Asking Google Play for the prices…}}'**
+  String storeAsking(String store);
+
+  /// On the paywall when the store did not answer, in place of the plans; and after a restore that could not reach it.
+  ///
+  /// In en, this message translates to:
+  /// **'{store, select, apple{Couldn’t reach the App Store} other{Couldn’t reach Google Play}}'**
+  String storeUnreachable(String store);
+
+  /// Under storeUnreachable on the paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'The prices and the free trial come from the store. Check your connection and try again.'**
+  String get storeUnreachableLine;
+
+  /// The button that asks the store again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// After a purchase that waits on someone's approval (Ask to Buy, a bank): not a failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval. Astute+ opens as soon as the payment goes through.'**
+  String get purchasePending;
+
+  /// The paywall's button while a purchase is under way.
+  ///
+  /// In en, this message translates to:
+  /// **'One moment…'**
+  String get oneMoment;
+
+  /// What a screen reader says for the cross that closes the paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeLabel;
 
   /// No description provided for @thatDidNotGoThrough.
   ///
@@ -2039,12 +2093,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel any time'**
   String get cancelAnyTime;
-
-  /// No description provided for @cancelAnyTimeNoPayment.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel any time · No payment is taken in this build'**
-  String get cancelAnyTimeNoPayment;
 
   /// No description provided for @restorePurchases.
   ///
@@ -2688,12 +2736,6 @@ abstract class AppLocalizations {
   /// **'Five cards a day from your mix, at your level. Your journey. Your whole archive.'**
   String get plusCardLine;
 
-  /// No description provided for @continueFree.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue free'**
-  String get continueFree;
-
   /// No description provided for @archiveBeforeThisWeek.
   ///
   /// In en, this message translates to:
@@ -3144,6 +3186,12 @@ abstract class AppLocalizations {
   /// **'Purchase complete.'**
   String get purchaseComplete;
 
+  /// The title of the screen a purchase ends on, when what began is a free trial rather than a paid plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Free trial started.'**
+  String get trialStartedTitle;
+
   /// Purchase success screen (design 129a).
   ///
   /// In en, this message translates to:
@@ -3155,6 +3203,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome to Astute+, {name}. Today’s five cards are ready.'**
   String successWelcomeNamed(String name);
+
+  /// Under the title of the screen a purchase ends on, when today's five are already read.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Astute+. Tomorrow’s five are all yours.'**
+  String get successWelcomeTomorrow;
+
+  /// successWelcomeTomorrow with the reader's first name.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Astute+, {name}. Tomorrow’s five are all yours.'**
+  String successWelcomeTomorrowNamed(String name);
 
   /// Purchase success screen (design 129a).
   ///

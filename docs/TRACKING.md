@@ -249,8 +249,9 @@ Every PostHog event carries `$screen_name`: the screen in front when it was
 sent, which after a return from a pushed screen is the screen returned to.
 
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
-subjects`, `onboarding genres`, `onboarding offer`, `comeback` (first run and
-come-back); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
+subjects`, `onboarding genres`, `comeback` (first run and come-back; the
+first run has had no paywall since October 2026, so `onboarding offer` is
+gone); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore).
 
@@ -342,7 +343,9 @@ is in its card facts.
 | `intro scene changed`, `intro skipped` | the intro's scenes | `from`, `to`, `by`, `ms_on_scene`, `at_scene` | P |
 | `onboarding started`, `onboarding step done`, `onboarding step skipped`, `onboarding completed` | the first run | `step`, `next`, `ms_on_step`, `topics`, `shape`, `claimed`, `solid_start`, `hand_picked` | P, T:`onb` (completed) |
 | `genres shown`, `genres set`, `mix set`, `levels set` | the mix | `subjects_in_mix`, `genres_off`, `strands_off`, `genres_on`, `topics`, `leaned_to`, `subjects_rated` | P, T:`genres`/`mix` |
-| `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome`, `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
+| `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome` (`signedIn`, `cancelled`, `unavailable`, `failed`, `busy`), `from` (`intro`, `profile`, `day done`), `ms`, `no_sheet` (a cancel that came back too fast for a sheet to have shown), `error` (every outcome but `signedIn`), `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
+| `sign in ignored` | a press while another sign-in is still waiting | `method`, `from`, `busy_with`, `busy_since_ms` | P |
+| `sign in sheet shown`, `sign in sheet closed` | the sheet with Apple and Google, by its door | `from`, `signed_in` | P |
 | `comeback shown` | the come-back screen after missed days | `days_missed`, `streak_lost` | P |
 | `rating prompt requested` | the system's rating sheet is asked for | `streak_days`, `is_plus` | P |
 
@@ -350,9 +353,9 @@ is in its card facts.
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `plan`, `from`, `link`, `left_by`, `ms_open`, `plan_changes`, `is_plus` | P |
-| `purchase started`, `purchase unavailable`, `purchase ended`, `purchase success shown`, `purchases restored` | buying | `source`, `plan`, `has_package`, `outcome`, `product`, `price`, `currency`, `trial`, `found` | P |
-| `store answered` | RevenueCat's offerings arrive | `ms`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus` | P |
+| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `see the plans`, `manage plan`, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
+| `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
+| `store answered` | each time RevenueCat is asked for the offerings: at launch, then after 3 s, 10 s, 30 s and 2 min while nothing is on sale, on the paywall opening, on Try again and on a return to the app | `ms`, `try`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus`, `error` | P |
 | `entitlement read`, `entitlement changed` | the subscription as the store holds it, at launch and on every change | `active`, `product`, `period_type`, `will_renew`, `store`, `sandbox`, `expires`, `unsubscribed`, `billing_issue` | P |
 | `trial started`, `plan changed` | the app's own plan | `is_plus` | P, T:`plan` (changed) |
 | `manage subscription opened` | the store's management page | `is_plus`, `from`, `days_left` | P |

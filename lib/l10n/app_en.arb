@@ -1154,7 +1154,6 @@
    }
   }
  },
- "chargedTodayCancel": "Charged today · cancel any time",
  "paywallRecordTitle": "See how much you really know.",
  "paywallRecordMark": "really",
  "@paywallRecordMark": {
@@ -1240,9 +1239,9 @@
    }
   }
  },
- "trialCharge": "Day {day} · {price} {plan, select, year{for a year} other{a month}}, unless you cancel",
+ "trialCharge": "Day {day} · {price} {plan, select, year{a year} other{a month}}, renewing automatically until you cancel",
  "@trialCharge": {
-  "description": "Last step of the trial timeline: the day, counted from today, the plan is first charged. {price} is the store's price; {plan} is 'year' or 'month'.",
+  "description": "The last step of the free trial under the paywall's button: the day the plan is charged, at the store's price, and that it renews automatically.",
   "placeholders": {
    "day": {
     "type": "int"
@@ -1255,7 +1254,73 @@
    }
   }
  },
- "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
+ "chargedTodayRenews": "{price}{suffix} charged today, renewing automatically until you cancel",
+ "@chargedTodayRenews": {
+  "description": "Under the paywall's button, for a plan with no free days: what is charged today, and that it renews automatically.",
+  "placeholders": {
+   "price": {
+    "type": "String"
+   },
+   "suffix": {
+    "type": "String"
+   }
+  }
+ },
+ "cancelHow": "Cancel any time in {where}, at least 24 hours before it renews.",
+ "@cancelHow": {
+  "description": "Under the paywall's terms: where the plan is cancelled, and by when. {where} is cancelWhereIos or cancelWhereAndroid.",
+  "placeholders": {
+   "where": {
+    "type": "String"
+   }
+  }
+ },
+ "cancelWhereIos": "Settings › your name › Subscriptions",
+ "@cancelWhereIos": {
+  "description": "Where a subscription is cancelled on an iPhone, as the Settings app names it."
+ },
+ "cancelWhereAndroid": "Google Play › Payments & subscriptions › Subscriptions",
+ "@cancelWhereAndroid": {
+  "description": "Where a subscription is cancelled on Android, as the Play Store names it."
+ },
+ "storeAsking": "{store, select, apple{Asking the App Store for the prices…} other{Asking Google Play for the prices…}}",
+ "@storeAsking": {
+  "description": "On the paywall while the store is asked for its prices. apple is the App Store; other is Google Play.",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "storeUnreachable": "{store, select, apple{Couldn’t reach the App Store} other{Couldn’t reach Google Play}}",
+ "@storeUnreachable": {
+  "description": "On the paywall when the store did not answer, in place of the plans; and after a restore that could not reach it.",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "storeUnreachableLine": "The prices and the free trial come from the store. Check your connection and try again.",
+ "@storeUnreachableLine": {
+  "description": "Under storeUnreachable on the paywall."
+ },
+ "tryAgain": "Try again",
+ "@tryAgain": {
+  "description": "The button that asks the store again."
+ },
+ "purchasePending": "Waiting for approval. Astute+ opens as soon as the payment goes through.",
+ "@purchasePending": {
+  "description": "After a purchase that waits on someone's approval (Ask to Buy, a bank): not a failure."
+ },
+ "oneMoment": "One moment…",
+ "@oneMoment": {
+  "description": "The paywall's button while a purchase is under way."
+ },
+ "closeLabel": "Close",
+ "@closeLabel": {
+  "description": "What a screen reader says for the cross that closes the paywall."
+ },
  "thatDidNotGoThrough": "That did not go through.",
  "plusIsBack": "Astute+ is back.",
  "nothingToRestore": "Nothing to restore on this account.",
@@ -1284,7 +1349,6 @@
  "billedMonthly": "billed monthly",
  "cancelTheTrial": "Cancel the trial",
  "cancelAnyTime": "Cancel any time",
- "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
  "restorePurchases": "Restore purchases",
  "termsOfUse": "Terms of Use",
  "@termsOfUse": {
@@ -1674,7 +1738,6 @@
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
- "continueFree": "Continue free",
  "archiveBeforeThisWeek": "Before this week",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
  "weekKeptSundayFourOwn": "A week kept, and tomorrow is Sunday: four of the five are yours.",
@@ -1784,6 +1847,10 @@
  "@purchaseComplete": {
   "description": "Purchase success screen (design 129a)."
  },
+ "trialStartedTitle": "Free trial started.",
+ "@trialStartedTitle": {
+  "description": "The title of the screen a purchase ends on, when what began is a free trial rather than a paid plan."
+ },
  "successWelcome": "Welcome to Astute+. Today’s five cards are ready.",
  "@successWelcome": {
   "description": "Purchase success screen (design 129a)."
@@ -1791,6 +1858,19 @@
  "successWelcomeNamed": "Welcome to Astute+, {name}. Today’s five cards are ready.",
  "@successWelcomeNamed": {
   "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "successWelcomeTomorrow": "Welcome to Astute+. Tomorrow’s five are all yours.",
+ "@successWelcomeTomorrow": {
+  "description": "Under the title of the screen a purchase ends on, when today's five are already read."
+ },
+ "successWelcomeTomorrowNamed": "Welcome to Astute+, {name}. Tomorrow’s five are all yours.",
+ "@successWelcomeTomorrowNamed": {
+  "description": "successWelcomeTomorrow with the reader's first name.",
   "placeholders": {
    "name": {
     "type": "String"
