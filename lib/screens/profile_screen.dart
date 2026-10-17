@@ -340,7 +340,7 @@ class ProfileScreen extends StatelessWidget {
             }).toList(),
           ),
           // Nothing to cover until something has been read: a list of
-          // nineteen subjects all reading zero is the same wall of nothing
+          // twenty subjects all reading zero is the same wall of nothing
           // the four tiles used to be. Under the topics, because it is the
           // topics, read.
           if (app.calibratedAnswers > 0) ...[
