@@ -12,6 +12,7 @@ import '../cloud.dart';
 import '../debug_flags.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
+import '../state/music_sound.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
 import '../sync/place_finder.dart';
@@ -495,6 +496,7 @@ class ProfileScreen extends StatelessWidget {
               // is not one.
               if (PlaceFinder.instance.canAsk || app.place != null)
                 _PlaceRow(app: app),
+              const _SoundRow(),
             ],
           ),
           ProfileHeader(context.l10n.accountSection),
@@ -769,6 +771,33 @@ class _PlaceRow extends StatelessWidget {
 /// part of AppState: it is a decision about this install rather than about
 /// this reader, so it does not travel to a new phone with the backup and
 /// there is no listener above to rebuild from.
+/// The music cards' notes: off until the reader turns them on, here or
+/// from a card's Listen. The whole row is the switch.
+class _SoundRow extends StatelessWidget {
+  const _SoundRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return ValueListenableBuilder<bool>(
+      valueListenable: MusicSound.on,
+      builder: (context, on, _) => ProfileRow(
+        key: const ValueKey('profile-sound'),
+        mark: ProfileMarks.sound,
+        label: l.musicSound,
+        toggled: on,
+        chevron: false,
+        onTap: () => MusicSound.set(!on, from: 'profile'),
+        trailing: NudgeSwitch(
+          value: on,
+          label: l.musicSound,
+          onChanged: (v) => MusicSound.set(v, from: 'profile'),
+        ),
+      ),
+    );
+  }
+}
+
 class _UsageSwitch extends StatefulWidget {
   const _UsageSwitch();
 

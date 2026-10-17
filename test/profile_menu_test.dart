@@ -27,6 +27,7 @@ import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/saved_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/state/music_sound.dart';
 import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/board.dart';
 import 'package:astuto/sync/place_finder.dart';
@@ -565,6 +566,39 @@ void main() {
       expect(said.of('usage sharing switched'), [
         {'on': false},
         {'on': true},
+      ]);
+    });
+
+    testWidgets('the music cards\' sound starts off, and the whole row turns '
+        'it on and off, kept', (tester) async {
+      final _Said said = _Said();
+      Analytics.useForTest(said);
+      final AppState app = await _app(tester);
+      await tester.pumpWidget(_host(app));
+      await _settle(tester);
+
+      final Finder row = await _row(tester, 'profile-sound');
+      NudgeSwitch toggle() =>
+          tester.widget<NudgeSwitch>(_in(row, find.byType(NudgeSwitch)));
+      expect(MusicSound.on.value, isFalse);
+      expect(toggle().value, isFalse);
+
+      // The label turns it on …
+      await tester.tap(_in(row, find.text('Sound in music cards')));
+      await _settle(tester);
+      expect(MusicSound.on.value, isTrue);
+      expect(toggle().value, isTrue);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.musicSound'), isTrue);
+
+      // … and the switch itself off again.
+      await tester.tap(_in(row, find.byType(NudgeSwitch)));
+      await _settle(tester);
+      expect(MusicSound.on.value, isFalse);
+      expect(prefs.getBool('knowit.musicSound'), isFalse);
+      expect(said.of('music sound switched'), [
+        {'on': true, 'from': 'profile'},
+        {'on': false, 'from': 'profile'},
       ]);
     });
   });

@@ -52,6 +52,11 @@ abstract final class ProfileMarks {
   /// Usage data: three bars.
   static const String chart = 'M6 20v-6 M12 20V4.5 M18 20v-9.5';
 
+  /// The music cards' sound: a speaker and two waves.
+  static const String sound =
+      'M4 9.5h3.5L12 5.5v13l-4.5-4H4z '
+      'M15.6 9.2a4 4 0 0 1 0 5.6 M18.4 6.4a8 8 0 0 1 0 11.2';
+
   /// Deleting the account: a bin.
   static const String bin =
       'M3.5 6h17 M9 6V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V6 '
