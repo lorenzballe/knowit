@@ -41,6 +41,7 @@ import 'utils/reminders.dart' show remindersSupported;
 import 'utils/upright.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
+import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
@@ -92,16 +93,20 @@ Future<void> main() async {
   await Cloud.start();
   final int cloudMs = cloud.elapsedMilliseconds;
   // Nor this, and for the same reason: see Analytics.start. It goes before
-  // runApp so that the reader's opt-out is read before the first event could
-  // be sent, and not one launch later.
+  // runApp so that the reader's answer is read before the first event could
+  // be sent: measurement is set up only if they have said yes.
   await Analytics.start();
   if (Analytics.ready) {
     // Stamped before the first event, so a reviewer's phone or a robot is
     // told apart from its very first one.
     await Analytics.installedFrom(await installChannel);
-    // How smoothly the phone draws, counted per session (see Session).
-    Session.instance.frames.listen();
+  } else {
+    // Kept for a yes given later, which stamps it on everything after.
+    unawaited(installChannel.then(Analytics.installedFrom));
   }
+  // How smoothly the phone draws, counted per session (see Session), once
+  // measurement is up: now, or the moment the reader says yes.
+  Analytics.whenStarted(() => Session.instance.frames.listen());
   // Said once measurement is up: a Firebase that would not start is the
   // cause of half the bug reports this app could ever get.
   Analytics.capture('cloud started', {
@@ -112,10 +117,11 @@ Future<void> main() async {
   // Explore's top list, with the launch crowd under the real counts until
   // there are enough of them. See TopSeed.
   Tallies.instance = Tallies(seed: launchCrowd());
-  // Session replay takes its pictures from under this widget. Only where
-  // measurement is running and the platform records at all.
+  // Session replay takes its pictures from under this widget. Only in a
+  // build that records (kSessionReplay, off in every store build), for a
+  // reader who said yes, where the platform records at all.
   runApp(
-    Analytics.ready && !kIsWeb
+    Analytics.ready && kSessionReplay && !kIsWeb
         ? const PostHogWidget(child: AstutoApp())
         : const AstutoApp(),
   );
@@ -378,6 +384,11 @@ class _AstutoRootState extends State<AstutoRoot> {
   bool _askingForAccount = false;
   Timer? _accountAskTimer;
 
+  /// True while a reader past the first run who never answered is asked
+  /// whether Astute may measure how the app is used (showConsentSheet).
+  bool _askingForConsent = false;
+  Timer? _consentAskTimer;
+
   bool _askingForReview = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
@@ -416,6 +427,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         _placeAskTimer = null;
         _accountAskTimer?.cancel();
         _accountAskTimer = null;
+        _consentAskTimer?.cancel();
+        _consentAskTimer = null;
       },
       onDetach: () {
         _account.flush();
@@ -446,7 +459,9 @@ class _AstutoRootState extends State<AstutoRoot> {
         );
         _sayWidgets();
         // A new sitting can be the moment of the account's sheet or the
-        // place's: a finished day still on the screen.
+        // place's, or of the question about measuring: a finished day still
+        // on the screen.
+        _considerConsentAsk();
         _considerAccountAsk();
         _considerPlaceAsk();
       },
@@ -665,7 +680,10 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (!_app.ready || _stage != _Stage.shell) return null;
     if (!_onTop || _deckOnTable) return null;
     if (_askingForPush || _askingForPlace || _askedThisSitting) return null;
-    if (_askingForAccount) return null;
+    if (_askingForAccount || _askingForConsent) return null;
+    if (_consentAskReason() != null || (_consentAskTimer?.isActive ?? false)) {
+      return null;
+    }
     if (_reminderAskReason() != null ||
         (_reminderAskTimer?.isActive ?? false)) {
       return null;
@@ -727,6 +745,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // stack: a paywall pushed over the tabs, and the moment it closes.
     _onTop = ModalRoute.isCurrentOf(context) ?? true;
     _considerReminderAsk();
+    _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
   }
@@ -764,10 +783,12 @@ class _AstutoRootState extends State<AstutoRoot> {
         !_placeAskedThisSitting &&
         !_askingForPlace &&
         !_askingForAccount &&
+        !_askingForConsent &&
         !_trialAskDue) {
       _askForReview();
     }
     // Last, so that a rating sheet decided just now has this sitting.
+    _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
   }
@@ -801,6 +822,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _reminderAskTimer?.cancel();
     _placeAskTimer?.cancel();
     _accountAskTimer?.cancel();
+    _consentAskTimer?.cancel();
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
@@ -832,6 +854,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // The sheets wait for the tabs: arriving on them, each is asked whether
     // this is its moment.
     _considerReminderAsk();
+    _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
   }
@@ -842,6 +865,67 @@ class _AstutoRootState extends State<AstutoRoot> {
       'step': from.screen,
       'ms_on_step': _stageClock.elapsedMilliseconds,
     });
+  }
+
+  /// Why the question about measuring would rise now, as a sheet, or null
+  /// when this is not its moment: a reader past the first run who has not
+  /// answered it — who started reading without answering it on the intro,
+  /// or whose phone had the app before it asked — once a day is finished,
+  /// at rest, after the reminder sheet and before the account's. Only in a
+  /// build that has somewhere to send what it would measure.
+  String? _consentAskReason() {
+    if (!_app.ready || _stage != _Stage.shell) return null;
+    if (!_onTop || _deckOnTable) return null;
+    if (_askingForPush || _askingForPlace || _askingForAccount) return null;
+    if (_askingForConsent || _askedThisSitting) return null;
+    if (_reminderAskReason() != null ||
+        (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (!_app.dayClosed) return null;
+    if (!Analytics.canAsk || Analytics.answered) return null;
+    return 'day done';
+  }
+
+  /// Raises the question a beat after its moment arrives, as the other
+  /// sheets rise, and only if the moment is still there.
+  void _considerConsentAsk() {
+    if (!mounted || _askingForConsent) return;
+    if (_consentAskReason() == null) {
+      _consentAskTimer?.cancel();
+      _consentAskTimer = null;
+      return;
+    }
+    if (_consentAskTimer?.isActive ?? false) return;
+    _consentAskTimer = Timer(_kReminderAskBeat, () {
+      _consentAskTimer = null;
+      if (!mounted || _consentAskReason() == null) return;
+      _offerConsent();
+    });
+  }
+
+  /// The question as a sheet, which waits for an answer either way.
+  Future<void> _offerConsent() async {
+    if (_askingForConsent) return;
+    _askingForConsent = true;
+    _askedThisSitting = true;
+    try {
+      final bool? yes = await showConsentSheet(context);
+      if (yes != null && mounted) await _answerConsent(yes, from: 'sheet');
+    } finally {
+      _askingForConsent = false;
+    }
+  }
+
+  /// The reader's answer, from the intro or the sheet. A yes sets
+  /// measurement up there and then, and its first event is that yes; a no
+  /// is kept, and nothing is sent about it.
+  Future<void> _answerConsent(bool yes, {required String from}) async {
+    await Analytics.setCollecting(yes);
+    if (!yes) return;
+    Analytics.capture('usage sharing answered', {'on': true, 'from': from});
+    // The reader's profile, said now that there is somewhere to say it.
+    if (_app.ready) _app.refreshAnalytics();
   }
 
   /// Why the account sheet would rise now — after a finished day — or null
@@ -856,9 +940,12 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (!_app.ready || _stage != _Stage.shell) return null;
     if (!_onTop || _deckOnTable) return null;
     if (_askingForPush || _askingForPlace || _askingForAccount) return null;
-    if (_askedThisSitting) return null;
+    if (_askingForConsent || _askedThisSitting) return null;
     if (_reminderAskReason() != null ||
         (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_consentAskReason() != null || (_consentAskTimer?.isActive ?? false)) {
       return null;
     }
     if (!_app.dayClosed || !_app.shouldOfferAccount) return null;
@@ -961,6 +1048,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     switch (_stage) {
       case _Stage.intro:
         return IntroScreen(
+          askConsent: Analytics.canAsk && !Analytics.answered,
+          onConsent: (yes) => _answerConsent(yes, from: 'intro'),
           onContinue: () => _go(_Stage.subjects),
           onSignIn: (context) => showSignInSheet(
             context,
@@ -1021,6 +1110,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           onDeckOnTable: (onTable) {
             _deckOnTable = onTable;
             _considerReminderAsk();
+            _considerConsentAsk();
             _considerAccountAsk();
             _considerPlaceAsk();
           },

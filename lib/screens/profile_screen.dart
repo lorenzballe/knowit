@@ -579,7 +579,7 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () => Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
               ),
-              const _UsageSwitch(),
+              _UsageSwitch(app: app),
             ],
           ),
           // Deleting the account, for anyone who has one — the phone makes
@@ -793,8 +793,14 @@ class _SoundRow extends StatelessWidget {
   }
 }
 
+/// The reader's answer to whether Astute may measure how the app is used —
+/// the same answer the intro and the sheet after the first finished day
+/// ask for, kept in the same place (Analytics.setCollecting). Off until the
+/// reader has said yes.
 class _UsageSwitch extends StatefulWidget {
-  const _UsageSwitch();
+  const _UsageSwitch({required this.app});
+
+  final AppState app;
 
   @override
   State<_UsageSwitch> createState() => _UsageSwitchState();
@@ -817,6 +823,9 @@ class _UsageSwitchState extends State<_UsageSwitch> {
     await Analytics.setCollecting(v);
     if (v) {
       Analytics.capture('usage sharing switched', {'on': true});
+      // A yes may just have started measurement: the reader's profile is
+      // said now that there is somewhere to say it.
+      if (widget.app.ready) widget.app.refreshAnalytics();
     }
     messenger
       ..hideCurrentSnackBar()

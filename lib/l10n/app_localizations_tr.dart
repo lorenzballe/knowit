@@ -1783,6 +1783,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get usageOff => 'Artık hiçbir şey ölçülmüyor.';
 
   @override
+  String get consentTitle => 'Astute\'u daha iyi yapmamıza yardım eder misin?';
+
+  @override
+  String get consentLine =>
+      'Hangi ekranları açtığını ve neyin ters gittiğini paylaş. Adın, e-postan ya da yazdıkların asla gönderilmez.';
+
+  @override
+  String get consentNo => 'Hayır, teşekkürler';
+
+  @override
+  String get consentYes => 'Evet, paylaş';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return 'Bunu istediğin zaman $profile › $setting bölümünden değiştirebilirsin.';
+  }
+
+  @override
   String get yourMix => 'Senin karışımın';
 
   @override

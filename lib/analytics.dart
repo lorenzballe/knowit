@@ -35,6 +35,14 @@ const String kPostHogHost = String.fromEnvironment(
   defaultValue: 'https://eu.i.posthog.com',
 );
 
+/// Whether sessions are recorded for replay. Off unless a build asks for it
+/// with `--dart-define=REPLAY=true`, and no build in codemagic.yaml or the
+/// GitHub workflows does: a recording of a reader's screen is more than a
+/// count of what they did, and more than the consent they gave asks for.
+/// A build that turns it on still records nothing before the reader has
+/// said yes, and hides every word and every picture on the screen.
+const bool kSessionReplay = bool.fromEnvironment('REPLAY');
+
 /// Where an event goes once the app has decided to send it.
 ///
 /// An interface rather than a direct call into PostHog, for the same reason
@@ -89,6 +97,13 @@ abstract class AnalyticsSink {
 /// AstutoApp without calling [start], so [ready] is false and no test reaches
 /// the network.
 ///
+/// **It waits for the reader's yes.** PostHog is not even set up until the
+/// reader has said yes — on the intro, on the sheet that asks once after
+/// the first finished day, or with the switch in Profile — so nothing is
+/// captured, queued or sent before then, and nothing at all after a no.
+/// What the app stamps on every event and who the reader is are kept on
+/// the phone meanwhile, and said the moment a yes starts it.
+///
 /// **It carries no prose.** Ids, counts, durations and enums go out; the name
 /// the reader typed, their email, their friend code, the reason they wrote on
 /// a card and the text of any answer do not. A card is a pill id and a
@@ -98,15 +113,23 @@ class Analytics {
 
   static AnalyticsSink? _sink;
   static String? _failure;
-  static bool _collecting = true;
 
-  /// Where the reader's own answer to "measure this?" is kept. On the phone,
-  /// not in the account: it is a decision about this install.
+  /// The reader's answer to "may Astute measure how the app is used?":
+  /// yes, no, or null while they have not said.
+  static bool? _choice;
+
+  /// Where the reader's own answer is kept, and whether it is one: on the
+  /// phone, not in the account, because it is a decision about this
+  /// install. `knowit.analytics` used to be the Profile switch alone, on by
+  /// default, so without `knowit.analytics.asked` beside it only a false is
+  /// taken as an answer — a reader who turned the switch off said no — and
+  /// a true is a default nobody chose, which is asked again.
   static const String _kCollecting = 'knowit.analytics';
+  static const String _kAsked = 'knowit.analytics.asked';
 
-  /// Whether measurement is up. False on a build with no key, on a build
-  /// where PostHog would not start, and under every test that has not asked
-  /// for a sink of its own.
+  /// Whether measurement is up. False on a build with no key, before the
+  /// reader has said yes, after a no, on a build where PostHog would not
+  /// start, and under every test that has not asked for a sink of its own.
   static bool get ready => _sink != null;
 
   /// Why it is not up, when it is not. Shown in the debug section, because
@@ -114,112 +137,226 @@ class Analytics {
   /// without it.
   static String? get failure => _failure;
 
-  /// Whether the reader has left it on. True unless they turned it off.
-  static bool get collecting => _collecting;
+  /// Whether the reader has said yes. False until they have, and after a no.
+  static bool get collecting => _choice == true;
 
-  /// Called once from main(), before the app is built. Never throws: a
+  /// Whether the reader has answered, either way.
+  static bool get answered => _choice != null;
+
+  /// Whether there is anything to ask about: a build with a project to send
+  /// to. A build with no key measures nothing whatever the reader says, so
+  /// it does not ask.
+  static bool get canAsk => canAskForTest ?? kPostHogKey.isNotEmpty;
+
+  /// Stands in for a key, for the tests that ask the question.
+  @visibleForTesting
+  static bool? canAskForTest;
+
+  /// What sets measurement up once there is a yes: PostHog, or a test's
+  /// own sink.
+  static Future<AnalyticsSink> Function() _setUp = _setUpPostHog;
+
+  /// Called once from main(), before the app is built. Reads the reader's
+  /// answer and sets PostHog up only on a yes. Never throws: a
   /// misconfigured project, an offline phone or a platform PostHog has no
   /// plugin for must not stop the app opening.
   static Future<void> start() async {
-    if (kPostHogKey.isEmpty) {
+    if (!canAsk) {
       _failure = 'No POSTHOG_KEY was built in, so nothing is measured.';
       return;
     }
+    _choice = await _readChoice();
+    if (_choice != true) {
+      _failure = _choice == null
+          ? 'The reader has not said yes or no yet, so nothing is measured.'
+          : 'The reader said no, so nothing is measured.';
+      return;
+    }
+    await _begin();
+  }
+
+  /// Sets measurement up, and says what was kept while it waited: what is
+  /// stamped on every event, where the install came from, and who the
+  /// reader is.
+  static Future<void> _begin() async {
+    if (_sink != null) return;
     try {
-      _collecting = await _readChoice();
-
-      final config = PostHogConfig(kPostHogKey)
-        ..host = kPostHogHost
-        // The reader's choice is applied here rather than after setup, so a
-        // reader who turned it off does not have the opening of the app
-        // measured on every launch before the switch is read.
-        ..optOut = !_collecting
-        // $app_opened, $app_backgrounded and the update events. The daily
-        // loop below is what the app measures on purpose; these are what say
-        // whether anyone came back to run it.
-        ..captureApplicationLifecycleEvents = true
-        // A person is only made once there is someone to be: an install that
-        // never signs in stays an event with no profile attached to it.
-        ..personProfiles = PostHogPersonProfiles.identifiedOnly
-        // Recorded, so PostHog can see where readers get stuck — the
-        // self-driving loop reads replays, errors and rage taps — but with
-        // every word on the screen hidden. The screen carries the reader's
-        // own written reasons, and a recording of them is not worth any
-        // finding. Layout, taps and scrolls are what is left, and they are
-        // what a stuck reader looks like.
-        ..sessionReplay = true
-        ..debug = kDebugMode;
-      config.sessionReplayConfig
-        ..maskAllTexts = true
-        ..maskAllImages = false
-        ..captureTouches = true;
-      // Every error the app does not catch, Dart's and the phone's own, goes
-      // to error tracking with the steps that led to it.
-      config.errorTrackingConfig
-        ..captureFlutterErrors = true
-        ..capturePlatformDispatcherErrors = true
-        ..captureIsolateErrors = true
-        ..captureNativeExceptions = true
-        ..inAppIncludes.add('package:astuto');
-
-      // The browser has no plugin to set up: posthog-js has to be on the page
-      // first, and this is what puts it there. A no-op everywhere else.
-      await bootAnalytics(key: kPostHogKey, host: kPostHogHost);
-
-      await Posthog().setup(config);
-      _sink = const _PostHogSink();
+      _sink = await _setUp();
       _failure = null;
     } catch (error, stack) {
       _sink = null;
       _failure = '$error';
       debugPrint('PostHog did not start, carrying on unmeasured: $error');
       debugPrintStack(stackTrace: stack);
+      return;
+    }
+    for (final MapEntry<String, Object> e in _registered.entries) {
+      await _guard(() => _sink?.register(e.key, e.value));
+    }
+    final String? channel = _installChannel;
+    if (channel != null) {
+      for (final MapEntry<String, Object> e in _installFacts(channel).entries) {
+        _personWaiting[e.key] = e.value;
+      }
+    }
+    final identity = _identity;
+    if (identity != null) {
+      await identify(
+        identity.uid,
+        anonymous: identity.anonymous,
+        method: identity.method,
+      );
+    } else {
+      await flushPerson(force: true);
+    }
+    final List<VoidCallback> waiting = List.of(_whenStarted);
+    _whenStarted.clear();
+    for (final VoidCallback f in waiting) {
+      try {
+        f();
+      } catch (_) {}
     }
   }
 
-  static Future<bool> _readChoice() async {
+  static Future<AnalyticsSink> _setUpPostHog() async {
+    final config = PostHogConfig(kPostHogKey)
+      ..host = kPostHogHost
+      // $app_opened, $app_backgrounded and the update events. The daily
+      // loop below is what the app measures on purpose; these are what say
+      // whether anyone came back to run it.
+      ..captureApplicationLifecycleEvents = true
+      // A person is only made once there is someone to be: an install that
+      // never signs in stays an event with no profile attached to it.
+      ..personProfiles = PostHogPersonProfiles.identifiedOnly
+      // Not recorded, unless a build asks (kSessionReplay); and then with
+      // every word and every picture on the screen hidden. The screen
+      // carries the reader's own written reasons and the cards they kept,
+      // and a recording of them is not worth any finding.
+      ..sessionReplay = kSessionReplay
+      ..debug = kDebugMode;
+    config.sessionReplayConfig
+      ..maskAllTexts = true
+      ..maskAllImages = true
+      ..captureTouches = true;
+    // Every error the app does not catch, Dart's and the phone's own, goes
+    // to error tracking with the steps that led to it.
+    config.errorTrackingConfig
+      ..captureFlutterErrors = true
+      ..capturePlatformDispatcherErrors = true
+      ..captureIsolateErrors = true
+      ..captureNativeExceptions = true
+      ..inAppIncludes.add('package:astuto');
+
+    // The browser has no plugin to set up: posthog-js has to be on the page
+    // first, and this is what puts it there. A no-op everywhere else.
+    await bootAnalytics(key: kPostHogKey, host: kPostHogHost);
+
+    await Posthog().setup(config);
+    return const _PostHogSink();
+  }
+
+  static Future<bool?> _readChoice() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      return prefs.getBool(_kCollecting) ?? true;
+      final bool? kept = prefs.getBool(_kCollecting);
+      if (prefs.getBool(_kAsked) == true) return kept ?? false;
+      // The old switch, turned off: a no, and kept as one.
+      return kept == false ? false : null;
     } catch (_) {
-      // A phone whose stored state will not open is one the app starts fresh
-      // on anyway. Measured is the default; the switch is still there.
-      return true;
+      // A phone whose stored state will not open is asked again, and
+      // measured only on a yes.
+      return null;
     }
   }
 
-  /// The reader's switch, from the foot of the profile. Remembered, and
-  /// applied to PostHog immediately — an opt-out that only takes effect next
-  /// launch is not an opt-out.
+  /// The reader's answer: on the intro, on the sheet that asks once, or
+  /// with the switch in Profile. Remembered, and applied at once — a yes
+  /// sets measurement up there and then, a no stops it before anything
+  /// else is sent; an answer that only takes effect next launch is not
+  /// one.
   static Future<void> setCollecting(bool on) async {
-    _collecting = on;
+    _choice = on;
     // Nothing waits to be said about a reader who has just said no; and one
     // who says yes again has their profile said whole, since what was held
     // back meanwhile never arrived.
     _personWaiting.clear();
     _personOnceWaiting.clear();
     if (on) _personSent.clear();
+    await _keepChoice(on);
+    if (!on) {
+      _failure = 'The reader said no, so nothing is measured.';
+      await _guard(() => _sink?.setCollecting(false));
+      return;
+    }
+    if (_sink == null) {
+      if (canAsk) await _begin();
+      return;
+    }
+    await _guard(() => _sink?.setCollecting(true));
+  }
+
+  static Future<void> _keepChoice(bool on) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_kCollecting, on);
+      await prefs.setBool(_kAsked, true);
     } catch (_) {
       // Not remembering the choice is bad; ignoring it now would be worse.
     }
-    await _guard(() => _sink?.setCollecting(on));
   }
 
-  /// Writes the choice back down after something wiped the phone.
+  /// Writes the answer back down after something wiped the phone.
   ///
-  /// Signing out clears every key the app holds, this one among them, and a
-  /// reader who turned measurement off does not expect signing out to turn it
-  /// back on.
-  static Future<void> persistChoice() => setCollecting(_collecting);
+  /// Signing out clears every key the app holds, these among them, and a
+  /// reader who said no does not expect signing out to turn measurement
+  /// back on — nor one who said yes to be asked again.
+  static Future<void> persistChoice() async {
+    final bool? choice = _choice;
+    if (choice != null) await _keepChoice(choice);
+  }
+
+  /// Runs [f] once measurement is up: now, if it is, or the moment a yes
+  /// starts it.
+  static void whenStarted(VoidCallback f) {
+    if (ready) {
+      f();
+    } else {
+      _whenStarted.add(f);
+    }
+  }
+
+  static final List<VoidCallback> _whenStarted = [];
+
+  /// What every later event is stamped with, kept so that a yes given
+  /// after launch stamps the events that follow it all the same.
+  static final Map<String, Object> _registered = {};
+
+  /// Who the reader is, as last said, kept for the same reason.
+  static ({String uid, bool anonymous, String? method})? _identity;
+
+  /// Measurement as a reader who has answered [yes] would find it at
+  /// launch, with [sink] standing in for PostHog: for the tests of the
+  /// question itself.
+  @visibleForTesting
+  static Future<void> startForTest(AnalyticsSink sink) async {
+    useForTest(null);
+    canAskForTest = true;
+    _setUp = () async => sink;
+    await start();
+  }
 
   @visibleForTesting
   static void useForTest(AnalyticsSink? sink) {
     _sink = sink;
     _failure = sink == null ? 'No sink under test.' : null;
-    _collecting = true;
+    // Measured, as every test that hands over a sink expects; the tests of
+    // the question start from no answer (startForTest).
+    _choice = sink == null ? null : true;
+    canAskForTest = null;
+    _setUp = _setUpPostHog;
+    _registered.clear();
+    _identity = null;
+    _whenStarted.clear();
     currentScreen = null;
     _installChannel = null;
     _personWaiting.clear();
@@ -285,6 +422,7 @@ class Analytics {
     bool anonymous = true,
     String? method,
   }) async {
+    _identity = (uid: uid, anonymous: anonymous, method: method);
     await _guard(
       () => _sink?.identify(uid, {
         'anonymous': anonymous,
@@ -307,6 +445,7 @@ class Analytics {
   /// Forgets the reader on a sign-out, so the next person on this phone is
   /// not counted as the last one.
   static Future<void> reset() async {
+    _identity = null;
     _personWaiting.clear();
     _personOnceWaiting.clear();
     _personSent.clear();
@@ -320,8 +459,10 @@ class Analytics {
 
   /// Stamps a property on every later event. Used for the few things worth
   /// cutting the whole funnel by.
-  static Future<void> register(String key, Object value) =>
-      _guard(() => _sink?.register(key, value));
+  static Future<void> register(String key, Object value) {
+    _registered[key] = value;
+    return _guard(() => _sink?.register(key, value));
+  }
 
   // ── The reader's profile ──────────────────────────────────────────────
 
@@ -434,9 +575,9 @@ class Analytics {
     _personOnceWaiting.clear();
     if (set.isEmpty && once.isEmpty) return;
     await _sink?.setPerson(set, once);
-    // An opted-out reader's profile went nowhere, so it is not marked as
-    // written.
-    if (!_collecting) return;
+    // A profile said to a reader who has said no went nowhere, so it is
+    // not marked as written.
+    if (!collecting) return;
     _personSent.addAll(set);
     _personOnceSent.addAll(once.keys);
     _personSentAt = now;

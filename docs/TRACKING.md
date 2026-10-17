@@ -59,11 +59,21 @@ These hold at every call site, old and new.
   an email and a friend code do not. A search is described by its length and
   how many cards it found; a typed answer by whether it was right. A test
   types a sentence into a card and fails if it appears in anything sent.
-- **The reader's switch.** *Profile → Usage data* turns PostHog off, every
-  event below included, the moment it moves; it survives a sign-out. The
-  trace is not measurement: it is the personalisation the reader uses the app
-  for, and the privacy policy says so.
-- **Replays hide every word** (`maskAllTexts`): taps, scrolls and layout only.
+- **Nothing before a yes.** The intro asks whether Astute may measure how
+  the app is used, with two answers of one size (`ConsentChoice`); a reader
+  who starts without answering is asked once more, as a sheet, after their
+  first finished day (`showConsentSheet`). PostHog is not set up until the
+  answer is yes, so nothing below is captured, queued or sent before it, and
+  nothing at all after a no; what is stamped on every event and who the
+  reader is are kept on the phone and said when a yes starts it. Kept as
+  `knowit.analytics` with `knowit.analytics.asked`; an old switch turned off
+  counts as a no, an old default of on as no answer. *Profile → Usage data*
+  is the same answer, and survives a sign-out. The trace is not
+  measurement: it is the personalisation the reader uses the app for, and
+  the privacy policy says so.
+- **No replays.** Session replay is off (`kSessionReplay`, `REPLAY` at build
+  time, set by no build); a build that turns it on records only after a
+  yes, with every word and every picture hidden.
 - **Names.** Events are lowercase phrases with spaces, in the past tense
   where they can be (`card advanced`). Properties are `snake_case`. Durations
   are whole milliseconds named `ms_*`. Counts are integers; percentages are
@@ -378,6 +388,7 @@ is in its card facts.
 | `theme set` | | `theme` | P |
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
+| `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |
 
@@ -390,7 +401,7 @@ the `friends_count` on the profile. Readers profiled before keep the last
 
 `$exception` for every uncaught error and for the caught ones
 (`Analytics.error`, with `where`); `$identify` at launch and sign-in; `$set`
-for the profile (§4); `$screen` (§6.2). Session replay is on, masked.
+for the profile (§4); `$screen` (§6.2). Session replay is off.
 
 ### 6.12 Where you live
 

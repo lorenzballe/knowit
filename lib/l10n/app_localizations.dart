@@ -2640,6 +2640,36 @@ abstract class AppLocalizations {
   /// **'Nothing more is measured.'**
   String get usageOff;
 
+  /// The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?
+  ///
+  /// In en, this message translates to:
+  /// **'Help make Astute better?'**
+  String get consentTitle;
+
+  /// Under consentTitle on the intro: what would be shared, and what never is.
+  ///
+  /// In en, this message translates to:
+  /// **'Share which screens you open and what goes wrong. Never your name, your email or anything you write.'**
+  String get consentLine;
+
+  /// The answer that keeps measurement off. Exactly as prominent as consentYes, side by side.
+  ///
+  /// In en, this message translates to:
+  /// **'No, thanks'**
+  String get consentNo;
+
+  /// The answer that turns measurement on. Exactly as prominent as consentNo, side by side.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, share'**
+  String get consentYes;
+
+  /// The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).
+  ///
+  /// In en, this message translates to:
+  /// **'You can change this any time in {profile}, under {setting}.'**
+  String consentChangeLater(String profile, String setting);
+
   /// No description provided for @yourMix.
   ///
   /// In en, this message translates to:

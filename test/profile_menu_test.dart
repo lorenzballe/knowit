@@ -706,13 +706,15 @@ void main() {
       );
       expect(tester.getSize(row).height, greaterThanOrEqualTo(44), reason: key);
     }
+    // Off: nobody here has said yes to being measured, and until somebody
+    // does, the switch says so.
     final Finder usage = await _row(tester, 'profile-usage');
     expect(
       tester.getSemantics(usage),
       isSemantics(
         label: 'Usage data',
         hasToggledState: true,
-        isToggled: true,
+        isToggled: false,
         isButton: false,
         hasTapAction: true,
       ),

@@ -1862,6 +1862,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get usageOff => 'Больше ничего не измеряется.';
 
   @override
+  String get consentTitle => 'Поможешь сделать Astute лучше?';
+
+  @override
+  String get consentLine =>
+      'Делись тем, какие экраны ты открываешь и что идёт не так. Никогда — твоё имя, почта или то, что ты пишешь.';
+
+  @override
+  String get consentNo => 'Нет, спасибо';
+
+  @override
+  String get consentYes => 'Да, делиться';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return 'Это можно изменить в любой момент: $profile › $setting.';
+  }
+
+  @override
   String get yourMix => 'Твой микс';
 
   @override

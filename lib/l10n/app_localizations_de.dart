@@ -1798,6 +1798,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get usageOff => 'Es wird nichts mehr gemessen.';
 
   @override
+  String get consentTitle => 'Hilfst du, Astute besser zu machen?';
+
+  @override
+  String get consentLine =>
+      'Teile, welche Bildschirme du öffnest und was nicht klappt. Nie deinen Namen, deine E-Mail oder etwas, das du schreibst.';
+
+  @override
+  String get consentNo => 'Nein, danke';
+
+  @override
+  String get consentYes => 'Ja, teilen';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return 'Du kannst das jederzeit unter $profile › $setting ändern.';
+  }
+
+  @override
   String get yourMix => 'Dein Mix';
 
   @override

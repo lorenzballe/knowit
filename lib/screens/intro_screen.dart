@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 
 import '../theme.dart';
 import '../widgets/ambient.dart';
+import '../widgets/consent.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import '../analytics.dart';
@@ -170,6 +171,8 @@ class IntroScreen extends StatefulWidget {
     super.key,
     required this.onContinue,
     required this.onSignIn,
+    this.askConsent = false,
+    this.onConsent,
   });
 
   /// "Start reading", Skip, and where a sign-in lands once it is done.
@@ -180,6 +183,14 @@ class IntroScreen extends StatefulWidget {
   /// "Not now", a sheet swiped away, a sign-in that did not work — leaves
   /// them exactly where they were.
   final Future<bool> Function(BuildContext context) onSignIn;
+
+  /// Whether the foot asks if Astute may measure how the app is used: a
+  /// build with somewhere to send it, and a reader who has not answered.
+  /// Nothing is measured until they say yes (see ConsentChoice).
+  final bool askConsent;
+
+  /// The reader's answer, true for yes.
+  final ValueChanged<bool>? onConsent;
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -193,6 +204,15 @@ class _IntroScreenState extends State<IntroScreen> {
   double _moved = 0;
 
   List<Color> get _blooms => kSceneBlooms[_scene % kSceneBlooms.length];
+
+  /// Whether the question about measuring is still on the foot. It goes as
+  /// soon as it is answered, and gives its room back to the picture.
+  late bool _asking = widget.askConsent;
+
+  void _answer(bool yes) {
+    setState(() => _asking = false);
+    widget.onConsent?.call(yes);
+  }
 
   /// When the scene now showing came up, for how long it held the reader.
   final Stopwatch _sceneClock = Stopwatch()..start();
@@ -267,181 +287,205 @@ class _IntroScreenState extends State<IntroScreen> {
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, kIntroTop, 0, 26),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: LayoutBuilder(
-                        builder: (context, room) {
-                          // The words at the reader's text size, and the
-                          // hint's line with them: at the default size the
-                          // constants above, and larger only where a larger
-                          // size needs it.
-                          final _CopyRoom copy = _CopyRoom.of(
-                            context,
-                            room.maxWidth - 2 * kIntroSide,
-                          );
-                          final double hintSlot = math.max(
-                            kIntroHintSlot,
-                            6 +
-                                MediaQuery.textScalerOf(context).scale(12.5) *
-                                    1.4,
-                          );
-                          // The picture's band is as tall as the screen's
-                          // width wants it, or as tall as the room above the
-                          // buttons allows once the words, the dots and the
-                          // hint have taken theirs: a short phone gets a
-                          // smaller picture, never a picture over the words.
-                          // Squeezed below what it is worth drawing at — the
-                          // larger text sizes — it gives its room to the
-                          // words rather than shrink to a dot.
-                          final double wanted =
-                              room.maxWidth * _SceneStage.ratio;
-                          final double spare =
-                              room.maxHeight -
-                              kIntroCopyGap -
-                              copy.height -
-                              kIntroDotsGap -
-                              kIntroDotsHeight -
-                              hintSlot;
-                          final double fits = math.max(
-                            0,
-                            math.min(wanted, spare),
-                          );
-                          final double band = fits < kIntroLeastBand ? 0 : fits;
-                          // How much of the band's top a drawing that
-                          // spans the width has to leave under Skip, in the
-                          // band's own units: Skip's foot is a fixed height
-                          // down this column, and the band starts under the
-                          // share of the spare room that goes above it.
-                          final double over =
-                              math.max(0, spare - band) *
-                              kIntroSpareAbove /
-                              (kIntroSpareAbove + kIntroSpareBelow);
-                          final double skipFoot =
-                              kIntroSkipTop +
-                              SkipCorner.heightOf(context) -
-                              kIntroTop;
-                          final double underSkip = band <= 0
-                              ? 0
-                              : math.max(0, skipFoot + kIntroUnderSkip - over) /
-                                    (band / _SceneStage.bandHeight);
-                          final List<Widget> words = [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: kIntroSide,
-                              ),
-                              // Pinned by the top: the copy going out and the
-                              // copy coming in share a top edge, so nothing
-                              // jumps.
-                              child: _Swap(
-                                scene: _scene,
-                                alignment: Alignment.topCenter,
-                                child: _SceneCopy(
-                                  index: _scene,
-                                  titleBox: copy.titleBox,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: kIntroDotsGap),
-                            _Dots(
-                              key: const ValueKey('intro-dots'),
-                              count: _sceneCount,
-                              active: _scene,
-                              onTap: (i) => _go(i, by: 'dot'),
-                            ),
-                            SizedBox(
-                              height: hintSlot,
-                              child: AnimatedOpacity(
-                                opacity: _moved == 0 && _scene == 0 ? 1 : 0,
-                                duration: const Duration(milliseconds: 350),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Text(
-                                    context.l10n.swipeToSeeMore,
-                                    textAlign: TextAlign.center,
-                                    style: AppText.body(
-                                      size: 12.5,
-                                      weight: FontWeight.w500,
-                                      color: Colors.white.withValues(
-                                        alpha: 0.4,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ];
-                          // The words alone, at the very largest sizes, can
-                          // be taller than the room: they scroll then, under
-                          // the buttons, rather than run into them.
-                          if (spare + kIntroCopyGap <
-                              SkipCorner.heightOf(context)) {
-                            return SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  SizedBox(
-                                    height: SkipCorner.heightOf(context),
-                                  ),
-                                  ...words,
-                                ],
-                              ),
+                child: LayoutBuilder(
+                  builder: (context, page) => Column(
+                    children: [
+                      Expanded(
+                        child: LayoutBuilder(
+                          builder: (context, room) {
+                            // The words at the reader's text size, and the
+                            // hint's line with them: at the default size the
+                            // constants above, and larger only where a larger
+                            // size needs it.
+                            final _CopyRoom copy = _CopyRoom.of(
+                              context,
+                              room.maxWidth - 2 * kIntroSide,
                             );
-                          }
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const Spacer(flex: kIntroSpareAbove),
-                              // The picture runs off both sides, so there
-                              // is nothing to see the end of, and keeps the
-                              // same size whatever the words under it say.
-                              // A drawing, not words to read: its few words
-                              // are part of the picture, drawn at the size
-                              // the picture is, and the title and the line
-                              // under it say what it shows.
-                              if (band > 0) ...[
-                                SizedBox(
-                                  height: band,
-                                  child: ExcludeSemantics(
-                                    child: MediaQuery.withNoTextScaling(
-                                      child: _SceneStage(
-                                        key: const ValueKey('intro-stage'),
-                                        child: _Swap(
-                                          scene: _scene,
-                                          child: _IntroScene(
-                                            index: _scene,
-                                            underSkip: underSkip,
-                                          ),
+                            final double hintSlot = math.max(
+                              kIntroHintSlot,
+                              6 +
+                                  MediaQuery.textScalerOf(context).scale(12.5) *
+                                      1.4,
+                            );
+                            // The picture's band is as tall as the screen's
+                            // width wants it, or as tall as the room above the
+                            // buttons allows once the words, the dots and the
+                            // hint have taken theirs: a short phone gets a
+                            // smaller picture, never a picture over the words.
+                            // Squeezed below what it is worth drawing at — the
+                            // larger text sizes — it gives its room to the
+                            // words rather than shrink to a dot.
+                            final double wanted =
+                                room.maxWidth * _SceneStage.ratio;
+                            final double spare =
+                                room.maxHeight -
+                                kIntroCopyGap -
+                                copy.height -
+                                kIntroDotsGap -
+                                kIntroDotsHeight -
+                                hintSlot;
+                            final double fits = math.max(
+                              0,
+                              math.min(wanted, spare),
+                            );
+                            final double band = fits < kIntroLeastBand
+                                ? 0
+                                : fits;
+                            // How much of the band's top a drawing that
+                            // spans the width has to leave under Skip, in the
+                            // band's own units: Skip's foot is a fixed height
+                            // down this column, and the band starts under the
+                            // share of the spare room that goes above it.
+                            final double over =
+                                math.max(0, spare - band) *
+                                kIntroSpareAbove /
+                                (kIntroSpareAbove + kIntroSpareBelow);
+                            final double skipFoot =
+                                kIntroSkipTop +
+                                SkipCorner.heightOf(context) -
+                                kIntroTop;
+                            final double underSkip = band <= 0
+                                ? 0
+                                : math.max(
+                                        0,
+                                        skipFoot + kIntroUnderSkip - over,
+                                      ) /
+                                      (band / _SceneStage.bandHeight);
+                            final List<Widget> words = [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: kIntroSide,
+                                ),
+                                // Pinned by the top: the copy going out and the
+                                // copy coming in share a top edge, so nothing
+                                // jumps.
+                                child: _Swap(
+                                  scene: _scene,
+                                  alignment: Alignment.topCenter,
+                                  child: _SceneCopy(
+                                    index: _scene,
+                                    titleBox: copy.titleBox,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: kIntroDotsGap),
+                              _Dots(
+                                key: const ValueKey('intro-dots'),
+                                count: _sceneCount,
+                                active: _scene,
+                                onTap: (i) => _go(i, by: 'dot'),
+                              ),
+                              SizedBox(
+                                height: hintSlot,
+                                child: AnimatedOpacity(
+                                  opacity: _moved == 0 && _scene == 0 ? 1 : 0,
+                                  duration: const Duration(milliseconds: 350),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 6),
+                                    child: Text(
+                                      context.l10n.swipeToSeeMore,
+                                      textAlign: TextAlign.center,
+                                      style: AppText.body(
+                                        size: 12.5,
+                                        weight: FontWeight.w500,
+                                        color: Colors.white.withValues(
+                                          alpha: 0.4,
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: kIntroCopyGap),
-                              ] else
-                                SizedBox(height: SkipCorner.heightOf(context)),
-                              ...words,
-                              const Spacer(flex: kIntroSpareBelow),
-                            ],
-                          );
-                        },
+                              ),
+                            ];
+                            // The words alone, at the very largest sizes, can
+                            // be taller than the room: they scroll then, under
+                            // the buttons, rather than run into them.
+                            if (spare + kIntroCopyGap <
+                                SkipCorner.heightOf(context)) {
+                              return SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    SizedBox(
+                                      height: SkipCorner.heightOf(context),
+                                    ),
+                                    ...words,
+                                  ],
+                                ),
+                              );
+                            }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Spacer(flex: kIntroSpareAbove),
+                                // The picture runs off both sides, so there
+                                // is nothing to see the end of, and keeps the
+                                // same size whatever the words under it say.
+                                // A drawing, not words to read: its few words
+                                // are part of the picture, drawn at the size
+                                // the picture is, and the title and the line
+                                // under it say what it shows.
+                                if (band > 0) ...[
+                                  SizedBox(
+                                    height: band,
+                                    child: ExcludeSemantics(
+                                      child: MediaQuery.withNoTextScaling(
+                                        child: _SceneStage(
+                                          key: const ValueKey('intro-stage'),
+                                          child: _Swap(
+                                            scene: _scene,
+                                            child: _IntroScene(
+                                              index: _scene,
+                                              underSkip: underSkip,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: kIntroCopyGap),
+                                ] else
+                                  SizedBox(
+                                    height: SkipCorner.heightOf(context),
+                                  ),
+                                ...words,
+                                const Spacer(flex: kIntroSpareBelow),
+                              ],
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kIntroSide,
+                      // The foot never takes more than three quarters of the
+                      // page: past that — the largest text sizes in the
+                      // longest languages — it scrolls within itself rather
+                      // than push the page off the screen.
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: page.maxHeight * 0.75,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: kIntroSide,
+                            ),
+                            child: _StartBlock(
+                              consent: _asking
+                                  ? ConsentChoice(onAnswer: _answer)
+                                  : null,
+                              // Where Skip goes, as the one button there is.
+                              onStart: () => _skipIntro(by: 'start reading'),
+                              onSignIn: () async {
+                                if (await widget.onSignIn(context)) {
+                                  widget.onContinue();
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                       ),
-                      child: _StartBlock(
-                        // Where Skip goes, as the one button there is.
-                        onStart: () => _skipIntro(by: 'start reading'),
-                        onSignIn: () async {
-                          if (await widget.onSignIn(context)) {
-                            widget.onContinue();
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -703,10 +747,17 @@ class _SceneCopy extends StatelessWidget {
 /// The foot of every scene: "Start reading", the way in for a reader who
 /// already has an account, and the terms.
 class _StartBlock extends StatelessWidget {
-  const _StartBlock({required this.onStart, required this.onSignIn});
+  const _StartBlock({
+    required this.onStart,
+    required this.onSignIn,
+    this.consent,
+  });
 
   final VoidCallback onStart;
   final VoidCallback onSignIn;
+
+  /// The question about measuring, while it is unanswered.
+  final Widget? consent;
 
   @override
   Widget build(BuildContext context) {
@@ -759,13 +810,36 @@ class _StartBlock extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          l.termsLine,
-          textAlign: TextAlign.center,
-          style: AppText.body(
-            size: 12.5,
-            height: 1.5,
-            color: Colors.white.withValues(alpha: 0.34),
+        // Under the way in and over the terms, and gone once answered: the
+        // foot shrinks back and the picture above takes the room.
+        AnimatedSize(
+          duration: const Duration(milliseconds: 260),
+          curve: Curves.easeOutCubic,
+          alignment: Alignment.topCenter,
+          child: consent == null
+              ? const SizedBox(width: double.infinity)
+              : Padding(
+                  padding: const EdgeInsets.only(top: 2, bottom: 10),
+                  // The question and the small print grow with the text
+                  // size up to half as large again, and no further: past
+                  // that, at twice the size, the two of them would take the
+                  // screen from the way in.
+                  child: MediaQuery.withClampedTextScaling(
+                    maxScaleFactor: 1.5,
+                    child: consent!,
+                  ),
+                ),
+        ),
+        MediaQuery.withClampedTextScaling(
+          maxScaleFactor: 1.5,
+          child: Text(
+            l.termsLine,
+            textAlign: TextAlign.center,
+            style: AppText.body(
+              size: 12.5,
+              height: 1.5,
+              color: Colors.white.withValues(alpha: 0.34),
+            ),
           ),
         ),
       ],

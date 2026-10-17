@@ -1729,6 +1729,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get usageOff => '不再测量任何内容。';
 
   @override
+  String get consentTitle => '帮我们把 Astute 做得更好？';
+
+  @override
+  String get consentLine => '分享你打开了哪些页面、哪里出了问题。绝不包括你的名字、邮箱或你写下的任何内容。';
+
+  @override
+  String get consentNo => '不用了，谢谢';
+
+  @override
+  String get consentYes => '好，分享';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return '你可以随时在“$profile”的“$setting”中更改。';
+  }
+
+  @override
   String get yourMix => '你的组合';
 
   @override

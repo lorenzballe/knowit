@@ -1735,6 +1735,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get usageOff => 'もう何も計測しません。';
 
   @override
+  String get consentTitle => 'Astute の改善に協力しませんか？';
+
+  @override
+  String get consentLine =>
+      '開いた画面や、うまくいかなかったことを共有します。名前、メールアドレス、書いた内容は一切送りません。';
+
+  @override
+  String get consentNo => 'いいえ、結構です';
+
+  @override
+  String get consentYes => 'はい、共有します';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return '$profileの「$setting」からいつでも変更できます。';
+  }
+
+  @override
   String get yourMix => 'あなたのミックス';
 
   @override

@@ -1243,20 +1243,29 @@ when something has been pushed over it. A visit sends `$screen` as it begins
 and `screen left` as it ends: the time in front, how far down it was
 scrolled, the drags and taps, and where the reader came from and went.
 
-**The reader's switch** sits at the foot of the settings, above the debug
-section, on by default and off in one tap, in all thirteen languages. It is
-applied to PostHog the moment it moves, and written back after a sign-out —
-sign-out clears every key the app holds, and a choice a wipe undoes is a delay
-rather than a choice. It turns off everything below as well.
+**Nothing is measured before a yes.** The intro's foot asks whether Astute
+may measure how the app is used — "Help make Astute better?", with No,
+thanks and Yes, share side by side and of one size — in all thirteen
+languages. It is not in the way: Start reading goes on without an answer,
+and no answer is a no. A reader who started without answering, or whose
+phone had the app before the question, is asked once more, as a sheet that
+waits for one of the two answers, after a finished day (after the reminder
+sheet, before the account's). PostHog is not even set up until the answer
+is yes: nothing is captured, queued or sent before it, and nothing after a
+no. What is stamped on every event, where the install came from and who the
+reader is are kept on the phone and said the moment a yes starts it.
 
-**Replays, with every word hidden.** Session replay is on, because PostHog's
-self-driving loop reads replays, errors and rage taps to find where readers
-get stuck and to propose fixes — but with `maskAllTexts`, so every word on
-the screen is a grey bar in the recording. The screen carries the reader's
-own written reasons, and a recording of them is not worth any finding;
-layout, taps and scrolls are what is left, and they are what a stuck reader
-looks like. `PostHogWidget` wraps the app for it, only where measurement is
-running.
+**The reader's switch** in the About box of Profile is the same answer, off
+until the reader has said yes. It is applied the moment it moves, and
+written back after a sign-out — sign-out clears every key the app holds,
+and a choice a wipe undoes is a delay rather than a choice. It turns off
+everything below as well.
+
+**No replays.** Session replay is off: a recording of a reader's screen is
+more than the count of what they did that they agreed to. A build can turn
+it on with `--dart-define=REPLAY=true`, and none does; it then records only
+after a yes, with every word and every picture hidden, under
+`PostHogWidget`.
 
 **Errors.** Every error the app does not catch — Flutter's, Dart's, the
 isolate's and the phone's own — goes to PostHog's error tracking with the

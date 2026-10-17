@@ -5465,51 +5465,77 @@ void main() {
       FlutterError.onError = (details) =>
           broke.add(details.exceptionAsString().split('\n').first);
       try {
-        for (final double scale in const [1.3, 2.0]) {
-          for (final Locale locale in const [
-            Locale('en'),
-            Locale('it'),
-            Locale('de'),
-            Locale('ru'),
-          ]) {
-            await tester.pumpWidget(
-              MaterialApp(
-                locale: locale,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                theme: buildAstutoTheme(Brightness.dark),
-                home: MediaQuery(
-                  data: MediaQueryData(
-                    size: const Size(375, 667),
-                    padding: const EdgeInsets.only(top: 20),
-                    textScaler: TextScaler.linear(scale),
-                  ),
-                  child: IntroScreen(
-                    onContinue: () {},
-                    onSignIn: (_) async => false,
+        // With the question about measuring on the foot, as a first launch
+        // has it, and without, as it is once answered.
+        for (final bool asking in const [false, true]) {
+          for (final double scale in const [1.3, 2.0]) {
+            for (final Locale locale in const [
+              Locale('en'),
+              Locale('it'),
+              Locale('de'),
+              Locale('ru'),
+            ]) {
+              await tester.pumpWidget(
+                MaterialApp(
+                  // A tree of its own each time, so the question is asked
+                  // afresh.
+                  key: UniqueKey(),
+                  locale: locale,
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  theme: buildAstutoTheme(Brightness.dark),
+                  home: MediaQuery(
+                    data: MediaQueryData(
+                      size: const Size(375, 667),
+                      padding: const EdgeInsets.only(top: 20),
+                      textScaler: TextScaler.linear(scale),
+                    ),
+                    child: IntroScreen(
+                      onContinue: () {},
+                      onSignIn: (_) async => false,
+                      askConsent: asking,
+                    ),
                   ),
                 ),
-              ),
-            );
-            await _settle(tester);
-            final String start = lookupAppLocalizations(locale).startReading;
-            for (int scene = 0; scene < 5; scene++) {
-              final String where = '$locale at ${scale}x, scene ${scene + 1}';
-              final Rect button = tester.getRect(
-                find.byKey(const ValueKey('intro-start')),
               );
-              expect(button.bottom, lessThanOrEqualTo(667), reason: where);
-              expect(find.text(start), findsOneWidget, reason: where);
-              if (scale == 2.0) {
-                expect(
-                  find.byKey(const ValueKey('intro-stage')),
-                  findsNothing,
-                  reason: where,
-                );
-              }
-              // A tap anywhere above the words turns to the next scene.
-              await tester.tapAt(const Offset(187, 110));
               await _settle(tester);
+              final String start = lookupAppLocalizations(locale).startReading;
+              for (int scene = 0; scene < 5; scene++) {
+                final String where =
+                    '$locale at ${scale}x, scene ${scene + 1}'
+                    '${asking ? ', asking' : ''}';
+                if (asking) {
+                  for (final String key in const [
+                    'consent-no',
+                    'consent-yes',
+                  ]) {
+                    final Rect answer = tester.getRect(
+                      find.byKey(ValueKey(key)),
+                    );
+                    expect(
+                      answer.bottom,
+                      lessThanOrEqualTo(667),
+                      reason: where,
+                    );
+                  }
+                }
+                final Rect button = tester.getRect(
+                  find.byKey(const ValueKey('intro-start')),
+                );
+                expect(button.bottom, lessThanOrEqualTo(667), reason: where);
+                expect(find.text(start), findsOneWidget, reason: where);
+                if (scale == 2.0) {
+                  expect(
+                    find.byKey(const ValueKey('intro-stage')),
+                    findsNothing,
+                    reason: where,
+                  );
+                }
+                // A tap anywhere above the words turns to the next scene.
+                await tester.tapAt(const Offset(187, 110));
+                await _settle(tester);
+              }
             }
           }
         }

@@ -1702,6 +1702,34 @@
  "anonymousUsageLine": "How the app is used — what gets read, kept and said, and what goes wrong — so the next cards are better ones. Never your name, your email, or anything you write.",
  "usageOn": "Shared, without your name or your words.",
  "usageOff": "Nothing more is measured.",
+ "consentTitle": "Help make Astute better?",
+ "@consentTitle": {
+  "description": "The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?"
+ },
+ "consentLine": "Share which screens you open and what goes wrong. Never your name, your email or anything you write.",
+ "@consentLine": {
+  "description": "Under consentTitle on the intro: what would be shared, and what never is."
+ },
+ "consentNo": "No, thanks",
+ "@consentNo": {
+  "description": "The answer that keeps measurement off. Exactly as prominent as consentYes, side by side."
+ },
+ "consentYes": "Yes, share",
+ "@consentYes": {
+  "description": "The answer that turns measurement on. Exactly as prominent as consentNo, side by side."
+ },
+ "consentChangeLater": "You can change this any time in {profile}, under {setting}.",
+ "@consentChangeLater": {
+  "description": "The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).",
+  "placeholders": {
+   "profile": {
+    "type": "String"
+   },
+   "setting": {
+    "type": "String"
+   }
+  }
+ },
  "yourMix": "Your mix",
  "genresLine": "Tap a genre to skip it. Hold one and the smaller topics inside open right below.",
  "insideGenre": "Inside",
