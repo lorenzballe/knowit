@@ -502,7 +502,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourCards => '你的卡片';
 
   @override
-  String get nothingYet => '还没有';
+  String get emptyLikedHint => '长按你喜欢的卡片';
+
+  @override
+  String get emptySavedHint => '点一下卡片上的书签';
 
   @override
   String get lastSevenDays => '最近 7 天';

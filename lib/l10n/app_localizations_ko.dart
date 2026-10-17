@@ -507,7 +507,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get yourCards => '내 카드';
 
   @override
-  String get nothingYet => '아직 없어요';
+  String get emptyLikedHint => '마음에 드는 카드를 길게 누르세요';
+
+  @override
+  String get emptySavedHint => '카드의 북마크를 누르세요';
 
   @override
   String get lastSevenDays => '최근 7일';

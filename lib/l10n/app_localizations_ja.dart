@@ -505,7 +505,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yourCards => 'あなたのカード';
 
   @override
-  String get nothingYet => 'まだありません';
+  String get emptyLikedHint => '気に入ったカードを長押し';
+
+  @override
+  String get emptySavedHint => 'カードのブックマークをタップ';
 
   @override
   String get lastSevenDays => '過去7日間';

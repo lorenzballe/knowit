@@ -514,7 +514,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yourCards => 'Your cards';
 
   @override
-  String get nothingYet => 'Nothing yet';
+  String get emptyLikedHint => 'Hold any card you like';
+
+  @override
+  String get emptySavedHint => 'Tap the bookmark on any card';
 
   @override
   String get lastSevenDays => 'Last 7 days';

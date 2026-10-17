@@ -6,7 +6,6 @@ import '../../analytics.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
-import '../balanced_text.dart';
 import 'parts.dart';
 
 /// Not sure where to start? — artboard 138f, the very bottom.
@@ -103,7 +102,9 @@ class _SurpriseMeState extends State<SurpriseMe> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            BalancedText(
+                            // A plain line, which fills the card: wrapped
+                            // to balance, it narrowed the card around it.
+                            Text(
                               l.anyCard,
                               textAlign: TextAlign.center,
                               style: AppText.display(

@@ -512,7 +512,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yourCards => 'Kartların';
 
   @override
-  String get nothingYet => 'Henüz yok';
+  String get emptyLikedHint => 'Beğendiğin bir karta basılı tut';
+
+  @override
+  String get emptySavedHint => 'Bir kartın yer imine dokun';
 
   @override
   String get lastSevenDays => 'Son 7 gün';

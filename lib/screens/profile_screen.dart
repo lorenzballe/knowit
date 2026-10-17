@@ -431,6 +431,8 @@ class ProfileScreen extends StatelessWidget {
             key: const ValueKey('profile-saved'),
             mark: ProfileMarks.bookmark,
             title: context.l10n.saved,
+            hint: context.l10n.emptySavedHint,
+            tint: kSpectrum[8],
             ids: app.savedIds,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
@@ -453,6 +455,9 @@ class ProfileScreen extends StatelessWidget {
             key: const ValueKey('profile-liked'),
             mark: ProfileMarks.heart,
             title: context.l10n.liked,
+            hint: context.l10n.emptyLikedHint,
+            // Human body's red, whose heart the like is.
+            tint: kSpectrum[14],
             ids: app.likedIds,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(

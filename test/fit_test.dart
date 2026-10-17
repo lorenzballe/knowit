@@ -224,7 +224,7 @@ void main() {
       });
 
       // Astute+ with both shelves empty: the foot of the profile says the
-      // days the archive keeps, the plan's name, and "Nothing yet" twice.
+      // days the archive keeps, the plan's name, and how each shelf fills.
       final AppState plusEmpty = await appWith({
         ...done,
         'knowit.plus': true,

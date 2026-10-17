@@ -816,11 +816,17 @@ abstract class AppLocalizations {
   /// **'Your cards'**
   String get yourCards;
 
-  /// Profile: under Saved or Liked while the shelf holds no card.
+  /// Profile: under Liked while the shelf is empty, the gesture that likes a card (a long press).
   ///
   /// In en, this message translates to:
-  /// **'Nothing yet'**
-  String get nothingYet;
+  /// **'Hold any card you like'**
+  String get emptyLikedHint;
+
+  /// Profile: under Saved while the shelf is empty, the gesture that saves a card (the bookmark on it).
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the bookmark on any card'**
+  String get emptySavedHint;
 
   /// Profile: the Archive row's value on the free plan, whose archive shows only the last seven days (kFreeArchiveDays). Astute+ readers see how many days instead.
   ///
