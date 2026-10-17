@@ -209,6 +209,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       input: (commit) => _PickInput(
                         pill: pill,
                         options: options,
@@ -220,6 +221,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       prompt: context.l10n.pickASideNoRightAnswer,
                       input: (commit) => _PickInput(
                         pill: pill,
@@ -232,6 +234,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
@@ -243,6 +246,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       prompt: context.l10n.estimateCloseEnough,
                       input: (commit) => PlaceItInput(
                         pill: pill,
@@ -644,12 +648,17 @@ class _AskFace extends StatefulWidget {
   /// line under the input when the card cannot be answered here.
   final Answer? given;
 
+  /// Whether the card's save and share sit in the bottom corner, which the
+  /// face then keeps clear.
+  final bool corner;
+
   const _AskFace({
     required this.pill,
     required this.input,
     required this.onAnswer,
     this.prompt,
     this.given,
+    this.corner = false,
   });
 
   @override
@@ -681,143 +690,261 @@ class _AskFaceState extends State<_AskFace> {
     widget.onAnswer?.call(response, null, reason);
   }
 
+  /// The gap above the line under the input, and the least room that line
+  /// keeps at the foot when the card's save and share are in the corner:
+  /// they reach 33 points up into the face (15 + 44 less its padding of
+  /// 26), and the input stays four clear of them.
+  static const double _footGap = 14;
+  static const double _cornerClear = 37;
+
+  /// The nudge's row, and the gap above it.
+  static const double _hintGap = 4;
+  static const double _hintRow = 44;
+
+  static TextStyle _questionStyle(Pill pill, double size) => AppText.display(
+    size: size,
+    weight: FontWeight.w600,
+    height: 1.14,
+    spacing: -0.3 - size * 0.018,
+    color: pill.ink,
+  );
+
+  static TextStyle _promptStyle(Pill pill) => AppText.body(
+    size: 12.5,
+    weight: FontWeight.w500,
+    color: pill.ink.withValues(alpha: 0.55),
+  );
+
+  /// The line under the input.
+  String _prompt(BuildContext context) {
+    final pill = widget.pill;
+    return _pending != null
+        ? (pill.isGraded
+              ? context.l10n.beingRightMattersLess
+              : context.l10n.writeItBeforeTheirs)
+        // Nowhere to commit means this is a re-read, and telling someone to
+        // commit to a card they answered days ago is just wrong. It used to
+        // also tell an unanswered one to go and answer it on Today — which
+        // the cards sitting behind the top of today's own deck were saying,
+        // on Today, about themselves.
+        : widget.onAnswer == null && widget.given != null
+        ? context.l10n.youAnsweredThisOne
+        : widget.prompt ??
+              context.l10n.commitBeforeYouTurn(
+                context.l10n.difficultyLabel(pill.difficulty.name),
+              );
+  }
+
+  /// How tall the input is, or the step that takes its place once the
+  /// reader has answered, whichever is taller: the question is sized once,
+  /// and does not jump when the step comes.
+  double _inputHeight(BuildContext context, double width, TextScaler scaler) {
+    final pill = widget.pill;
+    final double input = switch (pill.challenge) {
+      PickOne(:final options) => _PickInput.heightFor(
+        context,
+        options,
+        width,
+        scaler,
+      ),
+      TakeASide(:final positions) => _PickInput.heightFor(
+        context,
+        positions,
+        width,
+        scaler,
+      ),
+      TypeNumber() => 54,
+      Estimate() => PlaceItInput.heightFor(scaler),
+      NoChallenge() => 0,
+    };
+    final double step = pill.isGraded
+        ? _ConfidenceStep.heightFor(context, width, scaler)
+        : _ReasonStep.heightFor(scaler);
+    return math.max(input, step);
+  }
+
+  /// The gap above the line under the input: wide enough, where the card's
+  /// save and share are in the corner, that nothing above it reaches them.
+  double _footGapFor(double promptHeight) => widget.corner
+      ? math.max(_footGap, _cornerClear - promptHeight)
+      : _footGap;
+
+  /// How tall the question may be.
+  ///
+  /// Its share of the face, as it always was: a proportion keeps the same
+  /// composition from card to card. Unless what goes under it needs the
+  /// room. On a small phone a three-answer card gave its question 48% of
+  /// the face and pushed the last answer under the card's save and share,
+  /// where a tap on it saved the card. The question gives way first, down
+  /// to what it needs at its smallest size, because a question set smaller
+  /// is still read, and an answer under a button is not. A face shorter
+  /// than 520 points starts from 40%.
+  double _questionRoom(
+    BuildContext context,
+    BoxConstraints box,
+    double promptHeight,
+  ) {
+    final double height = box.maxHeight;
+    final double width = box.maxWidth;
+    if (!height.isFinite || !width.isFinite) return 0;
+    final pill = widget.pill;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final double share = height * (height < 520 ? 0.40 : 0.48);
+    double below =
+        22 +
+        _inputHeight(context, width, scaler) +
+        _footGapFor(promptHeight) +
+        promptHeight;
+    if (pill.hasHint) below += _hintGap + _hintRow;
+    // At its smallest, as drawn: ScaledText never sets it smaller.
+    final double needed =
+        _measure(
+          context,
+          pill.question,
+          _questionStyle(pill, 18),
+          width,
+          TextScaler.noScaling,
+        ) +
+        2;
+    return (height - below).clamp(math.min(needed, share), share);
+  }
+
   @override
   Widget build(BuildContext context) {
     final pill = widget.pill;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
 
     return LayoutBuilder(
-      builder: (context, constraints) => SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: constraints.maxHeight),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // The question takes a fixed share of the card and is set as
-              // large as that share will hold. A share rather than whatever
-              // the options leave over, because the leftover needs their
-              // intrinsic height — which a LayoutBuilder cannot give — and
-              // because a proportion keeps the same composition across every
-              // card instead of inventing one per question length.
-              SizedBox(
-                height: constraints.maxHeight * 0.48,
-                child: ScaledText(
-                  text: pill.question,
-                  min: 18,
-                  max: 28,
-                  alignment: Alignment.bottomLeft,
-                  styleFor: (size) => AppText.display(
-                    size: size,
-                    weight: FontWeight.w600,
-                    height: 1.14,
-                    spacing: -0.3 - size * 0.018,
-                    color: pill.ink,
+      builder: (context, constraints) {
+        final String prompt = _prompt(context);
+        final double promptHeight = _measure(
+          context,
+          prompt,
+          _promptStyle(pill),
+          constraints.maxWidth - (widget.corner ? _CardControl.room : 0),
+          scaler,
+        );
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // The question takes its share of the card, or what the
+                // answers leave it (see [_questionRoom]), and is set as large
+                // as that will hold.
+                SizedBox(
+                  height: _questionRoom(context, constraints, promptHeight),
+                  child: ScaledText(
+                    text: pill.question,
+                    min: 18,
+                    max: 28,
+                    alignment: Alignment.bottomLeft,
+                    styleFor: (size) => _questionStyle(pill, size),
                   ),
                 ),
-              ),
-              const SizedBox(height: 22),
-              if (_pending == null)
-                widget.input(widget.onAnswer == null ? null : _commit)
-              else if (pill.isGraded)
-                _ConfidenceStep(pill: pill, onPick: _finish)
-              else
-                _ReasonStep(pill: pill, onSubmit: _finishReason),
-              if (_pending == null && pill.hasHint) ...[
-                const SizedBox(height: 12),
-                if (_hintOpen)
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
-                    decoration: BoxDecoration(
-                      color: pill.wash,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'HINT',
-                          style: AppText.label(
-                            size: 10.5,
-                            spacing: 1.2,
-                            color: pill.ink.withValues(alpha: 0.6),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          pill.hint,
-                          style: AppText.body(
-                            size: 14,
-                            height: 1.4,
-                            color: pill.ink.withValues(alpha: 0.9),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                const SizedBox(height: 22),
+                if (_pending == null)
+                  widget.input(widget.onAnswer == null ? null : _commit)
+                else if (pill.isGraded)
+                  _ConfidenceStep(pill: pill, onPick: _finish)
                 else
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      setState(() => _hintOpen = true);
-                      // Asked for help: a card that needed a hint sat
-                      // above the reader, and the dealer can hear that.
-                      Analytics.capture('hint shown', {
-                        'pill_id': widget.pill.id,
-                        'topic': widget.pill.topic,
-                      });
-                      CardRead.of(context)?.hinted();
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.lightbulb_outline_rounded,
-                          size: 15,
-                          color: pill.ink.withValues(alpha: 0.65),
-                        ),
-                        const SizedBox(width: 7),
-                        Flexible(
-                          child: Text(
-                            context.l10n.giveMeANudge,
-                            style: AppText.body(
-                              size: 13,
-                              weight: FontWeight.w500,
-                              color: pill.ink.withValues(alpha: 0.65),
+                  _ReasonStep(pill: pill, onSubmit: _finishReason),
+                if (_pending == null && pill.hasHint) ...[
+                  const SizedBox(height: _hintGap),
+                  if (_hintOpen)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
+                      decoration: BoxDecoration(
+                        color: pill.wash,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'HINT',
+                            style: AppText.label(
+                              size: 10.5,
+                              spacing: 1.2,
+                              color: pill.ink.withValues(alpha: 0.6),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-              const SizedBox(height: 14),
-              Text(
-                _pending != null
-                    ? (pill.isGraded
-                          ? context.l10n.beingRightMattersLess
-                          : context.l10n.writeItBeforeTheirs)
-                    // Nowhere to commit means this is a re-read, and telling
-                    // someone to commit to a card they answered days ago is
-                    // just wrong. It used to also tell an unanswered one to
-                    // go and answer it on Today — which the cards sitting
-                    // behind the top of today's own deck were saying, on
-                    // Today, about themselves.
-                    : widget.onAnswer == null && widget.given != null
-                    ? context.l10n.youAnsweredThisOne
-                    : widget.prompt ??
-                          context.l10n.commitBeforeYouTurn(
-                            context.l10n.difficultyLabel(pill.difficulty.name),
+                          const SizedBox(height: 5),
+                          Text(
+                            pill.hint,
+                            style: AppText.body(
+                              size: 14,
+                              height: 1.4,
+                              color: pill.ink.withValues(alpha: 0.9),
+                            ),
                           ),
-                style: AppText.body(
-                  size: 12.5,
-                  weight: FontWeight.w500,
-                  color: pill.ink.withValues(alpha: 0.55),
+                        ],
+                      ),
+                    )
+                  else
+                    // The words are the size of the line under the input;
+                    // the target round them is a finger's.
+                    Semantics(
+                      button: true,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          setState(() => _hintOpen = true);
+                          // Asked for help: a card that needed a hint sat
+                          // above the reader, and the dealer can hear that.
+                          Analytics.capture('hint shown', {
+                            'pill_id': widget.pill.id,
+                            'topic': widget.pill.topic,
+                          });
+                          CardRead.of(context)?.hinted();
+                        },
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            minHeight: _hintRow,
+                          ),
+                          child: Row(
+                            children: [
+                              ExcludeSemantics(
+                                child: Icon(
+                                  Icons.lightbulb_outline_rounded,
+                                  size: 15,
+                                  color: pill.ink.withValues(alpha: 0.65),
+                                ),
+                              ),
+                              const SizedBox(width: 7),
+                              Flexible(
+                                child: Text(
+                                  context.l10n.giveMeANudge,
+                                  style: AppText.body(
+                                    size: 13,
+                                    weight: FontWeight.w500,
+                                    color: pill.ink.withValues(alpha: 0.65),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+                SizedBox(height: _footGapFor(promptHeight)),
+                // Kept clear of the corner where the card's save and share
+                // sit, so the line wraps rather than running under them.
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: widget.corner ? _CardControl.room : 0,
+                  ),
+                  child: Text(prompt, style: _promptStyle(pill)),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -837,6 +964,30 @@ class _PickInput extends StatelessWidget {
     required this.onAnswer,
     this.taken,
   });
+
+  /// How tall the options set at [width], as [_ChoiceButton] lays them:
+  /// each one's words, its padding and its edge, and the gap between.
+  static double heightFor(
+    BuildContext context,
+    List<String> options,
+    double width,
+    TextScaler scaler,
+  ) {
+    double total = 0;
+    for (int i = 0; i < options.length; i++) {
+      total +=
+          _measure(
+            context,
+            options[i],
+            _ChoiceButton.labelStyle(const Color(0xFF000000), false),
+            width - 34,
+            scaler,
+          ) +
+          30;
+      if (i > 0) total += 9;
+    }
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1046,6 +1197,13 @@ class _ChoiceButton extends StatelessWidget {
     this.taken = false,
   });
 
+  static TextStyle labelStyle(Color ink, bool taken) => AppText.body(
+    size: 14.5,
+    weight: taken ? FontWeight.w600 : FontWeight.w500,
+    height: 1.35,
+    color: ink,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Semantics(
@@ -1067,17 +1225,7 @@ class _ChoiceButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: AppText.body(
-                    size: 14.5,
-                    weight: taken ? FontWeight.w600 : FontWeight.w500,
-                    height: 1.35,
-                    color: ink,
-                  ),
-                ),
-              ),
+              Expanded(child: Text(label, style: labelStyle(ink, taken))),
               if (taken) ...[
                 const SizedBox(width: 10),
                 Text(
@@ -1106,6 +1254,45 @@ class _ConfidenceStep extends StatelessWidget {
   final ValueChanged<int> onPick;
 
   const _ConfidenceStep({required this.pill, required this.onPick});
+
+  /// How tall the step sets at [width]: the question, and the levels as
+  /// they wrap.
+  static double heightFor(
+    BuildContext context,
+    double width,
+    TextScaler scaler,
+  ) {
+    final TextStyle chip = AppText.body(size: 15, weight: FontWeight.w600);
+    final double chipHeight =
+        _measure(context, '90%', chip, width, scaler) + 28;
+    double row = 0;
+    int rows = 1;
+    for (final int level in kConfidenceLevels) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: '$level%', style: chip),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+      )..layout();
+      final double w = p.width + 38;
+      p.dispose();
+      if (row > 0 && row + 9 + w > width) {
+        rows++;
+        row = w;
+      } else {
+        row += (row > 0 ? 9 : 0) + w;
+      }
+    }
+    return _measure(
+          context,
+          context.l10n.howSureAreYou,
+          AppText.display(size: 19, weight: FontWeight.w600, spacing: -0.4),
+          width,
+          scaler,
+        ) +
+        14 +
+        rows * chipHeight +
+        (rows - 1) * 9;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1170,6 +1357,16 @@ class _ReasonStep extends StatefulWidget {
   final ValueChanged<String> onSubmit;
 
   const _ReasonStep({required this.pill, required this.onSubmit});
+
+  /// About how tall the step sets: the line asking why, two lines to write
+  /// in, and the button.
+  static double heightFor(TextScaler scaler) =>
+      scaler.scale(14.5) * 1.3 +
+      10 +
+      scaler.scale(14.5) * 1.35 * 2 +
+      24 +
+      10 +
+      46;
 
   @override
   State<_ReasonStep> createState() => _ReasonStepState();

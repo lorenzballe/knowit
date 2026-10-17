@@ -101,6 +101,15 @@ class PlaceItInput extends StatefulWidget {
     required this.onAnswer,
   });
 
+  /// About how tall the ruler sets at the reader's text size: the figure,
+  /// the ruler, and the line with its button.
+  static double heightFor(TextScaler scaler) =>
+      scaler.scale(34) +
+      12 +
+      64 +
+      14 +
+      math.max(26 + scaler.scale(11.5) * 1.25, scaler.scale(13) * 1.3);
+
   @override
   State<PlaceItInput> createState() => _PlaceItInputState();
 }

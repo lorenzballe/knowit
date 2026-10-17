@@ -107,69 +107,121 @@ class _MagicCardState extends State<MagicCard>
           borderRadius: BorderRadius.circular(_Rim.radius),
         ),
         padding: const EdgeInsets.fromLTRB(26, 26, 26, 22),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+        child: LayoutBuilder(
+          builder: (context, box) {
+            final (bool note, bool line) = _fit(context, box);
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.auto_awesome_rounded, size: 15, color: ink),
-                const SizedBox(width: 8),
-                Eyebrow(widget.eyebrow),
+                Row(
+                  children: [
+                    Icon(Icons.auto_awesome_rounded, size: 15, color: ink),
+                    const SizedBox(width: 8),
+                    Eyebrow(widget.eyebrow),
+                  ],
+                ),
+                if (note)
+                  if (widget.note case final (String, String) said) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      said.$2,
+                      key: ValueKey(said.$1),
+                      style: _noteStyle(ink),
+                    ),
+                  ],
+                const Spacer(),
+                // Two lines at most, in whatever size two lines take: the
+                // Italian is two words longer, the German longer again.
+                FitText(
+                  widget.headline,
+                  maxLines: 2,
+                  minSize: 24,
+                  style: _headlineStyle(ink),
+                ),
+                if (line) ...[
+                  const SizedBox(height: 14),
+                  Text(widget.line, style: _lineStyle(ink)),
+                ],
+                const Spacer(),
+                PrimaryButton(label: widget.action, onPressed: widget.onAction),
+                if (widget.skip != null && widget.onSkip != null) ...[
+                  const SizedBox(height: 4),
+                  Center(
+                    child: QuietButton(
+                      label: widget.skip!,
+                      onPressed: widget.onSkip!,
+                    ),
+                  ),
+                ],
               ],
-            ),
-            if (widget.note case final (String, String) note) ...[
-              const SizedBox(height: 12),
-              Text(
-                note.$2,
-                key: ValueKey(note.$1),
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w600,
-                  height: 1.35,
-                  color: ink.withValues(alpha: 0.85),
-                ),
-              ),
-            ],
-            const Spacer(),
-            // Two lines at most, in whatever size two lines take: the
-            // Italian is two words longer, the German longer again.
-            FitText(
-              widget.headline,
-              maxLines: 2,
-              minSize: 24,
-              style: AppText.display(
-                size: 40,
-                weight: FontWeight.w600,
-                height: 1.02,
-                spacing: -1.2,
-                color: ink,
-              ),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              widget.line,
-              style: AppText.body(
-                size: 15,
-                height: 1.4,
-                color: ink.withValues(alpha: 0.62),
-              ),
-            ),
-            const Spacer(),
-            PrimaryButton(label: widget.action, onPressed: widget.onAction),
-            if (widget.skip != null && widget.onSkip != null) ...[
-              const SizedBox(height: 4),
-              Center(
-                child: QuietButton(
-                  label: widget.skip!,
-                  onPressed: widget.onSkip!,
-                ),
-              ),
-            ],
-          ],
+            );
+          },
         ),
       ),
     );
+  }
+
+  static TextStyle _noteStyle(Color ink) => AppText.body(
+    size: 13.5,
+    weight: FontWeight.w600,
+    height: 1.35,
+    color: ink.withValues(alpha: 0.85),
+  );
+
+  static TextStyle _headlineStyle(Color ink) => AppText.display(
+    size: 40,
+    weight: FontWeight.w600,
+    height: 1.02,
+    spacing: -1.2,
+    color: ink,
+  );
+
+  static TextStyle _lineStyle(Color ink) =>
+      AppText.body(size: 15, height: 1.4, color: ink.withValues(alpha: 0.62));
+
+  /// Which of the two things the card can do without fit in [box]: the
+  /// week's note, and the line under the headline.
+  ///
+  /// The eyebrow, the headline and the button always stay: they are the
+  /// offer. On a short phone the card was a fixed column with nothing that
+  /// gave way, and the button the card exists for was cut off by 23
+  /// points. The line goes first, being the headline said again at
+  /// length; then the note, which the shelf says elsewhere.
+  (bool, bool) _fit(BuildContext context, BoxConstraints box) {
+    if (!box.maxHeight.isFinite) return (true, true);
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextDirection direction = Directionality.of(context);
+    final Color ink = context.p.ink;
+    // On the inherited style, as a Text here sets it: the theme's tracking
+    // is in it, and without it a line measured short of the one drawn.
+    final TextStyle inherited = DefaultTextStyle.of(context).style;
+    double measure(String text, TextStyle style, {int? lines}) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: text, style: inherited.merge(style)),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: lines,
+      )..layout(maxWidth: box.maxWidth);
+      final double h = p.height;
+      p.dispose();
+      return h;
+    }
+
+    final double fixed =
+        math.max(15, scaler.scale(11) * 1.3) +
+        measure(widget.headline, _headlineStyle(ink), lines: 2) +
+        // The button is 54, and the quiet way past it its own line.
+        54 +
+        (widget.skip != null ? 4 + 20 + scaler.scale(13) * 1.3 : 0);
+    final double note = widget.note == null
+        ? 0
+        : 12 + measure(widget.note!.$2, _noteStyle(ink));
+    final double line = 14 + measure(widget.line, _lineStyle(ink));
+    final double room = box.maxHeight;
+    if (fixed + note + line <= room) return (true, true);
+    if (fixed + note <= room) return (true, false);
+    return (false, false);
   }
 }
 
