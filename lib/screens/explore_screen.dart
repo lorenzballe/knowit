@@ -1809,17 +1809,31 @@ class _BigRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
-                    pill.barMove,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 11.5,
-                      weight: FontWeight.w500,
-                      height: 1.3,
-                      color: pill.ink,
+                  // The line to keep once the card is read; until then,
+                  // only how long it takes. Printed under a question nobody
+                  // had answered, it gave the answer away from the shelf.
+                  if (isRead(pill))
+                    Text(
+                      pill.barMove,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: 11.5,
+                        weight: FontWeight.w500,
+                        height: 1.3,
+                        color: pill.ink,
+                      ),
+                    )
+                  else
+                    Text(
+                      context.l10n.minutesShort(minutesFor(pill)),
+                      style: AppText.label(
+                        size: 9,
+                        weight: FontWeight.w700,
+                        spacing: 1.2,
+                        color: sub,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

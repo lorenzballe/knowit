@@ -43,7 +43,11 @@ void main() {
 
     test('the languages that write a point read like English', () {
       for (final locale in ['ja', 'ko', 'zh']) {
-        expect(TypeNumber.read('9,455', locale: locale), '9455', reason: locale);
+        expect(
+          TypeNumber.read('9,455', locale: locale),
+          '9455',
+          reason: locale,
+        );
       }
     });
 

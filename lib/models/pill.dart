@@ -106,9 +106,8 @@ class TypeNumber extends Challenge {
     }
     if (!RegExp(r'^[\d.,]*\d[\d.,]*$').hasMatch(s)) return null;
     final String point = _decimalMark(locale);
-    bool grouped(String digits, String mark) => RegExp(
-      '^\\d{1,3}(${RegExp.escape(mark)}\\d{3})+\$',
-    ).hasMatch(digits);
+    bool grouped(String digits, String mark) =>
+        RegExp('^\\d{1,3}(${RegExp.escape(mark)}\\d{3})+\$').hasMatch(digits);
 
     String whole = s;
     String fraction = '';

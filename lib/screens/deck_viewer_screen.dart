@@ -122,9 +122,8 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     // A ring of 38, in a target a finger finds: 44.
                     Semantics(
                       button: true,
-                      label: MaterialLocalizations.of(
-                        context,
-                      ).closeButtonTooltip,
+                      label: MaterialLocalizations.of(context)
+                          .closeButtonTooltip,
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () => Navigator.of(context).pop(),
