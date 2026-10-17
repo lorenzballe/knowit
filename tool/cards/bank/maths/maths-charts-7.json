@@ -1,0 +1,40 @@
+{
+  "id": "maths-charts-7",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: every honest chart starts its value axis at zero.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Bars must start at zero, because their length is the value: cut the base and the ink lies. Lines and dots show position, so their axis may zoom in, as a fever chart from 36 to 41 °C does, where zero would flatten everything. The rule is for bars, not every chart.",
+  "move": "Ask what the eye measures: a bar's length, or a point's position.",
+  "ask": "Which chart have I dismissed for its axis when it was a line, not bars?",
+  "trap": "Treating the zero rule for bars as a rule for every chart.",
+  "keywords": [
+    "chart axes",
+    "bar charts",
+    "proportional ink",
+    "data visualisation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilke, Fundamentals of Data Visualization, 2019",
+  "source_kind": "book",
+  "reference": "https://clauswilke.com/dataviz/proportional-ink.html",
+  "quote": "the sizes of shaded areas in a visualization need to be proportional to the data values they represent",
+  "written": "2026-10-17"
+}

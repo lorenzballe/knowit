@@ -1,0 +1,40 @@
+{
+  "id": "maths-units-8",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Football's Law 1 allows pitches 90–120 m long and 45–90 m wide. How much bigger is the largest legal pitch than the smallest?",
+  "options": [
+    "About 1.3 times",
+    "About 2 times",
+    "About 2.7 times"
+  ],
+  "correct": 2,
+  "answer": "About 2.7 times. The largest is 120 × 90 = 10,800 square metres, the smallest 90 × 45 = 4,050. Both sides can stretch, so the ratios multiply: 1.33 × 2 = 2.67. An area given in football pitches uses a unit that varies almost threefold.",
+  "move": "When both sides scale, the area grows by the product of the ratios.",
+  "ask": "Which figure in football pitches have I nodded at without asking which pitch?",
+  "trap": "About a third bigger, comparing only the lengths.",
+  "keywords": [
+    "football pitch",
+    "area",
+    "laws of the game",
+    "units"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, Law 1: The Field of Play",
+  "source_kind": "standard",
+  "reference": "https://www.theifab.com/laws/latest/the-field-of-play/",
+  "written": "2026-10-17"
+}

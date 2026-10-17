@@ -1,0 +1,41 @@
+{
+  "id": "maths-logarithms-5",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.logarithms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2020 researchers showed people COVID death charts on ordinary or logarithmic axes. What did the log charts do?",
+  "options": [
+    "Helped people read the trend better",
+    "Made people understand it less well",
+    "Made no difference at all"
+  ],
+  "correct": 1,
+  "answer": "Made people understand it less well. In Romano and colleagues' survey experiment, log charts left people with a worse grasp of how the pandemic had grown, worse predictions and even different policy views. A log axis turns steady growth into a straight line, which only helps readers who know how to read it.",
+  "move": "A chart helps only readers who know how its axis counts.",
+  "ask": "Which chart have I shared that most readers could not decode?",
+  "trap": "Assuming the expert's chart helps everyone who reads it.",
+  "keywords": [
+    "logarithmic scale",
+    "covid-19",
+    "charts",
+    "risk communication"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Romano et al., the effect of logarithmic scale on COVID-19 charts, Health Economics, 2020",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7461444/",
+  "quote": "when we show the number of COVID‐19 related deaths on a logarithmic scale, people have a less accurate understanding of how the pandemic has developed, make less accurate predictions on its evolution, and have different policy preferences",
+  "written": "2026-10-17"
+}

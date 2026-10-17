@@ -1,0 +1,39 @@
+{
+  "id": "maths-logic-3",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "True or false: at least two Londoners have exactly the same number of hairs on their heads.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True, by the pigeonhole principle. A scalp carries roughly 100,000 to 150,000 hairs, and nobody has a million, while London has nearly 9 million people. Put 9 million people into fewer than a million possible counts and many counts must be shared, without anyone counting a single hair.",
+  "move": "More items than boxes guarantees a shared box, with no counting at all.",
+  "ask": "Which certainty could I reach just by comparing two counts?",
+  "trap": "Thinking it needs a count of every head to know.",
+  "keywords": [
+    "pigeonhole principle",
+    "logic",
+    "proof",
+    "london"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Office for National Statistics, mid-2023 population estimates, London",
+  "source_kind": "statistics",
+  "reference": "Office for National Statistics, Population estimates for England and Wales: mid-2023, London region",
+  "written": "2026-10-17"
+}

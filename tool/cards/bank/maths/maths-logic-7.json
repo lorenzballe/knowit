@@ -1,0 +1,33 @@
+{
+  "id": "maths-logic-7",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1769 Euler guessed it takes at least five fifth powers to sum to a fifth power. How was he proved wrong?",
+  "answer": "By a computer search. In 1966 Leon Lander and Thomas Parkin found 27⁵ + 84⁵ + 110⁵ + 133⁵ = 144⁵: four fifth powers, not five. Their whole paper was a few lines long. One counterexample undoes a conjecture, however long it has stood.",
+  "move": "One example can sink a claim that many cases seemed to confirm.",
+  "ask": "Which belief of mine rests on many confirmations and no search for a counterexample?",
+  "keywords": [
+    "euler's conjecture",
+    "counterexample",
+    "fifth powers",
+    "computer search"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lander and Parkin, Counterexample to Euler's conjecture on sums of like powers, 1966",
+  "source_kind": "paper",
+  "reference": "Leon J. Lander and Thomas R. Parkin, Counterexample to Euler's conjecture on sums of like powers, Bulletin of the American Mathematical Society 72(6):1079, 1966",
+  "written": "2026-10-17"
+}

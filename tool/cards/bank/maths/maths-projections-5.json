@@ -1,0 +1,40 @@
+{
+  "id": "maths-projections-5",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Flights from London to Los Angeles pass over Greenland, far north of a straight line on a flat map. Why?",
+  "options": [
+    "To follow the jet stream",
+    "It is the shortest route on a globe",
+    "To stay near airports for emergencies"
+  ],
+  "correct": 1,
+  "answer": "It is the shortest route on a globe. The shortest path between two points on a sphere is a great circle, and on a Mercator map great circles bow towards the pole. Stretch a string between London and Los Angeles on a globe and it runs over Greenland and northern Canada.",
+  "move": "A straight line on a flat map is rarely the shortest path on Earth.",
+  "ask": "Which route or plan looks direct only because of how it was drawn?",
+  "trap": "Thinking the straight line on a flat map is the shortest.",
+  "keywords": [
+    "great circle",
+    "map projections",
+    "flight paths",
+    "geodesics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Great Circle Mapper, London Heathrow to Los Angeles",
+  "source_kind": "reference_work",
+  "reference": "http://www.gcmap.com/mapui?P=LHR-LAX",
+  "written": "2026-10-17"
+}

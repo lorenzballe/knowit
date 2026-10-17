@@ -1,0 +1,33 @@
+{
+  "id": "maths-game-theory-6",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Around 1980 Robert Axelrod pitted computer strategies against each other in a repeated prisoner's dilemma. Which won?",
+  "answer": "Tit for tat, the shortest program entered: cooperate first, then copy whatever the other side did last. Anatol Rapoport's few lines won both of Axelrod's tournaments. It never beat a single opponent head to head, yet scored best overall, because it drew others into cooperating and punished cheating only once.",
+  "move": "Be nice, retaliate once, forgive quickly: repeated games reward it.",
+  "ask": "In which repeated dealing could I start by cooperating and simply mirror back?",
+  "keywords": [
+    "tit for tat",
+    "prisoner's dilemma",
+    "robert axelrod",
+    "cooperation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Axelrod and Hamilton, The evolution of cooperation, Science, 1981",
+  "source_kind": "paper",
+  "reference": "Robert Axelrod and William D. Hamilton, The Evolution of Cooperation, Science 211(4489):1390–1396, 1981",
+  "written": "2026-10-17"
+}

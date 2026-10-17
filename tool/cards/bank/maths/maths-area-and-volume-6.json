@@ -1,0 +1,43 @@
+{
+  "id": "maths-area-and-volume-6",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "All gold ever mined, about 216,000 tonnes, at 19.3 tonnes per cubic metre: how wide a cube would it make, in metres?",
+  "value": 22.4,
+  "unit": "metres",
+  "tolerance": 0.5,
+  "answer": "About 22.4 metres a side: every bar, coin and ring ever made, in a cube about seven storeys high.",
+  "move": "A cube root shrinks a huge volume to a modest length; picture the side.",
+  "ask": "Which enormous total would look small if I pictured it as one block?",
+  "trap": "Kilometres wide, because 216,000 tonnes sounds enormous.",
+  "hint": "Turn tonnes into cubic metres, then find the cube root.",
+  "steps": [
+    "Volume: 216,000 ÷ 19.3 ≈ 11,200 cubic metres.",
+    "The side is the cube root: 22³ = 10,648 and 23³ = 12,167.",
+    "About 22.4 metres a side, roughly a seven-storey block."
+  ],
+  "keywords": [
+    "gold",
+    "cube root",
+    "volume",
+    "above-ground stocks"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Gold Council, how much gold has been mined",
+  "source_kind": "institution",
+  "reference": "https://www.gold.org/goldhub/data/how-much-gold",
+  "written": "2026-10-17"
+}

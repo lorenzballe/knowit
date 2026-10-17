@@ -1,0 +1,77 @@
+{
+  "id": "maths-projections-6",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which world maps show every country at its true size, and which inflate some?",
+  "answer": "Gall–Peters, Mollweide and Equal Earth are equal-area: each square centimetre of map covers the same ground. Mercator keeps angles instead, for navigation, and swells areas towards the poles; Robinson and Winkel tripel are compromises that bend everything a little. No flat map keeps both shapes and areas true, as Gauss's work on curved surfaces shows.",
+  "move": "Every flat map gives up something; ask whether it kept area, angle or neither.",
+  "ask": "Which map or chart have I trusted for something it was never designed to keep?",
+  "keywords": [
+    "map projections",
+    "equal-area maps",
+    "mercator",
+    "gall-peters"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Warps area",
+    "right": "Equal area",
+    "tag": "World map projections",
+    "items": [
+      {
+        "text": "Mercator",
+        "note": "The sailors' map of 1569: compass bearings are straight lines.",
+        "pile": "left",
+        "verdict": "Area swells away from the equator: four times at 60°, without limit at the poles."
+      },
+      {
+        "text": "Gall–Peters",
+        "note": "Promoted by Arno Peters in 1973, after James Gall in 1855.",
+        "pile": "right",
+        "verdict": "Equal area: every country true to size, though the shapes are stretched."
+      },
+      {
+        "text": "Robinson",
+        "note": "A 1963 design, National Geographic's world map from 1988.",
+        "pile": "left",
+        "verdict": "A compromise: it bends sizes and shapes a little, keeping neither exact."
+      },
+      {
+        "text": "Mollweide",
+        "note": "An oval world map from 1805.",
+        "pile": "right",
+        "verdict": "Equal area, at the cost of squeezed shapes near its edges."
+      },
+      {
+        "text": "Winkel tripel",
+        "note": "National Geographic's world map since 1998.",
+        "pile": "left",
+        "verdict": "Another compromise: sizes come close to true, but not equal."
+      },
+      {
+        "text": "Equal Earth",
+        "note": "Designed in 2018 for world maps of global data.",
+        "pile": "right",
+        "verdict": "Equal area by design, with shapes kept closer to the globe's."
+      }
+    ]
+  },
+  "source": "Šavrič, Patterson and Jenny, The Equal Earth map projection, 2019",
+  "source_kind": "paper",
+  "reference": "Bojan Šavrič, Tom Patterson and Bernhard Jenny, The Equal Earth map projection, International Journal of Geographical Information Science 33(3):454–465, 2019",
+  "written": "2026-10-17"
+}

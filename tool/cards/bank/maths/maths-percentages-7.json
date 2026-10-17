@@ -1,0 +1,43 @@
+{
+  "id": "maths-percentages-7",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In 2016, 17.4 million voted Leave in Britain's EU referendum, out of 46.5 million registered. What percent of the electorate was that?",
+  "value": 37.4,
+  "unit": "percent",
+  "tolerance": 0.2,
+  "answer": "37.4% of the electorate, and 51.9% of the votes cast: one result, measured against two different wholes.",
+  "move": "Name the whole before quoting a share: votes cast, or everyone eligible.",
+  "ask": "Which share have I quoted without saying what it was a share of?",
+  "trap": "52%, the share of votes cast, not of the electorate.",
+  "hint": "Divide the Leave votes by everyone registered, voters or not.",
+  "steps": [
+    "17,410,742 ÷ 46,500,001 ≈ 0.374: 37.4% of the electorate.",
+    "Remain had 34.7%; the 27.8% who did not vote make up the rest.",
+    "37.4% of the electorate, and 51.9% of the votes cast: one result, measured against two different wholes."
+  ],
+  "keywords": [
+    "brexit referendum",
+    "percentages",
+    "turnout",
+    "electorate"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Electoral Commission, EU referendum results and turnout, 2016",
+  "source_kind": "statistics",
+  "reference": "Electoral Commission, EU referendum results and turnout, 23 June 2016",
+  "written": "2026-10-17"
+}

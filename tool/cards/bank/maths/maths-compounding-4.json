@@ -1,0 +1,39 @@
+{
+  "id": "maths-compounding-4",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.compounding",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: Albert Einstein called compound interest the most powerful force in the universe.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False, as far as anyone can find. Nothing Einstein wrote or said contains it; the attribution appears decades after his death. Quote Investigator traced praise of compounding's power to a 1916 bank advertisement. The maths needs no famous name: at 7% a year, money doubles about every ten years.",
+  "move": "Judge a claim by its arithmetic, not by the name attached to it.",
+  "ask": "Which quote have I believed mainly because of the famous name under it?",
+  "trap": "Trusting a quote because it is famous and sounds right.",
+  "keywords": [
+    "albert einstein",
+    "misquotation",
+    "compound interest",
+    "quote investigator"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Quote Investigator, on compound interest and Einstein, 2011",
+  "source_kind": "reference_work",
+  "reference": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+  "written": "2026-10-17"
+}

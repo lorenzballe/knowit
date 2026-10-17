@@ -1,0 +1,40 @@
+{
+  "id": "maths-game-theory-5",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Your rock-paper-scissors opponent just lost a round playing rock. What should you throw next?",
+  "options": [
+    "Rock",
+    "Paper",
+    "Scissors"
+  ],
+  "correct": 2,
+  "answer": "Scissors. Watching 360 students play 300 rounds each, Wang, Xu and Zhou found winners tended to repeat their move and losers to switch to the next one in the cycle, rock to paper. Expect paper, and cut it. Playing truly at random is the only defence against habits like these.",
+  "move": "People are predictable even when trying not to be; look for their habits.",
+  "ask": "Which of my own habits would let a watchful rival predict me?",
+  "trap": "Paper, beating the rock they just lost with.",
+  "keywords": [
+    "rock paper scissors",
+    "game theory",
+    "win-stay lose-shift",
+    "strategy"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wang, Xu and Zhou, Social cycling and conditional responses in the Rock-Paper-Scissors game, Scientific Reports, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/srep05830",
+  "written": "2026-10-17"
+}

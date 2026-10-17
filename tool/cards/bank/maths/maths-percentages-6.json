@@ -1,0 +1,39 @@
+{
+  "id": "maths-percentages-6",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "True or false: a 20% discount works out cheaper if the shop takes it off before adding 20% VAT, not after.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Either way the price is multiplied by 0.8 and by 1.2, and the order does not change a product: £100 becomes £96 both ways. VAT is due on the price actually paid, so even the tax comes out the same. Only adding the percentages, 20 − 20, would wrongly give £100.",
+  "move": "Percentages applied one after another multiply, so their order does not matter.",
+  "ask": "Where have I argued over the order of two percentages that simply multiply?",
+  "trap": "Thinking the order of two percentages changes the final price.",
+  "keywords": [
+    "vat",
+    "discounts",
+    "percentages",
+    "multiplication"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "HMRC, VAT guide (VAT Notice 700)",
+  "source_kind": "institution",
+  "reference": "https://www.gov.uk/guidance/vat-guide-notice-700",
+  "written": "2026-10-17"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "maths-paradoxes-4",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "A new scanner moves patients with tiny tumours from stage 1 to stage 2. Survival rises in both stages. Did anyone live longer?",
+  "options": [
+    "Yes, both groups did better",
+    "No, nobody's outcome changed",
+    "Only the stage 2 patients"
+  ],
+  "correct": 1,
+  "answer": "No, nobody's outcome changed. The movers were the sickest of stage 1 and the healthiest of stage 2, so both averages rise while no one lives a day longer. Feinstein named it the Will Rogers phenomenon in 1985, after lung cancer survival rose stage by stage once new scans arrived.",
+  "move": "When groups are redrawn, every average can rise while nobody improves.",
+  "ask": "Which improvement have I credited that might only be a change of labels?",
+  "trap": "Crediting better treatment for what is only relabelling.",
+  "keywords": [
+    "will rogers phenomenon",
+    "stage migration",
+    "cancer survival",
+    "averages"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feinstein, Sosin and Wells, The Will Rogers phenomenon, New England Journal of Medicine, 1985",
+  "source_kind": "paper",
+  "reference": "Alvan Feinstein, Daniel Sosin and Carolyn Wells, The Will Rogers Phenomenon, New England Journal of Medicine 312(25):1604–1608, 1985",
+  "written": "2026-10-17"
+}

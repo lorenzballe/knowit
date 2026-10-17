@@ -1,0 +1,43 @@
+{
+  "id": "maths-compounding-8",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.compounding",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "The S&P 500 fell 57% from October 2007 to March 2009. By what percentage did it then have to rise to recover?",
+  "value": 133,
+  "unit": "percent",
+  "tolerance": 3,
+  "answer": "About 133%: a fall of 57% leaves 43%, which must more than double. It took until 2013.",
+  "move": "Losses and gains work on different bases, so losses cost more to undo.",
+  "ask": "Which loss am I expecting an equal-sized gain to repair?",
+  "trap": "57%, as if a rise undid an equal fall.",
+  "hint": "Start from £100, take the fall, then ask what multiplies the rest back to £100.",
+  "steps": [
+    "£100 falls 57% to £43.",
+    "Back to £100: 100 ÷ 43 ≈ 2.33 times.",
+    "A rise of about 133%, more than double the fall."
+  ],
+  "keywords": [
+    "stock market crash",
+    "investment losses",
+    "percentages",
+    "recovery"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "S&P Dow Jones Indices, S&P 500 closing values, 2007 to 2013",
+  "source_kind": "statistics",
+  "reference": "S&P Dow Jones Indices, S&P 500 closing values: 1,565.15 on 9 October 2007 and 676.53 on 9 March 2009",
+  "written": "2026-10-17"
+}

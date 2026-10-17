@@ -1,0 +1,33 @@
+{
+  "id": "maths-paradoxes-8",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A coin is tossed until it lands heads; the pot starts at £2 and doubles with each tails. What should you pay to play?",
+  "answer": "Its average payout is infinite: half the time £2, a quarter £4, an eighth £8, each adding £1 to the average. Yet few would pay even £20. Daniel Bernoulli answered in 1738 that each extra pound matters less the richer you are, so the pot's worth to you sets the price.",
+  "move": "An average can mislead when rare, huge outcomes drive it.",
+  "ask": "Which bet have I judged by its average when the rare outcomes did all the work?",
+  "keywords": [
+    "st petersburg paradox",
+    "expected value",
+    "daniel bernoulli",
+    "utility"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bernoulli, Exposition of a new theory on the measurement of risk, 1738, translated 1954",
+  "source_kind": "paper",
+  "reference": "Daniel Bernoulli, Exposition of a New Theory on the Measurement of Risk, translated by Louise Sommer, Econometrica 22(1):23–36, 1954",
+  "written": "2026-10-17"
+}

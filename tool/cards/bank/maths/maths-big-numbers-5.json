@@ -1,0 +1,39 @@
+{
+  "id": "maths-big-numbers-5",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "True or false: Britain officially counted a billion as a million million until 1974.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Britain long used the long scale, where a billion was a million million. In 1974 Harold Wilson told Parliament that ministers would use billion for a thousand million, the American and international sense, and usage followed. A billion in an old British book can be out by a factor of a thousand.",
+  "move": "Before comparing big numbers, check whose definition of the word they use.",
+  "ask": "Which figure have I repeated without knowing how its unit was defined?",
+  "trap": "Assuming a word for a number means the same everywhere.",
+  "keywords": [
+    "billion",
+    "long scale",
+    "short scale",
+    "harold wilson"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harold Wilson, written answer to the House of Commons, 1974",
+  "source_kind": "primary_document",
+  "reference": "Harold Wilson, written answer on the meaning of billion, House of Commons Hansard, 1974",
+  "written": "2026-10-17"
+}

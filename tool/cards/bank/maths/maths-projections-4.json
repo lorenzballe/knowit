@@ -1,0 +1,33 @@
+{
+  "id": "maths-projections-4",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do most web maps stop at about 85 degrees north and south, leaving the poles off?",
+  "answer": "To make the world a square. On Mercator's map the poles lie infinitely far away, so web maps cut it where its height equals its width: at 85.05°. That turns the world into square tiles that zoom neatly, at the cost of the polar regions and huge distortion near them.",
+  "move": "Every map trades something away; ask what this one gave up.",
+  "ask": "Which smooth tool have I used without noticing what it quietly leaves out?",
+  "keywords": [
+    "web mercator",
+    "map projections",
+    "map tiles",
+    "poles"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Battersby et al., Implications of Web Mercator and its use in online mapping, Cartographica, 2014",
+  "source_kind": "paper",
+  "reference": "https://pubs.usgs.gov/publication/70159494",
+  "written": "2026-10-17"
+}

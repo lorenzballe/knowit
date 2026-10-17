@@ -1,0 +1,43 @@
+{
+  "id": "maths-logarithms-6",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.logarithms",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "One lawnmower makes 90 decibels. A second, identical one starts beside it. What level do the two make together, in decibels?",
+  "value": 93,
+  "unit": "decibels",
+  "tolerance": 0,
+  "answer": "93 dB, not 180: doubling the sound energy adds only 3 decibels.",
+  "move": "On a log scale, doubling adds a fixed step; it never doubles the number.",
+  "ask": "Which reading on a logarithmic scale have I added up like ordinary numbers?",
+  "trap": "180 dB, adding the two readings together.",
+  "hint": "Decibels are logarithms: doubling the intensity adds 10 × log of 2.",
+  "steps": [
+    "Decibels count tenfold steps: 10 dB more is ten times the sound intensity.",
+    "Two mowers double the intensity: add 10 × log₁₀ 2 ≈ 3 dB.",
+    "90 + 3 = 93 dB, not 180."
+  ],
+  "keywords": [
+    "decibels",
+    "logarithms",
+    "noise",
+    "sound intensity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Health and Safety Executive, noise at work",
+  "source_kind": "institution",
+  "reference": "https://www.hse.gov.uk/MVR/topics/noise.htm",
+  "written": "2026-10-17"
+}

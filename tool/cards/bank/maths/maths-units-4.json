@@ -1,0 +1,39 @@
+{
+  "id": "maths-units-4",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "True or false: a nautical mile is exactly one minute of latitude, wherever you are on Earth.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Earth is slightly flattened, so a minute of latitude runs from about 1,843 metres at the equator to 1,862 near the poles. In 1929 hydrographers fixed the nautical mile at exactly 1,852 metres, near the average: 5,400 of them, 90 degrees of 60 minutes, still span 10,000 km, pole to equator.",
+  "move": "A unit named after nature usually ends up fixed by agreement.",
+  "ask": "Which measure do I treat as natural that is really an agreed convention?",
+  "trap": "Taking a defined unit for the natural length it was named after.",
+  "keywords": [
+    "nautical mile",
+    "latitude",
+    "units of length",
+    "navigation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "International Hydrographic Conference, Monaco, 1929",
+  "source_kind": "primary_document",
+  "reference": "International Hydrographic Bureau, International Extraordinary Hydrographic Conference, Monaco, 1929",
+  "written": "2026-10-17"
+}

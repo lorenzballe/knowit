@@ -1,0 +1,61 @@
+{
+  "id": "maths-area-and-volume-5",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which is the most pizza: one 18-inch, two 12-inch, three 10-inch or four 8-inch?",
+  "answer": "One 18-inch. Area grows with the square of the width: π × 9 × 9 ≈ 254 square inches, against 236 for three 10-inch, 226 for two 12-inch and 201 for four 8-inch. So one big pizza beats several smaller ones that sound like more.",
+  "move": "Compare circles by their widths squared, never by their widths.",
+  "ask": "Which deal have I judged by width or count when area was what I was buying?",
+  "keywords": [
+    "pizza",
+    "area of a circle",
+    "comparison",
+    "square law"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "rank",
+    "quantity": "Pizza, by area",
+    "most": "Most pizza",
+    "unit": "sq in",
+    "items": [
+      {
+        "label": "Two 12-inch pizzas",
+        "value": 226,
+        "note": "Two 12-inch: 2 × π × 6² ≈ 226 square inches, less than one 18-inch."
+      },
+      {
+        "label": "One 18-inch pizza",
+        "value": 254,
+        "note": "One 18-inch: π × 9² ≈ 254 square inches, the most pizza."
+      },
+      {
+        "label": "Four 8-inch pizzas",
+        "value": 201,
+        "note": "Four 8-inch: 4 × π × 4² ≈ 201 square inches, the least, in four boxes."
+      },
+      {
+        "label": "Three 10-inch pizzas",
+        "value": 236,
+        "note": "Three 10-inch: 3 × π × 5² ≈ 236 square inches, still short of one 18-inch."
+      }
+    ]
+  },
+  "source": "Fermat's Library, the 18-inch pizza against two 12-inch pizzas, 2019",
+  "source_kind": "arithmetic",
+  "reference": "Fermat's Library, one 18-inch pizza against two 12-inch pizzas, January 2019",
+  "written": "2026-10-17"
+}

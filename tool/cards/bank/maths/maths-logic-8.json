@@ -1,0 +1,33 @@
+{
+  "id": "maths-logic-8",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was it finally proved, in 1976, that four colours are enough for any map?",
+  "answer": "By computer. Kenneth Appel and Wolfgang Haken reduced every possible map to 1,936 configurations, then had a computer check them one by one, more than anyone could verify by hand. Many mathematicians were uneasy. A simpler proof followed in 1996, and in 2005 one checked entirely by computer.",
+  "move": "Trust in a result rests on how it can be checked, by hand or machine.",
+  "ask": "Which result do I accept that I could never check, and why do I trust it?",
+  "keywords": [
+    "four colour theorem",
+    "proof by computer",
+    "graph theory",
+    "maps"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thomas, The four colour theorem, Georgia Institute of Technology",
+  "source_kind": "reference_work",
+  "reference": "https://thomas.math.gatech.edu/FC/fourcolor.html",
+  "written": "2026-10-17"
+}

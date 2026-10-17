@@ -1,0 +1,43 @@
+{
+  "id": "maths-algorithms-4",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Luhn's rule: double every second digit from the right, add all the digits, and the total must end in 0. What check digit completes 7992739871?",
+  "value": 3,
+  "unit": "digit",
+  "tolerance": 0,
+  "answer": "3: any single mistyped digit breaks the total, so a form can reject a card number before it reaches the bank.",
+  "move": "A check digit lets a number catch its own typing errors.",
+  "ask": "Which number I type often has a built-in check I never noticed?",
+  "trap": "4, doubling the other half of the digits.",
+  "hint": "With the check digit added last, the doubled digits are 1, 8, 3, 2 and 9.",
+  "steps": [
+    "Double 1, 8, 3, 2, 9: 2, 16, 6, 4, 18; as digit sums, 2, 7, 6, 4, 9 = 28.",
+    "The undoubled digits 7, 9, 7, 9, 7 add to 39.",
+    "28 + 39 = 67, so the check digit is 3, making 70."
+  ],
+  "keywords": [
+    "luhn algorithm",
+    "check digits",
+    "card numbers",
+    "error detection"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Luhn, Computer for verifying numbers, US Patent 2,950,048, 1960",
+  "source_kind": "primary_document",
+  "reference": "https://patents.google.com/patent/US2950048A/en",
+  "written": "2026-10-17"
+}

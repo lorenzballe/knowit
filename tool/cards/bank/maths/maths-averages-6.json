@@ -1,0 +1,40 @@
+{
+  "id": "maths-averages-6",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "At a 1906 fair, 787 people guessed an ox's weight. How close did the middle guess come to the truth?",
+  "options": [
+    "Within 1%",
+    "Within 10%",
+    "Off by about a quarter"
+  ],
+  "correct": 0,
+  "answer": "Within 1%. Francis Galton lined up the 787 tickets and took the middlemost: 1,207 lb, against a dressed weight of 1,198 lb, out by 9 lb, or 0.8%. A middle value ignores how wild the extremes are, which suits a crowd of guesses; most single guesses missed by more.",
+  "move": "The middle of many independent guesses often beats nearly every single one.",
+  "ask": "Where could I gather several independent guesses instead of trusting one?",
+  "trap": "Off by a lot, since few of the guessers were experts.",
+  "keywords": [
+    "wisdom of crowds",
+    "median",
+    "francis galton",
+    "estimation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galton, Vox populi, Nature, 1907",
+  "source_kind": "paper",
+  "reference": "Francis Galton, Vox Populi, Nature 75:450–451, 1907",
+  "written": "2026-10-17"
+}

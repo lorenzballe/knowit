@@ -1,0 +1,40 @@
+{
+  "id": "maths-percentages-3",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A pack offers 50% extra free. What price cut would give you the same deal?",
+  "options": [
+    "50% off",
+    "About 33% off",
+    "About 25% off"
+  ],
+  "correct": 1,
+  "answer": "About 33% off. You get 150 units for the price of 100, so each unit costs 100 ÷ 150, two-thirds of the old price: a cut of a third. Shoppers often prefer the bonus pack to the equal discount, because they neglect the base each percentage is taken from.",
+  "move": "Ask what each percentage is a percentage of before comparing two.",
+  "ask": "Which offer did I pick for its bigger percentage without checking the base?",
+  "trap": "50% off, since the pack says 50%.",
+  "keywords": [
+    "bonus packs",
+    "percentages",
+    "discounts",
+    "base value neglect"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chen, Marmorstein, Tsiros and Rao, When more is less, Journal of Marketing, 2012",
+  "source_kind": "paper",
+  "reference": "Haipeng Chen, Howard Marmorstein, Michael Tsiros and Akshay Rao, When More Is Less: The Impact of Base Value Neglect on Consumer Preferences for Bonus Packs over Price Discounts, Journal of Marketing 76(4):64–77, 2012",
+  "written": "2026-10-17"
+}

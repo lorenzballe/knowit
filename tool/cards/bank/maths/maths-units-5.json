@@ -1,0 +1,43 @@
+{
+  "id": "maths-units-5",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A spring day warms from 10 °C to 20 °C. By what percentage did its absolute temperature rise?",
+  "value": 3.5,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "About 3.5%: not twice as warm, though the Celsius number doubled.",
+  "move": "Only numbers measured from a true zero can be compared as ratios.",
+  "ask": "Which 'twice as much' have I believed on a scale with no true zero?",
+  "trap": "100%, because 20 is twice 10.",
+  "hint": "Celsius starts at an arbitrary zero; measure both from absolute zero instead.",
+  "steps": [
+    "From absolute zero, 10 °C is 283.15 kelvin and 20 °C is 293.15.",
+    "The rise: 10 ÷ 283.15 ≈ 0.035.",
+    "About 3.5%: not twice as warm, though the Celsius number doubled."
+  ],
+  "keywords": [
+    "kelvin",
+    "celsius",
+    "ratio scales",
+    "temperature"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BIPM, The International System of Units, 2019",
+  "source_kind": "standard",
+  "reference": "https://www.bipm.org/en/publications/si-brochure",
+  "written": "2026-10-17"
+}

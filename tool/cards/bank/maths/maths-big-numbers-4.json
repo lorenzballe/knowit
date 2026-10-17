@@ -1,0 +1,64 @@
+{
+  "id": "maths-big-numbers-4",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Roughly how many people have ever been born, counting back to the first modern humans?",
+  "answer": "About 117 billion, by the Population Reference Bureau's 2022 estimate, so the 8 billion alive are about 7%. The living do not outnumber the dead, as a popular claim has it; the dead lead about fourteen to one. The total stays modest because for most of history few people lived, and most died young.",
+  "move": "A small yearly number, added over millennia, outgrows a big number now.",
+  "ask": "Which total do I judge from the present moment alone?",
+  "keywords": [
+    "people ever born",
+    "world population",
+    "demography",
+    "large numbers"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "billion people, ever born",
+    "answer": 117,
+    "each": 1,
+    "eachLabel": "1 dot = 1 billion people",
+    "arrange": "grid",
+    "compare": "Alive in 2022: 8 billion, about 7%",
+    "options": [
+      {
+        "label": "About 10",
+        "value": 10,
+        "note": "Too few: 8 billion are alive now, and billions lived before them."
+      },
+      {
+        "label": "About 35",
+        "value": 35,
+        "note": "Too few: the dead outnumber the living about fourteen to one."
+      },
+      {
+        "label": "About 120",
+        "value": 120,
+        "note": "Right: about 117 billion, by the Population Reference Bureau's estimate."
+      },
+      {
+        "label": "About 400",
+        "value": 400,
+        "note": "Too many: for most of history only a few million people were alive at once."
+      }
+    ]
+  },
+  "source": "Population Reference Bureau, How many people have ever lived on Earth?, 2022",
+  "source_kind": "institution",
+  "reference": "https://www.prb.org/articles/how-many-people-have-ever-lived-on-earth/",
+  "written": "2026-10-17"
+}

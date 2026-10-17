@@ -1,0 +1,33 @@
+{
+  "id": "maths-algorithms-5",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Every year thousands of new US doctors are matched to hospitals. How is it done so that no pair would rather swap?",
+  "answer": "By deferred acceptance, from David Gale and Lloyd Shapley in 1962. Applicants propose in order of preference; each programme holds its best offers so far and rejects the rest; rounds repeat until all settle. The result is stable: no doctor and hospital both prefer each other to their match. Shapley shared the 2012 Nobel prize.",
+  "move": "A good matching leaves no pair who would both rather break away.",
+  "ask": "Which arrangement around me leaves two people who would both rather swap?",
+  "keywords": [
+    "stable matching",
+    "gale-shapley algorithm",
+    "market design",
+    "nobel prize"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Nobel Prize, the Prize in Economic Sciences 2012",
+  "source_kind": "institution",
+  "reference": "https://www.nobelprize.org/prizes/economic-sciences/2012/summary/",
+  "written": "2026-10-17"
+}
