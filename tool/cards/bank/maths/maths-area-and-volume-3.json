@@ -1,0 +1,47 @@
+{
+  "id": "maths-area-and-volume-3",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "also": [
+    "maths.estimation.units"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Paper marked 80 gsm weighs 80 grams per square metre, and A0 is exactly one square metre. What does one A4 sheet weigh, in grams?",
+  "value": 5,
+  "unit": "grams",
+  "tolerance": 0.1,
+  "answer": "5 grams: a ream of 500 weighs 2.5 kg, as the wrapper's gsm already said.",
+  "move": "A unit on a label is a sum you can finish yourself.",
+  "ask": "Which number on a label do I accept without working out what it means?",
+  "trap": "80 grams, reading gsm as the weight of one sheet.",
+  "hint": "A1 is A0 cut in half, A2 is A1 cut in half, and so on down.",
+  "steps": [
+    "A1 is half of A0, A2 a quarter, A3 an eighth, A4 a sixteenth: 1/16 square metre.",
+    "80 grams per square metre ÷ 16 = 5 grams.",
+    "5 grams: a ream of 500 weighs 2.5 kg, as the wrapper's gsm already said."
+  ],
+  "keywords": [
+    "paper sizes",
+    "a4",
+    "iso 216",
+    "grammage",
+    "square metre"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 216 paper sizes, explained by Markus Kuhn",
+  "source_kind": "reference_work",
+  "reference": "https://www.cl.cam.ac.uk/~mgk25/iso-paper.html",
+  "written": "2026-10-17"
+}

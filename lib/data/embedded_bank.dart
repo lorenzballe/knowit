@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 1,
- "version": 202610121705,
- "built": "2026-10-12T17:05:23Z",
+ "version": 202610171834,
+ "built": "2026-10-17T18:34:35Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -86490,6 +86490,261 @@ const String kEmbeddedBank = r'''
    "source_kind": "paper",
    "reference": "Langer, The illusion of control, Journal of Personality and Social Psychology, 1975",
    "written": "2026-10-03"
+  },
+  {
+   "id": "maths-algorithms-3",
+   "topic": "maths",
+   "genre": "maths.everyday_maths",
+   "strand": "maths.everyday_maths.algorithms",
+   "also": [
+    "maths.growth.logarithms"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Think of a number from 1 to a million. If I may only ask higher or lower, how many guesses do I need?",
+   "answer": "Twenty, at most. Each answer halves what is left: a million, half a million, 250,000, and on down, and twenty halvings bring a million to one, since 2 to the 20th is 1,048,576. Double the list and it costs one more guess. This is binary search, how a computer finds one name among millions.",
+   "move": "When a list doubles, a good search needs only one more question.",
+   "ask": "Where do I search one by one when I could cut the pile in half?",
+   "keywords": [
+    "binary search",
+    "halving",
+    "guessing game",
+    "algorithms"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "guesses, at most",
+    "answer": 20,
+    "each": 1,
+    "eachLabel": "1 dot = 1 guess",
+    "arrange": "grid",
+    "compare": "A billion would take only 30",
+    "options": [
+     {
+      "label": "About 20",
+      "value": 20,
+      "note": "Right. Each answer halves the field, and 20 halvings take a million to one."
+     },
+     {
+      "label": "About 1,000",
+      "value": 1000,
+      "note": "Fifty times too many. Halving shrinks a million much faster than that."
+     },
+     {
+      "label": "About 50,000",
+      "value": 50000,
+      "note": "Far too many. Twenty halvings already leave a single number."
+     },
+     {
+      "label": "A million",
+      "value": 1000000,
+      "note": "That is asking one number at a time. Halving needs just 20."
+     }
+    ]
+   },
+   "source": "Khan Academy, Running time of binary search",
+   "source_kind": "institution",
+   "reference": "https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/running-time-of-binary-search",
+   "written": "2026-10-17"
+  },
+  {
+   "id": "maths-area-and-volume-3",
+   "topic": "maths",
+   "genre": "maths.shapes",
+   "strand": "maths.shapes.area_and_volume",
+   "also": [
+    "maths.estimation.units"
+   ],
+   "kind": "number",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "Paper marked 80 gsm weighs 80 grams per square metre, and A0 is exactly one square metre. What does one A4 sheet weigh, in grams?",
+   "value": 5,
+   "unit": "grams",
+   "tolerance": 0.1,
+   "answer": "5 grams: a ream of 500 weighs 2.5 kg, as the wrapper's gsm already said.",
+   "move": "A unit on a label is a sum you can finish yourself.",
+   "ask": "Which number on a label do I accept without working out what it means?",
+   "trap": "80 grams, reading gsm as the weight of one sheet.",
+   "hint": "A1 is A0 cut in half, A2 is A1 cut in half, and so on down.",
+   "steps": [
+    "A1 is half of A0, A2 a quarter, A3 an eighth, A4 a sixteenth: 1/16 square metre.",
+    "80 grams per square metre ÷ 16 = 5 grams.",
+    "5 grams: a ream of 500 weighs 2.5 kg, as the wrapper's gsm already said."
+   ],
+   "keywords": [
+    "paper sizes",
+    "a4",
+    "iso 216",
+    "grammage",
+    "square metre"
+   ],
+   "era": "timeless",
+   "region": "world",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "ISO 216 paper sizes, explained by Markus Kuhn",
+   "source_kind": "reference_work",
+   "reference": "https://www.cl.cam.ac.uk/~mgk25/iso-paper.html",
+   "written": "2026-10-17"
+  },
+  {
+   "id": "maths-charts-3",
+   "topic": "maths",
+   "genre": "maths.statistics",
+   "strand": "maths.statistics.charts",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Thirteen sets of points share the same averages, spreads and correlation, to two decimal places. Do their charts look alike?",
+   "answer": "No: one of them is a dinosaur. In 2017 Justin Matejka and George Fitzmaurice nudged Alberto Cairo's Datasaurus point by point, holding those five numbers fixed, into a star, a bullseye, stripes and a cross. Every summary fits all thirteen. It describes a shape it never shows; only the plot shows the shape.",
+   "move": "Look at the points before trusting the numbers that sum them up.",
+   "ask": "Which average have I trusted without ever seeing the data behind it?",
+   "keywords": [
+    "datasaurus",
+    "summary statistics",
+    "scatter plots",
+    "data visualisation"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Matejka and Fitzmaurice, Same Stats, Different Graphs, CHI 2017",
+   "source_kind": "paper",
+   "reference": "https://www.autodesk.com/research/publications/same-stats-different-graphs",
+   "written": "2026-10-17"
+  },
+  {
+   "id": "maths-polls-3",
+   "topic": "maths",
+   "genre": "maths.statistics",
+   "strand": "maths.statistics.polls",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A poll of 1,000 voters puts a party on 28% in May; another 1,000 in June say 32%. Has it gained support?",
+   "answer": "Not necessarily. A poll of 1,000 is good to about three points either way, and the gap between two such polls to about four. Here both were simulated from the same 30%: nobody changed their mind, and the jump is chance. A real shift shows up in poll after poll.",
+   "move": "A poll that moves alone is noise until the others move with it.",
+   "ask": "Which trend have I believed on the strength of just two numbers?",
+   "keywords": [
+    "opinion polls",
+    "margin of error",
+    "sampling error",
+    "poll trends"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated voters",
+    "hit": "Back the party",
+    "groups": [
+     {
+      "label": "May poll",
+      "rate": 0.3
+     },
+     {
+      "label": "June poll",
+      "rate": 0.3
+     }
+    ],
+    "steps": [
+     200,
+     2000,
+     20000,
+     200000
+    ],
+    "seed": 322,
+    "decimals": 1,
+    "button": "Poll more",
+    "notes": [
+     "Two polls of 100 from the same 30%: 23% then 33%. A ten-point surge, all chance.",
+     "1,000 each: 28% in May, 32% in June. A four-point rise to headline, and still chance.",
+     "10,000 each: 30.8% and 30.6%. The rise has gone.",
+     "100,000 each: 30.2% and 30.1%, beside the 30% built in. Nobody ever moved."
+    ]
+   },
+   "source": "Pew Research Center, on the margin of error, 2016",
+   "source_kind": "institution",
+   "reference": "https://www.pewresearch.org/short-reads/2016/09/08/understanding-the-margin-of-error-in-election-polls/",
+   "quote": "insufficient for reliably measuring a change in the horse race",
+   "written": "2026-10-17"
+  },
+  {
+   "id": "maths-units-3",
+   "topic": "maths",
+   "genre": "maths.estimation",
+   "strand": "maths.estimation.units",
+   "kind": "number",
+   "difficulty": "medium",
+   "principle": "computation",
+   "question": "In 1983 an Air Canada crew fuelled until their sums said 22,300 kg, but used 1.77 (pounds per litre) instead of 0.803 (kg). Tonnes aboard?",
+   "value": 10.1,
+   "unit": "tonnes",
+   "tolerance": 0.1,
+   "answer": "About 10.1 tonnes: under half, and the engines stopped over Manitoba.",
+   "move": "Write the unit beside every number, and a wrong conversion shows itself.",
+   "ask": "Which number did I last copy across without checking its unit?",
+   "trap": "22.3 tonnes, because every step of the sum was done carefully.",
+   "hint": "Turn the kilograms back into the litres actually pumped, then weigh those litres properly.",
+   "steps": [
+    "Litres pumped: 22,300 ÷ 1.77 = 12,599 litres.",
+    "Their real weight: 12,599 × 0.803 = 10,117 kg.",
+    "About 10.1 tonnes: under half, and the engines stopped over Manitoba."
+   ],
+   "keywords": [
+    "gimli glider",
+    "unit conversion",
+    "jet fuel",
+    "air canada",
+    "boeing 767"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "story",
+   "mood": "sober",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Board of Inquiry into Air Canada flight 143, 1985",
+   "source_kind": "primary_document",
+   "reference": "Lockwood, Final Report of the Board of Inquiry into Air Canada Boeing 767 C-GAUN Accident, Gimli, Manitoba, July 23, 1983, Government of Canada, 1985",
+   "written": "2026-10-17"
   },
   {
    "id": "medicine-alternative-medicine-1",
@@ -218596,7 +218851,12 @@ const String kEmbeddedBank = r'''
   "439": "thinking-z7",
   "440": "thinking-z2",
   "441": "thinking-h4",
-  "442": "thinking-c1"
+  "442": "thinking-c1",
+  "443": "thinking-n1",
+  "444": "thinking-z16",
+  "445": "thinking-5",
+  "446": "thinking-h21",
+  "447": "thinking-h5"
  },
  "commons": {
   "1": [
@@ -223018,6 +223278,56 @@ const String kEmbeddedBank = r'''
    "nature-feedback-loops-1",
    "pop_culture-why-brands-sell-feelings-4",
    "human_body-brain-myths-3"
+  ],
+  "443": [
+   "nature-greenhouse-effect-1",
+   "science-experiments-4",
+   "history-6",
+   "philosophy-epicurus-1",
+   "life-questions-to-yourself-1",
+   "language-false-origins-2",
+   "human_body-calories-burned-1",
+   "pop_culture-colours-11"
+  ],
+  "444": [
+   "food-food-safety-6",
+   "science-too-good-to-be-true-1",
+   "space-asteroid-risk-1",
+   "sport-money-in-sport-2",
+   "life-boredom-2",
+   "economics-get-rich-quick-2",
+   "medicine-bad-cures-3",
+   "philosophy-luck-1"
+  ],
+  "445": [
+   "sport-fantasy-sport-1",
+   "life-friendship-3",
+   "human_body-pain-2",
+   "psychology-overconfidence-4",
+   "cinema-war-films-1",
+   "economics-interest-12",
+   "space-what-we-can-see-1",
+   "pop_culture-cliffhangers-2"
+  ],
+  "446": [
+   "psychology-steelmanning-1",
+   "medicine-smoking-5",
+   "science-correlation-or-cause-3",
+   "cinema-dialogue-1",
+   "life-conversation-4",
+   "art-edited-photos-2",
+   "economics-tariffs-3",
+   "music-music-and-mood-1"
+  ],
+  "447": [
+   "economics-too-good-to-be-true-4",
+   "space-fermi-paradox-1",
+   "pop_culture-cancel-culture-1",
+   "cinema-remakes-2",
+   "human_body-probiotic-claims-1",
+   "art-florence-6",
+   "psychology-anger-2",
+   "philosophy-how-do-you-know-3"
   ]
  }
 }
