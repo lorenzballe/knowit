@@ -83,37 +83,48 @@ BoxDecoration cardFace(
 }
 
 /// A card further back, drawn toward the page's own colour by [amount],
-/// from 0 to 1.
+/// from 0 to 1, under a veil of that colour in the card's own shape.
 ///
 /// It used to be faded instead, and a faded card is a window: the shadow
 /// of the card in front, and the page, showed through it, so the edge of
-/// the deck read as a grey or olive band. Drawn solid and dimmed, it keeps
-/// a clean edge and its own colour, quieter.
+/// the deck read as a grey or olive band. Veiled, it keeps a clean edge and
+/// its own colour, quieter. The veil is always there, clear on the card in
+/// front, so a card that comes forward is the same card carried over, never
+/// one built again in the frame it arrives in.
 class CardDim extends StatelessWidget {
   const CardDim({
     super.key,
     required this.amount,
     required this.ground,
+    required this.radius,
     required this.child,
   });
 
   final double amount;
   final Color ground;
+
+  /// The corner of the card under the veil.
+  final double radius;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final double t = amount.clamp(0.0, 1.0);
-    if (t == 0) return child;
-    final double k = 1 - t;
-    return ColorFiltered(
-      colorFilter: ColorFilter.matrix([
-        k, 0, 0, 0, t * ground.r * 255, //
-        0, k, 0, 0, t * ground.g * 255, //
-        0, 0, k, 0, t * ground.b * 255, //
-        0, 0, 0, 1, 0, //
-      ]),
-      child: child,
+    return Stack(
+      fit: StackFit.passthrough,
+      children: [
+        child,
+        Positioned.fill(
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: ground.withValues(alpha: t),
+                borderRadius: BorderRadius.circular(radius),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

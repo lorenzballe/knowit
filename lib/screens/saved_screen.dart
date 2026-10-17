@@ -497,15 +497,18 @@ class _RowAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: label,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: Icon(icon, size: size, color: color),
+      child: Tooltip(
+        message: label,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Center(
+              child: Icon(icon, size: size, color: color),
+            ),
+          ),
         ),
       ),
     );

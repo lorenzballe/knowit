@@ -395,6 +395,9 @@ class _TodayDoneViewState extends State<TodayDoneView>
                 child: CardDim(
                   amount: dist * 0.5,
                   ground: context.p.surface,
+                  // The day's cards at the shelf's scale, and the card
+                  // after them at the deck's.
+                  radius: k < deck.length ? 34 * _cardWidth / _artWidth : 34,
                   child: ExcludeSemantics(
                     excluding: !front,
                     child: IgnorePointer(

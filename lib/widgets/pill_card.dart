@@ -1607,7 +1607,9 @@ class _CardControl extends StatelessWidget {
         onTap: onTap,
         child: SizedBox.square(
           dimension: size,
-          child: Icon(icon, size: 20, color: ink.withValues(alpha: 0.62)),
+          child: Center(
+            child: Icon(icon, size: 20, color: ink.withValues(alpha: 0.62)),
+          ),
         ),
       ),
     );

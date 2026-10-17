@@ -3868,7 +3868,10 @@ void main() {
     testWidgets('a taller box takes larger type for the same words', (
       tester,
     ) async {
-      await tester.pumpWidget(box('Why do we yawn?', height: 200));
+      // Short enough that height, not width, decides the smaller size: no
+      // word is broken to fit any more, so the widest a 300-point box sets
+      // "yawn?" in the test font is 60, and a 200-point box holds that.
+      await tester.pumpWidget(box('Why do we yawn?', height: 150));
       await tester.pumpAndSettle();
       final small = sizeOf(tester);
 

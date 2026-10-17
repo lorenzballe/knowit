@@ -605,7 +605,12 @@ class _PillCardStackState extends State<PillCardStack>
             // Tilt follows the sideways travel only: a card lifted straight
             // up should rise, not spin.
             ..rotateZ(isTop ? _drag.dx * 0.035 * math.pi / 180 : 0.0),
-          child: CardDim(amount: dim, ground: palette.surface, child: card),
+          child: CardDim(
+            amount: dim,
+            ground: palette.surface,
+            radius: 34,
+            child: card,
+          ),
         ),
       );
 
