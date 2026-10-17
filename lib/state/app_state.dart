@@ -374,6 +374,41 @@ class AppState extends ChangeNotifier {
     unawaited(PillBank.refresh(_prefs));
   }
 
+  /// The day turned while the app stayed in memory: it is dealt as a launch
+  /// would deal it — a freeze spent on a day missed, a lapsed streak said,
+  /// five new cards — and the reminder and the widgets hear of it. Asked at
+  /// every return to the app; false when the day has not turned, or turning
+  /// it would take a reader's evening from under them.
+  Future<bool> turnDayIfDue() async {
+    if (!ready || _turningDay) return false;
+    final DateTime now = _clock();
+    if (dateKey(now) == dateKey(today)) return false;
+    // A day begun and not finished, picked up again in the small hours, is
+    // still the evening's: the reader finishes the day they started, and it
+    // counts for that day. The first return after three deals the new one.
+    if (!todayCompleted &&
+        todayIndex > 0 &&
+        now.hour < 3 &&
+        daysBetween(today, now) == 1) {
+      return false;
+    }
+    _turningDay = true;
+    try {
+      today = now;
+      await _spendFreezeIfMissed();
+      await _sayStreakBroken();
+      await _startNewDay();
+    } finally {
+      _turningDay = false;
+    }
+    notifyListeners();
+    unawaited(refreshDailyReminder());
+    unawaited(refreshHomeWidget());
+    return true;
+  }
+
+  bool _turningDay = false;
+
   Future<void> _restore() async {
     streak = _prefs.getInt(_kStreak) ?? 0;
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
@@ -503,7 +538,7 @@ class AppState extends ChangeNotifier {
     if (freezes < missed) return;
 
     freezes -= missed;
-    lastCompletionDate = dateKey(today.subtract(const Duration(days: 1)));
+    lastCompletionDate = dateKey(dayShift(today, -1));
     frozeOn = dateKey(today);
     await _prefs.setInt(_kFreezes, freezes);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
@@ -861,7 +896,7 @@ class AppState extends ChangeNotifier {
   int get liveStreak {
     if (lastCompletionDate == null) return 0;
     final todayK = dateKey(today);
-    final yesterdayK = dateKey(today.subtract(const Duration(days: 1)));
+    final yesterdayK = dateKey(dayShift(today, -1));
     if (lastCompletionDate == todayK || lastCompletionDate == yesterdayK) {
       return streak;
     }
@@ -873,8 +908,7 @@ class AppState extends ChangeNotifier {
     if (lastCompletionDate == null) return 0;
     final parts = lastCompletionDate!.split('-').map(int.parse).toList();
     final last = DateTime(parts[0], parts[1], parts[2]);
-    final t = DateTime(today.year, today.month, today.day);
-    final gap = t.difference(last).inDays;
+    final gap = daysBetween(last, today);
     return gap > 1 ? gap - 1 : 0;
   }
 
@@ -1151,7 +1185,7 @@ class AppState extends ChangeNotifier {
     final key = dateKey(today);
     if (lastCompletionDate == key) return;
 
-    final yesterday = dateKey(today.subtract(const Duration(days: 1)));
+    final yesterday = dateKey(dayShift(today, -1));
     final int bestBefore = bestStreak;
     streak = (lastCompletionDate == yesterday) ? streak + 1 : 1;
     lastCompletionDate = key;
@@ -1171,9 +1205,7 @@ class AppState extends ChangeNotifier {
     unawaited(
       Trace.instance
           .flush()
-          .then(
-            (_) => Served.instance.prefetch(today.add(const Duration(days: 1))),
-          )
+          .then((_) => Served.instance.prefetch(dayShift(today, 1)))
           .then((ServedDay? day) {
             if (day == null) return;
             servedTomorrow = day;
@@ -1530,7 +1562,7 @@ class AppState extends ChangeNotifier {
     if (stage >= kReviewLadder.length) {
       return answer.copyWith(stage: stage, clearDue: true);
     }
-    final due = today.add(Duration(days: kReviewLadder[stage]));
+    final due = dayShift(today, kReviewLadder[stage]);
     return answer.copyWith(stage: stage, dueOn: dateKey(due));
   }
 
@@ -2096,7 +2128,7 @@ class AppState extends ChangeNotifier {
         final Pill lead = leadOn(day);
 
         // How long the reader will have been away when this one lands.
-        final int gap = lastDone == null ? 0 : day.difference(lastDone).inDays;
+        final int gap = lastDone == null ? 0 : daysBetween(lastDone, day);
         String title = l.nudgeTitle;
         String body = lead.question;
         if (gap == 2 && freezes > 0) {
@@ -2581,8 +2613,7 @@ class AppState extends ChangeNotifier {
   int get daysSinceInstall {
     final DateTime? installed = _dateOf(installedOn);
     if (installed == null) return 0;
-    final DateTime day = DateTime(today.year, today.month, today.day);
-    return day.difference(installed).inDays.clamp(0, 1 << 20);
+    return daysBetween(installed, today).clamp(0, 1 << 20);
   }
 
   Map<String, Object>? _profileSent;
@@ -3256,7 +3287,7 @@ class AppState extends ChangeNotifier {
   List<bool> weekCompletion() {
     final set = completedDates.toSet();
     return List.generate(7, (i) {
-      final d = today.subtract(Duration(days: 6 - i));
+      final d = dayShift(today, i - 6);
       return set.contains(dateKey(d));
     });
   }

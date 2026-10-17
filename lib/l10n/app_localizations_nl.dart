@@ -516,7 +516,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get yourCards => 'Je kaarten';
 
   @override
-  String get nothingYet => 'Nog niets';
+  String get emptyLikedHint => 'Houd een kaart vast die je goed vindt';
+
+  @override
+  String get emptySavedHint => 'Tik op de bladwijzer van een kaart';
 
   @override
   String get lastSevenDays => 'Laatste 7 dagen';

@@ -529,7 +529,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get yourCards => 'Twoje karty';
 
   @override
-  String get nothingYet => 'Jeszcze nic';
+  String get emptyLikedHint => 'Przytrzymaj kartę, która ci się podoba';
+
+  @override
+  String get emptySavedHint => 'Dotknij zakładki na karcie';
 
   @override
   String get lastSevenDays => 'Ostatnie 7 dni';

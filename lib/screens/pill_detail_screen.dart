@@ -47,7 +47,15 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
     return ScreenView(
       name: 'pill detail',
       child: Scaffold(
-        backgroundColor: pill.tint,
+        // The card's colour, faint, over the page: its own dark tint at
+        // night, and on paper a wash of it over paper — the words on it are
+        // the page's, and dark on the dark tint they could not be read.
+        backgroundColor: context.p.isDark
+            ? pill.tint
+            : Color.alphaBlend(
+                pill.color.withValues(alpha: 0.10),
+                context.p.surface,
+              ),
         body: SafeArea(
           child: ListView(
             padding: const EdgeInsets.fromLTRB(22, 12, 22, 28),

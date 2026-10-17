@@ -472,9 +472,13 @@
  "@yourCards": {
   "description": "Profile: the heading over Saved and Liked, the reader's own two shelves."
  },
- "nothingYet": "Nothing yet",
- "@nothingYet": {
-  "description": "Profile: under Saved or Liked while the shelf holds no card."
+ "emptyLikedHint": "Hold any card you like",
+ "@emptyLikedHint": {
+  "description": "Profile: under Liked while the shelf is empty, the gesture that likes a card (a long press)."
+ },
+ "emptySavedHint": "Tap the bookmark on any card",
+ "@emptySavedHint": {
+  "description": "Profile: under Saved while the shelf is empty, the gesture that saves a card (the bookmark on it)."
  },
  "lastSevenDays": "Last 7 days",
  "@lastSevenDays": {

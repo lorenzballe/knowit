@@ -314,19 +314,26 @@ void main() {
       );
     });
 
-    testWidgets('an empty shelf still looks meant: one faint outline where '
-        'the hand will be, and "Nothing yet"', (tester) async {
+    testWidgets('an empty shelf still looks meant: its own mark on a hand '
+        'waiting for cards, and how a card gets there', (tester) async {
       final AppState app = await _app(tester);
       await tester.pumpWidget(_host(app));
       await _settle(tester);
 
-      for (final String key in ['profile-saved', 'profile-liked']) {
+      for (final (String key, String hint) in [
+        ('profile-saved', 'Tap the bookmark on any card'),
+        ('profile-liked', 'Hold any card you like'),
+      ]) {
         final Finder row = await _row(tester, key);
-        expect(_in(row, find.text('Nothing yet')), findsOneWidget, reason: key);
-        expect(_in(row, find.byKey(const ValueKey('fan-empty'))), findsOne);
+        expect(_in(row, find.text(hint)), findsOneWidget, reason: key);
+        final Finder top = _in(row, find.byKey(const ValueKey('fan-empty')));
+        expect(top, findsOne);
+        // The shelf's own mark, on the top card.
+        expect(_in(top, find.byType(ProfileMark)), findsOne, reason: key);
         expect(_in(row, find.byType(SubjectIcon)), findsNothing, reason: key);
+        // No count while there is nothing to count.
         expect(
-          _in(row, find.textContaining('card')),
+          _in(row, find.textContaining(RegExp(r'\d+ cards?'))),
           findsNothing,
           reason: key,
         );
@@ -616,7 +623,7 @@ void main() {
 
     const List<(String, String, String?)> rows = [
       ('profile-saved', 'Saved', '3 cards'),
-      ('profile-liked', 'Liked', 'Nothing yet'),
+      ('profile-liked', 'Liked', 'Hold any card you like'),
       ('profile-archive', 'Archive', 'Last 7 days'),
       ('place-row', 'Where you live', 'Modena'),
       ('profile-plan', 'Manage subscription', 'Free plan'),

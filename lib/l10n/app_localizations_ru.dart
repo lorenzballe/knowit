@@ -531,7 +531,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourCards => 'Твои карточки';
 
   @override
-  String get nothingYet => 'Пока ничего';
+  String get emptyLikedHint => 'Удержите карточку, которая понравилась';
+
+  @override
+  String get emptySavedHint => 'Нажмите на закладку на карточке';
 
   @override
   String get lastSevenDays => 'Последние 7 дней';

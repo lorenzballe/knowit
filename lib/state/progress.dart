@@ -7,6 +7,7 @@
 library;
 
 import '../data/pill_bank.dart';
+import '../data/pills_repository.dart' show dayShift;
 import '../models/pill.dart';
 
 /// How many judgements before the app is willing to say anything about how
@@ -241,7 +242,7 @@ int weeksKept(Set<String> completedDates, DateTime today, {int of = 5}) {
   int days(DateTime monday) {
     var n = 0;
     for (var i = 0; i < 7; i++) {
-      final day = monday.add(Duration(days: i));
+      final day = dayShift(monday, i);
       final key =
           '${day.year.toString().padLeft(4, '0')}-'
           '${day.month.toString().padLeft(2, '0')}-'
@@ -251,21 +252,15 @@ int weeksKept(Set<String> completedDates, DateTime today, {int of = 5}) {
     return n;
   }
 
-  final thisMonday = DateTime(
-    today.year,
-    today.month,
-    today.day,
-  ).subtract(Duration(days: today.weekday - 1));
+  final thisMonday = mondayOf(today);
 
   var weeks = 0;
   // The week in hand counts only once it is already kept — a Monday is not
   // a broken week yet, so it never breaks the count either.
-  var monday = days(thisMonday) >= of
-      ? thisMonday
-      : thisMonday.subtract(const Duration(days: 7));
+  var monday = days(thisMonday) >= of ? thisMonday : dayShift(thisMonday, -7);
   while (days(monday) >= of) {
     weeks++;
-    monday = monday.subtract(const Duration(days: 7));
+    monday = dayShift(monday, -7);
   }
   return weeks;
 }
@@ -322,12 +317,8 @@ String _key(DateTime d) =>
     '${d.month.toString().padLeft(2, '0')}-'
     '${d.day.toString().padLeft(2, '0')}';
 
-/// The Monday of the week [today] falls in.
-DateTime mondayOf(DateTime today) => DateTime(
-  today.year,
-  today.month,
-  today.day,
-).subtract(Duration(days: today.weekday - 1));
+/// The Monday of the week [today] falls in, at noon (see [dayShift]).
+DateTime mondayOf(DateTime today) => dayShift(today, 1 - today.weekday);
 
 double? _gapOf(List<Judgement> run) {
   if (run.length < kWeekFloor) return null;
@@ -353,14 +344,14 @@ WeekReport weekReport({
   required DateTime today,
 }) {
   final monday = mondayOf(today);
-  final before = monday.subtract(const Duration(days: 7));
+  final before = dayShift(monday, -7);
   final String mondayKey = _key(monday);
   final String beforeKey = _key(before);
 
   final kept = completedDates.toSet();
   var days = 0;
   for (var i = 0; i < 7; i++) {
-    if (kept.contains(_key(monday.add(Duration(days: i))))) days++;
+    if (kept.contains(_key(dayShift(monday, i)))) days++;
   }
 
   final week = <Judgement>[];

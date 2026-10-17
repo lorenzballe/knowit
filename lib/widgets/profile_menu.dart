@@ -314,13 +314,15 @@ class ProfileRowNote extends StatelessWidget {
 ///
 /// The hand sits beside the words while the words fit on their lines, and
 /// under them at a text size where they would not. An empty shelf still
-/// looks meant: one faint outline where the cards will go, and "Nothing
-/// yet".
+/// looks meant: its own mark on a card in its [tint], fanned like the hand
+/// to come, and [hint] saying how a card gets there.
 class ShelfRow extends StatelessWidget {
   const ShelfRow({
     super.key,
     required this.mark,
     required this.title,
+    required this.hint,
+    required this.tint,
     required this.ids,
     required this.onTap,
   });
@@ -328,6 +330,13 @@ class ShelfRow extends StatelessWidget {
   /// One of [ProfileMarks], beside the count.
   final String mark;
   final String title;
+
+  /// Said in place of the count while the shelf is empty: the gesture that
+  /// fills it.
+  final String hint;
+
+  /// The empty hand's colour.
+  final Color tint;
 
   /// The shelf, newest first, as AppState keeps it.
   final List<String> ids;
@@ -340,9 +349,7 @@ class ShelfRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final String count = ids.isEmpty
-        ? context.l10n.nothingYet
-        : context.l10n.nCards(ids.length);
+    final String count = ids.isEmpty ? hint : context.l10n.nCards(ids.length);
     // A few more ids than the hand holds, so a card this build no longer
     // knows leaves no gap in it.
     final List<Pill> hand = pillsByIds(ids.take(8).toList()).take(4).toList();
@@ -366,15 +373,22 @@ class ShelfRow extends StatelessWidget {
         Text(title, style: titleStyle),
         const SizedBox(height: 6),
         Row(
+          // On the first line, where a hint that wraps begins.
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileMark(mark, size: 15 * k, color: p.inkMuted),
+            Padding(
+              padding: EdgeInsets.only(top: (15.6 * k - 15 * k) / 2),
+              child: ProfileMark(mark, size: 15 * k, color: p.inkMuted),
+            ),
             const SizedBox(width: 6),
             Flexible(child: Text(count, style: countStyle)),
           ],
         ),
       ],
     );
-    final Widget art = hand.isEmpty ? const _EmptyHand() : CardFan(hand);
+    final Widget art = hand.isEmpty
+        ? _EmptyHand(mark: mark, tint: tint)
+        : CardFan(hand);
     final Widget chevron = ProfileMark(
       ProfileMarks.chevron,
       size: 16,
@@ -403,9 +417,12 @@ class ShelfRow extends StatelessWidget {
               // The hand beside the words while the words fit on their
               // lines; under them at a text size where they would not.
               final double room = box.maxWidth - 18 - artWidth - 16 - 14;
+              // A count must fit its line; a hint may wrap under itself.
               final bool beside =
                   _lineWidth(context, title, titleStyle) <= room &&
-                  15 * k + 6 + _lineWidth(context, count, countStyle) <= room;
+                  (ids.isEmpty ||
+                      15 * k + 6 + _lineWidth(context, count, countStyle) <=
+                          room);
               if (!beside) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -547,36 +564,65 @@ class _MiniCard extends StatelessWidget {
   }
 }
 
-/// Where the hand will be, on a shelf with nothing on it yet: one card's
-/// outline, faint, where the top card of a hand sits.
+/// Where the hand will be, on a shelf with nothing on it yet: the shelf's
+/// own mark, white on a card in its colour, and two cards fanned behind it
+/// fading into the row — a hand waiting for its first card.
 class _EmptyHand extends StatelessWidget {
-  const _EmptyHand();
+  const _EmptyHand({required this.mark, required this.tint});
+
+  final String mark;
+  final Color tint;
+
+  /// How much of [tint] each card holds, the top one first.
+  static const List<double> _strength = [1, 0.42, 0.18];
 
   @override
   Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final bool dark = p.isDark;
+    Widget card(int i) => Container(
+      key: i == 0 ? const ValueKey('fan-empty') : null,
+      width: CardFan.cardWidth,
+      height: CardFan.cardHeight,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        // Mixed into the row rather than see-through, so the cards behind
+        // do not show through the one in front.
+        color: Color.alphaBlend(
+          tint.withValues(alpha: _strength[i]),
+          p.surfaceRaised,
+        ),
+        borderRadius: BorderRadius.circular(9),
+        boxShadow: i > 0
+            ? null
+            : dark
+            ? [BoxShadow(color: tint.withValues(alpha: 0.32), blurRadius: 18)]
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.16),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+      ),
+      child: i == 0 ? ProfileMark(mark, size: 22, color: Colors.white) : null,
+    );
     return LayoutBuilder(
       builder: (context, box) {
         final Offset at = CardFan.topCardAt(box.biggest);
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            Positioned(
-              left: at.dx,
-              top: at.dy,
-              child: Transform.rotate(
-                angle: -3 * math.pi / 180,
-                alignment: CardFan.pivot,
-                child: Container(
-                  key: const ValueKey('fan-empty'),
-                  width: CardFan.cardWidth,
-                  height: CardFan.cardHeight,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(color: context.p.lineStrong, width: 1.3),
-                  ),
+            for (int i = _strength.length - 1; i >= 0; i--)
+              Positioned(
+                left: at.dx,
+                top: at.dy,
+                child: Transform.rotate(
+                  angle: (-3 + CardFan.step * i) * math.pi / 180,
+                  alignment: CardFan.pivot,
+                  child: card(i),
                 ),
               ),
-            ),
           ],
         );
       },

@@ -517,7 +517,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get yourCards => 'Deine Karten';
 
   @override
-  String get nothingYet => 'Noch nichts';
+  String get emptyLikedHint => 'Halte eine Karte gedrückt, die dir gefällt';
+
+  @override
+  String get emptySavedHint => 'Tippe auf das Lesezeichen einer Karte';
 
   @override
   String get lastSevenDays => 'Letzte 7 Tage';
