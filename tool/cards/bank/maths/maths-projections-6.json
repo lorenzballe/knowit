@@ -28,9 +28,9 @@
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Warps area",
-    "right": "Equal area",
-    "tag": "World map projections",
+    "left": "Warps",
+    "right": "True",
+    "tag": "Do sizes stay true?",
     "items": [
       {
         "text": "Mercator",

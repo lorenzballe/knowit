@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 1,
- "version": 202610172014,
- "built": "2026-10-17T20:14:24Z",
+ "version": 202610172021,
+ "built": "2026-10-17T20:21:36Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -86814,7 +86814,7 @@ const String kEmbeddedBank = r'''
    "hint": "Find each shape's size from the 40 m perimeter, then its area.",
    "steps": [
     "Square: sides of 10 m, so 10 × 10 = 100 m².",
-    "Circle: radius 40 ÷ 2π ≈ 6.37 m, so area π × 6.37² ≈ 127.3 m².",
+    "Circle: radius 40 ÷ (2 × 3.1416) ≈ 6.37 m, so area 3.1416 × 6.37² ≈ 127.3 m².",
     "127.3 − 100 ≈ 27.3 m² more: over a quarter extra, from the same rope."
    ],
    "keywords": [
@@ -86847,7 +86847,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Which is the most pizza: one 18-inch, two 12-inch, three 10-inch or four 8-inch?",
-   "answer": "One 18-inch. Area grows with the square of the width: π × 9 × 9 ≈ 254 square inches, against 236 for three 10-inch, 226 for two 12-inch and 201 for four 8-inch. So one big pizza beats several smaller ones that sound like more.",
+   "answer": "One 18-inch. Area grows with the square of the width: 3.14 × 9 × 9 ≈ 254 square inches, against 236 for three 10-inch, 226 for two 12-inch and 201 for four 8-inch. So one big pizza beats several smaller ones that sound like more.",
    "move": "Compare circles by their widths squared, never by their widths.",
    "ask": "Which deal have I judged by width or count when area was what I was buying?",
    "keywords": [
@@ -86875,22 +86875,22 @@ const String kEmbeddedBank = r'''
      {
       "label": "Two 12-inch pizzas",
       "value": 226,
-      "note": "Two 12-inch: 2 × π × 6² ≈ 226 square inches, less than one 18-inch."
+      "note": "Two 12-inch: 2 × 3.14 × 6² ≈ 226 square inches, less than one 18-inch."
      },
      {
       "label": "One 18-inch pizza",
       "value": 254,
-      "note": "One 18-inch: π × 9² ≈ 254 square inches, the most pizza."
+      "note": "One 18-inch: 3.14 × 9² ≈ 254 square inches, the most pizza."
      },
      {
       "label": "Four 8-inch pizzas",
       "value": 201,
-      "note": "Four 8-inch: 4 × π × 4² ≈ 201 square inches, the least, in four boxes."
+      "note": "Four 8-inch: 4 × 3.14 × 4² ≈ 201 square inches, the least, in four boxes."
      },
      {
       "label": "Three 10-inch pizzas",
       "value": 236,
-      "note": "Three 10-inch: 3 × π × 5² ≈ 236 square inches, still short of one 18-inch."
+      "note": "Three 10-inch: 3 × 3.14 × 5² ≈ 236 square inches, short of one 18-inch."
      }
     ]
    },
@@ -88740,7 +88740,7 @@ const String kEmbeddedBank = r'''
    "source": "Romano et al., the effect of logarithmic scale on COVID-19 charts, Health Economics, 2020",
    "source_kind": "paper",
    "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7461444/",
-   "quote": "when we show the number of COVID‐19 related deaths on a logarithmic scale, people have a less accurate understanding of how the pandemic has developed, make less accurate predictions on its evolution, and have different policy preferences",
+   "quote": "when we show the number of COVID-19 related deaths on a logarithmic scale, people have a less accurate understanding of how the pandemic has developed, make less accurate predictions on its evolution, and have different policy preferences",
    "written": "2026-10-17"
   },
   {
@@ -90075,8 +90075,8 @@ const String kEmbeddedBank = r'''
      }
     ],
     "why": "Forbid sounds harsher than not allow, so people shrink from saying it, though both mean the same.",
-    "same": "You held steady. The public didn't: 75% wouldn't allow such speeches, only 54% would forbid them.",
-    "switched": "You moved with the word, as many did: one policy, two answers 21 points apart."
+    "same": "You held steady. The public moved 21 points with the word.",
+    "switched": "You moved with the word, as many did: 21 points apart."
    },
    "source": "CBS News, on Rugg's forbid or allow experiment",
    "source_kind": "news_archive",
@@ -90099,11 +90099,11 @@ const String kEmbeddedBank = r'''
    "move": "Every slice of a poll carries the margin of its own small sample.",
    "ask": "Which subgroup finding have I repeated without asking how many people it rests on?",
    "trap": "3 points, the margin quoted for the whole poll.",
-   "hint": "The margin shrinks with the square root of the sample: try 1 ÷ √n.",
+   "hint": "The margin shrinks with the square root of the sample: try 1 ÷ square root of n.",
    "steps": [
-    "For a share near 50%, the 95% margin is about 1 ÷ √n.",
-    "Whole poll: 1 ÷ √1,000 ≈ 0.032, about 3 points.",
-    "The 100 young people: 1 ÷ √100 = 0.1, about 10 points either way."
+    "For a share near 50%, the 95% margin is about 1 ÷ the square root of the sample.",
+    "Whole poll: the square root of 1,000 is about 31.6, and 1 ÷ 31.6 ≈ 0.032: about 3 points.",
+    "The 100 young people: 1 ÷ 10 = 0.1, about 10 points either way."
    ],
    "keywords": [
     "margin of error",
@@ -90293,9 +90293,9 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "scene": {
     "type": "sort",
-    "left": "Warps area",
-    "right": "Equal area",
-    "tag": "World map projections",
+    "left": "Warps",
+    "right": "True",
+    "tag": "Do sizes stay true?",
     "items": [
      {
       "text": "Mercator",
@@ -90809,15 +90809,15 @@ const String kEmbeddedBank = r'''
    "kind": "pickOne",
    "difficulty": "medium",
    "principle": "computation",
-   "question": "Fold an A4 sheet in half and you get A5, the same shape. Which ratio of sides makes that work?",
+   "question": "Halve an A4 sheet and you get A5, the same shape. What ratio of sides allows that?",
    "options": [
     "3 to 2",
     "The golden ratio, 1.618",
-    "√2, about 1.414"
+    "Square root of 2, about 1.414"
    ],
    "correct": 2,
-   "answer": "√2, about 1.414. Halving the long side turns sides 1 and r into r/2 and 1, the same shape only if r² = 2. So A4's 297 by 210 mm is 1.414 to 1, and each size is half the one before, down from A0's square metre.",
-   "move": "A shape survives halving only if its sides stand in the ratio √2.",
+   "answer": "The square root of 2, about 1.414. Halving the long side turns sides 1 and r into r/2 and 1, the same shape only if r² = 2. So A4's 297 by 210 mm is 1.414 to 1, and each size is half the one before, down from A0's square metre.",
+   "move": "A shape survives halving only if its sides stand at 1.414 to 1.",
    "ask": "Which everyday design have I used for years without asking why it has its shape?",
    "trap": "The golden ratio, the famous one for pleasing shapes.",
    "keywords": [

@@ -14,11 +14,11 @@
   "move": "Every slice of a poll carries the margin of its own small sample.",
   "ask": "Which subgroup finding have I repeated without asking how many people it rests on?",
   "trap": "3 points, the margin quoted for the whole poll.",
-  "hint": "The margin shrinks with the square root of the sample: try 1 ÷ √n.",
+  "hint": "The margin shrinks with the square root of the sample: try 1 ÷ square root of n.",
   "steps": [
-    "For a share near 50%, the 95% margin is about 1 ÷ √n.",
-    "Whole poll: 1 ÷ √1,000 ≈ 0.032, about 3 points.",
-    "The 100 young people: 1 ÷ √100 = 0.1, about 10 points either way."
+    "For a share near 50%, the 95% margin is about 1 ÷ the square root of the sample.",
+    "Whole poll: the square root of 1,000 is about 31.6, and 1 ÷ 31.6 ≈ 0.032: about 3 points.",
+    "The 100 young people: 1 ÷ 10 = 0.1, about 10 points either way."
   ],
   "keywords": [
     "margin of error",

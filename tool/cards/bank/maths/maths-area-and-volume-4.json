@@ -17,7 +17,7 @@
   "hint": "Find each shape's size from the 40 m perimeter, then its area.",
   "steps": [
     "Square: sides of 10 m, so 10 × 10 = 100 m².",
-    "Circle: radius 40 ÷ 2π ≈ 6.37 m, so area π × 6.37² ≈ 127.3 m².",
+    "Circle: radius 40 ÷ (2 × 3.1416) ≈ 6.37 m, so area 3.1416 × 6.37² ≈ 127.3 m².",
     "127.3 − 100 ≈ 27.3 m² more: over a quarter extra, from the same rope."
   ],
   "keywords": [
