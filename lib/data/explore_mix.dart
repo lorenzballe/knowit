@@ -4,9 +4,10 @@
 ///
 /// Nothing on these shelves is written for them. A month's subject is a
 /// subject the bank already holds, a bet is laid on a card's own answer, a
-/// chart is unmasked by the card that drew it, an age on the ruler is the
-/// age the card is tagged with. What the shelves add is only the way of
-/// meeting a card: on its own, in a round, against a clock, as a bet.
+/// chart is unmasked by the card that drew it, an age through time is the
+/// age the card is tagged with, a story is played from the card's own
+/// words. What the shelves add is only the way of meeting a card: on its
+/// own, in a round, against a clock, as a bet, a beat at a time.
 ///
 /// Everything here is dealt the way the turning themes are (see
 /// themed_shelves.dart): in the day's order, the same on every phone, and
@@ -22,15 +23,23 @@ import 'topics.dart';
 
 /// Deals [count] cards from [fits] in the day's order for [salt], at most
 /// [perTopic] from one subject unless that would leave the shelf short.
+/// Cards that pass [first] are dealt before any that do not, each lot in
+/// the day's order.
 List<Pill> dealCards(
   Iterable<Pill> fits, {
   required String salt,
   required int day,
   int count = kThemeCards,
   int perTopic = 2,
+  bool Function(Pill)? first,
 }) {
+  if (count <= 0) return [];
+  int ahead(Pill p) => first != null && first(p) ? 0 : 1;
   final keyed = [for (final p in fits) (shelfHash('$day:$salt:${p.id}'), p)]
-    ..sort((a, b) => a.$1.compareTo(b.$1));
+    ..sort((a, b) {
+      final int lot = ahead(a.$2).compareTo(ahead(b.$2));
+      return lot != 0 ? lot : a.$1.compareTo(b.$1);
+    });
   final picked = <Pill>[];
   final perSubject = <String, int>{};
   for (final (_, p) in keyed) {
@@ -173,6 +182,127 @@ SpotTheFalse? spotTheFalse(Iterable<Pill> pool, {required int day}) {
               .compareTo(shelfHash('$day:spot:${b.id}')),
     ),
   );
+}
+
+// ── True stories ─────────────────────────────────────────────────────────
+
+/// Whether a card tells a story Explore can play, a beat at a time: one
+/// written with a story to play ([StoryScene]), or one whose hook is a
+/// story that happened in an age of its own — not a timeless one, which is
+/// a fable, nor a debate, whose answer is one side of an argument rather
+/// than what happened next.
+bool tellsAStory(Pill p) =>
+    p.scene is StoryScene ||
+    (p.hook == 'story' &&
+        p.era.isNotEmpty &&
+        p.era != 'timeless' &&
+        p.challenge is! TakeASide);
+
+/// The day's true stories, from [pool]: the ones written with a story to
+/// play first, since they are the better telling, then the stories cards
+/// tell in their answers, each lot in the day's order and at most two from
+/// a subject. Null when the pool has too few to make a shelf.
+ThemedShelf? trueStories(Iterable<Pill> pool, {required int day}) {
+  final List<Pill> cards = dealCards(
+    pool.where(tellsAStory),
+    salt: 'stories',
+    day: day,
+    first: (p) => p.scene is StoryScene,
+  );
+  return cards.length < kThemeMinimum
+      ? null
+      : ThemedShelf(ShelfTheme.stories, 0, cards);
+}
+
+/// The most sentences of an answer a story plays, each a beat of its own.
+const int kStoryAnswerBeats = 5;
+
+/// Words that end with a full stop without ending a sentence.
+final Set<String> _notAnEnd = {
+  ...'Mr Mrs Ms Dr St Mt Jr Sr Prof Gen Col Lt Capt Sgt Rev Gov Sen Inc Co '
+          'Ltd No vs etc approx c ca Vol Fig e.g i.e'
+      .split(' '),
+};
+
+/// [text] a sentence at a time. A sentence ends at a full stop, a question
+/// mark or an exclamation mark with a capital, a figure or an opening quote
+/// after it — but not at an initial (the E. in Joseph E. Levine, the W.K.
+/// in W.K. Kellogg) or a title (Dr., St.).
+List<String> sentencesOf(String text) {
+  final String t = text.trim();
+  final List<String> out = [];
+  int from = 0;
+  for (final RegExpMatch m in RegExp(
+    r'([.!?…])["”’)\]]*\s+(?=["“‘(\[]?[A-Z0-9])',
+  ).allMatches(t)) {
+    if (m.group(1) == '.') {
+      final String word =
+          RegExp(r'(\S+)$').firstMatch(t.substring(from, m.start))?.group(1) ??
+          '';
+      final String bare = word.replaceFirst(RegExp(r'^["“‘(\[]+'), '');
+      if (RegExp(r'^(?:[A-Z]\.)*[A-Z]$').hasMatch(bare) ||
+          _notAnEnd.contains(bare)) {
+        continue;
+      }
+    }
+    out.add(t.substring(from, m.end).trim());
+    from = m.end;
+  }
+  if (from < t.length) out.add(t.substring(from).trim());
+  return [
+    for (final s in out)
+      if (s.isNotEmpty) s,
+  ];
+}
+
+/// A card's story as its own words tell it: the question, which is the
+/// hook, then the answer a sentence at a time. An answer of more sentences
+/// than [kStoryAnswerBeats] has its shortest neighbours joined, so no beat
+/// is a scrap and none runs on.
+List<String> toldBeats(Pill p) {
+  final List<String> said = sentencesOf(p.answer);
+  while (said.length > kStoryAnswerBeats) {
+    int at = 0;
+    for (int i = 1; i < said.length - 1; i++) {
+      if (said[i].length + said[i + 1].length <
+          said[at].length + said[at + 1].length) {
+        at = i;
+      }
+    }
+    said.replaceRange(at, at + 2, ['${said[at]} ${said[at + 1]}']);
+  }
+  return [p.question, ...said];
+}
+
+/// How many beats a card's story plays: the stops of a story written to be
+/// played, or the hook and the sentences of a story told in its answer.
+int storyBeatCount(Pill p) => switch (p.scene) {
+  final StoryScene s => s.stops,
+  _ => toldBeats(p).length,
+};
+
+/// How long a beat stays up when a story plays itself: long enough to read
+/// it unhurried, a second and a half to find the words and a little over a
+/// quarter of a second a word after that, never under three seconds nor
+/// over twelve.
+int beatMs(String text) {
+  final int words = RegExp(r'\S+').allMatches(text).length;
+  return (1500 + words * 280).clamp(3000, 12000);
+}
+
+/// How long a card's story takes, played through on its own, in whole
+/// minutes and never less than one: what its tile on the shelf says.
+int storyMinutes(Pill p) {
+  final int ms = switch (p.scene) {
+    final StoryScene s => [
+      for (final b in s.scenes) beatMs('${b.fact} ${b.line}'),
+      // The question waits for an answer, which takes about this long.
+      beatMs('${s.ask} ${s.options.join(' ')}'),
+      beatMs('${s.outcome.fact} ${s.outcome.line} ${s.why}'),
+    ].fold(0, (a, b) => a + b),
+    _ => toldBeats(p).fold(0, (a, b) => a + beatMs(b)),
+  };
+  return (ms / 60000).ceil().clamp(1, 99);
 }
 
 // ── Numbers to work out ──────────────────────────────────────────────────
@@ -415,8 +545,8 @@ List<(WorkKind, int)> workRow(Map<WorkKind, int> counts, {required int day}) {
 
 // ── Through time ─────────────────────────────────────────────────────────
 
-/// The ages the bank's cards are set in, oldest first: the stops on the
-/// ruler. A card tagged timeless is on no stop.
+/// The ages the bank's cards are set in, oldest first, which is the order
+/// Through time keeps them in. A card tagged timeless is in none.
 const List<String> kEras = [
   'ancient',
   'medieval',
@@ -455,7 +585,7 @@ const Map<String, int> kEraFrom = {
   'recent': 2000,
 };
 
-/// A year before Christ, as the ruler counts years: 1 BC is year 0 and 2 BC
+/// A year before Christ, as Through time counts years: 1 BC is year 0 and 2 BC
 /// is -1, so the distance from one year to another is a subtraction, across
 /// the change of era too. There was no year 0 in the calendar; there is one
 /// here, and it is 1 BC.
@@ -508,7 +638,7 @@ final RegExp _yearOf = RegExp(r'\b(1[0-9]{3}|20[0-4][0-9])(s)?\b');
 }
 
 /// The year a card's question names as the card says it: "1529", "the
-/// 1820s" as "1820s", "2 BC", "AD 393". What the ruler's cards show large.
+/// 1820s" as "1820s", "2 BC", "AD 393". What the cards of an age show large.
 String? yearSaid(Pill p) {
   final String? year = questionYear(p);
   final String q = p.question;
@@ -540,31 +670,36 @@ int? yearsAway(Pill p, int year, {required String era}) {
   return 0;
 }
 
-/// The cards of an age in the order a year typed on the ruler puts them:
-/// those whose question names a year in the age, nearest first, and then
-/// the rest as they came. Where two are as near, the day decides, so the
-/// same year is not the same two cards every day.
+/// The cards of an age in the order a year gone to puts them: those whose
+/// question names a year in the age, nearest first, and then the rest as
+/// they came. Of two as near, the one that names the year more closely
+/// comes first — 1956 before the 1950s, the 1950s before the 1900s — and
+/// where that is a tie too, the day decides, so the same year is not the
+/// same two cards every day.
 List<Pill> nearestToYear(
   List<Pill> cards,
   int year, {
   required String era,
   required int day,
 }) {
-  final named = <(int, int, Pill)>[];
+  final named = <(int, int, int, Pill)>[];
   final rest = <Pill>[];
   for (final Pill p in cards) {
     final int? away = yearsAway(p, year, era: era);
     if (away == null) {
       rest.add(p);
     } else {
-      named.add((away, shelfHash('$day:year:${p.id}'), p));
+      final (int from, int to) = yearsNamed(p)!;
+      named.add((away, to - from, shelfHash('$day:year:${p.id}'), p));
     }
   }
   named.sort((a, b) {
     final int nearer = a.$1.compareTo(b.$1);
-    return nearer != 0 ? nearer : a.$2.compareTo(b.$2);
+    if (nearer != 0) return nearer;
+    final int closer = a.$2.compareTo(b.$2);
+    return closer != 0 ? closer : a.$3.compareTo(b.$3);
   });
-  return [for (final (_, _, p) in named) p, ...rest];
+  return [for (final (_, _, _, p) in named) p, ...rest];
 }
 
 // ── A few cards in a row ─────────────────────────────────────────────────
@@ -883,13 +1018,15 @@ String firstLines(String answer, {int max = 180}) {
 
 /// Everything under the shelves that were always there, dealt for one day,
 /// one subject and one reader's unread pool. Each shelf claims its cards in
-/// the order the screen shows them, so a card is on one shelf only.
+/// turn, so a card is on one shelf only: mostly in the order the screen
+/// shows them, but the true stories first, since few cards are written as
+/// a story to play and no other shelf plays them, and Use it today with the
+/// cards to read, though the screen keeps it for last.
 class ExploreMix {
   const ExploreMix({
     required this.monthSubjectKey,
     required this.month,
     required this.sixty,
-    required this.myths,
     required this.numbers,
     required this.trueFalse,
     required this.spot,
@@ -902,7 +1039,6 @@ class ExploreMix {
     required this.sharpest,
     required this.didYouKnow,
     required this.compared,
-    required this.seen,
     required this.sampling,
     required this.unmask,
     required this.series,
@@ -917,7 +1053,6 @@ class ExploreMix {
   final String monthSubjectKey;
   final List<Pill> month;
   final List<Pill> sixty;
-  final ThemedShelf? myths;
   final ThemedShelf? numbers;
   final ThemedShelf? trueFalse;
 
@@ -931,15 +1066,17 @@ class ExploreMix {
   /// The ages with cards, oldest first.
   final List<(String, List<Pill>)> eras;
 
-  /// For each age on the ruler, the day's cards and then every other card
-  /// of the age no shelf holds: what a year typed on the ruler looks in,
-  /// since six cards seldom name the year somebody was born.
+  /// For each age, the day's cards and then every other card of the age no
+  /// shelf holds: what a year typed, or picked at random, looks in, since
+  /// six cards seldom name the year somebody was born.
   final Map<String, List<Pill>> eraPool;
+
+  /// The cards that tell a story, played a beat at a time: those written
+  /// with a story to play first (see [trueStories]).
   final ThemedShelf? stories;
   final ThemedShelf? sharpest;
   final List<Pill> didYouKnow;
   final List<Pill> compared;
-  final ThemedShelf? seen;
   final List<Pill> sampling;
   final List<Pill> unmask;
   final List<Series> series;
@@ -976,6 +1113,15 @@ ExploreMix dealExploreMix({
     return dealt;
   }
 
+  // The round is everybody's, read or not; the shelves below leave its eight
+  // alone so no claim is met twice in a scroll.
+  final sixty = sixtySeconds(bank, day: day);
+  taken.addAll(sixty.map((p) => p.id));
+  // The stories before anything else: the few written as a story to play
+  // are every one of them a card some other shelf could take, and none of
+  // the others plays it.
+  final stories = claim(trueStories(left(), day: day));
+
   final String monthKey = monthSubject(on);
   final month = claim(
     dealCards(
@@ -985,12 +1131,6 @@ ExploreMix dealExploreMix({
       perTopic: kThemeCards,
     ),
   );
-  // The round is everybody's, read or not; the shelves below leave its eight
-  // alone so no claim is met twice in a scroll.
-  final sixty = sixtySeconds(bank, day: day);
-  taken.addAll(sixty.map((p) => p.id));
-
-  final myths = claim(dealTheme(ShelfTheme.myths, 0, left(), day));
   final numbers = claim(dealTheme(ShelfTheme.numbers, 0, left(), day));
   final trueFalse = claim(dealTheme(ShelfTheme.trueOrFalse, 0, left(), day));
   final spot = spotTheFalse(left(), day: day);
@@ -1006,7 +1146,6 @@ ExploreMix dealExploreMix({
     if (cards.length >= 2) eras.add((era, cards));
   }
 
-  final stories = claim(dealTheme(ShelfTheme.stories, 0, left(), day));
   final sharpest = claim(dealTheme(ShelfTheme.sharpest, 0, left(), day));
   final dyk = claim(
     dealCards(left().where(isPlainRead), salt: 'dyk', day: day),
@@ -1018,7 +1157,6 @@ ExploreMix dealExploreMix({
       day: day,
     ),
   );
-  final seen = claim(dealTheme(ShelfTheme.seen, 0, left(), day));
   final sampling = claim(
     dealCards(
       left().where((p) => p.principle == Principle.sampling),
@@ -1050,8 +1188,9 @@ ExploreMix dealExploreMix({
   final howSure = claim(
     dealCards(left().where(asksHowSure), salt: 'how-sure', day: day, count: 6),
   );
-  // Last, from what no shelf took: a year typed on the ruler reaches past the
-  // day's cards for an age without showing a card twice on the page.
+  // Last, from what no shelf took: a year typed, or picked at random, reaches
+  // past the day's cards for an age without showing a card twice on the
+  // page.
   final List<Pill> unshelved = left();
   final eraPool = {
     for (final (era, cards) in eras)
@@ -1068,7 +1207,6 @@ ExploreMix dealExploreMix({
     monthSubjectKey: monthKey,
     month: month,
     sixty: sixty,
-    myths: myths,
     numbers: numbers,
     trueFalse: trueFalse,
     spot: spot,
@@ -1081,7 +1219,6 @@ ExploreMix dealExploreMix({
     sharpest: sharpest,
     didYouKnow: dyk,
     compared: compared,
-    seen: seen,
     sampling: sampling,
     unmask: unmask,
     series: series,

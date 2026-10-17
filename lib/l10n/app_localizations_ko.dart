@@ -1780,6 +1780,30 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themeStoriesLine => '실제로 일어난 일';
 
   @override
+  String get storyHint => '탭하면 다음으로 · 길게 누르면 멈춰요';
+
+  @override
+  String get storyTapOn => '탭하면 다음으로';
+
+  @override
+  String get storyPrevious => '이전';
+
+  @override
+  String get storyClose => '이야기 닫기';
+
+  @override
+  String get storySave => '보관';
+
+  @override
+  String get storySaved => '보관됨';
+
+  @override
+  String get storyShare => '공유';
+
+  @override
+  String get storyOpenCard => '카드 열기';
+
+  @override
   String get themeDebates => '편을 고르세요';
 
   @override
@@ -2602,12 +2626,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get eraRecentWhen => '2000년 이후';
 
   @override
-  String get eraRulerNow => '지금';
-
-  @override
-  String get eraRulerOld => '고대';
-
-  @override
   String get eraShortAncient => '고대';
 
   @override
@@ -2740,10 +2758,10 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => '무엇과 비교해서?';
+  String get moveComparedToWhat => '많은 걸까, 적은 걸까?';
 
   @override
-  String get moveComparedToWhatLine => '비교할 대상이 없으면 변화는 아무 의미가 없어요';
+  String get moveComparedToWhatLine => '‘30% 증가’는 무엇과 비교한 건지 알기 전까지 아무 의미가 없어요';
 
   @override
   String get askingTitle => '주제마다 한 문제';
@@ -2757,15 +2775,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get askingLine => '모두에게 같아요. 먼저 답하고, 이유는 그다음에';
 
   @override
-  String get moveSampling => '누가 포함됐을까?';
+  String get moveSampling => '데이터에서 누가 빠졌을까?';
 
   @override
-  String get moveSamplingLine => '연구에 누가 들어갔는지가 그 연구가 말해 줄 수 있는 것을 정해요';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$of장 중 $at번째 · 넘기려면 밀어 보세요';
-  }
+  String get moveSamplingLine =>
+      '모든 통계는 누군가는 세고 누군가는 놓쳐요. 누가 빠졌는지에 따라 답이 뒤집힐 수 있어요';
 
   @override
   String nOfM(int at, int of) {
@@ -2939,7 +2953,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get throughTime => '시간 여행';
 
   @override
-  String get throughTimeLine => '고대부터 올해까지. 끌거나, 연도를 입력하세요';
+  String get throughTimeLine => '고대부터 올해까지. 연도를 입력하거나, 우연에 맡겨 보세요';
 
   @override
   String leanHint(String or) {
@@ -3022,6 +3036,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get yearGo => '이 해로 가기';
+
+  @override
+  String get yearRandom => '랜덤';
+
+  @override
+  String get yearRandomHint => '카드에 나오는 해 가운데 하나로 가요';
 
   @override
   String yearNearest(String year) {

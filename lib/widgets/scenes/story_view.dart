@@ -31,19 +31,57 @@ import '../../theme.dart';
 /// Until the outcome has landed, taps and horizontal drags in the scene
 /// stay in the scene; afterwards a tap turns the card and a swipe moves the
 /// deck, as on any card.
+///
+/// Given a [controller], the scene is played from outside instead: the
+/// story player on Explore draws its own bars and keeps its own pace and
+/// taps, and the scene keeps the rest — the drawings, the words, the
+/// question and its outcomes — with no dashes, counter or hint of its own.
 class StorySceneView extends StatefulWidget {
   final StoryScene scene;
   final Color ink;
   final Color ground;
+  final StorySceneController? controller;
   const StorySceneView({
     super.key,
     required this.scene,
     required this.ink,
     required this.ground,
+    this.controller,
   });
 
   @override
   State<StorySceneView> createState() => _StorySceneViewState();
+}
+
+/// Plays a [StorySceneView] from outside it, a stop at a time, and says
+/// when it moves: on to a stop, to the outcome picked, to the outcome
+/// landed.
+class StorySceneController extends ChangeNotifier {
+  _StorySceneViewState? _view;
+
+  /// What a tap on the scene does for a screen reader, and what it is told
+  /// it will do, on every stop but the question, which waits for a pick.
+  VoidCallback? onTap;
+  String? hint;
+
+  /// The stop on show: a scene, the question ([StoryScene.askAt]) or the
+  /// outcome ([StoryScene.outcomeAt]).
+  int get at => _view?._at ?? 0;
+
+  /// The outcome the reader picked, once they have.
+  int? get pick => _view?._pick;
+
+  /// Whether the outcome has finished arriving.
+  bool get landed => _view?._landed ?? false;
+
+  /// On to the next scene, or from the last to the question. False where it
+  /// cannot go on by itself: the question waits for a pick.
+  bool next() => _view?._step(1) ?? false;
+
+  /// Back a scene. False at the first, and once the outcome is picked.
+  bool back() => _view?._step(-1) ?? false;
+
+  void _changed() => notifyListeners();
 }
 
 class _StorySceneViewState extends State<StorySceneView>
@@ -86,6 +124,19 @@ class _StorySceneViewState extends State<StorySceneView>
 
   bool get _calm => MediaQuery.disableAnimationsOf(context);
 
+  /// Played from outside, by a [StorySceneController].
+  bool get _driven => widget.controller != null;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller?._view = this;
+    // The outcome landing is the one change the player cannot see coming.
+    _run.addStatusListener((status) {
+      if (status == AnimationStatus.completed) widget.controller?._changed();
+    });
+  }
+
   bool get _landed => _at == _s.outcomeAt && _run.isCompleted;
 
   @override
@@ -103,6 +154,10 @@ class _StorySceneViewState extends State<StorySceneView>
   @override
   void didUpdateWidget(StorySceneView old) {
     super.didUpdateWidget(old);
+    if (old.controller != widget.controller) {
+      if (old.controller?._view == this) old.controller!._view = null;
+      widget.controller?._view = this;
+    }
     if (!identical(old.scene, widget.scene)) {
       _at = 0;
       _from = null;
@@ -115,6 +170,7 @@ class _StorySceneViewState extends State<StorySceneView>
 
   @override
   void dispose() {
+    if (widget.controller?._view == this) widget.controller!._view = null;
     _run.dispose();
     super.dispose();
   }
@@ -129,10 +185,24 @@ class _StorySceneViewState extends State<StorySceneView>
     });
     if (_calm) {
       _run.value = 1;
-      return;
+    } else {
+      _run.duration = to == _s.outcomeAt ? _landing : _change;
+      _run.forward(from: 0);
     }
-    _run.duration = to == _s.outcomeAt ? _landing : _change;
-    _run.forward(from: 0);
+    widget.controller?._changed();
+  }
+
+  /// A step asked for from outside: on through the scenes to the question,
+  /// or back through them.
+  bool _step(int by) {
+    if (by > 0) {
+      if (_at >= _s.askAt) return false;
+      _go(_at + 1);
+      return true;
+    }
+    if (_at == 0 || _at > _s.askAt) return false;
+    _go(_at - 1);
+    return true;
   }
 
   void _next() {
@@ -194,6 +264,9 @@ class _StorySceneViewState extends State<StorySceneView>
         widget.ink,
         _scaler,
         context.l10n.sceneNOfM(_s.stops, _s.stops).toUpperCase(),
+        you: context.l10n.sceneYou,
+        base: DefaultTextStyle.of(context).style,
+        driven: _driven,
       ),
     );
   }
@@ -252,6 +325,7 @@ class _StorySceneViewState extends State<StorySceneView>
               painter: _StoryPainter(
                 ink: ink,
                 stops: s.stops,
+                strip: !_driven,
                 filled: lerpDouble(
                   (from ?? -1) + 1.0,
                   _at + 1.0,
@@ -274,17 +348,18 @@ class _StorySceneViewState extends State<StorySceneView>
         ),
       ),
       // n of m, at the end of the dashes.
-      Positioned(
-        right: 0,
-        top: 0,
-        child: ExcludeSemantics(
-          child: Text(
-            l10n.sceneNOfM(_at + 1, s.stops).toUpperCase(),
-            textScaler: _scaler,
-            style: _Plan.counterStyle(ink),
+      if (!_driven)
+        Positioned(
+          right: 0,
+          top: 0,
+          child: ExcludeSemantics(
+            child: Text(
+              l10n.sceneNOfM(_at + 1, s.stops).toUpperCase(),
+              textScaler: _scaler,
+              style: _Plan.counterStyle(ink),
+            ),
           ),
         ),
-      ),
     ];
 
     // The stop being left: it lifts and fades as one piece.
@@ -310,15 +385,24 @@ class _StorySceneViewState extends State<StorySceneView>
 
     // The stop arriving, part by part.
     final incoming = _texts(to, _at, ink, ground, t, size, arriveAt: arrive);
+    // Played from outside, a tap goes where the player says, on every stop
+    // but the question.
+    final VoidCallback? onTap = _driven
+        ? (_at == s.askAt ? null : widget.controller!.onTap)
+        : (_at < s.askAt ? _next : null);
     children.add(
       Positioned.fill(
         child: Semantics(
           container: true,
           liveRegion: true,
-          button: _at < s.askAt,
+          button: onTap != null,
           label: _spoken(context),
-          hint: _at < s.askAt ? l10n.sceneSwipeHint : null,
-          onTap: _at < s.askAt ? _next : null,
+          hint: onTap == null
+              ? null
+              : _driven
+              ? widget.controller!.hint
+              : l10n.sceneSwipeHint,
+          onTap: onTap,
           child: Stack(children: incoming),
         ),
       ),
@@ -356,6 +440,12 @@ class _StorySceneViewState extends State<StorySceneView>
       );
     }
 
+    final Widget scene = SizedBox.fromSize(
+      size: size,
+      child: Stack(clipBehavior: Clip.none, children: children),
+    );
+    // Played from outside, the taps and the swipes are the player's.
+    if (_driven) return scene;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       excludeFromSemantics: true,
@@ -363,10 +453,7 @@ class _StorySceneViewState extends State<StorySceneView>
       onHorizontalDragStart: _landed ? null : (_) => _drag = 0,
       onHorizontalDragUpdate: _landed ? null : (d) => _drag += d.delta.dx,
       onHorizontalDragEnd: _landed ? null : _dragEnd,
-      child: SizedBox.fromSize(
-        size: size,
-        child: Stack(clipBehavior: Clip.none, children: children),
-      ),
+      child: scene,
     );
   }
 
@@ -443,9 +530,8 @@ class _StorySceneViewState extends State<StorySceneView>
               child: ExcludeSemantics(
                 child: Text(
                   p.fact!.text,
-                  maxLines: 1,
-                  softWrap: false,
-                  overflow: TextOverflow.clip,
+                  maxLines: 2,
+                  overflow: TextOverflow.fade,
                   textScaler: _scaler,
                   style: _Plan.factStyle(ink),
                 ),
@@ -514,7 +600,7 @@ class _StorySceneViewState extends State<StorySceneView>
           left: 0,
           right: 0,
           top: p.verdict,
-          height: _Plan.verdictH,
+          height: p.verdictHeight,
           child: Opacity(
             opacity: e,
             child: Transform.translate(
@@ -610,17 +696,13 @@ class _StorySceneViewState extends State<StorySceneView>
                 Expanded(
                   child: Text(
                     s.options[i],
-                    maxLines: 1,
-                    softWrap: false,
+                    maxLines: 2,
                     overflow: TextOverflow.fade,
                     textScaler: _scaler,
-                    style: AppText.body(
-                      size: 16,
-                      weight: FontWeight.w800,
-                      color: fg,
-                    ),
+                    style: _Plan.optionStyle(fg),
                   ),
                 ),
+                const SizedBox(width: _Plan.optionGap),
                 // The pick is said by shape too: an empty ring, then a
                 // ring with a dot.
                 Container(
@@ -660,12 +742,12 @@ class _StorySceneViewState extends State<StorySceneView>
     return Row(
       children: [
         Container(
-          height: 18,
+          height: _scaler.scale(18),
           padding: const EdgeInsets.symmetric(horizontal: 8),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: ink,
-            borderRadius: BorderRadius.circular(9),
+            borderRadius: BorderRadius.circular(_scaler.scale(9)),
           ),
           child: Text(
             you,
@@ -682,16 +764,11 @@ class _StorySceneViewState extends State<StorySceneView>
         Flexible(
           child: Text(
             _s.options[_pick!],
-            maxLines: 1,
-            softWrap: false,
+            maxLines: 2,
             overflow: TextOverflow.fade,
             textScaler: _scaler,
-            style:
-                AppText.body(
-                  size: 14,
-                  weight: FontWeight.w700,
-                  color: ink.withValues(alpha: right ? 1 : 0.62),
-                ).copyWith(
+            style: _Plan.pickStyle(ink.withValues(alpha: right ? 1 : 0.62))
+                .copyWith(
                   decoration: right ? null : TextDecoration.lineThrough,
                   decorationColor: ink.withValues(alpha: 0.7),
                   decorationThickness: 2,
@@ -782,6 +859,10 @@ class _Plan {
   final _Lines line;
   final List<Rect> options;
   final double? verdict;
+
+  /// How tall the verdict is: a line of its type, or two where the
+  /// reader's text is so large one will not hold the pick.
+  final double verdictHeight;
   final _Lines? why;
 
   /// Where the hint at the foot sits, or null when there is none.
@@ -794,6 +875,7 @@ class _Plan {
     required this.line,
     required this.options,
     required this.verdict,
+    this.verdictHeight = verdictH,
     required this.why,
     required this.footer,
     required this.counterWidth,
@@ -827,6 +909,48 @@ class _Plan {
     color: ink.withValues(alpha: 0.55),
   );
 
+  static TextStyle optionStyle(Color color) =>
+      AppText.body(size: 16, weight: FontWeight.w800, color: color);
+
+  /// Between an outcome's words and its ring, so a label that only just
+  /// fits never runs into the ring.
+  static const double optionGap = 12;
+
+  static TextStyle pickStyle(Color color) =>
+      AppText.body(size: 14, weight: FontWeight.w700, color: color);
+
+  static TextStyle youStyle(Color color) => AppText.label(
+    size: 9.5,
+    weight: FontWeight.w800,
+    spacing: 1.6,
+    color: color,
+  );
+
+  /// How tall the tallest of [texts] is in [style] over [base] — the style
+  /// around it, which a Text merges its own over — at [width], on at most
+  /// [maxLines] lines.
+  static double tallest(
+    List<String> texts,
+    TextStyle base,
+    TextStyle style,
+    double width,
+    TextScaler scaler, {
+    int maxLines = 2,
+  }) {
+    double out = 0;
+    for (final t in texts) {
+      final tp = TextPainter(
+        text: TextSpan(text: t, style: base.merge(style)),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: maxLines,
+      )..layout(maxWidth: math.max(1, width));
+      out = math.max(out, tp.height);
+      tp.dispose();
+    }
+    return out;
+  }
+
   static TextStyle lineStyle(double size, Color ink) => AppText.display(
     size: size,
     weight: FontWeight.w700,
@@ -845,18 +969,23 @@ class _Plan {
     color: ink.withValues(alpha: 0.92),
   );
 
+  /// [driven]: played from outside, with no dashes over the scene and no
+  /// hint under it, so the stage takes the whole height.
   factory _Plan.lay(
     StoryScene s,
     int stop,
     Size size,
     Color ink,
     TextScaler scaler,
-    String counterText,
-  ) {
+    String counterText, {
+    String you = 'YOU',
+    TextStyle base = const TextStyle(),
+    bool driven = false,
+  }) {
     final w = size.width;
     final h = size.height;
     final short = h < 330;
-    final stageTop = stripH + (short ? 12 : 22);
+    final stageTop = driven ? 0.0 : stripH + (short ? 12 : 22);
 
     final counter = TextPainter(
       text: TextSpan(text: counterText, style: counterStyle(ink)),
@@ -890,12 +1019,35 @@ class _Plan {
     if (stop < s.askAt || stop == s.outcomeAt) {
       final outcome = stop == s.outcomeAt;
       final b = outcome ? s.outcome : s.scenes[stop];
-      final footer = outcome ? null : h - hintH;
-      var bottom = outcome ? h : footer! - (short ? 10 : 16);
+      final footer = outcome || driven ? null : h - hintH;
+      var bottom = footer == null ? h : footer - (short ? 10 : 16);
 
       _Lines? why;
       double? verdict;
+      var verdictHeight = verdictH;
       if (outcome) {
+        // YOU, the pick and its mark, as tall as the larger of the pill and
+        // the pick, which may take two lines at the largest text sizes.
+        final pill = TextPainter(
+          text: TextSpan(text: you, style: base.merge(youStyle(ink))),
+          textDirection: TextDirection.ltr,
+          textScaler: scaler,
+        )..layout();
+        final pillW = pill.width + 16;
+        pill.dispose();
+        verdictHeight = math.max(
+          verdictH,
+          math.max(
+            scaler.scale(18),
+            tallest(
+              s.options,
+              base,
+              pickStyle(ink),
+              w - pillW - 10 - 8 - 14,
+              scaler,
+            ),
+          ),
+        );
         why = _Lines.fit(
           s.why,
           (z) => whyStyle(z, ink),
@@ -907,11 +1059,25 @@ class _Plan {
           maxLines: 4,
         );
         why = why.at(bottom - why.height);
-        verdict = why.top - (short ? 12 : 16) - verdictH;
+        verdict = why.top - (short ? 12 : 16) - verdictHeight;
         bottom = verdict - (short ? 10 : 14);
       }
 
-      final factRoom = b.fact.isEmpty ? 0.0 : factLine + 8;
+      // A line of small capitals, or two where the reader's text is so
+      // large that one will not hold the place and the date.
+      final factRoom = b.fact.isEmpty
+          ? 0.0
+          : math.max(
+                  factLine,
+                  tallest(
+                    [b.fact.toUpperCase()],
+                    base,
+                    factStyle(ink),
+                    w,
+                    scaler,
+                  ),
+                ) +
+                8;
       var line = _Lines.fit(
         b.line,
         (z) => lineStyle(z, ink),
@@ -931,6 +1097,7 @@ class _Plan {
         line: line,
         options: const [],
         verdict: verdict,
+        verdictHeight: verdictHeight,
         why: why,
         footer: footer,
         counterWidth: counterWidth,
@@ -938,12 +1105,24 @@ class _Plan {
     }
 
     // The question, and the outcomes under it.
-    final footer = h - hintH;
-    final bottom = footer - (short ? 10 : 14);
+    final footer = driven ? null : h - hintH;
+    final bottom = footer == null ? h : footer - (short ? 10 : 14);
     final optH = short ? 44.0 : 50.0;
     final gap = short ? 7.0 : 9.0;
     final n = s.options.length;
-    final optionsTop = bottom - n * optH - (n - 1) * gap;
+    // Each outcome on a line, or on two where the reader's text is so large
+    // that one will not hold it: the button grows rather than cut it.
+    final inner = w - 2 * 18 - optionGap - 18 - 2 * 1.6;
+    final heights = [
+      for (final o in s.options)
+        math.max(
+          optH,
+          tallest([o], base, optionStyle(ink), inner, scaler) +
+              (short ? 16 : 20),
+        ),
+    ];
+    final optionsTop =
+        bottom - heights.fold(0.0, (a, b) => a + b) - (n - 1) * gap;
     _Lines askAt(double width) => _Lines.fit(
       s.ask,
       (z) => lineStyle(z, ink),
@@ -966,19 +1145,26 @@ class _Plan {
       ask = askAt(w - side - 12);
       final block = math.max(ask.height, side);
       final top = optionsTop - gapAbove - block;
-      // The question sits on the buttons; the mark stands over its end.
-      ask = ask.at(top + block - ask.height);
-      glyph = side < 40 || top < stageTop
-          ? Rect.zero
-          : Rect.fromLTWH(w - side, top + (block - side) / 2, side, side);
+      if (side < 40 || top < stageTop) {
+        // No room beside it either: the question alone, on the buttons,
+        // across the whole width rather than the width left beside a mark
+        // that is not there.
+        ask = askAt(w);
+        ask = ask.at(optionsTop - gapAbove - ask.height);
+        glyph = Rect.zero;
+      } else {
+        // The question sits on the buttons; the mark stands over its end.
+        ask = ask.at(top + block - ask.height);
+        glyph = Rect.fromLTWH(w - side, top + (block - side) / 2, side, side);
+      }
     }
     return _Plan(
       glyph: glyph,
       fact: null,
       line: ask,
       options: [
-        for (var i = 0; i < n; i++)
-          Rect.fromLTWH(0, optionsTop + i * (optH + gap), w, optH),
+        for (var i = 0, top = optionsTop; i < n; top += heights[i] + gap, i++)
+          Rect.fromLTWH(0, top, w, heights[i]),
       ],
       verdict: null,
       why: null,
@@ -1314,6 +1500,10 @@ class _StoryPainter extends CustomPainter {
   final Color ink;
   final int stops;
 
+  /// Whether the dashes are drawn: not when the story is played from
+  /// outside, which draws its own.
+  final bool strip;
+
   /// How many dashes are full, fractional while one fills.
   final double filled;
   final double stripRight;
@@ -1333,6 +1523,7 @@ class _StoryPainter extends CustomPainter {
   _StoryPainter({
     required this.ink,
     required this.stops,
+    this.strip = true,
     required this.filled,
     required this.stripRight,
     required this.fromGlyph,
@@ -1357,7 +1548,7 @@ class _StoryPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _strip(canvas);
+    if (strip) _strip(canvas);
     final from = fromRect;
     final had = from != null && from != Rect.zero && fromGlyph != null;
     final has = toRect != Rect.zero;
@@ -1375,7 +1566,7 @@ class _StoryPainter extends CustomPainter {
     // The disc stays under the dashes and inside the scene.
     canvas.save();
     canvas.clipRect(
-      Rect.fromLTRB(-8, _Plan.stripH + 6, size.width, size.height),
+      Rect.fromLTRB(-8, strip ? _Plan.stripH + 6 : 0, size.width, size.height),
     );
     _disc(canvas, box, angle, fade * drawOn.clamp(0.0, 1.0));
     canvas.restore();
@@ -1516,6 +1707,7 @@ class _StoryPainter extends CustomPainter {
   bool shouldRepaint(_StoryPainter old) =>
       old.ink != ink ||
       old.stops != stops ||
+      old.strip != strip ||
       old.filled != filled ||
       old.stripRight != stripRight ||
       old.fromGlyph != fromGlyph ||

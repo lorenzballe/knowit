@@ -16,6 +16,10 @@ import 'parts.dart';
 /// What a shelf does with a card the reader taps.
 typedef OpenCard = void Function(List<Pill> shelf, Pill pill);
 
+/// What the story shelf does with a story the reader taps: plays it, grown
+/// out of [from], the tile on the screen, where it is known.
+typedef PlayStory = void Function(List<Pill> shelf, Pill pill, Rect? from);
+
 // ── True or false? (133e, answered on the shelf as 133b asks) ─────────────
 
 /// Each card split corner to corner in two tones of its colour, a question
@@ -251,24 +255,22 @@ class _SplitPainter extends CustomPainter {
 // ── True stories (133e) ──────────────────────────────────────────────────
 
 /// A story's beats across the top, the way a story is played on a phone,
-/// and how long it takes at the foot.
+/// and how long it takes at the foot — and a tap plays it, full screen, a
+/// beat at a time (see story_player.dart). It used to look like a story and
+/// open like any other card.
 class StoryRow extends StatelessWidget {
   const StoryRow({
     super.key,
     required this.pills,
     required this.isRead,
-    required this.onOpen,
+    required this.onPlay,
     this.onShown,
   });
 
   final List<Pill> pills;
   final bool Function(Pill) isRead;
-  final OpenCard onOpen;
+  final PlayStory onPlay;
   final ValueChanged<Pill>? onShown;
-
-  /// The story's beats: the sentences its answer tells it in, three to five.
-  static int beats(Pill p) =>
-      p.answer.split(RegExp(r'(?<=[.!?])\s+')).length.clamp(3, 5);
 
   @override
   Widget build(BuildContext context) {
@@ -278,248 +280,84 @@ class StoryRow extends StatelessWidget {
       itemBuilder: (context, i) {
         final Pill p = pills[i];
         onShown?.call(p);
-        final int n = beats(p);
-        return CardTap(
-          pill: p,
-          onTap: () => onOpen(pills, p),
-          child: Container(
-            width: 210,
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(22),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    for (int k = 0; k < n; k++) ...[
-                      if (k > 0) const SizedBox(width: 4),
-                      Expanded(
-                        child: Container(
-                          height: 3,
-                          decoration: BoxDecoration(
-                            color: p.ink.withValues(alpha: k == 0 ? 1 : 0.14),
-                            borderRadius: BorderRadius.circular(2),
+        final int n = storyBeatCount(p);
+        // Where the tile is when it is tapped, for the story to grow out of.
+        Rect? at(BuildContext tile) {
+          final RenderObject? box = tile.findRenderObject();
+          if (box is! RenderBox || !box.hasSize) return null;
+          return box.localToGlobal(Offset.zero) & box.size;
+        }
+
+        return Builder(
+          builder: (tile) => CardTap(
+            pill: p,
+            onTap: () => onPlay(pills, p, at(tile)),
+            child: Container(
+              width: 210,
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+              decoration: BoxDecoration(
+                color: p.color,
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // As many bars as the story has beats, the first lit.
+                  Row(
+                    children: [
+                      for (int k = 0; k < n; k++) ...[
+                        if (k > 0) const SizedBox(width: 4),
+                        Expanded(
+                          child: Container(
+                            height: 3,
+                            decoration: BoxDecoration(
+                              color: p.ink.withValues(alpha: k == 0 ? 1 : 0.22),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
                           ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: 13),
+                  CardHead(
+                    pill: p,
+                    trailing: isRead(p) ? ReadMark(pill: p) : null,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 8),
+                      child: CardQuestion(
+                        text: p.question,
+                        color: p.ink,
+                        min: 11,
+                        max: 17.5,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.play_arrow_rounded, size: 15, color: p.ink),
+                      const SizedBox(width: 5),
+                      Text(
+                        context.l10n.minutesShort(storyMinutes(p)),
+                        style: AppText.label(
+                          size: 9,
+                          weight: FontWeight.w700,
+                          spacing: 1.2,
+                          color: p.ink,
                         ),
                       ),
                     ],
-                  ],
-                ),
-                const SizedBox(height: 13),
-                CardHead(
-                  pill: p,
-                  trailing: isRead(p) ? ReadMark(pill: p) : null,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 8),
-                    child: CardQuestion(
-                      text: p.question,
-                      color: p.ink,
-                      min: 11,
-                      max: 17.5,
-                    ),
                   ),
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.play_arrow_rounded, size: 15, color: p.ink),
-                    const SizedBox(width: 5),
-                    Text(
-                      context.l10n.minutesShort(minutesFor(p)),
-                      style: AppText.label(
-                        size: 9,
-                        weight: FontWeight.w700,
-                        spacing: 1.2,
-                        color: p.ink,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
       },
     );
   }
-}
-
-// ── Seen, not read (133e) ────────────────────────────────────────────────
-
-/// Cards that draw their point, each with a small drawing of the kind of
-/// picture it holds at its foot: bars, a line, a field of dots.
-class SeenRow extends StatelessWidget {
-  const SeenRow({
-    super.key,
-    required this.pills,
-    required this.isRead,
-    required this.onOpen,
-    this.onShown,
-  });
-
-  final List<Pill> pills;
-  final bool Function(Pill) isRead;
-  final OpenCard onOpen;
-  final ValueChanged<Pill>? onShown;
-
-  @override
-  Widget build(BuildContext context) {
-    return SideRow(
-      height: 252,
-      count: pills.length,
-      itemBuilder: (context, i) {
-        final Pill p = pills[i];
-        onShown?.call(p);
-        return CardTap(
-          pill: p,
-          onTap: () => onOpen(pills, p),
-          child: Container(
-            width: 200,
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(22),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CardHead(
-                  pill: p,
-                  trailing: isRead(p) ? ReadMark(pill: p) : null,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: CardQuestion(
-                      text: p.question,
-                      color: p.ink,
-                      min: 11,
-                      max: 16.5,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 66,
-                  width: double.infinity,
-                  child: CustomPaint(
-                    painter: _SeenGlyph(
-                      kind: switch (p.diagram) {
-                        LineDiagram() => _Glyph.line,
-                        DotsDiagram() => _Glyph.dots,
-                        AreaDiagram() || SplitDiagram() => _Glyph.area,
-                        _ => _Glyph.bars,
-                      },
-                      tone: shade(p.color, 0.74),
-                      ink: p.ink,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-enum _Glyph { bars, line, dots, area }
-
-class _SeenGlyph extends CustomPainter {
-  _SeenGlyph({required this.kind, required this.tone, required this.ink});
-
-  final _Glyph kind;
-  final Color tone;
-  final Color ink;
-
-  static const List<double> _rise = [10, 14, 20, 30, 44, 62];
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint fill = Paint()..color = tone;
-    switch (kind) {
-      case _Glyph.bars:
-        const double gap = 5;
-        final double w = (size.width - gap * 5) / 6;
-        for (int i = 0; i < 6; i++) {
-          final double h = _rise[i];
-          canvas.drawRRect(
-            RRect.fromRectAndCorners(
-              Rect.fromLTWH(i * (w + gap), size.height - h, w, h),
-              topLeft: const Radius.circular(5),
-              topRight: const Radius.circular(5),
-            ),
-            i == 5 ? (Paint()..color = ink) : fill,
-          );
-        }
-      case _Glyph.line:
-        final path = Path();
-        const List<double> ys = [0.78, 0.7, 0.74, 0.52, 0.46, 0.22, 0.12];
-        for (int i = 0; i < ys.length; i++) {
-          final Offset o = Offset(
-            size.width * i / (ys.length - 1),
-            size.height * ys[i] - 4,
-          );
-          i == 0 ? path.moveTo(o.dx, o.dy) : path.lineTo(o.dx, o.dy);
-        }
-        final area = Path.from(path)
-          ..lineTo(size.width, size.height)
-          ..lineTo(0, size.height)
-          ..close();
-        canvas.drawPath(area, fill);
-        canvas.drawPath(
-          path,
-          Paint()
-            ..color = ink
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 3
-            ..strokeCap = StrokeCap.round
-            ..strokeJoin = StrokeJoin.round,
-        );
-      case _Glyph.dots:
-        const int cols = 10;
-        const int rows = 4;
-        final double step = size.width / cols;
-        final double r = math.min(step * 0.32, 5);
-        for (int y = 0; y < rows; y++) {
-          for (int x = 0; x < cols; x++) {
-            final bool lit = y == rows - 1 && x < 3;
-            canvas.drawCircle(
-              Offset(step * (x + 0.5), size.height - 8 - y * (r * 2 + 6)),
-              r,
-              lit ? (Paint()..color = ink) : fill,
-            );
-          }
-        }
-      case _Glyph.area:
-        final double w = size.width;
-        canvas.drawRRect(
-          RRect.fromRectAndCorners(
-            Rect.fromLTWH(0, 8, w * 0.62, size.height - 8),
-            topLeft: const Radius.circular(6),
-            topRight: const Radius.circular(6),
-          ),
-          fill,
-        );
-        canvas.drawRRect(
-          RRect.fromRectAndCorners(
-            Rect.fromLTWH(w * 0.62 + 5, 30, w * 0.38 - 5, size.height - 30),
-            topLeft: const Radius.circular(6),
-            topRight: const Radius.circular(6),
-          ),
-          Paint()..color = ink,
-        );
-    }
-  }
-
-  @override
-  bool shouldRepaint(_SeenGlyph old) =>
-      old.kind != kind || old.tone != tone || old.ink != ink;
 }
 
 // ── Where it came from (133e) ────────────────────────────────────────────

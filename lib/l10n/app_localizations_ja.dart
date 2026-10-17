@@ -1771,6 +1771,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themeStoriesLine => '実際に起きたこと';
 
   @override
+  String get storyHint => 'タップで次へ・長押しで一時停止';
+
+  @override
+  String get storyTapOn => 'タップで次へ';
+
+  @override
+  String get storyPrevious => '前へ';
+
+  @override
+  String get storyClose => 'ストーリーを閉じる';
+
+  @override
+  String get storySave => '保存';
+
+  @override
+  String get storySaved => '保存済み';
+
+  @override
+  String get storyShare => '共有';
+
+  @override
+  String get storyOpenCard => 'カードを開く';
+
+  @override
   String get themeDebates => 'どちらにつく？';
 
   @override
@@ -2587,12 +2611,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get eraRecentWhen => '2000年以降';
 
   @override
-  String get eraRulerNow => '現在';
-
-  @override
-  String get eraRulerOld => '古代';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2725,10 +2743,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => '何と比べて？';
+  String get moveComparedToWhat => '多い？少ない？';
 
   @override
-  String get moveComparedToWhatLine => '比べるものがなければ、変化は何も語らない';
+  String get moveComparedToWhatLine => '「30%アップ」は、何と比べてなのかが分かるまで何の意味もない';
 
   @override
   String get askingTitle => '分野ごとに1問';
@@ -2742,15 +2760,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get askingLine => 'みんな同じ。まず答えて、それから理由を';
 
   @override
-  String get moveSampling => '誰が数えられた？';
+  String get moveSampling => 'データから抜けているのは誰？';
 
   @override
-  String get moveSamplingLine => '研究に誰が入ったかで、わかることが決まる';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$of枚中$at枚目 · スワイプでめくる';
-  }
+  String get moveSamplingLine => 'どの統計にも、数えられる人と漏れる人がいる。誰が抜けたかで、答えはひっくり返る';
 
   @override
   String nOfM(int at, int of) {
@@ -2924,7 +2937,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get throughTime => '時代をめぐる';
 
   @override
-  String get throughTimeLine => '古代から今年まで。ドラッグするか、年を入力しよう';
+  String get throughTimeLine => '古代から今年まで。年を入力するか、偶然に任せよう';
 
   @override
   String leanHint(String or) {
@@ -3007,6 +3020,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get yearGo => 'この年へ';
+
+  @override
+  String get yearRandom => 'ランダム';
+
+  @override
+  String get yearRandomHint => 'カードに出てくる年のどれかへ';
 
   @override
   String yearNearest(String year) {

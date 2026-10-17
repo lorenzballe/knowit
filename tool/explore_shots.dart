@@ -1,7 +1,8 @@
 // Photographs Explore under the shelves that were always there: the month,
-// the deck of myths, the round against the clock, the six ways to work a
-// number out, the ruler of ages, the pile of facts, the charts unmasked, one
-// card from anywhere at the end — each at rest and each played.
+// the round against the clock, the six ways to work a number out, a year
+// through time, the pile of facts, the charts unmasked, one card from
+// anywhere and something to use today at the end — each at rest and each
+// played.
 //
 //   flutter test tool/explore_shots.dart --update-goldens
 //
@@ -246,9 +247,9 @@ void main() {
     }
   });
 
-  testWidgets('played: did you know, the ruler, the chart', (tester) async {
+  testWidgets('played: did you know, a year, the chart', (tester) async {
     await open(tester);
-    // In the page's order: the chart is among the cards to play, the ruler
+    // In the page's order: the chart is among the cards to play, a year
     // and the pile among the ways in by time.
     await reach(tester, 'mix-unmask');
     final Finder unmask = find.byWidgetPredicate(
@@ -265,7 +266,7 @@ void main() {
     await shoot(tester, 'play-unmask-after');
 
     await reach(tester, 'mix-through-time');
-    await tester.tap(find.byKey(const ValueKey('era-on')));
+    await tester.tap(find.byKey(const ValueKey('era-random')));
     await settle(tester);
     await shoot(tester, 'play-through-time');
 

@@ -1769,6 +1769,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themeStoriesLine => '真正发生过的事';
 
   @override
+  String get storyHint => '轻点继续 · 按住暂停';
+
+  @override
+  String get storyTapOn => '轻点继续';
+
+  @override
+  String get storyPrevious => '上一个';
+
+  @override
+  String get storyClose => '关闭故事';
+
+  @override
+  String get storySave => '收藏';
+
+  @override
+  String get storySaved => '已收藏';
+
+  @override
+  String get storyShare => '分享';
+
+  @override
+  String get storyOpenCard => '打开卡片';
+
+  @override
   String get themeDebates => '选一边';
 
   @override
@@ -2596,12 +2620,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eraRecentWhen => '2000年以来';
 
   @override
-  String get eraRulerNow => '现在';
-
-  @override
-  String get eraRulerOld => '古代';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2734,10 +2752,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => '和什么比？';
+  String get moveComparedToWhat => '多，还是少？';
 
   @override
-  String get moveComparedToWhatLine => '没有可以比较的东西，变化说明不了什么';
+  String get moveComparedToWhatLine => '“增长30%”说明不了什么，除非你知道：和什么比？';
 
   @override
   String get askingTitle => '每个主题一道题';
@@ -2751,15 +2769,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get askingLine => '人人相同。先作答，再看原因';
 
   @override
-  String get moveSampling => '谁被算进去了？';
+  String get moveSampling => '数据里少了谁？';
 
   @override
-  String get moveSamplingLine => '研究里有谁，决定了它能告诉你什么';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '第 $at/$of 张 · 滑动翻过';
-  }
+  String get moveSamplingLine => '每个统计都算进了一些人，也漏掉了另一些人。漏掉的是谁，可能让答案完全反过来';
 
   @override
   String nOfM(int at, int of) {
@@ -2933,7 +2946,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get throughTime => '穿越时间';
 
   @override
-  String get throughTimeLine => '从古代到今年，拖动，或输入一个年份';
+  String get throughTimeLine => '从古代到今年。输入一个年份，或者交给运气';
 
   @override
   String leanHint(String or) {
@@ -3016,6 +3029,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get yearGo => '前往这一年';
+
+  @override
+  String get yearRandom => '随机';
+
+  @override
+  String get yearRandomHint => '前往某张卡片提到的年份';
 
   @override
   String yearNearest(String year) {

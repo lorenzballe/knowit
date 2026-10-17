@@ -1833,6 +1833,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String get themeStoriesLine => 'Gerçekten yaşanmış şeyler';
 
   @override
+  String get storyHint => 'İlerlemek için dokun · durdurmak için basılı tut';
+
+  @override
+  String get storyTapOn => 'İlerlemek için dokun';
+
+  @override
+  String get storyPrevious => 'Önceki';
+
+  @override
+  String get storyClose => 'Hikâyeyi kapat';
+
+  @override
+  String get storySave => 'Sakla';
+
+  @override
+  String get storySaved => 'Saklandı';
+
+  @override
+  String get storyShare => 'Paylaş';
+
+  @override
+  String get storyOpenCard => 'Kartı aç';
+
+  @override
   String get themeDebates => 'Taraf seç';
 
   @override
@@ -2676,12 +2700,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get eraRecentWhen => '2000\'den beri';
 
   @override
-  String get eraRulerNow => 'Şimdi';
-
-  @override
-  String get eraRulerOld => 'Antik çağ';
-
-  @override
   String get eraShortAncient => 'Antik çağ';
 
   @override
@@ -2814,11 +2832,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'Neye göre?';
+  String get moveComparedToWhat => 'Çok mu, az mı?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Karşılaştıracak bir şey yoksa, bir değişim hiçbir şey ifade etmez';
+      '«%30 arttı» demek, şunu bilmeden hiçbir şey ifade etmez: neye göre?';
 
   @override
   String get askingTitle => 'Her konudan bir soru';
@@ -2832,16 +2850,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get askingLine => 'Herkes için aynı. Önce cevapla, sonra nedenini gör';
 
   @override
-  String get moveSampling => 'Kimler sayıldı?';
+  String get moveSampling => 'Verilerde kim eksik?';
 
   @override
   String get moveSamplingLine =>
-      'Bir araştırmaya kimin girdiği, sana ne söyleyebileceğini belirler';
-
-  @override
-  String mythDeckHint(int at, int of) {
-    return '$at/$of · çevirmek için kaydır';
-  }
+      'Her istatistik bazılarını sayar, bazılarını atlar. Dışarıda kalanlar cevabı tersine çevirebilir';
 
   @override
   String nOfM(int at, int of) {
@@ -3016,7 +3029,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'Antik dünyadan bu yıla. Kaydır ya da bir yıl yaz';
+      'Antik dünyadan bu yıla. Bir yıl yaz ya da seçimi şansa bırak';
 
   @override
   String leanHint(String or) {
@@ -3099,6 +3112,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get yearGo => 'Bu yıla git';
+
+  @override
+  String get yearRandom => 'Rastgele';
+
+  @override
+  String get yearRandomHint => 'Kartlardan birinin andığı bir yıla gider';
 
   @override
   String yearNearest(String year) {

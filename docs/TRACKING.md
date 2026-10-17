@@ -23,9 +23,12 @@ will find in six months.
   tutto il testo è nascosto. L'interruttore *Profilo → Dati di utilizzo*
   spegne tutto PostHog, eventi nuovi compresi.
 - **Quanto pesa.** Un lettore assiduo (6 aperture al giorno, le 5 carte,
-  3 visite in Esplora con 8 carte aperte) passa da circa **100 a circa 135
-  eventi al giorno**. Il piano gratuito di PostHog (1 milione al mese) regge
-  circa 245 lettori così, ogni giorno, o circa 800 lettori tipici.
+  3 visite in Esplora con 8 carte aperte e una storia vista fino in fondo)
+  passa da circa **100 a circa 140 eventi al giorno**. Il piano gratuito di
+  PostHog (1 milione al mese) regge circa 235 lettori così, ogni giorno, o
+  circa 800 lettori tipici. Una storia di *Storie vere* dice quando si apre,
+  quando arriva in fondo e quando si chiude, con quante delle sue parti sono
+  state viste: tre eventi a storia, mai uno per parte.
 - **Telefoni di prova.** Ogni evento e ogni profilo dicono da dove viene
   l'installazione (`install_channel`: `app_store`, `testflight`, `play`,
   `sideload`, `test_lab`, `debug`, `web`). I robot di Google Play e le build
@@ -203,7 +206,10 @@ about where the reader lives) and `edition`.
 
 New in October 2026: `screen left`, `card closed`, `explore shelf seen`,
 `first card shown`, the read facts on `card advanced`, the session on
-`app paused`, `ms_to_deal` on `day started`, `interaction` on card facts.
+`app paused`, `ms_to_deal` on `day started`, `interaction` on card facts;
+and, later in the month, a true story played on Explore (`explore story
+opened`, `finished`, `closed`) and how a year was gone to (`by` on
+`explore year`).
 
 ### 6.1 Launch and the sitting
 
@@ -245,7 +251,8 @@ sent, which after a return from a pushed screen is the screen returned to.
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
 subjects`, `onboarding genres`, `onboarding offer`, `comeback` (first run and
 come-back); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
-`journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`.
+`journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
+`story` (a true story played from Explore).
 
 ### 6.3 The day on Today
 
@@ -275,7 +282,7 @@ other ending.
 
 | Event | When | Properties | Why | Where |
 | --- | --- | --- | --- | --- |
-| `card closed` **new** | a stint ends without the day moving on: a card of the day left for a tab, a pushed screen or the background; every card read in the deck viewer, however it left | `ms_on_card` (in sight, this stint), card facts, `where` (`today`, or the screen the viewer was opened from: `explore`, `journey`, `came back`, `widget`; `viewer` when none was given), read facts | dwell and depth on cards read outside the day, and on cards of the day left half-read | P, T:`close` |
+| `card closed` **new** | a stint ends without the day moving on: a card of the day left for a tab, a pushed screen or the background; every card read in the deck viewer, however it left | `ms_on_card` (in sight, this stint), card facts, `where` (`today`, or the screen the viewer was opened from: `explore`, `journey`, `came back`, `widget`, `story` — the card opened from a story's last screen; `viewer` when none was given), read facts | dwell and depth on cards read outside the day, and on cards of the day left half-read | P, T:`close` |
 
 **Read facts**, on `card advanced` and `card closed`:
 
@@ -310,7 +317,10 @@ is in its card facts.
 | `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
 | `explore answered`, `explore leaned` | a card answered on a shelf | `pill_id`, `right`, `side`, `confidence` | | P |
 | `explore did you know`, `explore surprise`, `explore spot`, `explore chart unmasked`, `explore slide checked`, `explore range bet`, `explore stake bet`, `explore bigger picked` | the shelf games | `pill_id`, `right`, `new`, `trick`, `off`, `width`, `hit`, `stake`, `won` | | P |
-| `explore mood`, `explore minutes`, `explore era`, `explore year`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `era`, `year`, `right`, `answered`, `seconds` | | P |
+| `explore mood`, `explore minutes`, `explore year`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `era`, `year`, `by` (on `explore year`: `typed`, or `random` for a year picked by chance), `right`, `answered`, `seconds` | `explore era` went with the ruler and its arrows: an age is only gone to through a year now | P |
+| `explore story opened` **new** | a true story starts playing, from its tile on Explore | card facts, `beats` (how many it has), `authored` (true for a story written to be played, its scenes and its question), `rank` (its place on the shelf, from 1) | which stories are opened, and from where on the shelf | P |
+| `explore story finished` **new** | a story reaches its last screen, once per opening | `pill_id`, `beats`, `authored`, `ms_to_finish` (from opening), `picked_right` (on a story written to be played: whether the outcome picked came true; absent when nothing was picked) | how many stories are told to the end, and how long one takes | P |
+| `explore story closed` **new** | a story is closed, however | `pill_id`, `beats`, `beats_seen` (how many of its beats were on screen), `finished`, `ms_in_story`, `taps_back` (taps on the left to go back), `holds` (fingers held down to stop it), `exit` (`closed` with its button, `swiped down`, `card` — the card opened in its place, `back` — the phone's back) | where readers leave a story, and how: the beats seen are counted on the phone and said once, never an event per beat | P |
 
 ### 6.6 Keeping, saying, sharing
 
@@ -463,9 +473,10 @@ day, median 22 events, 90th percentile 170, 99th about 500; `$set` 7.3 and
 A **heavy reader's day**, modelled: two cold starts and four returns (one
 from the reminder), all five cards (four graded, one hint, one card left
 mid-read for Explore and one for the background), three visits to Explore
-seeing five shelves each and opening eight cards in the viewer, a filter and
-a top-list open, two shelf games, three likes or saves and one card said,
-Profile, Journey and Saved once each, one paywall.
+seeing five shelves each and opening eight cards in the viewer, one true
+story played to its last screen, a filter and a top-list open, two shelf
+games, three likes or saves and one card said, Profile, Journey and Saved
+once each, one paywall.
 
 | Events | Before | After | Note |
 | --- | ---: | ---: | --- |
@@ -480,10 +491,11 @@ Profile, Journey and Saved once each, one paywall.
 | `card closed` | – | 10 | 8 in the viewer, 2 on Today |
 | `explore shelf seen` | – | 15 | 3 visits × 5 shelves |
 | Explore: `card read elsewhere` ×8, filter, top list, games ×2 | 12 | 12 | |
+| A true story: `explore story opened`, `finished`, `closed`, its `$screen` and `screen left`, its `card read elsewhere` | – | 6 | one story, to its last screen |
 | Keeping and saying | 4 | 4 | |
 | Paywall, reminder, other | 4 | 4 | |
 | `$set` | 7 | 3 | coalesced, written only where changed |
-| **Total** | **99** | **135** | +36% |
+| **Total** | **99** | **141** | +42% |
 
 Where the reader lives adds nothing to a day: a handful of events per reader
 in all — at most two sheets of the app's own and their answers, one system
@@ -493,7 +505,7 @@ moved.
 
 A typical reader (one cold start, one return, the five cards, one short
 visit to Explore) goes from about 37 to about 40. The free plan then holds
-about 245 heavy readers, or about 800 typical ones, every day of a month.
+about 235 heavy readers, or about 800 typical ones, every day of a month.
 
 The levers, if it ever needs to come down: `tab opened` is redundant with
 `screen left` (`from`, `left_to`) and `$screen` except for its `by` (−6);

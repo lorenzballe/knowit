@@ -1,6 +1,6 @@
 // Three things to do on Explore's shelves rather than only read: lean
 // towards a side of a debate on a slider, spot the false one of four claims,
-// and type a year for the ruler of ages to travel to.
+// and go through time to a year, typed or picked by chance.
 //
 //   flutter test test/explore_side_false_year_test.dart
 //   flutter test test/explore_side_false_year_test.dart --update-goldens --dart-define=SHOTS=true
@@ -9,6 +9,7 @@
 // played, into tool/shots/gallery/explore-b/ (gitignored), to be looked at
 // rather than kept.
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -354,7 +355,6 @@ void main() {
       final Set<String> elsewhere = {
         ...mix.month.map((p) => p.id),
         ...mix.sixty.map((p) => p.id),
-        ...?mix.myths?.pills.map((p) => p.id),
         ...?mix.numbers?.pills.map((p) => p.id),
         ...?mix.trueFalse?.pills.map((p) => p.id),
         ...?mix.practical?.pills.map((p) => p.id),
@@ -365,7 +365,6 @@ void main() {
         ...?mix.sharpest?.pills.map((p) => p.id),
         ...mix.didYouKnow.map((p) => p.id),
         ...mix.compared.map((p) => p.id),
-        ...?mix.seen?.pills.map((p) => p.id),
         ...mix.sampling.map((p) => p.id),
         ...mix.unmask.map((p) => p.id),
         for (final s in mix.series) ...s.cards.map((p) => p.id),
@@ -480,7 +479,7 @@ void main() {
 
   // ── Through time ───────────────────────────────────────────────────────
 
-  group('a year on the ruler', () {
+  group('a year through time', () {
     test('goes to the age that holds it', () {
       expect(eraOfYear(yearBc(44)), 'ancient');
       expect(eraOfYear(476), 'ancient');
@@ -590,6 +589,7 @@ void main() {
   Widget ruler({
     required List<(String, List<Pill>)> eras,
     Map<String, List<Pill>> pool = const {},
+    math.Random? chance,
   }) => MaterialApp(
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
@@ -604,6 +604,7 @@ void main() {
             startAt: 0,
             isRead: (_) => false,
             onOpen: (_, _) {},
+            chance: chance,
           ),
         ],
       ),
@@ -678,12 +679,71 @@ void main() {
       ),
     );
 
-    // The arrows go back to browsing by age, and let go of the year.
-    await tester.tap(find.byKey(const ValueKey('era-on')));
+    // Two ways in, and only two: no ruler to drag, no arrows to step.
+    expect(find.byKey(const ValueKey('era-ruler')), findsNothing);
+    expect(find.byKey(const ValueKey('era-on')), findsNothing);
+    expect(find.byKey(const ValueKey('era-back')), findsNothing);
+    expect(find.byKey(const ValueKey('era-random')), findsOneWidget);
+  });
+
+  testWidgets('chance picks a year one of the cards names, and goes there', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      ruler(
+        eras: [
+          ('ancient', ancient.take(2).toList()),
+          ('twentieth', twentieth.take(2).toList()),
+          ('recent', recent),
+        ],
+        pool: {'ancient': ancient, 'twentieth': twentieth, 'recent': recent},
+        chance: math.Random(7),
+      ),
+    );
     await tester.pumpAndSettle();
-    expect(find.text('THE LAST CENTURY'), findsOneWidget);
-    expect(find.textContaining('Nearest to'), findsNothing);
-    expect(find.text('Type a year'), findsOneWidget);
+    expect(find.text('Random'), findsOneWidget);
+
+    // Every year a card names in its own age: 44 BC, AD 393, 1912, the
+    // 1960s, 1971 and 2007. Never one no card names, so wherever chance
+    // lands, the card that named the year is the first one there.
+    final Set<int> named = {yearBc(44), 393, 1912, 1960, 1971, 2007};
+    final List<int> went = [];
+    for (var i = 0; i < 8; i++) {
+      await tester.tap(find.byKey(const ValueKey('era-random')));
+      await tester.pumpAndSettle();
+      final int year = ExplorePlay.instance[ThroughTime.yearKey]! as int;
+      expect(named, contains(year));
+      if (went.isNotEmpty) expect(year, isNot(went.last));
+      went.add(year);
+
+      final List<Pill> shown =
+          [
+            for (final p in [...ancient, ...twentieth, ...recent])
+              if (find.byKey(ValueKey('explore-${p.id}')).evaluate().isNotEmpty)
+                p,
+          ]..sort(
+            (a, b) => tester
+                .getCenter(find.byKey(ValueKey('explore-${a.id}')))
+                .dx
+                .compareTo(
+                  tester.getCenter(find.byKey(ValueKey('explore-${b.id}'))).dx,
+                ),
+          );
+      expect(yearsAway(shown.first, year, era: eraOfYear(year)), 0);
+      // The year is in the field, before Christ where it is.
+      expect(
+        find.byKey(ValueKey('era-bc-${year <= 0 ? 'on' : 'off'}')),
+        findsOneWidget,
+      );
+      final String said = year <= 0
+          ? '${1 - year} BC'
+          : year < 1000
+          ? 'AD $year'
+          : '$year';
+      expect(find.text('Nearest to $said first'), findsOneWidget);
+    }
+    // Over a few goes, chance goes to more than one age.
+    expect(went.map(eraOfYear).toSet().length, greaterThan(1));
   });
 
   testWidgets('a year that cannot be gone to is said so, kindly', (
@@ -903,6 +963,9 @@ void main() {
           findsOneWidget,
           reason: where,
         );
+        // And a year by chance, its button beside the age's name.
+        await tap(find.byKey(const ValueKey('era-random')));
+        expect(ExplorePlay.instance[ThroughTime.yearKey], isA<int>());
         expect(tester.takeException(), isNull, reason: where);
       }
     }

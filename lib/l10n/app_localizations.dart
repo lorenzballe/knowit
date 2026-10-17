@@ -2772,6 +2772,54 @@ abstract class AppLocalizations {
   /// **'Things that really happened'**
   String get themeStoriesLine;
 
+  /// No description provided for @storyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to go on · hold to pause'**
+  String get storyHint;
+
+  /// No description provided for @storyTapOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to go on'**
+  String get storyTapOn;
+
+  /// No description provided for @storyPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get storyPrevious;
+
+  /// No description provided for @storyClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close the story'**
+  String get storyClose;
+
+  /// No description provided for @storySave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get storySave;
+
+  /// No description provided for @storySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get storySaved;
+
+  /// No description provided for @storyShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get storyShare;
+
+  /// No description provided for @storyOpenCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the card'**
+  String get storyOpenCard;
+
   /// No description provided for @themeDebates.
   ///
   /// In en, this message translates to:
@@ -3942,18 +3990,6 @@ abstract class AppLocalizations {
   /// **'Since 2000'**
   String get eraRecentWhen;
 
-  /// No description provided for @eraRulerNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Now'**
-  String get eraRulerNow;
-
-  /// No description provided for @eraRulerOld.
-  ///
-  /// In en, this message translates to:
-  /// **'Antiquity'**
-  String get eraRulerOld;
-
   /// No description provided for @eraShortAncient.
   ///
   /// In en, this message translates to:
@@ -4179,13 +4215,13 @@ abstract class AppLocalizations {
   /// No description provided for @moveComparedToWhat.
   ///
   /// In en, this message translates to:
-  /// **'Compared to what?'**
+  /// **'A lot, or a little?'**
   String get moveComparedToWhat;
 
   /// No description provided for @moveComparedToWhatLine.
   ///
   /// In en, this message translates to:
-  /// **'A change means nothing without something to compare it with'**
+  /// **'“Up 30%” means nothing until you know: compared to what?'**
   String get moveComparedToWhatLine;
 
   /// No description provided for @askingTitle.
@@ -4209,20 +4245,14 @@ abstract class AppLocalizations {
   /// No description provided for @moveSampling.
   ///
   /// In en, this message translates to:
-  /// **'Who got counted?'**
+  /// **'Who\'s missing from the data?'**
   String get moveSampling;
 
   /// No description provided for @moveSamplingLine.
   ///
   /// In en, this message translates to:
-  /// **'Who ends up in a study decides what it can tell you'**
+  /// **'Every statistic counts some people and misses others. Who was left out can flip the answer'**
   String get moveSamplingLine;
-
-  /// No description provided for @mythDeckHint.
-  ///
-  /// In en, this message translates to:
-  /// **'{at} of {of} · swipe to turn it over'**
-  String mythDeckHint(int at, int of);
 
   /// No description provided for @nOfM.
   ///
@@ -4497,7 +4527,7 @@ abstract class AppLocalizations {
   /// No description provided for @throughTimeLine.
   ///
   /// In en, this message translates to:
-  /// **'From the ancient world to this year. Drag, or type a year'**
+  /// **'From the ancient world to this year. Type a year, or let chance pick'**
   String get throughTimeLine;
 
   /// Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.
@@ -4619,6 +4649,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to this year'**
   String get yearGo;
+
+  /// No description provided for @yearRandom.
+  ///
+  /// In en, this message translates to:
+  /// **'Random'**
+  String get yearRandom;
+
+  /// No description provided for @yearRandomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Goes to a year one of the cards names'**
+  String get yearRandomHint;
 
   /// No description provided for @yearNearest.
   ///
