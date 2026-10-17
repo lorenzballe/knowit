@@ -1085,6 +1085,37 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signInNotNow => '暂不';
 
   @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': '思维',
+      'science': '科学',
+      'space': '太空',
+      'psychology': '心理学',
+      'economics': '经济',
+      'technology': '科技',
+      'history': '历史',
+      'human_body': '人体',
+      'philosophy': '哲学',
+      'pop_culture': '流行文化',
+      'nature': '自然',
+      'language': '语言',
+      'weird_facts': '奇闻',
+      'sport': '体育',
+      'cinema': '电影',
+      'music': '音乐',
+      'art': '艺术',
+      'medicine': '医学',
+      'food': '美食',
+      'life': '生活',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote => '卡片目前只有英文；应用界面使用你的语言。';
+
+  @override
   String get termsLine => '继续即表示你同意我们的服务条款和隐私政策';
 
   @override

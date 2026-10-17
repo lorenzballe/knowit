@@ -426,7 +426,7 @@ class _SideCardState extends State<_SideCard> with TickerProviderStateMixin {
                       SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink),
                       const SizedBox(width: 7),
                       Text(
-                        pill.topic.toUpperCase(),
+                        context.l10n.subjectOf(pill.topic).toUpperCase(),
                         style: AppText.label(
                           size: 10,
                           spacing: 1.6,
@@ -912,7 +912,7 @@ class _TryCard extends StatelessWidget {
                             const SizedBox(width: 7),
                             Flexible(
                               child: Text(
-                                pill.topic.toUpperCase(),
+                                context.l10n.subjectOf(pill.topic).toUpperCase(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppText.label(

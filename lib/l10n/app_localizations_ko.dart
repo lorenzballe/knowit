@@ -1096,6 +1096,37 @@ class AppLocalizationsKo extends AppLocalizations {
   String get signInNotNow => '나중에';
 
   @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': '생각',
+      'science': '과학',
+      'space': '우주',
+      'psychology': '심리학',
+      'economics': '경제',
+      'technology': '기술',
+      'history': '역사',
+      'human_body': '인체',
+      'philosophy': '철학',
+      'pop_culture': '대중문화',
+      'nature': '자연',
+      'language': '언어',
+      'weird_facts': '기묘한 사실',
+      'sport': '스포츠',
+      'cinema': '영화',
+      'music': '음악',
+      'art': '예술',
+      'medicine': '의학',
+      'food': '음식',
+      'life': '삶',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote => '카드는 아직 영어로만 되어 있어요. 앱은 당신의 언어로 표시돼요.';
+
+  @override
   String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
 
   @override

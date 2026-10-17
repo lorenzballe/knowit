@@ -1121,6 +1121,38 @@ class AppLocalizationsTr extends AppLocalizations {
   String get signInNotNow => 'Şimdi değil';
 
   @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': 'Düşünme',
+      'science': 'Bilim',
+      'space': 'Uzay',
+      'psychology': 'Psikoloji',
+      'economics': 'Ekonomi',
+      'technology': 'Teknoloji',
+      'history': 'Tarih',
+      'human_body': 'İnsan bedeni',
+      'philosophy': 'Felsefe',
+      'pop_culture': 'Popüler kültür',
+      'nature': 'Doğa',
+      'language': 'Dil',
+      'weird_facts': 'Tuhaf bilgiler',
+      'sport': 'Spor',
+      'cinema': 'Sinema',
+      'music': 'Müzik',
+      'art': 'Sanat',
+      'medicine': 'Tıp',
+      'food': 'Yemek',
+      'life': 'Yaşam',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote =>
+      'Kartlar şimdilik İngilizce; uygulama senin dilini konuşuyor.';
+
+  @override
   String get termsLine =>
       'Devam ederek Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul etmiş olursun';
 

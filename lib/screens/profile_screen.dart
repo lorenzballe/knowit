@@ -324,7 +324,7 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  subject.name,
+                  context.l10n.subjectOf(subject.name),
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,

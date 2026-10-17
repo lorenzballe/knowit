@@ -258,6 +258,8 @@
   "keepStreakTitle": "連続記録を守る",
   "keepStreakLine": "サインインすれば、新しいスマホでもここから続けられます。連続記録も、保存したカードも、記録も。",
   "signInNotNow": "今はしない",
+  "subjectName": "{topic, select, thinking{思考} science{科学} space{宇宙} psychology{心理学} economics{経済} technology{テクノロジー} history{歴史} human_body{人体} philosophy{哲学} pop_culture{ポップカルチャー} nature{自然} language{言語} weird_facts{へんな事実} sport{スポーツ} cinema{映画} music{音楽} art{アート} medicine{医学} food{食} life{暮らし} other{{topic}}}",
+  "cardsInEnglishNote": "カードは今のところ英語です。アプリはあなたの言語で表示されます。",
   "termsLine": "続けると利用規約とプライバシーポリシーに同意したことになります",
   "skip": "スキップ",
   "tapToRevealLower": "タップで表示",

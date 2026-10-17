@@ -1132,6 +1132,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get signInNotNow => 'Nicht jetzt';
 
   @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': 'Denken',
+      'science': 'Wissenschaft',
+      'space': 'Weltraum',
+      'psychology': 'Psychologie',
+      'economics': 'Wirtschaft',
+      'technology': 'Technik',
+      'history': 'Geschichte',
+      'human_body': 'Körper',
+      'philosophy': 'Philosophie',
+      'pop_culture': 'Popkultur',
+      'nature': 'Natur',
+      'language': 'Sprache',
+      'weird_facts': 'Kurioses',
+      'sport': 'Sport',
+      'cinema': 'Kino',
+      'music': 'Musik',
+      'art': 'Kunst',
+      'medicine': 'Medizin',
+      'food': 'Essen',
+      'life': 'Leben',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote =>
+      'Die Karten sind vorerst auf Englisch; die App spricht deine Sprache.';
+
+  @override
   String get termsLine =>
       'Indem du fortfährst, akzeptierst du unsere Nutzungsbedingungen und Datenschutzerklärung';
 

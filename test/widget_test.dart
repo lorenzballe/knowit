@@ -5446,6 +5446,76 @@ void main() {
     });
   });
 
+  group('the intro at a larger text size', () {
+    setUpAll(_loadRealFonts);
+
+    testWidgets('on a 375 by 667 phone the words and the button stay whole '
+        'in every scene, and at twice the text the picture steps aside '
+        'rather than shrink to a dot', (tester) async {
+      tester.view.physicalSize = const Size(375, 667) * 2;
+      tester.view.devicePixelRatio = 2;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final List<String> broke = [];
+      final before = FlutterError.onError;
+      FlutterError.onError = (details) =>
+          broke.add(details.exceptionAsString().split('\n').first);
+      try {
+        for (final double scale in const [1.3, 2.0]) {
+          for (final Locale locale in const [
+            Locale('en'),
+            Locale('it'),
+            Locale('de'),
+            Locale('ru'),
+          ]) {
+            await tester.pumpWidget(
+              MaterialApp(
+                locale: locale,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                theme: buildAstutoTheme(Brightness.dark),
+                home: MediaQuery(
+                  data: MediaQueryData(
+                    size: const Size(375, 667),
+                    padding: const EdgeInsets.only(top: 20),
+                    textScaler: TextScaler.linear(scale),
+                  ),
+                  child: IntroScreen(
+                    onContinue: () {},
+                    onSignIn: (_) async => false,
+                  ),
+                ),
+              ),
+            );
+            await _settle(tester);
+            final String start = lookupAppLocalizations(locale).startReading;
+            for (int scene = 0; scene < 5; scene++) {
+              final String where = '$locale at ${scale}x, scene ${scene + 1}';
+              final Rect button = tester.getRect(
+                find.byKey(const ValueKey('intro-start')),
+              );
+              expect(button.bottom, lessThanOrEqualTo(667), reason: where);
+              expect(find.text(start), findsOneWidget, reason: where);
+              if (scale == 2.0) {
+                expect(
+                  find.byKey(const ValueKey('intro-stage')),
+                  findsNothing,
+                  reason: where,
+                );
+              }
+              // A tap anywhere above the words turns to the next scene.
+              await tester.tapAt(const Offset(187, 110));
+              await _settle(tester);
+            }
+          }
+        }
+      } finally {
+        FlutterError.onError = before;
+      }
+      expect(broke, isEmpty, reason: broke.join('\n'));
+    });
+  });
+
   group('the last scene of the intro', () {
     // Outside the test body: FontLoader needs real asynchrony.
     setUpAll(_loadRealFonts);

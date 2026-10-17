@@ -258,6 +258,8 @@
   "keepStreakTitle": "守住你的连续记录",
   "keepStreakLine": "登录后，换了新手机也能接着这里继续：你的连续记录、收藏的卡片和记录都在。",
   "signInNotNow": "暂不",
+  "subjectName": "{topic, select, thinking{思维} science{科学} space{太空} psychology{心理学} economics{经济} technology{科技} history{历史} human_body{人体} philosophy{哲学} pop_culture{流行文化} nature{自然} language{语言} weird_facts{奇闻} sport{体育} cinema{电影} music{音乐} art{艺术} medicine{医学} food{美食} life{生活} other{{topic}}}",
+  "cardsInEnglishNote": "卡片目前只有英文；应用界面使用你的语言。",
   "termsLine": "继续即表示你同意我们的服务条款和隐私政策",
   "skip": "跳过",
   "tapToRevealLower": "点按揭晓",

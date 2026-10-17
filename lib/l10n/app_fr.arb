@@ -258,6 +258,8 @@
   "keepStreakTitle": "Garde ta série",
   "keepStreakLine": "Connecte-toi, et un nouveau téléphone reprend là où celui-ci s’arrête : ta série, tes cartes gardées, ton historique.",
   "signInNotNow": "Pas maintenant",
+  "subjectName": "{topic, select, thinking{Réflexion} science{Sciences} space{Espace} psychology{Psychologie} economics{Économie} technology{Technologie} history{Histoire} human_body{Corps humain} philosophy{Philosophie} pop_culture{Culture pop} nature{Nature} language{Langage} weird_facts{Insolite} sport{Sport} cinema{Cinéma} music{Musique} art{Art} medicine{Médecine} food{Cuisine} life{Vie} other{{topic}}}",
+  "cardsInEnglishNote": "Les cartes sont en anglais pour l’instant ; l’app parle ta langue.",
   "termsLine": "En continuant, tu acceptes nos Conditions d'utilisation et notre Politique de confidentialité",
   "skip": "Passer",
   "tapToRevealLower": "touche pour révéler",

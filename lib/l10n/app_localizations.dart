@@ -1668,6 +1668,18 @@ abstract class AppLocalizations {
   /// **'Not now'**
   String get signInNotNow;
 
+  /// A subject's name, by its key. Shown on the mix, the cards, the shelves and wherever else a subject is named. Keep each short: the mix sets them on one line in half the screen's width.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, thinking{Thinking} science{Science} space{Space} psychology{Psychology} economics{Economics} technology{Technology} history{History} human_body{Human body} philosophy{Philosophy} pop_culture{Pop culture} nature{Nature} language{Language} weird_facts{Weird facts} sport{Sport} cinema{Cinema} music{Music} art{Art} medicine{Medicine} food{Food} life{Life} other{{topic}}}'**
+  String subjectName(String topic);
+
+  /// Said once in the first run, on the mix, to a reader whose phone is not in English: the cards themselves are written in English for now.
+  ///
+  /// In en, this message translates to:
+  /// **'The cards are in English for now; the app speaks your language.'**
+  String get cardsInEnglishNote;
+
   /// Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up.
   ///
   /// In en, this message translates to:

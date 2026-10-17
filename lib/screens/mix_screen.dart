@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
+import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 
 import 'package:flutter/services.dart';
@@ -239,6 +240,23 @@ class _MixHeading extends StatelessWidget {
             color: Colors.white.withValues(alpha: 0.48),
           ),
         ),
+        // Said once, where the subjects are chosen, to a reader whose phone
+        // is in another language: everything around the cards speaks it,
+        // and the cards themselves are written in English for now. Found out
+        // on the first card instead, it reads as a promise broken.
+        if (Localizations.localeOf(context).languageCode != 'en') ...[
+          const SizedBox(height: 6),
+          Text(
+            context.l10n.cardsInEnglishNote,
+            key: const ValueKey('mix-cards-in-english'),
+            style: AppText.body(
+              size: 13.5,
+              weight: FontWeight.w600,
+              height: 1.4,
+              color: Colors.white.withValues(alpha: 0.78),
+            ),
+          ),
+        ],
       ],
     );
   }
@@ -356,11 +374,14 @@ class _MixTile extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 9),
+                            // A size smaller rather than dots: the names
+                            // are the reader's language now, and some of
+                            // them are longer than half a phone allows.
                             Expanded(
-                              child: Text(
-                                subject.name,
+                              child: FitText(
+                                context.l10n.subjectOf(subject.name),
                                 maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                minSize: 10,
                                 style: AppText.body(
                                   size: 13.5,
                                   weight: FontWeight.w700,

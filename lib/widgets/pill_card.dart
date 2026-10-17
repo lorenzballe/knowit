@@ -152,7 +152,7 @@ class PillCard extends StatelessWidget {
                   SubjectIcon(subject: pill.topic, size: 16, ink: pill.ink),
                   const SizedBox(width: 8),
                   Text(
-                    pill.topic.toUpperCase(),
+                    context.l10n.subjectOf(pill.topic).toUpperCase(),
                     style: AppText.label(
                       size: 11,
                       spacing: 1.4,

@@ -258,6 +258,8 @@
   "keepStreakTitle": "Houd je reeks vast",
   "keepStreakLine": "Log in, en een nieuwe telefoon gaat verder waar deze ophoudt: je reeks, je bewaarde kaarten, je staat van dienst.",
   "signInNotNow": "Niet nu",
+  "subjectName": "{topic, select, thinking{Denken} science{Wetenschap} space{Ruimte} psychology{Psychologie} economics{Economie} technology{Technologie} history{Geschiedenis} human_body{Lichaam} philosophy{Filosofie} pop_culture{Popcultuur} nature{Natuur} language{Taal} weird_facts{Rariteiten} sport{Sport} cinema{Film} music{Muziek} art{Kunst} medicine{Geneeskunde} food{Eten} life{Leven} other{{topic}}}",
+  "cardsInEnglishNote": "De kaarten zijn voorlopig in het Engels; de app spreekt jouw taal.",
   "termsLine": "Door verder te gaan ga je akkoord met onze Servicevoorwaarden en Privacyverklaring",
   "skip": "Overslaan",
   "tapToRevealLower": "tik om te onthullen",

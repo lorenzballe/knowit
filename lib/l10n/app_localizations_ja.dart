@@ -1092,6 +1092,37 @@ class AppLocalizationsJa extends AppLocalizations {
   String get signInNotNow => '今はしない';
 
   @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': '思考',
+      'science': '科学',
+      'space': '宇宙',
+      'psychology': '心理学',
+      'economics': '経済',
+      'technology': 'テクノロジー',
+      'history': '歴史',
+      'human_body': '人体',
+      'philosophy': '哲学',
+      'pop_culture': 'ポップカルチャー',
+      'nature': '自然',
+      'language': '言語',
+      'weird_facts': 'へんな事実',
+      'sport': 'スポーツ',
+      'cinema': '映画',
+      'music': '音楽',
+      'art': 'アート',
+      'medicine': '医学',
+      'food': '食',
+      'life': '暮らし',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote => 'カードは今のところ英語です。アプリはあなたの言語で表示されます。';
+
+  @override
   String get termsLine => '続けると利用規約とプライバシーポリシーに同意したことになります';
 
   @override
