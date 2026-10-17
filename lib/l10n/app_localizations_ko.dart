@@ -1068,7 +1068,63 @@ class AppLocalizationsKo extends AppLocalizations {
   String get continueWithGoogle => 'Google로 계속';
 
   @override
-  String get continueWithoutAccount => '계정 없이 계속';
+  String get startReading => '읽기 시작하기';
+
+  @override
+  String get haveAnAccount => '이미 계정이 있나요?';
+
+  @override
+  String get signInLink => '로그인';
+
+  @override
+  String get signInWelcomeTitle => '다시 만나서 반가워요';
+
+  @override
+  String get signInWelcomeLine => '로그인하면 연속 기록, 보관한 카드, 기록이 함께 돌아와요.';
+
+  @override
+  String get keepStreakOnNewPhone => '새 휴대폰에서도 연속 기록 이어가기';
+
+  @override
+  String get keepStreakTitle => '연속 기록 지키기';
+
+  @override
+  String get keepStreakLine =>
+      '로그인하면 새 휴대폰에서도 여기서 이어갈 수 있어요. 연속 기록, 보관한 카드, 기록까지요.';
+
+  @override
+  String get signInNotNow => '나중에';
+
+  @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': '생각',
+      'science': '과학',
+      'space': '우주',
+      'psychology': '심리학',
+      'economics': '경제',
+      'technology': '기술',
+      'history': '역사',
+      'human_body': '인체',
+      'philosophy': '철학',
+      'pop_culture': '대중문화',
+      'nature': '자연',
+      'language': '언어',
+      'weird_facts': '기묘한 사실',
+      'sport': '스포츠',
+      'cinema': '영화',
+      'music': '음악',
+      'art': '예술',
+      'medicine': '의학',
+      'food': '음식',
+      'life': '삶',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote => '카드는 아직 영어로만 되어 있어요. 앱은 당신의 언어로 표시돼요.';
 
   @override
   String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';

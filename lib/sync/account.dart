@@ -16,7 +16,13 @@ import 'reader_store.dart';
 import 'subscription.dart';
 
 /// How a sign-in ended, in terms the screen can act on.
-enum SignInOutcome { signedIn, cancelled, unavailable, failed }
+///
+/// [busy] is a tap that arrived while an earlier sign-in was still waiting
+/// on its sheet. It used to come back as [cancelled], the reader's own
+/// "never mind", and say nothing: on App Review's phones one stuck Apple
+/// request turned every later tap, Apple's and Google's alike, into an
+/// instant silent "cancelled" for two minutes.
+enum SignInOutcome { signedIn, cancelled, unavailable, failed, busy }
 
 /// How deleting the account ended.
 enum DeleteOutcome { deleted, cancelled, failed }
@@ -52,6 +58,15 @@ class Account extends ChangeNotifier {
 
   bool _busy = false;
 
+  /// Which provider the sign-in in flight is with, and since when.
+  String? _busyWith;
+  DateTime? _busySince;
+
+  /// The longest a system sheet may take before the attempt is called failed
+  /// and the next tap let through. One stuck Apple request held every later
+  /// tap for 121 seconds, and in two builds for good.
+  static const Duration sheetTimeout = Duration(seconds: 120);
+
   /// The last thing that went wrong, kept for the debug section. A silent
   /// failure is the hardest kind to report.
   String? lastError;
@@ -71,6 +86,20 @@ class Account extends ChangeNotifier {
 
   /// True while a sign-in is in flight, so the button can say so.
   bool get busy => _busy;
+
+  /// The provider of the sign-in in flight — its button says "Signing in…"
+  /// — and how long it has been waiting, for the funnel.
+  String? get busyWith => _busy ? _busyWith : null;
+  Duration? get busyFor {
+    final DateTime? since = _busySince;
+    return _busy && since != null ? DateTime.now().difference(since) : null;
+  }
+
+  /// Whether a sign-in can run on this build at all: Firebase started, or a
+  /// test stands in for it. The app offers an account of its own accord
+  /// only where one can be made; asked for from Profile, a build without it
+  /// says so instead.
+  bool get canSignIn => _firebase != null;
 
   FirebaseAuth? get _firebase =>
       authOverride ?? (Cloud.ready ? FirebaseAuth.instance : null);
@@ -123,7 +152,11 @@ class Account extends ChangeNotifier {
   ///
   /// [ask] is the system sheet. Where there is none — Apple on Android, a
   /// phone the Google sheet cannot run on — it says so instead of failing,
-  /// and [build] is the browser flow Firebase runs itself.
+  /// and [build] is the flow Firebase runs itself: a browser there, and for
+  /// Apple on an iPhone the system's own sheet (IdentityOutcome.firebaseSheet).
+  ///
+  /// Neither may hang: a sheet that has not answered in [sheetTimeout] is a
+  /// failure, said as one, and the next tap is let through.
   Future<SignInOutcome> _signIn(
     AppState app,
     String label,
@@ -138,15 +171,29 @@ class Account extends ChangeNotifier {
 
     // A second tap while the first sheet is still up starts a second flow,
     // and the two cancel each other — so a reader who taps twice gets nothing
-    // at all. One at a time.
-    if (_busy) return SignInOutcome.cancelled;
+    // at all. One at a time, and said as what it is: not the reader's
+    // "never mind", but a sign-in already waiting.
+    if (_busy) return SignInOutcome.busy;
 
     lastError = null;
     _busy = true;
+    _busyWith = label;
+    _busySince = DateTime.now();
     notifyListeners();
     try {
-      final IdentityResult identity = await ask();
+      final IdentityResult identity = await ask().timeout(
+        sheetTimeout,
+        onTimeout: () => IdentityResult(
+          IdentityOutcome.failed,
+          error:
+              'no answer from the $label sheet in '
+              '${sheetTimeout.inSeconds} s',
+        ),
+      );
       switch (identity.outcome) {
+        case IdentityOutcome.firebaseSheet:
+          lastRoute = '$label · system sheet via firebase_auth';
+          break;
         case IdentityOutcome.cancelled:
           return SignInOutcome.cancelled;
         case IdentityOutcome.failed:
@@ -177,9 +224,17 @@ class Account extends ChangeNotifier {
       }
 
       final AuthCredential? held = identity.credential;
-      final UserCredential credential = held == null
-          ? await _throughTheBrowser(auth, build)
-          : await _withCredential(auth, held);
+      final UserCredential credential =
+          await (held == null
+                  ? _throughFirebase(auth, build)
+                  : _withCredential(auth, held))
+              .timeout(
+                sheetTimeout,
+                onTimeout: () => throw TimeoutException(
+                  'no answer from the $label sheet in '
+                  '${sheetTimeout.inSeconds} s',
+                ),
+              );
 
       final User? signed = credential.user;
       if (signed == null) return SignInOutcome.failed;
@@ -208,6 +263,8 @@ class Account extends ChangeNotifier {
       return SignInOutcome.failed;
     } finally {
       _busy = false;
+      _busyWith = null;
+      _busySince = null;
       notifyListeners();
     }
   }
@@ -236,9 +293,10 @@ class Account extends ChangeNotifier {
     }
   }
 
-  /// The same thing where there was no sheet to ask, and Firebase runs the
-  /// whole flow itself in a browser.
-  Future<UserCredential> _throughTheBrowser(
+  /// The same thing where Firebase runs the whole flow itself: in a browser
+  /// where there was no sheet to ask, and for Apple on an iPhone in the
+  /// system's own sheet.
+  Future<UserCredential> _throughFirebase(
     FirebaseAuth auth,
     AuthProvider Function() build,
   ) async {
@@ -525,10 +583,16 @@ class Account extends ChangeNotifier {
         lastError = identity.error ?? 'The sign-in sheet failed.';
         return false;
       case IdentityOutcome.noSheet:
-        // Where there is no sheet, Firebase's own browser flow asks instead.
-        await current.reauthenticateWithProvider(
+      case IdentityOutcome.firebaseSheet:
+        // Where there is no sheet, Firebase's own browser flow asks instead;
+        // for Apple on an iPhone, Firebase's own system sheet. Either hands
+        // back Apple's one-time code, which is what gives up the app's
+        // access to the Apple ID.
+        final UserCredential again = await current.reauthenticateWithProvider(
           apple ? AppleAuthProvider() : GoogleAuthProvider(),
         );
+        final String? code = again.additionalUserInfo?.authorizationCode;
+        if (apple && code != null) await _revokeApple(auth, code);
         return true;
       case IdentityOutcome.got:
         final AuthCredential? credential = identity.credential;
@@ -538,17 +602,21 @@ class Account extends ChangeNotifier {
         }
         await current.reauthenticateWithCredential(credential);
         final String? code = identity.authorizationCode;
-        if (apple && code != null) {
-          try {
-            await auth.revokeTokenWithAuthorizationCode(code);
-          } catch (error) {
-            // Revoking needs Apple's key on Firebase's Apple provider. The
-            // account is deleted without it, and the reader can still remove
-            // the app from their Apple ID in Settings.
-            debugPrint('Could not revoke the Apple token: $error');
-          }
-        }
+        if (apple && code != null) await _revokeApple(auth, code);
         return true;
+    }
+  }
+
+  /// Gives up the app's access to the Apple ID, as Apple asks of an account
+  /// that is deleted.
+  Future<void> _revokeApple(FirebaseAuth auth, String code) async {
+    try {
+      await auth.revokeTokenWithAuthorizationCode(code);
+    } catch (error) {
+      // Revoking needs Apple's key on Firebase's Apple provider. The account
+      // is deleted without it, and the reader can still remove the app from
+      // their Apple ID in Settings.
+      debugPrint('Could not revoke the Apple token: $error');
     }
   }
 

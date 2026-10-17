@@ -1058,7 +1058,62 @@ class AppLocalizationsZh extends AppLocalizations {
   String get continueWithGoogle => '使用 Google 继续';
 
   @override
-  String get continueWithoutAccount => '不使用账号继续';
+  String get startReading => '开始阅读';
+
+  @override
+  String get haveAnAccount => '已有账号？';
+
+  @override
+  String get signInLink => '登录';
+
+  @override
+  String get signInWelcomeTitle => '欢迎回来';
+
+  @override
+  String get signInWelcomeLine => '登录后，你的连续记录、收藏的卡片和记录都会回来。';
+
+  @override
+  String get keepStreakOnNewPhone => '换了手机，连续记录也不丢';
+
+  @override
+  String get keepStreakTitle => '守住你的连续记录';
+
+  @override
+  String get keepStreakLine => '登录后，换了新手机也能接着这里继续：你的连续记录、收藏的卡片和记录都在。';
+
+  @override
+  String get signInNotNow => '暂不';
+
+  @override
+  String subjectName(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'thinking': '思维',
+      'science': '科学',
+      'space': '太空',
+      'psychology': '心理学',
+      'economics': '经济',
+      'technology': '科技',
+      'history': '历史',
+      'human_body': '人体',
+      'philosophy': '哲学',
+      'pop_culture': '流行文化',
+      'nature': '自然',
+      'language': '语言',
+      'weird_facts': '奇闻',
+      'sport': '体育',
+      'cinema': '电影',
+      'music': '音乐',
+      'art': '艺术',
+      'medicine': '医学',
+      'food': '美食',
+      'life': '生活',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cardsInEnglishNote => '卡片目前只有英文；应用界面使用你的语言。';
 
   @override
   String get termsLine => '继续即表示你同意我们的服务条款和隐私政策';

@@ -104,7 +104,9 @@ class ComebackScreen extends StatelessWidget {
                       const SizedBox(height: 11),
                       _MissedLine(
                         color: context.p.link,
-                        text: context.l10n.stillMostKeptTopic(favourite),
+                        text: context.l10n.stillMostKeptTopic(
+                          context.l10n.subjectOf(favourite),
+                        ),
                       ),
                     ],
                     // What is actually waiting, rather than only what was

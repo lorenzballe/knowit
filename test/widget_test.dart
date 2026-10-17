@@ -393,7 +393,7 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.text('Continue with Apple'), findsOneWidget);
+    expect(find.text('Start reading'), findsOneWidget);
   });
 
   testWidgets('the first run runs the subjects, then deals', (tester) async {
@@ -401,12 +401,10 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.text('Continue with Apple'));
+    // The one button there is: no account, nothing asked, nothing to fail.
+    await tester.tap(find.text('Start reading'));
     await _settle(tester);
-    // With no Firebase in a test, sign-in reports itself unavailable and says
-    // so. Let the snackbar go before touching anything underneath it.
-    await tester.pump(const Duration(seconds: 5));
-    await _settle(tester);
+    expect(find.byType(SnackBar), findsNothing);
 
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
@@ -5025,7 +5023,7 @@ void main() {
       await _settle(tester);
 
       // The intro, not the tab shell.
-      expect(find.text('Continue with Apple'), findsOneWidget);
+      expect(find.text('Start reading'), findsOneWidget);
       expect(find.byKey(const ValueKey('tab-Today')), findsNothing);
 
       final prefs = await SharedPreferences.getInstance();
@@ -5083,8 +5081,7 @@ void main() {
             data: const MediaQueryData(padding: insets, size: Size(402, 874)),
             child: IntroScreen(
               onContinue: () {},
-              onApple: () async => false,
-              onGoogle: () async => false,
+              onSignIn: (_) async => false,
             ),
           ),
         ),
@@ -5115,7 +5112,7 @@ void main() {
 
       // And the buttons are still on screen with the home indicator taking
       // its share of the bottom.
-      final apple = tester.getRect(find.text('Continue with Apple'));
+      final apple = tester.getRect(find.text('Start reading'));
       expect(apple.bottom, lessThanOrEqualTo(screen.height - insets.bottom));
     });
 
@@ -5155,8 +5152,7 @@ void main() {
               child: IntroScreen(
                 key: ValueKey(size),
                 onContinue: () {},
-                onApple: () async => false,
-                onGoogle: () async => false,
+                onSignIn: (_) async => false,
               ),
             ),
           ),
@@ -5278,7 +5274,7 @@ void main() {
       final Rect apple = tester.getRect(
         find
             .ancestor(
-              of: find.text('Continue with Apple'),
+              of: find.text('Start reading'),
               matching: find.byType(Container),
             )
             .first,
@@ -5320,8 +5316,7 @@ void main() {
               ),
               child: IntroScreen(
                 onContinue: () {},
-                onApple: () async => false,
-                onGoogle: () async => false,
+                onSignIn: (_) async => false,
               ),
             ),
           ),
@@ -5335,7 +5330,7 @@ void main() {
         expect(band.top, greaterThanOrEqualTo(20));
         final Rect title = tester.getRect(find.text('Astute'));
         expect(title.top, greaterThanOrEqualTo(band.bottom));
-        final Rect apple = tester.getRect(find.text('Continue with Apple'));
+        final Rect apple = tester.getRect(find.text('Start reading'));
         expect(apple.bottom, lessThanOrEqualTo(small.height));
         // The drawing is fitted to the shallower band: whole, and centred.
         final Rect mark = tester.getRect(
@@ -5451,6 +5446,76 @@ void main() {
     });
   });
 
+  group('the intro at a larger text size', () {
+    setUpAll(_loadRealFonts);
+
+    testWidgets('on a 375 by 667 phone the words and the button stay whole '
+        'in every scene, and at twice the text the picture steps aside '
+        'rather than shrink to a dot', (tester) async {
+      tester.view.physicalSize = const Size(375, 667) * 2;
+      tester.view.devicePixelRatio = 2;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final List<String> broke = [];
+      final before = FlutterError.onError;
+      FlutterError.onError = (details) =>
+          broke.add(details.exceptionAsString().split('\n').first);
+      try {
+        for (final double scale in const [1.3, 2.0]) {
+          for (final Locale locale in const [
+            Locale('en'),
+            Locale('it'),
+            Locale('de'),
+            Locale('ru'),
+          ]) {
+            await tester.pumpWidget(
+              MaterialApp(
+                locale: locale,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                theme: buildAstutoTheme(Brightness.dark),
+                home: MediaQuery(
+                  data: MediaQueryData(
+                    size: const Size(375, 667),
+                    padding: const EdgeInsets.only(top: 20),
+                    textScaler: TextScaler.linear(scale),
+                  ),
+                  child: IntroScreen(
+                    onContinue: () {},
+                    onSignIn: (_) async => false,
+                  ),
+                ),
+              ),
+            );
+            await _settle(tester);
+            final String start = lookupAppLocalizations(locale).startReading;
+            for (int scene = 0; scene < 5; scene++) {
+              final String where = '$locale at ${scale}x, scene ${scene + 1}';
+              final Rect button = tester.getRect(
+                find.byKey(const ValueKey('intro-start')),
+              );
+              expect(button.bottom, lessThanOrEqualTo(667), reason: where);
+              expect(find.text(start), findsOneWidget, reason: where);
+              if (scale == 2.0) {
+                expect(
+                  find.byKey(const ValueKey('intro-stage')),
+                  findsNothing,
+                  reason: where,
+                );
+              }
+              // A tap anywhere above the words turns to the next scene.
+              await tester.tapAt(const Offset(187, 110));
+              await _settle(tester);
+            }
+          }
+        }
+      } finally {
+        FlutterError.onError = before;
+      }
+      expect(broke, isEmpty, reason: broke.join('\n'));
+    });
+  });
+
   group('the last scene of the intro', () {
     // Outside the test body: FontLoader needs real asynchrony.
     setUpAll(_loadRealFonts);
@@ -5473,8 +5538,7 @@ void main() {
             child: IntroScreen(
               key: ValueKey(size),
               onContinue: () {},
-              onApple: () async => false,
-              onGoogle: () async => false,
+              onSignIn: (_) async => false,
             ),
           ),
         ),
@@ -5518,7 +5582,7 @@ void main() {
         final Rect apple = tester.getRect(
           find
               .ancestor(
-                of: find.text('Continue with Apple'),
+                of: find.text('Start reading'),
                 matching: find.byType(Container),
               )
               .first,

@@ -115,6 +115,7 @@ class AppState extends ChangeNotifier {
   static const _kPushDeferrals = 'knowit.pushDeferrals';
   static const _kPushDeferredAfter = 'knowit.pushDeferredAfter';
   static const _kReviewAsked = 'knowit.reviewAsked';
+  static const _kAccountOffered = 'knowit.accountOffered';
   static const _kPushTokens = 'knowit.pushTokens';
   static const _kTrialEnds = 'knowit.trialEnds';
   static const _kTrialPrice = 'knowit.trialPrice';
@@ -276,6 +277,10 @@ class AppState extends ChangeNotifier {
   /// whole budget: Apple shows it at most three times a year whatever an
   /// app asks, and a reader asked twice is a reader nagged.
   bool reviewAsked = false;
+
+  /// Whether the sheet that offers an account after the first finished day
+  /// has been put. Once: Profile keeps the row for anyone who wants it later.
+  bool accountOffered = false;
 
   /// Every address the account can be reached at, this phone's included.
   /// Kept whole rather than reduced to this device, so backing up does not
@@ -445,6 +450,7 @@ class AppState extends ChangeNotifier {
     pushDeferrals = _prefs.getInt(_kPushDeferrals) ?? 0;
     pushDeferredAfter = _prefs.getString(_kPushDeferredAfter);
     reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
+    accountOffered = _prefs.getBool(_kAccountOffered) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     place = Place.fromJson(_decodeJson(_prefs.getString(_kPlace)));
     placeRemovedAt = _instantOf(_prefs.getString(_kPlaceRemovedAt));
@@ -2871,6 +2877,7 @@ class AppState extends ChangeNotifier {
     _trialWarnedFor = null;
     _trialWarnedAt = null;
     reviewAsked = false;
+    accountOffered = false;
     pushTokens = [];
     place = null;
     placeRemovedAt = null;
@@ -2947,6 +2954,20 @@ class AppState extends ChangeNotifier {
   Future<void> notedReviewAsked() async {
     reviewAsked = true;
     await _prefs.setBool(_kReviewAsked, true);
+  }
+
+  /// True when an account is worth offering of the app's own accord: a day
+  /// is behind the reader, so there is a streak a new phone would lose, and
+  /// the offer has not been made before. The intro no longer leads with a
+  /// sign-in, so this is where most readers first hear an account exists.
+  /// main.dart chooses the moment, and only where a sign-in can run.
+  bool get shouldOfferAccount => !accountOffered && completedDates.isNotEmpty;
+
+  /// Noted before the sheet rises, so a sheet that fails to show is not a
+  /// reason to put it again.
+  Future<void> notedAccountOffered() async {
+    accountOffered = true;
+    await _prefs.setBool(_kAccountOffered, true);
   }
 
   /// Records the answer to that question, whatever it was. A refusal is

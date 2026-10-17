@@ -1783,7 +1783,7 @@ class _BigRow extends StatelessWidget {
                       const SizedBox(width: 7),
                       Flexible(
                         child: Text(
-                          pill.topic.toUpperCase(),
+                          context.l10n.subjectOf(pill.topic).toUpperCase(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppText.label(
@@ -2318,7 +2318,7 @@ class _Placed extends StatelessWidget {
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(
-                      pill.topic.toUpperCase(),
+                      context.l10n.subjectOf(pill.topic).toUpperCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.label(
