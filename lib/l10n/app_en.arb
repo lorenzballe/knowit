@@ -1399,6 +1399,23 @@
  "musicSoundIsOff": "Sound is off for music cards.",
  "musicSoundTurnOn": "Turn on",
  "thatWasTheOnlyOne": "That was the only one",
+ "lastOne": "The last one",
+ "@lastOne": {
+  "description": "Under the re-read deck, on its last card: the next throw ends the deck."
+ },
+ "deckEndTitle": "That's all {word}.",
+ "@deckEndTitle": {
+  "description": "The card after the last one in a re-read deck. {word} is how many cards there were, as countWord says it: 'eight'.",
+  "placeholders": {
+   "word": {
+    "type": "String"
+   }
+  }
+ },
+ "deckEndAgain": "Start again from the first",
+ "@deckEndAgain": {
+  "description": "The quiet button on the card after the last one: back to the first card of the deck."
+ },
  "indexOfN": "{i}/{n}",
  "@indexOfN": {
   "placeholders": {

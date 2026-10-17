@@ -1432,6 +1432,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get thatWasTheOnlyOne => '只有这一张';
 
   @override
+  String get lastOne => '最后一张';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word张，就这些了。';
+  }
+
+  @override
+  String get deckEndAgain => '从第一张重新开始';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }

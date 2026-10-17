@@ -2232,6 +2232,24 @@ abstract class AppLocalizations {
   /// **'That was the only one'**
   String get thatWasTheOnlyOne;
 
+  /// Under the re-read deck, on its last card: the next throw ends the deck.
+  ///
+  /// In en, this message translates to:
+  /// **'The last one'**
+  String get lastOne;
+
+  /// The card after the last one in a re-read deck. {word} is how many cards there were, as countWord says it: 'eight'.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s all {word}.'**
+  String deckEndTitle(String word);
+
+  /// The quiet button on the card after the last one: back to the first card of the deck.
+  ///
+  /// In en, this message translates to:
+  /// **'Start again from the first'**
+  String get deckEndAgain;
+
   /// No description provided for @indexOfN.
   ///
   /// In en, this message translates to:

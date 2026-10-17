@@ -1546,6 +1546,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Это была единственная';
 
   @override
+  String get lastOne => 'Последняя';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Это все $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Начать сначала';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }

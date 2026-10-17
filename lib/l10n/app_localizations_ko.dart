@@ -1444,6 +1444,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get thatWasTheOnlyOne => '마지막 한 장이었어요';
 
   @override
+  String get lastOne => '마지막 장';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word장, 이게 전부예요.';
+  }
+
+  @override
+  String get deckEndAgain => '처음부터 다시';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }

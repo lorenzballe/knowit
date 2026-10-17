@@ -1440,6 +1440,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get thatWasTheOnlyOne => 'これが最後の1枚でした';
 
   @override
+  String get lastOne => '最後の1枚';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word枚、これで全部です。';
+  }
+
+  @override
+  String get deckEndAgain => '最初からもう一度';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }

@@ -62,9 +62,29 @@ class DeckViewerScreen extends StatefulWidget {
 class _DeckViewerScreenState extends State<DeckViewerScreen> {
   late int _index = widget.initialIndex;
 
+  /// Past the last card: the card that says the deck is done is on top.
+  bool get _atEnd => _index >= widget.deck.length;
+
   void _read(int index) {
-    if (!widget.countsAsRead || widget.deck.isEmpty) return;
+    if (!widget.countsAsRead || index >= widget.deck.length) return;
     widget.app.markReadElsewhere(widget.deck[index].id);
+  }
+
+  /// The deck moves on. It used to go round: the eighth card thrown
+  /// brought back the first, with nothing to say the deck had been read,
+  /// and a reader who missed the counter went round again thinking the
+  /// cards were new. A deck of several ends on a card that says it is
+  /// done; one card, thrown, is simply put down.
+  void _advance() {
+    _read(_index);
+    if (_atEnd || widget.deck.length == 1) {
+      // Past everything the deck holds, so the table stays empty while the
+      // screen goes, rather than the thrown card coming back to wave.
+      setState(() => _index = widget.deck.length + 1);
+      Navigator.of(context).maybePop();
+      return;
+    }
+    setState(() => _index += 1);
   }
 
   @override
@@ -78,9 +98,13 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   /// Which face is showing now lives inside the deck, so the line under it
   /// no longer tries to say — it names the gesture the card does not already
   /// carry on its own face.
-  String get _hint => widget.deck.length > 1
-      ? context.l10n.swipeForTheNextOne
-      : context.l10n.thatWasTheOnlyOne;
+  String get _hint => _atEnd
+      ? ''
+      : widget.deck.length == 1
+      ? context.l10n.thatWasTheOnlyOne
+      : _index == widget.deck.length - 1
+      ? context.l10n.lastOne
+      : context.l10n.swipeForTheNextOne;
 
   @override
   Widget build(BuildContext context) {
@@ -92,27 +116,36 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(18, 6, 18, 0),
+                padding: const EdgeInsets.fromLTRB(15, 3, 15, 0),
                 child: Row(
                   children: [
+                    // A ring of 38, in a target a finger finds: 44.
                     Semantics(
                       button: true,
-                      label: 'Close',
+                      label: MaterialLocalizations.of(
+                        context,
+                      ).closeButtonTooltip,
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () => Navigator.of(context).pop(),
-                        child: Container(
-                          width: 38,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: context.p.line),
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.close_rounded,
-                            size: 18,
-                            color: context.p.ink,
+                        child: SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: Center(
+                            child: Container(
+                              width: 38,
+                              height: 38,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: context.p.line),
+                              ),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.close_rounded,
+                                size: 18,
+                                color: context.p.ink,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -130,9 +163,9 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 38,
+                      width: 44,
                       child: Text(
-                        '${_index + 1}/${widget.deck.length}',
+                        _atEnd ? '' : '${_index + 1}/${widget.deck.length}',
                         textAlign: TextAlign.right,
                         style: AppText.label(
                           size: 11.5,
@@ -165,12 +198,15 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                         widget.app.cardClosed(stint, where: widget.source),
                     readBefore: (id) => widget.app.seenIds.contains(id),
                     home: widget.app.place,
-                    onAdvance: () {
-                      _read(_index);
-                      setState(
-                        () => _index = (_index + 1) % widget.deck.length,
-                      );
-                    },
+                    onAdvance: _advance,
+                    trailing: widget.deck.length > 1
+                        ? DeckEnd(
+                            key: const ValueKey('deck-end'),
+                            deck: widget.deck,
+                            onClose: () => Navigator.of(context).maybePop(),
+                            onAgain: () => setState(() => _index = 0),
+                          )
+                        : null,
                     reviewIds: widget.answering
                         ? {for (final p in widget.deck) p.id}
                         : const {},
@@ -214,6 +250,92 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// The card after the last one: the deck's colours in a row, how many
+/// there were, and the two ways on — put the deck down, or go round again
+/// from the first. Thrown like any card, it puts the deck down.
+class DeckEnd extends StatelessWidget {
+  const DeckEnd({
+    super.key,
+    required this.deck,
+    required this.onClose,
+    required this.onAgain,
+  });
+
+  final List<Pill> deck;
+  final VoidCallback onClose;
+  final VoidCallback onAgain;
+
+  @override
+  Widget build(BuildContext context) {
+    final Palette p = context.p;
+    final String title = context.l10n.deckEndTitle(
+      context.l10n.countWord('${deck.length}'),
+    );
+    return Container(
+      decoration: BoxDecoration(
+        color: p.surfaceRaised,
+        borderRadius: BorderRadius.circular(34),
+        border: Border.all(color: p.line),
+      ),
+      padding: const EdgeInsets.fromLTRB(28, 28, 28, 22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Spacer(),
+          // The deck, read: one mark in each card's colour.
+          ExcludeSemantics(
+            child: Wrap(
+              spacing: 5,
+              runSpacing: 5,
+              children: [
+                for (final Pill pill in deck)
+                  Container(
+                    width: 22,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: pill.color,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: p.line, width: 0),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 22),
+          Semantics(
+            header: true,
+            child: Text(
+              title,
+              style: AppText.display(
+                size: 30,
+                weight: FontWeight.w600,
+                height: 1.08,
+                spacing: -0.9,
+                color: p.ink,
+              ),
+            ),
+          ),
+          const Spacer(),
+          PrimaryButton(
+            key: const ValueKey('deck-end-close'),
+            label: MaterialLocalizations.of(context).closeButtonLabel,
+            onPressed: onClose,
+          ),
+          const SizedBox(height: 4),
+          Semantics(
+            button: true,
+            child: QuietButton(
+              key: const ValueKey('deck-end-again'),
+              label: context.l10n.deckEndAgain,
+              onPressed: onAgain,
+            ),
+          ),
+        ],
       ),
     );
   }

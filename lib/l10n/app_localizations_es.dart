@@ -1492,6 +1492,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Era la única';
 
   @override
+  String get lastOne => 'La última';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Esas eran las $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Volver a empezar';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }

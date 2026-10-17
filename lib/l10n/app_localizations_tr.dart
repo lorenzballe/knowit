@@ -1478,6 +1478,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Tek kart buydu';
 
   @override
+  String get lastOne => 'Sonuncusu';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Hepsi bu kadar: $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Baştan başla';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
