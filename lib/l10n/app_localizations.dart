@@ -624,11 +624,11 @@ abstract class AppLocalizations {
   /// **'Delete your account?'**
   String get deleteAccountQuestion;
 
-  /// Body of that confirmation: what is deleted, that it cannot be undone, and that the App Store subscription is not cancelled by it.
+  /// The delete-account dialog. {store} is apple on an iPhone, google on Android, other elsewhere: where the subscription, which deleting does not cancel, is managed.
   ///
   /// In en, this message translates to:
-  /// **'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.'**
-  String get deleteAccountBody;
+  /// **'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: {store, select, apple{a subscription is managed in your App Store settings.} google{a subscription is managed in Google Play, under Payments & subscriptions.} other{a subscription is managed in the store you bought it from.}}'**
+  String deleteAccountBody(String store);
 
   /// The destructive button of that confirmation.
   ///
@@ -882,16 +882,16 @@ abstract class AppLocalizations {
   /// **'Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.'**
   String get howStep1Line;
 
-  /// No description provided for @howStep2Title.
+  /// How cards are written, step two: every card names its sources, and a second model reads most of them as a critic.
   ///
   /// In en, this message translates to:
-  /// **'Checked against its source'**
+  /// **'Sourced, then read by a critic'**
   String get howStep2Title;
 
-  /// No description provided for @howStep2Line.
+  /// Step two, said as it is: every card names its sources; most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed.
   ///
   /// In en, this message translates to:
-  /// **'Every card names where it comes from, and a second model reads it as a critic before it ships. What can\'t be backed up is cut.'**
+  /// **'Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.'**
   String get howStep2Line;
 
   /// No description provided for @howStep3Title.
@@ -900,10 +900,10 @@ abstract class AppLocalizations {
   /// **'Five, dealt each morning'**
   String get howStep3Title;
 
-  /// No description provided for @howStep3Line.
+  /// Step three: the day is dealt from the reader's subjects, cards they have not read, and a card they got right comes back later to see whether it stuck.
   ///
   /// In en, this message translates to:
-  /// **'From the subjects you picked, and never one you have already read.'**
+  /// **'From the subjects you picked, cards you haven’t read yet. One you got right comes back later, to see if it stuck.'**
   String get howStep3Line;
 
   /// No description provided for @howStep4Title.
@@ -930,10 +930,10 @@ abstract class AppLocalizations {
   /// **'Tap the flag next to a card\'s source to report it.'**
   String get howReportLine;
 
-  /// No description provided for @howFoot.
+  /// The foot of How cards are written, under the way to report a card.
   ///
   /// In en, this message translates to:
-  /// **'Sources are checked again every month.'**
+  /// **'We read every report, and we’d rather fix a card than defend it.'**
   String get howFoot;
 
   /// No description provided for @signingIn.
@@ -1680,11 +1680,23 @@ abstract class AppLocalizations {
   /// **'The cards are in English for now; the app speaks your language.'**
   String get cardsInEnglishNote;
 
-  /// Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up.
+  /// Under the intro's buttons. {terms} and {privacy} are termsLineTerms and termsLinePrivacy, drawn as links to the terms and the privacy policy; write them in the case and form this sentence needs.
   ///
   /// In en, this message translates to:
-  /// **'By continuing you agree to our Terms of Service & Privacy Policy'**
-  String get termsLine;
+  /// **'By continuing you agree to our {terms} and {privacy}'**
+  String termsLine(String terms, String privacy);
+
+  /// The link to the terms inside termsLine, in the form that sentence needs.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get termsLineTerms;
+
+  /// The link to the privacy policy inside termsLine, in the form that sentence needs.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get termsLinePrivacy;
 
   /// No description provided for @skip.
   ///
@@ -1799,12 +1811,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subscribe for {price}{suffix}'**
   String subscribeFor(String price, String suffix);
-
-  /// No description provided for @chargedTodayCancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Charged today · cancel any time'**
-  String get chargedTodayCancel;
 
   /// No description provided for @paywallRecordTitle.
   ///
@@ -1944,17 +1950,77 @@ abstract class AppLocalizations {
   /// **'Day {day} · we remind you'**
   String trialReminder(int day);
 
-  /// Last step of the trial timeline: the day, counted from today, the plan is first charged. {price} is the store's price; {plan} is 'year' or 'month'.
+  /// The last step of the free trial under the paywall's button: the day the plan is charged, at the store's price, and that it renews automatically.
   ///
   /// In en, this message translates to:
-  /// **'Day {day} · {price} {plan, select, year{for a year} other{a month}}, unless you cancel'**
+  /// **'Day {day} · {price} {plan, select, year{a year} other{a month}}, renewing automatically until you cancel'**
   String trialCharge(int day, String price, String plan);
 
-  /// No description provided for @trialStartedNoPayment.
+  /// Under the paywall's button, for a plan with no free days: what is charged today, and that it renews automatically.
   ///
   /// In en, this message translates to:
-  /// **'Trial started. No payment is connected in this build.'**
-  String get trialStartedNoPayment;
+  /// **'{price}{suffix} charged today, renewing automatically until you cancel'**
+  String chargedTodayRenews(String price, String suffix);
+
+  /// Under the paywall's terms: where the plan is cancelled, and by when. {where} is cancelWhereIos or cancelWhereAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel any time in {where}, at least 24 hours before it renews.'**
+  String cancelHow(String where);
+
+  /// Where a subscription is cancelled on an iPhone, as the Settings app names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings › your name › Subscriptions'**
+  String get cancelWhereIos;
+
+  /// Where a subscription is cancelled on Android, as the Play Store names it.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play › Payments & subscriptions › Subscriptions'**
+  String get cancelWhereAndroid;
+
+  /// On the paywall while the store is asked for its prices. apple is the App Store; other is Google Play.
+  ///
+  /// In en, this message translates to:
+  /// **'{store, select, apple{Asking the App Store for the prices…} other{Asking Google Play for the prices…}}'**
+  String storeAsking(String store);
+
+  /// On the paywall when the store did not answer, in place of the plans; and after a restore that could not reach it.
+  ///
+  /// In en, this message translates to:
+  /// **'{store, select, apple{Couldn’t reach the App Store} other{Couldn’t reach Google Play}}'**
+  String storeUnreachable(String store);
+
+  /// Under storeUnreachable on the paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'The prices and the free trial come from the store. Check your connection and try again.'**
+  String get storeUnreachableLine;
+
+  /// The button that asks the store again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// After a purchase that waits on someone's approval (Ask to Buy, a bank): not a failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval. Astute+ opens as soon as the payment goes through.'**
+  String get purchasePending;
+
+  /// The paywall's button while a purchase is under way.
+  ///
+  /// In en, this message translates to:
+  /// **'One moment…'**
+  String get oneMoment;
+
+  /// What a screen reader says for the cross that closes the paywall.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeLabel;
 
   /// No description provided for @thatDidNotGoThrough.
   ///
@@ -2039,12 +2105,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel any time'**
   String get cancelAnyTime;
-
-  /// No description provided for @cancelAnyTimeNoPayment.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel any time · No payment is taken in this build'**
-  String get cancelAnyTimeNoPayment;
 
   /// No description provided for @restorePurchases.
   ///
@@ -2592,6 +2652,36 @@ abstract class AppLocalizations {
   /// **'Nothing more is measured.'**
   String get usageOff;
 
+  /// The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?
+  ///
+  /// In en, this message translates to:
+  /// **'Help make Astute better?'**
+  String get consentTitle;
+
+  /// Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Share how you use the app — never your name, your email or what you write.'**
+  String get consentLine;
+
+  /// The answer that keeps measurement off. Exactly as prominent as consentYes, side by side.
+  ///
+  /// In en, this message translates to:
+  /// **'No, thanks'**
+  String get consentNo;
+
+  /// The answer that turns measurement on. Exactly as prominent as consentNo, side by side.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, share'**
+  String get consentYes;
+
+  /// The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).
+  ///
+  /// In en, this message translates to:
+  /// **'You can change this any time in {profile}, under {setting}.'**
+  String consentChangeLater(String profile, String setting);
+
   /// No description provided for @yourMix.
   ///
   /// In en, this message translates to:
@@ -2687,12 +2777,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Five cards a day from your mix, at your level. Your journey. Your whole archive.'**
   String get plusCardLine;
-
-  /// No description provided for @continueFree.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue free'**
-  String get continueFree;
 
   /// No description provided for @archiveBeforeThisWeek.
   ///
@@ -3144,6 +3228,12 @@ abstract class AppLocalizations {
   /// **'Purchase complete.'**
   String get purchaseComplete;
 
+  /// The title of the screen a purchase ends on, when what began is a free trial rather than a paid plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Free trial started.'**
+  String get trialStartedTitle;
+
   /// Purchase success screen (design 129a).
   ///
   /// In en, this message translates to:
@@ -3155,6 +3245,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome to Astute+, {name}. Today’s five cards are ready.'**
   String successWelcomeNamed(String name);
+
+  /// Under the title of the screen a purchase ends on, when today's five are already read.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Astute+. Tomorrow’s five are all yours.'**
+  String get successWelcomeTomorrow;
+
+  /// successWelcomeTomorrow with the reader's first name.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Astute+, {name}. Tomorrow’s five are all yours.'**
+  String successWelcomeTomorrowNamed(String name);
 
   /// Purchase success screen (design 129a).
   ///

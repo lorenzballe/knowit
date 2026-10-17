@@ -581,10 +581,7 @@ void main() {
     testWidgets('a tap while a sheet is still waiting is busy, said as '
         'such, and not a reader\'s cancel', (tester) async {
       final _Hung sheets = _Hung();
-      final Account account = Account(
-        authOverride: _NoOne(),
-        identity: sheets,
-      );
+      final Account account = Account(authOverride: _NoOne(), identity: sheets);
       final AppState app = AppState();
 
       final Future<SignInOutcome> first = account.signInWithApple(app);

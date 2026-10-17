@@ -105,13 +105,16 @@ Future<({SignInOutcome outcome, bool noSheet})> runSignIn({
 
 /// A tap while a sign-in is still waiting on its sheet: which one is
 /// waiting, and for how long it has.
-void _ignored(Account account, {required String method, required String from}) =>
-    Analytics.capture('sign in ignored', {
-      'method': method,
-      'from': from,
-      'busy_with': account.busyWith,
-      'busy_since_ms': account.busyFor?.inMilliseconds,
-    });
+void _ignored(
+  Account account, {
+  required String method,
+  required String from,
+}) => Analytics.capture('sign in ignored', {
+  'method': method,
+  'from': from,
+  'busy_with': account.busyWith,
+  'busy_since_ms': account.busyFor?.inMilliseconds,
+});
 
 /// Offers an account: Apple and Google on one sheet, and a way past it.
 /// Returns true once the reader is signed in, and false for "Not now", a

@@ -8,13 +8,18 @@ import '../widgets/ui.dart';
 /// and how one reaches the reader.
 ///
 /// Every line here is a claim about how the app works, so each has to stay
-/// true: the cards are written ahead into a bank, not the same morning;
-/// each names its source and is read by a second model before it ships;
-/// the day deals five the reader has not read; enough readers calling one
-/// untrue takes it out of the deal until a person has checked it
-/// (functions/src/scorecard.ts); and the sources are checked again each
-/// month. It used to promise a card drafted on the morning it was read and
-/// "the twelve you picked", which stopped being so long ago.
+/// true, and says no more than is: the cards are written ahead into a bank,
+/// not the same morning; each names where its facts come from; most, not
+/// all, have been read by a second model as a critic, and what it could
+/// not confirm waits on a list for a person (tool/cards/UNVERIFIED.md),
+/// which is not empty; the day deals cards the reader has not read, and a
+/// card they got right comes back to see whether it stuck; enough readers
+/// calling one untrue takes it out of the deal until a person has checked
+/// it (functions/src/scorecard.ts). It used to promise that what could not
+/// be backed up was cut and that the sources were checked again every
+/// month, neither of which was so, and before that a card drafted on the
+/// morning it was read and "the twelve you picked". When the list is empty
+/// and a monthly check runs, the words can say so again.
 class HowScreen extends StatelessWidget {
   const HowScreen({super.key});
 

@@ -494,9 +494,26 @@ void main() {
       expect(find.byType(HowScreen), findsOneWidget);
       await _back(tester);
 
+      // The privacy policy and the terms, a tap away in the About box.
+      await tester.tap(await _row(tester, 'profile-privacy'));
+      await _settle(tester);
+      await tester.tap(await _row(tester, 'profile-terms'));
+      await _settle(tester);
+      expect(said.of('legal page opened'), [
+        {'page': 'privacy', 'from': 'profile'},
+        {'page': 'terms', 'from': 'profile'},
+      ]);
+
       await tester.tap(await _row(tester, 'profile-delete'));
       await _settle(tester);
       expect(find.text('Delete your account?'), findsOneWidget);
+      // Deleting does not cancel the subscription, and the dialog names the
+      // store where it is managed: Google Play, on this phone.
+      expect(
+        find.textContaining('managed in Google Play, under Payments'),
+        findsOneWidget,
+      );
+      expect(find.textContaining('App Store'), findsNothing);
       expect(said.of('account deletion asked'), [
         {'signed_in': false, 'is_plus': false},
       ]);
@@ -690,6 +707,8 @@ void main() {
       ('profile-plan', 'Manage subscription', 'Free plan'),
       ('profile-keep-streak', 'Keep your streak on a new phone', null),
       ('profile-how', 'How cards are written', null),
+      ('profile-privacy', 'Privacy Policy', null),
+      ('profile-terms', 'Terms of Use', null),
       ('profile-delete', 'Delete account', null),
     ];
     for (final (String key, String label, String? value) in rows) {
@@ -706,13 +725,15 @@ void main() {
       );
       expect(tester.getSize(row).height, greaterThanOrEqualTo(44), reason: key);
     }
+    // Off: nobody here has said yes to being measured, and until somebody
+    // does, the switch says so.
     final Finder usage = await _row(tester, 'profile-usage');
     expect(
       tester.getSemantics(usage),
       isSemantics(
         label: 'Usage data',
         hasToggledState: true,
-        isToggled: true,
+        isToggled: false,
         isButton: false,
         hasTapAction: true,
       ),

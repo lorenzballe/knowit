@@ -397,9 +397,14 @@
  "@deleteAccountQuestion": {
   "description": "Title of the confirmation before deleting the account."
  },
- "deleteAccountBody": "Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.",
+ "deleteAccountBody": "Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: {store, select, apple{a subscription is managed in your App Store settings.} google{a subscription is managed in Google Play, under Payments & subscriptions.} other{a subscription is managed in the store you bought it from.}}",
  "@deleteAccountBody": {
-  "description": "Body of that confirmation: what is deleted, that it cannot be undone, and that the App Store subscription is not cancelled by it."
+  "description": "The delete-account dialog. {store} is apple on an iPhone, google on Android, other elsewhere: where the subscription, which deleting does not cancel, is managed.",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
  },
  "deleteAccountConfirm": "Delete for good",
  "@deleteAccountConfirm": {
@@ -498,15 +503,27 @@
  "howIntro": "We'd rather say it up front than have you find out. Here is how a card reaches you.",
  "howStep1Title": "Written ahead, by a model",
  "howStep1Line": "Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.",
- "howStep2Title": "Checked against its source",
- "howStep2Line": "Every card names where it comes from, and a second model reads it as a critic before it ships. What can't be backed up is cut.",
+ "howStep2Title": "Sourced, then read by a critic",
+ "@howStep2Title": {
+  "description": "How cards are written, step two: every card names its sources, and a second model reads most of them as a critic."
+ },
+ "howStep2Line": "Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.",
+ "@howStep2Line": {
+  "description": "Step two, said as it is: every card names its sources; most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed."
+ },
  "howStep3Title": "Five, dealt each morning",
- "howStep3Line": "From the subjects you picked, and never one you have already read.",
+ "howStep3Line": "From the subjects you picked, cards you haven’t read yet. One you got right comes back later, to see if it stuck.",
+ "@howStep3Line": {
+  "description": "Step three: the day is dealt from the reader's subjects, cards they have not read, and a card they got right comes back later to see whether it stuck."
+ },
  "howStep4Title": "Kept honest by readers",
  "howStep4Line": "When enough readers say a card is wrong, it stops being dealt until a person has checked it.",
  "howReportTitle": "Found something wrong?",
  "howReportLine": "Tap the flag next to a card's source to report it.",
- "howFoot": "Sources are checked again every month.",
+ "howFoot": "We read every report, and we’d rather fix a card than defend it.",
+ "@howFoot": {
+  "description": "The foot of How cards are written, under the way to report a card."
+ },
  "signingIn": "Signing in…",
  "signInWithApple": "Sign in with Apple",
  "signInWithGoogle": "Sign in with Google",
@@ -1066,9 +1083,25 @@
  "@cardsInEnglishNote": {
   "description": "Said once in the first run, on the mix, to a reader whose phone is not in English: the cards themselves are written in English for now."
  },
- "termsLine": "By continuing you agree to our Terms of Service & Privacy Policy",
+ "termsLine": "By continuing you agree to our {terms} and {privacy}",
  "@termsLine": {
-  "description": "Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up."
+  "description": "Under the intro's buttons. {terms} and {privacy} are termsLineTerms and termsLinePrivacy, drawn as links to the terms and the privacy policy; write them in the case and form this sentence needs.",
+  "placeholders": {
+   "terms": {
+    "type": "String"
+   },
+   "privacy": {
+    "type": "String"
+   }
+  }
+ },
+ "termsLineTerms": "Terms of Use",
+ "@termsLineTerms": {
+  "description": "The link to the terms inside termsLine, in the form that sentence needs."
+ },
+ "termsLinePrivacy": "Privacy Policy",
+ "@termsLinePrivacy": {
+  "description": "The link to the privacy policy inside termsLine, in the form that sentence needs."
  },
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
@@ -1154,7 +1187,6 @@
    }
   }
  },
- "chargedTodayCancel": "Charged today · cancel any time",
  "paywallRecordTitle": "See how much you really know.",
  "paywallRecordMark": "really",
  "@paywallRecordMark": {
@@ -1240,9 +1272,9 @@
    }
   }
  },
- "trialCharge": "Day {day} · {price} {plan, select, year{for a year} other{a month}}, unless you cancel",
+ "trialCharge": "Day {day} · {price} {plan, select, year{a year} other{a month}}, renewing automatically until you cancel",
  "@trialCharge": {
-  "description": "Last step of the trial timeline: the day, counted from today, the plan is first charged. {price} is the store's price; {plan} is 'year' or 'month'.",
+  "description": "The last step of the free trial under the paywall's button: the day the plan is charged, at the store's price, and that it renews automatically.",
   "placeholders": {
    "day": {
     "type": "int"
@@ -1255,7 +1287,73 @@
    }
   }
  },
- "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
+ "chargedTodayRenews": "{price}{suffix} charged today, renewing automatically until you cancel",
+ "@chargedTodayRenews": {
+  "description": "Under the paywall's button, for a plan with no free days: what is charged today, and that it renews automatically.",
+  "placeholders": {
+   "price": {
+    "type": "String"
+   },
+   "suffix": {
+    "type": "String"
+   }
+  }
+ },
+ "cancelHow": "Cancel any time in {where}, at least 24 hours before it renews.",
+ "@cancelHow": {
+  "description": "Under the paywall's terms: where the plan is cancelled, and by when. {where} is cancelWhereIos or cancelWhereAndroid.",
+  "placeholders": {
+   "where": {
+    "type": "String"
+   }
+  }
+ },
+ "cancelWhereIos": "Settings › your name › Subscriptions",
+ "@cancelWhereIos": {
+  "description": "Where a subscription is cancelled on an iPhone, as the Settings app names it."
+ },
+ "cancelWhereAndroid": "Google Play › Payments & subscriptions › Subscriptions",
+ "@cancelWhereAndroid": {
+  "description": "Where a subscription is cancelled on Android, as the Play Store names it."
+ },
+ "storeAsking": "{store, select, apple{Asking the App Store for the prices…} other{Asking Google Play for the prices…}}",
+ "@storeAsking": {
+  "description": "On the paywall while the store is asked for its prices. apple is the App Store; other is Google Play.",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "storeUnreachable": "{store, select, apple{Couldn’t reach the App Store} other{Couldn’t reach Google Play}}",
+ "@storeUnreachable": {
+  "description": "On the paywall when the store did not answer, in place of the plans; and after a restore that could not reach it.",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "storeUnreachableLine": "The prices and the free trial come from the store. Check your connection and try again.",
+ "@storeUnreachableLine": {
+  "description": "Under storeUnreachable on the paywall."
+ },
+ "tryAgain": "Try again",
+ "@tryAgain": {
+  "description": "The button that asks the store again."
+ },
+ "purchasePending": "Waiting for approval. Astute+ opens as soon as the payment goes through.",
+ "@purchasePending": {
+  "description": "After a purchase that waits on someone's approval (Ask to Buy, a bank): not a failure."
+ },
+ "oneMoment": "One moment…",
+ "@oneMoment": {
+  "description": "The paywall's button while a purchase is under way."
+ },
+ "closeLabel": "Close",
+ "@closeLabel": {
+  "description": "What a screen reader says for the cross that closes the paywall."
+ },
  "thatDidNotGoThrough": "That did not go through.",
  "plusIsBack": "Astute+ is back.",
  "nothingToRestore": "Nothing to restore on this account.",
@@ -1284,7 +1382,6 @@
  "billedMonthly": "billed monthly",
  "cancelTheTrial": "Cancel the trial",
  "cancelAnyTime": "Cancel any time",
- "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
  "restorePurchases": "Restore purchases",
  "termsOfUse": "Terms of Use",
  "@termsOfUse": {
@@ -1638,6 +1735,34 @@
  "anonymousUsageLine": "How the app is used — what gets read, kept and said, and what goes wrong — so the next cards are better ones. Never your name, your email, or anything you write.",
  "usageOn": "Shared, without your name or your words.",
  "usageOff": "Nothing more is measured.",
+ "consentTitle": "Help make Astute better?",
+ "@consentTitle": {
+  "description": "The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?"
+ },
+ "consentLine": "Share how you use the app — never your name, your email or what you write.",
+ "@consentLine": {
+  "description": "Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture."
+ },
+ "consentNo": "No, thanks",
+ "@consentNo": {
+  "description": "The answer that keeps measurement off. Exactly as prominent as consentYes, side by side."
+ },
+ "consentYes": "Yes, share",
+ "@consentYes": {
+  "description": "The answer that turns measurement on. Exactly as prominent as consentNo, side by side."
+ },
+ "consentChangeLater": "You can change this any time in {profile}, under {setting}.",
+ "@consentChangeLater": {
+  "description": "The foot of the consent sheet: where the answer can be changed. {profile} is the Profile tab's name (tabProfile), {setting} the switch's (anonymousUsage).",
+  "placeholders": {
+   "profile": {
+    "type": "String"
+   },
+   "setting": {
+    "type": "String"
+   }
+  }
+ },
  "yourMix": "Your mix",
  "genresLine": "Tap a genre to skip it. Hold one and the smaller topics inside open right below.",
  "insideGenre": "Inside",
@@ -1674,7 +1799,6 @@
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
- "continueFree": "Continue free",
  "archiveBeforeThisWeek": "Before this week",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
  "weekKeptSundayFourOwn": "A week kept, and tomorrow is Sunday: four of the five are yours.",
@@ -1784,6 +1908,10 @@
  "@purchaseComplete": {
   "description": "Purchase success screen (design 129a)."
  },
+ "trialStartedTitle": "Free trial started.",
+ "@trialStartedTitle": {
+  "description": "The title of the screen a purchase ends on, when what began is a free trial rather than a paid plan."
+ },
  "successWelcome": "Welcome to Astute+. Today’s five cards are ready.",
  "@successWelcome": {
   "description": "Purchase success screen (design 129a)."
@@ -1791,6 +1919,19 @@
  "successWelcomeNamed": "Welcome to Astute+, {name}. Today’s five cards are ready.",
  "@successWelcomeNamed": {
   "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "successWelcomeTomorrow": "Welcome to Astute+. Tomorrow’s five are all yours.",
+ "@successWelcomeTomorrow": {
+  "description": "Under the title of the screen a purchase ends on, when today's five are already read."
+ },
+ "successWelcomeTomorrowNamed": "Welcome to Astute+, {name}. Tomorrow’s five are all yours.",
+ "@successWelcomeTomorrowNamed": {
+  "description": "successWelcomeTomorrow with the reader's first name.",
   "placeholders": {
    "name": {
     "type": "String"

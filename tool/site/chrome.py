@@ -3,7 +3,7 @@
     python3 tool/site/chrome.py          # rewrite them in site/*.html
     python3 tool/site/chrome.py --check  # exit 1 if any page has drifted
 
-Seven pages share the same header and footer. Kept by hand they drift — a
+Eight pages share the same header and footer. Kept by hand they drift — a
 link added to one, a line changed on another — so they are written here
 once and put onto every page between the markers the pages carry:
 <!-- @header -->…<!-- /@header --> and <!-- @footer -->…<!-- /@footer -->.
@@ -205,6 +205,7 @@ def footer(p, home):
         <div>
           <h3>Help</h3>
           <a href="/support">Support</a>
+          <a href="/delete-account">Delete your account</a>
           <a href="mailto:thebalecompany@gmail.com">Write to us</a>
         </div>
         <div>

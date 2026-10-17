@@ -466,7 +466,7 @@ body.menu-open { overflow: hidden; }
 }
 .doc p, .doc li { color: var(--cream-85); text-wrap: pretty; }
 .doc strong { color: var(--cream); font-weight: 600; }
-.doc ul { padding-left: 20px; }
+.doc ul, .doc ol { padding-left: 20px; }
 .doc li + li { margin-top: 8px; }
 .doc a { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(242, 241, 236, .4); transition: text-decoration-color .2s ease; }
 .doc a:hover { text-decoration-color: var(--cream); }

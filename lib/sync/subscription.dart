@@ -1,3 +1,5 @@
+import 'dart:async' show Timer;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -53,11 +55,36 @@ const List<String> kMonthlyPackageIds = ['\$rc_monthly', 'monthly'];
 /// The free trial the yearly plan is sold with: two weeks, set in App Store
 /// Connect and Play Console as the year's introductory offer.
 ///
-/// The app says it only where the store has not answered, or where there is
-/// no store: once it has, the days are the store's own, so a trial changed
-/// in the store is said right without a new build, and one the store has
-/// not been set to give is never promised.
+/// Said only by a debug build with no store behind it (see
+/// [Subscription.previewWithoutStore]): everywhere else the days are the
+/// store's own, so a trial changed in the store is said right without a new
+/// build, and one the store has not been set to give — or has not said it
+/// will give — is never promised.
 const int kTrialDays = 14;
+
+/// Where the store stands, as the paywall shows it.
+enum StoreAnswer {
+  /// The plans are on sale, at the store's own prices.
+  ready,
+
+  /// Still asking: at launch, or again after a try that failed.
+  asking,
+
+  /// No answer: no network, a store that is not set up, a build without a
+  /// key. The paywall says so and offers to try again; it never stands a
+  /// price written into the app in for the store's.
+  unreachable,
+}
+
+/// How long the app waits between tries when the store has not answered:
+/// soon, then less and less often, and then only when asked — the paywall
+/// opening, Try again, the app coming back to the screen.
+const List<Duration> kStoreRetries = [
+  Duration(seconds: 3),
+  Duration(seconds: 10),
+  Duration(seconds: 30),
+  Duration(minutes: 2),
+];
 
 /// The days an introductory offer lasts, from the store's own period.
 int? daysOfPeriod(PeriodUnit unit, int units) => switch (unit) {
@@ -109,12 +136,12 @@ class Subscription extends ChangeNotifier {
   IntroEligibilityStatus? _yearlyEligibility;
 
   /// How many days free the yearly plan starts with for this reader, or
-  /// null when it starts with none for them: the store's introductory offer
-  /// at no charge, unless the store says this reader has had it. Before the
-  /// store answers, and where there is none, the plan as sold.
+  /// null when it starts with none for them, or when the store has not said:
+  /// the store's introductory offer at no charge, unless the store says this
+  /// reader has had it. A debug build with no store says the plan as sold.
   int? get trialDays {
     final Package? year = yearly;
-    if (year == null) return kTrialDays;
+    if (year == null) return previewWithoutStore ? kTrialDays : null;
     final int? days = freeDaysOf(year);
     if (days == null) return null;
     return switch (_yearlyEligibility) {
@@ -230,8 +257,55 @@ class Subscription extends ChangeNotifier {
   }
 
   /// What is on sale, or null when the store has not answered — in which
-  /// case the paywall falls back to the prices written into the app.
+  /// case the paywall says so, and offers to try again.
   Offering? get offering => _offering;
+
+  /// Whether this build has a store to ask: a phone, with its store's key
+  /// built in. The web app and a fork have none.
+  bool get hasStore => _key.isNotEmpty;
+
+  /// Whether a debug build stands the plans as sold in for the store's while
+  /// the store has not answered — and lets the buy button unlock Astute+ on
+  /// the phone. It is the only way to see the paywall, and the screens
+  /// behind it, on a simulator or under a test. A release build never does:
+  /// it says the store could not be reached. A test that wants to see the
+  /// release build's paywall turns this off; nothing else sets it.
+  static bool previewWithoutStore = kDebugMode;
+
+  bool _asking = false;
+  int _tries = 0;
+  Timer? _retry;
+
+  /// Where the store stands: on sale, still being asked, or not answering.
+  StoreAnswer get answer {
+    if (yearly != null || monthly != null) return StoreAnswer.ready;
+    if (_asking || (hasStore && !_ready && _tries == 0)) {
+      return StoreAnswer.asking;
+    }
+    return StoreAnswer.unreachable;
+  }
+
+  /// Asks the store again now — the paywall opening, Try again, the app
+  /// coming back to the screen — unless it has answered or is being asked.
+  /// The tries counted since the last answer start over, so the waits
+  /// between them are short again.
+  Future<void> reloadOffering() async {
+    if (!hasStore || !_configured) return;
+    if (answer == StoreAnswer.ready || _asking) return;
+    _retry?.cancel();
+    _retry = null;
+    _tries = 0;
+    await _loadOffering();
+  }
+
+  /// Stands in for a store that is still being asked, or that did not
+  /// answer, for the tests.
+  @visibleForTesting
+  void askingForTest(bool asking) {
+    _asking = asking;
+    _tries = asking ? 0 : 1;
+    notifyListeners();
+  }
 
   /// The yearly package, however the offering happens to name it.
   Package? get yearly => _packageFrom(kYearlyPackageIds, _offering?.annual);
@@ -260,47 +334,44 @@ class Subscription extends ChangeNotifier {
         : kRevenueCatIosKey;
   }
 
-  /// Starts the SDK, tied to the account so the entitlement follows the
-  /// reader rather than the phone. Never throws: a store that will not answer
-  /// leaves a reader on the free plan, not in front of a crash.
+  bool _configured = false;
+  final Stopwatch _sinceStart = Stopwatch();
+
+  /// Starts the SDK, at launch and on its own: tied to the account when the
+  /// phone already has one, and to a customer of the store's own when it
+  /// does not yet, until [switchTo] names it. Buying used to wait for the
+  /// Firebase sign-in and the backup behind it, so a phone whose account
+  /// was slow to come up could not buy at all. Never throws: a store that
+  /// will not answer leaves a reader on the free plan, not in front of a
+  /// crash.
   Future<void> start({required String? accountId}) async {
     await _loadReviewAccess();
     if (_key.isEmpty) return;
-    final Stopwatch took = Stopwatch()..start();
+    _sinceStart.start();
     try {
       await Purchases.setLogLevel(LogLevel.warn);
       await Purchases.configure(
         PurchasesConfiguration(_key)..appUserID = accountId,
       );
+      _configured = true;
       Purchases.addCustomerInfoUpdateListener(_apply);
       _apply(await Purchases.getCustomerInfo());
-      await _loadOffering();
-      await _checkTrialEligibility();
-      // What the store put on sale, as it priced it: a plan missing here is
-      // a paywall selling with prices written into the app.
-      final StoreProduct? year = yearly?.storeProduct;
-      final StoreProduct? month = monthly?.storeProduct;
-      Analytics.capture('store answered', {
-        'ms': took.elapsedMilliseconds,
-        'offering': _offering?.identifier,
-        'yearly_product': year?.identifier,
-        'yearly_price': year?.price,
-        'yearly_trial': year?.introductoryPrice?.period,
-        'monthly_product': month?.identifier,
-        'monthly_price': month?.price,
-        'currency': year?.currencyCode ?? month?.currencyCode,
-        'is_plus': _isPlus,
-      });
     } catch (error, stack) {
       debugPrint('RevenueCat did not start: $error');
       Analytics.error(error, stack, where: 'store start');
     }
+    // What is on sale is asked for even when the customer could not be
+    // read: the two fail apart, and a paywall can sell without the other.
+    if (_configured) await _loadOffering();
   }
 
-  /// Follows the reader when they sign in and the account id changes.
+  /// Follows the reader when they sign in and the account id changes, and
+  /// once the phone's own account has come up after the store did. Nothing
+  /// to do when the store already knows the reader by that id.
   Future<void> switchTo(String? accountId) async {
-    if (_key.isEmpty || accountId == null) return;
+    if (_key.isEmpty || accountId == null || !_configured) return;
     try {
+      if (await Purchases.appUserID == accountId) return;
       final result = await Purchases.logIn(accountId);
       _apply(result.customerInfo);
     } catch (error) {
@@ -322,13 +393,53 @@ class Subscription extends ChangeNotifier {
     }
   }
 
+  /// Asks what is on sale, and says what came back. A try that finds
+  /// nothing on sale — no network, a store not set up yet — is tried again
+  /// after a wait from [kStoreRetries], longer each time, and then only
+  /// when [reloadOffering] asks.
   Future<void> _loadOffering() async {
+    _asking = true;
+    notifyListeners();
+    Object? failure;
     try {
       _offering = (await Purchases.getOfferings()).current;
-      notifyListeners();
     } catch (error, stack) {
+      failure = error;
       debugPrint('Could not read the offerings: $error');
       Analytics.error(error, stack, where: 'store offerings');
+    }
+    _asking = false;
+    _tries += 1;
+    final bool onSale = yearly != null || monthly != null;
+    if (onSale) await _checkTrialEligibility();
+    // What the store put on sale, as it priced it, each time it is asked:
+    // a plan missing here is a paywall that cannot sell.
+    final StoreProduct? year = yearly?.storeProduct;
+    final StoreProduct? month = monthly?.storeProduct;
+    Analytics.capture('store answered', {
+      'ms': _sinceStart.elapsedMilliseconds,
+      'try': _tries,
+      'offering': _offering?.identifier,
+      'yearly_product': year?.identifier,
+      'yearly_price': year?.price,
+      'yearly_trial': year?.introductoryPrice?.period,
+      'monthly_product': month?.identifier,
+      'monthly_price': month?.price,
+      'currency': year?.currencyCode ?? month?.currencyCode,
+      'is_plus': _isPlus,
+      'error': failure == null ? null : Analytics.short(failure),
+    });
+    notifyListeners();
+    if (onSale) {
+      _tries = 0;
+      return;
+    }
+    if (_tries <= kStoreRetries.length) {
+      _retry?.cancel();
+      _retry = Timer(kStoreRetries[_tries - 1], () {
+        _retry = null;
+        if (answer != StoreAnswer.ready && !_asking) _loadOffering();
+      });
     }
   }
 
@@ -459,6 +570,12 @@ class Subscription extends ChangeNotifier {
       if (code == PurchasesErrorCode.purchaseCancelledError) {
         return PurchaseOutcome.cancelled;
       }
+      // Ask to Buy, a bank that wants to approve it: not a failure, and not
+      // a purchase yet. The store says when it goes through, and the
+      // listener on the customer turns Astute+ on then.
+      if (code == PurchasesErrorCode.paymentPendingError) {
+        return PurchaseOutcome.pending;
+      }
       debugPrint('Purchase failed: $code');
       Analytics.error(
         error,
@@ -499,17 +616,32 @@ class Subscription extends ChangeNotifier {
   }
 
   /// Apple requires a way to get back what you already paid for, and a reader
-  /// on a new phone needs it before they will believe the first one.
-  Future<bool> restore() async {
+  /// on a new phone needs it before they will believe the first one. It
+  /// needs no offering, so it is there whether or not the plans have come.
+  /// A store that cannot be reached is said as that, not as "nothing to
+  /// restore".
+  Future<RestoreOutcome> restore() async {
+    if (_key.isEmpty || !_configured) return RestoreOutcome.unreachable;
     try {
       _apply(await Purchases.restorePurchases());
-      return _isPlus;
+      return _isPlus ? RestoreOutcome.restored : RestoreOutcome.nothing;
     } catch (error, stack) {
       debugPrint('Could not restore: $error');
       Analytics.error(error, stack, where: 'restore');
-      return false;
+      return RestoreOutcome.unreachable;
     }
+  }
+
+  @override
+  void dispose() {
+    _retry?.cancel();
+    super.dispose();
   }
 }
 
-enum PurchaseOutcome { bought, cancelled, failed }
+/// How a purchase ended. [pending] is a payment waiting on someone else's
+/// approval — Ask to Buy, a bank — which is neither bought nor failed.
+enum PurchaseOutcome { bought, cancelled, pending, failed }
+
+/// How a restore ended.
+enum RestoreOutcome { restored, nothing, unreachable }

@@ -405,8 +405,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deleteAccountQuestion => 'Supprimer ton compte ?';
 
   @override
-  String get deleteAccountBody =>
-      'Ton compte et sa sauvegarde sont supprimés définitivement, et cet appareil repart de zéro. Astute+ n\'est pas résilié pour autant : l\'abonnement se gère dans les réglages de l\'App Store.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'l’abonnement se gère dans les réglages de l’App Store.',
+      'google': 'l’abonnement se gère dans Google Play, sous Paiements et abonnements.',
+      'other': 'l’abonnement se gère dans la boutique où tu l’as acheté.',
+    });
+    return 'Ton compte et sa sauvegarde sont supprimés définitivement, et cet appareil repart de zéro. Astute+ n’est pas résilié pour autant : $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Supprimer définitivement';
@@ -554,18 +560,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque carte suit une seule consigne : une question qui vaut la peine, une réponse qui dit pourquoi, et un réflexe à réutiliser.';
 
   @override
-  String get howStep2Title => 'Vérifiée sur sa source';
+  String get howStep2Title => 'Sourcée, puis relue par un critique';
 
   @override
   String get howStep2Line =>
-      'Chaque carte dit d\'où elle vient, et un second modèle la relit en critique avant sa sortie. Ce qui ne tient pas est coupé.';
+      'Chaque carte dit d’où viennent ses faits, pour que tu puisses vérifier toi-même. La plupart sont relues par un second modèle qui joue le critique, et ce qu’il ne peut pas confirmer va sur une liste qu’une personne vérifie. Cette liste n’est pas encore vide.';
 
   @override
   String get howStep3Title => 'Cinq, distribuées chaque matin';
 
   @override
   String get howStep3Line =>
-      'Parmi les sujets que tu as choisis, et jamais une que tu as déjà lue.';
+      'Parmi les sujets que tu as choisis, des cartes que tu n’as pas encore lues. Une que tu as réussie revient plus tard, pour voir si elle est restée.';
 
   @override
   String get howStep4Title => 'Gardée honnête par les lecteurs';
@@ -582,7 +588,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Touche le drapeau à côté de la source d\'une carte pour la signaler.';
 
   @override
-  String get howFoot => 'Les sources sont revérifiées chaque mois.';
+  String get howFoot =>
+      'Nous lisons chaque signalement, et nous préférons corriger une carte plutôt que la défendre.';
 
   @override
   String get signingIn => 'Connexion…';
@@ -1166,8 +1173,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les cartes sont en anglais pour l’instant ; l’app parle ta langue.';
 
   @override
-  String get termsLine =>
-      'En continuant, tu acceptes nos Conditions d\'utilisation et notre Politique de confidentialité';
+  String termsLine(String terms, String privacy) {
+    return 'En continuant, tu acceptes nos $terms et notre $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Conditions d’utilisation';
+
+  @override
+  String get termsLinePrivacy => 'Politique de confidentialité';
 
   @override
   String get skip => 'Passer';
@@ -1241,9 +1255,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String subscribeFor(String price, String suffix) {
     return 'S\'abonner pour $price$suffix';
   }
-
-  @override
-  String get chargedTodayCancel => 'Payé aujourd\'hui · annule quand tu veux';
 
   @override
   String get paywallRecordTitle => 'Découvre ce que tu sais vraiment.';
@@ -1332,15 +1343,63 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String trialCharge(int day, String price, String plan) {
     String _temp0 = intl.Intl.selectLogic(plan, {
-      'year': 'pour un an',
+      'year': 'par an',
       'other': 'par mois',
     });
-    return 'Jour $day · $price $_temp0, sauf si tu annules';
+    return 'Jour $day · $price $_temp0, renouvelé automatiquement jusqu’à résiliation';
   }
 
   @override
-  String get trialStartedNoPayment =>
-      'Essai lancé. Aucun paiement n\'est branché dans cette version.';
+  String chargedTodayRenews(String price, String suffix) {
+    return '$price$suffix prélevés aujourd’hui, renouvelés automatiquement jusqu’à résiliation';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return 'Résilie à tout moment dans $where, au moins 24 heures avant le renouvellement.';
+  }
+
+  @override
+  String get cancelWhereIos => 'Réglages › ton nom › Abonnements';
+
+  @override
+  String get cancelWhereAndroid =>
+      'Google Play › Paiements et abonnements › Abonnements';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'On demande les prix à l’App Store…',
+      'other': 'On demande les prix à Google Play…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Impossible de joindre l’App Store',
+      'other': 'Impossible de joindre Google Play',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine =>
+      'Les prix et l’essai gratuit viennent du store. Vérifie ta connexion et réessaie.';
+
+  @override
+  String get tryAgain => 'Réessayer';
+
+  @override
+  String get purchasePending =>
+      'En attente d’approbation. Astute+ s’ouvrira dès que le paiement sera passé.';
+
+  @override
+  String get oneMoment => 'Un instant…';
+
+  @override
+  String get closeLabel => 'Fermer';
 
   @override
   String get thatDidNotGoThrough => 'Ça n\'est pas passé.';
@@ -1387,10 +1446,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cancelAnyTime => 'Annule quand tu veux';
-
-  @override
-  String get cancelAnyTimeNoPayment =>
-      'Annule quand tu veux · Aucun paiement dans cette version';
 
   @override
   String get restorePurchases => 'Restaurer les achats';
@@ -1759,6 +1814,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get usageOff => 'Plus rien n’est mesuré.';
 
   @override
+  String get consentTitle => 'Tu nous aides à améliorer Astute ?';
+
+  @override
+  String get consentLine =>
+      'Partage ta façon d’utiliser l’app — jamais ton nom, ton e-mail ni ce que tu écris.';
+
+  @override
+  String get consentNo => 'Non, merci';
+
+  @override
+  String get consentYes => 'Oui, partager';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return 'Tu peux changer d’avis à tout moment dans $profile, sous $setting.';
+  }
+
+  @override
   String get yourMix => 'Ton mélange';
 
   @override
@@ -1812,9 +1885,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get plusCardLine =>
       'Cinq cartes par jour de ton mix, à ton niveau. Ton voyage. Toute ton archive.';
-
-  @override
-  String get continueFree => 'Continuer gratuitement';
 
   @override
   String get archiveBeforeThisWeek => 'Avant cette semaine';
@@ -2076,12 +2146,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchaseComplete => 'Achat effectué.';
 
   @override
+  String get trialStartedTitle => 'Essai gratuit lancé.';
+
+  @override
   String get successWelcome =>
       'Bienvenue dans Astute+. Les cinq cartes du jour sont prêtes.';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Bienvenue dans Astute+, $name. Les cinq cartes du jour sont prêtes.';
+  }
+
+  @override
+  String get successWelcomeTomorrow =>
+      'Bienvenue dans Astute+. Les cinq de demain sont toutes à toi.';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Bienvenue dans Astute+, $name. Les cinq de demain sont toutes à toi.';
   }
 
   @override

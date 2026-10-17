@@ -397,8 +397,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deleteAccountQuestion => '删除你的账号？';
 
   @override
-  String get deleteAccountBody =>
-      '你的账号及其备份将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '订阅请在 App Store 设置中管理。',
+      'google': '订阅请在 Google Play 的“付款和订阅”中管理。',
+      'other': '订阅请在你购买它的商店中管理。',
+    });
+    return '你的账号及其备份将被永久删除，这台设备会从头开始。这不会取消 Astute+：$_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => '永久删除';
@@ -535,16 +541,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howStep1Line => '每张卡片都按同一要求写成：一个值得问的问题，一个讲清原因的答案，一个可以反复用的招。';
 
   @override
-  String get howStep2Title => '对照出处核查';
+  String get howStep2Title => '注明出处，再由批评者通读';
 
   @override
-  String get howStep2Line => '每张卡片都注明出处，发布前还有第二个模型以批评者的眼光通读。站不住的内容会被删掉。';
+  String get howStep2Line =>
+      '每张卡片都注明事实的出处，你可以自己核对。大多数卡片还会由扮演批评者的第二个模型通读，它无法确认的内容会进入一份由人工核查的清单。这份清单目前还没有清空。';
 
   @override
   String get howStep3Title => '每天早上发五张';
 
   @override
-  String get howStep3Line => '来自你选的主题，绝不重复你读过的卡片。';
+  String get howStep3Line => '来自你选的主题，都是你还没读过的卡片。答对的卡片过一阵会再出现，看看你是否记住了。';
 
   @override
   String get howStep4Title => '由读者守住真实';
@@ -559,7 +566,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howReportLine => '点一下卡片出处旁边的小旗即可举报。';
 
   @override
-  String get howFoot => '出处每月重新核查一次。';
+  String get howFoot => '每一条报告我们都会读。比起为一张卡片辩护，我们更愿意把它改对。';
 
   @override
   String get signingIn => '登录中…';
@@ -1116,7 +1123,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cardsInEnglishNote => '卡片目前只有英文；应用界面使用你的语言。';
 
   @override
-  String get termsLine => '继续即表示你同意我们的服务条款和隐私政策';
+  String termsLine(String terms, String privacy) {
+    return '继续即表示你同意我们的$terms和$privacy';
+  }
+
+  @override
+  String get termsLineTerms => '使用条款';
+
+  @override
+  String get termsLinePrivacy => '隐私政策';
 
   @override
   String get skip => '跳过';
@@ -1190,9 +1205,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String subscribeFor(String price, String suffix) {
     return '以 $price$suffix 订阅';
   }
-
-  @override
-  String get chargedTodayCancel => '今天扣款 · 随时可取消';
 
   @override
   String get paywallRecordTitle => '看看你真正知道多少。';
@@ -1276,11 +1288,57 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String trialCharge(int day, String price, String plan) {
     String _temp0 = intl.Intl.selectLogic(plan, {'year': '每年', 'other': '每月'});
-    return '第 $day 天 · 若不取消，$_temp0 $price';
+    return '第 $day 天 · $_temp0 $price，取消前自动续订';
   }
 
   @override
-  String get trialStartedNoPayment => '试用已开始。此版本未接入付款。';
+  String chargedTodayRenews(String price, String suffix) {
+    return '今天扣款 $price$suffix，取消前自动续订';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return '可随时在“$where”中取消，请在续订前至少 24 小时操作。';
+  }
+
+  @override
+  String get cancelWhereIos => '设置 › 你的姓名 › 订阅';
+
+  @override
+  String get cancelWhereAndroid => 'Google Play › 付款和订阅 › 订阅';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '正在向 App Store 获取价格…',
+      'other': '正在向 Google Play 获取价格…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '无法连接 App Store',
+      'other': '无法连接 Google Play',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine => '价格和免费试用都来自应用商店。请检查网络连接后重试。';
+
+  @override
+  String get tryAgain => '重试';
+
+  @override
+  String get purchasePending => '等待批准。付款完成后，Astute+ 会立即开通。';
+
+  @override
+  String get oneMoment => '请稍候…';
+
+  @override
+  String get closeLabel => '关闭';
 
   @override
   String get thatDidNotGoThrough => '没有成功。';
@@ -1327,9 +1385,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cancelAnyTime => '随时可取消';
-
-  @override
-  String get cancelAnyTimeNoPayment => '随时可取消 · 此版本不会扣款';
 
   @override
   String get restorePurchases => '恢复购买';
@@ -1689,6 +1744,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get usageOff => '不再测量任何内容。';
 
   @override
+  String get consentTitle => '帮我们把 Astute 做得更好？';
+
+  @override
+  String get consentLine => '分享你使用应用的方式——绝不包括你的名字、邮箱或你写的内容。';
+
+  @override
+  String get consentNo => '不用了，谢谢';
+
+  @override
+  String get consentYes => '好，分享';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return '你可以随时在“$profile”的“$setting”中更改。';
+  }
+
+  @override
   String get yourMix => '你的组合';
 
   @override
@@ -1739,9 +1811,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get plusCardLine => '每天五张来自你的组合、匹配你的水平。你的旅程。你的全部档案。';
-
-  @override
-  String get continueFree => '免费继续';
 
   @override
   String get archiveBeforeThisWeek => '本周之前的一切';
@@ -1983,11 +2052,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get purchaseComplete => '购买成功。';
 
   @override
+  String get trialStartedTitle => '免费试用已开始。';
+
+  @override
   String get successWelcome => '欢迎加入 Astute+。今天的五张卡片已经准备好了。';
 
   @override
   String successWelcomeNamed(String name) {
     return '欢迎加入 Astute+，$name。今天的五张卡片已经准备好了。';
+  }
+
+  @override
+  String get successWelcomeTomorrow => '欢迎加入 Astute+。明天的五张卡片都为你而选。';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return '欢迎加入 Astute+，$name。明天的五张卡片都为你而选。';
   }
 
   @override

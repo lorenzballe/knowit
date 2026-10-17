@@ -59,11 +59,21 @@ These hold at every call site, old and new.
   an email and a friend code do not. A search is described by its length and
   how many cards it found; a typed answer by whether it was right. A test
   types a sentence into a card and fails if it appears in anything sent.
-- **The reader's switch.** *Profile → Usage data* turns PostHog off, every
-  event below included, the moment it moves; it survives a sign-out. The
-  trace is not measurement: it is the personalisation the reader uses the app
-  for, and the privacy policy says so.
-- **Replays hide every word** (`maskAllTexts`): taps, scrolls and layout only.
+- **Nothing before a yes.** The intro asks whether Astute may measure how
+  the app is used, with two answers of one size (`ConsentChoice`); a reader
+  who starts without answering is asked once more, as a sheet, after their
+  first finished day (`showConsentSheet`). PostHog is not set up until the
+  answer is yes, so nothing below is captured, queued or sent before it, and
+  nothing at all after a no; what is stamped on every event and who the
+  reader is are kept on the phone and said when a yes starts it. Kept as
+  `knowit.analytics` with `knowit.analytics.asked`; an old switch turned off
+  counts as a no, an old default of on as no answer. *Profile → Usage data*
+  is the same answer, and survives a sign-out. The trace is not
+  measurement: it is the personalisation the reader uses the app for, and
+  the privacy policy says so.
+- **No replays.** Session replay is off (`kSessionReplay`, `REPLAY` at build
+  time, set by no build); a build that turns it on records only after a
+  yes, with every word and every picture hidden.
 - **Names.** Events are lowercase phrases with spaces, in the past tense
   where they can be (`card advanced`). Properties are `snake_case`. Durations
   are whole milliseconds named `ms_*`. Counts are integers; percentages are
@@ -249,8 +259,9 @@ Every PostHog event carries `$screen_name`: the screen in front when it was
 sent, which after a return from a pushed screen is the screen returned to.
 
 Screen names: `today`, `explore`, `profile` (tabs); `intro`, `onboarding
-subjects`, `onboarding genres`, `onboarding offer`, `comeback` (first run and
-come-back); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
+subjects`, `onboarding genres`, `comeback` (first run and come-back; the
+first run has had no paywall since October 2026, so `onboarding offer` is
+gone); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
 `story` (a true story played from Explore).
 
@@ -342,7 +353,9 @@ is in its card facts.
 | `intro scene changed`, `intro skipped` | the intro's scenes | `from`, `to`, `by`, `ms_on_scene`, `at_scene` | P |
 | `onboarding started`, `onboarding step done`, `onboarding step skipped`, `onboarding completed` | the first run | `step`, `next`, `ms_on_step`, `topics`, `shape`, `claimed`, `solid_start`, `hand_picked` | P, T:`onb` (completed) |
 | `genres shown`, `genres set`, `mix set`, `levels set` | the mix | `subjects_in_mix`, `genres_off`, `strands_off`, `genres_on`, `topics`, `leaned_to`, `subjects_rated` | P, T:`genres`/`mix` |
-| `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome`, `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
+| `sign in started`, `sign in ended`, `account merged` | signing in | `method`, `outcome` (`signedIn`, `cancelled`, `unavailable`, `failed`, `busy`), `from` (`intro`, `profile`, `day done`), `ms`, `no_sheet` (a cancel that came back too fast for a sheet to have shown), `error` (every outcome but `signedIn`), `route`, `account_had_backup`, `days_on_phone`, `days_in_account`, `days_after`, `saved_after`, `cards_seen_after` | P |
+| `sign in ignored` | a press while another sign-in is still waiting | `method`, `from`, `busy_with`, `busy_since_ms` | P |
+| `sign in sheet shown`, `sign in sheet closed` | the sheet with Apple and Google, by its door | `from`, `signed_in` | P |
 | `comeback shown` | the come-back screen after missed days | `days_missed`, `streak_lost` | P |
 | `rating prompt requested` | the system's rating sheet is asked for | `streak_days`, `is_plus` | P |
 
@@ -350,9 +363,9 @@ is in its card facts.
 
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
-| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `plan`, `from`, `link`, `left_by`, `ms_open`, `plan_changes`, `is_plus` | P |
-| `purchase started`, `purchase unavailable`, `purchase ended`, `purchase success shown`, `purchases restored` | buying | `source`, `plan`, `has_package`, `outcome`, `product`, `price`, `currency`, `trial`, `found` | P |
-| `store answered` | RevenueCat's offerings arrive | `ms`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus` | P |
+| `paywall shown`, `paywall plan selected`, `paywall link opened`, `paywall closed` | the paywall, by the door that opened it (`sixth card`, `journey`, `archive`, `see the plans`, `manage plan`, the locked features' own; no longer `onboarding`) | `source`, `variant`, `has_number`, `plan_shown`, `store_answered`, `store` (`ready`, `asking`, `unreachable`), `plan`, `from`, `link`, `left_by` (`close`, `back`, `bought`, `pending`, `review access`, `unlocked without a store` in a debug build), `ms_open`, `plan_changes`, `is_plus` | P |
+| `purchase started`, `purchase ended`, `purchase success shown`, `purchases restored` | buying | `source`, `plan`, `has_package`, `outcome` (`bought`, `cancelled`, `pending`, `failed`; for a restore `restored`, `nothing`, `unreachable`), `product`, `price`, `currency`, `trial`, `found` | P |
+| `store answered` | each time RevenueCat is asked for the offerings: at launch, then after 3 s, 10 s, 30 s and 2 min while nothing is on sale, on the paywall opening, on Try again and on a return to the app | `ms`, `try`, `offering`, `yearly_product`, `yearly_price`, `yearly_trial`, `monthly_product`, `monthly_price`, `currency`, `is_plus`, `error` | P |
 | `entitlement read`, `entitlement changed` | the subscription as the store holds it, at launch and on every change | `active`, `product`, `period_type`, `will_renew`, `store`, `sandbox`, `expires`, `unsubscribed`, `billing_issue` | P |
 | `trial started`, `plan changed` | the app's own plan | `is_plus` | P, T:`plan` (changed) |
 | `manage subscription opened` | the store's management page | `is_plus`, `from`, `days_left` | P |
@@ -375,6 +388,8 @@ is in its card facts.
 | `theme set` | | `theme` | P |
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
+| `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |
+| `legal page opened` | the privacy policy or the terms, from the intro's small print or Profile's About box (the paywall's own links send `paywall link opened`) | `page` (`privacy`, `terms`), `from` (`intro`, `profile`) | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |
 
@@ -387,7 +402,7 @@ the `friends_count` on the profile. Readers profiled before keep the last
 
 `$exception` for every uncaught error and for the caught ones
 (`Analytics.error`, with `where`); `$identify` at launch and sign-in; `$set`
-for the profile (§4); `$screen` (§6.2). Session replay is on, masked.
+for the profile (§4); `$screen` (§6.2). Session replay is off.
 
 ### 6.12 Where you live
 

@@ -14,6 +14,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/reader_profile.dart';
+import 'package:astuto/debug_flags.dart';
 import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/legal.dart';
 import 'package:astuto/main.dart';
@@ -114,13 +115,6 @@ Future<void> _tapJourneyButton(WidgetTester tester) async {
   await tester.scrollUntilVisible(button, 200, scrollable: _profileList);
   await _settle(tester);
   await tester.tap(button);
-  await _settle(tester);
-}
-
-/// Walks past the offer the onboarding ends on.
-Future<void> _continueFree(WidgetTester tester) async {
-  expect(find.byType(PaywallScreen), findsOneWidget);
-  await tester.tap(find.text('Continue free'));
   await _settle(tester);
 }
 
@@ -429,8 +423,9 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four, and last: the offer, with the way past it written under it.
-    await _continueFree(tester);
+    // And then the first day, straight away: no offer and no question
+    // between the genres and the first card.
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
 
     // And the answers are kept, not just used once.
@@ -2026,8 +2021,8 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is the intro and the mix, the offer once, and '
-      'then the cards', (tester) async {
+  testWidgets('the onboarding is the intro, the mix and the genres, and then '
+      'the cards', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2046,17 +2041,16 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four: the offer, once, with the free trial first and the way past
-    // it under it — and the cards start straight after, because there is
-    // nothing else to ask.
-    expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
-    await _continueFree(tester);
+    // And the cards, straight after: nothing is sold to a reader who has
+    // not seen a card yet, and nothing else is asked.
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.textContaining('days free'), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
 
-  testWidgets('setting the genres ends on the offer too', (tester) async {
+  testWidgets('setting the genres ends on the first day too', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2065,16 +2059,18 @@ void main() {
     await tester.tap(find.text('Next'));
     await _settle(tester);
     expect(find.text('Your mix'), findsOneWidget);
-    // Answered rather than walked past: the same road, to the offer and
-    // then the cards.
+    // Answered rather than walked past: the same road, to the cards.
     await tester.tap(find.textContaining('genres on'));
     await _settle(tester);
-    await _continueFree(tester);
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
 
-  testWidgets('skipping the mix goes straight to the first day, with no '
-      'offer', (tester) async {
+  testWidgets('skipping the mix goes straight to the first day', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -2083,8 +2079,9 @@ void main() {
     // The mix's own Skip, in its heading's row.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
-    // A reader who has said nothing and seen no card is not sold anything
-    // yet: the first day, straight away.
+    // Past the genres too, which narrow a mix nobody set: the first day,
+    // straight away.
+    expect(find.text('Your mix'), findsNothing);
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
     // And the first run is not asked again.
@@ -2136,28 +2133,34 @@ void main() {
 
     // Yearly leads and is preselected, so the call to action opens on it:
     // the year starts with two weeks free, and the days under the button
-    // say nothing is charged today and when that changes.
+    // say nothing is charged today, when that changes, and that it renews
+    // until it is cancelled. A debug build with no store shows the plans
+    // as sold; a store build shows only the store's (paywall_doors_test).
     expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
     expect(find.text('Today · all of Astute+, free'), findsOneWidget);
     expect(
-      find.text('Day 14 · €29,99 for a year, unless you cancel'),
+      find.text(
+        'Day 14 · €29,99 a year, renewing automatically until you cancel',
+      ),
       findsOneWidget,
     );
 
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 37%'), findsOneWidget);
 
-    // The month has no free week, so it does not promise one. With no store
-    // behind this build nothing is charged at all, and the line says that
-    // rather than "charged today".
+    // The month has no free week, so it does not promise one: it is
+    // charged today, and renews.
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
     expect(find.textContaining('Try 14 days free'), findsNothing);
     expect(
-      find.text('Cancel any time · No payment is taken in this build'),
+      find.text(
+        '€3,99/mo charged today, renewing automatically until you cancel',
+      ),
       findsOneWidget,
     );
+    expect(find.textContaining('No payment is taken'), findsNothing);
   });
 
   testWidgets('the paywall links the terms and the privacy policy', (
@@ -2171,14 +2174,19 @@ void main() {
     await _settle(tester);
 
     // Apple refuses a subscription without both beside it (3.1.2): the
-    // terms of use and the privacy policy, as links that open.
+    // terms of use and the privacy policy, as links that open — Apple's
+    // licence on an iPhone, the site's own terms everywhere else.
     expect(find.text('Terms of Use'), findsOneWidget);
     expect(find.text('Privacy Policy'), findsOneWidget);
-    expect(kTermsUrl, startsWith('https://www.apple.com/legal/'));
+    expect(
+      termsUrlFor(TargetPlatform.iOS),
+      startsWith('https://www.apple.com/legal/'),
+    );
+    expect(termsUrlFor(TargetPlatform.android), kSiteTermsUrl);
     expect(kPrivacyUrl, 'https://astutetheapp.com/privacy');
-    // Restoring means something only with a store behind the build, and
-    // this one has none.
-    expect(find.text('Restore purchases'), findsNothing);
+    // And the way back to a plan already paid for, which needs nothing
+    // from the store's offer and so is always there.
+    expect(find.text('Restore purchases'), findsOneWidget);
     // Still one screen with nothing to scroll.
     expect(find.byType(Scrollable), findsNothing);
   });
@@ -3173,6 +3181,11 @@ void main() {
   testWidgets('the profile opens on the record, then the settings', (
     tester,
   ) async {
+    // As a TestFlight build has it, with the developer tools: no other
+    // build has the DEBUG section at all.
+    final bool tools = debugToolsOn;
+    debugToolsOn = true;
+    addTearDown(() => debugToolsOn = tools);
     SharedPreferences.setMockInitialValues({
       ..._installed(),
       'knowit.seenIds': <String>['science-4'],
@@ -4999,6 +5012,15 @@ void main() {
   });
 
   group('debug tools', () {
+    // A build made with the tools, as a TestFlight build is: no other build
+    // has them.
+    late bool before;
+    setUp(() {
+      before = debugToolsOn;
+      debugToolsOn = true;
+    });
+    tearDown(() => debugToolsOn = before);
+
     testWidgets('wiping puts the app back at the onboarding', (tester) async {
       SharedPreferences.setMockInitialValues({
         ..._installed(plus: true),
@@ -5079,10 +5101,7 @@ void main() {
           theme: buildAstutoTheme(Brightness.dark),
           home: MediaQuery(
             data: const MediaQueryData(padding: insets, size: Size(402, 874)),
-            child: IntroScreen(
-              onContinue: () {},
-              onSignIn: (_) async => false,
-            ),
+            child: IntroScreen(onContinue: () {}, onSignIn: (_) async => false),
           ),
         ),
       );
@@ -5461,51 +5480,77 @@ void main() {
       FlutterError.onError = (details) =>
           broke.add(details.exceptionAsString().split('\n').first);
       try {
-        for (final double scale in const [1.3, 2.0]) {
-          for (final Locale locale in const [
-            Locale('en'),
-            Locale('it'),
-            Locale('de'),
-            Locale('ru'),
-          ]) {
-            await tester.pumpWidget(
-              MaterialApp(
-                locale: locale,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                theme: buildAstutoTheme(Brightness.dark),
-                home: MediaQuery(
-                  data: MediaQueryData(
-                    size: const Size(375, 667),
-                    padding: const EdgeInsets.only(top: 20),
-                    textScaler: TextScaler.linear(scale),
-                  ),
-                  child: IntroScreen(
-                    onContinue: () {},
-                    onSignIn: (_) async => false,
+        // With the question about measuring on the foot, as a first launch
+        // has it, and without, as it is once answered.
+        for (final bool asking in const [false, true]) {
+          for (final double scale in const [1.3, 2.0]) {
+            for (final Locale locale in const [
+              Locale('en'),
+              Locale('it'),
+              Locale('de'),
+              Locale('ru'),
+            ]) {
+              await tester.pumpWidget(
+                MaterialApp(
+                  // A tree of its own each time, so the question is asked
+                  // afresh.
+                  key: UniqueKey(),
+                  locale: locale,
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  theme: buildAstutoTheme(Brightness.dark),
+                  home: MediaQuery(
+                    data: MediaQueryData(
+                      size: const Size(375, 667),
+                      padding: const EdgeInsets.only(top: 20),
+                      textScaler: TextScaler.linear(scale),
+                    ),
+                    child: IntroScreen(
+                      onContinue: () {},
+                      onSignIn: (_) async => false,
+                      askConsent: asking,
+                    ),
                   ),
                 ),
-              ),
-            );
-            await _settle(tester);
-            final String start = lookupAppLocalizations(locale).startReading;
-            for (int scene = 0; scene < 5; scene++) {
-              final String where = '$locale at ${scale}x, scene ${scene + 1}';
-              final Rect button = tester.getRect(
-                find.byKey(const ValueKey('intro-start')),
               );
-              expect(button.bottom, lessThanOrEqualTo(667), reason: where);
-              expect(find.text(start), findsOneWidget, reason: where);
-              if (scale == 2.0) {
-                expect(
-                  find.byKey(const ValueKey('intro-stage')),
-                  findsNothing,
-                  reason: where,
-                );
-              }
-              // A tap anywhere above the words turns to the next scene.
-              await tester.tapAt(const Offset(187, 110));
               await _settle(tester);
+              final String start = lookupAppLocalizations(locale).startReading;
+              for (int scene = 0; scene < 5; scene++) {
+                final String where =
+                    '$locale at ${scale}x, scene ${scene + 1}'
+                    '${asking ? ', asking' : ''}';
+                if (asking) {
+                  for (final String key in const [
+                    'consent-no',
+                    'consent-yes',
+                  ]) {
+                    final Rect answer = tester.getRect(
+                      find.byKey(ValueKey(key)),
+                    );
+                    expect(
+                      answer.bottom,
+                      lessThanOrEqualTo(667),
+                      reason: where,
+                    );
+                  }
+                }
+                final Rect button = tester.getRect(
+                  find.byKey(const ValueKey('intro-start')),
+                );
+                expect(button.bottom, lessThanOrEqualTo(667), reason: where);
+                expect(find.text(start), findsOneWidget, reason: where);
+                if (scale == 2.0) {
+                  expect(
+                    find.byKey(const ValueKey('intro-stage')),
+                    findsNothing,
+                    reason: where,
+                  );
+                }
+                // A tap anywhere above the words turns to the next scene.
+                await tester.tapAt(const Offset(187, 110));
+                await _settle(tester);
+              }
             }
           }
         }

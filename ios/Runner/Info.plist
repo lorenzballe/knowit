@@ -6,6 +6,26 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<!-- The thirteen languages the app speaks, so that iOS offers each in
+	     the app's own language setting and the App Store lists them, and
+	     so that the permission prompts below are read from the matching
+	     <lang>.lproj/InfoPlist.strings rather than in English. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>it</string>
+		<string>de</string>
+		<string>fr</string>
+		<string>es</string>
+		<string>pt</string>
+		<string>pl</string>
+		<string>nl</string>
+		<string>tr</string>
+		<string>ja</string>
+		<string>ko</string>
+		<string>zh-Hans</string>
+		<string>ru</string>
+	</array>
 	<key>CFBundleDisplayName</key>
 	<string>Astute</string>
 	<key>CFBundleExecutable</key>
@@ -90,6 +110,12 @@
 	     carries the same honest sentence. -->
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Astute uses your location to deal you cards about the place you live — its history, its science, its surprises. Only your city is kept, never your exact position.</string>
+	<!-- The share sheet's "Save Image", for the day, a card or the record
+	     shared as a picture (lib/utils/share_image_native.dart): adding to
+	     the photos, never reading them. Without this key iOS ends the app
+	     the moment a reader taps it. -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Astute saves the images you choose to keep — your day, a card, your record — to your photos. It never looks at your library.</string>
 	<!-- PostHog is started from Dart, in lib/analytics.dart, because the key
 	     arrives as a dart-define at build time and this file cannot read
 	     one. Without

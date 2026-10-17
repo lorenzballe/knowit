@@ -71,10 +71,7 @@ void main() {
         debugShowCheckedModeBanner: false,
         home: MediaQuery(
           data: const MediaQueryData(size: phone, padding: insets),
-          child: IntroScreen(
-            onContinue: () {},
-            onSignIn: (_) async => false,
-          ),
+          child: IntroScreen(onContinue: () {}, onSignIn: (_) async => false),
         ),
       ),
     );
@@ -282,7 +279,7 @@ void main() {
           debugShowCheckedModeBanner: false,
           home: MediaQuery(
             data: const MediaQueryData(size: mine, padding: notch),
-            child: PaywallScreen(app: app, source: 'camera', onClose: () {}),
+            child: PaywallScreen(app: app, source: 'camera'),
           ),
         ),
       );
