@@ -46,8 +46,8 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
-      '1': 'um',
-      '2': 'dois',
+      '1': 'uma',
+      '2': 'duas',
       '3': 'três',
       '4': 'quatro',
       '5': 'cinco',
@@ -63,7 +63,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String dayRead(int n, String word) {
-    return 'Dia $n · $word lidos';
+    return 'Dia $n · $word lidas';
   }
 
   @override
@@ -93,12 +93,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Os cinco de amanhã abrem em $when';
+    return 'As cinco de amanhã abrem em $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic abre os cinco de amanhã, em $when';
+    return '$topic abre as cinco de amanhã, em $when';
   }
 
   @override
@@ -814,7 +814,7 @@ class AppLocalizationsPt extends AppLocalizations {
       other: '$n dias continuam a ser',
       one: 'Um dia continua a ser',
     );
-    return '$_temp0 o teu recorde. Lê os cinco de hoje e o contador recomeça do um.';
+    return '$_temp0 o teu recorde. Lê as cinco de hoje e o contador recomeça do um.';
   }
 
   @override
@@ -848,7 +848,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get startAgainWithTodaysFive => 'Recomeçar com os cinco de hoje';
+  String get startAgainWithTodaysFive => 'Recomeçar com as cinco de hoje';
 
   @override
   String moveMyReminderTo(String time) {
@@ -1474,7 +1474,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get swipeForTheNextOne => 'Desliza para o próximo';
+  String get swipeForTheNextOne => 'Desliza para a próxima';
 
   @override
   String get musicSound => 'Som nas cartas de música';
@@ -1486,7 +1486,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get musicSoundTurnOn => 'Ligar';
 
   @override
-  String get thatWasTheOnlyOne => 'Era o único';
+  String get thatWasTheOnlyOne => 'Era a única';
 
   @override
   String indexOfN(int i, int n) {
