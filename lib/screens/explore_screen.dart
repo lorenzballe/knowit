@@ -1542,21 +1542,29 @@ class _Head extends StatelessWidget {
           key: const ValueKey('explore-search'),
           button: true,
           label: context.l10n.searchEveryCard,
+          // A 38 tile in a 44 target, its right edge on the margin.
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onOpenSearch,
-            child: Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: context.p.ink.withValues(alpha: 0.07),
-                borderRadius: BorderRadius.circular(13),
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.search_rounded,
-                size: 16,
-                color: context.p.ink.withValues(alpha: 0.6),
+            child: SizedBox(
+              width: 44,
+              height: 44,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: context.p.ink.withValues(alpha: 0.07),
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.search_rounded,
+                    size: 16,
+                    color: context.p.ink.withValues(alpha: 0.6),
+                  ),
+                ),
               ),
             ),
           ),
@@ -1614,6 +1622,7 @@ class _SubjectRow extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   height: 36,
+                  constraints: const BoxConstraints(minWidth: 44),
                   padding: const EdgeInsets.symmetric(horizontal: 13),
                   decoration: BoxDecoration(
                     color: on
@@ -1633,7 +1642,7 @@ class _SubjectRow extends StatelessWidget {
                         const SizedBox(width: 8),
                       ],
                       Text(
-                        subject?.name ?? 'All',
+                        subject?.name ?? context.l10n.all,
                         style: AppText.body(
                           size: 12.5,
                           weight: FontWeight.w600,
@@ -2097,30 +2106,38 @@ class _WindowSwitch extends StatelessWidget {
         key: ValueKey('top-${isMonth ? 'month' : 'week'}-${on ? 'on' : 'off'}'),
         button: true,
         selected: on,
+        // A 24-point word in a target 44 high: the pair is small, the
+        // place a finger lands on it is not.
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: on ? null : () => onPick(isMonth),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            height: 24,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: on
-                  ? context.p.inverse
-                  : context.p.inverse.withValues(alpha: 0),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              label,
-              style: AppText.body(
-                size: 11.5,
-                weight: FontWeight.w600,
-                height: 1,
-                color: on
-                    ? context.p.onInverse
-                    : context.p.ink.withValues(alpha: 0.55),
+          child: SizedBox(
+            height: 44,
+            child: Center(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+                height: 24,
+                constraints: const BoxConstraints(minWidth: 44),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: on
+                      ? context.p.inverse
+                      : context.p.inverse.withValues(alpha: 0),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  label,
+                  style: AppText.body(
+                    size: 11.5,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    color: on
+                        ? context.p.onInverse
+                        : context.p.ink.withValues(alpha: 0.55),
+                  ),
+                ),
               ),
             ),
           ),
@@ -2128,19 +2145,30 @@ class _WindowSwitch extends StatelessWidget {
       );
     }
 
-    return Container(
-      padding: const EdgeInsets.all(2.5),
-      decoration: BoxDecoration(
-        color: context.p.ink.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          side(context.l10n.topWeek, false),
-          side(context.l10n.topMonth, true),
-        ],
-      ),
+    // The pair's ground is drawn 29 high behind two targets 44 high.
+    return Stack(
+      children: [
+        Positioned.fill(
+          top: 7.5,
+          bottom: 7.5,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: context.p.ink.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2.5),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              side(context.l10n.topWeek, false),
+              side(context.l10n.topMonth, true),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -83,10 +83,11 @@ class PillCard extends StatelessWidget {
     final Widget card = Stack(
       children: [
         _face(context),
+        // Each control is 44 square, its mark where the 38 one put it.
         if (onSave != null)
           Positioned(
-            right: 20,
-            bottom: 18,
+            right: _CardControl.right,
+            bottom: _CardControl.bottom,
             child: Row(
               children: [
                 _CardControl(
@@ -202,7 +203,7 @@ class PillCard extends StatelessWidget {
                 ? _BackFace(
                     pill: pill,
                     given: given,
-                    cornerRoom: onSave != null ? 88 : 0,
+                    cornerRoom: onSave != null ? _CardControl.room : 0,
                   )
                 // The challenge decides the front. A new kind of challenge
                 // will not compile until it is given a face here.
@@ -1398,6 +1399,14 @@ class _CardControl extends StatelessWidget {
   final Color ink;
   final VoidCallback onTap;
 
+  /// Where the pair sits from the card's corner, and the room the line
+  /// beside it keeps clear inside the face's padding: the pair reaches 81
+  /// points into it (17 + 44 + 4 + 44, less the padding of 28).
+  static const double right = 17;
+  static const double bottom = 15;
+  static const double size = 44;
+  static const double room = 88;
+
   @override
   Widget build(BuildContext context) {
     return Semantics(
@@ -1406,8 +1415,8 @@ class _CardControl extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(9),
+        child: SizedBox.square(
+          dimension: size,
           child: Icon(icon, size: 20, color: ink.withValues(alpha: 0.62)),
         ),
       ),
