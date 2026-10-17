@@ -14,11 +14,17 @@ import '../analytics.dart';
 /// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
 ///
-/// Swipe left or tap for the next scene, swipe right for the previous, or take
-/// any of the three buttons at the foot — they all lead to the same place,
-/// because no account is created here. The copy on the next screen makes that
-/// promise explicit: an account is asked for once there is a streak worth
-/// keeping.
+/// Swipe left or tap for the next scene, swipe right for the previous. The
+/// one button at the foot is "Start reading", and it asks for nothing: no
+/// account is made here. A reader who already has one finds a quiet "Sign
+/// in" under it; everyone else is offered an account once there is a streak
+/// worth keeping, after the first finished day, and in Profile.
+///
+/// It used to lead with Apple and Google, two large white buttons over a
+/// faint "Continue without an account". The largest button is the one most
+/// people press, and while sign-in was broken in review, the first thing
+/// the app did for a new reader was fail.
+///
 /// Where the words sit, scene after scene: the same place.
 ///
 /// The copy used to be anchored by its foot, above the dots, so a title set
@@ -75,17 +81,17 @@ class IntroScreen extends StatefulWidget {
   const IntroScreen({
     super.key,
     required this.onContinue,
-    required this.onApple,
-    required this.onGoogle,
+    required this.onSignIn,
   });
 
-  /// Skip, and where every button lands once it is done.
+  /// "Start reading", Skip, and where a sign-in lands once it is done.
   final VoidCallback onContinue;
 
-  /// Sign in. Each returns false only when the reader backed out of the
-  /// provider's sheet, which should leave them exactly where they were.
-  final Future<bool> Function() onApple;
-  final Future<bool> Function() onGoogle;
+  /// Offers Apple and Google on a sheet of their own, for a reader who
+  /// already has an account. True once they are signed in; anything else —
+  /// "Not now", a sheet swiped away, a sign-in that did not work — leaves
+  /// them exactly where they were.
+  final Future<bool> Function(BuildContext context) onSignIn;
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -125,8 +131,8 @@ class _IntroScreenState extends State<IntroScreen> {
   void _prev() =>
       _go(_scene == 0 ? _sceneCount - 1 : _scene - 1, by: 'swipe back');
 
-  /// Skip, from the corner or from under the sign-in: said with the scene
-  /// it left from, and [by] which of the two.
+  /// The way on, from the corner or from "Start reading": said with the
+  /// scene it left from, and [by] which of the two.
   void _skipIntro({String by = 'corner'}) {
     Analytics.capture('intro skipped', {
       'at_scene': _scene + 1,
@@ -283,18 +289,14 @@ class _IntroScreenState extends State<IntroScreen> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: kIntroSide,
                       ),
-                      child: _SignInBlock(
-                        onApple: () async {
-                          if (await widget.onApple()) widget.onContinue();
+                      child: _StartBlock(
+                        // Where Skip goes, as the one button there is.
+                        onStart: () => _skipIntro(by: 'start reading'),
+                        onSignIn: () async {
+                          if (await widget.onSignIn(context)) {
+                            widget.onContinue();
+                          }
                         },
-                        onGoogle: () async {
-                          if (await widget.onGoogle()) widget.onContinue();
-                        },
-                        // Where Skip goes, said in words under the two that
-                        // ask for an account. It used to say "Continue with
-                        // Email", which had nothing behind it: it said so in
-                        // a snackbar and carried on without one anyway.
-                        onWithoutAccount: () => _skipIntro(by: 'no account'),
                       ),
                     ),
                   ],
@@ -543,50 +545,67 @@ class _SceneCopy extends StatelessWidget {
   }
 }
 
-class _SignInBlock extends StatelessWidget {
-  const _SignInBlock({
-    required this.onApple,
-    required this.onGoogle,
-    required this.onWithoutAccount,
-  });
+/// The foot of every scene: "Start reading", the way in for a reader who
+/// already has an account, and the terms.
+class _StartBlock extends StatelessWidget {
+  const _StartBlock({required this.onStart, required this.onSignIn});
 
-  final VoidCallback onApple;
-  final VoidCallback onGoogle;
-  final VoidCallback onWithoutAccount;
+  final VoidCallback onStart;
+  final VoidCallback onSignIn;
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Column(
       children: [
         _WhiteButton(
-          label: context.l10n.continueWithApple,
-          onTap: onApple,
-          leading: const Icon(Icons.apple, size: 21, color: Colors.black),
+          key: const ValueKey('intro-start'),
+          label: l.startReading,
+          onTap: onStart,
         ),
-        const SizedBox(height: 11),
-        _WhiteButton(
-          label: context.l10n.continueWithGoogle,
-          onTap: onGoogle,
-          leading: const _GoogleG(),
-        ),
-        const SizedBox(height: 11),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onWithoutAccount,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 13, 0, 7),
-            child: Text(
-              context.l10n.continueWithoutAccount,
-              style: AppText.body(
-                size: 16,
-                weight: FontWeight.w500,
-                color: Colors.white.withValues(alpha: 0.74),
+        const SizedBox(height: 4),
+        // Quiet, and the whole line is the target: a reader with an
+        // account looks for it, and nobody else trips on it.
+        Semantics(
+          button: true,
+          label: '${l.haveAnAccount} ${l.signInLink}',
+          excludeSemantics: true,
+          child: GestureDetector(
+            key: const ValueKey('intro-sign-in'),
+            behavior: HitTestBehavior.opaque,
+            onTap: onSignIn,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 44),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: l.haveAnAccount),
+                      const TextSpan(text: ' '),
+                      TextSpan(
+                        text: l.signInLink,
+                        style: AppText.body(
+                          size: 15,
+                          weight: FontWeight.w600,
+                          color: Colors.white.withValues(alpha: 0.92),
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                  style: AppText.body(
+                    size: 15,
+                    weight: FontWeight.w500,
+                    color: Colors.white.withValues(alpha: 0.6),
+                  ),
+                ),
               ),
             ),
           ),
         ),
         Text(
-          context.l10n.termsLine,
+          l.termsLine,
           textAlign: TextAlign.center,
           style: AppText.body(
             size: 12.5,
@@ -599,16 +618,14 @@ class _SignInBlock extends StatelessWidget {
   }
 }
 
+/// The white button the intro's foot is built on: a finger and a half
+/// high, and taller when a longer language or a larger text size needs a
+/// second line — the words wrap rather than end in dots.
 class _WhiteButton extends StatefulWidget {
-  const _WhiteButton({
-    required this.label,
-    required this.onTap,
-    required this.leading,
-  });
+  const _WhiteButton({super.key, required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;
-  final Widget leading;
 
   @override
   State<_WhiteButton> createState() => _WhiteButtonState();
@@ -619,66 +636,44 @@ class _WhiteButtonState extends State<_WhiteButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => setState(() => _down = true),
-      onTapCancel: () => setState(() => _down = false),
-      onTapUp: (_) => setState(() => _down = false),
-      onTap: widget.onTap,
-      child: AnimatedScale(
-        scale: _down ? 0.985 : 1,
-        duration: const Duration(milliseconds: 120),
-        child: AnimatedOpacity(
-          opacity: _down ? 0.86 : 1,
+    return Semantics(
+      button: true,
+      label: widget.label,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => setState(() => _down = true),
+        onTapCancel: () => setState(() => _down = false),
+        onTapUp: (_) => setState(() => _down = false),
+        onTap: widget.onTap,
+        child: AnimatedScale(
+          scale: _down ? 0.985 : 1,
           duration: const Duration(milliseconds: 120),
-          child: Container(
-            height: 57,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                widget.leading,
-                const SizedBox(width: 9),
-                // Flexible, so a longer label in another language shortens
-                // rather than running off the end of the button.
-                Flexible(
-                  child: Text(
-                    widget.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 17,
-                      weight: FontWeight.w600,
-                      spacing: -0.2,
-                      color: Colors.black,
-                    ),
-                  ),
+          child: AnimatedOpacity(
+            opacity: _down ? 0.86 : 1,
+            duration: const Duration(milliseconds: 120),
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 57),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                widget.label,
+                textAlign: TextAlign.center,
+                style: AppText.body(
+                  size: 17,
+                  weight: FontWeight.w600,
+                  spacing: -0.2,
+                  color: Colors.black,
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-/// The Google mark, drawn rather than shipped as an asset.
-class _GoogleG extends StatelessWidget {
-  const _GoogleG();
-
-  @override
-  Widget build(BuildContext context) {
-    // Google's own mark, keyed off its plate and scaled down — not a drawing
-    // of it. Four arcs and a bar never quite become a G at nineteen pixels.
-    return Image.asset(
-      'assets/brand/google-g.png',
-      width: 19,
-      height: 19,
-      filterQuality: FilterQuality.medium,
     );
   }
 }

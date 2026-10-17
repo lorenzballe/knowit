@@ -1102,7 +1102,33 @@ class AppLocalizationsIt extends AppLocalizations {
   String get continueWithGoogle => 'Continua con Google';
 
   @override
-  String get continueWithoutAccount => 'Continua senza account';
+  String get startReading => 'Inizia a leggere';
+
+  @override
+  String get haveAnAccount => 'Hai già un account?';
+
+  @override
+  String get signInLink => 'Accedi';
+
+  @override
+  String get signInWelcomeTitle => 'Bentornato';
+
+  @override
+  String get signInWelcomeLine =>
+      'Accedi, e la tua serie, le carte salvate e il tuo record tornano con te.';
+
+  @override
+  String get keepStreakOnNewPhone => 'Porta la tua serie su un nuovo telefono';
+
+  @override
+  String get keepStreakTitle => 'Non perdere la tua serie';
+
+  @override
+  String get keepStreakLine =>
+      'Accedi, e un nuovo telefono riparte da dove si ferma questo: la tua serie, le carte salvate, il tuo record.';
+
+  @override
+  String get signInNotNow => 'Non ora';
 
   @override
   String get termsLine =>

@@ -1101,7 +1101,34 @@ class AppLocalizationsNl extends AppLocalizations {
   String get continueWithGoogle => 'Doorgaan met Google';
 
   @override
-  String get continueWithoutAccount => 'Doorgaan zonder account';
+  String get startReading => 'Begin met lezen';
+
+  @override
+  String get haveAnAccount => 'Heb je al een account?';
+
+  @override
+  String get signInLink => 'Inloggen';
+
+  @override
+  String get signInWelcomeTitle => 'Welkom terug';
+
+  @override
+  String get signInWelcomeLine =>
+      'Log in, en je reeks, je bewaarde kaarten en je staat van dienst komen met je mee terug.';
+
+  @override
+  String get keepStreakOnNewPhone =>
+      'Neem je reeks mee naar een nieuwe telefoon';
+
+  @override
+  String get keepStreakTitle => 'Houd je reeks vast';
+
+  @override
+  String get keepStreakLine =>
+      'Log in, en een nieuwe telefoon gaat verder waar deze ophoudt: je reeks, je bewaarde kaarten, je staat van dienst.';
+
+  @override
+  String get signInNotNow => 'Niet nu';
 
   @override
   String get termsLine =>

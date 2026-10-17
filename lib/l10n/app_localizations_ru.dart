@@ -1148,7 +1148,33 @@ class AppLocalizationsRu extends AppLocalizations {
   String get continueWithGoogle => 'Продолжить с Google';
 
   @override
-  String get continueWithoutAccount => 'Продолжить без аккаунта';
+  String get startReading => 'Начать читать';
+
+  @override
+  String get haveAnAccount => 'Уже есть аккаунт?';
+
+  @override
+  String get signInLink => 'Войти';
+
+  @override
+  String get signInWelcomeTitle => 'С возвращением';
+
+  @override
+  String get signInWelcomeLine =>
+      'Войди, и твоя серия, сохранённые карточки и история вернутся вместе с тобой.';
+
+  @override
+  String get keepStreakOnNewPhone => 'Сохрани серию на новом телефоне';
+
+  @override
+  String get keepStreakTitle => 'Не потеряй серию';
+
+  @override
+  String get keepStreakLine =>
+      'Войди, и новый телефон продолжит с того места, где остановился этот: твоя серия, сохранённые карточки, твоя история.';
+
+  @override
+  String get signInNotNow => 'Не сейчас';
 
   @override
   String get termsLine =>

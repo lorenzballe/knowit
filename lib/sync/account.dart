@@ -72,6 +72,12 @@ class Account extends ChangeNotifier {
   /// True while a sign-in is in flight, so the button can say so.
   bool get busy => _busy;
 
+  /// Whether a sign-in can run on this build at all: Firebase started, or a
+  /// test stands in for it. The app offers an account of its own accord
+  /// only where one can be made; asked for from Profile, a build without it
+  /// says so instead.
+  bool get canSignIn => _firebase != null;
+
   FirebaseAuth? get _firebase =>
       authOverride ?? (Cloud.ready ? FirebaseAuth.instance : null);
 

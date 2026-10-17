@@ -1103,7 +1103,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get continueWithGoogle => 'Weiter mit Google';
 
   @override
-  String get continueWithoutAccount => 'Weiter ohne Konto';
+  String get startReading => 'Loslegen';
+
+  @override
+  String get haveAnAccount => 'Schon ein Konto?';
+
+  @override
+  String get signInLink => 'Anmelden';
+
+  @override
+  String get signInWelcomeTitle => 'Willkommen zurück';
+
+  @override
+  String get signInWelcomeLine =>
+      'Melde dich an, und deine Serie, deine behaltenen Karten und deine Bilanz kommen mit.';
+
+  @override
+  String get keepStreakOnNewPhone => 'Deine Serie aufs neue Handy mitnehmen';
+
+  @override
+  String get keepStreakTitle => 'Behalte deine Serie';
+
+  @override
+  String get keepStreakLine =>
+      'Melde dich an, und ein neues Handy macht da weiter, wo dieses aufhört: deine Serie, deine behaltenen Karten, deine Bilanz.';
+
+  @override
+  String get signInNotNow => 'Nicht jetzt';
 
   @override
   String get termsLine =>

@@ -1068,7 +1068,32 @@ class AppLocalizationsKo extends AppLocalizations {
   String get continueWithGoogle => 'Google로 계속';
 
   @override
-  String get continueWithoutAccount => '계정 없이 계속';
+  String get startReading => '읽기 시작하기';
+
+  @override
+  String get haveAnAccount => '이미 계정이 있나요?';
+
+  @override
+  String get signInLink => '로그인';
+
+  @override
+  String get signInWelcomeTitle => '다시 만나서 반가워요';
+
+  @override
+  String get signInWelcomeLine => '로그인하면 연속 기록, 보관한 카드, 기록이 함께 돌아와요.';
+
+  @override
+  String get keepStreakOnNewPhone => '새 휴대폰에서도 연속 기록 이어가기';
+
+  @override
+  String get keepStreakTitle => '연속 기록 지키기';
+
+  @override
+  String get keepStreakLine =>
+      '로그인하면 새 휴대폰에서도 여기서 이어갈 수 있어요. 연속 기록, 보관한 카드, 기록까지요.';
+
+  @override
+  String get signInNotNow => '나중에';
 
   @override
   String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';

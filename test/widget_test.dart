@@ -393,7 +393,7 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.text('Continue with Apple'), findsOneWidget);
+    expect(find.text('Start reading'), findsOneWidget);
   });
 
   testWidgets('the first run runs the subjects, then deals', (tester) async {
@@ -401,12 +401,10 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.text('Continue with Apple'));
+    // The one button there is: no account, nothing asked, nothing to fail.
+    await tester.tap(find.text('Start reading'));
     await _settle(tester);
-    // With no Firebase in a test, sign-in reports itself unavailable and says
-    // so. Let the snackbar go before touching anything underneath it.
-    await tester.pump(const Duration(seconds: 5));
-    await _settle(tester);
+    expect(find.byType(SnackBar), findsNothing);
 
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
@@ -5025,7 +5023,7 @@ void main() {
       await _settle(tester);
 
       // The intro, not the tab shell.
-      expect(find.text('Continue with Apple'), findsOneWidget);
+      expect(find.text('Start reading'), findsOneWidget);
       expect(find.byKey(const ValueKey('tab-Today')), findsNothing);
 
       final prefs = await SharedPreferences.getInstance();
@@ -5083,8 +5081,7 @@ void main() {
             data: const MediaQueryData(padding: insets, size: Size(402, 874)),
             child: IntroScreen(
               onContinue: () {},
-              onApple: () async => false,
-              onGoogle: () async => false,
+              onSignIn: (_) async => false,
             ),
           ),
         ),
@@ -5115,7 +5112,7 @@ void main() {
 
       // And the buttons are still on screen with the home indicator taking
       // its share of the bottom.
-      final apple = tester.getRect(find.text('Continue with Apple'));
+      final apple = tester.getRect(find.text('Start reading'));
       expect(apple.bottom, lessThanOrEqualTo(screen.height - insets.bottom));
     });
 
@@ -5155,8 +5152,7 @@ void main() {
               child: IntroScreen(
                 key: ValueKey(size),
                 onContinue: () {},
-                onApple: () async => false,
-                onGoogle: () async => false,
+                onSignIn: (_) async => false,
               ),
             ),
           ),
@@ -5278,7 +5274,7 @@ void main() {
       final Rect apple = tester.getRect(
         find
             .ancestor(
-              of: find.text('Continue with Apple'),
+              of: find.text('Start reading'),
               matching: find.byType(Container),
             )
             .first,
@@ -5320,8 +5316,7 @@ void main() {
               ),
               child: IntroScreen(
                 onContinue: () {},
-                onApple: () async => false,
-                onGoogle: () async => false,
+                onSignIn: (_) async => false,
               ),
             ),
           ),
@@ -5335,7 +5330,7 @@ void main() {
         expect(band.top, greaterThanOrEqualTo(20));
         final Rect title = tester.getRect(find.text('Astute'));
         expect(title.top, greaterThanOrEqualTo(band.bottom));
-        final Rect apple = tester.getRect(find.text('Continue with Apple'));
+        final Rect apple = tester.getRect(find.text('Start reading'));
         expect(apple.bottom, lessThanOrEqualTo(small.height));
         // The drawing is fitted to the shallower band: whole, and centred.
         final Rect mark = tester.getRect(
@@ -5473,8 +5468,7 @@ void main() {
             child: IntroScreen(
               key: ValueKey(size),
               onContinue: () {},
-              onApple: () async => false,
-              onGoogle: () async => false,
+              onSignIn: (_) async => false,
             ),
           ),
         ),
@@ -5518,7 +5512,7 @@ void main() {
         final Rect apple = tester.getRect(
           find
               .ancestor(
-                of: find.text('Continue with Apple'),
+                of: find.text('Start reading'),
                 matching: find.byType(Container),
               )
               .first,

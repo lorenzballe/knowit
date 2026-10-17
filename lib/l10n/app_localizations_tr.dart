@@ -1092,7 +1092,33 @@ class AppLocalizationsTr extends AppLocalizations {
   String get continueWithGoogle => 'Google ile devam et';
 
   @override
-  String get continueWithoutAccount => 'Hesapsız devam et';
+  String get startReading => 'Okumaya başla';
+
+  @override
+  String get haveAnAccount => 'Hesabın var mı?';
+
+  @override
+  String get signInLink => 'Giriş yap';
+
+  @override
+  String get signInWelcomeTitle => 'Tekrar hoş geldin';
+
+  @override
+  String get signInWelcomeLine =>
+      'Giriş yap; serin, sakladığın kartlar ve sicilin seninle geri gelsin.';
+
+  @override
+  String get keepStreakOnNewPhone => 'Serini yeni bir telefona taşı';
+
+  @override
+  String get keepStreakTitle => 'Serini kaybetme';
+
+  @override
+  String get keepStreakLine =>
+      'Giriş yap, yeni bir telefon bu telefonun kaldığı yerden devam etsin: serin, sakladığın kartlar, sicilin.';
+
+  @override
+  String get signInNotNow => 'Şimdi değil';
 
   @override
   String get termsLine =>

@@ -1058,7 +1058,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get continueWithGoogle => '使用 Google 继续';
 
   @override
-  String get continueWithoutAccount => '不使用账号继续';
+  String get startReading => '开始阅读';
+
+  @override
+  String get haveAnAccount => '已有账号？';
+
+  @override
+  String get signInLink => '登录';
+
+  @override
+  String get signInWelcomeTitle => '欢迎回来';
+
+  @override
+  String get signInWelcomeLine => '登录后，你的连续记录、收藏的卡片和记录都会回来。';
+
+  @override
+  String get keepStreakOnNewPhone => '换了手机，连续记录也不丢';
+
+  @override
+  String get keepStreakTitle => '守住你的连续记录';
+
+  @override
+  String get keepStreakLine => '登录后，换了新手机也能接着这里继续：你的连续记录、收藏的卡片和记录都在。';
+
+  @override
+  String get signInNotNow => '暂不';
 
   @override
   String get termsLine => '继续即表示你同意我们的服务条款和隐私政策';

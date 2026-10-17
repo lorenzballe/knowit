@@ -1064,7 +1064,32 @@ class AppLocalizationsJa extends AppLocalizations {
   String get continueWithGoogle => 'Googleで続ける';
 
   @override
-  String get continueWithoutAccount => 'アカウントなしで続ける';
+  String get startReading => '読みはじめる';
+
+  @override
+  String get haveAnAccount => 'アカウントをお持ちですか？';
+
+  @override
+  String get signInLink => 'サインイン';
+
+  @override
+  String get signInWelcomeTitle => 'おかえりなさい';
+
+  @override
+  String get signInWelcomeLine => 'サインインすると、連続記録も保存したカードも記録も戻ってきます。';
+
+  @override
+  String get keepStreakOnNewPhone => '新しいスマホでも連続記録を続ける';
+
+  @override
+  String get keepStreakTitle => '連続記録を守る';
+
+  @override
+  String get keepStreakLine =>
+      'サインインすれば、新しいスマホでもここから続けられます。連続記録も、保存したカードも、記録も。';
+
+  @override
+  String get signInNotNow => '今はしない';
 
   @override
   String get termsLine => '続けると利用規約とプライバシーポリシーに同意したことになります';

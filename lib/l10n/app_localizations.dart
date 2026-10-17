@@ -1614,11 +1614,59 @@ abstract class AppLocalizations {
   /// **'Continue with Google'**
   String get continueWithGoogle;
 
-  /// The intro's third way on, under Continue with Apple and Continue with Google: it goes where Skip goes and makes no account.
+  /// The intro's one big button: into the app with no account.
   ///
   /// In en, this message translates to:
-  /// **'Continue without an account'**
-  String get continueWithoutAccount;
+  /// **'Start reading'**
+  String get startReading;
+
+  /// The quiet line under Start reading, before the words that sign in.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get haveAnAccount;
+
+  /// The words that open the sign-in sheet, right after haveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signInLink;
+
+  /// The sign-in sheet's title when it is opened from the intro, by a reader who already has an account.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get signInWelcomeTitle;
+
+  /// Under signInWelcomeTitle: what an account brings back.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in, and your streak, your saved cards and your record come back with you.'**
+  String get signInWelcomeLine;
+
+  /// Profile's row that offers an account, and the title of the sheet it opens.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your streak on a new phone'**
+  String get keepStreakOnNewPhone;
+
+  /// The title of the sheet that offers an account once, after the reader's first finished day.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your streak'**
+  String get keepStreakTitle;
+
+  /// Under keepStreakTitle and keepStreakOnNewPhone on the sign-in sheet: what an account keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in, and a new phone picks up where this one leaves off: your streak, your saved cards, your record.'**
+  String get keepStreakLine;
+
+  /// The way past the sign-in sheet, without an account.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get signInNotNow;
 
   /// Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up.
   ///
