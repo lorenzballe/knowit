@@ -41,7 +41,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get freezeKeptStreak => 'Un freeze ha salvato la serie';
+  String get freezeKeptStreak => 'Un jolly ha salvato la serie';
 
   @override
   String countWord(String n) {
@@ -85,6 +85,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get shareThisPill => 'Condividi questa carta';
+
+  @override
+  String get share => 'Condividi';
 
   @override
   String cardOf(int k, int n) {
@@ -783,8 +786,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n freeze disponibili',
-      one: '1 freeze disponibile',
+      other: '$n jolly disponibili',
+      one: '1 jolly disponibile',
     );
     return '$_temp0';
   }
@@ -1116,9 +1119,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'DA PORTARE CON TE';
-
-  @override
-  String get theBarMoveCaps => 'LA MOSSA DA BAR';
 
   @override
   String get widgetFootPlain => 'Cinque carte, due minuti.';
@@ -1490,6 +1490,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Era l\'unica';
 
   @override
+  String get lastOne => 'L\'ultima';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Sono tutte e $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Ricomincia dalla prima';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1508,9 +1519,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'La fonte viaggia con lei';
-
-  @override
-  String get fiveADayALittleSharper => 'Cinque al giorno. Un po\' più lucido.';
 
   @override
   String get shareMyDay => 'Condividi';
@@ -1597,11 +1605,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get nudgeTitle => 'Le tue cinque sono pronte';
 
   @override
-  String get nudgeFreezeTitle => 'Il tuo congelamento sta tenendo';
+  String get nudgeFreezeTitle => 'La tua serie è al sicuro';
 
   @override
   String nudgeFreezeBody(String question) {
-    return 'Ieri è coperto. Oggi: $question';
+    return 'Ieri ti ha coperto un jolly. Oggi: $question';
   }
 
   @override
@@ -2692,9 +2700,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Rettifiche';
-
-  @override
   String get didYouKnow => 'Lo sapevi?';
 
   @override
@@ -2731,53 +2736,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => 'Questa è l\'edizione di oggi';
-
-  @override
-  String get editionTomorrow => 'Quella di domani esce al mattino';
-
-  @override
-  String get eraAncient => 'Il mondo antico';
-
-  @override
-  String get eraAncientWhen => 'Prima del 500';
-
-  @override
-  String get eraEarlyModern => 'La prima età moderna';
-
-  @override
-  String get eraEarlyModernWhen => 'Dal 1500 al 1800';
-
-  @override
-  String get eraMedieval => 'Il Medioevo';
-
-  @override
-  String get eraMedievalWhen => 'Dal 500 al 1500';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Altre $n di quest\'epoca',
-      one: 'Un\'altra di quest\'epoca',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'L\'Ottocento';
-
-  @override
-  String get eraNineteenthWhen => 'Dal 1800 al 1900';
-
-  @override
-  String get eraRecent => 'Questo secolo';
-
-  @override
-  String get eraRecentWhen => 'Dal 2000';
-
-  @override
   String get eraShortAncient => 'Antichità';
 
   @override
@@ -2794,12 +2752,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => 'Novecento';
-
-  @override
-  String get eraTwentieth => 'Il secolo scorso';
-
-  @override
-  String get eraTwentiethWhen => 'Dal 1900 al 2000';
 
   @override
   String get fewCards => 'In poche carte';
@@ -2823,9 +2775,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get howSure => 'Quanto ne sono sicuro, e perché?';
-
-  @override
-  String get inNumbers => 'In cifre';
 
   @override
   String inRange(int pts, String said) {
@@ -2963,18 +2912,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pickOneFirst => 'Prima scegline una';
 
   @override
-  String get puzzleOfTheDay => 'Il rompicapo del giorno';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts pt';
   }
 
   @override
   String get rightLastTime => 'Giusta l\'ultima volta';
-
-  @override
-  String get sameForEveryoneCaps => 'Uguale per tutti';
 
   @override
   String get sayFalse => 'Falso';
@@ -3101,19 +3044,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'In apertura';
-
-  @override
-  String get throughTime => 'Nel tempo';
-
-  @override
-  String get throughTimeLine =>
-      'Dal mondo antico a quest\'anno. Scrivi un anno, o lascia scegliere al caso';
-
-  @override
   String leanHint(String or) {
     return 'Trascina la «$or» fin dove la pensi';
   }
@@ -3148,7 +3078,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spotTitle => 'Trova quella falsa';
 
   @override
-  String get spotLine => 'Tre sono vere. Una no.';
+  String get spotLine => 'Quattro affermazioni. Tre sono vere, una è falsa.';
 
   @override
   String get spotPrompt => 'Tocca quella che secondo te è falsa';
@@ -3169,66 +3099,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spotYours => 'La tua scelta';
 
   @override
-  String get yearHint => 'Scrivi un anno';
-
-  @override
-  String get yearAd => 'd.C.';
-
-  @override
-  String get yearBc => 'a.C.';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '$year d.C.';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year a.C.';
-  }
-
-  @override
-  String get yearGo => 'Vai a quest\'anno';
-
-  @override
-  String get yearRandom => 'A caso';
-
-  @override
-  String get yearRandomHint => 'Va a un anno citato da una delle carte';
-
-  @override
-  String yearNearest(String year) {
-    return 'Prima le più vicine al $year';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Nessuna carta qui nomina un anno vicino al $year. Queste sono della sua epoca.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Oggi qui non c\'è niente di vicino al $year. Questa è l\'epoca più vicina.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return 'Il $year deve ancora venire. Ecco questo secolo.';
-  }
-
-  @override
-  String get yearZero => 'L\'anno 0 non è mai esistito. Prova 1 a.C. o 1 d.C.';
-
-  @override
   String get todayLabel => 'Oggi';
-
-  @override
-  String get todaysEdition => 'Edizione di oggi';
 
   @override
   String get toneCurious => 'Curioso';

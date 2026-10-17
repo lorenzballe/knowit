@@ -1,15 +1,14 @@
-// Three things to do on Explore's shelves rather than only read: lean
-// towards a side of a debate on a slider, spot the false one of four claims,
-// and go through time to a year, typed or picked by chance.
+// Two things to do on Explore's shelves rather than only read: lean
+// towards a side of a debate on a slider, and spot the false one of four
+// claims.
 //
 //   flutter test test/explore_side_false_year_test.dart
 //   flutter test test/explore_side_false_year_test.dart --update-goldens --dart-define=SHOTS=true
 //
-// With SHOTS the last test also photographs the three shelves, at rest and
+// With SHOTS the last test also photographs the two shelves, at rest and
 // played, into tool/shots/gallery/explore-b/ (gitignored), to be looked at
 // rather than kept.
 import 'dart:io';
-import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -30,7 +29,6 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/explore/spot_the_false.dart';
-import 'package:astuto/widgets/explore/through_time.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/signature_shelves.dart';
 
@@ -116,25 +114,6 @@ AppState _app(WidgetTester tester) => tester
     .state<ExploreScreenState>(find.byType(ExploreScreen, skipOffstage: false))
     .widget
     .app;
-
-/// A card made for a test, with only what the shelves read.
-Pill _card(
-  String id,
-  String question, {
-  String era = 'twentieth',
-  String topic = 'History',
-}) => Pill(
-  id: id,
-  topic: topic,
-  color: const Color(0xFFFFB020),
-  ink: const Color(0xFF10100C),
-  tint: const Color(0xFFFFB020),
-  question: question,
-  answer: 'Because.',
-  barMove: '',
-  source: '',
-  era: era,
-);
 
 /// The faces the app ships, and the icons, so a photograph is what a
 /// reader sees.
@@ -360,7 +339,6 @@ void main() {
         ...?mix.practical?.pills.map((p) => p.id),
         ...?mix.debates?.pills.map((p) => p.id),
         ...mix.work.cards.map((p) => p.id),
-        for (final (_, cards) in mix.eras) ...cards.map((p) => p.id),
         ...?mix.stories?.pills.map((p) => p.id),
         ...?mix.sharpest?.pills.map((p) => p.id),
         ...mix.didYouKnow.map((p) => p.id),
@@ -477,346 +455,9 @@ void main() {
     expect(find.text('Found it. The other three are true.'), findsOneWidget);
   });
 
-  // ── Through time ───────────────────────────────────────────────────────
-
-  group('a year through time', () {
-    test('goes to the age that holds it', () {
-      expect(eraOfYear(yearBc(44)), 'ancient');
-      expect(eraOfYear(476), 'ancient');
-      expect(eraOfYear(500), 'medieval');
-      expect(eraOfYear(1499), 'medieval');
-      expect(eraOfYear(1500), 'early_modern');
-      expect(eraOfYear(1799), 'early_modern');
-      expect(eraOfYear(1800), 'nineteenth');
-      expect(eraOfYear(1969), 'twentieth');
-      expect(eraOfYear(2000), 'recent');
-      expect(eraOfYear(2026), 'recent');
-      // 1 BC is the year before AD 1.
-      expect(1 - yearBc(1), 1);
-    });
-
-    test('is read from what a question names, and only the question', () {
-      expect(yearsNamed(_card('a', 'What happened in 1969?')), (1969, 1969));
-      expect(yearsNamed(_card('b', 'Why did the 1820s boom?')), (1820, 1829));
-      expect(yearsNamed(_card('c', 'Who printed in the 1500s?')), (1500, 1599));
-      expect(
-        yearsNamed(_card('d', 'In 2 BC just over 200,000 men drew grain.')),
-        (yearBc(2), yearBc(2)),
-      );
-      expect(yearsNamed(_card('e', 'Did a decree ban the Games in AD 393?')), (
-        393,
-        393,
-      ));
-      expect(
-        yearsNamed(_card('f', 'How did his Geography, of about 150 AD, last?')),
-        (150, 150),
-      );
-      expect(yearsNamed(_card('g', 'How many readers were there?')), isNull);
-      expect(
-        yearSaid(_card('e', 'Did a decree ban the Games in AD 393?')),
-        'AD 393',
-      );
-      expect(yearSaid(_card('b', 'Why did the 1820s boom?')), '1820s');
-    });
-
-    test('brings the cards naming the nearest years first, the rest after', () {
-      final List<Pill> age = [
-        _card('none', 'Why do the lights hum?'),
-        _card('1912', 'What sank in 1912?'),
-        _card('1960s', 'Who sang in the 1960s?'),
-        _card('1971', 'What launched in 1971?'),
-        _card('1999', 'What was feared in 1999?'),
-      ];
-      expect(
-        nearestToYear(age, 1969, era: 'twentieth', day: 1).map((p) => p.id),
-        ['1960s', '1971', '1999', '1912', 'none'],
-      );
-      // A Renaissance card that names its restoration in the 1990s is not
-      // pulled to the front of its age by it.
-      final Pill restored = _card(
-        'restored',
-        'What did the 1990s restoration keep?',
-        era: 'early_modern',
-      );
-      final Pill painted = _card(
-        'painted',
-        'Who painted it in 1503?',
-        era: 'early_modern',
-      );
-      expect(yearsAway(restored, 1990, era: 'early_modern'), isNull);
-      expect(
-        nearestToYear(
-          [restored, painted],
-          1990,
-          era: 'early_modern',
-          day: 1,
-        ).map((p) => p.id),
-        ['painted', 'restored'],
-      );
-    });
-
-    test('looks through every card of an age no other shelf holds', () {
-      final ExploreMix mix = dealExploreMix(
-        bank: bank,
-        pool: bank,
-        day: 20735,
-        on: DateTime(2026, 10, 9),
-      );
-      for (final (era, cards) in mix.eras) {
-        final List<Pill> pool = mix.eraPool[era]!;
-        expect(
-          pool.take(cards.length).map((p) => p.id),
-          cards.map((p) => p.id),
-        );
-        expect(pool.every((p) => p.era == era), isTrue, reason: era);
-        expect(pool.map((p) => p.id).toSet(), hasLength(pool.length));
-      }
-      // Enough of the last century names its years for 1969 to find one
-      // within a couple of them.
-      final List<Pill> found = nearestToYear(
-        mix.eraPool['twentieth']!,
-        1969,
-        era: 'twentieth',
-        day: 20735,
-      );
-      expect(
-        yearsAway(found.first, 1969, era: 'twentieth'),
-        lessThanOrEqualTo(2),
-      );
-    });
-  });
-
-  Widget ruler({
-    required List<(String, List<Pill>)> eras,
-    Map<String, List<Pill>> pool = const {},
-    math.Random? chance,
-  }) => MaterialApp(
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    theme: buildAstutoTheme(Brightness.dark),
-    home: Scaffold(
-      body: ListView(
-        children: [
-          ThroughTime(
-            eras: eras,
-            pool: pool,
-            day: 1,
-            startAt: 0,
-            isRead: (_) => false,
-            onOpen: (_, _) {},
-            chance: chance,
-          ),
-        ],
-      ),
-    ),
-  );
-
-  final List<Pill> ancient = [
-    _card('caesar', 'Who was stabbed in 44 BC?', era: 'ancient'),
-    _card('olympia', 'Did a decree end the Games in AD 393?', era: 'ancient'),
-    _card('bronze', 'How was bronze cast?', era: 'ancient'),
-  ];
-  final List<Pill> twentieth = [
-    _card('hum', 'Why do the lights hum?'),
-    _card('titanic', 'What sank in 1912?'),
-    _card('sixties', 'Who sang in the 1960s?'),
-    _card('seventy-one', 'What launched in 1971?'),
-  ];
-  final List<Pill> recent = [
-    _card('phone', 'What did the phone of 2007 drop?', era: 'recent'),
-    _card('feed', 'Why does a feed learn?', era: 'recent'),
-  ];
-
-  testWidgets('a year typed travels to its age, nearest cards first', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      ruler(
-        eras: [
-          ('ancient', ancient.take(2).toList()),
-          ('twentieth', twentieth.take(2).toList()),
-          ('recent', recent),
-        ],
-        pool: {'ancient': ancient, 'twentieth': twentieth, 'recent': recent},
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(find.text('THE ANCIENT WORLD'), findsOneWidget);
-    expect(find.text('Type a year'), findsOneWidget);
-
-    // Four figures are a year: it goes there without being asked.
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '1969');
-    await tester.pumpAndSettle();
-    expect(find.text('THE LAST CENTURY'), findsOneWidget);
-    expect(find.text('Nearest to 1969 first'), findsOneWidget);
-    // The 1960s hold 1969; 1971 is two years off. Neither was among the
-    // two the day dealt the age.
-    expect(find.byKey(const ValueKey('explore-sixties')), findsOneWidget);
-    expect(find.byKey(const ValueKey('explore-seventy-one')), findsOneWidget);
-    expect(find.byKey(const ValueKey('explore-hum')), findsNothing);
-    expect(
-      tester.getCenter(find.byKey(const ValueKey('explore-sixties'))).dx,
-      lessThan(
-        tester.getCenter(find.byKey(const ValueKey('explore-seventy-one'))).dx,
-      ),
-    );
-
-    // Before Christ: the era first, then the year, then go.
-    await tester.tap(find.byKey(const ValueKey('era-bc-off')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('era-bc-on')), findsOneWidget);
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '44');
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('era-year-go')));
-    await tester.pumpAndSettle();
-    expect(find.text('THE ANCIENT WORLD'), findsOneWidget);
-    expect(find.text('Nearest to 44 BC first'), findsOneWidget);
-    expect(find.byKey(const ValueKey('explore-caesar')), findsOneWidget);
-    expect(
-      tester.getCenter(find.byKey(const ValueKey('explore-caesar'))).dx,
-      lessThan(
-        tester.getCenter(find.byKey(const ValueKey('explore-olympia'))).dx,
-      ),
-    );
-
-    // Two ways in, and only two: no ruler to drag, no arrows to step.
-    expect(find.byKey(const ValueKey('era-ruler')), findsNothing);
-    expect(find.byKey(const ValueKey('era-on')), findsNothing);
-    expect(find.byKey(const ValueKey('era-back')), findsNothing);
-    expect(find.byKey(const ValueKey('era-random')), findsOneWidget);
-  });
-
-  testWidgets('chance picks a year one of the cards names, and goes there', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      ruler(
-        eras: [
-          ('ancient', ancient.take(2).toList()),
-          ('twentieth', twentieth.take(2).toList()),
-          ('recent', recent),
-        ],
-        pool: {'ancient': ancient, 'twentieth': twentieth, 'recent': recent},
-        chance: math.Random(7),
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(find.text('Random'), findsOneWidget);
-
-    // Every year a card names in its own age: 44 BC, AD 393, 1912, the
-    // 1960s, 1971 and 2007. Never one no card names, so wherever chance
-    // lands, the card that named the year is the first one there.
-    final Set<int> named = {yearBc(44), 393, 1912, 1960, 1971, 2007};
-    final List<int> went = [];
-    for (var i = 0; i < 8; i++) {
-      await tester.tap(find.byKey(const ValueKey('era-random')));
-      await tester.pumpAndSettle();
-      final int year = ExplorePlay.instance[ThroughTime.yearKey]! as int;
-      expect(named, contains(year));
-      if (went.isNotEmpty) expect(year, isNot(went.last));
-      went.add(year);
-
-      final List<Pill> shown =
-          [
-            for (final p in [...ancient, ...twentieth, ...recent])
-              if (find.byKey(ValueKey('explore-${p.id}')).evaluate().isNotEmpty)
-                p,
-          ]..sort(
-            (a, b) => tester
-                .getCenter(find.byKey(ValueKey('explore-${a.id}')))
-                .dx
-                .compareTo(
-                  tester.getCenter(find.byKey(ValueKey('explore-${b.id}'))).dx,
-                ),
-          );
-      expect(yearsAway(shown.first, year, era: eraOfYear(year)), 0);
-      // The year is in the field, before Christ where it is.
-      expect(
-        find.byKey(ValueKey('era-bc-${year <= 0 ? 'on' : 'off'}')),
-        findsOneWidget,
-      );
-      final String said = year <= 0
-          ? '${1 - year} BC'
-          : year < 1000
-          ? 'AD $year'
-          : '$year';
-      expect(find.text('Nearest to $said first'), findsOneWidget);
-    }
-    // Over a few goes, chance goes to more than one age.
-    expect(went.map(eraOfYear).toSet().length, greaterThan(1));
-  });
-
-  testWidgets('a year that cannot be gone to is said so, kindly', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      ruler(
-        eras: [
-          ('ancient', ancient.take(2).toList()),
-          ('twentieth', twentieth.take(2).toList()),
-          ('recent', recent),
-        ],
-        pool: {'ancient': ancient, 'twentieth': twentieth, 'recent': recent},
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    // There was no year 0, and the shelf stays where it was.
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '0');
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('era-year-go')));
-    await tester.pumpAndSettle();
-    expect(find.text('There was no year 0. Try 1 BC or AD 1.'), findsOneWidget);
-    expect(find.text('THE ANCIENT WORLD'), findsOneWidget);
-
-    // A year still to come is this century's.
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '2999');
-    await tester.pumpAndSettle();
-    expect(find.text('THIS CENTURY'), findsOneWidget);
-    expect(
-      find.text('2999 is still to come. Here is this century.'),
-      findsOneWidget,
-    );
-
-    // An age with nothing in it today sends the shelf to the nearest that
-    // has something, and says so.
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '1200');
-    await tester.pumpAndSettle();
-    expect(find.text('THE ANCIENT WORLD'), findsOneWidget);
-    expect(
-      find.text(
-        'Nothing from around 1200 here today. This is the nearest age.',
-      ),
-      findsOneWidget,
-    );
-
-    // An age whose cards name no year near it says that instead.
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '2025');
-    await tester.pumpAndSettle();
-    expect(find.text('THIS CENTURY'), findsOneWidget);
-    expect(find.text('Nearest to 2025 first'), findsOneWidget);
-  });
-
-  testWidgets('the year field on the shelves takes a year and travels', (
-    tester,
-  ) async {
-    await _openExplore(tester);
-    await _reach(tester, find.byKey(const ValueKey('mix-through-time')));
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '1969');
-    await _settle(tester);
-    expect(find.text('THE LAST CENTURY'), findsOneWidget);
-    expect(
-      _keyed((k) => k.startsWith('era-cards-twentieth-1969')),
-      findsOneWidget,
-    );
-    expect(find.text('Nearest to 1969 first'), findsOneWidget);
-    // Kept for the day, so the shelf is still there when scrolled back to.
-    expect(ExplorePlay.instance[ThroughTime.yearKey], 1969);
-  });
-
   // ── Every language, and a small phone ──────────────────────────────────
 
-  testWidgets('the three fit in every language, on a small phone too', (
+  testWidgets('the two fit in every language, on a small phone too', (
     tester,
   ) async {
     Pill debate(String id, List<String> sides) => Pill(
@@ -894,23 +535,6 @@ void main() {
                       onCommit: (p, response) =>
                           setState(() => said[p.id] = Answer(response)),
                     ),
-                    const SizedBox(height: 20),
-                    ThroughTime(
-                      eras: [
-                        ('ancient', ancient.take(2).toList()),
-                        ('twentieth', twentieth.take(2).toList()),
-                        ('recent', recent),
-                      ],
-                      pool: {
-                        'ancient': ancient,
-                        'twentieth': twentieth,
-                        'recent': recent,
-                      },
-                      day: 1,
-                      startAt: 0,
-                      isRead: (_) => false,
-                      onOpen: (_, _) {},
-                    ),
                   ],
                 ),
               ),
@@ -943,29 +567,6 @@ void main() {
         expect(said['c-1']?.response, '1', reason: where);
         expect(said.containsKey('c-2'), isFalse, reason: where);
 
-        // Type a year, then one before Christ, then one that never was.
-        final Finder year = find.byKey(const ValueKey('era-year'));
-        await tester.ensureVisible(year);
-        await tester.pumpAndSettle();
-        await tester.enterText(year, '1969');
-        await tester.pumpAndSettle();
-        await tap(_keyed((k) => k.startsWith('era-bc-')));
-        await tester.enterText(year, '44');
-        await tap(find.byKey(const ValueKey('era-year-go')));
-        await tester.enterText(year, '0');
-        await tap(find.byKey(const ValueKey('era-year-go')));
-        expect(
-          find.byKey(
-            ValueKey(
-              'era-year-said-${lookupAppLocalizations(locale).yearZero}',
-            ),
-          ),
-          findsOneWidget,
-          reason: where,
-        );
-        // And a year by chance, its button beside the age's name.
-        await tap(find.byKey(const ValueKey('era-random')));
-        expect(ExplorePlay.instance[ThroughTime.yearKey], isA<int>());
         expect(tester.takeException(), isNull, reason: where);
       }
     }
@@ -973,7 +574,7 @@ void main() {
 
   // ── Photographs ────────────────────────────────────────────────────────
 
-  testWidgets('photographs: the three shelves, at rest and played', (
+  testWidgets('photographs: the two shelves, at rest and played', (
     tester,
   ) async {
     Future<void> shoot(String name) => expectLater(
@@ -1051,36 +652,6 @@ void main() {
         top: 150,
       );
       await shoot('$tag-spot-told');
-
-      // Through time: at rest, typing, gone to a year, before Christ.
-      await _reach(
-        tester,
-        find.byKey(const ValueKey('mix-through-time')),
-        top: 120,
-      );
-      await shoot('$tag-time-rest');
-      await tester.showKeyboard(find.byKey(const ValueKey('era-year')));
-      await tester.enterText(find.byKey(const ValueKey('era-year')), '19');
-      await _settle(tester);
-      await shoot('$tag-time-typing');
-      await tester.enterText(find.byKey(const ValueKey('era-year')), '1969');
-      // The first frame is where every figure starts its spin; the next,
-      // a third of a second on, is the roll.
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 330));
-      await shoot('$tag-time-rolling');
-      await _settle(tester);
-      await shoot('$tag-time-1969');
-      await tester.tap(find.byKey(const ValueKey('era-bc-off')));
-      await _settle(tester);
-      await tester.enterText(find.byKey(const ValueKey('era-year')), '44');
-      await tester.tap(find.byKey(const ValueKey('era-year-go')));
-      await _settle(tester);
-      await shoot('$tag-time-44bc');
-      await tester.enterText(find.byKey(const ValueKey('era-year')), '0');
-      await tester.tap(find.byKey(const ValueKey('era-year-go')));
-      await _settle(tester);
-      await shoot('$tag-time-zero');
     }
 
     await play(tag: 'night');
@@ -1090,34 +661,5 @@ void main() {
     tester.platformDispatcher.localesTestValue = const [Locale('it')];
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
     await play(tag: 'it');
-  }, skip: !_shots);
-
-  testWidgets('photographs: the year on a small phone in French', (
-    tester,
-  ) async {
-    tester.view.physicalSize = const Size(320, 568) * 3;
-    tester.view.devicePixelRatio = 3;
-    tester.platformDispatcher.localesTestValue = const [Locale('fr')];
-    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-    await _openExplore(tester);
-    await _reach(
-      tester,
-      find.byKey(const ValueKey('mix-through-time')),
-      top: 110,
-    );
-    await expectLater(
-      find.byType(MaterialApp).first,
-      matchesGoldenFile(
-        '../tool/shots/gallery/explore-b/fr-small-time-rest.png',
-      ),
-    );
-    await tester.enterText(find.byKey(const ValueKey('era-year')), '1969');
-    await _settle(tester);
-    await expectLater(
-      find.byType(MaterialApp).first,
-      matchesGoldenFile(
-        '../tool/shots/gallery/explore-b/fr-small-time-1969.png',
-      ),
-    );
   }, skip: !_shots);
 }

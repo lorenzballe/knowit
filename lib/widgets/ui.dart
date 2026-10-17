@@ -4,6 +4,7 @@ import '../data/topics.dart';
 import '../l10n/l10n.dart';
 
 import '../theme.dart';
+import 'card_edge.dart';
 import 'chunky.dart';
 
 // Every screen names itself by wrapping in a ScreenView, which lives with
@@ -150,6 +151,10 @@ class SkipCorner extends StatelessWidget {
 }
 
 /// Circular back chevron in a hairline ring, top-left of the sub-screens.
+///
+/// The ring is 38 and the target round it 44, the least a finger can be
+/// asked to find; the ring's left edge sits three points in from where it
+/// did, which nobody sees and every thumb feels.
 class BackCircle extends StatelessWidget {
   final VoidCallback onPressed;
   final bool dark;
@@ -159,19 +164,29 @@ class BackCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Back',
+      label: MaterialLocalizations.of(context).backButtonTooltip,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onPressed,
-        child: Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: context.p.line),
+        child: SizedBox(
+          width: 44,
+          height: 44,
+          child: Center(
+            child: Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: context.p.line),
+              ),
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.arrow_back_rounded,
+                size: 17,
+                color: context.p.ink,
+              ),
+            ),
           ),
-          alignment: Alignment.center,
-          child: Icon(Icons.arrow_back_rounded, size: 17, color: context.p.ink),
         ),
       ),
     );
@@ -287,6 +302,9 @@ class PaperCard extends StatelessWidget {
 }
 
 /// Rounded square colour swatch that stands in for a topic.
+///
+/// Thinking's white on a white row was no swatch at all, so a colour that
+/// would vanish into the panel it sits on gets a hairline edge.
 class TopicDot extends StatelessWidget {
   final Color color;
   final double size;
@@ -300,6 +318,7 @@ class TopicDot extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(2),
+        border: cardHairline(color, context.p.surfaceRaised),
       ),
     );
   }
@@ -330,22 +349,26 @@ class NudgeSwitch extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(!value),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: 50,
-          height: 30,
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            color: value ? context.p.ink : context.p.lineStrong,
-            borderRadius: BorderRadius.circular(999),
-          ),
-          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 24,
-            height: 24,
+        // The switch is 30 high; the target round it is 44.
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 7),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: 50,
+            height: 30,
+            padding: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: context.p.surfaceRaised,
-              shape: BoxShape.circle,
+              color: value ? context.p.ink : context.p.lineStrong,
+              borderRadius: BorderRadius.circular(999),
+            ),
+            alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+            child: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: context.p.surfaceRaised,
+                shape: BoxShape.circle,
+              ),
             ),
           ),
         ),
@@ -409,8 +432,10 @@ class TopicFilterRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Chips 34 high in a row 44 high: the target is the row's height, and
+    // a chip as narrow as "All" is never less than 44 wide.
     return SizedBox(
-      height: 34,
+      height: 44,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
@@ -428,6 +453,8 @@ class TopicFilterRow extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: () => onPick(on ? null : key),
               child: Container(
+                constraints: const BoxConstraints(minWidth: 44),
+                margin: const EdgeInsets.symmetric(vertical: 5),
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -445,7 +472,7 @@ class TopicFilterRow extends StatelessWidget {
                       const SizedBox(width: 7),
                     ],
                     Text(
-                      style?.name ?? 'All',
+                      style?.name ?? context.l10n.all,
                       style: AppText.body(
                         size: 12.5,
                         weight: FontWeight.w500,

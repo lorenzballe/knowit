@@ -40,12 +40,25 @@ class ProfileScreen extends StatelessWidget {
   final Account account;
   final VoidCallback onSignedOut;
 
+  /// Takes the reader to the Today tab: the shell's, since a tab cannot
+  /// change tabs on its own. Null where Profile stands alone.
+  final VoidCallback? onToday;
+
   const ProfileScreen({
     super.key,
     required this.app,
     required this.account,
     required this.onSignedOut,
+    this.onToday,
   });
+
+  /// "Back to today's five", from an empty shelf: everything open over the
+  /// tabs is put away and the reader lands on Today, which is what the
+  /// button says. It used to pop the shelf and leave them on Profile.
+  void _backToToday(BuildContext routeContext) {
+    Navigator.of(routeContext).popUntil((route) => route.isFirst);
+    onToday?.call();
+  }
 
   Future<void> _editTopics(BuildContext context) async {
     await Navigator.of(context).push(
@@ -283,61 +296,78 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 11),
           _ThemePicker(app: app),
           const SizedBox(height: 22),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Eyebrow(context.l10n.yourTopics),
-              // The mix is everybody's: it is what the free day's cards
-              // are dealt from, the reader's own and the ones at random, so
-              // gating it would gate the one thing the free day has to show.
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => _editTopics(context),
-                child: Text(
-                  context.l10n.edit,
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    color: context.p.link,
+          // The mix is everybody's: it is what the free day's cards are
+          // dealt from, the reader's own and the ones at random, so gating
+          // it would gate the one thing the free day has to show.
+          //
+          // The whole block opens the editor. "Edit" alone was a target
+          // 24 points by 18, beside chips that looked like buttons and did
+          // nothing; now the chips are the way in, and "Edit" says so.
+          Semantics(
+            container: true,
+            button: true,
+            label: context.l10n.yourTopics,
+            hint: context.l10n.edit,
+            excludeSemantics: true,
+            child: GestureDetector(
+              key: const ValueKey('profile-topics'),
+              behavior: HitTestBehavior.opaque,
+              onTap: () => _editTopics(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Eyebrow(context.l10n.yourTopics),
+                      Text(
+                        context.l10n.edit,
+                        style: AppText.body(
+                          size: 12.5,
+                          weight: FontWeight.w500,
+                          color: context.p.link,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                  const SizedBox(height: 11),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    // All of them, in the onboarding's own order — the ones in the
+                    // mix in their colour, the ones out of it dark. Showing only what
+                    // was chosen made this a list with nothing to compare against:
+                    // you could not see what you had turned off, or that there was
+                    // anything else to turn on.
+                    children: kMixSubjects.map((subject) {
+                      final bool live = app.pickedTopics.contains(subject.key);
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 13,
+                          vertical: 9,
+                        ),
+                        decoration: BoxDecoration(
+                          color: live
+                              ? subject.color
+                              : context.p.inverse.withValues(alpha: 0.06),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          subject.name,
+                          style: AppText.body(
+                            size: 12.5,
+                            weight: FontWeight.w500,
+                            color: live
+                                ? inkOn(subject.color)
+                                : context.p.ink.withValues(alpha: 0.34),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 11),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            // All of them, in the onboarding's own order — the ones in the
-            // mix in their colour, the ones out of it dark. Showing only what
-            // was chosen made this a list with nothing to compare against:
-            // you could not see what you had turned off, or that there was
-            // anything else to turn on.
-            children: kMixSubjects.map((subject) {
-              final bool live = app.pickedTopics.contains(subject.key);
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 13,
-                  vertical: 9,
-                ),
-                decoration: BoxDecoration(
-                  color: live
-                      ? subject.color
-                      : context.p.inverse.withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-                child: Text(
-                  subject.name,
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    color: live
-                        ? inkOn(subject.color)
-                        : context.p.ink.withValues(alpha: 0.34),
-                  ),
-                ),
-              );
-            }).toList(),
+            ),
           ),
           // Nothing to cover until something has been read: a list of
           // nineteen subjects all reading zero is the same wall of nothing
@@ -441,7 +471,8 @@ class ProfileScreen extends StatelessWidget {
                   body: SafeArea(
                     child: SavedScreen(
                       app: app,
-                      onBackToToday: () => Navigator.of(routeContext).pop(),
+                      onBack: () => Navigator.of(routeContext).pop(),
+                      onBackToToday: () => _backToToday(routeContext),
                     ),
                   ),
                 ),
@@ -467,7 +498,8 @@ class ProfileScreen extends StatelessWidget {
                     child: SavedScreen(
                       app: app,
                       shelf: Shelf.liked,
-                      onBackToToday: () => Navigator.of(routeContext).pop(),
+                      onBack: () => Navigator.of(routeContext).pop(),
+                      onBackToToday: () => _backToToday(routeContext),
                     ),
                   ),
                 ),
@@ -1102,6 +1134,7 @@ class _ThemePicker extends StatelessWidget {
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
+                  constraints: const BoxConstraints(minHeight: 44),
                   padding: const EdgeInsets.symmetric(vertical: 11),
                   decoration: BoxDecoration(
                     color: selected ? context.p.inverse : Colors.transparent,

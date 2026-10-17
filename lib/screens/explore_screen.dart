@@ -22,7 +22,6 @@ import '../theme.dart';
 import '../widgets/balanced_text.dart';
 import '../widgets/explore/did_you_know.dart';
 import '../widgets/explore/form_shelves.dart';
-import '../widgets/explore/front_page.dart';
 import '../widgets/explore/month_shelf.dart';
 import '../widgets/explore/mood_minutes.dart';
 import '../widgets/explore/series_shelf.dart';
@@ -30,7 +29,6 @@ import '../widgets/explore/sixty_seconds.dart';
 import '../widgets/explore/spot_the_false.dart';
 import '../widgets/explore/story_player.dart';
 import '../widgets/explore/surprise_me.dart';
-import '../widgets/explore/through_time.dart';
 import '../widgets/explore/unmask_chart.dart';
 import '../widgets/explore/where_you_live.dart';
 import '../widgets/place_ask.dart';
@@ -44,6 +42,7 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
+import '../widgets/card_edge.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -715,10 +714,10 @@ class ExploreScreenState extends State<ExploreScreen> {
               // stories played a beat at a time), cards to play (true or
               // false, what came back, the tricks in a number, working it
               // out, a chart unmasked, how sure, what if), and ways in by time
-              // (a few cards, sixty seconds, your minutes, the day's edition,
-              // a year, a fact), then one card from anywhere and something to
-              // use before tonight at the very end. Every one is free:
-              // Explore is what brings a reader back.
+              // (a few cards, sixty seconds, your minutes, a fact),
+              // then one card from anywhere and something to use before
+              // tonight at the very end. Every one is free: Explore is what
+              // brings a reader back.
               if (mix.month.length >= 3) ...[
                 const SizedBox(height: 24),
                 _watch(
@@ -1007,38 +1006,6 @@ class ExploreScreenState extends State<ExploreScreen> {
                     isRead: read,
                     onOpen: _open,
                     onShown: (p) => _seen('mood', p),
-                  ),
-                ),
-              ],
-              // The day as an edition: the same front page for everybody.
-              if (mix.front case final FrontPage page) ...[
-                const SizedBox(height: 32),
-                _watch(
-                  'front-page',
-                  FrontPageView(
-                    page: page,
-                    onOpen: _open,
-                    onShown: (p) => _seen('front-page', p),
-                  ),
-                ),
-              ],
-              if (mix.eras.length >= 2) ...[
-                const SizedBox(height: 24),
-                _watch(
-                  'through-time',
-                  _Shelf(
-                    key: const ValueKey('mix-through-time'),
-                    title: l.throughTime,
-                    line: l.throughTimeLine,
-                    child: ThroughTime(
-                      eras: mix.eras,
-                      pool: mix.eraPool,
-                      day: day,
-                      startAt: day % mix.eras.length,
-                      isRead: read,
-                      onOpen: _open,
-                      onShown: (p) => _seen('through-time', p),
-                    ),
                   ),
                 ),
               ],
@@ -1555,21 +1522,29 @@ class _Head extends StatelessWidget {
           key: const ValueKey('explore-search'),
           button: true,
           label: context.l10n.searchEveryCard,
+          // A 38 tile in a 44 target, its right edge on the margin.
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onOpenSearch,
-            child: Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                color: context.p.ink.withValues(alpha: 0.07),
-                borderRadius: BorderRadius.circular(13),
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.search_rounded,
-                size: 16,
-                color: context.p.ink.withValues(alpha: 0.6),
+            child: SizedBox(
+              width: 44,
+              height: 44,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: context.p.ink.withValues(alpha: 0.07),
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.search_rounded,
+                    size: 16,
+                    color: context.p.ink.withValues(alpha: 0.6),
+                  ),
+                ),
               ),
             ),
           ),
@@ -1627,6 +1602,7 @@ class _SubjectRow extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   height: 36,
+                  constraints: const BoxConstraints(minWidth: 44),
                   padding: const EdgeInsets.symmetric(horizontal: 13),
                   decoration: BoxDecoration(
                     color: on
@@ -1646,7 +1622,7 @@ class _SubjectRow extends StatelessWidget {
                         const SizedBox(width: 8),
                       ],
                       Text(
-                        subject?.name ?? 'All',
+                        subject?.name ?? context.l10n.all,
                         style: AppText.body(
                           size: 12.5,
                           weight: FontWeight.w600,
@@ -1769,10 +1745,7 @@ class _BigRow extends StatelessWidget {
             child: Container(
               width: 214,
               padding: const EdgeInsets.all(17),
-              decoration: BoxDecoration(
-                color: pill.color,
-                borderRadius: BorderRadius.circular(22),
-              ),
+              decoration: cardFace(context, pill.color, radius: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1822,17 +1795,31 @@ class _BigRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
-                    pill.barMove,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 11.5,
-                      weight: FontWeight.w500,
-                      height: 1.3,
-                      color: pill.ink,
+                  // The line to keep once the card is read; until then,
+                  // only how long it takes. Printed under a question nobody
+                  // had answered, it gave the answer away from the shelf.
+                  if (isRead(pill))
+                    Text(
+                      pill.barMove,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: 11.5,
+                        weight: FontWeight.w500,
+                        height: 1.3,
+                        color: pill.ink,
+                      ),
+                    )
+                  else
+                    Text(
+                      context.l10n.minutesShort(minutesFor(pill)),
+                      style: AppText.label(
+                        size: 9,
+                        weight: FontWeight.w700,
+                        spacing: 1.2,
+                        color: sub,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -2009,10 +1996,7 @@ class _SmallRow extends StatelessWidget {
             child: Container(
               width: 158,
               padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: pill.color,
-                borderRadius: BorderRadius.circular(19),
-              ),
+              decoration: cardFace(context, pill.color, radius: 19),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2096,30 +2080,38 @@ class _WindowSwitch extends StatelessWidget {
         key: ValueKey('top-${isMonth ? 'month' : 'week'}-${on ? 'on' : 'off'}'),
         button: true,
         selected: on,
+        // A 24-point word in a target 44 high: the pair is small, the
+        // place a finger lands on it is not.
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: on ? null : () => onPick(isMonth),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            height: 24,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: on
-                  ? context.p.inverse
-                  : context.p.inverse.withValues(alpha: 0),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              label,
-              style: AppText.body(
-                size: 11.5,
-                weight: FontWeight.w600,
-                height: 1,
-                color: on
-                    ? context.p.onInverse
-                    : context.p.ink.withValues(alpha: 0.55),
+          child: SizedBox(
+            height: 44,
+            child: Center(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+                height: 24,
+                constraints: const BoxConstraints(minWidth: 44),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: on
+                      ? context.p.inverse
+                      : context.p.inverse.withValues(alpha: 0),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  label,
+                  style: AppText.body(
+                    size: 11.5,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    color: on
+                        ? context.p.onInverse
+                        : context.p.ink.withValues(alpha: 0.55),
+                  ),
+                ),
               ),
             ),
           ),
@@ -2127,19 +2119,30 @@ class _WindowSwitch extends StatelessWidget {
       );
     }
 
-    return Container(
-      padding: const EdgeInsets.all(2.5),
-      decoration: BoxDecoration(
-        color: context.p.ink.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          side(context.l10n.topWeek, false),
-          side(context.l10n.topMonth, true),
-        ],
-      ),
+    // The pair's ground is drawn 29 high behind two targets 44 high.
+    return Stack(
+      children: [
+        Positioned.fill(
+          top: 7.5,
+          bottom: 7.5,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: context.p.ink.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2.5),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              side(context.l10n.topWeek, false),
+              side(context.l10n.topMonth, true),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -2305,10 +2308,7 @@ class _Placed extends StatelessWidget {
         rank: rank,
         card: Container(
           padding: const EdgeInsets.fromLTRB(14, 14, 14, 13),
-          decoration: BoxDecoration(
-            color: pill.color,
-            borderRadius: BorderRadius.circular(19),
-          ),
+          decoration: cardFace(context, pill.color, radius: 19),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

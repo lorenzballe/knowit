@@ -41,13 +41,13 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get freezeKeptStreak => 'Um freeze salvou a sequência';
+  String get freezeKeptStreak => 'Uma proteção salvou a sequência';
 
   @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
-      '1': 'um',
-      '2': 'dois',
+      '1': 'uma',
+      '2': 'duas',
       '3': 'três',
       '4': 'quatro',
       '5': 'cinco',
@@ -63,7 +63,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String dayRead(int n, String word) {
-    return 'Dia $n · $word lidos';
+    return 'Dia $n · $word lidas';
   }
 
   @override
@@ -75,7 +75,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tapToFlip => 'TOCA PARA VIRAR';
 
   @override
-  String get shareThisCard => 'Partilhar este cartão';
+  String get shareThisCard => 'Partilhar esta carta';
 
   @override
   String get removeFromSaved => 'Remover dos guardados';
@@ -87,18 +87,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get shareThisPill => 'Partilhar esta carta';
 
   @override
+  String get share => 'Partilhar';
+
+  @override
   String cardOf(int k, int n) {
-    return 'Cartão $k de $n';
+    return 'Carta $k de $n';
   }
 
   @override
   String tomorrowsFiveOpenIn(String when) {
-    return 'Os cinco de amanhã abrem em $when';
+    return 'As cinco de amanhã abrem em $when';
   }
 
   @override
   String topicOpensTomorrow(String topic, String when) {
-    return '$topic abre os cinco de amanhã, em $when';
+    return '$topic abre as cinco de amanhã, em $when';
   }
 
   @override
@@ -132,7 +135,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get olderFromTurnedUp => 'Cartões mais antigos dos temas que subiste';
+  String get olderFromTurnedUp => 'Cartas mais antigas dos temas que subiste';
 
   @override
   String moreOn(String name) {
@@ -151,7 +154,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get somewhereToStart => 'Um ponto de partida que não é hoje';
 
   @override
-  String get searchEveryCard => 'Procurar em todos os cartões';
+  String get searchEveryCard => 'Procurar em todas as cartas';
 
   @override
   String nothingForYet(String query) {
@@ -182,7 +185,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String cardsTapADay(int n) {
-    return '$n cartões. Toca num dia para o abrir.';
+    return '$n cartas. Toca num dia para o abrir.';
   }
 
   @override
@@ -190,7 +193,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String searchNCards(int n) {
-    return 'Procurar em $n cartões';
+    return 'Procurar em $n cartas';
   }
 
   @override
@@ -201,8 +204,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cartões',
-      one: '1 cartão',
+      other: '$n cartas',
+      one: '1 carta',
     );
     return '$_temp0';
   }
@@ -250,7 +253,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get nothingThisWeekYet =>
-      'Ainda nada esta semana. Cinco cartões começam-na.';
+      'Ainda nada esta semana. Cinco cartas começam-na.';
 
   @override
   String keptDaysOfSeven(int days) {
@@ -335,7 +338,7 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(id, {
       'day_one': 'Toda a gente começa aqui.',
       'reading': 'O hábito começou.',
-      'answering': 'Comprometes-te antes de virar o cartão.',
+      'answering': 'Comprometes-te antes de virar a carta.',
       'saying_how_sure': 'Pões um número no que achas que sabes.',
       'calibrated': 'O que dizes saber, sabes.',
       'holding': 'Fica contigo semanas depois.',
@@ -347,12 +350,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String stepRead(int n) {
-    return 'mais $n cartões para ler';
+    return 'mais $n cartas para ler';
   }
 
   @override
   String stepAnswer(int n) {
-    return 'mais $n cartões para responder';
+    return 'mais $n cartas para responder';
   }
 
   @override
@@ -362,7 +365,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String stepHold(int n) {
-    return 'mais $n cartões para reter';
+    return 'mais $n cartas para reter';
   }
 
   @override
@@ -783,8 +786,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n freezes disponíveis',
-      one: '1 freeze disponível',
+      other: '$n proteções disponíveis',
+      one: '1 proteção disponível',
     );
     return '$_temp0';
   }
@@ -814,7 +817,7 @@ class AppLocalizationsPt extends AppLocalizations {
       other: '$n dias continuam a ser',
       one: 'Um dia continua a ser',
     );
-    return '$_temp0 o teu recorde. Lê os cinco de hoje e o contador recomeça do um.';
+    return '$_temp0 o teu recorde. Lê as cinco de hoje e o contador recomeça do um.';
   }
 
   @override
@@ -841,14 +844,14 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cartões que acertaste voltam hoje',
-      one: '1 cartão que acertaste volta hoje',
+      other: '$n cartas que acertaste voltam hoje',
+      one: '1 carta que acertaste volta hoje',
     );
     return '$_temp0';
   }
 
   @override
-  String get startAgainWithTodaysFive => 'Recomeçar com os cinco de hoje';
+  String get startAgainWithTodaysFive => 'Recomeçar com as cinco de hoje';
 
   @override
   String moveMyReminderTo(String time) {
@@ -1069,7 +1072,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get introThirtyLine =>
-      'Uma notificação, cinco cartões e uma sequência que não vais querer quebrar.';
+      'Uma notificação, cinco cartas e uma sequência que não vais querer quebrar.';
 
   @override
   String introNotifyWhen(String time) {
@@ -1115,9 +1118,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'PARA LEVAR CONTIGO';
-
-  @override
-  String get theBarMoveCaps => 'A FRASE DE BAR';
 
   @override
   String get widgetFootPlain => 'Cinco cartas, dois minutos.';
@@ -1474,19 +1474,30 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get swipeForTheNextOne => 'Desliza para o próximo';
+  String get swipeForTheNextOne => 'Desliza para a próxima';
 
   @override
-  String get musicSound => 'Som nos cartões de música';
+  String get musicSound => 'Som nas cartas de música';
 
   @override
-  String get musicSoundIsOff => 'O som dos cartões de música está desligado.';
+  String get musicSoundIsOff => 'O som das cartas de música está desligado.';
 
   @override
   String get musicSoundTurnOn => 'Ligar';
 
   @override
-  String get thatWasTheOnlyOne => 'Era o único';
+  String get thatWasTheOnlyOne => 'Era a única';
+
+  @override
+  String get lastOne => 'A última';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Já viste as $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Recomeçar pela primeira';
 
   @override
   String indexOfN(int i, int n) {
@@ -1494,7 +1505,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get couldNotRenderCard => 'Não foi possível desenhar o cartão.';
+  String get couldNotRenderCard => 'Não foi possível desenhar a carta.';
 
   @override
   String get textCopiedInstead => 'Em vez disso, o texto foi copiado.';
@@ -1507,9 +1518,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'A fonte vai com ele';
-
-  @override
-  String get fiveADayALittleSharper => 'Cinco por dia. Um pouco mais afiado.';
 
   @override
   String get shareMyDay => 'Partilhar';
@@ -1596,11 +1604,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get nudgeTitle => 'As tuas cinco estão prontas';
 
   @override
-  String get nudgeFreezeTitle => 'O teu congelamento está a aguentar';
+  String get nudgeFreezeTitle => 'A tua sequência está protegida';
 
   @override
   String nudgeFreezeBody(String question) {
-    return 'Ontem está coberto. Hoje: $question';
+    return 'Ontem ficou protegido. Hoje: $question';
   }
 
   @override
@@ -2047,12 +2055,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String successFootFirstCharge(String date) {
-    return 'Primeira cobrança em $date · cancele quando quiser';
+    return 'Primeira cobrança em $date · cancela quando quiseres';
   }
 
   @override
   String successFootRenews(String date) {
-    return 'Renova em $date · cancele quando quiser';
+    return 'Renova em $date · cancela quando quiseres';
   }
 
   @override
@@ -2076,7 +2084,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get revealSeePicture => 'Ver o desenho';
 
   @override
-  String get revealPlayScene => 'Experimente você';
+  String get revealPlayScene => 'Experimenta tu';
 
   @override
   String get revealBackToAnswer => 'Voltar à resposta';
@@ -2088,7 +2096,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sceneLockIn => 'CONFIRMAR';
 
   @override
-  String get sceneYou => 'VOCÊ';
+  String get sceneYou => 'TU';
 
   @override
   String get sceneTruth => 'REAL';
@@ -2097,22 +2105,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sceneTryAgain => 'De novo';
 
   @override
-  String get sceneDrawHint => 'Desenhe seu palpite com o dedo';
+  String get sceneDrawHint => 'Desenha o teu palpite com o dedo';
 
   @override
-  String get sceneHoldHint => 'Pressione e segure';
+  String get sceneHoldHint => 'Pressiona e segura';
 
   @override
-  String get sceneSwipeHint => 'Deslize ou toque';
+  String get sceneSwipeHint => 'Desliza ou toca';
 
   @override
-  String get sceneTapToPick => 'Toque na sua escolha';
+  String get sceneTapToPick => 'Toca na tua escolha';
 
   @override
-  String get sceneShowMe => 'Mostre';
+  String get sceneShowMe => 'Mostra-me';
 
   @override
-  String get sceneYourGuess => 'Seu palpite';
+  String get sceneYourGuess => 'O teu palpite';
 
   @override
   String sceneNOfM(int n, int m) {
@@ -2126,11 +2134,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get reportedThanks => 'Reportado. Obrigado.';
 
   @override
-  String get reportTitle => 'O que está errado neste cartão?';
+  String get reportTitle => 'O que está errado nesta carta?';
 
   @override
   String get reportLead =>
-      'Verificamos cada aviso nas fontes e corrigimos o cartão.';
+      'Verificamos cada aviso nas fontes e corrigimos a carta.';
 
   @override
   String get reportFact => 'Um facto está errado';
@@ -2222,9 +2230,9 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cartões',
-      one: '$n cartão',
-      zero: '$n cartões',
+      other: '$n cartas',
+      one: '$n carta',
+      zero: '$n cartas',
     );
     return '$_temp0';
   }
@@ -2249,8 +2257,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cartões',
-      one: '1 cartão',
+      other: '$n cartas',
+      one: '1 carta',
     );
     return '$_temp0';
   }
@@ -2282,8 +2290,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cartões retidos',
-      one: '1 cartão retido',
+      other: '$n cartas retidas',
+      one: '1 carta retida',
     );
     return '$_temp0';
   }
@@ -2369,11 +2377,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get journeyOfThree => 'de 3';
 
   @override
-  String get journeyHardNow => 'Os cartões que abres.';
+  String get journeyHardNow => 'As cartas que abres.';
 
   @override
   String journeyHardThen(String v, String month) {
-    return 'Os cartões que abres. $v em $month';
+    return 'As cartas que abres. $v em $month';
   }
 
   @override
@@ -2444,9 +2452,9 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'cartões ainda contigo',
-      one: 'cartão ainda contigo',
-      zero: 'cartões ainda contigo',
+      other: 'cartas ainda contigo',
+      one: 'carta ainda contigo',
+      zero: 'cartas ainda contigo',
     );
     return '$_temp0';
   }
@@ -2693,9 +2701,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Correções';
-
-  @override
   String get didYouKnow => 'Sabias?';
 
   @override
@@ -2732,53 +2737,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => 'Esta é a edição de hoje';
-
-  @override
-  String get editionTomorrow => 'A de amanhã sai de manhã';
-
-  @override
-  String get eraAncient => 'O mundo antigo';
-
-  @override
-  String get eraAncientWhen => 'Antes de 500';
-
-  @override
-  String get eraEarlyModern => 'A Idade Moderna';
-
-  @override
-  String get eraEarlyModernWhen => 'De 1500 a 1800';
-
-  @override
-  String get eraMedieval => 'A Idade Média';
-
-  @override
-  String get eraMedievalWhen => 'De 500 a 1500';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Mais $n desta época',
-      one: 'Mais 1 desta época',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'O século XIX';
-
-  @override
-  String get eraNineteenthWhen => 'De 1800 a 1900';
-
-  @override
-  String get eraRecent => 'Este século';
-
-  @override
-  String get eraRecentWhen => 'Desde 2000';
-
-  @override
   String get eraShortAncient => 'Antiguidade';
 
   @override
@@ -2795,12 +2753,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => 'Século XX';
-
-  @override
-  String get eraTwentieth => 'O século passado';
-
-  @override
-  String get eraTwentiethWhen => 'De 1900 a 2000';
 
   @override
   String get fewCards => 'Em poucas cartas';
@@ -2824,9 +2776,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get howSure => 'Até que ponto tenho a certeza, e porquê?';
-
-  @override
-  String get inNumbers => 'Em números';
 
   @override
   String inRange(int pts, String said) {
@@ -2964,18 +2913,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pickOneFirst => 'Escolhe uma primeiro';
 
   @override
-  String get puzzleOfTheDay => 'O enigma do dia';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts pts';
   }
 
   @override
   String get rightLastTime => 'Certa da última vez';
-
-  @override
-  String get sameForEveryoneCaps => 'Igual para todos';
 
   @override
   String get sayFalse => 'Falso';
@@ -3102,19 +3045,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Manchete';
-
-  @override
-  String get throughTime => 'Através do tempo';
-
-  @override
-  String get throughTimeLine =>
-      'Do mundo antigo a este ano. Escreve um ano, ou deixa o acaso escolher';
-
-  @override
   String leanHint(String or) {
     return 'Desliza o «$or» até onde estás';
   }
@@ -3149,7 +3079,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get spotTitle => 'Descobre a falsa';
 
   @override
-  String get spotLine => 'Três são verdadeiras. Uma não.';
+  String get spotLine =>
+      'Quatro afirmações. Três são verdadeiras, uma é falsa.';
 
   @override
   String get spotPrompt => 'Toca na que achas que é falsa';
@@ -3170,66 +3101,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get spotYours => 'A tua escolha';
 
   @override
-  String get yearHint => 'Escreve um ano';
-
-  @override
-  String get yearAd => 'd.C.';
-
-  @override
-  String get yearBc => 'a.C.';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '$year d.C.';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year a.C.';
-  }
-
-  @override
-  String get yearGo => 'Ir para este ano';
-
-  @override
-  String get yearRandom => 'Ao acaso';
-
-  @override
-  String get yearRandomHint => 'Vai para um ano que uma das cartas refere';
-
-  @override
-  String yearNearest(String year) {
-    return 'Primeiro o mais perto de $year';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Nenhuma carta aqui fala de um ano perto de $year. Estas são da sua época.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Hoje não há nada de perto de $year. Esta é a época mais próxima.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year ainda está para vir. Aqui está este século.';
-  }
-
-  @override
-  String get yearZero => 'Não houve ano 0. Experimenta 1 a.C. ou 1 d.C.';
-
-  @override
   String get todayLabel => 'Hoje';
-
-  @override
-  String get todaysEdition => 'Edição de hoje';
 
   @override
   String get toneCurious => 'Curioso';

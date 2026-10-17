@@ -87,6 +87,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareThisPill => 'このカードを共有';
 
   @override
+  String get share => '共有';
+
+  @override
   String cardOf(int k, int n) {
     return '$n枚中$k枚目';
   }
@@ -1079,9 +1082,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get barMoveCaps => '持ち帰ること';
 
   @override
-  String get theBarMoveCaps => '会話のひと言';
-
-  @override
   String get widgetFootPlain => '5枚のカード、2分。';
 
   @override
@@ -1440,6 +1440,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get thatWasTheOnlyOne => 'これが最後の1枚でした';
 
   @override
+  String get lastOne => '最後の1枚';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word枚、これで全部です。';
+  }
+
+  @override
+  String get deckEndAgain => '最初からもう一度';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1458,9 +1469,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '出典も一緒に';
-
-  @override
-  String get fiveADayALittleSharper => '1日5枚。少しだけ鋭く。';
 
   @override
   String get shareMyDay => 'シェア';
@@ -2555,9 +2563,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get corrections => '訂正';
-
-  @override
   String get didYouKnow => '知ってた？';
 
   @override
@@ -2592,52 +2597,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => '今日の号はここまで';
-
-  @override
-  String get editionTomorrow => '明日の号は朝に届きます';
-
-  @override
-  String get eraAncient => '古代の世界';
-
-  @override
-  String get eraAncientWhen => '500年より前';
-
-  @override
-  String get eraEarlyModern => '近世';
-
-  @override
-  String get eraEarlyModernWhen => '1500年〜1800年';
-
-  @override
-  String get eraMedieval => '中世';
-
-  @override
-  String get eraMedievalWhen => '500年〜1500年';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'この時代からあと$n枚',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19世紀';
-
-  @override
-  String get eraNineteenthWhen => '1800年〜1900年';
-
-  @override
-  String get eraRecent => '今世紀';
-
-  @override
-  String get eraRecentWhen => '2000年以降';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2654,12 +2613,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900年代';
-
-  @override
-  String get eraTwentieth => '前世紀';
-
-  @override
-  String get eraTwentiethWhen => '1900年〜2000年';
 
   @override
   String get fewCards => '数枚で分かる';
@@ -2683,9 +2636,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get howSure => 'どれくらい確かで、なぜそう思う？';
-
-  @override
-  String get inNumbers => '数字で見る';
 
   @override
   String inRange(int pts, String said) {
@@ -2819,18 +2769,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pickOneFirst => 'まず1つ選んで';
 
   @override
-  String get puzzleOfTheDay => '今日のパズル';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w・${pts}pt';
   }
 
   @override
   String get rightLastTime => '前回は正解';
-
-  @override
-  String get sameForEveryoneCaps => 'みんな同じ';
 
   @override
   String get sayFalse => '間違い';
@@ -2955,18 +2899,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'トップ記事';
-
-  @override
-  String get throughTime => '時代をめぐる';
-
-  @override
-  String get throughTimeLine => '古代から今年まで。年を入力するか、偶然に任せよう';
-
-  @override
   String leanHint(String or) {
     return '「$or」を自分の立場までスライド';
   }
@@ -3001,7 +2933,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotTitle => '間違いを見つけよう';
 
   @override
-  String get spotLine => '3つは正しく、1つは間違い。';
+  String get spotLine => '4つの主張。3つは正しく、1つは間違い。';
 
   @override
   String get spotPrompt => '間違いだと思うものをタップ';
@@ -3022,66 +2954,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotYours => 'あなたの選択';
 
   @override
-  String get yearHint => '年を入力';
-
-  @override
-  String get yearAd => '西暦';
-
-  @override
-  String get yearBc => '紀元前';
-
-  @override
-  String yearNamed(String year) {
-    return '$year年';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '西暦$year年';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '紀元前$year年';
-  }
-
-  @override
-  String get yearGo => 'この年へ';
-
-  @override
-  String get yearRandom => 'ランダム';
-
-  @override
-  String get yearRandomHint => 'カードに出てくる年のどれかへ';
-
-  @override
-  String yearNearest(String year) {
-    return '$yearに近い順';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '$yearに近い年を挙げるカードはありません。同じ時代のカードです。';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '今日は$yearごろのカードがありません。いちばん近い時代です。';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$yearはまだ先。今世紀をどうぞ。';
-  }
-
-  @override
-  String get yearZero => '0年はありません。紀元前1年か西暦1年を試して。';
-
-  @override
   String get todayLabel => '今日';
-
-  @override
-  String get todaysEdition => '今日の号';
 
   @override
   String get toneCurious => '好奇心';

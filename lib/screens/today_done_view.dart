@@ -12,6 +12,7 @@ import '../data/daily.dart';
 import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
+import '../widgets/card_edge.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import 'journey_screen.dart';
@@ -389,8 +390,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
               offset: Offset(x, 0),
               child: Transform.scale(
                 scale: 1 - dist * 0.07,
-                child: Opacity(
-                  opacity: 1 - dist * 0.5,
+                // Quieter to the side, as the deck's next card is: drawn
+                // toward the page rather than faded into a window onto it.
+                child: CardDim(
+                  amount: dist * 0.5,
+                  ground: context.p.surface,
                   child: ExcludeSemantics(
                     excluding: !front,
                     child: IgnorePointer(
@@ -598,13 +602,16 @@ class _CardFace extends StatelessWidget {
     final Color sub = ink.withValues(alpha: darkInk ? 0.6 : 0.66);
     final Color soft = ink.withValues(alpha: darkInk ? 0.10 : 0.14);
 
+    final Palette p = context.p;
     return Container(
       width: width,
       height: height,
       padding: EdgeInsets.all(28 * s),
       decoration: BoxDecoration(
         color: pill.color,
-        borderRadius: BorderRadius.circular(36 * s),
+        // The deck's corner, at the shelf's scale: one card, one shape.
+        borderRadius: BorderRadius.circular(34 * s),
+        border: cardHairline(pill.color, p.surface),
         boxShadow: [
           // A pool under the card rather than a wash over the screen: the
           // canvas throws the card's colour across the whole page, which on
@@ -615,16 +622,17 @@ class _CardFace extends StatelessWidget {
           // on the first pass and less far than the canvas asks.
           if (glow > 0)
             BoxShadow(
-              color: pill.color.withValues(alpha: 0.52 * glow),
+              color: pill.color.withValues(
+                alpha: (p.isDark ? 0.52 : 0.36) * glow,
+              ),
               offset: Offset(0, 30 * s),
               blurRadius: 64 * s,
               spreadRadius: -26 * s,
             ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.42 + 0.08 * glow),
-            offset: const Offset(0, 16),
-            blurRadius: 36,
-          ),
+          // On paper, the deck's own lift under the pool. Half of black,
+          // blurred, was a grey slab there; on the night paper it was
+          // black on black, and is not drawn.
+          ...cardLift(p),
         ],
       ),
       child: Column(

@@ -8,6 +8,7 @@ import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../state/explore_play.dart';
 import '../../theme.dart';
+import '../card_edge.dart';
 import 'parts.dart';
 
 /// Did you know? — artboard 141b's pile.
@@ -210,10 +211,7 @@ class _DidYouKnowState extends State<DidYouKnow>
         child: Opacity(
           opacity: 0.55,
           child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(24),
-            ),
+            decoration: cardFace(context, p.color, radius: 24),
           ),
         ),
       ),
@@ -303,18 +301,22 @@ class _DidYouKnowState extends State<DidYouKnow>
     );
     return Container(
       padding: const EdgeInsets.all(20),
+      // On black, a deep shadow is what parts a card from the pile under
+      // it; on paper, the deck's own lift and, where the colour is the
+      // page's, its hairline.
       decoration: BoxDecoration(
         color: p.color,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(
-              alpha: context.p.isDark ? 0.6 : 0.18,
-            ),
-            blurRadius: 34,
-            offset: const Offset(0, 14),
-          ),
-        ],
+        border: cardHairline(p.color, context.p.surface),
+        boxShadow: context.p.isDark
+            ? const [
+                BoxShadow(
+                  color: Color(0x99000000),
+                  blurRadius: 34,
+                  offset: Offset(0, 14),
+                ),
+              ]
+            : cardLift(context.p),
       ),
       child: Stack(
         clipBehavior: Clip.none,

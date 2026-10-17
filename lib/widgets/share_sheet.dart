@@ -183,14 +183,21 @@ class _ShareSheetState extends State<_ShareSheet> {
             const SizedBox(height: 20),
             RepaintBoundary(
               key: _cardKey,
-              child: _ShareCard(pill: pill),
+              // An image, not a screen: set at one size whatever the
+              // reader's text size, or a large setting crops the question
+              // off a picture somebody else will see at theirs.
+              child: MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: TextScaler.noScaling),
+                child: _ShareCard(pill: pill),
+              ),
             ),
             const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
                   child: PrimaryButton(
-                    label: _busy ? context.l10n.rendering : 'Share',
+                    label: _busy ? context.l10n.rendering : context.l10n.share,
                     height: 52,
                     onPressed: _busy ? null : _shareImage,
                   ),
@@ -208,10 +215,9 @@ class _ShareSheetState extends State<_ShareSheet> {
             Center(
               child: Text(
                 context.l10n.theSourceGoesWithIt,
-                style: AppText.body(
-                  size: 12,
-                  color: Colors.black.withValues(alpha: 0.4),
-                ),
+                // The palette's, not black: on the night sheet black was
+                // not there to read.
+                style: AppText.body(size: 12, color: context.p.inkMuted),
               ),
             ),
           ],
@@ -285,7 +291,7 @@ class _ShareCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    context.l10n.theBarMoveCaps,
+                    context.l10n.barMoveCaps,
                     style: AppText.label(
                       size: 9,
                       spacing: 1.4,
@@ -306,6 +312,9 @@ class _ShareCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            // The name, and where to find it: a picture in a chat or a
+            // story loses the link that went with it, so the address is
+            // on the picture itself.
             Row(
               children: [
                 Text(
@@ -316,18 +325,14 @@ class _ShareCard extends StatelessWidget {
                     color: onCard.withValues(alpha: 0.7),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    context.l10n.fiveADayALittleSharper,
-                    textAlign: TextAlign.right,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 10.5,
-                      weight: FontWeight.w500,
-                      color: onCard.withValues(alpha: 0.45),
-                    ),
+                const Spacer(),
+                Text(
+                  kSiteHost,
+                  style: AppText.body(
+                    size: 10.5,
+                    weight: FontWeight.w600,
+                    spacing: 0.2,
+                    color: onCard.withValues(alpha: 0.55),
                   ),
                 ),
               ],

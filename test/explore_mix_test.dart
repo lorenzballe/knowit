@@ -17,7 +17,6 @@ void main() {
     ...?m.practical?.pills.map((p) => p.id),
     ...?m.debates?.pills.map((p) => p.id),
     ...m.work.cards.map((p) => p.id),
-    for (final (_, cards) in m.eras) ...cards.map((p) => p.id),
     ...?m.stories?.pills.map((p) => p.id),
     ...?m.sharpest?.pills.map((p) => p.id),
     ...m.didYouKnow.map((p) => p.id),
@@ -101,13 +100,6 @@ void main() {
       for (final p in mix.whatIf) {
         expect(p.ask, isNotEmpty, reason: p.id);
       }
-      for (final (era, cards) in mix.eras) {
-        expect(kEras, contains(era));
-        for (final p in cards) {
-          expect(p.era, era, reason: p.id);
-        }
-      }
-      expect(mix.front, isNotNull);
     });
 
     test('is the same for everybody on a day, and dealt afresh the next', () {
@@ -474,14 +466,6 @@ void main() {
         final ranks = s.cards.map((p) => p.difficulty.index).toList();
         expect(ranks, [...ranks]..sort(), reason: s.key);
       }
-    });
-
-    test('the front page is the same however the bank is ordered', () {
-      final a = frontPage(bank, day: 20735)!;
-      final b = frontPage(List.of(bank.reversed), day: 20735)!;
-      expect(b.cards.map((p) => p.id), a.cards.map((p) => p.id));
-      expect(a.numbers.every((p) => shelfFigure(p) != null), isTrue);
-      expect(a.columns.map((p) => p.topic), isNot(contains(a.lead.topic)));
     });
   });
 }

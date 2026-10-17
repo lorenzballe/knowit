@@ -12,6 +12,7 @@ import '../theme.dart';
 import 'explore/parts.dart' show upper;
 import 'scaled_text.dart';
 import 'subject_icon.dart';
+import 'card_edge.dart';
 
 /// The cards of Explore's always-on shelves, one drawing per kind of shelf
 /// (design 132, "one signature per kind"): the figure itself for a number
@@ -129,10 +130,7 @@ class _NumberCard extends StatelessWidget {
     final figure = shelfFigure(pill) ?? '?';
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-      decoration: BoxDecoration(
-        color: pill.color,
-        borderRadius: BorderRadius.circular(22),
-      ),
+      decoration: cardFace(context, pill.color, radius: 22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

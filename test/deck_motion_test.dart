@@ -197,9 +197,9 @@ void main() {
   testWidgets('a deck that refuses to move on puts the card back', (
     tester,
   ) async {
-    // The deck viewer wraps with `% length`, so a deck of one advances to
-    // itself. The card must land back under the reader rather than stay
-    // wherever the throw sent it.
+    // A deck whose owner declines to move it on keeps its index. The card
+    // must land back under the reader rather than stay wherever the throw
+    // sent it.
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -87,6 +87,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get shareThisPill => '이 카드 공유';
 
   @override
+  String get share => '공유';
+
+  @override
   String cardOf(int k, int n) {
     return '$n장 중 $k번째';
   }
@@ -1083,9 +1086,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get barMoveCaps => '기억할 것';
 
   @override
-  String get theBarMoveCaps => '대화용 한 문장';
-
-  @override
   String get widgetFootPlain => '카드 다섯 장, 2분.';
 
   @override
@@ -1444,6 +1444,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get thatWasTheOnlyOne => '마지막 한 장이었어요';
 
   @override
+  String get lastOne => '마지막 장';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word장, 이게 전부예요.';
+  }
+
+  @override
+  String get deckEndAgain => '처음부터 다시';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1462,9 +1473,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '출처도 함께';
-
-  @override
-  String get fiveADayALittleSharper => '하루 다섯 장. 조금 더 예리하게.';
 
   @override
   String get shareMyDay => '공유';
@@ -2570,9 +2578,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get corrections => '바로잡습니다';
-
-  @override
   String get didYouKnow => '알고 있었나요?';
 
   @override
@@ -2607,52 +2612,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => '오늘 판은 여기까지';
-
-  @override
-  String get editionTomorrow => '내일 판은 아침에 나와요';
-
-  @override
-  String get eraAncient => '고대 세계';
-
-  @override
-  String get eraAncientWhen => '500년 이전';
-
-  @override
-  String get eraEarlyModern => '근세';
-
-  @override
-  String get eraEarlyModernWhen => '1500년~1800년';
-
-  @override
-  String get eraMedieval => '중세';
-
-  @override
-  String get eraMedievalWhen => '500년~1500년';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '이 시대 카드 $n장 더',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19세기';
-
-  @override
-  String get eraNineteenthWhen => '1800년~1900년';
-
-  @override
-  String get eraRecent => '이번 세기';
-
-  @override
-  String get eraRecentWhen => '2000년 이후';
-
-  @override
   String get eraShortAncient => '고대';
 
   @override
@@ -2669,12 +2628,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900년대';
-
-  @override
-  String get eraTwentieth => '지난 세기';
-
-  @override
-  String get eraTwentiethWhen => '1900년~2000년';
 
   @override
   String get fewCards => '카드 몇 장으로';
@@ -2698,9 +2651,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get howSure => '나는 얼마나 확신하고, 왜 그럴까?';
-
-  @override
-  String get inNumbers => '숫자로 보기';
 
   @override
   String inRange(int pts, String said) {
@@ -2835,18 +2785,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pickOneFirst => '먼저 하나 고르세요';
 
   @override
-  String get puzzleOfTheDay => '오늘의 퍼즐';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts점';
   }
 
   @override
   String get rightLastTime => '지난번엔 맞혔어요';
-
-  @override
-  String get sameForEveryoneCaps => '모두에게 같아요';
 
   @override
   String get sayFalse => '거짓';
@@ -2971,18 +2915,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => '머리기사';
-
-  @override
-  String get throughTime => '시간 여행';
-
-  @override
-  String get throughTimeLine => '고대부터 올해까지. 연도를 입력하거나, 우연에 맡겨 보세요';
-
-  @override
   String leanHint(String or) {
     return '‘$or’를 내 입장까지 밀어 보세요';
   }
@@ -3017,7 +2949,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get spotTitle => '거짓을 찾아보세요';
 
   @override
-  String get spotLine => '셋은 참, 하나는 거짓.';
+  String get spotLine => '네 가지 주장. 셋은 참, 하나는 거짓.';
 
   @override
   String get spotPrompt => '거짓이라고 생각하는 것을 누르세요';
@@ -3038,66 +2970,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get spotYours => '내 선택';
 
   @override
-  String get yearHint => '연도를 입력하세요';
-
-  @override
-  String get yearAd => '서기';
-
-  @override
-  String get yearBc => '기원전';
-
-  @override
-  String yearNamed(String year) {
-    return '$year년';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '서기 $year년';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '기원전 $year년';
-  }
-
-  @override
-  String get yearGo => '이 해로 가기';
-
-  @override
-  String get yearRandom => '랜덤';
-
-  @override
-  String get yearRandomHint => '카드에 나오는 해 가운데 하나로 가요';
-
-  @override
-  String yearNearest(String year) {
-    return '$year에 가까운 순서';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '$year 가까운 해를 말하는 카드가 없어요. 같은 시대의 카드예요.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '오늘은 $year 무렵의 카드가 없어요. 가장 가까운 시대예요.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year: 아직 오지 않은 해예요. 이번 세기를 보여 드려요.';
-  }
-
-  @override
-  String get yearZero => '0년은 없었어요. 기원전 1년이나 서기 1년을 입력해 보세요.';
-
-  @override
   String get todayLabel => '오늘';
-
-  @override
-  String get todaysEdition => '오늘 판';
 
   @override
   String get toneCurious => '호기심';

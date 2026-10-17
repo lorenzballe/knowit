@@ -19,6 +19,7 @@ import 'deck_viewer_screen.dart';
 import 'path_screen.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
+import '../widgets/card_edge.dart';
 
 /// Your journey, as artboard 137a: tiles, two to a row.
 ///
@@ -750,6 +751,9 @@ class _ScoreChart extends StatelessWidget {
       builder: (context, box) {
         final double w = box.maxWidth;
         final geo = _ScoreGeometry(w, weeks.length, top);
+        final double hit = weeks.length < 2
+            ? 44
+            : math.min(44, (geo.x(1) - geo.x(0)).abs());
         final Offset mark = Offset(geo.x(at), geo.y(scores[at]));
         return GestureDetector(
           key: const ValueKey('journey-chart'),
@@ -788,12 +792,14 @@ class _ScoreChart extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Targets 44 high, and as wide as 44 or the room between
+                // two weeks, whichever is less, so neighbours never overlap.
                 for (var i = 0; i < weeks.length; i++)
                   Positioned(
-                    left: geo.x(i) - 13,
-                    top: geo.y(scores[i]) - 13,
-                    width: 26,
-                    height: 26,
+                    left: geo.x(i) - hit / 2,
+                    top: geo.y(scores[i]) - 22,
+                    width: hit,
+                    height: 44,
                     child: Semantics(
                       button: true,
                       selected: i == at,
@@ -2107,10 +2113,7 @@ class _WeekAsksTile extends StatelessWidget {
                       width: 3,
                       height: 36,
                       margin: const EdgeInsets.only(right: 12, top: 2),
-                      decoration: BoxDecoration(
-                        color: pill.color,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
+                      decoration: cardFace(context, pill.color, radius: 2),
                     ),
                     Expanded(
                       child: Text(
