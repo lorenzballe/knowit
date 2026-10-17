@@ -526,6 +526,21 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'Twoje karty';
+
+  @override
+  String get nothingYet => 'Jeszcze nic';
+
+  @override
+  String get lastSevenDays => 'Ostatnie 7 dni';
+
+  @override
+  String get accountSection => 'Konto';
+
+  @override
+  String get aboutSection => 'Informacje';
+
+  @override
   String get manageSubscription => 'Zarządzaj subskrypcją';
 
   @override

@@ -513,6 +513,21 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'Je kaarten';
+
+  @override
+  String get nothingYet => 'Nog niets';
+
+  @override
+  String get lastSevenDays => 'Laatste 7 dagen';
+
+  @override
+  String get accountSection => 'Account';
+
+  @override
+  String get aboutSection => 'Over';
+
+  @override
   String get manageSubscription => 'Abonnement beheren';
 
   @override

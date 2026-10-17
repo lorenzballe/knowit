@@ -499,6 +499,21 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get yourCards => '你的卡片';
+
+  @override
+  String get nothingYet => '还没有';
+
+  @override
+  String get lastSevenDays => '最近 7 天';
+
+  @override
+  String get accountSection => '账号';
+
+  @override
+  String get aboutSection => '关于';
+
+  @override
   String get manageSubscription => '管理订阅';
 
   @override
