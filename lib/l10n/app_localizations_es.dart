@@ -41,7 +41,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get freezeKeptStreak => 'Un freeze salvó la racha';
+  String get freezeKeptStreak => 'Un comodín salvó la racha';
 
   @override
   String countWord(String n) {
@@ -784,8 +784,8 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n freezes disponibles',
-      one: '1 freeze disponible',
+      other: '$n comodines disponibles',
+      one: '1 comodín disponible',
     );
     return '$_temp0';
   }
@@ -1599,11 +1599,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get nudgeTitle => 'Tus cinco están listas';
 
   @override
-  String get nudgeFreezeTitle => 'Tu congelación aguanta';
+  String get nudgeFreezeTitle => 'Tu racha sigue a salvo';
 
   @override
   String nudgeFreezeBody(String question) {
-    return 'Ayer está cubierto. Hoy: $question';
+    return 'Ayer te cubrió un comodín. Hoy: $question';
   }
 
   @override

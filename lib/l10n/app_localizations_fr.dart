@@ -41,7 +41,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get freezeKeptStreak => 'Un freeze a sauvé la série';
+  String get freezeKeptStreak => 'Un joker a sauvé la série';
 
   @override
   String countWord(String n) {
@@ -786,8 +786,8 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n freezes en réserve',
-      one: '1 freeze en réserve',
+      other: '$n jokers en réserve',
+      one: '1 joker en réserve',
     );
     return '$_temp0';
   }
@@ -1599,11 +1599,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nudgeTitle => 'Tes cinq sont prêtes';
 
   @override
-  String get nudgeFreezeTitle => 'Ton gel tient';
+  String get nudgeFreezeTitle => 'Ta série est protégée';
 
   @override
   String nudgeFreezeBody(String question) {
-    return 'Hier est couvert. Aujourd\'hui : $question';
+    return 'Hier, ton joker t\'a couvert. Aujourd\'hui : $question';
   }
 
   @override
@@ -1869,7 +1869,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get themeOriginsLine =>
-      'L\'origine de choses que vous utilisez chaque jour';
+      'L\'origine de choses que tu utilises chaque jour';
 
   @override
   String get themeStories => 'Histoires vraies';
@@ -1903,7 +1903,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get storyOpenCard => 'Ouvrir la carte';
 
   @override
-  String get themeDebates => 'Choisissez votre camp';
+  String get themeDebates => 'Choisis ton camp';
 
   @override
   String get themeDebatesLine =>
@@ -2096,7 +2096,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sceneLockIn => 'VALIDER';
 
   @override
-  String get sceneYou => 'VOUS';
+  String get sceneYou => 'TOI';
 
   @override
   String get sceneTruth => 'RÉEL';
@@ -2105,22 +2105,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sceneTryAgain => 'Recommencer';
 
   @override
-  String get sceneDrawHint => 'Dessinez votre idée du doigt';
+  String get sceneDrawHint => 'Dessine ton idée du doigt';
 
   @override
-  String get sceneHoldHint => 'Maintenez appuyé';
+  String get sceneHoldHint => 'Maintiens appuyé';
 
   @override
-  String get sceneSwipeHint => 'Glissez ou touchez';
+  String get sceneSwipeHint => 'Glisse ou touche';
 
   @override
-  String get sceneTapToPick => 'Touchez votre choix';
+  String get sceneTapToPick => 'Touche ton choix';
 
   @override
-  String get sceneShowMe => 'Montrez-moi';
+  String get sceneShowMe => 'Montre-moi';
 
   @override
-  String get sceneYourGuess => 'Votre idée';
+  String get sceneYourGuess => 'Ton idée';
 
   @override
   String sceneNOfM(int n, int m) {
