@@ -110,7 +110,10 @@ class _CopyRoom {
     }) {
       final TextStyle at = base.merge(style);
       TextPainter laidOut(double size, int? lines) => TextPainter(
-        text: TextSpan(text: text, style: at.copyWith(fontSize: size)),
+        text: TextSpan(
+          text: text,
+          style: at.copyWith(fontSize: size),
+        ),
         maxLines: lines,
         textAlign: TextAlign.center,
         textDirection: direction,
@@ -304,9 +307,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             0,
                             math.min(wanted, spare),
                           );
-                          final double band = fits < kIntroLeastBand
-                              ? 0
-                              : fits;
+                          final double band = fits < kIntroLeastBand ? 0 : fits;
                           // How much of the band's top a drawing that
                           // spans the width has to leave under Skip, in the
                           // band's own units: Skip's foot is a fixed height
@@ -379,7 +380,9 @@ class _IntroScreenState extends State<IntroScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  SizedBox(height: SkipCorner.heightOf(context)),
+                                  SizedBox(
+                                    height: SkipCorner.heightOf(context),
+                                  ),
                                   ...words,
                                 ],
                               ),

@@ -257,10 +257,7 @@ void main() {
         'explore': ExploreScreen(app: app),
         'archive': ArchiveScreen(app: app, onBack: () {}),
         'how': const HowScreen(),
-        'intro': IntroScreen(
-          onContinue: () {},
-          onSignIn: (_) async => false,
-        ),
+        'intro': IntroScreen(onContinue: () {}, onSignIn: (_) async => false),
         'mix': MixScreen(onDone: (_) {}, onSkip: () {}),
         'genres': GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),
         'comeback': ComebackScreen(app: app, onContinue: () {}),

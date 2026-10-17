@@ -485,9 +485,7 @@ void main() {
     ) async {
       final said = _listen();
       SharedPreferences.setMockInitialValues({});
-      await tester.pumpWidget(
-        const AstutoApp(),
-      );
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await tester.tap(find.byKey(const ValueKey('intro-sign-in')));
