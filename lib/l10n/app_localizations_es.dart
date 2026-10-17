@@ -1817,7 +1817,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consentLine =>
-      'Comparte qué pantallas abres y qué falla. Nunca tu nombre, tu correo ni lo que escribes.';
+      'Comparte cómo usas la app: nunca tu nombre, tu correo ni lo que escribes.';
 
   @override
   String get consentNo => 'No, gracias';

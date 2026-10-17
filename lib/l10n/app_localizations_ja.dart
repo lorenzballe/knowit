@@ -1753,8 +1753,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get consentTitle => 'Astute の改善に協力しませんか？';
 
   @override
-  String get consentLine =>
-      '開いた画面や、うまくいかなかったことを共有します。名前、メールアドレス、書いた内容は一切送りません。';
+  String get consentLine => 'アプリの使い方を共有します。名前、メール、書いた内容は送りません。';
 
   @override
   String get consentNo => 'いいえ、結構です';

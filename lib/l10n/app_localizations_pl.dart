@@ -1874,7 +1874,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get consentLine =>
-      'Udostępniaj, które ekrany otwierasz i co nie działa. Nigdy twojego imienia, e-maila ani tego, co piszesz.';
+      'Udostępniaj, jak korzystasz z aplikacji — nigdy imienia, e-maila ani tego, co piszesz.';
 
   @override
   String get consentNo => 'Nie, dziękuję';

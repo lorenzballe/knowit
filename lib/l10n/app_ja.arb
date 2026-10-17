@@ -423,7 +423,7 @@
   "usageOn": "共有中。名前も、書いた言葉も含みません。",
   "usageOff": "もう何も計測しません。",
   "consentTitle": "Astute の改善に協力しませんか？",
-  "consentLine": "開いた画面や、うまくいかなかったことを共有します。名前、メールアドレス、書いた内容は一切送りません。",
+  "consentLine": "アプリの使い方を共有します。名前、メール、書いた内容は送りません。",
   "consentNo": "いいえ、結構です",
   "consentYes": "はい、共有します",
   "consentChangeLater": "{profile}の「{setting}」からいつでも変更できます。",

@@ -1747,7 +1747,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get consentTitle => '帮我们把 Astute 做得更好？';
 
   @override
-  String get consentLine => '分享你打开了哪些页面、哪里出了问题。绝不包括你的名字、邮箱或你写下的任何内容。';
+  String get consentLine => '分享你使用应用的方式——绝不包括你的名字、邮箱或你写的内容。';
 
   @override
   String get consentNo => '不用了，谢谢';

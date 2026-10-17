@@ -1801,7 +1801,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get consentLine =>
-      'Hangi ekranları açtığını ve neyin ters gittiğini paylaş. Adın, e-postan ya da yazdıkların asla gönderilmez.';
+      'Uygulamayı nasıl kullandığını paylaş — adın, e-postan ve yazdıkların asla gitmez.';
 
   @override
   String get consentNo => 'Hayır, teşekkürler';

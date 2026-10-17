@@ -755,7 +755,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
     final List<Widget> foot = [
       SizedBox(height: short ? 8 : 12),
-      ..._offerBlock(context, short: short, stacked: scale >= 1.6),
+      ..._offerBlock(
+        context,
+        short: short,
+        stacked: scale >= 1.6,
+        oneScreen: oneScreen,
+      ),
       // What Apple requires beside a subscription, always on screen: a way
       // back to something already paid for — which needs no plans, so it is
       // there while the store is not — and the terms and the privacy
@@ -918,6 +923,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     BuildContext context, {
     required bool short,
     required bool stacked,
+    required bool oneScreen,
   }) {
     final l = context.l10n;
     final p = context.p;
@@ -965,7 +971,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 onTap: () => _pick(Plan.month),
               ),
     ];
-    final List<String>? trial = _trialSteps(short: short);
+    final List<String>? trial = _trialSteps(short: short && oneScreen);
     return [
       // Side by side, the same height on their own: three lines each, every
       // line fitted to the tile's width. At the largest text sizes, one

@@ -423,7 +423,7 @@
   "usageOn": "已共享，不含你的名字和你写的话。",
   "usageOff": "不再测量任何内容。",
   "consentTitle": "帮我们把 Astute 做得更好？",
-  "consentLine": "分享你打开了哪些页面、哪里出了问题。绝不包括你的名字、邮箱或你写下的任何内容。",
+  "consentLine": "分享你使用应用的方式——绝不包括你的名字、邮箱或你写的内容。",
   "consentNo": "不用了，谢谢",
   "consentYes": "好，分享",
   "consentChangeLater": "你可以随时在“{profile}”的“{setting}”中更改。",

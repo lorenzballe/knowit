@@ -2658,10 +2658,10 @@ abstract class AppLocalizations {
   /// **'Help make Astute better?'**
   String get consentTitle;
 
-  /// Under consentTitle on the intro: what would be shared, and what never is.
+  /// Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture.
   ///
   /// In en, this message translates to:
-  /// **'Share which screens you open and what goes wrong. Never your name, your email or anything you write.'**
+  /// **'Share how you use the app — never your name, your email or what you write.'**
   String get consentLine;
 
   /// The answer that keeps measurement off. Exactly as prominent as consentYes, side by side.

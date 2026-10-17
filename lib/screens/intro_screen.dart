@@ -820,7 +820,7 @@ class _StartBlock extends StatelessWidget {
           child: consent == null
               ? const SizedBox(width: double.infinity)
               : Padding(
-                  padding: const EdgeInsets.only(top: 2, bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 8),
                   // The question and the small print grow with the text
                   // size up to half as large again, and no further: past
                   // that, at twice the size, the two of them would take the

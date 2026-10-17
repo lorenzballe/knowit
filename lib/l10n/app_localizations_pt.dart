@@ -1816,7 +1816,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get consentLine =>
-      'Partilha que ecrãs abres e o que falha. Nunca o teu nome, o teu email ou o que escreves.';
+      'Partilha como usas a app — nunca o teu nome, o teu email ou o que escreves.';
 
   @override
   String get consentNo => 'Não, obrigado';

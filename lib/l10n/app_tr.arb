@@ -423,7 +423,7 @@
   "usageOn": "Paylaşılıyor; adın ve sözlerin olmadan.",
   "usageOff": "Artık hiçbir şey ölçülmüyor.",
   "consentTitle": "Astute'u daha iyi yapmamıza yardım eder misin?",
-  "consentLine": "Hangi ekranları açtığını ve neyin ters gittiğini paylaş. Adın, e-postan ya da yazdıkların asla gönderilmez.",
+  "consentLine": "Uygulamayı nasıl kullandığını paylaş — adın, e-postan ve yazdıkların asla gitmez.",
   "consentNo": "Hayır, teşekkürler",
   "consentYes": "Evet, paylaş",
   "consentChangeLater": "Bunu istediğin zaman {profile} › {setting} bölümünden değiştirebilirsin.",

@@ -25,7 +25,9 @@ class ConsentChoice extends StatelessWidget {
     final l = context.l10n;
     return Container(
       key: const ValueKey('consent'),
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+      // As little of a small phone as two lines and a row of answers
+      // can take: the picture above gives up what this takes.
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.07),
         borderRadius: BorderRadius.circular(16),
@@ -50,12 +52,12 @@ class ConsentChoice extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
             style: AppText.body(
-              size: 13,
-              height: 1.4,
+              size: 12.5,
+              height: 1.35,
               color: Colors.white.withValues(alpha: 0.62),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           _Answers(onAnswer: onAnswer, onDark: true),
         ],
       ),
@@ -198,8 +200,8 @@ class _Answer extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Container(
-          constraints: const BoxConstraints(minHeight: 46),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          constraints: const BoxConstraints(minHeight: 44),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: ink.withValues(alpha: onDark ? 0.12 : 0.06),

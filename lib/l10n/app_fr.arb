@@ -423,7 +423,7 @@
   "usageOn": "Partagées, sans ton nom ni tes mots.",
   "usageOff": "Plus rien n’est mesuré.",
   "consentTitle": "Tu nous aides à améliorer Astute ?",
-  "consentLine": "Partage les écrans que tu ouvres et ce qui ne marche pas. Jamais ton nom, ton e-mail ni ce que tu écris.",
+  "consentLine": "Partage ta façon d’utiliser l’app — jamais ton nom, ton e-mail ni ce que tu écris.",
   "consentNo": "Non, merci",
   "consentYes": "Oui, partager",
   "consentChangeLater": "Tu peux changer d’avis à tout moment dans {profile}, sous {setting}.",

@@ -423,7 +423,7 @@
   "usageOn": "Udostępniane, bez twojego imienia i twoich słów.",
   "usageOff": "Nic już nie jest mierzone.",
   "consentTitle": "Pomożesz ulepszyć Astute?",
-  "consentLine": "Udostępniaj, które ekrany otwierasz i co nie działa. Nigdy twojego imienia, e-maila ani tego, co piszesz.",
+  "consentLine": "Udostępniaj, jak korzystasz z aplikacji — nigdy imienia, e-maila ani tego, co piszesz.",
   "consentNo": "Nie, dziękuję",
   "consentYes": "Tak, udostępniaj",
   "consentChangeLater": "Możesz to zmienić w każdej chwili: {profile} › {setting}.",

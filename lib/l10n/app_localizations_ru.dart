@@ -1880,7 +1880,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get consentLine =>
-      'Делись тем, какие экраны ты открываешь и что идёт не так. Никогда — твоё имя, почта или то, что ты пишешь.';
+      'Делись тем, как пользуешься приложением, — без имени, почты и того, что ты пишешь.';
 
   @override
   String get consentNo => 'Нет, спасибо';

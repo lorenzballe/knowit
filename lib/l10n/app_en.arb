@@ -1739,9 +1739,9 @@
  "@consentTitle": {
   "description": "The question asked on the intro, and as a sheet once after the first finished day, before anything is measured: may Astute measure how the app is used?"
  },
- "consentLine": "Share which screens you open and what goes wrong. Never your name, your email or anything you write.",
+ "consentLine": "Share how you use the app — never your name, your email or what you write.",
  "@consentLine": {
-  "description": "Under consentTitle on the intro: what would be shared, and what never is."
+  "description": "Under consentTitle on the intro, in one breath with it: what would be shared, and what never is. Short: two lines on a small phone, so the intro keeps its picture."
  },
  "consentNo": "No, thanks",
  "@consentNo": {

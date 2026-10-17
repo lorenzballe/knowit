@@ -1763,8 +1763,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get consentTitle => 'Astute를 더 좋게 만드는 걸 도와줄래요?';
 
   @override
-  String get consentLine =>
-      '어떤 화면을 열고 무엇이 잘 안 됐는지 공유해요. 이름, 이메일, 직접 쓴 내용은 절대 보내지 않아요.';
+  String get consentLine => '앱 사용 방식을 공유해요. 이름, 이메일, 쓴 내용은 보내지 않아요.';
 
   @override
   String get consentNo => '아니요, 괜찮아요';
