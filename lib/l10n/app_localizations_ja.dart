@@ -545,17 +545,18 @@ class AppLocalizationsJa extends AppLocalizations {
       'どのカードもひとつの方針で書かれます。問う価値のある問い、理由を語る答え、そして繰り返し使える一手。';
 
   @override
-  String get howStep2Title => '出典と照らし合わせる';
+  String get howStep2Title => '出典つきで、批評役が読む';
 
   @override
   String get howStep2Line =>
-      'どのカードにも出典があり、公開前に別のモデルが批評家として読みます。裏づけのないものは削られます。';
+      'どのカードにも事実の出典があり、自分で確かめられます。ほとんどのカードは批評役の別のモデルが読み、確認できなかった点は人が確かめるリストに載ります。そのリストはまだ空ではありません。';
 
   @override
   String get howStep3Title => '毎朝、5枚を配る';
 
   @override
-  String get howStep3Line => '選んだ分野から、まだ読んでいないカードだけを。';
+  String get howStep3Line =>
+      '選んだ分野から、まだ読んでいないカードを。正解したカードは、身についたか確かめるために後でもう一度出てきます。';
 
   @override
   String get howStep4Title => '読者が正しさを保つ';
@@ -570,7 +571,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get howReportLine => 'カードの出典の横にある旗をタップして報告できます。';
 
   @override
-  String get howFoot => '出典は毎月見直しています。';
+  String get howFoot => '報告はすべて読んでいます。カードを弁護するより、直すほうを選びます。';
 
   @override
   String get signingIn => 'ログイン中…';

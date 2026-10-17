@@ -882,16 +882,16 @@ abstract class AppLocalizations {
   /// **'Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.'**
   String get howStep1Line;
 
-  /// No description provided for @howStep2Title.
+  /// How cards are written, step two: every card names its sources, and a second model reads most of them as a critic.
   ///
   /// In en, this message translates to:
-  /// **'Checked against its source'**
+  /// **'Sourced, then read by a critic'**
   String get howStep2Title;
 
-  /// No description provided for @howStep2Line.
+  /// Step two, said as it is: every card names its sources; most, not all, are read by a second model as a critic; what it cannot confirm waits on a list for a person, and that list is not empty. Do not promise that every claim is confirmed.
   ///
   /// In en, this message translates to:
-  /// **'Every card names where it comes from, and a second model reads it as a critic before it ships. What can\'t be backed up is cut.'**
+  /// **'Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.'**
   String get howStep2Line;
 
   /// No description provided for @howStep3Title.
@@ -900,10 +900,10 @@ abstract class AppLocalizations {
   /// **'Five, dealt each morning'**
   String get howStep3Title;
 
-  /// No description provided for @howStep3Line.
+  /// Step three: the day is dealt from the reader's subjects, cards they have not read, and a card they got right comes back later to see whether it stuck.
   ///
   /// In en, this message translates to:
-  /// **'From the subjects you picked, and never one you have already read.'**
+  /// **'From the subjects you picked, cards you haven’t read yet. One you got right comes back later, to see if it stuck.'**
   String get howStep3Line;
 
   /// No description provided for @howStep4Title.
@@ -930,10 +930,10 @@ abstract class AppLocalizations {
   /// **'Tap the flag next to a card\'s source to report it.'**
   String get howReportLine;
 
-  /// No description provided for @howFoot.
+  /// The foot of How cards are written, under the way to report a card.
   ///
   /// In en, this message translates to:
-  /// **'Sources are checked again every month.'**
+  /// **'We read every report, and we’d rather fix a card than defend it.'**
   String get howFoot;
 
   /// No description provided for @signingIn.

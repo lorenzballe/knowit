@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/legal.dart';
 
 void main() {
@@ -200,6 +202,30 @@ void main() {
     for (final String text in [home, terms]) {
       expect(text, isNot(contains('every month')));
     }
+  });
+
+  test('How cards are written says no more than is true', () {
+    // Two lines used to promise what nobody did: that what could not be
+    // backed up was cut, and that the sources were checked every month.
+    // The screen now says that most cards are read by a critic and that
+    // the list of claims it could not confirm is not empty yet.
+    final l = lookupAppLocalizations(const Locale('en'));
+    final String screen = [
+      l.howTitle,
+      l.howIntro,
+      l.howStep1Line,
+      l.howStep2Title,
+      l.howStep2Line,
+      l.howStep3Line,
+      l.howStep4Line,
+      l.howReportLine,
+      l.howFoot,
+    ].join(' ');
+    expect(screen, isNot(contains('every month')));
+    expect(screen, isNot(contains('is cut')));
+    expect(screen, isNot(contains('never one you have already read')));
+    expect(l.howStep2Line, contains('Most are read by a second model'));
+    expect(l.howStep2Line, contains('That list isn’t empty yet.'));
   });
 
   test('the site measures what its privacy policy says, and no more', () {

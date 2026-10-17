@@ -547,17 +547,18 @@ class AppLocalizationsKo extends AppLocalizations {
       '모든 카드는 하나의 지침을 따릅니다. 던질 가치가 있는 질문, 이유를 말해 주는 답, 다시 쓸 수 있는 한 수.';
 
   @override
-  String get howStep2Title => '출처와 대조합니다';
+  String get howStep2Title => '출처를 달고, 비평가가 읽습니다';
 
   @override
   String get howStep2Line =>
-      '모든 카드는 출처를 밝히고, 공개 전에 두 번째 모델이 비평가로서 읽습니다. 뒷받침되지 않는 내용은 빠집니다.';
+      '모든 카드는 사실의 출처를 밝혀서 직접 확인할 수 있어요. 대부분은 비평가 역할을 하는 두 번째 모델이 읽고, 확인하지 못한 내용은 사람이 검토하는 목록에 올라가요. 그 목록은 아직 비어 있지 않아요.';
 
   @override
   String get howStep3Title => '매일 아침 다섯 장';
 
   @override
-  String get howStep3Line => '고른 주제에서, 이미 읽은 카드는 다시 나오지 않아요.';
+  String get howStep3Line =>
+      '고른 주제에서, 아직 읽지 않은 카드를 보내요. 맞힌 카드는 기억에 남았는지 보려고 나중에 다시 나와요.';
 
   @override
   String get howStep4Title => '독자가 정직함을 지킵니다';
@@ -572,7 +573,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get howReportLine => '카드 출처 옆의 깃발을 누르면 신고할 수 있어요.';
 
   @override
-  String get howFoot => '출처는 매달 다시 확인합니다.';
+  String get howFoot => '신고는 모두 읽어요. 카드를 변호하기보다 고치는 쪽을 택해요.';
 
   @override
   String get signingIn => '로그인 중…';

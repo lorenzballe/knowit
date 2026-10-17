@@ -570,18 +570,18 @@ class AppLocalizationsPl extends AppLocalizations {
       'Każda karta powstaje według jednego zadania: pytanie warte zadania, odpowiedź, która mówi dlaczego, i jeden ruch do ponownego użycia.';
 
   @override
-  String get howStep2Title => 'Sprawdzona ze źródłem';
+  String get howStep2Title => 'Ze źródłami, potem czytana przez krytyka';
 
   @override
   String get howStep2Line =>
-      'Każda karta podaje, skąd pochodzi, a drugi model czyta ją jako krytyk, zanim się ukaże. To, czego nie da się poprzeć, wylatuje.';
+      'Każda karta podaje, skąd pochodzą jej fakty, żebyś mógł to sprawdzić sam. Większość czyta drugi model w roli krytyka, a to, czego nie może potwierdzić, trafia na listę, którą sprawdza człowiek. Ta lista nie jest jeszcze pusta.';
 
   @override
   String get howStep3Title => 'Pięć, rozdawanych co rano';
 
   @override
   String get howStep3Line =>
-      'Z tematów, które wybrałeś, i nigdy taka, którą już czytałeś.';
+      'Z tematów, które wybrałeś, karty, których jeszcze nie czytałeś. Ta, na którą odpowiedziałeś dobrze, wraca później, żeby sprawdzić, czy została w pamięci.';
 
   @override
   String get howStep4Title => 'Czytelnicy pilnują uczciwości';
@@ -598,7 +598,8 @@ class AppLocalizationsPl extends AppLocalizations {
       'Dotknij flagi obok źródła karty, aby ją zgłosić.';
 
   @override
-  String get howFoot => 'Źródła są sprawdzane ponownie co miesiąc.';
+  String get howFoot =>
+      'Czytamy każde zgłoszenie i wolimy poprawić kartę, niż jej bronić.';
 
   @override
   String get signingIn => 'Logowanie…';

@@ -558,18 +558,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada tarjeta sigue un solo encargo: una pregunta que merece la pena, una respuesta que explica el porqué y una jugada que puedes volver a usar.';
 
   @override
-  String get howStep2Title => 'Comprobada con su fuente';
+  String get howStep2Title => 'Con sus fuentes, y leída por un crítico';
 
   @override
   String get howStep2Line =>
-      'Cada tarjeta dice de dónde viene, y un segundo modelo la lee como crítico antes de publicarla. Lo que no se puede respaldar se corta.';
+      'Cada tarjeta dice de dónde salen sus datos, para que puedas comprobarlo tú. La mayoría las lee un segundo modelo que hace de crítico, y lo que no puede confirmar va a una lista que revisa una persona. Esa lista aún no está vacía.';
 
   @override
   String get howStep3Title => 'Cinco, repartidas cada mañana';
 
   @override
   String get howStep3Line =>
-      'De los temas que elegiste, y nunca una que ya hayas leído.';
+      'De los temas que elegiste, tarjetas que aún no has leído. Una que acertaste vuelve más adelante, para ver si se te quedó.';
 
   @override
   String get howStep4Title => 'Los lectores la mantienen honesta';
@@ -586,7 +586,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Toca la banderita junto a la fuente de una tarjeta para denunciarla.';
 
   @override
-  String get howFoot => 'Las fuentes se vuelven a comprobar cada mes.';
+  String get howFoot =>
+      'Leemos cada aviso, y preferimos corregir una tarjeta antes que defenderla.';
 
   @override
   String get signingIn => 'Iniciando sesión…';

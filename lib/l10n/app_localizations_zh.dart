@@ -541,16 +541,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howStep1Line => '每张卡片都按同一要求写成：一个值得问的问题，一个讲清原因的答案，一个可以反复用的招。';
 
   @override
-  String get howStep2Title => '对照出处核查';
+  String get howStep2Title => '注明出处，再由批评者通读';
 
   @override
-  String get howStep2Line => '每张卡片都注明出处，发布前还有第二个模型以批评者的眼光通读。站不住的内容会被删掉。';
+  String get howStep2Line =>
+      '每张卡片都注明事实的出处，你可以自己核对。大多数卡片还会由扮演批评者的第二个模型通读，它无法确认的内容会进入一份由人工核查的清单。这份清单目前还没有清空。';
 
   @override
   String get howStep3Title => '每天早上发五张';
 
   @override
-  String get howStep3Line => '来自你选的主题，绝不重复你读过的卡片。';
+  String get howStep3Line => '来自你选的主题，都是你还没读过的卡片。答对的卡片过一阵会再出现，看看你是否记住了。';
 
   @override
   String get howStep4Title => '由读者守住真实';
@@ -565,7 +566,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howReportLine => '点一下卡片出处旁边的小旗即可举报。';
 
   @override
-  String get howFoot => '出处每月重新核查一次。';
+  String get howFoot => '每一条报告我们都会读。比起为一张卡片辩护，我们更愿意把它改对。';
 
   @override
   String get signingIn => '登录中…';

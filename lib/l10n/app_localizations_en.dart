@@ -555,18 +555,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.';
 
   @override
-  String get howStep2Title => 'Checked against its source';
+  String get howStep2Title => 'Sourced, then read by a critic';
 
   @override
   String get howStep2Line =>
-      'Every card names where it comes from, and a second model reads it as a critic before it ships. What can\'t be backed up is cut.';
+      'Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.';
 
   @override
   String get howStep3Title => 'Five, dealt each morning';
 
   @override
   String get howStep3Line =>
-      'From the subjects you picked, and never one you have already read.';
+      'From the subjects you picked, cards you haven’t read yet. One you got right comes back later, to see if it stuck.';
 
   @override
   String get howStep4Title => 'Kept honest by readers';
@@ -583,7 +583,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap the flag next to a card\'s source to report it.';
 
   @override
-  String get howFoot => 'Sources are checked again every month.';
+  String get howFoot =>
+      'We read every report, and we’d rather fix a card than defend it.';
 
   @override
   String get signingIn => 'Signing in…';

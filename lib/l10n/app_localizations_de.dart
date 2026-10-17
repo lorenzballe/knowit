@@ -559,18 +559,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jede Karte folgt einer Vorgabe: eine Frage, die sich lohnt, eine Antwort, die sagt warum, und ein Denkzug, den du wieder nutzen kannst.';
 
   @override
-  String get howStep2Title => 'An ihrer Quelle geprüft';
+  String get howStep2Title => 'Mit Quellen, dann kritisch gelesen';
 
   @override
   String get howStep2Line =>
-      'Jede Karte nennt ihre Quelle, und ein zweites Modell liest sie als Kritiker, bevor sie erscheint. Was sich nicht belegen lässt, fliegt raus.';
+      'Jede Karte nennt, woher ihre Fakten stammen, damit du sie selbst prüfen kannst. Die meisten liest ein zweites Modell als Kritiker, und was es nicht bestätigen kann, kommt auf eine Liste, die ein Mensch prüft. Diese Liste ist noch nicht leer.';
 
   @override
   String get howStep3Title => 'Fünf, jeden Morgen ausgeteilt';
 
   @override
   String get howStep3Line =>
-      'Aus den Fächern, die du gewählt hast, und nie eine, die du schon gelesen hast.';
+      'Aus den Fächern, die du gewählt hast, Karten, die du noch nicht gelesen hast. Eine, die du richtig hattest, kommt später wieder, um zu sehen, ob sie sitzt.';
 
   @override
   String get howStep4Title => 'Ehrlich gehalten von den Lesern';
@@ -587,7 +587,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tippe auf das Fähnchen neben der Quelle einer Karte, um sie zu melden.';
 
   @override
-  String get howFoot => 'Die Quellen werden jeden Monat neu geprüft.';
+  String get howFoot =>
+      'Wir lesen jede Meldung, und wir korrigieren eine Karte lieber, als sie zu verteidigen.';
 
   @override
   String get signingIn => 'Anmeldung…';

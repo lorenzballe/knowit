@@ -553,18 +553,18 @@ class AppLocalizationsTr extends AppLocalizations {
       'Her kart tek bir talimata göre yazılır: sormaya değer bir soru, nedenini söyleyen bir yanıt ve yeniden kullanabileceğin bir hamle.';
 
   @override
-  String get howStep2Title => 'Kaynağına göre kontrol edilir';
+  String get howStep2Title => 'Kaynaklı, sonra bir eleştirmen okur';
 
   @override
   String get howStep2Line =>
-      'Her kart nereden geldiğini söyler ve yayımlanmadan önce ikinci bir model onu eleştirmen gibi okur. Dayanağı olmayan çıkarılır.';
+      'Her kart bilgilerinin nereden geldiğini söyler, böylece kendin kontrol edebilirsin. Çoğunu eleştirmen rolündeki ikinci bir model okur; doğrulayamadığı şeyler bir insanın kontrol edeceği bir listeye girer. O liste henüz boş değil.';
 
   @override
   String get howStep3Title => 'Her sabah beş kart';
 
   @override
   String get howStep3Line =>
-      'Seçtiğin konulardan, ve asla daha önce okuduğun bir kart değil.';
+      'Seçtiğin konulardan, henüz okumadığın kartlar. Doğru bildiğin bir kart, aklında kalıp kalmadığını görmek için sonra geri gelir.';
 
   @override
   String get howStep4Title => 'Okurlar dürüst tutar';
@@ -581,7 +581,8 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bildirmek için bir kartın kaynağının yanındaki bayrağa dokun.';
 
   @override
-  String get howFoot => 'Kaynaklar her ay yeniden kontrol edilir.';
+  String get howFoot =>
+      'Her bildirimi okuyoruz; bir kartı savunmaktansa düzeltmeyi tercih ederiz.';
 
   @override
   String get signingIn => 'Giriş yapılıyor…';

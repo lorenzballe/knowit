@@ -558,18 +558,18 @@ class AppLocalizationsPt extends AppLocalizations {
       'Cada carta segue uma só instrução: uma pergunta que vale a pena, uma resposta que diz porquê e uma jogada que podes voltar a usar.';
 
   @override
-  String get howStep2Title => 'Verificada na sua fonte';
+  String get howStep2Title => 'Com as suas fontes, e lida por um crítico';
 
   @override
   String get howStep2Line =>
-      'Cada carta diz de onde vem, e um segundo modelo lê-a como crítico antes de sair. O que não se sustenta é cortado.';
+      'Cada carta diz de onde vêm os seus factos, para que possas verificá-los tu mesmo. A maioria é lida por um segundo modelo que faz de crítico, e o que ele não consegue confirmar vai para uma lista que uma pessoa verifica. Essa lista ainda não está vazia.';
 
   @override
   String get howStep3Title => 'Cinco, distribuídas cada manhã';
 
   @override
   String get howStep3Line =>
-      'Dos temas que escolheste, e nunca uma que já tenhas lido.';
+      'Dos temas que escolheste, cartas que ainda não leste. Uma que acertaste volta mais tarde, para ver se ficou.';
 
   @override
   String get howStep4Title => 'Mantida honesta pelos leitores';
@@ -586,7 +586,8 @@ class AppLocalizationsPt extends AppLocalizations {
       'Toca na bandeirinha ao lado da fonte de uma carta para a denunciar.';
 
   @override
-  String get howFoot => 'As fontes são verificadas de novo todos os meses.';
+  String get howFoot =>
+      'Lemos todos os avisos, e preferimos corrigir uma carta a defendê-la.';
 
   @override
   String get signingIn => 'A entrar…';

@@ -560,18 +560,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque carte suit une seule consigne : une question qui vaut la peine, une réponse qui dit pourquoi, et un réflexe à réutiliser.';
 
   @override
-  String get howStep2Title => 'Vérifiée sur sa source';
+  String get howStep2Title => 'Sourcée, puis relue par un critique';
 
   @override
   String get howStep2Line =>
-      'Chaque carte dit d\'où elle vient, et un second modèle la relit en critique avant sa sortie. Ce qui ne tient pas est coupé.';
+      'Chaque carte dit d’où viennent ses faits, pour que tu puisses vérifier toi-même. La plupart sont relues par un second modèle qui joue le critique, et ce qu’il ne peut pas confirmer va sur une liste qu’une personne vérifie. Cette liste n’est pas encore vide.';
 
   @override
   String get howStep3Title => 'Cinq, distribuées chaque matin';
 
   @override
   String get howStep3Line =>
-      'Parmi les sujets que tu as choisis, et jamais une que tu as déjà lue.';
+      'Parmi les sujets que tu as choisis, des cartes que tu n’as pas encore lues. Une que tu as réussie revient plus tard, pour voir si elle est restée.';
 
   @override
   String get howStep4Title => 'Gardée honnête par les lecteurs';
@@ -588,7 +588,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Touche le drapeau à côté de la source d\'une carte pour la signaler.';
 
   @override
-  String get howFoot => 'Les sources sont revérifiées chaque mois.';
+  String get howFoot =>
+      'Nous lisons chaque signalement, et nous préférons corriger une carte plutôt que la défendre.';
 
   @override
   String get signingIn => 'Connexion…';

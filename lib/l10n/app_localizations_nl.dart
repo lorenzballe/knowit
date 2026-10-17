@@ -558,18 +558,18 @@ class AppLocalizationsNl extends AppLocalizations {
       'Elke kaart volgt één opdracht: een vraag die het stellen waard is, een antwoord dat zegt waarom, en één zet die je opnieuw kunt gebruiken.';
 
   @override
-  String get howStep2Title => 'Gecontroleerd aan de bron';
+  String get howStep2Title => 'Met bronnen, dan gelezen door een criticus';
 
   @override
   String get howStep2Line =>
-      'Elke kaart zegt waar ze vandaan komt, en een tweede model leest haar als criticus voordat ze verschijnt. Wat niet te onderbouwen is, gaat eruit.';
+      'Elke kaart zegt waar haar feiten vandaan komen, zodat je het zelf kunt nagaan. De meeste worden gelezen door een tweede model dat de criticus speelt, en wat het niet kan bevestigen, komt op een lijst die een mens nakijkt. Die lijst is nog niet leeg.';
 
   @override
   String get howStep3Title => 'Vijf, elke ochtend gedeeld';
 
   @override
   String get howStep3Line =>
-      'Uit de vakken die je koos, en nooit een die je al gelezen hebt.';
+      'Uit de vakken die je koos, kaarten die je nog niet gelezen hebt. Een die je goed had, komt later terug, om te zien of hij is blijven hangen.';
 
   @override
   String get howStep4Title => 'Eerlijk gehouden door lezers';
@@ -586,7 +586,8 @@ class AppLocalizationsNl extends AppLocalizations {
       'Tik op het vlaggetje naast de bron van een kaart om haar te melden.';
 
   @override
-  String get howFoot => 'Bronnen worden elke maand opnieuw gecontroleerd.';
+  String get howFoot =>
+      'We lezen elke melding, en we verbeteren een kaart liever dan dat we haar verdedigen.';
 
   @override
   String get signingIn => 'Inloggen…';
