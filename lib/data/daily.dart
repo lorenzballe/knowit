@@ -83,8 +83,11 @@ bool isSunday(DateTime date) => date.weekday == DateTime.sunday;
 /// Which edition a date is: the first day is 1, and every day after it one
 /// more. Days before the calendar started come out at zero and below, and
 /// still deal — there is an archive to reconstruct.
-int editionOf(DateTime date) =>
-    DateTime(date.year, date.month, date.day).difference(kEpoch).inDays + 1;
+///
+/// Counted on the calendar, as the server counts it (functions/src/bank.ts):
+/// between local dates, a change of the clocks made a day 23 hours and the
+/// count one short wherever summer time began after the first day.
+int editionOf(DateTime date) => daysBetween(kEpoch, date) + 1;
 
 /// The date an edition falls on.
 DateTime dateOfEdition(int edition) =>

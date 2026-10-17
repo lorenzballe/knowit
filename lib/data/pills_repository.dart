@@ -9,6 +9,21 @@ import 'topics.dart';
 String dateKey(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
+/// The calendar day [days] away from [d]'s, at noon. A day is not always
+/// 24 hours — a change of the clocks makes one 23 or 25 — so days are
+/// counted on the calendar, never as hours taken away or added: the hour
+/// before midnight on a 25-hour day, less 24 hours, is still that day.
+DateTime dayShift(DateTime d, int days) =>
+    DateTime(d.year, d.month, d.day + days, 12);
+
+/// Whole calendar days from [from]'s date to [to]'s, whatever the clocks did
+/// in between: counted between the two dates at midnight UTC.
+int daysBetween(DateTime from, DateTime to) => DateTime.utc(
+  to.year,
+  to.month,
+  to.day,
+).difference(DateTime.utc(from.year, from.month, from.day)).inDays;
+
 /// How many pills a day holds, on every plan. What Astute+ changes is not
 /// how many but whose: see `ownCardsFor` in daily.dart.
 const int kPillsPerDay = 5;
@@ -652,7 +667,7 @@ String daySeed(DateTime on) =>
 
 String weekSeed(DateTime on) {
   final firstOfYear = DateTime(on.year);
-  final week = ((on.difference(firstOfYear).inDays + firstOfYear.weekday) / 7)
+  final week = ((daysBetween(firstOfYear, on) + firstOfYear.weekday) / 7)
       .floor();
   return '${on.year}-w$week';
 }

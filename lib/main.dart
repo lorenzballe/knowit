@@ -425,7 +425,13 @@ class _AstutoRootState extends State<AstutoRoot> {
         // Where the reader lives, read again once a week for a reader who
         // allowed it, and never with a prompt.
         if (_app.ready) _app.refreshPlaceIfDue();
-        _takeWidgetOpen();
+        // A night asleep in memory: the day turned while the app was away,
+        // and it is dealt before a widget's tap looks for its card in it.
+        unawaited(
+          _app.turnDayIfDue().then((_) {
+            if (mounted) _takeWidgetOpen();
+          }),
+        );
         _sayWidgets();
         // A new sitting can be the place sheet's moment: a finished day
         // still on the screen.
