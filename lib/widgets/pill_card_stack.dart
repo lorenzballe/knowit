@@ -540,7 +540,15 @@ class _PillCardStackState extends State<PillCardStack>
                 onAnswer: !controls || !widget.answering
                     ? null
                     : (response, confidence, reason) {
-                        HapticFeedback.mediumImpact();
+                        // The answer's own feel, on the frame it is given:
+                        // firmer for right, light for wrong — acknowledged,
+                        // never punished.
+                        if (pill.isGraded &&
+                            !pill.challenge.accepts(response)) {
+                          HapticFeedback.lightImpact();
+                        } else {
+                          HapticFeedback.mediumImpact();
+                        }
                         widget.onAnswer(pill.id, response, confidence, reason);
                         setState(() {
                           _answeredHere = true;

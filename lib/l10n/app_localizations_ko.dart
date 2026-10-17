@@ -1312,17 +1312,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tapToReveal => '탭하여 보기';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return '근접 · 답은 $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return '내 답 $given · 정답 $answer, $band까지 인정';
   }
-
-  @override
-  String get youGotIt => '정답';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1332,6 +1324,20 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · 확신 $pct%라고 답함';
+  }
+
+  @override
+  String get verdictRight => '정답이에요.';
+
+  @override
+  String get verdictClose => '충분히 가까워요.';
+
+  @override
+  String get verdictWrong => '아쉬워요.';
+
+  @override
+  String verdictSure(int pct) {
+    return '$pct% 확신했어요.';
   }
 
   @override

@@ -4211,8 +4211,8 @@ void main() {
 
       expect(given[pick.id]?.response, '${challenge.correct}');
       expect(given[pick.id]?.confidence, 80);
-      expect(find.textContaining('You got it'), findsOneWidget);
-      expect(find.textContaining('you said 80% sure'), findsOneWidget);
+      // The verdict, set large, runs into how sure.
+      expect(find.text('Right.  You were 80% sure.'), findsOneWidget);
       expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
@@ -4257,7 +4257,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(given[number.id]?.response, '${challenge.answer}');
-      expect(find.textContaining('You got it'), findsOneWidget);
+      // A back this full keeps the working in view, and the verdict gives
+      // way to it: said, large, without the line that runs on after it.
+      expect(find.text('Right.'), findsOneWidget);
       // A worked solution, not one paragraph.
       expect(find.text(number.steps.first), findsOneWidget);
     });
@@ -4339,7 +4341,11 @@ void main() {
       // An opinion is not something to be sure about, so it is never asked,
       // and it is never marked.
       expect(find.text('How sure are you?'), findsNothing);
-      expect(find.text('You got it'), findsNothing);
+      // No verdict, however much runs on after it.
+      expect(
+        find.textContaining(RegExp(r'^(Right|Not quite|Close enough)\.')),
+        findsNothing,
+      );
       expect(find.text('Almost everyone gets this wrong'), findsNothing);
 
       // What is asked for instead is a reason, before the other side is

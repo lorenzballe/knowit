@@ -2028,23 +2028,11 @@ abstract class AppLocalizations {
   /// **'Tap to reveal'**
   String get tapToReveal;
 
-  /// No description provided for @closeEnoughItIs.
-  ///
-  /// In en, this message translates to:
-  /// **'Close enough · it is {answer}'**
-  String closeEnoughItIs(String answer);
-
   /// No description provided for @youSaidItIsCounted.
   ///
   /// In en, this message translates to:
   /// **'You said {given} · it is {answer}, and {band} counted'**
   String youSaidItIsCounted(String given, String answer, String band);
-
-  /// No description provided for @youGotIt.
-  ///
-  /// In en, this message translates to:
-  /// **'You got it'**
-  String get youGotIt;
 
   /// No description provided for @youSaidItIs.
   ///
@@ -2057,6 +2045,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{line} · you said {pct}% sure'**
   String lineYouSaidSure(String line, int pct);
+
+  /// The verdict on the back of a card answered right, set large.
+  ///
+  /// In en, this message translates to:
+  /// **'Right.'**
+  String get verdictRight;
+
+  /// The verdict on the back of an estimate placed close enough, set large.
+  ///
+  /// In en, this message translates to:
+  /// **'Close enough.'**
+  String get verdictClose;
+
+  /// The verdict on the back of a card answered wrong, set large: kind, not a scolding.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite.'**
+  String get verdictWrong;
+
+  /// Under the verdict: how sure the reader said they were. {pct} is 50 to 90.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {pct}% sure.'**
+  String verdictSure(int pct);
 
   /// No description provided for @giveMeANudge.
   ///

@@ -1308,17 +1308,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tapToReveal => 'タップで表示';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return '惜しい · 正解は$answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'あなたの答え$given · 正解は$answer、$bandは正解扱い';
   }
-
-  @override
-  String get youGotIt => '正解';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1328,6 +1320,20 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · 自信$pct%と答えた';
+  }
+
+  @override
+  String get verdictRight => '正解。';
+
+  @override
+  String get verdictClose => '十分近い。';
+
+  @override
+  String get verdictWrong => '惜しい。';
+
+  @override
+  String verdictSure(int pct) {
+    return '自信は$pct%でした。';
   }
 
   @override

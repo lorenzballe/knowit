@@ -1356,17 +1356,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tapToReveal => 'Tik om te onthullen';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Dichtbij · het is $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'Je zei $given · het is $answer, en $band telt';
   }
-
-  @override
-  String get youGotIt => 'Goed';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1376,6 +1368,20 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · je zei $pct% zeker';
+  }
+
+  @override
+  String get verdictRight => 'Goed.';
+
+  @override
+  String get verdictClose => 'Dichtbij genoeg.';
+
+  @override
+  String get verdictWrong => 'Niet helemaal.';
+
+  @override
+  String verdictSure(int pct) {
+    return 'Je was $pct% zeker.';
   }
 
   @override

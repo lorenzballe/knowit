@@ -1269,14 +1269,6 @@
  "pickASideNoRightAnswer": "Pick a side. There is no right answer.",
  "estimateCloseEnough": "Estimate. Close enough counts.",
  "tapToReveal": "Tap to reveal",
- "closeEnoughItIs": "Close enough · it is {answer}",
- "@closeEnoughItIs": {
-  "placeholders": {
-   "answer": {
-    "type": "String"
-   }
-  }
- },
  "youSaidItIsCounted": "You said {given} · it is {answer}, and {band} counted",
  "@youSaidItIsCounted": {
   "placeholders": {
@@ -1291,7 +1283,6 @@
    }
   }
  },
- "youGotIt": "You got it",
  "youSaidItIs": "You said {given} · it is {answer}",
  "@youSaidItIs": {
   "placeholders": {
@@ -1309,6 +1300,27 @@
    "line": {
     "type": "String"
    },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "verdictRight": "Right.",
+ "@verdictRight": {
+  "description": "The verdict on the back of a card answered right, set large."
+ },
+ "verdictClose": "Close enough.",
+ "@verdictClose": {
+  "description": "The verdict on the back of an estimate placed close enough, set large."
+ },
+ "verdictWrong": "Not quite.",
+ "@verdictWrong": {
+  "description": "The verdict on the back of a card answered wrong, set large: kind, not a scolding."
+ },
+ "verdictSure": "You were {pct}% sure.",
+ "@verdictSure": {
+  "description": "Under the verdict: how sure the reader said they were. {pct} is 50 to 90.",
+  "placeholders": {
    "pct": {
     "type": "int"
    }

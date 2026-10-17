@@ -1408,17 +1408,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get tapToReveal => 'Dotknij, by odsłonić';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Blisko · to $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'Powiedziałeś $given · to $answer, i $band się liczy';
   }
-
-  @override
-  String get youGotIt => 'Trafione';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1428,6 +1420,20 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · powiedziałeś $pct% pewności';
+  }
+
+  @override
+  String get verdictRight => 'Dobrze.';
+
+  @override
+  String get verdictClose => 'Wystarczająco blisko.';
+
+  @override
+  String get verdictWrong => 'Nie do końca.';
+
+  @override
+  String verdictSure(int pct) {
+    return 'Byłeś pewien na $pct%.';
   }
 
   @override

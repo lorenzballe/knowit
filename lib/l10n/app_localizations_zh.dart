@@ -1300,17 +1300,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tapToReveal => '点按揭晓';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return '够接近 · 答案是 $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return '你说 $given · 答案是 $answer，$band 之内算对';
   }
-
-  @override
-  String get youGotIt => '答对了';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1320,6 +1312,20 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · 你说有 $pct% 的把握';
+  }
+
+  @override
+  String get verdictRight => '答对了。';
+
+  @override
+  String get verdictClose => '足够接近。';
+
+  @override
+  String get verdictWrong => '差一点。';
+
+  @override
+  String verdictSure(int pct) {
+    return '你当时有 $pct% 的把握。';
   }
 
   @override

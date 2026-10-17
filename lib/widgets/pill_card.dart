@@ -441,15 +441,18 @@ class _BackFace extends StatelessWidget {
     double Function(double, TextScaler)? leadHeight;
     Widget? shortLead;
     double Function(double, TextScaler)? shortLeadHeight;
+    Widget? leastLead;
+    double Function(double, TextScaler)? leastLeadHeight;
     if (given != null && pill.isGraded) {
-      final verdict = _Verdict(
+      final bool right = pill.challenge.accepts(given.response);
+      _Verdict verdictOf(_Room room) => _Verdict(
         pill: pill,
-        right: pill.challenge.accepts(given.response),
+        right: right,
         given: pill.challenge.describe(given.response),
         confidence: given.confidence,
+        room: room,
       );
-      final line = verdict.text(context);
-      lead = Column(
+      Widget leadOf(_Verdict verdict) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -464,9 +467,25 @@ class _BackFace extends StatelessWidget {
           ],
         ],
       );
-      leadHeight = (width, scaler) =>
-          _Verdict.heightFor(context, line, pill.ink, width, scaler) +
-          (estimate != null ? 6 + PlaceItReveal.height : 0);
+      double Function(double, TextScaler) heightOf(_Verdict verdict) =>
+          (width, scaler) =>
+              verdict.heightIn(context, width, scaler) +
+              (estimate != null ? 6 + PlaceItReveal.height : 0);
+      final _Verdict verdict = verdictOf(_Room.all);
+      lead = leadOf(verdict);
+      leadHeight = heightOf(verdict);
+      // On a back too full for the whole of it, how sure goes first: it
+      // was said a moment ago, on the front.
+      final _Verdict brief = verdictOf(_Room.withoutSure);
+      shortLead = leadOf(brief);
+      shortLeadHeight = heightOf(brief);
+      // Then, on a wrong answer, what was said: the answer under it says
+      // what it is. A right one has nothing said back to give up.
+      if (!right) {
+        final _Verdict bare = verdictOf(_Room.verdictOnly);
+        leastLead = leadOf(bare);
+        leastLeadHeight = heightOf(bare);
+      }
     } else if (given != null) {
       lead = PopIn(
         delay: const Duration(milliseconds: 260),
@@ -496,6 +515,8 @@ class _BackFace extends StatelessWidget {
       leadHeight: leadHeight,
       shortLead: shortLead,
       shortLeadHeight: shortLeadHeight,
+      leastLead: leastLead,
+      leastLeadHeight: leastLeadHeight,
       cornerRoom: cornerRoom,
       // On a card that asked first, the scene waits for the answer: played
       // before, it would have given it away.
@@ -552,80 +573,146 @@ double _measureSpan(
   return h;
 }
 
-/// Right or wrong, said plainly at the top of the reveal.
+/// How much of the verdict a back has room for, from all of it down: what
+/// was said and how sure, what was said, the verdict alone.
+enum _Room { all, withoutSure, verdictOnly }
+
+/// Right or wrong, said plainly at the top of the reveal: the verdict in
+/// the card's own voice, set large, running into what was said and how
+/// sure, set small — a run-in head, as a paper sets one.
+///
+/// It used to be one line of eleven-point capitals, quieter than the
+/// subject's name over the card. That is the wrong size for the moment the
+/// app is built on, how sure against how right. Run in rather than stacked,
+/// it takes about the room the old line took, so the back still fits the
+/// card. A wrong answer is "Not quite.": said, and not rubbed in.
 class _Verdict extends StatelessWidget {
   final Pill pill;
   final bool right;
   final String given;
   final int? confidence;
+
+  /// How much of it the back has room for.
+  final _Room room;
   const _Verdict({
     required this.pill,
     required this.right,
     required this.given,
     this.confidence,
+    this.room = _Room.all,
   });
 
-  static TextStyle _style(Color ink) =>
-      AppText.label(size: 11, spacing: 1.2, color: ink.withValues(alpha: 0.85));
+  /// The mark beside the words, and the gap after it.
+  static const double _mark = 20;
+  static const double _gap = 10;
 
-  /// The verdict as it is printed, confidence and all.
-  String text(BuildContext context) => confidence == null
-      ? _line(context)
-      : context.l10n.lineYouSaidSure(_line(context), confidence!);
+  static TextStyle _headStyle(Color ink) => AppText.display(
+    size: 20,
+    weight: FontWeight.w600,
+    height: 1.2,
+    spacing: -0.4,
+    color: ink,
+  );
 
-  /// The room the verdict takes at [width]: its words beside the mark.
-  static double heightFor(
-    BuildContext context,
-    String text,
-    Color ink,
-    double width,
-    TextScaler scaler,
-  ) {
-    final h = _measure(context, text, _style(ink), width - 26, scaler);
-    return h > 18 ? h : 18;
-  }
+  static TextStyle _detailStyle(Color ink) => AppText.body(
+    size: 13,
+    weight: FontWeight.w500,
+    height: 1.35,
+    color: ink.withValues(alpha: 0.75),
+  );
 
-  String _line(BuildContext context) {
+  /// The verdict itself.
+  String _head(BuildContext context) => !right
+      ? context.l10n.verdictWrong
+      : pill.challenge is Estimate
+      ? context.l10n.verdictClose
+      : context.l10n.verdictRight;
+
+  /// What was said, when it was not what the card says: the reader's
+  /// answer, and the card's.
+  String? _said(BuildContext context) {
+    if (right) return null;
     return switch (pill.challenge) {
       Estimate(:final answerLabel, :final band) =>
-        right
-            ? context.l10n.closeEnoughItIs(answerLabel)
-            : context.l10n.youSaidItIsCounted(given, answerLabel, band),
-      TypeNumber(:final answerLabel) =>
-        right
-            ? context.l10n.youGotIt
-            : context.l10n.youSaidItIs(given, answerLabel),
+        context.l10n.youSaidItIsCounted(given, answerLabel, band),
+      TypeNumber(:final answerLabel) => context.l10n.youSaidItIs(
+        given,
+        answerLabel,
+      ),
       // A wrong pick is said the way a wrong number is: what was picked,
       // and what it is. It used to be "almost everyone gets this wrong",
       // which is a claim about other readers that nothing on the phone can
       // back — how each card is answered is counted on the server, for the
       // tools that check cards (functions/src/scorecard.ts), and none of it
       // reaches a card's back.
-      PickOne(:final correctOption) =>
-        right
-            ? context.l10n.youGotIt
-            : context.l10n.youSaidItIs(given, correctOption),
+      PickOne(:final correctOption) => context.l10n.youSaidItIs(
+        given,
+        correctOption,
+      ),
       // Never marked, so never given a verdict: the back says the reader's
       // own line instead.
-      NoChallenge() || TakeASide() => '',
+      NoChallenge() || TakeASide() => null,
     };
+  }
+
+  /// What runs on after the verdict: what was said, and how sure.
+  String? _detail(BuildContext context) {
+    if (room == _Room.verdictOnly) return null;
+    final String? said = _said(context);
+    final int? sure = room == _Room.all ? confidence : null;
+    if (said == null) {
+      return sure == null ? null : context.l10n.verdictSure(sure);
+    }
+    return sure == null ? said : context.l10n.lineYouSaidSure(said, sure);
+  }
+
+  InlineSpan _span(BuildContext context) {
+    final String? detail = _detail(context);
+    return TextSpan(
+      children: [
+        TextSpan(text: _head(context), style: _headStyle(pill.ink)),
+        if (detail != null)
+          TextSpan(text: '  $detail', style: _detailStyle(pill.ink)),
+      ],
+    );
+  }
+
+  /// The room the verdict takes at [width]: its words beside the mark.
+  double heightIn(BuildContext context, double width, TextScaler scaler) {
+    final double h = _measureSpan(
+      context,
+      _span(context),
+      width - _mark - _gap,
+      scaler,
+    );
+    return math.max(h, _mark + 3);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // The words say right or wrong; the mark repeats it in shape.
-        ExcludeSemantics(
-          child: Icon(
-            right ? Icons.check_circle_rounded : Icons.cancel_rounded,
-            size: 18,
-            color: pill.ink,
+    // Said out loud when the back comes round, for a reader who cannot see
+    // the mark or the size of the words.
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // The words say right or wrong; the mark repeats it in shape.
+          Padding(
+            padding: const EdgeInsets.only(top: 3),
+            child: ExcludeSemantics(
+              child: Icon(
+                right ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                size: _mark,
+                color: pill.ink,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(width: 8),
-        Flexible(child: Text(text(context), style: _style(pill.ink))),
-      ],
+          const SizedBox(width: _gap),
+          Expanded(child: Text.rich(_span(context))),
+        ],
+      ),
     );
   }
 }

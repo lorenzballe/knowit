@@ -1413,17 +1413,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tapToReveal => 'Нажми, чтобы открыть';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Достаточно близко · это $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'Ты сказал $given · это $answer, и $band засчитано';
   }
-
-  @override
-  String get youGotIt => 'Верно';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1433,6 +1425,20 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · ты был уверен на $pct%';
+  }
+
+  @override
+  String get verdictRight => 'Верно.';
+
+  @override
+  String get verdictClose => 'Достаточно близко.';
+
+  @override
+  String get verdictWrong => 'Не совсем.';
+
+  @override
+  String verdictSure(int pct) {
+    return 'Ты был уверен на $pct%.';
   }
 
   @override

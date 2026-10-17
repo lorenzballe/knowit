@@ -1345,17 +1345,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tapToReveal => 'Görmek için dokun';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Yeterince yakın · $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return '$given dedin · $answer, ve $band sayıldı';
   }
-
-  @override
-  String get youGotIt => 'Bildin';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1365,6 +1357,20 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · %$pct emin dedin';
+  }
+
+  @override
+  String get verdictRight => 'Doğru.';
+
+  @override
+  String get verdictClose => 'Yeterince yakın.';
+
+  @override
+  String get verdictWrong => 'Tam değil.';
+
+  @override
+  String verdictSure(int pct) {
+    return '%$pct emindin.';
   }
 
   @override
