@@ -2172,6 +2172,24 @@ abstract class AppLocalizations {
   /// **'Swipe for the next one'**
   String get swipeForTheNextOne;
 
+  /// No description provided for @musicSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound in music cards'**
+  String get musicSound;
+
+  /// No description provided for @musicSoundIsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound is off for music cards.'**
+  String get musicSoundIsOff;
+
+  /// No description provided for @musicSoundTurnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get musicSoundTurnOn;
+
   /// No description provided for @thatWasTheOnlyOne.
   ///
   /// In en, this message translates to:

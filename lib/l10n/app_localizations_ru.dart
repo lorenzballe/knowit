@@ -1516,6 +1516,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get swipeForTheNextOne => 'Листай к следующей';
 
   @override
+  String get musicSound => 'Звук в музыкальных карточках';
+
+  @override
+  String get musicSoundIsOff => 'Звук музыкальных карточек выключен.';
+
+  @override
+  String get musicSoundTurnOn => 'Включить';
+
+  @override
   String get thatWasTheOnlyOne => 'Это была единственная';
 
   @override

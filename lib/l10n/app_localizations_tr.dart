@@ -1448,6 +1448,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get swipeForTheNextOne => 'Sonraki için kaydır';
 
   @override
+  String get musicSound => 'Müzik kartlarında ses';
+
+  @override
+  String get musicSoundIsOff => 'Müzik kartlarının sesi kapalı.';
+
+  @override
+  String get musicSoundTurnOn => 'Aç';
+
+  @override
   String get thatWasTheOnlyOne => 'Tek kart buydu';
 
   @override

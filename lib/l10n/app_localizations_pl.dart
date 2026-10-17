@@ -1511,6 +1511,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get swipeForTheNextOne => 'Przesuń po następną';
 
   @override
+  String get musicSound => 'Dźwięk w kartach muzycznych';
+
+  @override
+  String get musicSoundIsOff => 'Dźwięk kart muzycznych jest wyłączony.';
+
+  @override
+  String get musicSoundTurnOn => 'Włącz';
+
+  @override
   String get thatWasTheOnlyOne => 'To była jedyna';
 
   @override

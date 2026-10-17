@@ -7,7 +7,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../l10n/l10n.dart';
 import '../../models/scene.dart';
+import '../../state/music_sound.dart';
 import '../../theme.dart';
 
 /// Plays a [MusicScene]: build a sound and hear what changed.
@@ -18,7 +20,8 @@ import '../../theme.dart';
 /// step grid under a playhead. At the foot, the instrument: keys, harmonic
 /// bars, tracks. A tap on the instrument changes the sound and plays it;
 /// nothing plays unless a finger asks, and nothing is only heard: the
-/// picture and the line under it always say what the speaker would.
+/// picture and the line under it always say what the speaker would. The
+/// speaker stays quiet until the reader turns the sound on ([MusicSound]).
 ///
 /// The card is also tapped to turn, thrown to move on and long-pressed to
 /// like. Every control here claims its pointer the moment it lands (see
@@ -68,7 +71,8 @@ abstract class MusicSceneSpeaker {
   void dispose();
 }
 
-/// The speaker every music scene makes, on its first tap and not before.
+/// The speaker every music scene makes, on its first tap with the sound on
+/// and not before.
 abstract final class MusicSceneAudio {
   static MusicSceneSpeaker Function() speaker = _AudioplayersSpeaker.new;
 }
@@ -140,7 +144,9 @@ abstract final class MusicSceneSynth {
         final w = 2 * math.pi * f / rate;
         for (var i = onset; i < n; i++) {
           final t = (i - onset) / rate;
-          out[i] += amp * _env(t, seconds - onset / rate, 0.012, 0.9) *
+          out[i] +=
+              amp *
+              _env(t, seconds - onset / rate, 0.012, 0.9) *
               math.sin(w * (i - onset));
         }
       }
@@ -259,8 +265,10 @@ abstract final class MusicSceneSynth {
               final decay = sound == MusicSceneSound.keys
                   ? math.exp(-t * 1.6)
                   : 0.75 + 0.25 * math.exp(-t * 6);
-              add(i, amp * _env(t, gate + 0.12, 0.006, 0) * decay *
-                  math.sin(w * i));
+              add(
+                i,
+                amp * _env(t, gate + 0.12, 0.006, 0) * decay * math.sin(w * i),
+              );
             }
           }
         }
@@ -334,9 +342,7 @@ abstract final class MusicSceneSynth {
 /// widget goes; and whether motion is wanted.
 mixin _Sounding<T extends StatefulWidget> on State<T> {
   MusicSceneSpeaker? _speaker;
-  late final AppLifecycleListener _life = AppLifecycleListener(
-    onHide: silence,
-  );
+  late final AppLifecycleListener _life = AppLifecycleListener(onHide: silence);
 
   bool get calm => MediaQuery.disableAnimationsOf(context);
 
@@ -345,8 +351,38 @@ mixin _Sounding<T extends StatefulWidget> on State<T> {
     if (mounted) setState(() {});
   }
 
-  void sound(Uint8List wav, {bool loop = false, Duration from = Duration.zero}) {
+  void sound(
+    Uint8List wav, {
+    bool loop = false,
+    Duration from = Duration.zero,
+  }) {
+    // Off, nothing is made: no player, no audio session, and whatever the
+    // phone is playing keeps playing. The picture still moves.
+    if (!MusicSound.on.value) return;
     (_speaker ??= MusicSceneAudio.speaker()).play(wav, loop: loop, from: from);
+  }
+
+  /// Listen pressed with the sound off: says so, with the way to turn it on,
+  /// and once it is on, [then] plays what the scene holds.
+  void offerSound(VoidCallback then) {
+    if (MusicSound.on.value) return;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    if (messenger == null) return;
+    final l = context.l10n;
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(l.musicSoundIsOff),
+          action: SnackBarAction(
+            label: l.musicSoundTurnOn,
+            onPressed: () {
+              MusicSound.set(true, from: 'card');
+              if (mounted) then();
+            },
+          ),
+        ),
+      );
   }
 
   /// Stops the speaker and whatever drew it.
@@ -424,9 +460,7 @@ class _ChordViewState extends State<_ChordView>
   void _play() {
     if (_on.isEmpty) return;
     sound(
-      MusicSceneSynth.wav(
-        MusicSceneSynth.chord(widget.scene.hertzOf(_on)),
-      ),
+      MusicSceneSynth.wav(MusicSceneSynth.chord(widget.scene.hertzOf(_on))),
     );
     if (calm) {
       _ring.value = 0;
@@ -466,6 +500,7 @@ class _ChordViewState extends State<_ChordView>
     if (_ring.isAnimating) {
       silence();
     } else {
+      offerSound(_play);
       _play();
     }
   }
@@ -489,9 +524,8 @@ class _ChordViewState extends State<_ChordView>
     };
     final hertz = s.hertzOf(_on);
     final period = s.tuning == MusicSceneTuning.just ? s.periodOf(_on) : 0.0;
-    final names = [
-      for (final m in _on.toList()..sort()) s.noteOf(m).pitchClass,
-    ].join(' ');
+    final names = [for (final m in _on.toList()..sort()) s.noteOf(m).pitchClass]
+        .join(' ');
 
     return LayoutBuilder(
       builder: (context, box) {
@@ -572,7 +606,10 @@ class _KeyboardLayout {
   const _KeyboardLayout(this.whites, this.blacks);
 
   factory _KeyboardLayout.of(List<MusicSceneNote> keys, Size size) {
-    final whiteKeys = [for (final k in keys) if (!k.isBlack) k.midi];
+    final whiteKeys = [
+      for (final k in keys)
+        if (!k.isBlack) k.midi,
+    ];
     final w = size.width / whiteKeys.length;
     final whites = <(int, Rect)>[
       for (var i = 0; i < whiteKeys.length; i++)
@@ -753,7 +790,13 @@ class _KeysPainter extends CustomPainter {
     }
   }
 
-  void _name(Canvas canvas, String text, Rect key, Color c, {required bool low}) {
+  void _name(
+    Canvas canvas,
+    String text,
+    Rect key,
+    Color c, {
+    required bool low,
+  }) {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
@@ -860,6 +903,7 @@ class _HarmonicsViewState extends State<_HarmonicsView>
     if (_ring.isAnimating) {
       silence();
     } else {
+      offerSound(_play);
       _play();
     }
   }
@@ -1136,15 +1180,18 @@ class _Head extends StatelessWidget {
                       child: Text(
                         value,
                         maxLines: 1,
-                        style: AppText.display(
-                          size: big,
-                          weight: FontWeight.w800,
-                          height: 1.05,
-                          spacing: -big * 0.02,
-                          color: ink,
-                        ).copyWith(
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
+                        style:
+                            AppText.display(
+                              size: big,
+                              weight: FontWeight.w800,
+                              height: 1.05,
+                              spacing: -big * 0.02,
+                              color: ink,
+                            ).copyWith(
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
                       ),
                     ),
                     Text(
@@ -1628,8 +1675,22 @@ class _LayersViewState extends State<_LayersView>
     if (_playing) {
       _stopLoop();
     } else {
+      offerSound(_resume);
       _start();
     }
+  }
+
+  /// The sound turned on mid-loop picks up where the playhead is.
+  void _resume() {
+    if (!_playing) {
+      _start();
+      return;
+    }
+    sound(
+      MusicSceneSynth.wav(MusicSceneSynth.loop(widget.scene, _on)),
+      loop: true,
+      from: _position,
+    );
   }
 
   void _toggle(int i) {
@@ -1732,12 +1793,7 @@ class _LayersViewState extends State<_LayersView>
               ),
             ),
             SizedBox(height: compact ? 6 : 12),
-            _Caption(
-              text: _line,
-              lines: 3,
-              ink: ink,
-              calm: calm,
-            ),
+            _Caption(text: _line, lines: 3, ink: ink, calm: calm),
           ],
         );
       },
@@ -1973,15 +2029,26 @@ class _TrackPainter extends CustomPainter {
       ..color = ink.withValues(alpha: 0.05);
     for (var b = 0; b < steps; b += 8) {
       canvas.drawRRect(
-        RRect.fromLTRBR(b * w, top, (b + 4) * w, bottom, const Radius.circular(4)),
+        RRect.fromLTRBR(
+          b * w,
+          top,
+          (b + 4) * w,
+          bottom,
+          const Radius.circular(4),
+        ),
         _p,
       );
     }
     if (now >= 0) {
       _p.color = ink.withValues(alpha: 0.12);
       canvas.drawRRect(
-        RRect.fromLTRBR(now * w, top - 2, (now + 1) * w, bottom + 2,
-            const Radius.circular(3)),
+        RRect.fromLTRBR(
+          now * w,
+          top - 2,
+          (now + 1) * w,
+          bottom + 2,
+          const Radius.circular(3),
+        ),
         _p,
       );
     }

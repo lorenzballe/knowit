@@ -1459,6 +1459,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get swipeForTheNextOne => 'Desliza para o próximo';
 
   @override
+  String get musicSound => 'Som nos cartões de música';
+
+  @override
+  String get musicSoundIsOff => 'O som dos cartões de música está desligado.';
+
+  @override
+  String get musicSoundTurnOn => 'Ligar';
+
+  @override
   String get thatWasTheOnlyOne => 'Era o único';
 
   @override

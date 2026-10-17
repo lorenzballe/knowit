@@ -1410,6 +1410,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get swipeForTheNextOne => 'スワイプで次へ';
 
   @override
+  String get musicSound => '音楽カードの音';
+
+  @override
+  String get musicSoundIsOff => '音楽カードの音はオフです。';
+
+  @override
+  String get musicSoundTurnOn => 'オンにする';
+
+  @override
   String get thatWasTheOnlyOne => 'これが最後の1枚でした';
 
   @override

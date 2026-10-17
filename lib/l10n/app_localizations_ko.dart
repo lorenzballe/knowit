@@ -1414,6 +1414,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get swipeForTheNextOne => '밀어서 다음으로';
 
   @override
+  String get musicSound => '음악 카드 소리';
+
+  @override
+  String get musicSoundIsOff => '음악 카드 소리가 꺼져 있어요.';
+
+  @override
+  String get musicSoundTurnOn => '켜기';
+
+  @override
   String get thatWasTheOnlyOne => '마지막 한 장이었어요';
 
   @override

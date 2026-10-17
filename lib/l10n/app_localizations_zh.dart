@@ -1402,6 +1402,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get swipeForTheNextOne => '滑动看下一张';
 
   @override
+  String get musicSound => '音乐卡片的声音';
+
+  @override
+  String get musicSoundIsOff => '音乐卡片的声音已关闭。';
+
+  @override
+  String get musicSoundTurnOn => '打开';
+
+  @override
   String get thatWasTheOnlyOne => '只有这一张';
 
   @override

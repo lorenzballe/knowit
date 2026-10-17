@@ -1371,6 +1371,9 @@
   }
  },
  "swipeForTheNextOne": "Swipe for the next one",
+ "musicSound": "Sound in music cards",
+ "musicSoundIsOff": "Sound is off for music cards.",
+ "musicSoundTurnOn": "Turn on",
  "thatWasTheOnlyOne": "That was the only one",
  "indexOfN": "{i}/{n}",
  "@indexOfN": {
