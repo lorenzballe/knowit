@@ -897,7 +897,13 @@ class _NumberInputState extends State<_NumberInput> {
     super.dispose();
   }
 
-  bool get _ready => TypeNumber.parse(_controller.text) != null;
+  /// What was typed, read the way the reader's language writes numbers.
+  String? get _reading => TypeNumber.read(
+    _controller.text,
+    locale: Localizations.localeOf(context).toString(),
+  );
+
+  bool get _ready => _reading != null;
 
   /// Digits taken back are the reader changing their mind before they
   /// commit — counted, never read: what was typed stays here.
@@ -909,9 +915,12 @@ class _NumberInputState extends State<_NumberInput> {
     setState(() {});
   }
 
+  /// Kept in plain form, so the answer is graded the same way whatever
+  /// language the reader typed it in.
   void _submit() {
-    if (!_ready || widget.onAnswer == null) return;
-    widget.onAnswer!(_controller.text.trim());
+    final String? reading = _reading;
+    if (reading == null || widget.onAnswer == null) return;
+    widget.onAnswer!(reading);
   }
 
   @override
