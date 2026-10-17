@@ -401,8 +401,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAccountQuestion => 'Delete your account?';
 
   @override
-  String get deleteAccountBody =>
-      'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'a subscription is managed in your App Store settings.',
+      'google': 'a subscription is managed in Google Play, under Payments & subscriptions.',
+      'other': 'a subscription is managed in the store you bought it from.',
+    });
+    return 'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Delete for good';
@@ -1159,8 +1165,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'The cards are in English for now; the app speaks your language.';
 
   @override
-  String get termsLine =>
-      'By continuing you agree to our Terms of Service & Privacy Policy';
+  String termsLine(String terms, String privacy) {
+    return 'By continuing you agree to our $terms and $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Terms of Use';
+
+  @override
+  String get termsLinePrivacy => 'Privacy Policy';
 
   @override
   String get skip => 'Skip';

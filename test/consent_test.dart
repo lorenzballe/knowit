@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show MethodChannel;
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,7 @@ import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/main.dart';
+import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/consent.dart';
@@ -269,5 +271,51 @@ void main() {
       expect(tester.getSize(_no), tester.getSize(_yes), reason: '$locale');
       expect(tester.getRect(_yes).bottom, lessThanOrEqualTo(667));
     }
+  });
+
+  testWidgets('the intro\'s small print links the terms and the privacy '
+      'policy, in every language', (tester) async {
+    Analytics.useForTest(said);
+    for (final Locale locale in AppLocalizations.supportedLocales) {
+      await tester.pumpWidget(
+        MaterialApp(
+          key: UniqueKey(),
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: IntroScreen(onContinue: () {}, onSignIn: (_) async => false),
+        ),
+      );
+      await tester.pump();
+      final l = lookupAppLocalizations(locale);
+      final RichText line = tester.widget<RichText>(
+        find.descendant(
+          of: find.byKey(const ValueKey('intro-terms')),
+          matching: find.byType(RichText),
+        ),
+      );
+      final List<TextSpan> links = [];
+      line.text.visitChildren((span) {
+        if (span is TextSpan && span.recognizer != null) links.add(span);
+        return true;
+      });
+      expect(links.map((s) => s.text), [
+        l.termsLineTerms,
+        l.termsLinePrivacy,
+      ], reason: '$locale');
+      // The marks the sentence was asked with are all gone.
+      expect(line.text.toPlainText(), isNot(contains('\u0001')));
+      expect(line.text.toPlainText(), isNot(contains('\u0002')));
+      if (locale.languageCode == 'en') {
+        for (final TextSpan link in links) {
+          (link.recognizer! as TapGestureRecognizer).onTap!();
+        }
+      }
+    }
+    expect(said.of('legal page opened'), [
+      {'page': 'terms', 'from': 'intro'},
+      {'page': 'privacy', 'from': 'intro'},
+    ]);
   });
 }

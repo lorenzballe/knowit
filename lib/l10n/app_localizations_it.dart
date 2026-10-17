@@ -403,8 +403,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deleteAccountQuestion => 'Eliminare il tuo account?';
 
   @override
-  String get deleteAccountBody =>
-      'Il tuo account e il suo backup vengono eliminati per sempre, e questo dispositivo riparte dall\'inizio. Astute+ non viene disdetto: l\'abbonamento si gestisce nelle impostazioni dell\'App Store.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'l’abbonamento si gestisce nelle impostazioni dell’App Store.',
+      'google': 'l’abbonamento si gestisce in Google Play, in Pagamenti e abbonamenti.',
+      'other': 'l’abbonamento si gestisce nello store in cui l’hai acquistato.',
+    });
+    return 'Il tuo account e il suo backup vengono eliminati per sempre, e questo dispositivo riparte dall’inizio. Astute+ non viene disdetto: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Elimina per sempre';
@@ -1163,8 +1169,15 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le carte, per ora, sono in inglese; l’app parla la tua lingua.';
 
   @override
-  String get termsLine =>
-      'Continuando accetti i Termini di servizio e la Privacy Policy';
+  String termsLine(String terms, String privacy) {
+    return 'Continuando accetti i $terms e la $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Termini d’uso';
+
+  @override
+  String get termsLinePrivacy => 'Privacy Policy';
 
   @override
   String get skip => 'Salta';

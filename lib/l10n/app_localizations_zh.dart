@@ -397,8 +397,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deleteAccountQuestion => '删除你的账号？';
 
   @override
-  String get deleteAccountBody =>
-      '你的账号及其备份将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '订阅请在 App Store 设置中管理。',
+      'google': '订阅请在 Google Play 的“付款和订阅”中管理。',
+      'other': '订阅请在你购买它的商店中管理。',
+    });
+    return '你的账号及其备份将被永久删除，这台设备会从头开始。这不会取消 Astute+：$_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => '永久删除';
@@ -1116,7 +1122,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cardsInEnglishNote => '卡片目前只有英文；应用界面使用你的语言。';
 
   @override
-  String get termsLine => '继续即表示你同意我们的服务条款和隐私政策';
+  String termsLine(String terms, String privacy) {
+    return '继续即表示你同意我们的$terms和$privacy';
+  }
+
+  @override
+  String get termsLineTerms => '使用条款';
+
+  @override
+  String get termsLinePrivacy => '隐私政策';
 
   @override
   String get skip => '跳过';

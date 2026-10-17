@@ -10,6 +10,7 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
+import '../legal.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
 import '../state/music_sound.dart';
@@ -47,6 +48,12 @@ class ProfileScreen extends StatelessWidget {
     required this.account,
     required this.onSignedOut,
   });
+
+  /// Opens the privacy policy or the terms, and says which.
+  void _openLegal(String page, String url) {
+    Analytics.capture('legal page opened', {'page': page, 'from': 'profile'});
+    openLink(url);
+  }
 
   Future<void> _editTopics(BuildContext context) async {
     await Navigator.of(context).push(
@@ -129,7 +136,13 @@ class ProfileScreen extends StatelessWidget {
           style: AppText.display(size: 19, color: context.p.ink),
         ),
         content: Text(
-          l.deleteAccountBody,
+          // Where the subscription deleting does not cancel is managed: the
+          // reader's own store, named.
+          l.deleteAccountBody(switch (Theme.of(context).platform) {
+            TargetPlatform.iOS || TargetPlatform.macOS => 'apple',
+            TargetPlatform.android => 'google',
+            _ => 'other',
+          }),
           style: AppText.body(
             size: 14,
             height: 1.45,
@@ -578,6 +591,24 @@ class ProfileScreen extends StatelessWidget {
                 label: context.l10n.howPillsAreWritten,
                 onTap: () => Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
+              ),
+              // What the reader agreed to, a tap away and not only on the
+              // first screen: the privacy policy, and the terms — Apple's
+              // licence on an iPhone, the site's own everywhere else.
+              ProfileRow(
+                key: const ValueKey('profile-privacy'),
+                mark: ProfileMarks.shield,
+                label: context.l10n.privacyPolicy,
+                onTap: () => _openLegal('privacy', kPrivacyUrl),
+              ),
+              ProfileRow(
+                key: const ValueKey('profile-terms'),
+                mark: ProfileMarks.page,
+                label: context.l10n.termsOfUse,
+                onTap: () => _openLegal(
+                  'terms',
+                  termsUrlFor(Theme.of(context).platform),
+                ),
               ),
               _UsageSwitch(app: app),
             ],

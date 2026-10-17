@@ -405,8 +405,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deleteAccountQuestion => 'Supprimer ton compte ?';
 
   @override
-  String get deleteAccountBody =>
-      'Ton compte et sa sauvegarde sont supprimés définitivement, et cet appareil repart de zéro. Astute+ n\'est pas résilié pour autant : l\'abonnement se gère dans les réglages de l\'App Store.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'l’abonnement se gère dans les réglages de l’App Store.',
+      'google': 'l’abonnement se gère dans Google Play, sous Paiements et abonnements.',
+      'other': 'l’abonnement se gère dans la boutique où tu l’as acheté.',
+    });
+    return 'Ton compte et sa sauvegarde sont supprimés définitivement, et cet appareil repart de zéro. Astute+ n’est pas résilié pour autant : $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Supprimer définitivement';
@@ -1166,8 +1172,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les cartes sont en anglais pour l’instant ; l’app parle ta langue.';
 
   @override
-  String get termsLine =>
-      'En continuant, tu acceptes nos Conditions d\'utilisation et notre Politique de confidentialité';
+  String termsLine(String terms, String privacy) {
+    return 'En continuant, tu acceptes nos $terms et notre $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Conditions d’utilisation';
+
+  @override
+  String get termsLinePrivacy => 'Politique de confidentialité';
 
   @override
   String get skip => 'Passer';

@@ -397,9 +397,14 @@
  "@deleteAccountQuestion": {
   "description": "Title of the confirmation before deleting the account."
  },
- "deleteAccountBody": "Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.",
+ "deleteAccountBody": "Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: {store, select, apple{a subscription is managed in your App Store settings.} google{a subscription is managed in Google Play, under Payments & subscriptions.} other{a subscription is managed in the store you bought it from.}}",
  "@deleteAccountBody": {
-  "description": "Body of that confirmation: what is deleted, that it cannot be undone, and that the App Store subscription is not cancelled by it."
+  "description": "The delete-account dialog. {store} is apple on an iPhone, google on Android, other elsewhere: where the subscription, which deleting does not cancel, is managed.",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
  },
  "deleteAccountConfirm": "Delete for good",
  "@deleteAccountConfirm": {
@@ -1066,9 +1071,25 @@
  "@cardsInEnglishNote": {
   "description": "Said once in the first run, on the mix, to a reader whose phone is not in English: the cards themselves are written in English for now."
  },
- "termsLine": "By continuing you agree to our Terms of Service & Privacy Policy",
+ "termsLine": "By continuing you agree to our {terms} and {privacy}",
  "@termsLine": {
-  "description": "Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up."
+  "description": "Under the intro's buttons. {terms} and {privacy} are termsLineTerms and termsLinePrivacy, drawn as links to the terms and the privacy policy; write them in the case and form this sentence needs.",
+  "placeholders": {
+   "terms": {
+    "type": "String"
+   },
+   "privacy": {
+    "type": "String"
+   }
+  }
+ },
+ "termsLineTerms": "Terms of Use",
+ "@termsLineTerms": {
+  "description": "The link to the terms inside termsLine, in the form that sentence needs."
+ },
+ "termsLinePrivacy": "Privacy Policy",
+ "@termsLinePrivacy": {
+  "description": "The link to the privacy policy inside termsLine, in the form that sentence needs."
  },
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",

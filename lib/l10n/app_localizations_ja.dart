@@ -398,8 +398,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deleteAccountQuestion => 'アカウントを削除しますか？';
 
   @override
-  String get deleteAccountBody =>
-      'アカウントとそのバックアップが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。サブスクリプションは App Store の設定で管理してください。';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'サブスクリプションは App Store の設定で管理してください。',
+      'google': 'サブスクリプションは Google Play の「お支払いと定期購入」で管理してください。',
+      'other': 'サブスクリプションは購入したストアで管理してください。',
+    });
+    return 'アカウントとそのバックアップが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。$_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => '完全に削除';
@@ -1123,7 +1129,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get cardsInEnglishNote => 'カードは今のところ英語です。アプリはあなたの言語で表示されます。';
 
   @override
-  String get termsLine => '続けると利用規約とプライバシーポリシーに同意したことになります';
+  String termsLine(String terms, String privacy) {
+    return '続けると$termsと$privacyに同意したことになります';
+  }
+
+  @override
+  String get termsLineTerms => '利用規約';
+
+  @override
+  String get termsLinePrivacy => 'プライバシーポリシー';
 
   @override
   String get skip => 'スキップ';

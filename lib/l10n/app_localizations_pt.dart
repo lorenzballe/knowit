@@ -402,8 +402,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deleteAccountQuestion => 'Apagar a tua conta?';
 
   @override
-  String get deleteAccountBody =>
-      'A tua conta e a cópia de segurança são apagadas para sempre, e este aparelho recomeça do início. Isto não cancela o Astute+: a subscrição gere-se nas definições da App Store.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'a subscrição gere-se nas definições da App Store.',
+      'google':
+          'a subscrição gere-se no Google Play, em Pagamentos e subscrições.',
+      'other': 'a subscrição gere-se na loja onde a compraste.',
+    });
+    return 'A tua conta e a cópia de segurança são apagadas para sempre, e este aparelho recomeça do início. Isto não cancela o Astute+: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Apagar para sempre';
@@ -1163,8 +1170,15 @@ class AppLocalizationsPt extends AppLocalizations {
       'Por agora, as cartas estão em inglês; a app fala a tua língua.';
 
   @override
-  String get termsLine =>
-      'Ao continuares aceitas os nossos Termos de Serviço e a Política de Privacidade';
+  String termsLine(String terms, String privacy) {
+    return 'Ao continuares aceitas os nossos $terms e a $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Termos de Utilização';
+
+  @override
+  String get termsLinePrivacy => 'Política de Privacidade';
 
   @override
   String get skip => 'Saltar';

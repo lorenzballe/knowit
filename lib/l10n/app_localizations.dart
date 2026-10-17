@@ -624,11 +624,11 @@ abstract class AppLocalizations {
   /// **'Delete your account?'**
   String get deleteAccountQuestion;
 
-  /// Body of that confirmation: what is deleted, that it cannot be undone, and that the App Store subscription is not cancelled by it.
+  /// The delete-account dialog. {store} is apple on an iPhone, google on Android, other elsewhere: where the subscription, which deleting does not cancel, is managed.
   ///
   /// In en, this message translates to:
-  /// **'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.'**
-  String get deleteAccountBody;
+  /// **'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: {store, select, apple{a subscription is managed in your App Store settings.} google{a subscription is managed in Google Play, under Payments & subscriptions.} other{a subscription is managed in the store you bought it from.}}'**
+  String deleteAccountBody(String store);
 
   /// The destructive button of that confirmation.
   ///
@@ -1680,11 +1680,23 @@ abstract class AppLocalizations {
   /// **'The cards are in English for now; the app speaks your language.'**
   String get cardsInEnglishNote;
 
-  /// Under the intro's buttons. True of every way on, with an account or without one, so it says continuing rather than signing up.
+  /// Under the intro's buttons. {terms} and {privacy} are termsLineTerms and termsLinePrivacy, drawn as links to the terms and the privacy policy; write them in the case and form this sentence needs.
   ///
   /// In en, this message translates to:
-  /// **'By continuing you agree to our Terms of Service & Privacy Policy'**
-  String get termsLine;
+  /// **'By continuing you agree to our {terms} and {privacy}'**
+  String termsLine(String terms, String privacy);
+
+  /// The link to the terms inside termsLine, in the form that sentence needs.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get termsLineTerms;
+
+  /// The link to the privacy policy inside termsLine, in the form that sentence needs.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get termsLinePrivacy;
 
   /// No description provided for @skip.
   ///

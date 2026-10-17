@@ -403,8 +403,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deleteAccountQuestion => 'Dein Konto löschen?';
 
   @override
-  String get deleteAccountBody =>
-      'Dein Konto und seine Sicherung werden endgültig gelöscht, und dieses Gerät beginnt wieder von vorn. Astute+ wird dadurch nicht gekündigt: Ein Abo verwaltest du in den App-Store-Einstellungen.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Ein Abo verwaltest du in den App-Store-Einstellungen.',
+      'google':
+          'Ein Abo verwaltest du in Google Play unter „Zahlungen & Abos“.',
+      'other': 'Ein Abo verwaltest du in dem Store, in dem du es abgeschlossen hast.',
+    });
+    return 'Dein Konto und seine Sicherung werden endgültig gelöscht, und dieses Gerät beginnt wieder von vorn. Astute+ wird dadurch nicht gekündigt: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Endgültig löschen';
@@ -1164,8 +1171,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Karten sind vorerst auf Englisch; die App spricht deine Sprache.';
 
   @override
-  String get termsLine =>
-      'Indem du fortfährst, akzeptierst du unsere Nutzungsbedingungen und Datenschutzerklärung';
+  String termsLine(String terms, String privacy) {
+    return 'Indem du fortfährst, akzeptierst du unsere $terms und $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Nutzungsbedingungen';
+
+  @override
+  String get termsLinePrivacy => 'Datenschutzerklärung';
 
   @override
   String get skip => 'Überspringen';

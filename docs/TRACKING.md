@@ -389,6 +389,7 @@ is in its card facts.
 | `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
 | `usage sharing answered` | the first event after a yes: the intro's question or the sheet's (a no sends nothing) | `on`, `from` (`intro`, `sheet`) | P |
+| `legal page opened` | the privacy policy or the terms, from the intro's small print or Profile's About box (the paywall's own links send `paywall link opened`) | `page` (`privacy`, `terms`), `from` (`intro`, `profile`) | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |
 

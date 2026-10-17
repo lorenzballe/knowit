@@ -401,8 +401,14 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deleteAccountQuestion => 'Hesabın silinsin mi?';
 
   @override
-  String get deleteAccountBody =>
-      'Hesabın ve yedeği kalıcı olarak silinir ve bu cihaz en baştan başlar. Bu, Astute+ aboneliğini iptal etmez: abonelik App Store ayarlarından yönetilir.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'abonelik App Store ayarlarından yönetilir.',
+      'google': 'abonelik Google Play\'de, Ödemeler ve abonelikler bölümünden yönetilir.',
+      'other': 'abonelik, satın aldığın mağazadan yönetilir.',
+    });
+    return 'Hesabın ve yedeği kalıcı olarak silinir ve bu cihaz en baştan başlar. Bu, Astute+ aboneliğini iptal etmez: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Kalıcı olarak sil';
@@ -1153,8 +1159,15 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kartlar şimdilik İngilizce; uygulama senin dilini konuşuyor.';
 
   @override
-  String get termsLine =>
-      'Devam ederek Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul etmiş olursun';
+  String termsLine(String terms, String privacy) {
+    return 'Devam ederek $terms ve $privacy kabul etmiş olursun';
+  }
+
+  @override
+  String get termsLineTerms => 'Kullanım Koşullarımızı';
+
+  @override
+  String get termsLinePrivacy => 'Gizlilik Politikamızı';
 
   @override
   String get skip => 'Atla';

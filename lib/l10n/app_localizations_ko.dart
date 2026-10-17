@@ -399,8 +399,14 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deleteAccountQuestion => '계정을 삭제할까요?';
 
   @override
-  String get deleteAccountBody =>
-      '계정과 백업이 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '구독은 App Store 설정에서 관리하세요.',
+      'google': '구독은 Google Play의 ‘결제 및 정기 결제’에서 관리하세요.',
+      'other': '구독은 구매한 스토어에서 관리하세요.',
+    });
+    return '계정과 백업이 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => '영구 삭제';
@@ -1127,7 +1133,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get cardsInEnglishNote => '카드는 아직 영어로만 되어 있어요. 앱은 당신의 언어로 표시돼요.';
 
   @override
-  String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
+  String termsLine(String terms, String privacy) {
+    return '계속하면 $terms과 $privacy에 동의하게 됩니다';
+  }
+
+  @override
+  String get termsLineTerms => '이용약관';
+
+  @override
+  String get termsLinePrivacy => '개인정보 처리방침';
 
   @override
   String get skip => '건너뛰기';

@@ -419,8 +419,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deleteAccountQuestion => 'Удалить аккаунт?';
 
   @override
-  String get deleteAccountBody =>
-      'Аккаунт и его резервная копия удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: ею управляют в настройках App Store.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'ею управляют в настройках App Store.',
+      'google': 'ею управляют в Google Play, в разделе «Платежи и подписки».',
+      'other': 'ею управляют в магазине, где она была оформлена.',
+    });
+    return 'Аккаунт и его резервная копия удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Удалить навсегда';
@@ -1209,8 +1215,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'Карточки пока на английском; приложение говорит на твоём языке.';
 
   @override
-  String get termsLine =>
-      'Продолжая, ты принимаешь Условия использования и Политику конфиденциальности';
+  String termsLine(String terms, String privacy) {
+    return 'Продолжая, ты принимаешь $terms и $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Условия использования';
+
+  @override
+  String get termsLinePrivacy => 'Политику конфиденциальности';
 
   @override
   String get skip => 'Пропустить';

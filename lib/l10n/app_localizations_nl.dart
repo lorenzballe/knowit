@@ -402,8 +402,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get deleteAccountQuestion => 'Je account verwijderen?';
 
   @override
-  String get deleteAccountBody =>
-      'Je account en de back-up ervan worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: een abonnement beheer je in de App Store-instellingen.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'een abonnement beheer je in de App Store-instellingen.',
+      'google': 'een abonnement beheer je in Google Play, onder Betalingen en abonnementen.',
+      'other':
+          'een abonnement beheer je in de winkel waar je het hebt gekocht.',
+    });
+    return 'Je account en de back-up ervan worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Definitief verwijderen';
@@ -1163,8 +1170,15 @@ class AppLocalizationsNl extends AppLocalizations {
       'De kaarten zijn voorlopig in het Engels; de app spreekt jouw taal.';
 
   @override
-  String get termsLine =>
-      'Door verder te gaan ga je akkoord met onze Servicevoorwaarden en Privacyverklaring';
+  String termsLine(String terms, String privacy) {
+    return 'Door verder te gaan ga je akkoord met onze $terms en $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Gebruiksvoorwaarden';
+
+  @override
+  String get termsLinePrivacy => 'Privacyverklaring';
 
   @override
   String get skip => 'Overslaan';

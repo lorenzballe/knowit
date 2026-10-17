@@ -1,10 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
-
+import '../legal.dart';
 import '../theme.dart';
 import '../widgets/ambient.dart';
 import '../widgets/consent.dart';
@@ -832,17 +833,94 @@ class _StartBlock extends StatelessWidget {
         ),
         MediaQuery.withClampedTextScaling(
           maxScaleFactor: 1.5,
-          child: Text(
-            l.termsLine,
-            textAlign: TextAlign.center,
-            style: AppText.body(
-              size: 12.5,
-              height: 1.5,
-              color: Colors.white.withValues(alpha: 0.34),
-            ),
-          ),
+          child: const _TermsLine(),
         ),
       ],
+    );
+  }
+}
+
+/// The line under the intro's buttons, with the terms and the privacy
+/// policy in it as links that open them: Apple's licence on an iPhone, the
+/// site's own terms everywhere else (termsUrlFor), and the site's policy.
+/// A line saying the reader agrees to pages they cannot open is a line
+/// nobody can hold them to.
+class _TermsLine extends StatefulWidget {
+  const _TermsLine();
+
+  @override
+  State<_TermsLine> createState() => _TermsLineState();
+}
+
+class _TermsLineState extends State<_TermsLine> {
+  late final TapGestureRecognizer _terms = TapGestureRecognizer()
+    ..onTap = () => _open('terms', termsUrlFor(Theme.of(context).platform));
+  late final TapGestureRecognizer _privacy = TapGestureRecognizer()
+    ..onTap = () => _open('privacy', kPrivacyUrl);
+
+  void _open(String page, String url) {
+    Analytics.capture('legal page opened', {'page': page, 'from': 'intro'});
+    openLink(url);
+  }
+
+  @override
+  void dispose() {
+    _terms.dispose();
+    _privacy.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final TextStyle link =
+        AppText.body(
+          size: 12.5,
+          height: 1.5,
+          weight: FontWeight.w600,
+          color: Colors.white.withValues(alpha: 0.6),
+        ).copyWith(
+          decoration: TextDecoration.underline,
+          decorationColor: Colors.white.withValues(alpha: 0.3),
+        );
+    // The sentence is asked for with a mark where each link goes, so that
+    // every language puts them where its own grammar wants them, and the
+    // links are laid in where the marks are.
+    const String terms = '\u0001', privacy = '\u0002';
+    final String line = l.termsLine(terms, privacy);
+    final List<InlineSpan> spans = [];
+    final StringBuffer words = StringBuffer();
+    void flush() {
+      if (words.isEmpty) return;
+      spans.add(TextSpan(text: words.toString()));
+      words.clear();
+    }
+
+    for (final String char in line.split('')) {
+      if (char == terms || char == privacy) {
+        flush();
+        final bool isTerms = char == terms;
+        spans.add(
+          TextSpan(
+            text: isTerms ? l.termsLineTerms : l.termsLinePrivacy,
+            style: link,
+            recognizer: isTerms ? _terms : _privacy,
+          ),
+        );
+      } else {
+        words.write(char);
+      }
+    }
+    flush();
+    return Text.rich(
+      TextSpan(children: spans),
+      key: const ValueKey('intro-terms'),
+      textAlign: TextAlign.center,
+      style: AppText.body(
+        size: 12.5,
+        height: 1.5,
+        color: Colors.white.withValues(alpha: 0.34),
+      ),
     );
   }
 }
