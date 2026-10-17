@@ -3181,6 +3181,11 @@ void main() {
   testWidgets('the profile opens on the record, then the settings', (
     tester,
   ) async {
+    // As a TestFlight build has it, with the developer tools: no other
+    // build has the DEBUG section at all.
+    final bool tools = debugToolsOn;
+    debugToolsOn = true;
+    addTearDown(() => debugToolsOn = tools);
     SharedPreferences.setMockInitialValues({
       ..._installed(),
       'knowit.seenIds': <String>['science-4'],
