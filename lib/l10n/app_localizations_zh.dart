@@ -2606,46 +2606,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => '古代世界';
-
-  @override
-  String get eraAncientWhen => '公元500年以前';
-
-  @override
-  String get eraEarlyModern => '近代早期';
-
-  @override
-  String get eraEarlyModernWhen => '1500年至1800年';
-
-  @override
-  String get eraMedieval => '中世纪';
-
-  @override
-  String get eraMedievalWhen => '500年至1500年';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '这个时代还有 $n 张',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19世纪';
-
-  @override
-  String get eraNineteenthWhen => '1800年至1900年';
-
-  @override
-  String get eraRecent => '本世纪';
-
-  @override
-  String get eraRecentWhen => '2000年以来';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2662,12 +2622,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '20世纪';
-
-  @override
-  String get eraTwentieth => '上个世纪';
-
-  @override
-  String get eraTwentiethWhen => '1900年至2000年';
 
   @override
   String get fewCards => '几张卡片讲明白';
@@ -2954,12 +2908,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get throughTime => '穿越时间';
-
-  @override
-  String get throughTimeLine => '从古代到今年。输入一个年份，或者交给运气';
-
-  @override
   String leanHint(String or) {
     return '把“$or”滑到你的立场';
   }
@@ -3013,62 +2961,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get spotYours => '你的选择';
-
-  @override
-  String get yearHint => '输入年份';
-
-  @override
-  String get yearAd => '公元';
-
-  @override
-  String get yearBc => '公元前';
-
-  @override
-  String yearNamed(String year) {
-    return '$year年';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '公元$year年';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '公元前$year年';
-  }
-
-  @override
-  String get yearGo => '前往这一年';
-
-  @override
-  String get yearRandom => '随机';
-
-  @override
-  String get yearRandomHint => '前往某张卡片提到的年份';
-
-  @override
-  String yearNearest(String year) {
-    return '离$year最近的在前';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '这里没有卡片提到$year附近的年份。这些来自同一时代。';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '今天没有$year前后的卡片。这是最近的时代。';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year还没到来。这是本世纪。';
-  }
-
-  @override
-  String get yearZero => '没有公元0年。试试公元前1年或公元1年。';
 
   @override
   String get todayLabel => '今天';

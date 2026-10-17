@@ -2597,46 +2597,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => '古代の世界';
-
-  @override
-  String get eraAncientWhen => '500年より前';
-
-  @override
-  String get eraEarlyModern => '近世';
-
-  @override
-  String get eraEarlyModernWhen => '1500年〜1800年';
-
-  @override
-  String get eraMedieval => '中世';
-
-  @override
-  String get eraMedievalWhen => '500年〜1500年';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'この時代からあと$n枚',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19世紀';
-
-  @override
-  String get eraNineteenthWhen => '1800年〜1900年';
-
-  @override
-  String get eraRecent => '今世紀';
-
-  @override
-  String get eraRecentWhen => '2000年以降';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2653,12 +2613,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900年代';
-
-  @override
-  String get eraTwentieth => '前世紀';
-
-  @override
-  String get eraTwentiethWhen => '1900年〜2000年';
 
   @override
   String get fewCards => '数枚で分かる';
@@ -2945,12 +2899,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get throughTime => '時代をめぐる';
-
-  @override
-  String get throughTimeLine => '古代から今年まで。年を入力するか、偶然に任せよう';
-
-  @override
   String leanHint(String or) {
     return '「$or」を自分の立場までスライド';
   }
@@ -3004,62 +2952,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get spotYours => 'あなたの選択';
-
-  @override
-  String get yearHint => '年を入力';
-
-  @override
-  String get yearAd => '西暦';
-
-  @override
-  String get yearBc => '紀元前';
-
-  @override
-  String yearNamed(String year) {
-    return '$year年';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '西暦$year年';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '紀元前$year年';
-  }
-
-  @override
-  String get yearGo => 'この年へ';
-
-  @override
-  String get yearRandom => 'ランダム';
-
-  @override
-  String get yearRandomHint => 'カードに出てくる年のどれかへ';
-
-  @override
-  String yearNearest(String year) {
-    return '$yearに近い順';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '$yearに近い年を挙げるカードはありません。同じ時代のカードです。';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '今日は$yearごろのカードがありません。いちばん近い時代です。';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$yearはまだ先。今世紀をどうぞ。';
-  }
-
-  @override
-  String get yearZero => '0年はありません。紀元前1年か西暦1年を試して。';
 
   @override
   String get todayLabel => '今日';

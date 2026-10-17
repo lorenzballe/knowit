@@ -2612,46 +2612,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => '고대 세계';
-
-  @override
-  String get eraAncientWhen => '500년 이전';
-
-  @override
-  String get eraEarlyModern => '근세';
-
-  @override
-  String get eraEarlyModernWhen => '1500년~1800년';
-
-  @override
-  String get eraMedieval => '중세';
-
-  @override
-  String get eraMedievalWhen => '500년~1500년';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '이 시대 카드 $n장 더',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19세기';
-
-  @override
-  String get eraNineteenthWhen => '1800년~1900년';
-
-  @override
-  String get eraRecent => '이번 세기';
-
-  @override
-  String get eraRecentWhen => '2000년 이후';
-
-  @override
   String get eraShortAncient => '고대';
 
   @override
@@ -2668,12 +2628,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900년대';
-
-  @override
-  String get eraTwentieth => '지난 세기';
-
-  @override
-  String get eraTwentiethWhen => '1900년~2000년';
 
   @override
   String get fewCards => '카드 몇 장으로';
@@ -2961,12 +2915,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get throughTime => '시간 여행';
-
-  @override
-  String get throughTimeLine => '고대부터 올해까지. 연도를 입력하거나, 우연에 맡겨 보세요';
-
-  @override
   String leanHint(String or) {
     return '‘$or’를 내 입장까지 밀어 보세요';
   }
@@ -3020,62 +2968,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get spotYours => '내 선택';
-
-  @override
-  String get yearHint => '연도를 입력하세요';
-
-  @override
-  String get yearAd => '서기';
-
-  @override
-  String get yearBc => '기원전';
-
-  @override
-  String yearNamed(String year) {
-    return '$year년';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '서기 $year년';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '기원전 $year년';
-  }
-
-  @override
-  String get yearGo => '이 해로 가기';
-
-  @override
-  String get yearRandom => '랜덤';
-
-  @override
-  String get yearRandomHint => '카드에 나오는 해 가운데 하나로 가요';
-
-  @override
-  String yearNearest(String year) {
-    return '$year에 가까운 순서';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '$year 가까운 해를 말하는 카드가 없어요. 같은 시대의 카드예요.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '오늘은 $year 무렵의 카드가 없어요. 가장 가까운 시대예요.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year: 아직 오지 않은 해예요. 이번 세기를 보여 드려요.';
-  }
-
-  @override
-  String get yearZero => '0년은 없었어요. 기원전 1년이나 서기 1년을 입력해 보세요.';
 
   @override
   String get todayLabel => '오늘';

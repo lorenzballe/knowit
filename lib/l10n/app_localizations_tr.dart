@@ -2685,47 +2685,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => 'Antik dünya';
-
-  @override
-  String get eraAncientWhen => '500\'den önce';
-
-  @override
-  String get eraEarlyModern => 'Erken modern çağ';
-
-  @override
-  String get eraEarlyModernWhen => '1500\'den 1800\'e';
-
-  @override
-  String get eraMedieval => 'Orta Çağ';
-
-  @override
-  String get eraMedievalWhen => '500\'den 1500\'e';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Bu çağdan $n tane daha',
-      one: 'Bu çağdan 1 tane daha',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19. yüzyıl';
-
-  @override
-  String get eraNineteenthWhen => '1800\'den 1900\'e';
-
-  @override
-  String get eraRecent => 'Bu yüzyıl';
-
-  @override
-  String get eraRecentWhen => '2000\'den beri';
-
-  @override
   String get eraShortAncient => 'Antik çağ';
 
   @override
@@ -2742,12 +2701,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900\'ler';
-
-  @override
-  String get eraTwentieth => 'Geçen yüzyıl';
-
-  @override
-  String get eraTwentiethWhen => '1900\'den 2000\'e';
 
   @override
   String get fewCards => 'Birkaç kartta';
@@ -3036,13 +2989,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get throughTime => 'Zamanda yolculuk';
-
-  @override
-  String get throughTimeLine =>
-      'Antik dünyadan bu yıla. Bir yıl yaz ya da seçimi şansa bırak';
-
-  @override
   String leanHint(String or) {
     return '«$or» düğmesini durduğun yere kaydır';
   }
@@ -3096,62 +3042,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get spotYours => 'Seçimin';
-
-  @override
-  String get yearHint => 'Bir yıl yaz';
-
-  @override
-  String get yearAd => 'MS';
-
-  @override
-  String get yearBc => 'MÖ';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return 'MS $year';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return 'MÖ $year';
-  }
-
-  @override
-  String get yearGo => 'Bu yıla git';
-
-  @override
-  String get yearRandom => 'Rastgele';
-
-  @override
-  String get yearRandomHint => 'Kartlardan birinin andığı bir yıla gider';
-
-  @override
-  String yearNearest(String year) {
-    return 'Önce $year yılına en yakınlar';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Buradaki hiçbir kart $year yılına yakın bir yıl anmıyor. Bunlar o çağdan.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Bugün $year civarından hiçbir şey yok. En yakın çağ bu.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year henüz gelmedi. İşte bu yüzyıl.';
-  }
-
-  @override
-  String get yearZero => '0 yılı diye bir yıl yoktu. MÖ 1 ya da MS 1\'i dene.';
 
   @override
   String get todayLabel => 'Bugün';

@@ -2736,47 +2736,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => 'Il mondo antico';
-
-  @override
-  String get eraAncientWhen => 'Prima del 500';
-
-  @override
-  String get eraEarlyModern => 'La prima età moderna';
-
-  @override
-  String get eraEarlyModernWhen => 'Dal 1500 al 1800';
-
-  @override
-  String get eraMedieval => 'Il Medioevo';
-
-  @override
-  String get eraMedievalWhen => 'Dal 500 al 1500';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Altre $n di quest\'epoca',
-      one: 'Un\'altra di quest\'epoca',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'L\'Ottocento';
-
-  @override
-  String get eraNineteenthWhen => 'Dal 1800 al 1900';
-
-  @override
-  String get eraRecent => 'Questo secolo';
-
-  @override
-  String get eraRecentWhen => 'Dal 2000';
-
-  @override
   String get eraShortAncient => 'Antichità';
 
   @override
@@ -2793,12 +2752,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => 'Novecento';
-
-  @override
-  String get eraTwentieth => 'Il secolo scorso';
-
-  @override
-  String get eraTwentiethWhen => 'Dal 1900 al 2000';
 
   @override
   String get fewCards => 'In poche carte';
@@ -3091,13 +3044,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get throughTime => 'Nel tempo';
-
-  @override
-  String get throughTimeLine =>
-      'Dal mondo antico a quest\'anno. Scrivi un anno, o lascia scegliere al caso';
-
-  @override
   String leanHint(String or) {
     return 'Trascina la «$or» fin dove la pensi';
   }
@@ -3151,62 +3097,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spotYours => 'La tua scelta';
-
-  @override
-  String get yearHint => 'Scrivi un anno';
-
-  @override
-  String get yearAd => 'd.C.';
-
-  @override
-  String get yearBc => 'a.C.';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '$year d.C.';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year a.C.';
-  }
-
-  @override
-  String get yearGo => 'Vai a quest\'anno';
-
-  @override
-  String get yearRandom => 'A caso';
-
-  @override
-  String get yearRandomHint => 'Va a un anno citato da una delle carte';
-
-  @override
-  String yearNearest(String year) {
-    return 'Prima le più vicine al $year';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Nessuna carta qui nomina un anno vicino al $year. Queste sono della sua epoca.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Oggi qui non c\'è niente di vicino al $year. Questa è l\'epoca più vicina.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return 'Il $year deve ancora venire. Ecco questo secolo.';
-  }
-
-  @override
-  String get yearZero => 'L\'anno 0 non è mai esistito. Prova 1 a.C. o 1 d.C.';
 
   @override
   String get todayLabel => 'Oggi';

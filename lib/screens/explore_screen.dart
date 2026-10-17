@@ -29,7 +29,6 @@ import '../widgets/explore/sixty_seconds.dart';
 import '../widgets/explore/spot_the_false.dart';
 import '../widgets/explore/story_player.dart';
 import '../widgets/explore/surprise_me.dart';
-import '../widgets/explore/through_time.dart';
 import '../widgets/explore/unmask_chart.dart';
 import '../widgets/explore/where_you_live.dart';
 import '../widgets/place_ask.dart';
@@ -714,7 +713,7 @@ class ExploreScreenState extends State<ExploreScreen> {
               // stories played a beat at a time), cards to play (true or
               // false, what came back, the tricks in a number, working it
               // out, a chart unmasked, how sure, what if), and ways in by time
-              // (a few cards, sixty seconds, your minutes, a year, a fact),
+              // (a few cards, sixty seconds, your minutes, a fact),
               // then one card from anywhere and something to use before
               // tonight at the very end. Every one is free: Explore is what
               // brings a reader back.
@@ -1006,26 +1005,6 @@ class ExploreScreenState extends State<ExploreScreen> {
                     isRead: read,
                     onOpen: _open,
                     onShown: (p) => _seen('mood', p),
-                  ),
-                ),
-              ],
-              if (mix.eras.length >= 2) ...[
-                const SizedBox(height: 24),
-                _watch(
-                  'through-time',
-                  _Shelf(
-                    key: const ValueKey('mix-through-time'),
-                    title: l.throughTime,
-                    line: l.throughTimeLine,
-                    child: ThroughTime(
-                      eras: mix.eras,
-                      pool: mix.eraPool,
-                      day: day,
-                      startAt: day % mix.eras.length,
-                      isRead: read,
-                      onOpen: _open,
-                      onShown: (p) => _seen('through-time', p),
-                    ),
                   ),
                 ),
               ],

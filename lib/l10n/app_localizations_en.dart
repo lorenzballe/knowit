@@ -2705,47 +2705,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => 'The ancient world';
-
-  @override
-  String get eraAncientWhen => 'Before 500';
-
-  @override
-  String get eraEarlyModern => 'The early modern age';
-
-  @override
-  String get eraEarlyModernWhen => '1500 to 1800';
-
-  @override
-  String get eraMedieval => 'The Middle Ages';
-
-  @override
-  String get eraMedievalWhen => '500 to 1500';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n more from this age',
-      one: '1 more from this age',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'The nineteenth century';
-
-  @override
-  String get eraNineteenthWhen => '1800 to 1900';
-
-  @override
-  String get eraRecent => 'This century';
-
-  @override
-  String get eraRecentWhen => 'Since 2000';
-
-  @override
   String get eraShortAncient => 'Antiquity';
 
   @override
@@ -2762,12 +2721,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900s';
-
-  @override
-  String get eraTwentieth => 'The last century';
-
-  @override
-  String get eraTwentiethWhen => '1900 to 2000';
 
   @override
   String get fewCards => 'In a few cards';
@@ -3060,13 +3013,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get throughTime => 'Through time';
-
-  @override
-  String get throughTimeLine =>
-      'From the ancient world to this year. Type a year, or let chance pick';
-
-  @override
   String leanHint(String or) {
     return 'Slide the “$or” to where you stand';
   }
@@ -3121,62 +3067,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spotYours => 'Your pick';
-
-  @override
-  String get yearHint => 'Type a year';
-
-  @override
-  String get yearAd => 'AD';
-
-  @override
-  String get yearBc => 'BC';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return 'AD $year';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year BC';
-  }
-
-  @override
-  String get yearGo => 'Go to this year';
-
-  @override
-  String get yearRandom => 'Random';
-
-  @override
-  String get yearRandomHint => 'Goes to a year one of the cards names';
-
-  @override
-  String yearNearest(String year) {
-    return 'Nearest to $year first';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'No card here names a year near $year. These are from its age.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Nothing from around $year here today. This is the nearest age.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year is still to come. Here is this century.';
-  }
-
-  @override
-  String get yearZero => 'There was no year 0. Try 1 BC or AD 1.';
 
   @override
   String get todayLabel => 'Today';

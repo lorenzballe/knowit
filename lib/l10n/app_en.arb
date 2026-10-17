@@ -2670,32 +2670,12 @@
    }
   }
  },
- "eraAncient": "The ancient world",
- "eraAncientWhen": "Before 500",
- "eraEarlyModern": "The early modern age",
- "eraEarlyModernWhen": "1500 to 1800",
- "eraMedieval": "The Middle Ages",
- "eraMedievalWhen": "500 to 1500",
- "eraMore": "{n, plural, =1{1 more from this age} other{{n} more from this age}}",
- "@eraMore": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "eraNineteenth": "The nineteenth century",
- "eraNineteenthWhen": "1800 to 1900",
- "eraRecent": "This century",
- "eraRecentWhen": "Since 2000",
  "eraShortAncient": "Antiquity",
  "eraShortEarlyModern": "1500–1800",
  "eraShortMedieval": "Middle Ages",
  "eraShortNineteenth": "1800s",
  "eraShortRecent": "2000s",
  "eraShortTwentieth": "1900s",
- "eraTwentieth": "The last century",
- "eraTwentiethWhen": "1900 to 2000",
  "fewCards": "In a few cards",
  "fewCardsLine": "When one card isn't enough to explain it",
  "firstLabel": "First",
@@ -2936,8 +2916,6 @@
    }
   }
  },
- "throughTime": "Through time",
- "throughTimeLine": "From the ancient world to this year. Type a year, or let chance pick",
  "leanHint": "Slide the “{or}” to where you stand",
  "@leanHint": {
   "description": "Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.",
@@ -2992,70 +2970,6 @@
  "spotMissed": "Not that one: it's true. The false one is struck out.",
  "spotWhy": "Tap any of them to read why",
  "spotYours": "Your pick",
- "yearHint": "Type a year",
- "yearAd": "AD",
- "yearBc": "BC",
- "yearNamed": "{year}",
- "@yearNamed": {
-  "description": "A year from 1000 on, inside a sentence.",
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearAdOf": "AD {year}",
- "@yearAdOf": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearBcOf": "{year} BC",
- "@yearBcOf": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearGo": "Go to this year",
- "yearRandom": "Random",
- "yearRandomHint": "Goes to a year one of the cards names",
- "yearNearest": "Nearest to {year} first",
- "@yearNearest": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearNoneNamed": "No card here names a year near {year}. These are from its age.",
- "@yearNoneNamed": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearNoAge": "Nothing from around {year} here today. This is the nearest age.",
- "@yearNoAge": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearFuture": "{year} is still to come. Here is this century.",
- "@yearFuture": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearZero": "There was no year 0. Try 1 BC or AD 1.",
  "todayLabel": "Today",
  "toneCurious": "Curious",
  "toneLight": "Light",

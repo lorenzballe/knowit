@@ -4,9 +4,8 @@
 ///
 /// Nothing on these shelves is written for them. A month's subject is a
 /// subject the bank already holds, a bet is laid on a card's own answer, a
-/// chart is unmasked by the card that drew it, an age through time is the
-/// age the card is tagged with, a story is played from the card's own
-/// words. What the shelves add is only the way of meeting a card: on its
+/// chart is unmasked by the card that drew it, a story is played from the
+/// card's own words. What the shelves add is only the way of meeting a card: on its
 /// own, in a round, against a clock, as a bet, a beat at a time.
 ///
 /// Everything here is dealt the way the turning themes are (see
@@ -543,27 +542,7 @@ List<(WorkKind, int)> workRow(Map<WorkKind, int> counts, {required int day}) {
   }
 }
 
-// ── Through time ─────────────────────────────────────────────────────────
-
-/// The ages the bank's cards are set in, oldest first, which is the order
-/// Through time keeps them in. A card tagged timeless is in none.
-const List<String> kEras = [
-  'ancient',
-  'medieval',
-  'early_modern',
-  'nineteenth',
-  'twentieth',
-  'recent',
-];
-
-/// The cards set in [era], dealt for the day.
-List<Pill> eraCards(Iterable<Pill> pool, String era, {required int day}) =>
-    dealCards(
-      pool.where((p) => p.era == era),
-      salt: 'era-$era',
-      day: day,
-      count: 6,
-    );
+// ── A year a question names ─────────────────────────────────────────────
 
 /// The year a card's question names, when it names one: "1529", "the
 /// 1820s". Only the question, so the year is never the answer given away.
@@ -571,135 +550,6 @@ String? questionYear(Pill p) {
   final m = RegExp(r'\b(1[0-9]{3}|20[0-4][0-9])(s)?\b').firstMatch(p.question);
   if (m == null) return null;
   return '${m.group(1)}${m.group(2) ?? ''}';
-}
-
-/// The year each age after the ancient world begins with. An age runs up to
-/// the next one's first year and stops short of it, so 1500 is the early
-/// modern age's first year rather than the Middle Ages' last, and a year
-/// before 500, however far back, is the ancient world's.
-const Map<String, int> kEraFrom = {
-  'medieval': 500,
-  'early_modern': 1500,
-  'nineteenth': 1800,
-  'twentieth': 1900,
-  'recent': 2000,
-};
-
-/// A year before Christ, as Through time counts years: 1 BC is year 0 and 2 BC
-/// is -1, so the distance from one year to another is a subtraction, across
-/// the change of era too. There was no year 0 in the calendar; there is one
-/// here, and it is 1 BC.
-int yearBc(int n) => 1 - n;
-
-/// The age [year] falls in.
-String eraOfYear(int year) {
-  String era = kEras.first;
-  for (final MapEntry<String, int> e in kEraFrom.entries) {
-    if (year >= e.value) era = e.key;
-  }
-  return era;
-}
-
-final RegExp _yearBc = RegExp(r'\b(\d{1,4})\s?(?:BCE|BC|B\.C\.)');
-final RegExp _yearAd = RegExp(
-  r'\b(?:AD|CE)\s?(\d{1,4})\b|\b(\d{1,4})\s?(?:AD|CE)\b',
-);
-final RegExp _yearOf = RegExp(r'\b(1[0-9]{3}|20[0-4][0-9])(s)?\b');
-
-/// The years a card's question names, first named first, as the span they
-/// cover: 1529 is 1529 to 1529, the 1820s are 1820 to 1829, the 1500s the
-/// whole century, 2 BC is -1 (see [yearBc]). Only the question, like
-/// [questionYear], so the year is never the answer given away. Null when
-/// it names none.
-(int, int)? yearsNamed(Pill p) {
-  final String q = p.question;
-  // Each kind of year where it is first named, and the earliest kept. A year
-  // given with its era is found by two patterns at the same place; the
-  // era's, looked for first, is the one kept.
-  (int, int, int)? first;
-  if (_yearBc.firstMatch(q) case final RegExpMatch m) {
-    final int y = yearBc(int.parse(m.group(1)!));
-    first = (m.start, y, y);
-  }
-  if (_yearAd.firstMatch(q) case final RegExpMatch m
-      when first == null || m.start < first.$1) {
-    final int y = int.parse(m.group(1) ?? m.group(2)!);
-    first = (m.start, y, y);
-  }
-  if (_yearOf.firstMatch(q) case final RegExpMatch m
-      when first == null || m.start < first.$1) {
-    final int y = int.parse(m.group(1)!);
-    // A decade is ten years, and a decade that is a round hundred, the
-    // 1500s, is the century.
-    final int to = m.group(2) == null ? y : y + (y % 100 == 0 ? 99 : 9);
-    first = (m.start, y, to);
-  }
-  return first == null ? null : (first.$2, first.$3);
-}
-
-/// The year a card's question names as the card says it: "1529", "the
-/// 1820s" as "1820s", "2 BC", "AD 393". What the cards of an age show large.
-String? yearSaid(Pill p) {
-  final String? year = questionYear(p);
-  final String q = p.question;
-  final RegExpMatch? bc = _yearBc.firstMatch(q);
-  final RegExpMatch? ad = _yearAd.firstMatch(q);
-  final RegExpMatch? old = switch ((bc, ad)) {
-    (final RegExpMatch b, final RegExpMatch a) => b.start < a.start ? b : a,
-    (final RegExpMatch b, null) => b,
-    (null, final RegExpMatch a) => a,
-    _ => null,
-  };
-  if (old == null) return year;
-  final RegExpMatch? four = _yearOf.firstMatch(q);
-  if (four != null && four.start < old.start) return year;
-  return old.group(0)!.replaceAll(RegExp(r'\s+'), ' ').trim();
-}
-
-/// How many years [year] is from what [p]'s question names, nothing when
-/// it falls inside a decade or a century the question names; null when the
-/// question names no year in [era], so a restoration in the 1990s does not
-/// pull a Renaissance card to the front of the last century.
-int? yearsAway(Pill p, int year, {required String era}) {
-  final (int, int)? span = yearsNamed(p);
-  if (span == null) return null;
-  final (int from, int to) = span;
-  if (eraOfYear(from) != era && eraOfYear(to) != era) return null;
-  if (year < from) return from - year;
-  if (year > to) return year - to;
-  return 0;
-}
-
-/// The cards of an age in the order a year gone to puts them: those whose
-/// question names a year in the age, nearest first, and then the rest as
-/// they came. Of two as near, the one that names the year more closely
-/// comes first — 1956 before the 1950s, the 1950s before the 1900s — and
-/// where that is a tie too, the day decides, so the same year is not the
-/// same two cards every day.
-List<Pill> nearestToYear(
-  List<Pill> cards,
-  int year, {
-  required String era,
-  required int day,
-}) {
-  final named = <(int, int, int, Pill)>[];
-  final rest = <Pill>[];
-  for (final Pill p in cards) {
-    final int? away = yearsAway(p, year, era: era);
-    if (away == null) {
-      rest.add(p);
-    } else {
-      final (int from, int to) = yearsNamed(p)!;
-      named.add((away, to - from, shelfHash('$day:year:${p.id}'), p));
-    }
-  }
-  named.sort((a, b) {
-    final int nearer = a.$1.compareTo(b.$1);
-    if (nearer != 0) return nearer;
-    final int closer = a.$2.compareTo(b.$2);
-    return closer != 0 ? closer : a.$3.compareTo(b.$3);
-  });
-  return [for (final (_, _, _, p) in named) p, ...rest];
 }
 
 // ── A few cards in a row ─────────────────────────────────────────────────
@@ -956,8 +806,6 @@ class ExploreMix {
     required this.practical,
     required this.debates,
     required this.work,
-    required this.eras,
-    required this.eraPool,
     required this.stories,
     required this.sharpest,
     required this.didYouKnow,
@@ -984,14 +832,6 @@ class ExploreMix {
   final ThemedShelf? practical;
   final ThemedShelf? debates;
   final WorkItOutDeal work;
-
-  /// The ages with cards, oldest first.
-  final List<(String, List<Pill>)> eras;
-
-  /// For each age, the day's cards and then every other card of the age no
-  /// shelf holds: what a year typed, or picked at random, looks in, since
-  /// six cards seldom name the year somebody was born.
-  final Map<String, List<Pill>> eraPool;
 
   /// The cards that tell a story, played a beat at a time: those written
   /// with a story to play first (see [trueStories]).
@@ -1061,12 +901,6 @@ ExploreMix dealExploreMix({
   final work = workItOut(left(), day: day);
   taken.addAll(work.cards.map((p) => p.id));
 
-  final eras = <(String, List<Pill>)>[];
-  for (final era in kEras) {
-    final cards = claim(eraCards(left(), era, day: day));
-    if (cards.length >= 2) eras.add((era, cards));
-  }
-
   final sharpest = claim(dealTheme(ShelfTheme.sharpest, 0, left(), day));
   final dyk = claim(
     dealCards(left().where(isPlainRead), salt: 'dyk', day: day),
@@ -1109,21 +943,6 @@ ExploreMix dealExploreMix({
   final howSure = claim(
     dealCards(left().where(asksHowSure), salt: 'how-sure', day: day, count: 6),
   );
-  // Last, from what no shelf took: a year typed, or picked at random, reaches
-  // past the day's cards for an age without showing a card twice on the
-  // page.
-  final List<Pill> unshelved = left();
-  final eraPool = {
-    for (final (era, cards) in eras)
-      era: [
-        ...cards,
-        ...unshelved.where((p) => p.era == era).toList()..sort(
-          (a, b) =>
-              shelfHash('$day:era-pool:${a.id}')
-                  .compareTo(shelfHash('$day:era-pool:${b.id}')),
-        ),
-      ],
-  };
   return ExploreMix(
     monthSubjectKey: monthKey,
     month: month,
@@ -1134,8 +953,6 @@ ExploreMix dealExploreMix({
     practical: practical,
     debates: debates,
     work: work,
-    eras: eras,
-    eraPool: eraPool,
     stories: stories,
     sharpest: sharpest,
     didYouKnow: dyk,

@@ -3972,72 +3972,6 @@ abstract class AppLocalizations {
   /// **'{n, plural, =0{Nothing new today} =1{1 new to you} other{{n} new to you}}'**
   String dykNew(int n);
 
-  /// No description provided for @eraAncient.
-  ///
-  /// In en, this message translates to:
-  /// **'The ancient world'**
-  String get eraAncient;
-
-  /// No description provided for @eraAncientWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'Before 500'**
-  String get eraAncientWhen;
-
-  /// No description provided for @eraEarlyModern.
-  ///
-  /// In en, this message translates to:
-  /// **'The early modern age'**
-  String get eraEarlyModern;
-
-  /// No description provided for @eraEarlyModernWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'1500 to 1800'**
-  String get eraEarlyModernWhen;
-
-  /// No description provided for @eraMedieval.
-  ///
-  /// In en, this message translates to:
-  /// **'The Middle Ages'**
-  String get eraMedieval;
-
-  /// No description provided for @eraMedievalWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'500 to 1500'**
-  String get eraMedievalWhen;
-
-  /// No description provided for @eraMore.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 more from this age} other{{n} more from this age}}'**
-  String eraMore(int n);
-
-  /// No description provided for @eraNineteenth.
-  ///
-  /// In en, this message translates to:
-  /// **'The nineteenth century'**
-  String get eraNineteenth;
-
-  /// No description provided for @eraNineteenthWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'1800 to 1900'**
-  String get eraNineteenthWhen;
-
-  /// No description provided for @eraRecent.
-  ///
-  /// In en, this message translates to:
-  /// **'This century'**
-  String get eraRecent;
-
-  /// No description provided for @eraRecentWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'Since 2000'**
-  String get eraRecentWhen;
-
   /// No description provided for @eraShortAncient.
   ///
   /// In en, this message translates to:
@@ -4073,18 +4007,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1900s'**
   String get eraShortTwentieth;
-
-  /// No description provided for @eraTwentieth.
-  ///
-  /// In en, this message translates to:
-  /// **'The last century'**
-  String get eraTwentieth;
-
-  /// No description provided for @eraTwentiethWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'1900 to 2000'**
-  String get eraTwentiethWhen;
 
   /// No description provided for @fewCards.
   ///
@@ -4536,18 +4458,6 @@ abstract class AppLocalizations {
   /// **'The answer: {said}.'**
   String theAnswer(String said);
 
-  /// No description provided for @throughTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Through time'**
-  String get throughTime;
-
-  /// No description provided for @throughTimeLine.
-  ///
-  /// In en, this message translates to:
-  /// **'From the ancient world to this year. Type a year, or let chance pick'**
-  String get throughTimeLine;
-
   /// Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.
   ///
   /// In en, this message translates to:
@@ -4625,90 +4535,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your pick'**
   String get spotYours;
-
-  /// No description provided for @yearHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Type a year'**
-  String get yearHint;
-
-  /// No description provided for @yearAd.
-  ///
-  /// In en, this message translates to:
-  /// **'AD'**
-  String get yearAd;
-
-  /// No description provided for @yearBc.
-  ///
-  /// In en, this message translates to:
-  /// **'BC'**
-  String get yearBc;
-
-  /// A year from 1000 on, inside a sentence.
-  ///
-  /// In en, this message translates to:
-  /// **'{year}'**
-  String yearNamed(String year);
-
-  /// No description provided for @yearAdOf.
-  ///
-  /// In en, this message translates to:
-  /// **'AD {year}'**
-  String yearAdOf(String year);
-
-  /// No description provided for @yearBcOf.
-  ///
-  /// In en, this message translates to:
-  /// **'{year} BC'**
-  String yearBcOf(String year);
-
-  /// No description provided for @yearGo.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to this year'**
-  String get yearGo;
-
-  /// No description provided for @yearRandom.
-  ///
-  /// In en, this message translates to:
-  /// **'Random'**
-  String get yearRandom;
-
-  /// No description provided for @yearRandomHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Goes to a year one of the cards names'**
-  String get yearRandomHint;
-
-  /// No description provided for @yearNearest.
-  ///
-  /// In en, this message translates to:
-  /// **'Nearest to {year} first'**
-  String yearNearest(String year);
-
-  /// No description provided for @yearNoneNamed.
-  ///
-  /// In en, this message translates to:
-  /// **'No card here names a year near {year}. These are from its age.'**
-  String yearNoneNamed(String year);
-
-  /// No description provided for @yearNoAge.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing from around {year} here today. This is the nearest age.'**
-  String yearNoAge(String year);
-
-  /// No description provided for @yearFuture.
-  ///
-  /// In en, this message translates to:
-  /// **'{year} is still to come. Here is this century.'**
-  String yearFuture(String year);
-
-  /// No description provided for @yearZero.
-  ///
-  /// In en, this message translates to:
-  /// **'There was no year 0. Try 1 BC or AD 1.'**
-  String get yearZero;
 
   /// No description provided for @todayLabel.
   ///

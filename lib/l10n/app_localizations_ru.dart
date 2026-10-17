@@ -2852,49 +2852,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get eraAncient => 'Древний мир';
-
-  @override
-  String get eraAncientWhen => 'До 500 года';
-
-  @override
-  String get eraEarlyModern => 'Раннее Новое время';
-
-  @override
-  String get eraEarlyModernWhen => '1500–1800 годы';
-
-  @override
-  String get eraMedieval => 'Средние века';
-
-  @override
-  String get eraMedievalWhen => '500–1500 годы';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Ещё $n из этой эпохи',
-      many: 'Ещё $n из этой эпохи',
-      few: 'Ещё $n из этой эпохи',
-      one: 'Ещё $n из этой эпохи',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'XIX век';
-
-  @override
-  String get eraNineteenthWhen => '1800–1900 годы';
-
-  @override
-  String get eraRecent => 'Этот век';
-
-  @override
-  String get eraRecentWhen => 'С 2000 года';
-
-  @override
   String get eraShortAncient => 'Древность';
 
   @override
@@ -2911,12 +2868,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => 'XX век';
-
-  @override
-  String get eraTwentieth => 'Прошлый век';
-
-  @override
-  String get eraTwentiethWhen => '1900–2000 годы';
 
   @override
   String get fewCards => 'В нескольких карточках';
@@ -3223,13 +3174,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get throughTime => 'Сквозь время';
-
-  @override
-  String get throughTimeLine =>
-      'От древнего мира до наших дней. Введите год или доверьтесь случаю';
-
-  @override
   String leanHint(String or) {
     return 'Сдвиньте «$or» туда, где вы стоите';
   }
@@ -3283,64 +3227,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get spotYours => 'Ваш выбор';
-
-  @override
-  String get yearHint => 'Введите год';
-
-  @override
-  String get yearAd => 'н. э.';
-
-  @override
-  String get yearBc => 'до н. э.';
-
-  @override
-  String yearNamed(String year) {
-    return '$year г.';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '$year г. н. э.';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year г. до н. э.';
-  }
-
-  @override
-  String get yearGo => 'Перейти к этому году';
-
-  @override
-  String get yearRandom => 'Наугад';
-
-  @override
-  String get yearRandomHint =>
-      'Переходит к году, который называет одна из карточек';
-
-  @override
-  String yearNearest(String year) {
-    return 'Сначала ближайшие к $year';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Ни одна карточка здесь не называет год рядом с $year. Эти — из той же эпохи.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Сегодня нет ничего около $year. Вот ближайшая эпоха.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year ещё впереди. Вот этот век.';
-  }
-
-  @override
-  String get yearZero =>
-      'Нулевого года не было. Попробуйте 1 г. до н. э. или 1 г. н. э.';
 
   @override
   String get todayLabel => 'Сегодня';

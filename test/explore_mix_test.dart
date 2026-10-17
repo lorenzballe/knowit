@@ -17,7 +17,6 @@ void main() {
     ...?m.practical?.pills.map((p) => p.id),
     ...?m.debates?.pills.map((p) => p.id),
     ...m.work.cards.map((p) => p.id),
-    for (final (_, cards) in m.eras) ...cards.map((p) => p.id),
     ...?m.stories?.pills.map((p) => p.id),
     ...?m.sharpest?.pills.map((p) => p.id),
     ...m.didYouKnow.map((p) => p.id),
@@ -100,12 +99,6 @@ void main() {
       }
       for (final p in mix.whatIf) {
         expect(p.ask, isNotEmpty, reason: p.id);
-      }
-      for (final (era, cards) in mix.eras) {
-        expect(kEras, contains(era));
-        for (final p in cards) {
-          expect(p.era, era, reason: p.id);
-        }
       }
     });
 
