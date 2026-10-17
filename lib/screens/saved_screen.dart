@@ -21,13 +21,20 @@ enum Shelf { saved, liked }
 
 class SavedScreen extends StatefulWidget {
   final AppState app;
+
+  /// The empty shelf's way on: the Today tab, where cards are kept from.
   final VoidCallback onBackToToday;
+
+  /// The way back to the screen this was opened over. Left null, the
+  /// screen is popped.
+  final VoidCallback? onBack;
   final Shelf shelf;
 
   const SavedScreen({
     super.key,
     required this.app,
     required this.onBackToToday,
+    this.onBack,
     this.shelf = Shelf.saved,
   });
 
@@ -102,7 +109,10 @@ class _SavedScreenState extends State<SavedScreen> {
                 children: [
                   // The way back. This screen is pushed over the profile and
                   // had nothing but the phone's own gesture to leave it.
-                  BackCircle(onPressed: widget.onBackToToday),
+                  BackCircle(
+                    onPressed:
+                        widget.onBack ?? () => Navigator.of(context).maybePop(),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     // One line, at whatever size one line takes: "Saved"

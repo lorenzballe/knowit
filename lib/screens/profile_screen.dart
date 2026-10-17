@@ -40,12 +40,25 @@ class ProfileScreen extends StatelessWidget {
   final Account account;
   final VoidCallback onSignedOut;
 
+  /// Takes the reader to the Today tab: the shell's, since a tab cannot
+  /// change tabs on its own. Null where Profile stands alone.
+  final VoidCallback? onToday;
+
   const ProfileScreen({
     super.key,
     required this.app,
     required this.account,
     required this.onSignedOut,
+    this.onToday,
   });
+
+  /// "Back to today's five", from an empty shelf: everything open over the
+  /// tabs is put away and the reader lands on Today, which is what the
+  /// button says. It used to pop the shelf and leave them on Profile.
+  void _backToToday(BuildContext routeContext) {
+    Navigator.of(routeContext).popUntil((route) => route.isFirst);
+    onToday?.call();
+  }
 
   Future<void> _editTopics(BuildContext context) async {
     await Navigator.of(context).push(
@@ -441,7 +454,8 @@ class ProfileScreen extends StatelessWidget {
                   body: SafeArea(
                     child: SavedScreen(
                       app: app,
-                      onBackToToday: () => Navigator.of(routeContext).pop(),
+                      onBack: () => Navigator.of(routeContext).pop(),
+                      onBackToToday: () => _backToToday(routeContext),
                     ),
                   ),
                 ),
@@ -467,7 +481,8 @@ class ProfileScreen extends StatelessWidget {
                     child: SavedScreen(
                       app: app,
                       shelf: Shelf.liked,
-                      onBackToToday: () => Navigator.of(routeContext).pop(),
+                      onBack: () => Navigator.of(routeContext).pop(),
+                      onBackToToday: () => _backToToday(routeContext),
                     ),
                   ),
                 ),

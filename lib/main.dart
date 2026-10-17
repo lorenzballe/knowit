@@ -1355,6 +1355,7 @@ class _AstutoShellState extends State<AstutoShell>
         app: widget.app,
         account: widget.account,
         onSignedOut: widget.onSignedOut,
+        onToday: () => _goTo(0, by: 'shelf'),
       ),
     ];
     // Each tab is a screen of its own, in front only while it is the tab
