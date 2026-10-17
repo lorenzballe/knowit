@@ -49,13 +49,22 @@ Future<({SignInOutcome outcome, bool noSheet})> runSignIn({
   required String from,
 }) async {
   // One at a time. A second flow started while the first sheet is up
-  // cancels both, and a reader who tapped twice would get nothing.
-  if (account.busy) return (outcome: SignInOutcome.cancelled, noSheet: false);
+  // cancels both, and a reader who tapped twice would get nothing. The tap
+  // is counted as what it is — a sign-in already waiting — and not as the
+  // reader's cancel, which is what hid a stuck Apple request for builds.
+  if (account.busy) {
+    _ignored(account, method: method, from: from);
+    return (outcome: SignInOutcome.busy, noSheet: false);
+  }
   Analytics.capture('sign in started', {'method': method, 'from': from});
   final Stopwatch took = Stopwatch()..start();
   final SignInOutcome outcome = method == 'Apple'
       ? await account.signInWithApple(app)
       : await account.signInWithGoogle(app);
+  if (outcome == SignInOutcome.busy) {
+    _ignored(account, method: method, from: from);
+    return (outcome: outcome, noSheet: false);
+  }
   final int ms = took.elapsedMilliseconds;
   final bool noSheet =
       outcome == SignInOutcome.cancelled && ms < kNoSheetWithin.inMilliseconds;
@@ -66,18 +75,15 @@ Future<({SignInOutcome outcome, bool noSheet})> runSignIn({
     'from': from,
     'ms': ms,
     if (outcome == SignInOutcome.cancelled) 'no_sheet': noSheet,
-    // Which road it took — the phone's own sheet or Firebase's browser.
-    // Two rounds were spent working that out by hand once already.
+    // Which road it took — the phone's own sheet, firebase_auth's, or
+    // Firebase's browser. Two rounds were spent working that out by hand.
     'route': account.lastRoute,
-    // Why it failed, as Apple, Google or Firebase put it: an error code and
-    // its sentence, never anything the reader typed. Without it, 71 failed
-    // sign-ins in a row from App Review's phones said only "failed", and
-    // the one place the reason showed was a snackbar on a phone nobody here
-    // was holding.
-    'error':
-        (outcome == SignInOutcome.failed ||
-                outcome == SignInOutcome.unavailable) &&
-            error != null
+    // Why it did not end in a sign-in, as Apple, Google or Firebase put it:
+    // an error code and its sentence, never anything the reader typed.
+    // Without it, 71 failed sign-ins in a row from App Review's phones said
+    // only "failed", and the one place the reason showed was a snackbar on
+    // a phone nobody here was holding.
+    'error': outcome != SignInOutcome.signedIn && error != null
         ? Analytics.short(error)
         : null,
   });
@@ -96,6 +102,16 @@ Future<({SignInOutcome outcome, bool noSheet})> runSignIn({
   }
   return (outcome: outcome, noSheet: noSheet);
 }
+
+/// A tap while a sign-in is still waiting on its sheet: which one is
+/// waiting, and for how long it has.
+void _ignored(Account account, {required String method, required String from}) =>
+    Analytics.capture('sign in ignored', {
+      'method': method,
+      'from': from,
+      'busy_with': account.busyWith,
+      'busy_since_ms': account.busyFor?.inMilliseconds,
+    });
 
 /// Offers an account: Apple and Google on one sheet, and a way past it.
 /// Returns true once the reader is signed in, and false for "Not now", a
@@ -213,11 +229,20 @@ class _SignInSheetState extends State<SignInSheet> {
       SignInOutcome.cancelled => noSheet ? failed : null,
       SignInOutcome.failed => failed,
       SignInOutcome.unavailable => l.signInNotAvailableBuild,
+      // A sign-in already waiting says so on its own button.
+      SignInOutcome.busy => null,
     };
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+    // A sign-in started from somewhere else, still waiting on its sheet,
+    // holds these buttons too, and says so on its own.
+    listenable: widget.account,
+    builder: (context, _) => _sheet(context),
+  );
+
+  Widget _sheet(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
     final bool back = widget.door == SignInDoor.intro;
@@ -228,6 +253,8 @@ class _SignInSheetState extends State<SignInSheet> {
     };
     final String? note = _note;
     final String? detail = _detail;
+    final String? waiting = _running ?? widget.account.busyWith;
+    final bool free = _running == null && !widget.account.busy;
     return Container(
       key: const ValueKey('sign-in-sheet'),
       decoration: BoxDecoration(
@@ -273,25 +300,25 @@ class _SignInSheetState extends State<SignInSheet> {
             const SizedBox(height: 20),
             _ProviderButton(
               key: const ValueKey('sign-in-apple'),
-              label: _running == 'Apple'
+              label: waiting == 'Apple'
                   ? l.signingIn
                   : back
                   ? l.continueWithApple
                   : l.signInWithApple,
               leading: (ink) => Icon(Icons.apple, size: 21, color: ink),
-              enabled: _running == null,
+              enabled: free,
               onTap: () => _go('Apple'),
             ),
             const SizedBox(height: 10),
             _ProviderButton(
               key: const ValueKey('sign-in-google'),
-              label: _running == 'Google'
+              label: waiting == 'Google'
                   ? l.signingIn
                   : back
                   ? l.continueWithGoogle
                   : l.signInWithGoogle,
               leading: (_) => const GoogleMark(size: 19),
-              enabled: _running == null,
+              enabled: free,
               onTap: () => _go('Google'),
             ),
             // Said where the reader is looking, and read out as it changes.
