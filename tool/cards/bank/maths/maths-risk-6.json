@@ -9,7 +9,6 @@
   "question": "At roulette you bet £1 on red and double your stake after every loss. After ten straight losses, what is the eleventh bet?",
   "value": 1024,
   "unit": "pounds",
-  "tolerance": 0,
   "answer": "£1,024, risked to recover £1,023 and gain a single pound. Ten misses in a row come about once in 780 tries on a single-zero wheel: rare in an evening, likely over a long run, and table limits stop the doubling anyway.",
   "move": "A strategy that risks a fortune to win a pound fails rarely but ruinously.",
   "ask": "Which small, steady win of mine rests on a rare loss that could wipe it out?",

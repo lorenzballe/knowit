@@ -9,7 +9,6 @@
   "question": "Without a calculator, how many digits does 2 to the power 100 have?",
   "value": 31,
   "unit": "digits",
-  "tolerance": 0,
   "answer": "31 digits: 2¹⁰⁰ = 1,267,650,600,228,229,401,496,703,205,376.",
   "move": "A number's digit count is its base-10 logarithm, rounded down, plus one.",
   "ask": "Which huge number could I size up just by counting its powers of ten?",

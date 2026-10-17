@@ -9,7 +9,6 @@
   "question": "A coat is 40% off, with an extra 25% off at the till. What is the total discount, in percent?",
   "value": 55,
   "unit": "percent",
-  "tolerance": 0,
   "answer": "55%, not 65%: the second discount comes off an already reduced price.",
   "move": "Discounts taken one after another multiply; they never simply add up.",
   "ask": "Which deal with stacked discounts have I added up instead of multiplying?",

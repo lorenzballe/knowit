@@ -9,7 +9,6 @@
   "question": "A receipt for £84 includes VAT at 20%. How much of the £84 is VAT, in pounds?",
   "value": 14,
   "unit": "pounds",
-  "tolerance": 0,
   "answer": "£14, a sixth of the total, not £16.80: the 20% was charged on the price before tax.",
   "move": "To strip out a percentage that was added, divide; never subtract it.",
   "ask": "Which price have I reversed by subtracting a percentage that was added on?",

@@ -9,7 +9,6 @@
   "question": "Wimbledon's singles draw starts with 128 players. How many matches does it take to crown a champion?",
   "value": 127,
   "unit": "matches",
-  "tolerance": 0,
   "answer": "127: each match knocks out exactly one player, and all but one must go.",
   "move": "Count what each step removes, and the total follows without adding rounds.",
   "ask": "Which tally could I get at once by counting what each step removes?",

@@ -9,7 +9,6 @@
   "question": "Luhn's rule: double every second digit from the right, add all the digits, and the total must end in 0. What check digit completes 7992739871?",
   "value": 3,
   "unit": "digit",
-  "tolerance": 0,
   "answer": "3: any single mistyped digit breaks the total, so a form can reject a card number before it reaches the bank.",
   "move": "A check digit lets a number catch its own typing errors.",
   "ask": "Which number I type often has a built-in check I never noticed?",

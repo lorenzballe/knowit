@@ -9,7 +9,6 @@
   "question": "Chess offers about 1,000 ways to play each pair of moves, and games last about 40 pairs. How many zeros in the count of games?",
   "value": 120,
   "unit": "zeros",
-  "tolerance": 0,
   "answer": "120 zeros, Shannon's 1950 figure: far more games than atoms in the observable universe, roughly 10⁸⁰.",
   "move": "Chained choices multiply, and outgrow any count of real things.",
   "ask": "Where am I adding up options that really multiply?",

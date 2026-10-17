@@ -9,7 +9,6 @@
   "question": "Paper is 0.1 mm thick. How many times would you have to fold it in half to pass the Moon, 384,000 km away?",
   "value": 42,
   "unit": "folds",
-  "tolerance": 0,
   "answer": "42 folds, in theory. In practice the record is 12, set in 2002 by Britney Gallivan, a high-school student, with a sheet 1.2 km long.",
   "move": "Doubling reaches astronomical sizes in a few dozen steps.",
   "ask": "What small thing of mine is doubling quietly, and where will it be in ten doublings?",

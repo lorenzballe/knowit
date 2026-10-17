@@ -9,7 +9,6 @@
   "question": "One lawnmower makes 90 decibels. A second, identical one starts beside it. What level do the two make together, in decibels?",
   "value": 93,
   "unit": "decibels",
-  "tolerance": 0,
   "answer": "93 dB, not 180: doubling the sound energy adds only 3 decibels.",
   "move": "On a log scale, doubling adds a fixed step; it never doubles the number.",
   "ask": "Which reading on a logarithmic scale have I added up like ordinary numbers?",

@@ -9,7 +9,6 @@
   "question": "Bradman reached his last Test innings with 6,996 runs, out 69 times. If out again, how many runs for an average of 100?",
   "value": 4,
   "unit": "runs",
-  "tolerance": 0,
   "answer": "4 runs. He was bowled second ball for 0 at the Oval in 1948, leaving the most famous average in sport at 99.94.",
   "move": "To reach a target average, work out the target total, then subtract.",
   "ask": "Which average of mine could I steer by working out the total it needs?",
