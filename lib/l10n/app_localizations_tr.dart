@@ -2640,9 +2640,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Düzeltmeler';
-
-  @override
   String get didYouKnow => 'Biliyor muydun?';
 
   @override
@@ -2678,12 +2675,6 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => 'Bugünün baskısı bu kadar';
-
-  @override
-  String get editionTomorrow => 'Yarınki sabah çıkıyor';
 
   @override
   String get eraAncient => 'Antik dünya';
@@ -2772,9 +2763,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get howSure => 'Ne kadar eminim, ve neden?';
-
-  @override
-  String get inNumbers => 'Rakamlarla';
 
   @override
   String inRange(int pts, String said) {
@@ -2910,18 +2898,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get pickOneFirst => 'Önce birini seç';
 
   @override
-  String get puzzleOfTheDay => 'Günün bulmacası';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts p';
   }
 
   @override
   String get rightLastTime => 'Geçen sefer doğru';
-
-  @override
-  String get sameForEveryoneCaps => 'Herkes için aynı';
 
   @override
   String get sayFalse => 'Yanlış';
@@ -3046,12 +3028,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Manşet';
-
-  @override
   String get throughTime => 'Zamanda yolculuk';
 
   @override
@@ -3171,9 +3147,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get todayLabel => 'Bugün';
-
-  @override
-  String get todaysEdition => 'Bugünün baskısı';
 
   @override
   String get toneCurious => 'Meraklı';

@@ -107,7 +107,6 @@ void main() {
           expect(p.era, era, reason: p.id);
         }
       }
-      expect(mix.front, isNotNull);
     });
 
     test('is the same for everybody on a day, and dealt afresh the next', () {
@@ -474,14 +473,6 @@ void main() {
         final ranks = s.cards.map((p) => p.difficulty.index).toList();
         expect(ranks, [...ranks]..sort(), reason: s.key);
       }
-    });
-
-    test('the front page is the same however the bank is ordered', () {
-      final a = frontPage(bank, day: 20735)!;
-      final b = frontPage(List.of(bank.reversed), day: 20735)!;
-      expect(b.cards.map((p) => p.id), a.cards.map((p) => p.id));
-      expect(a.numbers.every((p) => shelfFigure(p) != null), isTrue);
-      expect(a.columns.map((p) => p.topic), isNot(contains(a.lead.topic)));
     });
   });
 }

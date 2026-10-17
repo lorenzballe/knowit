@@ -882,83 +882,6 @@ List<Pill> forTheTime(
   return out;
 }
 
-// ── The front page ───────────────────────────────────────────────────────
-
-/// Today's edition: one lead, two columns, three numbers, a correction and a
-/// puzzle. The same for everybody, read or not, which is what it says on it.
-class FrontPage {
-  const FrontPage({
-    required this.lead,
-    required this.columns,
-    required this.numbers,
-    required this.correction,
-    required this.puzzle,
-  });
-
-  final Pill lead;
-  final List<Pill> columns;
-  final List<Pill> numbers;
-  final Pill? correction;
-  final Pill? puzzle;
-
-  List<Pill> get cards => [lead, ...columns, ...numbers, ?correction, ?puzzle];
-}
-
-FrontPage? frontPage(Iterable<Pill> bank, {required int day}) {
-  final List<Pill> all = bank.toList();
-  final used = <String>{};
-  List<Pill> take(Iterable<Pill> fits, String salt, int n) {
-    final picked = dealCards(
-      fits.where((p) => !used.contains(p.id)),
-      salt: 'front-$salt',
-      day: day,
-      count: n,
-      perTopic: 1,
-    );
-    used.addAll(picked.map((p) => p.id));
-    return picked;
-  }
-
-  final lead = take(
-    all.where(
-      (p) =>
-          p.barMove.isNotEmpty &&
-          p.difficulty != Difficulty.easy &&
-          p.question.length <= 130,
-    ),
-    'lead',
-    1,
-  );
-  if (lead.isEmpty) return null;
-  final columns = take(
-    all.where((p) => p.question.length <= 120 && p.topic != lead.first.topic),
-    'columns',
-    2,
-  );
-  final numbers = take(
-    all.where((p) => p.hook == 'number' && shelfFigure(p) != null),
-    'numbers',
-    3,
-  );
-  final correction = take(
-    all.where((p) => p.hook == 'misconception'),
-    'correction',
-    1,
-  );
-  final puzzle = take(
-    all.where((p) => p.challenge is TypeNumber && p.question.length <= 140),
-    'puzzle',
-    1,
-  );
-  return FrontPage(
-    lead: lead.first,
-    columns: columns,
-    numbers: numbers,
-    correction: correction.firstOrNull,
-    puzzle: puzzle.firstOrNull,
-  );
-}
-
 // ── The rest of the shelves ──────────────────────────────────────────────
 
 /// Unmask the chart: the cards whose chart tells the truth in its numbers
@@ -1046,7 +969,6 @@ class ExploreMix {
     required this.origins,
     required this.whatIf,
     required this.howSure,
-    required this.front,
     required this.surprise,
   });
 
@@ -1086,7 +1008,6 @@ class ExploreMix {
   final ThemedShelf? origins;
   final List<Pill> whatIf;
   final List<Pill> howSure;
-  final FrontPage? front;
 
   /// What "surprise me" deals from: every card not read.
   final List<Pill> surprise;
@@ -1226,7 +1147,6 @@ ExploreMix dealExploreMix({
     origins: origins,
     whatIf: whatIf,
     howSure: howSure,
-    front: frontPage(bank, day: day),
     surprise: pool,
   );
 }

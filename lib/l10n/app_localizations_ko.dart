@@ -2570,9 +2570,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get corrections => '바로잡습니다';
-
-  @override
   String get didYouKnow => '알고 있었나요?';
 
   @override
@@ -2605,12 +2602,6 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => '오늘 판은 여기까지';
-
-  @override
-  String get editionTomorrow => '내일 판은 아침에 나와요';
 
   @override
   String get eraAncient => '고대 세계';
@@ -2698,9 +2689,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get howSure => '나는 얼마나 확신하고, 왜 그럴까?';
-
-  @override
-  String get inNumbers => '숫자로 보기';
 
   @override
   String inRange(int pts, String said) {
@@ -2835,18 +2823,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pickOneFirst => '먼저 하나 고르세요';
 
   @override
-  String get puzzleOfTheDay => '오늘의 퍼즐';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts점';
   }
 
   @override
   String get rightLastTime => '지난번엔 맞혔어요';
-
-  @override
-  String get sameForEveryoneCaps => '모두에게 같아요';
 
   @override
   String get sayFalse => '거짓';
@@ -2971,12 +2953,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => '머리기사';
-
-  @override
   String get throughTime => '시간 여행';
 
   @override
@@ -3095,9 +3071,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get todayLabel => '오늘';
-
-  @override
-  String get todaysEdition => '오늘 판';
 
   @override
   String get toneCurious => '호기심';

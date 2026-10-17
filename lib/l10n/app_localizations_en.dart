@@ -2661,9 +2661,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Corrections';
-
-  @override
   String get didYouKnow => 'Did you know?';
 
   @override
@@ -2698,12 +2695,6 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => 'That\'s today\'s edition';
-
-  @override
-  String get editionTomorrow => 'Tomorrow\'s is out in the morning';
 
   @override
   String get eraAncient => 'The ancient world';
@@ -2792,9 +2783,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get howSure => 'How sure am I, and why?';
-
-  @override
-  String get inNumbers => 'In numbers';
 
   @override
   String inRange(int pts, String said) {
@@ -2932,18 +2920,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickOneFirst => 'Pick one first';
 
   @override
-  String get puzzleOfTheDay => 'Puzzle of the day';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts pts';
   }
 
   @override
   String get rightLastTime => 'Right last time';
-
-  @override
-  String get sameForEveryoneCaps => 'The same for everyone';
 
   @override
   String get sayFalse => 'False';
@@ -3070,12 +3052,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'The lead';
-
-  @override
   String get throughTime => 'Through time';
 
   @override
@@ -3196,9 +3172,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todayLabel => 'Today';
-
-  @override
-  String get todaysEdition => 'Today\'s edition';
 
   @override
   String get toneCurious => 'Curious';

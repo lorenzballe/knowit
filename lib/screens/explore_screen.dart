@@ -22,7 +22,6 @@ import '../theme.dart';
 import '../widgets/balanced_text.dart';
 import '../widgets/explore/did_you_know.dart';
 import '../widgets/explore/form_shelves.dart';
-import '../widgets/explore/front_page.dart';
 import '../widgets/explore/month_shelf.dart';
 import '../widgets/explore/mood_minutes.dart';
 import '../widgets/explore/series_shelf.dart';
@@ -715,10 +714,10 @@ class ExploreScreenState extends State<ExploreScreen> {
               // stories played a beat at a time), cards to play (true or
               // false, what came back, the tricks in a number, working it
               // out, a chart unmasked, how sure, what if), and ways in by time
-              // (a few cards, sixty seconds, your minutes, the day's edition,
-              // a year, a fact), then one card from anywhere and something to
-              // use before tonight at the very end. Every one is free:
-              // Explore is what brings a reader back.
+              // (a few cards, sixty seconds, your minutes, a year, a fact),
+              // then one card from anywhere and something to use before
+              // tonight at the very end. Every one is free: Explore is what
+              // brings a reader back.
               if (mix.month.length >= 3) ...[
                 const SizedBox(height: 24),
                 _watch(
@@ -1007,18 +1006,6 @@ class ExploreScreenState extends State<ExploreScreen> {
                     isRead: read,
                     onOpen: _open,
                     onShown: (p) => _seen('mood', p),
-                  ),
-                ),
-              ],
-              // The day as an edition: the same front page for everybody.
-              if (mix.front case final FrontPage page) ...[
-                const SizedBox(height: 32),
-                _watch(
-                  'front-page',
-                  FrontPageView(
-                    page: page,
-                    onOpen: _open,
-                    onShown: (p) => _seen('front-page', p),
                   ),
                 ),
               ],

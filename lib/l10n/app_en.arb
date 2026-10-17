@@ -2631,7 +2631,6 @@
    }
   }
  },
- "corrections": "Corrections",
  "didYouKnow": "Did you know?",
  "didYouKnowLine": "Turn it over, then: new to you, or knew it?",
  "dragToSet": "Drag to set",
@@ -2652,8 +2651,6 @@
    }
   }
  },
- "editionEnd": "That's today's edition",
- "editionTomorrow": "Tomorrow's is out in the morning",
  "eraAncient": "The ancient world",
  "eraAncientWhen": "Before 500",
  "eraEarlyModern": "The early modern age",
@@ -2694,7 +2691,6 @@
   }
  },
  "howSure": "How sure am I, and why?",
- "inNumbers": "In numbers",
  "inRange": "In range: +{pts} points. It is {said}.",
  "@inRange": {
   "placeholders": {
@@ -2803,7 +2799,6 @@
  "notSureTitle": "Not sure where to start?",
  "openWord": "Open",
  "pickOneFirst": "Pick one first",
- "puzzleOfTheDay": "Puzzle of the day",
  "rangeWidth": "±{w} · {pts} pts",
  "@rangeWidth": {
   "placeholders": {
@@ -2816,7 +2811,6 @@
   }
  },
  "rightLastTime": "Right last time",
- "sameForEveryoneCaps": "The same for everyone",
  "sayFalse": "False",
  "sayTrue": "True",
  "seriesAnchors": "First impressions",
@@ -2923,8 +2917,6 @@
    }
   }
  },
- "theAstute": "The Astute",
- "theLead": "The lead",
  "throughTime": "Through time",
  "throughTimeLine": "From the ancient world to this year. Type a year, or let chance pick",
  "leanHint": "Slide the “{or}” to where you stand",
@@ -3046,7 +3038,6 @@
  },
  "yearZero": "There was no year 0. Try 1 BC or AD 1.",
  "todayLabel": "Today",
- "todaysEdition": "Today's edition",
  "toneCurious": "Curious",
  "toneLight": "Light",
  "toneSerious": "Serious",

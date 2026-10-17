@@ -2692,9 +2692,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Fe de erratas';
-
-  @override
   String get didYouKnow => '¿Lo sabías?';
 
   @override
@@ -2730,12 +2727,6 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => 'Esta es la edición de hoy';
-
-  @override
-  String get editionTomorrow => 'La de mañana sale por la mañana';
 
   @override
   String get eraAncient => 'El mundo antiguo';
@@ -2824,9 +2815,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get howSure => '¿Qué tan seguro estoy, y por qué?';
-
-  @override
-  String get inNumbers => 'En cifras';
 
   @override
   String inRange(int pts, String said) {
@@ -2964,18 +2952,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pickOneFirst => 'Elige una primero';
 
   @override
-  String get puzzleOfTheDay => 'El acertijo del día';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts pts';
   }
 
   @override
   String get rightLastTime => 'Acertada la última vez';
-
-  @override
-  String get sameForEveryoneCaps => 'Igual para todos';
 
   @override
   String get sayFalse => 'Falso';
@@ -3103,12 +3085,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Apertura';
-
-  @override
   String get throughTime => 'A través del tiempo';
 
   @override
@@ -3228,9 +3204,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get todayLabel => 'Hoy';
-
-  @override
-  String get todaysEdition => 'Edición de hoy';
 
   @override
   String get toneCurious => 'Curioso';

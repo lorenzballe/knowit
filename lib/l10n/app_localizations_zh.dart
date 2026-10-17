@@ -2564,9 +2564,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get corrections => '更正';
-
-  @override
   String get didYouKnow => '你知道吗？';
 
   @override
@@ -2599,12 +2596,6 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => '今天这一期就到这里';
-
-  @override
-  String get editionTomorrow => '明天的一期早上发布';
 
   @override
   String get eraAncient => '古代世界';
@@ -2692,9 +2683,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get howSure => '我有多确定？为什么？';
-
-  @override
-  String get inNumbers => '数字看点';
 
   @override
   String inRange(int pts, String said) {
@@ -2828,18 +2816,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pickOneFirst => '先选一个';
 
   @override
-  String get puzzleOfTheDay => '今日谜题';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts 分';
   }
 
   @override
   String get rightLastTime => '上次答对了';
-
-  @override
-  String get sameForEveryoneCaps => '人人相同';
 
   @override
   String get sayFalse => '假';
@@ -2964,12 +2946,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => '头条';
-
-  @override
   String get throughTime => '穿越时间';
 
   @override
@@ -3088,9 +3064,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get todayLabel => '今天';
-
-  @override
-  String get todaysEdition => '今日版';
 
   @override
   String get toneCurious => '好奇';

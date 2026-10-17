@@ -2555,9 +2555,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get corrections => '訂正';
-
-  @override
   String get didYouKnow => '知ってた？';
 
   @override
@@ -2590,12 +2587,6 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => '今日の号はここまで';
-
-  @override
-  String get editionTomorrow => '明日の号は朝に届きます';
 
   @override
   String get eraAncient => '古代の世界';
@@ -2683,9 +2674,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get howSure => 'どれくらい確かで、なぜそう思う？';
-
-  @override
-  String get inNumbers => '数字で見る';
 
   @override
   String inRange(int pts, String said) {
@@ -2819,18 +2807,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pickOneFirst => 'まず1つ選んで';
 
   @override
-  String get puzzleOfTheDay => '今日のパズル';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w・${pts}pt';
   }
 
   @override
   String get rightLastTime => '前回は正解';
-
-  @override
-  String get sameForEveryoneCaps => 'みんな同じ';
 
   @override
   String get sayFalse => '間違い';
@@ -2955,12 +2937,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'トップ記事';
-
-  @override
   String get throughTime => '時代をめぐる';
 
   @override
@@ -3079,9 +3055,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get todayLabel => '今日';
-
-  @override
-  String get todaysEdition => '今日の号';
 
   @override
   String get toneCurious => '好奇心';

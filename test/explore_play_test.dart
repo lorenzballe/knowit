@@ -95,7 +95,6 @@ void main() {
       'mix-series',
       'mix-sixty',
       'mix-mood',
-      'front-page',
       'mix-through-time',
       'mix-did-you-know',
       'mix-surprise',

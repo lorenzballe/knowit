@@ -3924,12 +3924,6 @@ abstract class AppLocalizations {
   /// **'Right: it is more than {v}.'**
   String closerYesMore(String v);
 
-  /// No description provided for @corrections.
-  ///
-  /// In en, this message translates to:
-  /// **'Corrections'**
-  String get corrections;
-
   /// No description provided for @didYouKnow.
   ///
   /// In en, this message translates to:
@@ -3965,18 +3959,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =0{Nothing new today} =1{1 new to you} other{{n} new to you}}'**
   String dykNew(int n);
-
-  /// No description provided for @editionEnd.
-  ///
-  /// In en, this message translates to:
-  /// **'That\'s today\'s edition'**
-  String get editionEnd;
-
-  /// No description provided for @editionTomorrow.
-  ///
-  /// In en, this message translates to:
-  /// **'Tomorrow\'s is out in the morning'**
-  String get editionTomorrow;
 
   /// No description provided for @eraAncient.
   ///
@@ -4133,12 +4115,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How sure am I, and why?'**
   String get howSure;
-
-  /// No description provided for @inNumbers.
-  ///
-  /// In en, this message translates to:
-  /// **'In numbers'**
-  String get inNumbers;
 
   /// No description provided for @inRange.
   ///
@@ -4356,12 +4332,6 @@ abstract class AppLocalizations {
   /// **'Pick one first'**
   String get pickOneFirst;
 
-  /// No description provided for @puzzleOfTheDay.
-  ///
-  /// In en, this message translates to:
-  /// **'Puzzle of the day'**
-  String get puzzleOfTheDay;
-
   /// No description provided for @rangeWidth.
   ///
   /// In en, this message translates to:
@@ -4373,12 +4343,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Right last time'**
   String get rightLastTime;
-
-  /// No description provided for @sameForEveryoneCaps.
-  ///
-  /// In en, this message translates to:
-  /// **'The same for everyone'**
-  String get sameForEveryoneCaps;
 
   /// No description provided for @sayFalse.
   ///
@@ -4560,18 +4524,6 @@ abstract class AppLocalizations {
   /// **'The answer: {said}.'**
   String theAnswer(String said);
 
-  /// No description provided for @theAstute.
-  ///
-  /// In en, this message translates to:
-  /// **'The Astute'**
-  String get theAstute;
-
-  /// No description provided for @theLead.
-  ///
-  /// In en, this message translates to:
-  /// **'The lead'**
-  String get theLead;
-
   /// No description provided for @throughTime.
   ///
   /// In en, this message translates to:
@@ -4751,12 +4703,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today'**
   String get todayLabel;
-
-  /// No description provided for @todaysEdition.
-  ///
-  /// In en, this message translates to:
-  /// **'Today\'s edition'**
-  String get todaysEdition;
 
   /// No description provided for @toneCurious.
   ///

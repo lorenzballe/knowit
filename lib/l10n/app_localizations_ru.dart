@@ -2804,9 +2804,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Поправки';
-
-  @override
   String get didYouKnow => 'А вы знали?';
 
   @override
@@ -2845,12 +2842,6 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get editionEnd => 'Это сегодняшний выпуск';
-
-  @override
-  String get editionTomorrow => 'Завтрашний выйдет утром';
 
   @override
   String get eraAncient => 'Древний мир';
@@ -2941,9 +2932,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get howSure => 'Насколько я уверен — и почему?';
-
-  @override
-  String get inNumbers => 'В цифрах';
 
   @override
   String inRange(int pts, String said) {
@@ -3083,18 +3071,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get pickOneFirst => 'Сначала выберите';
 
   @override
-  String get puzzleOfTheDay => 'Задача дня';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts оч.';
   }
 
   @override
   String get rightLastTime => 'В прошлый раз верно';
-
-  @override
-  String get sameForEveryoneCaps => 'Один на всех';
 
   @override
   String get sayFalse => 'Ложь';
@@ -3233,12 +3215,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Главное';
-
-  @override
   String get throughTime => 'Сквозь время';
 
   @override
@@ -3360,9 +3336,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get todayLabel => 'Сегодня';
-
-  @override
-  String get todaysEdition => 'Сегодняшний выпуск';
 
   @override
   String get toneCurious => 'Любопытно';
