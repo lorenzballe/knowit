@@ -1006,7 +1006,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Alles ist drin. Zieh ein Fach nach unten, um weniger davon zu sehen, oder bis auf null, um es zu streichen.';
+      'Alles ist drin. Schieb ein Fach nach links, um weniger davon zu sehen, oder ganz nach links, um es zu streichen.';
 
   @override
   String get next => 'Weiter';
@@ -1046,7 +1046,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Versteh das Warum der Dinge und wie weit du deinem Wissen trauen kannst';
 
   @override
-  String get introTopicsTitle => 'Neunzehn Fächer, fünf Karten';
+  String get introTopicsTitle => 'Zwanzig Fächer, fünf Karten';
 
   @override
   String get introTopicsLine =>
@@ -1703,8 +1703,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get yourMix => 'Dein Mix';
 
   @override
+  String get genresTitle => 'Welche Teile?';
+
+  @override
   String get genresLine =>
-      'Tippe ein Genre an, um es zu überspringen. Halte es, und die drei Stränge darin öffnen sich direkt darunter.';
+      'Tippe ein Genre an, um es zu überspringen. Halte es, und die kleineren Themen darin öffnen sich direkt darunter.';
 
   @override
   String get insideGenre => 'Darin';

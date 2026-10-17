@@ -17,6 +17,9 @@ const Map<String, String> kSubjectIcons = {
   'Sport': 'M7 4h10v4a5 5 0 0 1-10 0V4z M7 5H4.42v2a3 3 0 0 0 3 3 M17 5h2.58v2a3 3 0 0 1-3 3 M12 13v4 M9 20h6l-1-3h-4z',
   'Nature': 'M6 18C6 10 12 4 20 4c0 8-6 14-14 14z M4 20L15 9',
   'Science': 'M9 3h6 M10 3v6l-5.54 8.95A2 2 0 0 0 6.16 21h11.68a2 2 0 0 0 1.7-3.05L14 9V3 M6.29 15h11.42',
+  // Pi, the one mark every reader takes for maths at 17 px: a bar that
+  // lifts at its left end, a leg that sweeps out and one that kicks up.
+  'Maths': 'M4.5 8c1.2-1.6 2.6-2.4 4.6-2.4H19.5 M9.4 5.6c0 5.2-.9 9.9-3.4 13.4 M15 5.6v10.9c0 1.6.7 2.4 2 2.4.9 0 1.5-.4 1.8-1.2',
   'Language': 'M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V6z M9 13l3-6 3 6 M10 11h4',
   'Technology': 'M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z M10 9h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z M9 5V3 M15 5V3 M9 21v-2 M15 21v-2 M5 9H3 M5 15H3 M21 9h-2 M21 15h-2',
   'Space': 'M12 5.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 1 0 0-13z M15.48 6.51A10.5 3.6 -30 1 1 5.51 12.27',

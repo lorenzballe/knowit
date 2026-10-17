@@ -68,6 +68,11 @@ final Map<String, TopicStyle> kTopics = {
   'economics': _topic('Economics', kSpectrum[0]),
   'pop_culture': _topic('Pop culture', kSpectrum[13]),
   'science': _topic('Science', kSpectrum[3]),
+  // Came after the eighteen, like Life, but sits inside the wheel rather
+  // than at its pale end: between Science and Language, deeper and bluer
+  // than both, so it reads as its own green and carries white ink as the
+  // saturated subjects do.
+  'maths': _topic('Maths', kMathsJade),
   'history': _topic('History', kSpectrum[17]),
   'psychology': _topic('Psychology', kSpectrum[9]),
   'weird_facts': _topic('Weird facts', kSpectrum[11]),
@@ -104,6 +109,11 @@ final Map<String, TopicStyle> kTopics = {
 /// The hues of the subjects added after the eighteen: peach, for Life.
 const List<Color> kLateSubjects = [Color(0xFFFFC49B)];
 
+/// Blackboard jade, for Maths: a school blackboard's green, lit to glow like
+/// the rest of the wheel. White on it is 3.6:1, between Pop culture's and
+/// Psychology's.
+const Color kMathsJade = Color(0xFF0E9A70);
+
 /// The paper a reasoning card is printed on.
 const Color kThinkingWhite = Color(0xFFF2F1EC);
 
@@ -111,6 +121,7 @@ const Color kThinkingWhite = Color(0xFFF2F1EC);
 const List<String> kTopicOrder = [
   'thinking',
   'science',
+  'maths',
   'space',
   'psychology',
   'economics',

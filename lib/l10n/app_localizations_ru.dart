@@ -1051,7 +1051,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Всё включено. Потяни тему вниз, чтобы видеть её реже, или до нуля, чтобы убрать.';
+      'Всё включено. Сдвинь тему влево, чтобы видеть её реже, или до конца, чтобы убрать.';
 
   @override
   String get next => 'Дальше';
@@ -1091,7 +1091,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пойми, почему всё так, и насколько можно доверять тому, что знаешь';
 
   @override
-  String get introTopicsTitle => 'Девятнадцать тем, пять карточек';
+  String get introTopicsTitle => 'Двадцать тем, пять карточек';
 
   @override
   String get introTopicsLine =>
@@ -1766,8 +1766,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get yourMix => 'Твой микс';
 
   @override
+  String get genresTitle => 'Какие части?';
+
+  @override
   String get genresLine =>
-      'Коснись жанра, чтобы пропустить его. Задержи — и три ветки внутри откроются прямо под ним.';
+      'Коснись жанра, чтобы пропустить его. Задержи — и темы поменьше внутри откроются прямо под ним.';
 
   @override
   String get insideGenre => 'Внутри';

@@ -1455,7 +1455,7 @@ abstract class AppLocalizations {
   /// No description provided for @everythingIsInDrag.
   ///
   /// In en, this message translates to:
-  /// **'Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.'**
+  /// **'Everything is in. Slide a subject left to see less of it, or all the way to drop it.'**
   String get everythingIsInDrag;
 
   /// No description provided for @next.
@@ -1515,7 +1515,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Nineteen topics, five cards'**
+  /// **'Twenty topics, five cards'**
   String get introTopicsTitle;
 
   /// No description provided for @introTopicsLine.
@@ -2537,6 +2537,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your mix'**
   String get yourMix;
+
+  /// The title of the onboarding step after the mix, where the reader picks which genres of each subject they want.
+  ///
+  /// In en, this message translates to:
+  /// **'Which parts?'**
+  String get genresTitle;
 
   /// No description provided for @genresLine.
   ///

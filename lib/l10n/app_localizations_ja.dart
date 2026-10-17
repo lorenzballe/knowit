@@ -972,7 +972,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => 'すべて入っています。分野を下にドラッグすると減り、ゼロまで下げると外れます。';
+  String get everythingIsInDrag => 'すべて入っています。分野を左へスライドすると減り、左端まで動かすと外れます。';
 
   @override
   String get next => '次へ';
@@ -1011,7 +1011,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tagline => '物事の「なぜ」を学び、自分の知識をどこまで信じていいかを知る';
 
   @override
-  String get introTopicsTitle => '19の分野、5枚のカード';
+  String get introTopicsTitle => '20の分野、5枚のカード';
 
   @override
   String get introTopicsLine => 'モデルが前もって書き、一枚ずつ出典を示しています。';
@@ -1642,7 +1642,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yourMix => 'あなたのミックス';
 
   @override
-  String get genresLine => 'ジャンルをタップすると外せます。長押しすると、中の三つの筋がすぐ下に開きます。';
+  String get genresTitle => 'どの部分を？';
+
+  @override
+  String get genresLine => 'ジャンルをタップすると外せます。長押しすると、中の小さなテーマがすぐ下に開きます。';
 
   @override
   String get insideGenre => 'この中身';
