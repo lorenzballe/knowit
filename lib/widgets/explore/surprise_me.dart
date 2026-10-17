@@ -6,6 +6,7 @@ import '../../analytics.dart';
 import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
+import '../card_edge.dart';
 import 'parts.dart';
 
 /// Not sure where to start? — artboard 138f, the very bottom.
@@ -140,15 +141,16 @@ class _SurpriseMeState extends State<SurpriseMe> {
                         decoration: BoxDecoration(
                           color: card.color,
                           borderRadius: BorderRadius.circular(22),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(
-                                alpha: context.p.isDark ? 0.6 : 0.18,
-                              ),
-                              blurRadius: 30,
-                              offset: const Offset(0, 12),
-                            ),
-                          ],
+                          border: cardHairline(card.color, context.p.surface),
+                          boxShadow: context.p.isDark
+                              ? const [
+                                  BoxShadow(
+                                    color: Color(0x99000000),
+                                    blurRadius: 30,
+                                    offset: Offset(0, 12),
+                                  ),
+                                ]
+                              : cardLift(context.p),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

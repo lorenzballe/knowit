@@ -9,6 +9,8 @@ import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import '../sync/trace.dart';
+import '../theme.dart';
+import 'card_edge.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
 
@@ -441,6 +443,18 @@ class _PillCardStackState extends State<PillCardStack>
   /// The least black kept above and below the deck.
   static const double _air = 10;
 
+  /// How much of the card behind shows under the one being read, on every
+  /// phone. It used to be sixteen points down less what the smaller card
+  /// lost: eight on a small phone, five on a large one, where the sliver
+  /// thinned to a line and its rounded ends to nothing.
+  static const double _peek = 10;
+
+  /// How much smaller each card further back is drawn.
+  static const double _shrink = 0.035;
+
+  /// How far a card further back is drawn toward the page's own colour.
+  static double _dimBehind(Palette p) => p.isDark ? 0.4 : 0.45;
+
   @override
   Widget build(BuildContext context) {
     final remaining = widget.count - widget.index;
@@ -449,7 +463,42 @@ class _PillCardStackState extends State<PillCardStack>
     // so what is on screen is never more than the next question.
     final visible = math.min(3, remaining);
     if (visible <= 0) return const SizedBox.shrink();
+
+    // As big as the room allows, short of a slab: the card takes the
+    // height it is given, minus a little black at each end so the deck
+    // reads as sitting in a space rather than jammed into one, and stops
+    // at a card's tallest proportion.
+    //
+    // A card's own scrolling — a back too long for a very large text size —
+    // is the card's, measured by the card, and goes no further: the screen
+    // the deck is on does not scroll when a card does.
+    return NotificationListener<ScrollMetricsNotification>(
+      onNotification: (_) => true,
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (_) => true,
+        child: Center(
+          child: LayoutBuilder(
+            builder: (context, box) {
+              final double height = math.min(
+                math.max(0, box.maxHeight - _air * 2),
+                box.maxWidth * _cardAspect,
+              );
+              return SizedBox(
+                width: box.maxWidth,
+                height: height,
+                child: Stack(children: _layers(context, visible, height)),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// The cards on the table, the one furthest back first.
+  List<Widget> _layers(BuildContext context, int visible, double height) {
     final progress = _progress;
+    final Palette palette = context.p;
 
     final layers = <Widget>[];
     for (var d = visible - 1; d >= 0; d--) {
@@ -521,22 +570,25 @@ class _PillCardStackState extends State<PillCardStack>
 
       // Continuous depth: 1 becomes 0 as the top card leaves.
       final depth = isTop ? 0.0 : d - progress;
-      final translateY = depth * 16.0;
-      final scale = 1 - depth * 0.035;
+      final translateY = depth * (_peek + height * _shrink / 2);
+      final scale = 1 - depth * _shrink;
       // The card being dragged stays solid. Fading it turned it into a
       // window onto the card underneath, and two legible questions printed
       // over each other read as a fault rather than as one card leaving. It
       // travels far enough to clear the screen on its own.
       //
-      // Behind it, only the next one. A stack that fades every card it
-      // holds shows four questions at once, which is three more than the
-      // reader asked for and a spoiler of the rest of the day. The third
-      // is drawn at nothing and arrives only as the top card goes.
-      final opacity = isTop
-          ? 1.0
-          : depth <= 1
-          ? math.pow(0.5, depth).toDouble()
-          : (0.5 * (2 - depth)).clamp(0.0, 0.5);
+      // Behind it, only the next one, solid and quieter: drawn toward the
+      // page's colour, and brought back to its own as the top card goes.
+      // It used to be faded, and a faded card is a window — the shadow of
+      // the card in front and the page showed through, and the edge of the
+      // deck read as a grey or olive band. A stack that showed every card
+      // it holds would show four questions at once, which is three more
+      // than the reader asked for and a spoiler of the rest of the day, so
+      // the third is drawn at nothing and arrives only as the top card goes.
+      final double dim = isTop
+          ? 0.0
+          : math.min(depth, 1.0) * _dimBehind(palette);
+      final double opacity = depth <= 1 ? 1.0 : (2 - depth).clamp(0.0, 1.0);
 
       card = Opacity(
         opacity: opacity,
@@ -553,7 +605,7 @@ class _PillCardStackState extends State<PillCardStack>
             // Tilt follows the sideways travel only: a card lifted straight
             // up should rise, not spin.
             ..rotateZ(isTop ? _drag.dx * 0.035 * math.pi / 180 : 0.0),
-          child: card,
+          child: CardDim(amount: dim, ground: palette.surface, child: card),
         ),
       );
 
@@ -589,31 +641,6 @@ class _PillCardStackState extends State<PillCardStack>
       );
     }
 
-    // As big as the room allows, short of a slab: the card takes the
-    // height it is given, minus a little black at each end so the deck
-    // reads as sitting in a space rather than jammed into one, and stops
-    // at a card's tallest proportion.
-    //
-    // A card's own scrolling — a back too long for a very large text size —
-    // is the card's, measured by the card, and goes no further: the screen
-    // the deck is on does not scroll when a card does.
-    return NotificationListener<ScrollMetricsNotification>(
-      onNotification: (_) => true,
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (_) => true,
-        child: Center(
-          child: LayoutBuilder(
-            builder: (context, box) => SizedBox(
-              width: box.maxWidth,
-              height: math.min(
-                math.max(0, box.maxHeight - _air * 2),
-                box.maxWidth * _cardAspect,
-              ),
-              child: Stack(children: layers),
-            ),
-          ),
-        ),
-      ),
-    );
+    return layers;
   }
 }

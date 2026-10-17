@@ -8,6 +8,7 @@ import '../../l10n/l10n.dart';
 import '../../models/pill.dart';
 import '../../theme.dart';
 import 'parts.dart';
+import '../card_edge.dart';
 
 /// Unmask the chart — artboard 138d, drawn from the bank's own charts.
 ///
@@ -106,10 +107,7 @@ class _ChartCardState extends State<_ChartCard>
       child: Container(
         width: 320,
         padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: p.color,
-          borderRadius: BorderRadius.circular(22),
-        ),
+        decoration: cardFace(context, p.color, radius: 22),
         child: AnimatedBuilder(
           animation: _t,
           builder: (context, _) {

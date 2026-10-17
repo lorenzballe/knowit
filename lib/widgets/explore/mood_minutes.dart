@@ -8,6 +8,7 @@ import '../../state/explore_play.dart';
 import '../../theme.dart';
 import '../subject_icon.dart';
 import 'parts.dart';
+import '../card_edge.dart';
 
 /// Your mood, your minutes — artboard 140b.
 ///
@@ -219,10 +220,7 @@ class _Grid extends StatelessWidget {
       onTap: () => onOpen(cards, p),
       child: Container(
         padding: EdgeInsets.all(hero ? 18 : 15),
-        decoration: BoxDecoration(
-          color: p.color,
-          borderRadius: BorderRadius.circular(hero ? 22 : 20),
-        ),
+        decoration: cardFace(context, p.color, radius: hero ? 22 : 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

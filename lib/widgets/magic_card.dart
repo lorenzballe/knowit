@@ -180,7 +180,9 @@ class _Rim extends CustomPainter {
 
   final double turn;
 
-  static const double radius = 30;
+  /// The deck's corner: the card after the fifth is the same shape as the
+  /// five before it.
+  static const double radius = 34;
   static const double width = 3;
   static const double glow = 26;
 

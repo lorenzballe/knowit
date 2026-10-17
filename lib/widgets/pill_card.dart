@@ -11,6 +11,7 @@ import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import '../theme.dart';
+import 'card_edge.dart';
 import 'hold_to_keep.dart';
 import 'motion.dart';
 import 'place_it.dart';
@@ -127,18 +128,10 @@ class PillCard extends StatelessWidget {
   }
 
   Widget _face(BuildContext context) {
+    // Cut from the page with a hairline where its colour is the page's
+    // own, and lifted by a shadow that stays under the card (card_edge.dart).
     return Container(
-      decoration: BoxDecoration(
-        color: pill.color,
-        borderRadius: BorderRadius.circular(34),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x40000000),
-            blurRadius: 60,
-            offset: Offset(0, 24),
-          ),
-        ],
-      ),
+      decoration: cardFace(context, pill.color, radius: 34, lift: 1),
       padding: const EdgeInsets.fromLTRB(28, 26, 28, 26),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

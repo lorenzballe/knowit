@@ -13,6 +13,7 @@ import '../widgets/premium.dart';
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
 import '../analytics.dart';
+import '../widgets/card_edge.dart';
 
 /// How many days back the free plan's archive goes. A week: long enough
 /// to find the card from Tuesday, short enough that the day before it is
@@ -488,10 +489,7 @@ class _Day extends StatelessWidget {
                         child: Container(
                           width: 8,
                           height: 8,
-                          decoration: BoxDecoration(
-                            color: pill.color,
-                            borderRadius: BorderRadius.circular(3),
-                          ),
+                          decoration: cardFace(context, pill.color, radius: 3),
                         ),
                       ),
                     SizedBox(

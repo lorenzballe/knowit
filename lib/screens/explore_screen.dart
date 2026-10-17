@@ -42,6 +42,7 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../measure/screens.dart';
 import '../measure/shelves.dart';
+import '../widgets/card_edge.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -1744,10 +1745,7 @@ class _BigRow extends StatelessWidget {
             child: Container(
               width: 214,
               padding: const EdgeInsets.all(17),
-              decoration: BoxDecoration(
-                color: pill.color,
-                borderRadius: BorderRadius.circular(22),
-              ),
+              decoration: cardFace(context, pill.color, radius: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1998,10 +1996,7 @@ class _SmallRow extends StatelessWidget {
             child: Container(
               width: 158,
               padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: pill.color,
-                borderRadius: BorderRadius.circular(19),
-              ),
+              decoration: cardFace(context, pill.color, radius: 19),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2313,10 +2308,7 @@ class _Placed extends StatelessWidget {
         rank: rank,
         card: Container(
           padding: const EdgeInsets.fromLTRB(14, 14, 14, 13),
-          decoration: BoxDecoration(
-            color: pill.color,
-            borderRadius: BorderRadius.circular(19),
-          ),
+          decoration: cardFace(context, pill.color, radius: 19),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -19,6 +19,7 @@ import 'deck_viewer_screen.dart';
 import 'path_screen.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
+import '../widgets/card_edge.dart';
 
 /// Your journey, as artboard 137a: tiles, two to a row.
 ///
@@ -2112,10 +2113,7 @@ class _WeekAsksTile extends StatelessWidget {
                       width: 3,
                       height: 36,
                       margin: const EdgeInsets.only(right: 12, top: 2),
-                      decoration: BoxDecoration(
-                        color: pill.color,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
+                      decoration: cardFace(context, pill.color, radius: 2),
                     ),
                     Expanded(
                       child: Text(

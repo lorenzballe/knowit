@@ -8,6 +8,7 @@ import '../../models/pill.dart';
 import '../../theme.dart';
 import '../subject_icon.dart';
 import 'parts.dart';
+import '../card_edge.dart';
 
 /// The shelves whose cards are cards — sideways rows and short lists — each
 /// in the form the canvas drew for its kind (133b to 138c, 131e): you can
@@ -295,10 +296,7 @@ class StoryRow extends StatelessWidget {
             child: Container(
               width: 210,
               padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-              decoration: BoxDecoration(
-                color: p.color,
-                borderRadius: BorderRadius.circular(22),
-              ),
+              decoration: cardFace(context, p.color, radius: 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -414,10 +412,7 @@ class OriginRow extends StatelessWidget {
           child: Container(
             width: 206,
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(22),
-            ),
+            decoration: cardFace(context, p.color, radius: 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -654,10 +649,7 @@ class CameBackRow extends StatelessWidget {
           child: Container(
             width: 200,
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(22),
-            ),
+            decoration: cardFace(context, p.color, radius: 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -767,10 +759,7 @@ class MoveRow extends StatelessWidget {
           child: Container(
             width: 196,
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(20),
-            ),
+            decoration: cardFace(context, p.color, radius: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -888,10 +877,7 @@ class WhatIfRow extends StatelessWidget {
           onTap: () => onOpen(pills, p),
           child: Container(
             width: 300,
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(22),
-            ),
+            decoration: cardFace(context, p.color, radius: 22),
             clipBehavior: Clip.antiAlias,
             child: Stack(
               children: [
@@ -1044,10 +1030,7 @@ class HowSureShelf extends StatelessWidget {
               child: Container(
                 width: 290,
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: p.color,
-                  borderRadius: BorderRadius.circular(20),
-                ),
+                decoration: cardFace(context, p.color, radius: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1159,10 +1142,7 @@ class _UseTodayListState extends State<UseTodayList> {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
-        decoration: BoxDecoration(
-          color: p.color,
-          borderRadius: BorderRadius.circular(17),
-        ),
+        decoration: cardFace(context, p.color, radius: 17),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
