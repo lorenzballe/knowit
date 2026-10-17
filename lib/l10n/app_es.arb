@@ -742,7 +742,7 @@
   "leanTook": "Elegiste {side}",
   "leanVerdict": "{says}. Ábrela para ver el otro bando.",
   "spotTitle": "Encuentra la falsa",
-  "spotLine": "Tres son verdad. Una no.",
+  "spotLine": "Cuatro afirmaciones. Tres son verdaderas, una es falsa.",
   "spotPrompt": "Toca la que creas que es falsa",
   "spotConfirm": "Esa es la falsa",
   "spotFound": "La encontraste. Las otras tres son verdad.",

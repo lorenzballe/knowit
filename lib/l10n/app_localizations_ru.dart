@@ -3256,7 +3256,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get spotTitle => 'Найдите ложное';
 
   @override
-  String get spotLine => 'Три верны. Одно нет.';
+  String get spotLine => 'Четыре утверждения. Три верны, одно ложно.';
 
   @override
   String get spotPrompt => 'Нажмите на то, что считаете ложным';

@@ -742,7 +742,7 @@
   "leanTook": "고른 쪽: {side}",
   "leanVerdict": "{says}. 반대편 주장은 카드를 열어 보세요.",
   "spotTitle": "거짓을 찾아보세요",
-  "spotLine": "셋은 참, 하나는 거짓.",
+  "spotLine": "네 가지 주장. 셋은 참, 하나는 거짓.",
   "spotPrompt": "거짓이라고 생각하는 것을 누르세요",
   "spotConfirm": "이게 거짓이에요",
   "spotFound": "찾았어요. 나머지 셋은 참이에요.",

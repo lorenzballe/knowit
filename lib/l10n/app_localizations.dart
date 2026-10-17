@@ -4575,7 +4575,7 @@ abstract class AppLocalizations {
   /// No description provided for @spotLine.
   ///
   /// In en, this message translates to:
-  /// **'Three are true. One is not.'**
+  /// **'Four claims. Three are true, one is false.'**
   String get spotLine;
 
   /// No description provided for @spotPrompt.

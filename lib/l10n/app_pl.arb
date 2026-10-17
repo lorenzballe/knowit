@@ -742,7 +742,7 @@
   "leanTook": "Twój wybór: {side}",
   "leanVerdict": "{says}. Otwórz, żeby poznać drugą stronę.",
   "spotTitle": "Znajdź fałsz",
-  "spotLine": "Trzy są prawdziwe. Jedno nie.",
+  "spotLine": "Cztery twierdzenia. Trzy są prawdziwe, jedno jest fałszywe.",
   "spotPrompt": "Stuknij to, które uważasz za fałszywe",
   "spotConfirm": "To jest fałszywe",
   "spotFound": "Znalezione. Pozostałe trzy są prawdziwe.",

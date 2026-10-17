@@ -742,7 +742,7 @@
   "leanTook": "Tu as pris {side}",
   "leanVerdict": "{says}. Ouvre-la pour l'autre camp.",
   "spotTitle": "Trouve la fausse",
-  "spotLine": "Trois sont vraies. Une ne l'est pas.",
+  "spotLine": "Quatre affirmations. Trois sont vraies, une est fausse.",
   "spotPrompt": "Touche celle que tu crois fausse",
   "spotConfirm": "C'est elle, la fausse",
   "spotFound": "Trouvé. Les trois autres sont vraies.",

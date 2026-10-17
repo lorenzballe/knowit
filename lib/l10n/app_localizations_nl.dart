@@ -3118,7 +3118,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get spotTitle => 'Welke is niet waar?';
 
   @override
-  String get spotLine => 'Drie zijn waar. Eén niet.';
+  String get spotLine => 'Vier beweringen. Drie zijn waar, één is niet waar.';
 
   @override
   String get spotPrompt => 'Tik op de bewering die volgens jou niet klopt';

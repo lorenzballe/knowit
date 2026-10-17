@@ -742,7 +742,7 @@
   "leanTook": "Escolheste {side}",
   "leanVerdict": "{says}. Abre-a para veres o outro lado.",
   "spotTitle": "Descobre a falsa",
-  "spotLine": "Três são verdadeiras. Uma não.",
+  "spotLine": "Quatro afirmações. Três são verdadeiras, uma é falsa.",
   "spotPrompt": "Toca na que achas que é falsa",
   "spotConfirm": "É esta a falsa",
   "spotFound": "Encontraste-a. As outras três são verdadeiras.",

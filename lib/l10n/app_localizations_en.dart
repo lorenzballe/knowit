@@ -3093,7 +3093,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spotTitle => 'Spot the false one';
 
   @override
-  String get spotLine => 'Three are true. One is not.';
+  String get spotLine => 'Four claims. Three are true, one is false.';
 
   @override
   String get spotPrompt => 'Tap the one you think is false';

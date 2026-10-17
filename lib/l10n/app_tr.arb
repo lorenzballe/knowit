@@ -742,7 +742,7 @@
   "leanTook": "Seçtiğin: {side}",
   "leanVerdict": "{says}. Karşı tarafı görmek için aç.",
   "spotTitle": "Yanlış olanı bul",
-  "spotLine": "Üçü doğru. Biri değil.",
+  "spotLine": "Dört iddia. Üçü doğru, biri yanlış.",
   "spotPrompt": "Yanlış olduğunu düşündüğüne dokun",
   "spotConfirm": "Yanlış olan bu",
   "spotFound": "Buldun. Diğer üçü doğru.",

@@ -3069,7 +3069,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get spotTitle => 'Yanlış olanı bul';
 
   @override
-  String get spotLine => 'Üçü doğru. Biri değil.';
+  String get spotLine => 'Dört iddia. Üçü doğru, biri yanlış.';
 
   @override
   String get spotPrompt => 'Yanlış olduğunu düşündüğüne dokun';

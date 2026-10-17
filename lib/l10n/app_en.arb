@@ -2966,7 +2966,7 @@
   }
  },
  "spotTitle": "Spot the false one",
- "spotLine": "Three are true. One is not.",
+ "spotLine": "Four claims. Three are true, one is false.",
  "spotPrompt": "Tap the one you think is false",
  "spotConfirm": "That's the false one",
  "spotFound": "Found it. The other three are true.",

@@ -742,7 +742,7 @@
   "leanTook": "你选了{side}",
   "leanVerdict": "{says}。打开看另一方的理由。",
   "spotTitle": "找出假的那条",
-  "spotLine": "三条是真的，一条不是。",
+  "spotLine": "四条说法。三条是真的，一条是假的。",
   "spotPrompt": "点你认为是假的那条",
   "spotConfirm": "这条是假的",
   "spotFound": "找到了。其余三条都是真的。",

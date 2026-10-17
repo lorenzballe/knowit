@@ -742,7 +742,7 @@
   "leanTook": "Du hast {side} gewählt",
   "leanVerdict": "{says}. Öffne sie für die Gegenseite.",
   "spotTitle": "Finde die falsche",
-  "spotLine": "Drei sind wahr. Eine nicht.",
+  "spotLine": "Vier Behauptungen. Drei sind wahr, eine ist falsch.",
   "spotPrompt": "Tippe auf die, die du für falsch hältst",
   "spotConfirm": "Das ist die falsche",
   "spotFound": "Gefunden. Die anderen drei sind wahr.",

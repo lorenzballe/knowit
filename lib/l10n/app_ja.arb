@@ -742,7 +742,7 @@
   "leanTook": "選んだのは{side}",
   "leanVerdict": "{says}。反対側の意見はカードで。",
   "spotTitle": "間違いを見つけよう",
-  "spotLine": "3つは正しく、1つは間違い。",
+  "spotLine": "4つの主張。3つは正しく、1つは間違い。",
   "spotPrompt": "間違いだと思うものをタップ",
   "spotConfirm": "これが間違い",
   "spotFound": "正解。残りの3つは正しい。",

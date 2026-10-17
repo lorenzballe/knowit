@@ -3131,7 +3131,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spotTitle => 'Trouve la fausse';
 
   @override
-  String get spotLine => 'Trois sont vraies. Une ne l\'est pas.';
+  String get spotLine =>
+      'Quatre affirmations. Trois sont vraies, une est fausse.';
 
   @override
   String get spotPrompt => 'Touche celle que tu crois fausse';

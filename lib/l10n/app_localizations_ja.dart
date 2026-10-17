@@ -2977,7 +2977,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotTitle => '間違いを見つけよう';
 
   @override
-  String get spotLine => '3つは正しく、1つは間違い。';
+  String get spotLine => '4つの主張。3つは正しく、1つは間違い。';
 
   @override
   String get spotPrompt => '間違いだと思うものをタップ';

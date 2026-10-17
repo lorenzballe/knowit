@@ -2986,7 +2986,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get spotTitle => '找出假的那条';
 
   @override
-  String get spotLine => '三条是真的，一条不是。';
+  String get spotLine => '四条说法。三条是真的，一条是假的。';
 
   @override
   String get spotPrompt => '点你认为是假的那条';

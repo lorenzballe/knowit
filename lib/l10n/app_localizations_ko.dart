@@ -2993,7 +2993,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get spotTitle => '거짓을 찾아보세요';
 
   @override
-  String get spotLine => '셋은 참, 하나는 거짓.';
+  String get spotLine => '네 가지 주장. 셋은 참, 하나는 거짓.';
 
   @override
   String get spotPrompt => '거짓이라고 생각하는 것을 누르세요';

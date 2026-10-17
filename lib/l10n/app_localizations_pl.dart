@@ -3251,7 +3251,8 @@ class AppLocalizationsPl extends AppLocalizations {
   String get spotTitle => 'Znajdź fałsz';
 
   @override
-  String get spotLine => 'Trzy są prawdziwe. Jedno nie.';
+  String get spotLine =>
+      'Cztery twierdzenia. Trzy są prawdziwe, jedno jest fałszywe.';
 
   @override
   String get spotPrompt => 'Stuknij to, które uważasz za fałszywe';

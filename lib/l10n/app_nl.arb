@@ -742,7 +742,7 @@
   "leanTook": "Je koos {side}",
   "leanVerdict": "{says}. Open hem voor de andere kant.",
   "spotTitle": "Welke is niet waar?",
-  "spotLine": "Drie zijn waar. Eén niet.",
+  "spotLine": "Vier beweringen. Drie zijn waar, één is niet waar.",
   "spotPrompt": "Tik op de bewering die volgens jou niet klopt",
   "spotConfirm": "Deze is niet waar",
   "spotFound": "Gevonden. De andere drie zijn waar.",

@@ -742,7 +742,7 @@
   "leanTook": "Hai scelto {side}",
   "leanVerdict": "{says}. Aprila per sentire l'altra campana.",
   "spotTitle": "Trova quella falsa",
-  "spotLine": "Tre sono vere. Una no.",
+  "spotLine": "Quattro affermazioni. Tre sono vere, una è falsa.",
   "spotPrompt": "Tocca quella che secondo te è falsa",
   "spotConfirm": "È questa quella falsa",
   "spotFound": "Trovata. Le altre tre sono vere.",
