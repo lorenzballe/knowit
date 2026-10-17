@@ -33,6 +33,7 @@ import '../sync/trace.dart';
 import '../utils/home_widget.dart';
 import '../utils/reminders.dart';
 import 'journey_record.dart';
+import 'music_sound.dart';
 import 'progress.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
@@ -401,6 +402,7 @@ class AppState extends ChangeNotifier {
     isPlus = _prefs.getBool(_kPlus) ?? false;
     Trace.instance.plus = isPlus;
     themeMode = _decodeTheme(_prefs.getString(_kTheme));
+    MusicSound.load(_prefs);
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     ownIdsToday = (_prefs.getStringList(_kOwnIds) ?? []).toSet();
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
@@ -2829,6 +2831,7 @@ class AppState extends ChangeNotifier {
     name = 'You';
     isPlus = false;
     themeMode = ThemeMode.dark;
+    MusicSound.load(_prefs);
     seenIds = {};
     pushAsked = false;
     pushDeferrals = 0;

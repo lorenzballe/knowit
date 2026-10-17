@@ -223,6 +223,15 @@ void main() {
         ]),
       });
 
+      // Astute+ with both shelves empty: the foot of the profile says the
+      // days the archive keeps, the plan's name, and "Nothing yet" twice.
+      final AppState plusEmpty = await appWith({
+        ...done,
+        'knowit.plus': true,
+        'knowit.likedIds': <String>[],
+        'knowit.savedIds': <String>[],
+      });
+
       final screens = <String, Widget>{
         'journey': JourneyScreen(app: app, onBack: () {}),
         'journey-measured': JourneyScreen(app: measured, onBack: () {}),
@@ -231,6 +240,11 @@ void main() {
         'paywall': PaywallScreen(app: app, source: 'audit'),
         'profile': ProfileScreen(
           app: app,
+          account: account,
+          onSignedOut: () {},
+        ),
+        'profile-plus-empty': ProfileScreen(
+          app: plusEmpty,
           account: account,
           onSignedOut: () {},
         ),
@@ -300,6 +314,16 @@ void main() {
           await tester.drag(scrollable.first, const Offset(0, -500));
           await settle(tester);
           note(locale, '${entry.key} ↓', tester);
+        }
+        // The profile, down to its foot: the shelves, the archive and where
+        // the reader lives, the account, how cards are written, and the way
+        // out, each row with its words and what is behind it.
+        if (entry.key.startsWith('profile')) {
+          for (var fold = 2; fold <= 7; fold++) {
+            await tester.drag(scrollable.first, const Offset(0, -500));
+            await settle(tester);
+            note(locale, '${entry.key} ↓$fold', tester);
+          }
         }
       }
 

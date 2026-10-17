@@ -810,6 +810,36 @@ abstract class AppLocalizations {
   /// **'Saved · {n}'**
   String savedN(int n);
 
+  /// Profile: the heading over Saved and Liked, the reader's own two shelves.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cards'**
+  String get yourCards;
+
+  /// Profile: under Saved or Liked while the shelf holds no card.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet'**
+  String get nothingYet;
+
+  /// Profile: the Archive row's value on the free plan, whose archive shows only the last seven days (kFreeArchiveDays). Astute+ readers see how many days instead.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get lastSevenDays;
+
+  /// Profile: the heading over Manage subscription and signing in or out.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountSection;
+
+  /// Profile: the heading over How cards are written and Usage data.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutSection;
+
   /// No description provided for @manageSubscription.
   ///
   /// In en, this message translates to:
@@ -2171,6 +2201,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe for the next one'**
   String get swipeForTheNextOne;
+
+  /// No description provided for @musicSound.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound in music cards'**
+  String get musicSound;
+
+  /// No description provided for @musicSoundIsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound is off for music cards.'**
+  String get musicSoundIsOff;
+
+  /// No description provided for @musicSoundTurnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get musicSoundTurnOn;
 
   /// No description provided for @thatWasTheOnlyOne.
   ///

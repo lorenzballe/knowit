@@ -12,6 +12,7 @@ import '../cloud.dart';
 import '../debug_flags.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
+import '../state/music_sound.dart';
 import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
 import '../sync/place_finder.dart';
@@ -24,6 +25,7 @@ import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/place_ask.dart';
 import '../widgets/premium.dart';
+import '../widgets/profile_menu.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
@@ -415,23 +417,21 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          // Where the reader lives: the city kept, or off, and the way to
-          // change either. Only where a place can be read, or one is kept —
-          // the web has neither, and a switch that leads nowhere is not one.
-          if (PlaceFinder.instance.canAsk || app.place != null) ...[
-            const SizedBox(height: 22),
-            Eyebrow(context.l10n.placeRowTitle),
-            const SizedBox(height: 11),
-            _PlaceRow(app: app),
-          ],
-          const SizedBox(height: 24),
+          // What is the reader's own, then the account, then how the app
+          // works, and the way out at the very end. Every row says what is
+          // behind it before it is opened — how many cards, how far back,
+          // which city, which plan — where a list of bare labels made each
+          // one a door to try.
+          ProfileHeader(context.l10n.yourCards, top: 30, bottom: 12),
           // Your own shelf, which is a thing you own and not a place to go
           // looking — so it lives here, with the rest of what is yours,
-          // rather than taking one of three tabs.
-          _LinkRow(
-            label: app.savedIds.isEmpty
-                ? context.l10n.saved
-                : context.l10n.savedN(app.savedIds.length),
+          // rather than taking one of three tabs. Shown as a hand of its own
+          // cards, the newest on top.
+          ShelfRow(
+            key: const ValueKey('profile-saved'),
+            mark: ProfileMarks.bookmark,
+            title: context.l10n.saved,
+            ids: app.savedIds,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (routeContext) => Scaffold(
@@ -446,12 +446,14 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 10),
           // And the other shelf: not what you want to find again, but
           // what you liked — which is also what the app deals more of.
-          _LinkRow(
-            label: app.likedIds.isEmpty
-                ? context.l10n.liked
-                : context.l10n.likedN(app.likedIds.length),
+          ShelfRow(
+            key: const ValueKey('profile-liked'),
+            mark: ProfileMarks.heart,
+            title: context.l10n.liked,
+            ids: app.likedIds,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (routeContext) => Scaffold(
@@ -467,108 +469,153 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          // The archive, on either plan: a week of it on the free plan, and
-          // the lock on everything before that, inside. Locked at this door,
-          // the free week was never seen, and nor was the row that says
-          // what Astute+ keeps.
-          _LinkRow(
-            label: context.l10n.archive,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (routeContext) => ArchiveScreen(
-                  app: app,
-                  onBack: () => Navigator.of(routeContext).pop(),
+          const SizedBox(height: 10),
+          ProfileBox(
+            children: [
+              // The archive, on either plan: a week of it on the free plan,
+              // and the lock on everything before that, inside. Locked at
+              // this door, the free week was never seen, and nor was the row
+              // that says what Astute+ keeps.
+              ProfileRow(
+                key: const ValueKey('profile-archive'),
+                mark: ProfileMarks.clock,
+                label: context.l10n.archive,
+                value: _archiveHolds(context, app),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (routeContext) => ArchiveScreen(
+                      app: app,
+                      onBack: () => Navigator.of(routeContext).pop(),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              // Where the reader lives: the city kept, or off, and the way
+              // to change either. Only where a place can be read, or one is
+              // kept — the web has neither, and a switch that leads nowhere
+              // is not one.
+              if (PlaceFinder.instance.canAsk || app.place != null)
+                _PlaceRow(app: app),
+              const _SoundRow(),
+            ],
           ),
-          _LinkRow(
-            label: context.l10n.manageSubscription,
-            // A subscriber wants to cancel, change plan or ask for a refund,
-            // and none of that belongs on a screen built to sell. RevenueCat's
-            // customer centre does all of it; the paywall is for everyone
-            // else.
-            onTap: () {
-              Analytics.capture('manage subscription opened', {
-                'is_plus': app.isPlus,
-              });
-              app.isPlus
-                  ? Subscription.instance.presentCustomerCenter()
-                  : Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            PaywallScreen(app: app, source: 'manage plan'),
-                      ),
-                    );
-            },
-          ),
-          _LinkRow(
-            label: context.l10n.howPillsAreWritten,
-            onTap: () =>
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => const HowScreen())),
-          ),
+          ProfileHeader(context.l10n.accountSection),
           // The account changes under this screen — a sign-in that lands, a
           // sheet still up — and none of it is worth leaving the profile to
           // see.
           ListenableBuilder(
             listenable: account,
-            builder: (context, _) {
-              if (account.signedInForReal) {
-                return _LinkRow(
-                  label: context.l10n.signOut,
-                  muted: true,
-                  onTap: () => _confirmSignOut(context),
-                );
-              }
-              // While a sheet is up, say so and take no second tap. Two flows
-              // at once cancel each other, so a reader tapping again because
-              // nothing seemed to happen would end up with nothing.
-              if (account.busy) {
-                return _LinkRow(
-                  label: context.l10n.signingIn,
-                  muted: true,
-                  onTap: () {},
-                );
-              }
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _LinkRow(
+            builder: (context, _) => ProfileBox(
+              children: [
+                ProfileRow(
+                  key: const ValueKey('profile-plan'),
+                  mark: ProfileMarks.plan,
+                  label: context.l10n.manageSubscription,
+                  value: app.isPlus
+                      ? context.l10n.plusName
+                      : context.l10n.freePlan,
+                  // A subscriber wants to cancel, change plan or ask for a
+                  // refund, and none of that belongs on a screen built to
+                  // sell. RevenueCat's customer centre does all of it; the
+                  // paywall is for everyone else.
+                  onTap: () {
+                    Analytics.capture('manage subscription opened', {
+                      'is_plus': app.isPlus,
+                    });
+                    app.isPlus
+                        ? Subscription.instance.presentCustomerCenter()
+                        : Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => PaywallScreen(
+                                app: app,
+                                source: 'manage plan',
+                              ),
+                            ),
+                          );
+                  },
+                ),
+                if (account.signedInForReal)
+                  ProfileRow(
+                    key: const ValueKey('profile-sign-out'),
+                    mark: ProfileMarks.exit,
+                    label: context.l10n.signOut,
+                    chevron: false,
+                    onTap: () => _confirmSignOut(context),
+                  )
+                // While a sheet is up, say so and take no second tap. Two
+                // flows at once cancel each other, so a reader tapping again
+                // because nothing seemed to happen would end up with nothing.
+                else if (account.busy)
+                  ProfileRow(
+                    key: const ValueKey('profile-signing-in'),
+                    mark: ProfileMarks.enter,
+                    label: context.l10n.signingIn,
+                    color: context.p.inkMuted,
+                    chevron: false,
+                    onTap: () {},
+                  )
+                else ...[
+                  ProfileRow(
+                    key: const ValueKey('profile-apple'),
+                    leading: (size) =>
+                        Icon(Icons.apple, size: size, color: context.p.ink),
                     label: context.l10n.signInWithApple,
                     onTap: () =>
                         _signIn(context, 'Apple', account.signInWithApple),
                   ),
-                  _LinkRow(
+                  ProfileRow(
+                    key: const ValueKey('profile-google'),
+                    leading: (size) => GoogleMark(size: size * 19 / 22),
                     label: context.l10n.signInWithGoogle,
                     onTap: () =>
                         _signIn(context, 'Google', account.signInWithGoogle),
                   ),
                 ],
-              );
-            },
+              ],
+            ),
+          ),
+          ProfileHeader(context.l10n.aboutSection),
+          ProfileBox(
+            children: [
+              ProfileRow(
+                key: const ValueKey('profile-how'),
+                mark: ProfileMarks.quill,
+                label: context.l10n.howPillsAreWritten,
+                onTap: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => const HowScreen())),
+              ),
+              const _UsageSwitch(),
+            ],
           ),
           // Deleting the account, for anyone who has one — the phone makes
           // one of its own before anybody signs in, and that one holds a
-          // backup too. Muted, under the sign-in: where a reader looking for
-          // it finds it, and where nobody trips on it.
+          // backup too. In a box of its own at the very end, in red: where a
+          // reader looking for it finds it, and where nobody trips on it.
           ListenableBuilder(
             listenable: account,
             builder: (context, _) {
               if (!account.signedIn) return const SizedBox.shrink();
-              return _LinkRow(
-                label: account.deleting
-                    ? context.l10n.deletingAccount
-                    : context.l10n.deleteAccount,
-                muted: true,
-                onTap: account.deleting ? () {} : () => _confirmDelete(context),
+              return Padding(
+                padding: const EdgeInsets.only(top: 26),
+                child: ProfileBox(
+                  children: [
+                    ProfileRow(
+                      key: const ValueKey('profile-delete'),
+                      mark: ProfileMarks.bin,
+                      label: account.deleting
+                          ? context.l10n.deletingAccount
+                          : context.l10n.deleteAccount,
+                      color: context.p.alert,
+                      chevron: false,
+                      onTap: account.deleting
+                          ? () {}
+                          : () => _confirmDelete(context),
+                    ),
+                  ],
+                ),
               );
             },
           ),
-          const SizedBox(height: 24),
-          Eyebrow(context.l10n.anonymousUsage),
-          const SizedBox(height: 11),
-          const _UsageSwitch(),
           if (debugToolsOn) ...[
             const SizedBox(height: 40),
             const Eyebrow('Debug'),
@@ -678,10 +725,25 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
+/// What the archive row says is behind it. On Astute+, the days it keeps:
+/// every one the reader finished. On the free plan, the week it shows
+/// (kFreeArchiveDays, which the words say): the days before it are there
+/// too, under the lock, and counting them would count what cannot be
+/// opened. Nothing on Astute+ before a first day is finished, where "0
+/// days" would read as an archive that is broken rather than one that has
+/// not started.
+String? _archiveHolds(BuildContext context, AppState app) {
+  if (!app.isPlus) return context.l10n.lastSevenDays;
+  final int days = app.completedDates.toSet().length;
+  return days == 0 ? null : context.l10n.streakDays(days);
+}
+
 /// Where the reader lives, as the app keeps it: the city — or the region or
 /// the country, when the phone named no city — or Off. A tap on a place
 /// offers to read it again or remove it; a tap on Off is the sheet that
-/// asks, the same one Explore's shelf opens.
+/// asks, the same one Explore's shelf opens. That only the city is kept,
+/// never the position, is said on both sheets, where the choice is made,
+/// rather than under the row.
 class _PlaceRow extends StatelessWidget {
   const _PlaceRow({required this.app});
 
@@ -690,62 +752,15 @@ class _PlaceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Palette p = context.p;
     final Place? place = app.place;
-    return Semantics(
-      button: true,
-      child: GestureDetector(
-        key: const ValueKey('place-row'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => place == null
-            ? askForPlace(context, app, from: 'profile')
-            : showPlaceOptions(context, app),
-        child: PaperCard(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-          radius: 18,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      place == null ? l.placeRowOff : placeName(place),
-                      style: AppText.body(
-                        size: 14.5,
-                        weight: FontWeight.w500,
-                        height: 1.2,
-                        color: p.ink,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      place == null ? l.placeRowOffLine : l.placeOnlyCity,
-                      style: AppText.body(
-                        size: 12,
-                        height: 1.3,
-                        color: p.inkMuted,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 14),
-              if (place == null)
-                Text(
-                  l.placeSwitchOn,
-                  style: AppText.body(
-                    size: 13,
-                    weight: FontWeight.w600,
-                    color: p.link,
-                  ),
-                )
-              else
-                Icon(Icons.chevron_right_rounded, size: 20, color: p.inkFaint),
-            ],
-          ),
-        ),
-      ),
+    return ProfileRow(
+      key: const ValueKey('place-row'),
+      mark: ProfileMarks.pin,
+      label: l.placeRowTitle,
+      value: place == null ? l.placeRowOff : placeName(place),
+      onTap: () => place == null
+          ? askForPlace(context, app, from: 'profile')
+          : showPlaceOptions(context, app),
     );
   }
 }
@@ -756,6 +771,33 @@ class _PlaceRow extends StatelessWidget {
 /// part of AppState: it is a decision about this install rather than about
 /// this reader, so it does not travel to a new phone with the backup and
 /// there is no listener above to rebuild from.
+/// The music cards' notes: off until the reader turns them on, here or
+/// from a card's Listen. The whole row is the switch.
+class _SoundRow extends StatelessWidget {
+  const _SoundRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return ValueListenableBuilder<bool>(
+      valueListenable: MusicSound.on,
+      builder: (context, on, _) => ProfileRow(
+        key: const ValueKey('profile-sound'),
+        mark: ProfileMarks.sound,
+        label: l.musicSound,
+        toggled: on,
+        chevron: false,
+        onTap: () => MusicSound.set(!on, from: 'profile'),
+        trailing: NudgeSwitch(
+          value: on,
+          label: l.musicSound,
+          onChanged: (v) => MusicSound.set(v, from: 'profile'),
+        ),
+      ),
+    );
+  }
+}
+
 class _UsageSwitch extends StatefulWidget {
   const _UsageSwitch();
 
@@ -766,51 +808,50 @@ class _UsageSwitch extends StatefulWidget {
 class _UsageSwitchState extends State<_UsageSwitch> {
   late bool _on = Analytics.collecting;
 
+  Future<void> _set(bool v) async {
+    final l = context.l10n;
+    // The switch moves first. Waiting on a write to disk to show a toggle
+    // is what makes a second tap look necessary.
+    setState(() => _on = v);
+    final messenger = ScaffoldMessenger.of(context);
+    // Said while it can still be said: turning measurement off is the last
+    // event, turning it on the first.
+    if (!v) {
+      Analytics.capture('usage sharing switched', {'on': false});
+    }
+    await Analytics.setCollecting(v);
+    if (v) {
+      Analytics.capture('usage sharing switched', {'on': true});
+    }
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(v ? l.usageOn : l.usageOff)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return PaperCard(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-      radius: 18,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              l.anonymousUsageLine,
-              style: AppText.body(
-                size: 12,
-                height: 1.35,
-                color: context.p.inkMuted,
-              ),
-            ),
-          ),
-          const SizedBox(width: 14),
-          NudgeSwitch(
+    // A row of the About box, with what it measures under it. The whole
+    // row is the switch, so the target is a finger's height and not only
+    // the switch's thirty points.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ProfileRow(
+          key: const ValueKey('profile-usage'),
+          mark: ProfileMarks.chart,
+          label: l.anonymousUsage,
+          toggled: _on,
+          chevron: false,
+          onTap: () => _set(!_on),
+          trailing: NudgeSwitch(
             value: _on,
             label: l.anonymousUsage,
-            onChanged: (v) async {
-              // The switch moves first. Waiting on a write to disk to show a
-              // toggle is what makes a second tap look necessary.
-              setState(() => _on = v);
-              final messenger = ScaffoldMessenger.of(context);
-              // Said while it can still be said: turning measurement off is
-              // the last event, turning it on the first.
-              if (!v) {
-                Analytics.capture('usage sharing switched', {'on': false});
-              }
-              await Analytics.setCollecting(v);
-              if (v) {
-                Analytics.capture('usage sharing switched', {'on': true});
-              }
-              messenger
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(content: Text(v ? l.usageOn : l.usageOff)),
-                );
-            },
+            onChanged: _set,
           ),
-        ],
-      ),
+        ),
+        ProfileRowNote(l.anonymousUsageLine),
+      ],
     );
   }
 }
@@ -818,13 +859,8 @@ class _UsageSwitchState extends State<_UsageSwitch> {
 class _LinkRow extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
-  final bool muted;
 
-  const _LinkRow({
-    required this.label,
-    required this.onTap,
-    this.muted = false,
-  });
+  const _LinkRow({required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -854,7 +890,7 @@ class _LinkRow extends StatelessWidget {
                       style: AppText.body(
                         size: 14,
                         weight: FontWeight.w500,
-                        color: muted ? context.p.inkMuted : context.p.ink,
+                        color: context.p.ink,
                       ),
                     ),
                   ),

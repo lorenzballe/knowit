@@ -513,6 +513,21 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'As tuas cartas';
+
+  @override
+  String get nothingYet => 'Ainda nada';
+
+  @override
+  String get lastSevenDays => 'Últimos 7 dias';
+
+  @override
+  String get accountSection => 'Conta';
+
+  @override
+  String get aboutSection => 'Sobre';
+
+  @override
   String get manageSubscription => 'Gerir subscrição';
 
   @override
@@ -1457,6 +1472,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get swipeForTheNextOne => 'Desliza para o próximo';
+
+  @override
+  String get musicSound => 'Som nos cartões de música';
+
+  @override
+  String get musicSoundIsOff => 'O som dos cartões de música está desligado.';
+
+  @override
+  String get musicSoundTurnOn => 'Ligar';
 
   @override
   String get thatWasTheOnlyOne => 'Era o único';

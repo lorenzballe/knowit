@@ -5,11 +5,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/card_json.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/state/music_sound.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/scene_view.dart';
@@ -41,9 +43,9 @@ class _Ears implements MusicSceneSpeaker {
 }
 
 List<Map<String, Object?>> _samples() => [
-  for (final c
-      in jsonDecode(File('tool/cards/samples/music.json').readAsStringSync())
-          as List)
+  for (final c in jsonDecode(
+    File('tool/cards/samples/music.json').readAsStringSync(),
+  ) as List)
     (c as Map).cast<String, Object?>(),
 ];
 
@@ -72,6 +74,9 @@ void main() {
   setUp(() {
     ears = _Ears();
     MusicSceneAudio.speaker = () => ears;
+    // The reader turned the sound on: what these tests listen for. It
+    // starts off; that is the group below.
+    MusicSound.on.value = true;
   });
 
   MusicScene parse(Map<String, Object?> m) =>
@@ -181,99 +186,167 @@ void main() {
       ('an unknown mode', {...chord, 'mode': 'opera'}),
       ('no hint', {...chord}..remove('hint')),
       ('a hint too long', {...chord, 'hint': 'x' * 91}),
-      ('a key that is not a note', {...chord, 'keys': ['C4', 'H5']}),
-      ('a keyboard ending on a black key', {...chord, 'keys': ['C4', 'C#5']}),
-      ('a keyboard of four white keys', {...chord, 'keys': ['C4', 'F4']}),
-      ('a keyboard of eleven white keys', {...chord, 'keys': ['C4', 'F5']}),
-      ('a start note off the keyboard', {...chord, 'start': ['D5']}),
-      ('seven start notes', {
-        ...chord,
-        'start': ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
-      }),
+      (
+        'a key that is not a note',
+        {
+          ...chord,
+          'keys': ['C4', 'H5'],
+        },
+      ),
+      (
+        'a keyboard ending on a black key',
+        {
+          ...chord,
+          'keys': ['C4', 'C#5'],
+        },
+      ),
+      (
+        'a keyboard of four white keys',
+        {
+          ...chord,
+          'keys': ['C4', 'F4'],
+        },
+      ),
+      (
+        'a keyboard of eleven white keys',
+        {
+          ...chord,
+          'keys': ['C4', 'F5'],
+        },
+      ),
+      (
+        'a start note off the keyboard',
+        {
+          ...chord,
+          'start': ['D5'],
+        },
+      ),
+      (
+        'seven start notes',
+        {
+          ...chord,
+          'start': ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
+        },
+      ),
       ('an unknown tuning', {...chord, 'tuning': 'pythagorean'}),
-      ('a moment without text', {
-        ...chord,
-        'moments': [
-          {'notes': ['C4']},
-        ],
-      }),
-      ('harmonics out of range', {
-        'type': 'music',
-        'mode': 'harmonics',
-        'readout': 'R',
-        'hint': 'h',
-        'fundamental': 110,
-        'harmonics': 9,
-        'start': [1],
-      }),
-      ('a harmonic past the last', {
-        'type': 'music',
-        'mode': 'harmonics',
-        'readout': 'R',
-        'hint': 'h',
-        'fundamental': 110,
-        'harmonics': 4,
-        'start': [5],
-      }),
-      ('a fundamental too low', {
-        'type': 'music',
-        'mode': 'harmonics',
-        'readout': 'R',
-        'hint': 'h',
-        'fundamental': 20,
-        'harmonics': 4,
-        'start': [1],
-      }),
+      (
+        'a moment without text',
+        {
+          ...chord,
+          'moments': [
+            {
+              'notes': ['C4'],
+            },
+          ],
+        },
+      ),
+      (
+        'harmonics out of range',
+        {
+          'type': 'music',
+          'mode': 'harmonics',
+          'readout': 'R',
+          'hint': 'h',
+          'fundamental': 110,
+          'harmonics': 9,
+          'start': [1],
+        },
+      ),
+      (
+        'a harmonic past the last',
+        {
+          'type': 'music',
+          'mode': 'harmonics',
+          'readout': 'R',
+          'hint': 'h',
+          'fundamental': 110,
+          'harmonics': 4,
+          'start': [5],
+        },
+      ),
+      (
+        'a fundamental too low',
+        {
+          'type': 'music',
+          'mode': 'harmonics',
+          'readout': 'R',
+          'hint': 'h',
+          'fundamental': 20,
+          'harmonics': 4,
+          'start': [1],
+        },
+      ),
       ('steps not a multiple of four', {...layers, 'steps': 10}),
       ('a loop over eight seconds', {...layers, 'bpm': 60, 'steps': 32}),
-      ('one track', {
-        ...layers,
-        'tracks': [(layers['tracks'] as List).first],
-      }),
-      ('a pattern of the wrong length', {
-        ...layers,
-        'tracks': [
-          {'name': 'K', 'sound': 'kick', 'pattern': 'x . . .'},
-          {'name': 'B', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
-        ],
-      }),
-      ('a note in a drum track', {
-        ...layers,
-        'tracks': [
-          {'name': 'K', 'sound': 'kick', 'pattern': 'C2 . . . x . . .'},
-          {'name': 'B', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
-        ],
-      }),
-      ('a hold with nothing to hold', {
-        ...layers,
-        'tracks': [
-          {'name': 'K', 'sound': 'kick', 'pattern': 'x . . . x . . .'},
-          {'name': 'B', 'sound': 'bass', 'pattern': '- . . . . . . .'},
-        ],
-      }),
-      ('an unknown sound', {
-        ...layers,
-        'tracks': [
-          {'name': 'K', 'sound': 'cowbell', 'pattern': 'x . . . x . . .'},
-          {'name': 'B', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
-        ],
-      }),
-      ('two tracks of one name', {
-        ...layers,
-        'tracks': [
-          {'name': 'K', 'sound': 'kick', 'pattern': 'x . . . x . . .'},
-          {'name': 'K', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
-        ],
-      }),
-      ('a moment naming no track', {
-        ...layers,
-        'moments': [
-          {
-            'on': ['Drums'],
-            'text': 't',
-          },
-        ],
-      }),
+      (
+        'one track',
+        {
+          ...layers,
+          'tracks': [(layers['tracks'] as List).first],
+        },
+      ),
+      (
+        'a pattern of the wrong length',
+        {
+          ...layers,
+          'tracks': [
+            {'name': 'K', 'sound': 'kick', 'pattern': 'x . . .'},
+            {'name': 'B', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
+          ],
+        },
+      ),
+      (
+        'a note in a drum track',
+        {
+          ...layers,
+          'tracks': [
+            {'name': 'K', 'sound': 'kick', 'pattern': 'C2 . . . x . . .'},
+            {'name': 'B', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
+          ],
+        },
+      ),
+      (
+        'a hold with nothing to hold',
+        {
+          ...layers,
+          'tracks': [
+            {'name': 'K', 'sound': 'kick', 'pattern': 'x . . . x . . .'},
+            {'name': 'B', 'sound': 'bass', 'pattern': '- . . . . . . .'},
+          ],
+        },
+      ),
+      (
+        'an unknown sound',
+        {
+          ...layers,
+          'tracks': [
+            {'name': 'K', 'sound': 'cowbell', 'pattern': 'x . . . x . . .'},
+            {'name': 'B', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
+          ],
+        },
+      ),
+      (
+        'two tracks of one name',
+        {
+          ...layers,
+          'tracks': [
+            {'name': 'K', 'sound': 'kick', 'pattern': 'x . . . x . . .'},
+            {'name': 'K', 'sound': 'bass', 'pattern': 'A1 - . . . . . .'},
+          ],
+        },
+      ),
+      (
+        'a moment naming no track',
+        {
+          ...layers,
+          'moments': [
+            {
+              'on': ['Drums'],
+              'text': 't',
+            },
+          ],
+        },
+      ),
     ]) {
       test('refuses $why', () {
         expect(() => parse(bad), throwsFormatException);
@@ -338,30 +411,29 @@ void main() {
 
   // ------------------------------------------------------------- the scene
 
-  Widget alone(Map<String, Object?> json, Size box, {bool dark = false}) =>
-      MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: buildAstutoTheme(Brightness.dark),
-        home: Scaffold(
-          backgroundColor: dark
-              ? const Color(0xFF3D1E99)
-              : const Color(0xFFFFD84D),
-          body: Center(
-            child: SizedBox(
-              width: box.width,
-              height: box.height,
-              child: SceneView(
-                scene: Scene.fromJson(json)!,
-                ink: dark ? Colors.white : const Color(0xFF141414),
-                ground: dark
-                    ? const Color(0xFF3D1E99)
-                    : const Color(0xFFFFD84D),
-              ),
-            ),
+  Widget alone(
+    Map<String, Object?> json,
+    Size box, {
+    bool dark = false,
+  }) => MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    theme: buildAstutoTheme(Brightness.dark),
+    home: Scaffold(
+      backgroundColor: dark ? const Color(0xFF3D1E99) : const Color(0xFFFFD84D),
+      body: Center(
+        child: SizedBox(
+          width: box.width,
+          height: box.height,
+          child: SceneView(
+            scene: Scene.fromJson(json)!,
+            ink: dark ? Colors.white : const Color(0xFF141414),
+            ground: dark ? const Color(0xFF3D1E99) : const Color(0xFFFFD84D),
           ),
         ),
-      );
+      ),
+    ),
+  );
 
   Future<void> shoot(WidgetTester tester, String name) async {
     if (!_shots) return;
@@ -562,6 +634,63 @@ void main() {
     await tester.pump();
     expect(find.text('Listen'), findsOneWidget);
     await tester.pumpAndSettle();
+  });
+
+  group('with the sound off, as it starts', () {
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      MusicSound.load(await SharedPreferences.getInstance());
+    });
+
+    testWidgets('a key still changes the chord and the picture, silently', (
+      tester,
+    ) async {
+      await tester.pumpWidget(alone(_scene(0), const Size(276, 330)));
+      await tester.pumpAndSettle();
+      expect(MusicSound.on.value, isFalse);
+      await key(tester, 'E4');
+      expect(find.text('4 : 5 : 6'), findsOneWidget);
+      expect(find.text('Major chord'), findsOneWidget);
+      expect(ears.plays, isEmpty, reason: 'nothing sounds until it is on');
+      await tester.pumpAndSettle();
+      expect(find.text('Sound is off for music cards.'), findsNothing);
+    });
+
+    testWidgets('Listen says the sound is off; Turn on plays, and is kept', (
+      tester,
+    ) async {
+      await tester.pumpWidget(alone(_scene(0), const Size(276, 330)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Listen'));
+      await tester.pump();
+      expect(ears.plays, isEmpty);
+      await tester.pump(const Duration(milliseconds: 750));
+      expect(find.text('Sound is off for music cards.'), findsOneWidget);
+
+      await tester.tap(find.text('Turn on'));
+      await tester.pump();
+      expect(MusicSound.on.value, isTrue);
+      expect(ears.plays, hasLength(1), reason: 'the chord held, now heard');
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.musicSound'), isTrue);
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('a loop turned on midway joins where the playhead is', (
+      tester,
+    ) async {
+      await tester.pumpWidget(alone(_scene(2), const Size(276, 330)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Listen'));
+      await tester.pump();
+      expect(ears.plays, isEmpty);
+      await tester.pump(const Duration(milliseconds: 1200));
+      await tester.tap(find.text('Turn on'));
+      await tester.pump();
+      expect(ears.plays.single.loop, isTrue);
+      expect(ears.plays.single.from, greaterThan(Duration.zero));
+      await tester.pumpAndSettle();
+    });
   });
 
   testWidgets('with animations off it ends in the same place', (tester) async {

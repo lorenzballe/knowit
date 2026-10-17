@@ -509,6 +509,21 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get yourCards => 'Kartların';
+
+  @override
+  String get nothingYet => 'Henüz yok';
+
+  @override
+  String get lastSevenDays => 'Son 7 gün';
+
+  @override
+  String get accountSection => 'Hesap';
+
+  @override
+  String get aboutSection => 'Hakkında';
+
+  @override
   String get manageSubscription => 'Aboneliği yönet';
 
   @override
@@ -1446,6 +1461,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get swipeForTheNextOne => 'Sonraki için kaydır';
+
+  @override
+  String get musicSound => 'Müzik kartlarında ses';
+
+  @override
+  String get musicSoundIsOff => 'Müzik kartlarının sesi kapalı.';
+
+  @override
+  String get musicSoundTurnOn => 'Aç';
 
   @override
   String get thatWasTheOnlyOne => 'Tek kart buydu';

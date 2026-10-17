@@ -499,6 +499,21 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get yourCards => '你的卡片';
+
+  @override
+  String get nothingYet => '还没有';
+
+  @override
+  String get lastSevenDays => '最近 7 天';
+
+  @override
+  String get accountSection => '账号';
+
+  @override
+  String get aboutSection => '关于';
+
+  @override
   String get manageSubscription => '管理订阅';
 
   @override
@@ -1400,6 +1415,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get swipeForTheNextOne => '滑动看下一张';
+
+  @override
+  String get musicSound => '音乐卡片的声音';
+
+  @override
+  String get musicSoundIsOff => '音乐卡片的声音已关闭。';
+
+  @override
+  String get musicSoundTurnOn => '打开';
 
   @override
   String get thatWasTheOnlyOne => '只有这一张';

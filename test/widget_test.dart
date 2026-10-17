@@ -28,6 +28,7 @@ import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
+import 'package:astuto/screens/saved_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
@@ -3186,11 +3187,16 @@ void main() {
     // same thing lower down is gone.
     expect(find.text('SEE THE PLANS'), findsOneWidget);
 
+    // Then what is the reader's own, the account and how the app works,
+    // with the debug tools still last.
     final order = await _sectionOrder(tester, const [
       'YOUR RECORD',
       'APPEARANCE',
       'YOUR TOPICS',
       'DAILY NUDGE',
+      'YOUR CARDS',
+      'ACCOUNT',
+      'ABOUT',
       'DEBUG',
     ]);
     expect(order, const [
@@ -3198,6 +3204,9 @@ void main() {
       'APPEARANCE',
       'YOUR TOPICS',
       'DAILY NUDGE',
+      'YOUR CARDS',
+      'ACCOUNT',
+      'ABOUT',
       'DEBUG',
     ]);
     expect(find.text('Upgrade'), findsNothing);
@@ -3696,10 +3705,18 @@ void main() {
       await _settle(tester);
       expect(find.text('2 cards'), findsOneWidget);
 
-      // And the way out, which the screen did not have.
+      // And the way out, which the screen did not have: back on the profile,
+      // where the shelf's row says the same two cards.
       await tester.tap(find.bySemanticsLabel('Back'));
       await _settle(tester);
-      expect(find.text('2 cards'), findsNothing);
+      expect(find.byType(SavedScreen), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('profile-saved')),
+          matching: find.text('2 cards'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('removing a pill can be undone', (tester) async {
@@ -3734,7 +3751,24 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await _openSetting(tester, 'Liked · 1');
+      // The row is the shelf's name with how much is on it, and a hand of
+      // what is: this one card, on top with its subject's mark.
+      await _openProfile(tester);
+      final Finder row = find.byKey(const ValueKey('profile-liked'));
+      await tester.scrollUntilVisible(row, 200, scrollable: _profileList);
+      await _settle(tester);
+      expect(
+        find.descendant(of: row, matching: find.text('1 card')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: row,
+          matching: find.byKey(ValueKey('fan-card-${liked.id}')),
+        ),
+        findsOneWidget,
+      );
+      await _openSetting(tester, 'Liked');
       expect(find.text('Liked'), findsOneWidget);
       expect(find.text(liked.question), findsOneWidget);
       expect(find.byTooltip('Remove from liked'), findsOneWidget);

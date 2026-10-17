@@ -373,6 +373,7 @@ is in its card facts.
 | Event | When | Properties | Where |
 | --- | --- | --- | --- |
 | `theme set` | | `theme` | P |
+| `music sound switched` | the music cards' sound, off until turned on: Profile's switch, or Turn on after a card's Listen | `on`, `from` (`profile`, `card`) | P |
 | `usage sharing switched` | the reader's switch | `on` | P |
 | `signed out` | | `streak_days`, `days_completed`, `pills_read` | P |
 | `account deletion asked`, `…cancelled`, `…started`, `…ended` | deleting the account | `signed_in`, `is_plus`, `account`, `outcome`, `error` | P |
