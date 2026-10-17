@@ -259,8 +259,7 @@ void main() {
         'how': const HowScreen(),
         'intro': IntroScreen(
           onContinue: () {},
-          onApple: () async => false,
-          onGoogle: () async => false,
+          onSignIn: (_) async => false,
         ),
         'mix': MixScreen(onDone: (_) {}, onSkip: () {}),
         'genres': GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),

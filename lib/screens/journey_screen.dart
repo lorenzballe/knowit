@@ -1291,7 +1291,7 @@ class _SubjectsTile extends StatelessWidget {
         builder: (_) => DeckViewerScreen(
           app: app,
           deck: deck,
-          title: style.name,
+          title: context.l10n.subjectOf(style.name),
           source: 'journey',
         ),
       ),

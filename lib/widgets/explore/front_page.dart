@@ -150,7 +150,7 @@ class FrontPageView extends StatelessWidget {
                         right: 16,
                         child: CardHead(
                           pill: lead,
-                          label: '${lead.topic} · ${l.theLead}',
+                          label: '${l.subjectOf(lead.topic)} · ${l.theLead}',
                         ),
                       ),
                     ],

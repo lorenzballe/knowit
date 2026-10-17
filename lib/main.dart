@@ -43,6 +43,7 @@ import 'theme.dart';
 import 'widgets/ambient.dart';
 import 'widgets/place_ask.dart';
 import 'widgets/reminder_ask.dart';
+import 'widgets/sign_in_sheet.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -371,6 +372,11 @@ class _AstutoRootState extends State<AstutoRoot> {
   bool _askingForPlace = false;
   Timer? _placeAskTimer;
 
+  /// True while an account is being offered after a finished day: the
+  /// sheet, and Apple's or Google's own behind it.
+  bool _askingForAccount = false;
+  Timer? _accountAskTimer;
+
   bool _askingForReview = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
@@ -407,6 +413,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         _placeAskedThisSitting = false;
         _placeAskTimer?.cancel();
         _placeAskTimer = null;
+        _accountAskTimer?.cancel();
+        _accountAskTimer = null;
       },
       onDetach: () {
         _account.flush();
@@ -433,8 +441,9 @@ class _AstutoRootState extends State<AstutoRoot> {
           }),
         );
         _sayWidgets();
-        // A new sitting can be the place sheet's moment: a finished day
-        // still on the screen.
+        // A new sitting can be the moment of the account's sheet or the
+        // place's: a finished day still on the screen.
+        _considerAccountAsk();
         _considerPlaceAsk();
       },
     );
@@ -637,16 +646,21 @@ class _AstutoRootState extends State<AstutoRoot> {
   ///
   /// The same moment as the reminder sheet's — the finished day at rest,
   /// with nothing pushed over the tabs and the card after the fifth thrown —
-  /// and the reminder goes first: the place sheet waits while that one is
-  /// due, and for a sitting in which nothing else, the system's prompts and
-  /// the store's rating sheet included, has been asked. Only on a phone,
-  /// where there is a place to read.
+  /// and the reminder goes first, then the account: the place sheet waits
+  /// while either is due, and for a sitting in which nothing else, the
+  /// system's prompts and the store's rating sheet included, has been
+  /// asked. Only on a phone, where there is a place to read.
   String? _placeAskReason() {
     if (!_app.ready || _stage != _Stage.shell) return null;
     if (!_onTop || _deckOnTable) return null;
     if (_askingForPush || _askingForPlace || _askedThisSitting) return null;
+    if (_askingForAccount) return null;
     if (_reminderAskReason() != null ||
         (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_accountAskReason() != null ||
+        (_accountAskTimer?.isActive ?? false)) {
       return null;
     }
     if (!_app.dayClosed || !_app.shouldAskForPlace) return null;
@@ -703,6 +717,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // stack: a paywall pushed over the tabs, and the moment it closes.
     _onTop = ModalRoute.isCurrentOf(context) ?? true;
     _considerReminderAsk();
+    _considerAccountAsk();
     _considerPlaceAsk();
   }
 
@@ -738,10 +753,12 @@ class _AstutoRootState extends State<AstutoRoot> {
         !_pushAskedThisSession &&
         !_placeAskedThisSitting &&
         !_askingForPlace &&
+        !_askingForAccount &&
         !_trialAskDue) {
       _askForReview();
     }
     // Last, so that a rating sheet decided just now has this sitting.
+    _considerAccountAsk();
     _considerPlaceAsk();
   }
 
@@ -773,6 +790,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   void dispose() {
     _reminderAskTimer?.cancel();
     _placeAskTimer?.cancel();
+    _accountAskTimer?.cancel();
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
@@ -804,6 +822,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // Arriving on the tabs can be the sheet's moment: the onboarding's offer
     // closing on a trial just started.
     _considerReminderAsk();
+    _considerAccountAsk();
     _considerPlaceAsk();
   }
 
@@ -815,56 +834,62 @@ class _AstutoRootState extends State<AstutoRoot> {
     });
   }
 
-  /// Returns whether the intro should move on. Only backing out of the
-  /// provider's own sheet keeps the reader where they are.
-  Future<bool> _signIn(
-    String label,
-    Future<SignInOutcome> Function(AppState) run,
-  ) async {
-    Analytics.capture('sign in started', {'method': label});
-    final outcome = await run(_app);
-    if (!mounted) return false;
-    Analytics.capture('sign in ended', {
-      'method': label,
-      'outcome': outcome.name,
-      // Which road it took — the phone's own sheet or Firebase's browser.
-      // Two rounds were spent working that out by hand once already.
-      'route': _account.lastRoute,
-      // Why it failed, as Apple, Google or Firebase put it: an error code
-      // and its sentence, never anything the reader typed. Without it, 71
-      // failed sign-ins in a row from App Review's phones said only
-      // "failed", and the one place the reason showed was a snackbar on a
-      // phone nobody here was holding.
-      'error': outcome == SignInOutcome.failed && _account.lastError != null
-          ? Analytics.short(_account.lastError!)
-          : null,
+  /// Why the account sheet would rise now — after a finished day — or null
+  /// when this is not its moment (AppState.shouldOfferAccount says whether
+  /// it is due at all).
+  ///
+  /// The finished day at rest, as for the place sheet, with nothing pushed
+  /// over the tabs and the card after the fifth thrown; after the reminder
+  /// sheet, which goes first, and in a sitting nothing else has asked in.
+  /// Only where a sign-in can run, and only for a reader not signed in.
+  String? _accountAskReason() {
+    if (!_app.ready || _stage != _Stage.shell) return null;
+    if (!_onTop || _deckOnTable) return null;
+    if (_askingForPush || _askingForPlace || _askingForAccount) return null;
+    if (_askedThisSitting) return null;
+    if (_reminderAskReason() != null ||
+        (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (!_app.dayClosed || !_app.shouldOfferAccount) return null;
+    if (!_account.canSignIn || _account.signedInForReal) return null;
+    return 'day done';
+  }
+
+  /// Raises the account sheet a beat after its moment arrives, as the
+  /// reminder and place sheets rise, and only if the moment is still there.
+  void _considerAccountAsk() {
+    if (!mounted || _askingForAccount) return;
+    if (_accountAskReason() == null) {
+      _accountAskTimer?.cancel();
+      _accountAskTimer = null;
+      return;
+    }
+    if (_accountAskTimer?.isActive ?? false) return;
+    _accountAskTimer = Timer(_kReminderAskBeat, () {
+      _accountAskTimer = null;
+      if (!mounted || _accountAskReason() == null) return;
+      _offerAccount();
     });
-    switch (outcome) {
-      case SignInOutcome.signedIn:
-        // The account id may have changed, and the entitlement belongs to the
-        // reader rather than to the phone.
-        await Subscription.instance.switchTo(_account.uid);
-        _identify(method: label);
-        return true;
-      // Firebase is not running. This used to move on in silence, which made
-      // a broken build look exactly like a successful sign-in: press, no
-      // sheet, next screen. Say it instead.
-      case SignInOutcome.unavailable:
-        _say('Sign-in is unavailable: ${_account.lastError ?? "unknown"}');
-        return true;
-      case SignInOutcome.cancelled:
-        return false;
-      case SignInOutcome.failed:
-        // While the debug tools are on, show what actually went wrong. A
-        // polite sentence is the right thing for a reader and the wrong
-        // thing for the person trying to fix it.
-        _say(
-          debugToolsOn && _account.lastError != null
-              ? '$label sign-in failed — ${_account.lastError}'
-              : 'Could not sign in with $label. You can carry on without an '
-                    'account.',
-        );
-        return false;
+  }
+
+  /// The offer itself: once, whatever the answer.
+  Future<void> _offerAccount() async {
+    if (_askingForAccount) return;
+    _askingForAccount = true;
+    _askedThisSitting = true;
+    try {
+      await _app.notedAccountOffered();
+      if (!mounted) return;
+      final bool signedIn = await showSignInSheet(
+        context,
+        account: _account,
+        app: _app,
+        door: SignInDoor.firstDay,
+      );
+      if (signedIn && mounted) _say(context.l10n.signedInRecordOnAccount);
+    } finally {
+      _askingForAccount = false;
     }
   }
 
@@ -928,8 +953,12 @@ class _AstutoRootState extends State<AstutoRoot> {
       case _Stage.intro:
         return IntroScreen(
           onContinue: () => _go(_Stage.subjects),
-          onApple: () => _signIn('Apple', _account.signInWithApple),
-          onGoogle: () => _signIn('Google', _account.signInWithGoogle),
+          onSignIn: (context) => showSignInSheet(
+            context,
+            account: _account,
+            app: _app,
+            door: SignInDoor.intro,
+          ),
         );
 
       case _Stage.subjects:
@@ -998,6 +1027,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           onDeckOnTable: (onTable) {
             _deckOnTable = onTable;
             _considerReminderAsk();
+            _considerAccountAsk();
             _considerPlaceAsk();
           },
           onSignedOut: () {

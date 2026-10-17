@@ -415,37 +415,39 @@ void main() {
     });
   });
 
-  group('The intro offers no sign-in it cannot do', () {
-    testWidgets('continuing without an account goes where Skip goes', (
+  group('The intro leads with reading, and a sign-in never fails silently', () {
+    testWidgets('Start reading is the one button, and goes where Skip goes', (
       tester,
     ) async {
       final said = _listen();
       var continued = 0;
+      var asked = 0;
       await tester.pumpWidget(
         _host(
           IntroScreen(
             onContinue: () => continued++,
-            onApple: () async => false,
-            onGoogle: () async => false,
+            onSignIn: (_) async {
+              asked++;
+              return false;
+            },
           ),
         ),
       );
       await _settle(tester);
 
-      expect(find.text('Continue with Email'), findsNothing);
-      // True of all three ways on, so it no longer says signing up.
+      // No provider on the first screen: an account is behind a quiet line.
+      expect(find.text('Continue with Apple'), findsNothing);
+      expect(find.text('Continue with Google'), findsNothing);
       expect(
-        find.text(
-          'By continuing you agree to our Terms of Service & Privacy Policy',
-        ),
+        find.textContaining('Already have an account?', findRichText: true),
         findsOneWidget,
       );
 
-      await tester.tap(find.text('Continue without an account'));
+      await tester.tap(find.text('Start reading'));
       await _settle(tester);
       expect(continued, 1);
       expect(said.of('intro skipped'), hasLength(1));
-      expect(said.of('intro skipped').single['by'], 'no account');
+      expect(said.of('intro skipped').single['by'], 'start reading');
       expect(said.of('intro skipped').single['at_scene'], 1);
       // Nothing was signed in to, and nothing says it was tried.
       expect(find.byType(SnackBar), findsNothing);
@@ -455,6 +457,13 @@ void main() {
       await _settle(tester);
       expect(continued, 2);
       expect(said.of('intro skipped').last['by'], 'corner');
+
+      // The quiet line asks for a sign-in; one that does not end in an
+      // account leaves the reader where they were.
+      await tester.tap(find.byKey(const ValueKey('intro-sign-in')));
+      await _settle(tester);
+      expect(asked, 1);
+      expect(continued, 2);
     });
 
     testWidgets('in the app it lands on the subjects', (tester) async {
@@ -462,12 +471,88 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.text('Continue without an account'));
+      await tester.tap(find.text('Start reading'));
       await _settle(tester);
       expect(find.byType(IntroScreen), findsNothing);
       expect(find.byType(MixScreen), findsOneWidget);
       expect(find.text('19 of 19 subjects in the mix'), findsOneWidget);
       expect(find.byType(SnackBar), findsNothing);
+    });
+
+    testWidgets('signing in opens Apple and Google on a sheet, and a build '
+        'that cannot sign in says so there, in the reader\'s language', (
+      tester,
+    ) async {
+      final said = _listen();
+      SharedPreferences.setMockInitialValues({});
+      await tester.pumpWidget(
+        const AstutoApp(),
+      );
+      await _settle(tester);
+
+      await tester.tap(find.byKey(const ValueKey('intro-sign-in')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('sign-in-sheet')), findsOneWidget);
+      expect(find.text('Welcome back'), findsOneWidget);
+      expect(said.of('sign in sheet shown').single['from'], 'intro');
+
+      // No Firebase under a test: the sheet says so, rather than a tap that
+      // does nothing, and the reader stays where they were.
+      await tester.tap(find.byKey(const ValueKey('sign-in-apple')));
+      await _settle(tester);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('sign-in-sheet')),
+          matching: find.text('Signing in is not available on this build.'),
+        ),
+        findsOneWidget,
+      );
+      expect(said.of('sign in ended').single, containsPair('from', 'intro'));
+      expect(
+        said.of('sign in ended').single,
+        containsPair('outcome', 'unavailable'),
+      );
+
+      // Not now: back on the intro, with nothing signed in.
+      await tester.tap(find.byKey(const ValueKey('sign-in-not-now')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('sign-in-sheet')), findsNothing);
+      expect(find.byType(IntroScreen), findsOneWidget);
+      expect(said.of('sign in sheet closed').single['signed_in'], false);
+    });
+  });
+
+  group('An account is offered once, after the first finished day', () {
+    Future<AppState> app(Map<String, Object> prefs) async {
+      SharedPreferences.setMockInitialValues(prefs);
+      final AppState app = AppState(
+        hasPermission: () async => false,
+        askPermission: () async => false,
+        arm: (_) async {},
+        disarm: () async {},
+        pushWidget: (_) async {},
+      );
+      await app.init();
+      return app;
+    }
+
+    test('not before a day is behind the reader', () async {
+      expect((await app(_free())).shouldOfferAccount, isFalse);
+    });
+
+    test('after one, once, and again for somebody new', () async {
+      final AppState reader = await app(_free(days: [_daysAgo(1)]));
+      expect(reader.shouldOfferAccount, isTrue);
+      await reader.notedAccountOffered();
+      expect(reader.shouldOfferAccount, isFalse);
+      // Remembered across a launch.
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.accountOffered'), isTrue);
+      // Signing out wipes the phone: whoever comes next is offered it after
+      // a day of their own.
+      await reader.signOut();
+      expect(reader.accountOffered, isFalse);
+      expect(reader.shouldOfferAccount, isFalse);
     });
   });
 

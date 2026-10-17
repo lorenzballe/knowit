@@ -639,7 +639,7 @@ class _CardFace extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        pill.topic.toUpperCase(),
+                        context.l10n.subjectOf(pill.topic).toUpperCase(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.label(
@@ -1250,7 +1250,10 @@ class _Tomorrow extends StatelessWidget {
           child: Text(
             lead == null
                 ? context.l10n.tomorrowsFiveOpenIn(when)
-                : context.l10n.topicOpensTomorrow(lead.topic, when),
+                : context.l10n.topicOpensTomorrow(
+                    context.l10n.subjectOf(lead.topic),
+                    when,
+                  ),
             style: AppText.body(
               size: 13.5,
               weight: FontWeight.w500,

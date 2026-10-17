@@ -102,7 +102,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                         final key = subject.key;
                         final on = _picked.contains(key);
                         return _TopicChip(
-                          label: subject.name,
+                          label: context.l10n.subjectOf(subject.name),
                           on: on,
                           color: subject.color,
                           onColor: inkOn(subject.color),

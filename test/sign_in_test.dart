@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/identity.dart';
 import 'package:crypto/crypto.dart';
@@ -149,8 +151,31 @@ AuthenticationResults _googleAnswer({String? idToken}) => AuthenticationResults(
 void main() {
   tearDown(() => debugDefaultTargetPlatformOverride = null);
 
-  group('Apple', () {
+  group('Apple on an iPhone', () {
     setUp(() => debugDefaultTargetPlatformOverride = TargetPlatform.iOS);
+
+    test('goes through firebase_auth\'s sheet, never the plugin\'s', () async {
+      // sign_in_with_apple 8.2.0 asks for the sheet with no window to show
+      // it from, and on App Review's iOS 27 phones it never appeared.
+      // firebase_auth runs the same system sheet anchored to the scene's
+      // key window, so on an iPhone the plugin is not asked at all.
+      final sheet = _FakeAppleSheet(
+        answer: _appleAnswer(identityToken: 'apple-id-token'),
+      );
+      SignInWithApplePlatform.instance = sheet;
+
+      final IdentityResult result = await Identity().apple();
+
+      expect(result.outcome, IdentityOutcome.firebaseSheet);
+      expect(result.credential, isNull);
+      expect(sheet.askedWithNonce, isNull);
+      expect(Identity.implementation, 'native-sheets-2');
+    });
+  });
+
+  // The plugin's own sheet still runs on a Mac.
+  group('Apple', () {
+    setUp(() => debugDefaultTargetPlatformOverride = TargetPlatform.macOS);
 
     test(
       'hands Apple the hash and Firebase the string it was made from',
@@ -266,10 +291,10 @@ void main() {
       },
     );
 
-    test('an iPhone too old for the sheet falls back too', () async {
-      // Sign in with Apple starts at iOS 13. Below it the sheet is simply not
-      // there, which is a reason to ask the browser rather than to tell
-      // somebody their phone cannot have an account.
+    test('a Mac too old for the sheet falls back too', () async {
+      // Sign in with Apple starts at macOS 10.15. Below it the sheet is simply
+      // not there, which is a reason to ask the browser rather than to tell
+      // somebody their computer cannot have an account.
       SignInWithApplePlatform.instance = _FakeAppleSheet(available: false);
 
       final IdentityResult result = await Identity().apple();
@@ -467,7 +492,7 @@ void main() {
     test(
       'Apple: an unanswerable probe is a missing sheet, not a failure',
       () async {
-        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
         SignInWithApplePlatform.instance = _FakeAppleSheet(
           availabilityThrows: MissingPluginException(
             'No implementation found for method isAvailable',
@@ -551,4 +576,69 @@ void main() {
       expect(Account.identityIsSpokenFor('invalid-credential'), isFalse);
     });
   });
+
+  group('One sign-in at a time, and none that waits forever', () {
+    testWidgets('a tap while a sheet is still waiting is busy, said as '
+        'such, and not a reader\'s cancel', (tester) async {
+      final _Hung sheets = _Hung();
+      final Account account = Account(
+        authOverride: _NoOne(),
+        identity: sheets,
+      );
+      final AppState app = AppState();
+
+      final Future<SignInOutcome> first = account.signInWithApple(app);
+      await tester.pump();
+      expect(account.busy, isTrue);
+      expect(account.busyWith, 'Apple');
+
+      expect(await account.signInWithGoogle(app), SignInOutcome.busy);
+      expect(await account.signInWithApple(app), SignInOutcome.busy);
+
+      // The first one answers after all: the next tap is free again.
+      sheets.waiting.complete(const IdentityResult(IdentityOutcome.cancelled));
+      expect(await first, SignInOutcome.cancelled);
+      expect(account.busy, isFalse);
+      expect(account.busyWith, isNull);
+    });
+
+    testWidgets('a sheet that never answers fails after two minutes, says '
+        'why, and lets the next tap through', (tester) async {
+      final Account account = Account(
+        authOverride: _NoOne(),
+        identity: _Hung(),
+      );
+      final AppState app = AppState();
+
+      SignInOutcome? first;
+      account.signInWithApple(app).then((o) => first = o);
+      await tester.pump(const Duration(seconds: 119));
+      expect(first, isNull);
+      expect(account.busy, isTrue);
+
+      await tester.pump(const Duration(seconds: 2));
+      expect(first, SignInOutcome.failed);
+      expect(account.lastError, contains('120 s'));
+      expect(account.busy, isFalse);
+      expect(Account.sheetTimeout, const Duration(seconds: 120));
+    });
+  });
+}
+
+/// Firebase, running, with nobody signed in to it yet.
+class _NoOne extends Fake implements FirebaseAuth {
+  @override
+  User? get currentUser => null;
+}
+
+/// Sheets that never answer until told to, as Apple's did on App Review's
+/// phones for two minutes at a time.
+class _Hung extends Identity {
+  final Completer<IdentityResult> waiting = Completer<IdentityResult>();
+
+  @override
+  Future<IdentityResult> apple() => waiting.future;
+
+  @override
+  Future<IdentityResult> google() => waiting.future;
 }

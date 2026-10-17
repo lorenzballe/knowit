@@ -25,6 +25,13 @@ enum IdentityOutcome {
 
   /// A sheet was asked, and said no for a reason worth showing.
   failed,
+
+  /// firebase_auth shows the system's own sheet itself. For Apple on an
+  /// iPhone that is the native Sign in with Apple sheet — the same Face ID
+  /// glance — presented from the foreground scene's key window, not a
+  /// browser (FLTFirebaseAuthPlugin's presentationAnchor). The caller hands
+  /// the provider to Firebase and Firebase does the rest, nonce included.
+  firebaseSheet,
 }
 
 /// An identity, or why there isn't one.
@@ -66,6 +73,16 @@ class IdentityResult {
 /// Google's lists the accounts the phone is holding. So they are what gets
 /// asked first, and the browser stays as the fallback for the places that
 /// have no sheet of their own.
+///
+/// On an iPhone, Apple's sheet is asked for through firebase_auth rather
+/// than through sign_in_with_apple. That plugin (8.2.0) never gives the
+/// request a window to present from and lets go of its controller, and on
+/// iOS 27 under UIScene the sheet never appeared: every one of App Review's
+/// attempts failed in about 40 ms, or stalled for minutes and ended in
+/// AuthorizationError 1000. firebase_auth runs the same system sheet,
+/// anchored to the foreground scene's key window. For Apple on an iPhone,
+/// Firebase's flow is that native sheet, not a web page; for Google it is
+/// still the web page, and Google keeps its own sheet.
 class Identity {
   Identity();
 
@@ -73,7 +90,7 @@ class Identity {
   /// is actually on the phone. Working out whether a build even carried the
   /// new code cost a round trip once — a screenshot should answer it. Bump it
   /// whenever this path changes.
-  static const String implementation = 'native-sheets-1';
+  static const String implementation = 'native-sheets-2';
 
   /// Whether landing in Firebase's browser flow is an acceptable answer here.
   ///
@@ -87,6 +104,9 @@ class Identity {
   /// Everywhere else the fallback is the real answer: Android has no Apple
   /// sheet at all, and its Google sheet wants a signing fingerprint this
   /// project has never registered.
+  ///
+  /// Apple on an iPhone is not this case: firebase_auth's path there is the
+  /// system sheet itself ([IdentityOutcome.firebaseSheet]), not a browser.
   bool get browserIsAcceptable =>
       kIsWeb ||
       (defaultTargetPlatform != TargetPlatform.iOS &&
@@ -115,6 +135,12 @@ class Identity {
 
   Future<IdentityResult> apple() async {
     if (!_hasAppleSheet) return const IdentityResult(IdentityOutcome.noSheet);
+    // On an iPhone, firebase_auth's sheet: anchored to the window, where this
+    // plugin's is not (see the class's note). The plugin's own sheet stays
+    // for the Mac.
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
+      return const IdentityResult(IdentityOutcome.firebaseSheet);
+    }
 
     try {
       if (!await SignInWithApple.isAvailable()) {

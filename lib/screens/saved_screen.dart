@@ -416,7 +416,7 @@ class _SavedRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    pill.topic.toUpperCase(),
+                    context.l10n.subjectOf(pill.topic).toUpperCase(),
                     style: AppText.label(
                       size: 10.5,
                       spacing: 1.2,

@@ -331,7 +331,7 @@ class _Subject extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      style.name,
+                      l.subjectOf(style.name),
                       style: AppText.body(
                         size: 15,
                         weight: FontWeight.w600,
