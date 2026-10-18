@@ -578,7 +578,8 @@ class AppState extends ChangeNotifier {
       ownCardsFor(plus: isPlus, streak: liveStreak, sunday: isSunday(day));
 
   /// True on the reader's Sunday when today's five hold the one more card
-  /// chosen for them, which Today says in a line of its own. Read off the
+  /// chosen for them, which the first of their own says under its head on
+  /// Today. Read off the
   /// deal itself, whoever dealt it, so the line never promises a card a
   /// day does not have; never on Astute+, whose five are all the reader's
   /// own every day.

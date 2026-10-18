@@ -3040,9 +3040,9 @@
    }
   }
  },
- "sundayOneMore": "Sunday: one more card chosen for you",
+ "sundayOneMore": "Sunday: one more chosen for you",
  "@sundayOneMore": {
-  "description": "A small line on Today on the reader's Sunday, on the free plan: one of the five cards that would have come at random is chosen for them instead."
+  "description": "On the reader's Sunday, on the free plan, a quiet line under the head of the first of their own cards: one of the five that would have come at random was chosen for them instead. The card is the one more, so it need not say 'card'."
  },
  "whereYouLive": "Where you live",
  "@whereYouLive": {

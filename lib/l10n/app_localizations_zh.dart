@@ -3029,7 +3029,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => '星期日：多一张为你挑选的卡片';
+  String get sundayOneMore => '星期日：再为你多选一张';
 
   @override
   String get whereYouLive => '你住的地方';

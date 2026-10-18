@@ -60,6 +60,10 @@ class PillCardStack extends StatefulWidget {
   /// them — on the free plan, where the others came at random.
   final Set<String> ownIds;
 
+  /// A line a card carries on its front, under its head, by the card's id:
+  /// why it is in front of the reader today.
+  final Map<String, String> notes;
+
   /// True while a card is under the finger, so the chrome can step out of
   /// the way of the gesture.
   final ValueChanged<bool>? onMotion;
@@ -125,6 +129,7 @@ class PillCardStack extends StatefulWidget {
     required this.onAnswer,
     required this.reviewIds,
     this.ownIds = const {},
+    this.notes = const {},
     required this.isSaved,
     required this.onSave,
     required this.onShare,
@@ -632,6 +637,7 @@ class _PillCardStackState extends State<PillCardStack>
                 isReview: widget.reviewIds.contains(pill.id),
                 isOwn: widget.ownIds.contains(pill.id),
                 home: widget.home,
+                note: widget.notes[pill.id],
                 given: controls ? given : null,
                 saved: controls && widget.isSaved(pill.id),
                 onSave: controls ? () => widget.onSave(pill) : null,

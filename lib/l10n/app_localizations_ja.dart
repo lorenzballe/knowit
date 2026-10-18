@@ -3020,7 +3020,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => '日曜日：あなたのために選んだカードがもう1枚';
+  String get sundayOneMore => '日曜日：あなたのためにもう1枚';
 
   @override
   String get whereYouLive => 'あなたの住む場所';

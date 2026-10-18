@@ -3111,7 +3111,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => 'Pazar: senin için seçilmiş bir kart daha';
+  String get sundayOneMore => 'Pazar: senin için seçilmiş bir tane daha';
 
   @override
   String get whereYouLive => 'Yaşadığın yer';

@@ -111,6 +111,16 @@ class _TodayScreenState extends State<TodayScreen> {
   /// True once the deck has shown how a card is sent on, until one is.
   bool _hinting = false;
 
+  /// The first of the day's own cards, on a Sunday that has one more of
+  /// them than other days; null on any other day.
+  static String? _sundaysOwn(AppState app) {
+    if (!app.sundayExtraToday) return null;
+    for (final Pill p in app.todaysDeck) {
+      if (app.ownIdsToday.contains(p.id)) return p.id;
+    }
+    return null;
+  }
+
   /// The card after the fifth, thrown.
   void _throwMagic() {
     if (!mounted || !_magic) return;
@@ -189,15 +199,7 @@ class _TodayScreenState extends State<TodayScreen> {
                 ? context.l10n.swipeForTheNextOne
                 : null,
           ),
-          // On the reader's Sunday, the one card more of their own is said
-          // once, quietly, where the day starts: under the day's name, and
-          // gone tomorrow.
-          if (app.sundayExtraToday) ...[
-            const SizedBox(height: 6),
-            _SundayLine(text: context.l10n.sundayOneMore),
-            const SizedBox(height: 12),
-          ] else
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
           _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
           const SizedBox(height: 16),
           // The deck takes every pixel that is left.
@@ -262,6 +264,15 @@ class _TodayScreenState extends State<TodayScreen> {
               // Which cards are the reader's own, on the day that has
               // others: Astute+ has no others to tell them from.
               ownIds: app.isPlus ? const {} : app.ownIdsToday,
+              // On the reader's Sunday, the one more of their own is said
+              // on the card itself — the first of their own — under its
+              // head, where a card about a place says why it is there. It
+              // used to be a line over the deck, about a card not yet in
+              // sight, read before the day had started.
+              notes: {
+                if (_sundaysOwn(app) case final String id)
+                  id: context.l10n.sundayOneMore,
+              },
               answerFor: app.answerFor,
               onAnswer: (id, response, confidence, reason) => app.recordAnswer(
                 id,
@@ -461,33 +472,6 @@ class _SwipeHint extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Sunday's line under the day's name: one card that would have come at
-/// random was chosen for the reader instead. Small and muted, in line with
-/// the header above it, because it is a thing to notice and not a banner —
-/// and it wraps rather than being cut in a language that says it at length.
-class _SundayLine extends StatelessWidget {
-  const _SundayLine({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      key: const ValueKey('sunday-line'),
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Text(
-        text,
-        style: AppText.body(
-          size: 12.5,
-          weight: FontWeight.w500,
-          height: 1.3,
-          color: context.p.ink.withValues(alpha: 0.55),
         ),
       ),
     );

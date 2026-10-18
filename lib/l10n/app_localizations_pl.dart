@@ -3288,8 +3288,7 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore =>
-      'Niedziela: jedna karta więcej, wybrana dla ciebie';
+  String get sundayOneMore => 'Niedziela: jedna więcej, wybrana dla ciebie';
 
   @override
   String get whereYouLive => 'Tam, gdzie mieszkasz';

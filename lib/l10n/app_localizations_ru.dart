@@ -3292,8 +3292,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore =>
-      'Воскресенье: ещё одна карточка, выбранная для тебя';
+  String get sundayOneMore => 'Воскресенье: ещё одна, выбранная для тебя';
 
   @override
   String get whereYouLive => 'Там, где ты живёшь';

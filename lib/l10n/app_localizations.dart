@@ -4680,10 +4680,10 @@ abstract class AppLocalizations {
   /// **'Your country · {place}'**
   String placeYourCountry(String place);
 
-  /// A small line on Today on the reader's Sunday, on the free plan: one of the five cards that would have come at random is chosen for them instead.
+  /// On the reader's Sunday, on the free plan, a quiet line under the head of the first of their own cards: one of the five that would have come at random was chosen for them instead. The card is the one more, so it need not say 'card'.
   ///
   /// In en, this message translates to:
-  /// **'Sunday: one more card chosen for you'**
+  /// **'Sunday: one more chosen for you'**
   String get sundayOneMore;
 
   /// Title of the Explore shelf of cards about the reader's city, region and country.

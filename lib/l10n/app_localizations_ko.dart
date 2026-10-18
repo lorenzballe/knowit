@@ -3036,7 +3036,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => '일요일: 당신을 위해 고른 카드가 한 장 더';
+  String get sundayOneMore => '일요일: 당신을 위해 한 장 더';
 
   @override
   String get whereYouLive => '당신이 사는 곳';

@@ -3166,7 +3166,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => 'Domenica: una carta in più scelta per te';
+  String get sundayOneMore => 'Domenica: una in più, scelta per te';
 
   @override
   String get whereYouLive => 'Dove vivi';

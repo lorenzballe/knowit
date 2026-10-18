@@ -50,6 +50,11 @@ class PillCard extends StatelessWidget {
   /// its front (see [placeLineOf]); null when they have not said.
   final Place? home;
 
+  /// Why this card is in today's five, said on its front under its head
+  /// the way a card about a place says so: on the reader's Sunday, the one
+  /// more of their own. Null for nothing to say.
+  final String? note;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -60,6 +65,7 @@ class PillCard extends StatelessWidget {
     this.isReview = false,
     this.isOwn = false,
     this.home,
+    this.note,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -190,7 +196,19 @@ class PillCard extends StatelessWidget {
           ),
           if (!flipped)
             if (placeLineOf(context, pill.place, home) case final String why)
-              _PlaceLine(text: why, ink: pill.ink),
+              _WhyLine(
+                key: const ValueKey('place-line'),
+                icon: Icons.place_rounded,
+                text: why,
+                ink: pill.ink,
+              ),
+          if (!flipped && note != null)
+            _WhyLine(
+              key: const ValueKey('card-note'),
+              icon: Icons.auto_awesome_rounded,
+              text: note!,
+              ink: pill.ink,
+            ),
           Expanded(
             child: flipped
                 ? _BackFace(
@@ -262,14 +280,22 @@ class PillCard extends StatelessWidget {
   }
 }
 
-/// Why a card about a place is in front of the reader, under its subject:
-/// "Near you · Modena". Quiet on purpose — the card is the question, and
-/// this is the one fact about it the reader did not choose — so it takes
-/// the subject row's ink at the same strength, sentence case, a pin beside
-/// it, and wraps rather than being cut in a language that runs long.
-class _PlaceLine extends StatelessWidget {
-  const _PlaceLine({required this.text, required this.ink});
+/// Why a card is in front of the reader, under its subject: "Near you ·
+/// Modena" on a card about a place, with a pin; "Sunday: one more chosen
+/// for you" on Sunday's one more of the reader's own, with a spark. Quiet
+/// on purpose — the card is the question, and this is the one fact about
+/// it the reader did not choose — so it takes the subject row's ink at the
+/// same strength, sentence case, a mark beside it, and wraps rather than
+/// being cut in a language that runs long.
+class _WhyLine extends StatelessWidget {
+  const _WhyLine({
+    super.key,
+    required this.icon,
+    required this.text,
+    required this.ink,
+  });
 
+  final IconData icon;
   final String text;
   final Color ink;
 
@@ -277,16 +303,13 @@ class _PlaceLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color muted = ink.withValues(alpha: 0.66);
     return Padding(
-      key: const ValueKey('place-line'),
       padding: const EdgeInsets.only(top: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 1.5),
-            child: ExcludeSemantics(
-              child: Icon(Icons.place_rounded, size: 13, color: muted),
-            ),
+            child: ExcludeSemantics(child: Icon(icon, size: 13, color: muted)),
           ),
           const SizedBox(width: 5),
           Flexible(

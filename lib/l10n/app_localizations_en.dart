@@ -3135,7 +3135,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => 'Sunday: one more card chosen for you';
+  String get sundayOneMore => 'Sunday: one more chosen for you';
 
   @override
   String get whereYouLive => 'Where you live';

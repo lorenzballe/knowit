@@ -760,7 +760,7 @@
   "placeNearYou": "你附近 · {place}",
   "placeYourRegion": "你的地区 · {place}",
   "placeYourCountry": "你的国家 · {place}",
-  "sundayOneMore": "星期日：多一张为你挑选的卡片",
+  "sundayOneMore": "星期日：再为你多选一张",
   "whereYouLive": "你住的地方",
   "whereYouLiveLine": "先是你的城市，然后是地区，再是国家",
   "whereYouLiveAsk": "关于你的城市、地区和国家的卡片：每天最多一张，还有这个书架。只保存城市，从不保存你的确切位置。",
