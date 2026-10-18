@@ -11,6 +11,7 @@ import '../measure/card_read.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import '../theme.dart';
+import 'card_edge.dart';
 import 'hold_to_keep.dart';
 import 'motion.dart';
 import 'place_it.dart';
@@ -49,6 +50,11 @@ class PillCard extends StatelessWidget {
   /// its front (see [placeLineOf]); null when they have not said.
   final Place? home;
 
+  /// Why this card is in today's five, said on its front under its head
+  /// the way a card about a place says so: on the reader's Sunday, the one
+  /// more of their own. Null for nothing to say.
+  final String? note;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -59,6 +65,7 @@ class PillCard extends StatelessWidget {
     this.isReview = false,
     this.isOwn = false,
     this.home,
+    this.note,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -83,10 +90,11 @@ class PillCard extends StatelessWidget {
     final Widget card = Stack(
       children: [
         _face(context),
+        // Each control is 44 square, its mark where the 38 one put it.
         if (onSave != null)
           Positioned(
-            right: 20,
-            bottom: 18,
+            right: _CardControl.right,
+            bottom: _CardControl.bottom,
             child: Row(
               children: [
                 _CardControl(
@@ -126,18 +134,10 @@ class PillCard extends StatelessWidget {
   }
 
   Widget _face(BuildContext context) {
+    // Cut from the page with a hairline where its colour is the page's
+    // own, and lifted by a shadow that stays under the card (card_edge.dart).
     return Container(
-      decoration: BoxDecoration(
-        color: pill.color,
-        borderRadius: BorderRadius.circular(34),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x40000000),
-            blurRadius: 60,
-            offset: Offset(0, 24),
-          ),
-        ],
-      ),
+      decoration: cardFace(context, pill.color, radius: 34, lift: 1),
       padding: const EdgeInsets.fromLTRB(28, 26, 28, 26),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,13 +196,25 @@ class PillCard extends StatelessWidget {
           ),
           if (!flipped)
             if (placeLineOf(context, pill.place, home) case final String why)
-              _PlaceLine(text: why, ink: pill.ink),
+              _WhyLine(
+                key: const ValueKey('place-line'),
+                icon: Icons.place_rounded,
+                text: why,
+                ink: pill.ink,
+              ),
+          if (!flipped && note != null)
+            _WhyLine(
+              key: const ValueKey('card-note'),
+              icon: Icons.auto_awesome_rounded,
+              text: note!,
+              ink: pill.ink,
+            ),
           Expanded(
             child: flipped
                 ? _BackFace(
                     pill: pill,
                     given: given,
-                    cornerRoom: onSave != null ? 88 : 0,
+                    cornerRoom: onSave != null ? _CardControl.room : 0,
                   )
                 // The challenge decides the front. A new kind of challenge
                 // will not compile until it is given a face here.
@@ -215,6 +227,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       input: (commit) => _PickInput(
                         pill: pill,
                         options: options,
@@ -226,6 +239,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       prompt: context.l10n.pickASideNoRightAnswer,
                       input: (commit) => _PickInput(
                         pill: pill,
@@ -238,6 +252,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
@@ -249,6 +264,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      corner: onSave != null,
                       prompt: context.l10n.estimateCloseEnough,
                       input: (commit) => PlaceItInput(
                         pill: pill,
@@ -264,14 +280,22 @@ class PillCard extends StatelessWidget {
   }
 }
 
-/// Why a card about a place is in front of the reader, under its subject:
-/// "Near you · Modena". Quiet on purpose — the card is the question, and
-/// this is the one fact about it the reader did not choose — so it takes
-/// the subject row's ink at the same strength, sentence case, a pin beside
-/// it, and wraps rather than being cut in a language that runs long.
-class _PlaceLine extends StatelessWidget {
-  const _PlaceLine({required this.text, required this.ink});
+/// Why a card is in front of the reader, under its subject: "Near you ·
+/// Modena" on a card about a place, with a pin; "Sunday: one more chosen
+/// for you" on Sunday's one more of the reader's own, with a spark. Quiet
+/// on purpose — the card is the question, and this is the one fact about
+/// it the reader did not choose — so it takes the subject row's ink at the
+/// same strength, sentence case, a mark beside it, and wraps rather than
+/// being cut in a language that runs long.
+class _WhyLine extends StatelessWidget {
+  const _WhyLine({
+    super.key,
+    required this.icon,
+    required this.text,
+    required this.ink,
+  });
 
+  final IconData icon;
   final String text;
   final Color ink;
 
@@ -279,16 +303,13 @@ class _PlaceLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color muted = ink.withValues(alpha: 0.66);
     return Padding(
-      key: const ValueKey('place-line'),
       padding: const EdgeInsets.only(top: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 1.5),
-            child: ExcludeSemantics(
-              child: Icon(Icons.place_rounded, size: 13, color: muted),
-            ),
+            child: ExcludeSemantics(child: Icon(icon, size: 13, color: muted)),
           ),
           const SizedBox(width: 5),
           Flexible(
@@ -443,15 +464,18 @@ class _BackFace extends StatelessWidget {
     double Function(double, TextScaler)? leadHeight;
     Widget? shortLead;
     double Function(double, TextScaler)? shortLeadHeight;
+    Widget? leastLead;
+    double Function(double, TextScaler)? leastLeadHeight;
     if (given != null && pill.isGraded) {
-      final verdict = _Verdict(
+      final bool right = pill.challenge.accepts(given.response);
+      _Verdict verdictOf(_Room room) => _Verdict(
         pill: pill,
-        right: pill.challenge.accepts(given.response),
+        right: right,
         given: pill.challenge.describe(given.response),
         confidence: given.confidence,
+        room: room,
       );
-      final line = verdict.text(context);
-      lead = Column(
+      Widget leadOf(_Verdict verdict) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -466,9 +490,25 @@ class _BackFace extends StatelessWidget {
           ],
         ],
       );
-      leadHeight = (width, scaler) =>
-          _Verdict.heightFor(context, line, pill.ink, width, scaler) +
-          (estimate != null ? 6 + PlaceItReveal.height : 0);
+      double Function(double, TextScaler) heightOf(_Verdict verdict) =>
+          (width, scaler) =>
+              verdict.heightIn(context, width, scaler) +
+              (estimate != null ? 6 + PlaceItReveal.height : 0);
+      final _Verdict verdict = verdictOf(_Room.all);
+      lead = leadOf(verdict);
+      leadHeight = heightOf(verdict);
+      // On a back too full for the whole of it, how sure goes first: it
+      // was said a moment ago, on the front.
+      final _Verdict brief = verdictOf(_Room.withoutSure);
+      shortLead = leadOf(brief);
+      shortLeadHeight = heightOf(brief);
+      // Then, on a wrong answer, what was said: the answer under it says
+      // what it is. A right one has nothing said back to give up.
+      if (!right) {
+        final _Verdict bare = verdictOf(_Room.verdictOnly);
+        leastLead = leadOf(bare);
+        leastLeadHeight = heightOf(bare);
+      }
     } else if (given != null) {
       lead = PopIn(
         delay: const Duration(milliseconds: 260),
@@ -498,6 +538,8 @@ class _BackFace extends StatelessWidget {
       leadHeight: leadHeight,
       shortLead: shortLead,
       shortLeadHeight: shortLeadHeight,
+      leastLead: leastLead,
+      leastLeadHeight: leastLeadHeight,
       cornerRoom: cornerRoom,
       // On a card that asked first, the scene waits for the answer: played
       // before, it would have given it away.
@@ -554,80 +596,146 @@ double _measureSpan(
   return h;
 }
 
-/// Right or wrong, said plainly at the top of the reveal.
+/// How much of the verdict a back has room for, from all of it down: what
+/// was said and how sure, what was said, the verdict alone.
+enum _Room { all, withoutSure, verdictOnly }
+
+/// Right or wrong, said plainly at the top of the reveal: the verdict in
+/// the card's own voice, set large, running into what was said and how
+/// sure, set small — a run-in head, as a paper sets one.
+///
+/// It used to be one line of eleven-point capitals, quieter than the
+/// subject's name over the card. That is the wrong size for the moment the
+/// app is built on, how sure against how right. Run in rather than stacked,
+/// it takes about the room the old line took, so the back still fits the
+/// card. A wrong answer is "Not quite.": said, and not rubbed in.
 class _Verdict extends StatelessWidget {
   final Pill pill;
   final bool right;
   final String given;
   final int? confidence;
+
+  /// How much of it the back has room for.
+  final _Room room;
   const _Verdict({
     required this.pill,
     required this.right,
     required this.given,
     this.confidence,
+    this.room = _Room.all,
   });
 
-  static TextStyle _style(Color ink) =>
-      AppText.label(size: 11, spacing: 1.2, color: ink.withValues(alpha: 0.85));
+  /// The mark beside the words, and the gap after it.
+  static const double _mark = 20;
+  static const double _gap = 10;
 
-  /// The verdict as it is printed, confidence and all.
-  String text(BuildContext context) => confidence == null
-      ? _line(context)
-      : context.l10n.lineYouSaidSure(_line(context), confidence!);
+  static TextStyle _headStyle(Color ink) => AppText.display(
+    size: 20,
+    weight: FontWeight.w600,
+    height: 1.2,
+    spacing: -0.4,
+    color: ink,
+  );
 
-  /// The room the verdict takes at [width]: its words beside the mark.
-  static double heightFor(
-    BuildContext context,
-    String text,
-    Color ink,
-    double width,
-    TextScaler scaler,
-  ) {
-    final h = _measure(context, text, _style(ink), width - 26, scaler);
-    return h > 18 ? h : 18;
-  }
+  static TextStyle _detailStyle(Color ink) => AppText.body(
+    size: 13,
+    weight: FontWeight.w500,
+    height: 1.35,
+    color: ink.withValues(alpha: 0.75),
+  );
 
-  String _line(BuildContext context) {
+  /// The verdict itself.
+  String _head(BuildContext context) => !right
+      ? context.l10n.verdictWrong
+      : pill.challenge is Estimate
+      ? context.l10n.verdictClose
+      : context.l10n.verdictRight;
+
+  /// What was said, when it was not what the card says: the reader's
+  /// answer, and the card's.
+  String? _said(BuildContext context) {
+    if (right) return null;
     return switch (pill.challenge) {
       Estimate(:final answerLabel, :final band) =>
-        right
-            ? context.l10n.closeEnoughItIs(answerLabel)
-            : context.l10n.youSaidItIsCounted(given, answerLabel, band),
-      TypeNumber(:final answerLabel) =>
-        right
-            ? context.l10n.youGotIt
-            : context.l10n.youSaidItIs(given, answerLabel),
+        context.l10n.youSaidItIsCounted(given, answerLabel, band),
+      TypeNumber(:final answerLabel) => context.l10n.youSaidItIs(
+        given,
+        answerLabel,
+      ),
       // A wrong pick is said the way a wrong number is: what was picked,
       // and what it is. It used to be "almost everyone gets this wrong",
       // which is a claim about other readers that nothing on the phone can
       // back — how each card is answered is counted on the server, for the
       // tools that check cards (functions/src/scorecard.ts), and none of it
       // reaches a card's back.
-      PickOne(:final correctOption) =>
-        right
-            ? context.l10n.youGotIt
-            : context.l10n.youSaidItIs(given, correctOption),
+      PickOne(:final correctOption) => context.l10n.youSaidItIs(
+        given,
+        correctOption,
+      ),
       // Never marked, so never given a verdict: the back says the reader's
       // own line instead.
-      NoChallenge() || TakeASide() => '',
+      NoChallenge() || TakeASide() => null,
     };
+  }
+
+  /// What runs on after the verdict: what was said, and how sure.
+  String? _detail(BuildContext context) {
+    if (room == _Room.verdictOnly) return null;
+    final String? said = _said(context);
+    final int? sure = room == _Room.all ? confidence : null;
+    if (said == null) {
+      return sure == null ? null : context.l10n.verdictSure(sure);
+    }
+    return sure == null ? said : context.l10n.lineYouSaidSure(said, sure);
+  }
+
+  InlineSpan _span(BuildContext context) {
+    final String? detail = _detail(context);
+    return TextSpan(
+      children: [
+        TextSpan(text: _head(context), style: _headStyle(pill.ink)),
+        if (detail != null)
+          TextSpan(text: '  $detail', style: _detailStyle(pill.ink)),
+      ],
+    );
+  }
+
+  /// The room the verdict takes at [width]: its words beside the mark.
+  double heightIn(BuildContext context, double width, TextScaler scaler) {
+    final double h = _measureSpan(
+      context,
+      _span(context),
+      width - _mark - _gap,
+      scaler,
+    );
+    return math.max(h, _mark + 3);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // The words say right or wrong; the mark repeats it in shape.
-        ExcludeSemantics(
-          child: Icon(
-            right ? Icons.check_circle_rounded : Icons.cancel_rounded,
-            size: 18,
-            color: pill.ink,
+    // Said out loud when the back comes round, for a reader who cannot see
+    // the mark or the size of the words.
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // The words say right or wrong; the mark repeats it in shape.
+          Padding(
+            padding: const EdgeInsets.only(top: 3),
+            child: ExcludeSemantics(
+              child: Icon(
+                right ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                size: _mark,
+                color: pill.ink,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(width: 8),
-        Flexible(child: Text(text(context), style: _style(pill.ink))),
-      ],
+          const SizedBox(width: _gap),
+          Expanded(child: Text.rich(_span(context))),
+        ],
+      ),
     );
   }
 }
@@ -650,12 +758,17 @@ class _AskFace extends StatefulWidget {
   /// line under the input when the card cannot be answered here.
   final Answer? given;
 
+  /// Whether the card's save and share sit in the bottom corner, which the
+  /// face then keeps clear.
+  final bool corner;
+
   const _AskFace({
     required this.pill,
     required this.input,
     required this.onAnswer,
     this.prompt,
     this.given,
+    this.corner = false,
   });
 
   @override
@@ -687,143 +800,261 @@ class _AskFaceState extends State<_AskFace> {
     widget.onAnswer?.call(response, null, reason);
   }
 
+  /// The gap above the line under the input, and the least room that line
+  /// keeps at the foot when the card's save and share are in the corner:
+  /// they reach 33 points up into the face (15 + 44 less its padding of
+  /// 26), and the input stays four clear of them.
+  static const double _footGap = 14;
+  static const double _cornerClear = 37;
+
+  /// The nudge's row, and the gap above it.
+  static const double _hintGap = 4;
+  static const double _hintRow = 44;
+
+  static TextStyle _questionStyle(Pill pill, double size) => AppText.display(
+    size: size,
+    weight: FontWeight.w600,
+    height: 1.14,
+    spacing: -0.3 - size * 0.018,
+    color: pill.ink,
+  );
+
+  static TextStyle _promptStyle(Pill pill) => AppText.body(
+    size: 12.5,
+    weight: FontWeight.w500,
+    color: pill.ink.withValues(alpha: 0.55),
+  );
+
+  /// The line under the input.
+  String _prompt(BuildContext context) {
+    final pill = widget.pill;
+    return _pending != null
+        ? (pill.isGraded
+              ? context.l10n.beingRightMattersLess
+              : context.l10n.writeItBeforeTheirs)
+        // Nowhere to commit means this is a re-read, and telling someone to
+        // commit to a card they answered days ago is just wrong. It used to
+        // also tell an unanswered one to go and answer it on Today — which
+        // the cards sitting behind the top of today's own deck were saying,
+        // on Today, about themselves.
+        : widget.onAnswer == null && widget.given != null
+        ? context.l10n.youAnsweredThisOne
+        : widget.prompt ??
+              context.l10n.commitBeforeYouTurn(
+                context.l10n.difficultyLabel(pill.difficulty.name),
+              );
+  }
+
+  /// How tall the input is, or the step that takes its place once the
+  /// reader has answered, whichever is taller: the question is sized once,
+  /// and does not jump when the step comes.
+  double _inputHeight(BuildContext context, double width, TextScaler scaler) {
+    final pill = widget.pill;
+    final double input = switch (pill.challenge) {
+      PickOne(:final options) => _PickInput.heightFor(
+        context,
+        options,
+        width,
+        scaler,
+      ),
+      TakeASide(:final positions) => _PickInput.heightFor(
+        context,
+        positions,
+        width,
+        scaler,
+      ),
+      TypeNumber() => 54,
+      Estimate() => PlaceItInput.heightFor(scaler),
+      NoChallenge() => 0,
+    };
+    final double step = pill.isGraded
+        ? _ConfidenceStep.heightFor(context, width, scaler)
+        : _ReasonStep.heightFor(scaler);
+    return math.max(input, step);
+  }
+
+  /// The gap above the line under the input: wide enough, where the card's
+  /// save and share are in the corner, that nothing above it reaches them.
+  double _footGapFor(double promptHeight) => widget.corner
+      ? math.max(_footGap, _cornerClear - promptHeight)
+      : _footGap;
+
+  /// How tall the question may be.
+  ///
+  /// Its share of the face, as it always was: a proportion keeps the same
+  /// composition from card to card. Unless what goes under it needs the
+  /// room. On a small phone a three-answer card gave its question 48% of
+  /// the face and pushed the last answer under the card's save and share,
+  /// where a tap on it saved the card. The question gives way first, down
+  /// to what it needs at its smallest size, because a question set smaller
+  /// is still read, and an answer under a button is not. A face shorter
+  /// than 520 points starts from 40%.
+  double _questionRoom(
+    BuildContext context,
+    BoxConstraints box,
+    double promptHeight,
+  ) {
+    final double height = box.maxHeight;
+    final double width = box.maxWidth;
+    if (!height.isFinite || !width.isFinite) return 0;
+    final pill = widget.pill;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final double share = height * (height < 520 ? 0.40 : 0.48);
+    double below =
+        22 +
+        _inputHeight(context, width, scaler) +
+        _footGapFor(promptHeight) +
+        promptHeight;
+    if (pill.hasHint) below += _hintGap + _hintRow;
+    // At its smallest, as drawn: ScaledText never sets it smaller.
+    final double needed =
+        _measure(
+          context,
+          pill.question,
+          _questionStyle(pill, 18),
+          width,
+          TextScaler.noScaling,
+        ) +
+        2;
+    return (height - below).clamp(math.min(needed, share), share);
+  }
+
   @override
   Widget build(BuildContext context) {
     final pill = widget.pill;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
 
     return LayoutBuilder(
-      builder: (context, constraints) => SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: constraints.maxHeight),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // The question takes a fixed share of the card and is set as
-              // large as that share will hold. A share rather than whatever
-              // the options leave over, because the leftover needs their
-              // intrinsic height — which a LayoutBuilder cannot give — and
-              // because a proportion keeps the same composition across every
-              // card instead of inventing one per question length.
-              SizedBox(
-                height: constraints.maxHeight * 0.48,
-                child: ScaledText(
-                  text: pill.question,
-                  min: 18,
-                  max: 28,
-                  alignment: Alignment.bottomLeft,
-                  styleFor: (size) => AppText.display(
-                    size: size,
-                    weight: FontWeight.w600,
-                    height: 1.14,
-                    spacing: -0.3 - size * 0.018,
-                    color: pill.ink,
+      builder: (context, constraints) {
+        final String prompt = _prompt(context);
+        final double promptHeight = _measure(
+          context,
+          prompt,
+          _promptStyle(pill),
+          constraints.maxWidth - (widget.corner ? _CardControl.room : 0),
+          scaler,
+        );
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // The question takes its share of the card, or what the
+                // answers leave it (see [_questionRoom]), and is set as large
+                // as that will hold.
+                SizedBox(
+                  height: _questionRoom(context, constraints, promptHeight),
+                  child: ScaledText(
+                    text: pill.question,
+                    min: 18,
+                    max: 28,
+                    alignment: Alignment.bottomLeft,
+                    styleFor: (size) => _questionStyle(pill, size),
                   ),
                 ),
-              ),
-              const SizedBox(height: 22),
-              if (_pending == null)
-                widget.input(widget.onAnswer == null ? null : _commit)
-              else if (pill.isGraded)
-                _ConfidenceStep(pill: pill, onPick: _finish)
-              else
-                _ReasonStep(pill: pill, onSubmit: _finishReason),
-              if (_pending == null && pill.hasHint) ...[
-                const SizedBox(height: 12),
-                if (_hintOpen)
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
-                    decoration: BoxDecoration(
-                      color: pill.wash,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'HINT',
-                          style: AppText.label(
-                            size: 10.5,
-                            spacing: 1.2,
-                            color: pill.ink.withValues(alpha: 0.6),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          pill.hint,
-                          style: AppText.body(
-                            size: 14,
-                            height: 1.4,
-                            color: pill.ink.withValues(alpha: 0.9),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                const SizedBox(height: 22),
+                if (_pending == null)
+                  widget.input(widget.onAnswer == null ? null : _commit)
+                else if (pill.isGraded)
+                  _ConfidenceStep(pill: pill, onPick: _finish)
                 else
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      setState(() => _hintOpen = true);
-                      // Asked for help: a card that needed a hint sat
-                      // above the reader, and the dealer can hear that.
-                      Analytics.capture('hint shown', {
-                        'pill_id': widget.pill.id,
-                        'topic': widget.pill.topic,
-                      });
-                      CardRead.of(context)?.hinted();
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.lightbulb_outline_rounded,
-                          size: 15,
-                          color: pill.ink.withValues(alpha: 0.65),
-                        ),
-                        const SizedBox(width: 7),
-                        Flexible(
-                          child: Text(
-                            context.l10n.giveMeANudge,
-                            style: AppText.body(
-                              size: 13,
-                              weight: FontWeight.w500,
-                              color: pill.ink.withValues(alpha: 0.65),
+                  _ReasonStep(pill: pill, onSubmit: _finishReason),
+                if (_pending == null && pill.hasHint) ...[
+                  const SizedBox(height: _hintGap),
+                  if (_hintOpen)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
+                      decoration: BoxDecoration(
+                        color: pill.wash,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'HINT',
+                            style: AppText.label(
+                              size: 10.5,
+                              spacing: 1.2,
+                              color: pill.ink.withValues(alpha: 0.6),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-              const SizedBox(height: 14),
-              Text(
-                _pending != null
-                    ? (pill.isGraded
-                          ? context.l10n.beingRightMattersLess
-                          : context.l10n.writeItBeforeTheirs)
-                    // Nowhere to commit means this is a re-read, and telling
-                    // someone to commit to a card they answered days ago is
-                    // just wrong. It used to also tell an unanswered one to
-                    // go and answer it on Today — which the cards sitting
-                    // behind the top of today's own deck were saying, on
-                    // Today, about themselves.
-                    : widget.onAnswer == null && widget.given != null
-                    ? context.l10n.youAnsweredThisOne
-                    : widget.prompt ??
-                          context.l10n.commitBeforeYouTurn(
-                            context.l10n.difficultyLabel(pill.difficulty.name),
+                          const SizedBox(height: 5),
+                          Text(
+                            pill.hint,
+                            style: AppText.body(
+                              size: 14,
+                              height: 1.4,
+                              color: pill.ink.withValues(alpha: 0.9),
+                            ),
                           ),
-                style: AppText.body(
-                  size: 12.5,
-                  weight: FontWeight.w500,
-                  color: pill.ink.withValues(alpha: 0.55),
+                        ],
+                      ),
+                    )
+                  else
+                    // The words are the size of the line under the input;
+                    // the target round them is a finger's.
+                    Semantics(
+                      button: true,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          setState(() => _hintOpen = true);
+                          // Asked for help: a card that needed a hint sat
+                          // above the reader, and the dealer can hear that.
+                          Analytics.capture('hint shown', {
+                            'pill_id': widget.pill.id,
+                            'topic': widget.pill.topic,
+                          });
+                          CardRead.of(context)?.hinted();
+                        },
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            minHeight: _hintRow,
+                          ),
+                          child: Row(
+                            children: [
+                              ExcludeSemantics(
+                                child: Icon(
+                                  Icons.lightbulb_outline_rounded,
+                                  size: 15,
+                                  color: pill.ink.withValues(alpha: 0.65),
+                                ),
+                              ),
+                              const SizedBox(width: 7),
+                              Flexible(
+                                child: Text(
+                                  context.l10n.giveMeANudge,
+                                  style: AppText.body(
+                                    size: 13,
+                                    weight: FontWeight.w500,
+                                    color: pill.ink.withValues(alpha: 0.65),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+                SizedBox(height: _footGapFor(promptHeight)),
+                // Kept clear of the corner where the card's save and share
+                // sit, so the line wraps rather than running under them.
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: widget.corner ? _CardControl.room : 0,
+                  ),
+                  child: Text(prompt, style: _promptStyle(pill)),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -843,6 +1074,30 @@ class _PickInput extends StatelessWidget {
     required this.onAnswer,
     this.taken,
   });
+
+  /// How tall the options set at [width], as [_ChoiceButton] lays them:
+  /// each one's words, its padding and its edge, and the gap between.
+  static double heightFor(
+    BuildContext context,
+    List<String> options,
+    double width,
+    TextScaler scaler,
+  ) {
+    double total = 0;
+    for (int i = 0; i < options.length; i++) {
+      total +=
+          _measure(
+            context,
+            options[i],
+            _ChoiceButton.labelStyle(const Color(0xFF000000), false),
+            width - 34,
+            scaler,
+          ) +
+          30;
+      if (i > 0) total += 9;
+    }
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -897,7 +1152,13 @@ class _NumberInputState extends State<_NumberInput> {
     super.dispose();
   }
 
-  bool get _ready => TypeNumber.parse(_controller.text) != null;
+  /// What was typed, read the way the reader's language writes numbers.
+  String? get _reading => TypeNumber.read(
+    _controller.text,
+    locale: Localizations.localeOf(context).toString(),
+  );
+
+  bool get _ready => _reading != null;
 
   /// Digits taken back are the reader changing their mind before they
   /// commit — counted, never read: what was typed stays here.
@@ -909,9 +1170,12 @@ class _NumberInputState extends State<_NumberInput> {
     setState(() {});
   }
 
+  /// Kept in plain form, so the answer is graded the same way whatever
+  /// language the reader typed it in.
   void _submit() {
-    if (!_ready || widget.onAnswer == null) return;
-    widget.onAnswer!(_controller.text.trim());
+    final String? reading = _reading;
+    if (reading == null || widget.onAnswer == null) return;
+    widget.onAnswer!(reading);
   }
 
   @override
@@ -1043,6 +1307,13 @@ class _ChoiceButton extends StatelessWidget {
     this.taken = false,
   });
 
+  static TextStyle labelStyle(Color ink, bool taken) => AppText.body(
+    size: 14.5,
+    weight: taken ? FontWeight.w600 : FontWeight.w500,
+    height: 1.35,
+    color: ink,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Semantics(
@@ -1064,17 +1335,7 @@ class _ChoiceButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: AppText.body(
-                    size: 14.5,
-                    weight: taken ? FontWeight.w600 : FontWeight.w500,
-                    height: 1.35,
-                    color: ink,
-                  ),
-                ),
-              ),
+              Expanded(child: Text(label, style: labelStyle(ink, taken))),
               if (taken) ...[
                 const SizedBox(width: 10),
                 Text(
@@ -1103,6 +1364,45 @@ class _ConfidenceStep extends StatelessWidget {
   final ValueChanged<int> onPick;
 
   const _ConfidenceStep({required this.pill, required this.onPick});
+
+  /// How tall the step sets at [width]: the question, and the levels as
+  /// they wrap.
+  static double heightFor(
+    BuildContext context,
+    double width,
+    TextScaler scaler,
+  ) {
+    final TextStyle chip = AppText.body(size: 15, weight: FontWeight.w600);
+    final double chipHeight =
+        _measure(context, '90%', chip, width, scaler) + 28;
+    double row = 0;
+    int rows = 1;
+    for (final int level in kConfidenceLevels) {
+      final TextPainter p = TextPainter(
+        text: TextSpan(text: '$level%', style: chip),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+      )..layout();
+      final double w = p.width + 38;
+      p.dispose();
+      if (row > 0 && row + 9 + w > width) {
+        rows++;
+        row = w;
+      } else {
+        row += (row > 0 ? 9 : 0) + w;
+      }
+    }
+    return _measure(
+          context,
+          context.l10n.howSureAreYou,
+          AppText.display(size: 19, weight: FontWeight.w600, spacing: -0.4),
+          width,
+          scaler,
+        ) +
+        14 +
+        rows * chipHeight +
+        (rows - 1) * 9;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1167,6 +1467,16 @@ class _ReasonStep extends StatefulWidget {
   final ValueChanged<String> onSubmit;
 
   const _ReasonStep({required this.pill, required this.onSubmit});
+
+  /// About how tall the step sets: the line asking why, two lines to write
+  /// in, and the button.
+  static double heightFor(TextScaler scaler) =>
+      scaler.scale(14.5) * 1.3 +
+      10 +
+      scaler.scale(14.5) * 1.35 * 2 +
+      24 +
+      10 +
+      46;
 
   @override
   State<_ReasonStep> createState() => _ReasonStepState();
@@ -1389,6 +1699,14 @@ class _CardControl extends StatelessWidget {
   final Color ink;
   final VoidCallback onTap;
 
+  /// Where the pair sits from the card's corner, and the room the line
+  /// beside it keeps clear inside the face's padding: the pair reaches 81
+  /// points into it (17 + 44 + 4 + 44, less the padding of 28).
+  static const double right = 17;
+  static const double bottom = 15;
+  static const double size = 44;
+  static const double room = 88;
+
   @override
   Widget build(BuildContext context) {
     return Semantics(
@@ -1397,9 +1715,11 @@ class _CardControl extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(9),
-          child: Icon(icon, size: 20, color: ink.withValues(alpha: 0.62)),
+        child: SizedBox.square(
+          dimension: size,
+          child: Center(
+            child: Icon(icon, size: 20, color: ink.withValues(alpha: 0.62)),
+          ),
         ),
       ),
     );

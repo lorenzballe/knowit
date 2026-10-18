@@ -87,6 +87,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareThisPill => 'Bu kartı paylaş';
 
   @override
+  String get share => 'Paylaş';
+
+  @override
   String cardOf(int k, int n) {
     return '$n karttan $k.';
   }
@@ -797,15 +800,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get welcomeBack => 'Tekrar hoş geldin';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n gün\nkaçırdın.',
-      one: 'Bir gün\nkaçırdın.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Seni yeniden görmek güzel.';
+
+  @override
+  String get comebackStillYours => 'Hâlâ senin';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -816,20 +814,6 @@ class AppLocalizationsTr extends AppLocalizations {
       one: 'Bir gün',
     );
     return '$_temp0 hâlâ rekorun. Bugünün beşlisini oku, sayaç yeniden birden başlar.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Sen yokken';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n kart okunmadan kaldı',
-      one: '1 kart okunmadan kaldı',
-    );
-    return '$_temp0';
   }
 
   @override
@@ -1180,9 +1164,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get barMoveCaps => 'AKILDA KALAN';
 
   @override
-  String get theBarMoveCaps => 'MASADA SÖYLENECEK SÖZ';
-
-  @override
   String get widgetFootPlain => 'Beş kart, iki dakika.';
 
   @override
@@ -1457,17 +1438,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tapToReveal => 'Görmek için dokun';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Yeterince yakın · $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return '$given dedin · $answer, ve $band sayıldı';
   }
-
-  @override
-  String get youGotIt => 'Bildin';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1477,6 +1450,20 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · %$pct emin dedin';
+  }
+
+  @override
+  String get verdictRight => 'Doğru.';
+
+  @override
+  String get verdictClose => 'Yeterince yakın.';
+
+  @override
+  String get verdictWrong => 'Tam değil.';
+
+  @override
+  String verdictSure(int pct) {
+    return '%$pct emindin.';
   }
 
   @override
@@ -1590,6 +1577,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Tek kart buydu';
 
   @override
+  String get lastOne => 'Sonuncusu';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Hepsi bu kadar: $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Baştan başla';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1608,9 +1606,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'Kaynak da onunla gider';
-
-  @override
-  String get fiveADayALittleSharper => 'Günde beş. Biraz daha keskin.';
 
   @override
   String get shareMyDay => 'Paylaş';
@@ -1860,7 +1855,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.';
+      'Her gün senin için seçilmiş beş kart: karışımından, seviyende, ve kaçırdıkların geri gelir. Yarından itibaren.';
 
   @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
@@ -1873,11 +1868,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get archiveBeforeThisWeek => 'Bu haftadan öncesi';
 
   @override
-  String get weekKeptThreeOwn => 'Bir hafta tamam: yarın beşten üçü senin.';
+  String get weekKeptThreeOwn => 'Yedi gün üst üste: yarın beşten üçü senin.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Bir hafta tamam, yarın da pazar: beşten dördü senin.';
+      'Yedi gün üst üste, yarın da pazar: beşten dördü senin.';
 
   @override
   String get topOfTheWeek => 'Haftanın en iyileri';
@@ -2779,9 +2774,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Düzeltmeler';
-
-  @override
   String get didYouKnow => 'Biliyor muydun?';
 
   @override
@@ -2819,53 +2811,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => 'Bugünün baskısı bu kadar';
-
-  @override
-  String get editionTomorrow => 'Yarınki sabah çıkıyor';
-
-  @override
-  String get eraAncient => 'Antik dünya';
-
-  @override
-  String get eraAncientWhen => '500\'den önce';
-
-  @override
-  String get eraEarlyModern => 'Erken modern çağ';
-
-  @override
-  String get eraEarlyModernWhen => '1500\'den 1800\'e';
-
-  @override
-  String get eraMedieval => 'Orta Çağ';
-
-  @override
-  String get eraMedievalWhen => '500\'den 1500\'e';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Bu çağdan $n tane daha',
-      one: 'Bu çağdan 1 tane daha',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19. yüzyıl';
-
-  @override
-  String get eraNineteenthWhen => '1800\'den 1900\'e';
-
-  @override
-  String get eraRecent => 'Bu yüzyıl';
-
-  @override
-  String get eraRecentWhen => '2000\'den beri';
-
-  @override
   String get eraShortAncient => 'Antik çağ';
 
   @override
@@ -2882,12 +2827,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900\'ler';
-
-  @override
-  String get eraTwentieth => 'Geçen yüzyıl';
-
-  @override
-  String get eraTwentiethWhen => '1900\'den 2000\'e';
 
   @override
   String get fewCards => 'Birkaç kartta';
@@ -2911,9 +2850,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get howSure => 'Ne kadar eminim, ve neden?';
-
-  @override
-  String get inNumbers => 'Rakamlarla';
 
   @override
   String inRange(int pts, String said) {
@@ -3049,18 +2985,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get pickOneFirst => 'Önce birini seç';
 
   @override
-  String get puzzleOfTheDay => 'Günün bulmacası';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts p';
   }
 
   @override
   String get rightLastTime => 'Geçen sefer doğru';
-
-  @override
-  String get sameForEveryoneCaps => 'Herkes için aynı';
 
   @override
   String get sayFalse => 'Yanlış';
@@ -3185,19 +3115,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Manşet';
-
-  @override
-  String get throughTime => 'Zamanda yolculuk';
-
-  @override
-  String get throughTimeLine =>
-      'Antik dünyadan bu yıla. Bir yıl yaz ya da seçimi şansa bırak';
-
-  @override
   String leanHint(String or) {
     return '«$or» düğmesini durduğun yere kaydır';
   }
@@ -3232,7 +3149,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get spotTitle => 'Yanlış olanı bul';
 
   @override
-  String get spotLine => 'Üçü doğru. Biri değil.';
+  String get spotLine => 'Dört iddia. Üçü doğru, biri yanlış.';
 
   @override
   String get spotPrompt => 'Yanlış olduğunu düşündüğüne dokun';
@@ -3253,66 +3170,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get spotYours => 'Seçimin';
 
   @override
-  String get yearHint => 'Bir yıl yaz';
-
-  @override
-  String get yearAd => 'MS';
-
-  @override
-  String get yearBc => 'MÖ';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return 'MS $year';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return 'MÖ $year';
-  }
-
-  @override
-  String get yearGo => 'Bu yıla git';
-
-  @override
-  String get yearRandom => 'Rastgele';
-
-  @override
-  String get yearRandomHint => 'Kartlardan birinin andığı bir yıla gider';
-
-  @override
-  String yearNearest(String year) {
-    return 'Önce $year yılına en yakınlar';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Buradaki hiçbir kart $year yılına yakın bir yıl anmıyor. Bunlar o çağdan.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Bugün $year civarından hiçbir şey yok. En yakın çağ bu.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year henüz gelmedi. İşte bu yüzyıl.';
-  }
-
-  @override
-  String get yearZero => '0 yılı diye bir yıl yoktu. MÖ 1 ya da MS 1\'i dene.';
-
-  @override
   String get todayLabel => 'Bugün';
-
-  @override
-  String get todaysEdition => 'Bugünün baskısı';
 
   @override
   String get toneCurious => 'Meraklı';
@@ -3392,7 +3250,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => 'Pazar: senin için seçilmiş bir kart daha';
+  String get sundayOneMore => 'Pazar: senin için seçilmiş bir tane daha';
 
   @override
   String get whereYouLive => 'Yaşadığın yer';

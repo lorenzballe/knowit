@@ -41,7 +41,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get freezeKeptStreak => 'Ein Freeze hat die Serie gerettet';
+  String get freezeKeptStreak => 'Ein Joker hat die Serie gerettet';
 
   @override
   String countWord(String n) {
@@ -85,6 +85,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get shareThisPill => 'Diese Karte teilen';
+
+  @override
+  String get share => 'Teilen';
 
   @override
   String cardOf(int k, int n) {
@@ -792,8 +795,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n Freezes übrig',
-      one: '1 Freeze übrig',
+      other: '$n Joker übrig',
+      one: '1 Joker übrig',
     );
     return '$_temp0';
   }
@@ -805,15 +808,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get welcomeBack => 'Willkommen zurück';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Du hast\n$n Tage verpasst.',
-      one: 'Du hast\neinen Tag verpasst.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Schön, dass du wieder da bist.';
+
+  @override
+  String get comebackStillYours => 'Das bleibt dir';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -824,20 +822,6 @@ class AppLocalizationsDe extends AppLocalizations {
       one: 'Ein Tag ist',
     );
     return '$_temp0 weiterhin dein Rekord. Lies die fünf von heute und der Zähler beginnt wieder bei eins.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Während du weg warst';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n Karten blieben ungelesen',
-      one: '1 Karte blieb ungelesen',
-    );
-    return '$_temp0';
   }
 
   @override
@@ -1192,9 +1176,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get barMoveCaps => 'ZUM MITNEHMEN';
 
   @override
-  String get theBarMoveCaps => 'DER SATZ FÜR DIE BAR';
-
-  @override
   String get widgetFootPlain => 'Fünf Karten, zwei Minuten.';
 
   @override
@@ -1471,17 +1452,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get tapToReveal => 'Tippen zum Aufdecken';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Nah dran · es ist $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'Du sagtest $given · es ist $answer, und $band zählt';
   }
-
-  @override
-  String get youGotIt => 'Richtig';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1491,6 +1464,20 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · du sagtest $pct % sicher';
+  }
+
+  @override
+  String get verdictRight => 'Richtig.';
+
+  @override
+  String get verdictClose => 'Nah genug.';
+
+  @override
+  String get verdictWrong => 'Nicht ganz.';
+
+  @override
+  String verdictSure(int pct) {
+    return 'Du warst dir zu $pct % sicher.';
   }
 
   @override
@@ -1604,6 +1591,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Das war die einzige';
 
   @override
+  String get lastOne => 'Die letzte';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Das waren alle $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Noch einmal von vorn';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1622,9 +1620,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'Die Quelle geht mit';
-
-  @override
-  String get fiveADayALittleSharper => 'Fünf am Tag. Ein bisschen schärfer.';
 
   @override
   String get shareMyDay => 'Teilen';
@@ -1711,11 +1706,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nudgeTitle => 'Deine fünf sind bereit';
 
   @override
-  String get nudgeFreezeTitle => 'Dein Freeze hält';
+  String get nudgeFreezeTitle => 'Deine Serie ist geschützt';
 
   @override
   String nudgeFreezeBody(String question) {
-    return 'Gestern ist gedeckt. Heute: $question';
+    return 'Gestern hat dein Joker übernommen. Heute: $question';
   }
 
   @override
@@ -1876,7 +1871,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Fünf Karten am Tag, für dich gewählt: aus deinem Mix, auf deinem Niveau, nie eine schon gelesene. Ab morgen.';
+      'Fünf Karten am Tag, für dich gewählt: aus deinem Mix, auf deinem Niveau, und was du falsch hast, kommt wieder. Ab morgen.';
 
   @override
   String get plusCardHeadline => 'Alle fünf, deine.';
@@ -1890,11 +1885,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn =>
-      'Eine Woche gehalten: morgen sind drei der fünf deine.';
+      'Sieben Tage am Stück: morgen sind drei der fünf deine.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Eine Woche gehalten, und morgen ist Sonntag: vier der fünf sind deine.';
+      'Sieben Tage am Stück, und morgen ist Sonntag: vier der fünf sind deine.';
 
   @override
   String get topOfTheWeek => 'Top der Woche';
@@ -2825,9 +2820,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Berichtigungen';
-
-  @override
   String get didYouKnow => 'Wusstest du\'s?';
 
   @override
@@ -2865,53 +2857,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => 'Das war die heutige Ausgabe';
-
-  @override
-  String get editionTomorrow => 'Die von morgen erscheint am Morgen';
-
-  @override
-  String get eraAncient => 'Die Antike';
-
-  @override
-  String get eraAncientWhen => 'Vor 500';
-
-  @override
-  String get eraEarlyModern => 'Die Frühe Neuzeit';
-
-  @override
-  String get eraEarlyModernWhen => '1500 bis 1800';
-
-  @override
-  String get eraMedieval => 'Das Mittelalter';
-
-  @override
-  String get eraMedievalWhen => '500 bis 1500';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n weitere aus dieser Zeit',
-      one: '1 weitere aus dieser Zeit',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'Das 19. Jahrhundert';
-
-  @override
-  String get eraNineteenthWhen => '1800 bis 1900';
-
-  @override
-  String get eraRecent => 'Dieses Jahrhundert';
-
-  @override
-  String get eraRecentWhen => 'Seit 2000';
-
-  @override
   String get eraShortAncient => 'Antike';
 
   @override
@@ -2928,12 +2873,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900er';
-
-  @override
-  String get eraTwentieth => 'Das letzte Jahrhundert';
-
-  @override
-  String get eraTwentiethWhen => '1900 bis 2000';
 
   @override
   String get fewCards => 'In ein paar Karten';
@@ -2957,9 +2896,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get howSure => 'Wie sicher bin ich, und warum?';
-
-  @override
-  String get inNumbers => 'In Zahlen';
 
   @override
   String inRange(int pts, String said) {
@@ -3097,18 +3033,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pickOneFirst => 'Erst eine wählen';
 
   @override
-  String get puzzleOfTheDay => 'Das Rätsel des Tages';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts P.';
   }
 
   @override
   String get rightLastTime => 'Letztes Mal richtig';
-
-  @override
-  String get sameForEveryoneCaps => 'Für alle gleich';
 
   @override
   String get sayFalse => 'Falsch';
@@ -3235,19 +3165,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Aufmacher';
-
-  @override
-  String get throughTime => 'Durch die Zeit';
-
-  @override
-  String get throughTimeLine =>
-      'Von der Antike bis heute. Tipp ein Jahr, oder lass den Zufall wählen';
-
-  @override
   String leanHint(String or) {
     return 'Schieb das „$or“ dorthin, wo du stehst';
   }
@@ -3282,7 +3199,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spotTitle => 'Finde die falsche';
 
   @override
-  String get spotLine => 'Drei sind wahr. Eine nicht.';
+  String get spotLine => 'Vier Behauptungen. Drei sind wahr, eine ist falsch.';
 
   @override
   String get spotPrompt => 'Tippe auf die, die du für falsch hältst';
@@ -3304,68 +3221,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spotYours => 'Deine Wahl';
 
   @override
-  String get yearHint => 'Gib ein Jahr ein';
-
-  @override
-  String get yearAd => 'n. Chr.';
-
-  @override
-  String get yearBc => 'v. Chr.';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '$year n. Chr.';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year v. Chr.';
-  }
-
-  @override
-  String get yearGo => 'Zu diesem Jahr';
-
-  @override
-  String get yearRandom => 'Zufall';
-
-  @override
-  String get yearRandomHint =>
-      'Springt zu einem Jahr, das eine der Karten nennt';
-
-  @override
-  String yearNearest(String year) {
-    return 'Am nächsten an $year zuerst';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Keine Karte hier nennt ein Jahr nahe $year. Diese sind aus seiner Epoche.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Heute nichts aus der Zeit um $year. Das ist die nächste Epoche.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year kommt erst noch. Hier ist dieses Jahrhundert.';
-  }
-
-  @override
-  String get yearZero =>
-      'Ein Jahr 0 gab es nicht. Versuch 1 v. Chr. oder 1 n. Chr.';
-
-  @override
   String get todayLabel => 'Heute';
-
-  @override
-  String get todaysEdition => 'Heutige Ausgabe';
 
   @override
   String get toneCurious => 'Neugierig';
@@ -3444,7 +3300,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => 'Sonntag: eine Karte mehr, für dich gewählt';
+  String get sundayOneMore => 'Sonntag: eine mehr, für dich gewählt';
 
   @override
   String get whereYouLive => 'Wo du wohnst';

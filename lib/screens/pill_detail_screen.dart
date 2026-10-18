@@ -7,6 +7,7 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/reveal_body.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/card_edge.dart';
 import '../widgets/ui.dart';
 import '../analytics.dart';
 
@@ -107,17 +108,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
               const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(26),
-                decoration: BoxDecoration(
-                  color: pill.color,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x29000000),
-                      blurRadius: 36,
-                      offset: Offset(0, 16),
-                    ),
-                  ],
-                ),
+                decoration: cardFace(context, pill.color, radius: 30, lift: 1),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -178,18 +169,25 @@ class _RoundAction extends StatelessWidget {
     return Semantics(
       button: true,
       label: label,
+      // A ring of 38 in a target of 44.
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: context.p.line),
+        child: SizedBox(
+          width: 44,
+          height: 44,
+          child: Center(
+            child: Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: context.p.line),
+              ),
+              alignment: Alignment.center,
+              child: Icon(icon, size: 17, color: color),
+            ),
           ),
-          alignment: Alignment.center,
-          child: Icon(icon, size: 17, color: color),
         ),
       ),
     );

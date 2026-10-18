@@ -95,8 +95,6 @@ void main() {
       'mix-series',
       'mix-sixty',
       'mix-mood',
-      'front-page',
-      'mix-through-time',
       'mix-did-you-know',
       'mix-surprise',
       'theme-practical-0',
@@ -119,6 +117,34 @@ void main() {
     }
     expect(themes.difference(formed), isEmpty);
   });
+
+  testWidgets(
+    'the top shelf never prints what a card is for before it is read',
+    (tester) async {
+      await _openExplore(tester);
+      // The cards on today's shelf, the first row on the page.
+      final Finder tiles = _keyed(
+        (k) =>
+            k.startsWith('explore-') &&
+            PillBank.byId(k.substring('explore-'.length)) != null,
+      );
+      expect(tiles, findsWidgets);
+      for (final e in tiles.evaluate().take(3)) {
+        final String id = (e.widget.key! as ValueKey<String>).value.substring(
+          'explore-'.length,
+        );
+        final pill = PillBank.byId(id)!;
+        expect(
+          find.descendant(
+            of: find.byWidget(e.widget),
+            matching: find.text(pill.barMove),
+          ),
+          findsNothing,
+          reason: '$id gives its line away unread',
+        );
+      }
+    },
+  );
 
   testWidgets('a true or false answered on the shelf is the card answered', (
     tester,

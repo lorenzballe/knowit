@@ -2215,13 +2215,14 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
+    // The time as the phone writes one, as the reminder sheet does.
     await tester.scrollUntilVisible(
-      find.text('Every day at 08:30'),
+      find.text('Every day at 8:30 AM'),
       200,
       scrollable: _profileList,
     );
     await _settle(tester);
-    expect(find.text('Every day at 08:30'), findsOneWidget);
+    expect(find.text('Every day at 8:30 AM'), findsOneWidget);
 
     // Named rather than found by type: the settings carry a second switch of
     // the same kind — the one over anonymous usage — and "the only switch on
@@ -2229,15 +2230,28 @@ void main() {
     final nudge = find.byWidgetPredicate(
       (w) => w is NudgeSwitch && w.label == 'Daily nudge',
     );
+    bool shown() => tester.widget<NudgeSwitch>(nudge).value;
+
+    // On from the install, the setting said a nudge would come before the
+    // system was ever asked whether the app may notify: off until it is.
+    final prefs = await SharedPreferences.getInstance();
+    expect(shown(), isFalse);
+
+    // The tap asks; this host has no notification centre to answer, so
+    // from here the switch is the setting.
+    await tester.tap(nudge);
+    await _settle(tester);
+    expect(shown(), isTrue);
+    expect(prefs.getBool('knowit.notifications') ?? true, isTrue);
 
     await tester.tap(nudge);
     await _settle(tester);
-
-    final prefs = await SharedPreferences.getInstance();
+    expect(shown(), isFalse);
     expect(prefs.getBool('knowit.notifications'), isFalse);
 
     await tester.tap(nudge);
     await _settle(tester);
+    expect(shown(), isTrue);
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
 
@@ -3879,7 +3893,10 @@ void main() {
     testWidgets('a taller box takes larger type for the same words', (
       tester,
     ) async {
-      await tester.pumpWidget(box('Why do we yawn?', height: 200));
+      // Short enough that height, not width, decides the smaller size: no
+      // word is broken to fit any more, so the widest a 300-point box sets
+      // "yawn?" in the test font is 60, and a 200-point box holds that.
+      await tester.pumpWidget(box('Why do we yawn?', height: 150));
       await tester.pumpAndSettle();
       final small = sizeOf(tester);
 
@@ -4219,8 +4236,8 @@ void main() {
 
       expect(given[pick.id]?.response, '${challenge.correct}');
       expect(given[pick.id]?.confidence, 80);
-      expect(find.textContaining('You got it'), findsOneWidget);
-      expect(find.textContaining('you said 80% sure'), findsOneWidget);
+      // The verdict, set large, runs into how sure.
+      expect(find.text('Right.  You were 80% sure.'), findsOneWidget);
       expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
@@ -4265,7 +4282,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(given[number.id]?.response, '${challenge.answer}');
-      expect(find.textContaining('You got it'), findsOneWidget);
+      // A back this full keeps the working in view, and the verdict gives
+      // way to it: said, large, without the line that runs on after it.
+      expect(find.text('Right.'), findsOneWidget);
       // A worked solution, not one paragraph.
       expect(find.text(number.steps.first), findsOneWidget);
     });
@@ -4347,7 +4366,11 @@ void main() {
       // An opinion is not something to be sure about, so it is never asked,
       // and it is never marked.
       expect(find.text('How sure are you?'), findsNothing);
-      expect(find.text('You got it'), findsNothing);
+      // No verdict, however much runs on after it.
+      expect(
+        find.textContaining(RegExp(r'^(Right|Not quite|Close enough)\.')),
+        findsNothing,
+      );
       expect(find.text('Almost everyone gets this wrong'), findsNothing);
 
       // What is asked for instead is a reason, before the other side is
@@ -4967,7 +4990,9 @@ void main() {
     await _settle(tester);
 
     expect(find.text('WELCOME BACK'), findsOneWidget);
-    expect(find.textContaining('You missed'), findsOneWidget);
+    // Glad, not a bill: nothing about what was missed.
+    expect(find.text('Good to see you again.'), findsOneWidget);
+    expect(find.textContaining('missed'), findsNothing);
 
     await tester.tap(find.text("Start again with today's five"));
     await _settle(tester);

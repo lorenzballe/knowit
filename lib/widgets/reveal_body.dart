@@ -755,6 +755,7 @@ class _Fit {
     this.tuckSteps = false,
     this.pictureScale = 1,
     this.shortLead = false,
+    this.leastLead = false,
     this.scrolls = false,
   });
 
@@ -791,6 +792,9 @@ class _Fit {
   /// The reader's own line said in one paragraph rather than three.
   final bool shortLead;
 
+  /// The lead said in as few words as it has: a verdict alone.
+  final bool leastLead;
+
   /// True when even the tightest setting does not fit — only at a large
   /// text size — and the back scrolls rather than shrink the reader's type.
   final bool scrolls;
@@ -812,6 +816,7 @@ class _Fit {
     tuckSteps: tuckSteps,
     pictureScale: pictureScale,
     shortLead: shortLead,
+    leastLead: leastLead,
     scrolls: scrolls ?? this.scrolls,
   );
 }
@@ -850,6 +855,10 @@ class CardReveal extends StatefulWidget {
   final Widget? shortLead;
   final double Function(double width, TextScaler scaler)? shortLeadHeight;
 
+  /// Fewer still, for a back too short of room even for that.
+  final Widget? leastLead;
+  final double Function(double width, TextScaler scaler)? leastLeadHeight;
+
   /// Keeps the source's lines clear of the save and share buttons in the
   /// bottom corner.
   final double cornerRoom;
@@ -864,6 +873,8 @@ class CardReveal extends StatefulWidget {
     this.leadHeight,
     this.shortLead,
     this.shortLeadHeight,
+    this.leastLead,
+    this.leastLeadHeight,
     this.cornerRoom = 0,
     this.scene,
   });
@@ -938,15 +949,22 @@ class _CardRevealState extends State<CardReveal> {
         aside == _Aside.picture ||
         aside == _Aside.working;
     if (widget.lead != null && !visual) {
-      final short = f.shortLead && widget.shortLead != null;
+      final least = f.leastLead && widget.leastLead != null;
+      final short = !least && f.shortLead && widget.shortLead != null;
       out.add(
         _Block(
-          short
+          least
+              ? widget.leastLeadHeight!(width, m.scaler)
+              : short
               ? widget.shortLeadHeight!(width, m.scaler)
               : widget.leadHeight!(width, m.scaler),
           KeyedSubtree(
             key: const ValueKey('lead'),
-            child: short ? widget.shortLead! : widget.lead!,
+            child: least
+                ? widget.leastLead!
+                : short
+                ? widget.shortLead!
+                : widget.lead!,
           ),
         ),
       );
@@ -1290,6 +1308,7 @@ class _CardRevealState extends State<CardReveal> {
       bool tuckSteps = false,
       double pictureScale = 1,
       bool shortLead = false,
+      bool leastLead = false,
     }) => _Fit(
       question: question,
       questionSize: 17,
@@ -1300,6 +1319,7 @@ class _CardRevealState extends State<CardReveal> {
       tuckSteps: tuckSteps,
       pictureScale: pictureScale,
       shortLead: shortLead,
+      leastLead: leastLead,
     );
 
     Iterable<double> band(double from, double to) sync* {
@@ -1314,45 +1334,74 @@ class _CardRevealState extends State<CardReveal> {
         ? const [true]
         : [false, if (widget.pill.hasSteps) true];
 
+    // Every size, from the largest down, for one way of setting the back.
+    Iterable<_Fit> sizes({
+      required bool tuckSteps,
+      bool shortLead = false,
+    }) sync* {
+      for (final tucked in tucks) {
+        for (final b in band(
+          CardReveal.maxBody(width),
+          CardReveal.minBodyWithQuestion,
+        )) {
+          yield at(
+            b,
+            question: true,
+            tucked: tucked,
+            tuckSteps: tuckSteps,
+            shortLead: shortLead,
+          );
+        }
+        for (final b in band(
+          CardReveal.maxBody(width),
+          CardReveal.minBody + 0.5,
+        )) {
+          yield at(
+            b,
+            question: false,
+            tucked: tucked,
+            tuckSteps: tuckSteps,
+            shortLead: shortLead,
+          );
+        }
+        for (final b in band(15, CardReveal.minBody)) {
+          yield at(
+            b,
+            question: false,
+            gap: 0.75,
+            tucked: tucked,
+            tuckSteps: tuckSteps,
+            shortLead: shortLead,
+          );
+        }
+        // The last half point, with the spacing at its closest: still a
+        // comfortable size on a phone, and better than a card that
+        // scrolls.
+        for (final gap in [0.75, 0.6]) {
+          yield at(
+            CardReveal.minBody - 0.5,
+            question: false,
+            gap: gap,
+            tucked: tucked,
+            tuckSteps: tuckSteps,
+            shortLead: shortLead,
+          );
+        }
+      }
+    }
+
     // Everything in its place first; then the working, then the picture,
     // behind a line to tap — each only when the words would otherwise go
     // below a comfortable size.
     Iterable<_Fit> plans() sync* {
       for (final tuckSteps in stepsTucks) {
-        for (final tucked in tucks) {
-          for (final b in band(
-            CardReveal.maxBody(width),
-            CardReveal.minBodyWithQuestion,
-          )) {
-            yield at(b, question: true, tucked: tucked, tuckSteps: tuckSteps);
-          }
-          for (final b in band(
-            CardReveal.maxBody(width),
-            CardReveal.minBody + 0.5,
-          )) {
-            yield at(b, question: false, tucked: tucked, tuckSteps: tuckSteps);
-          }
-          for (final b in band(15, CardReveal.minBody)) {
-            yield at(
-              b,
-              question: false,
-              gap: 0.75,
-              tucked: tucked,
-              tuckSteps: tuckSteps,
-            );
-          }
-          // The last half point, with the spacing at its closest: still a
-          // comfortable size on a phone, and better than a card that
-          // scrolls.
-          for (final gap in [0.75, 0.6]) {
-            yield at(
-              CardReveal.minBody - 0.5,
-              question: false,
-              gap: gap,
-              tucked: tucked,
-              tuckSteps: tuckSteps,
-            );
-          }
+        yield* sizes(tuckSteps: tuckSteps);
+        // A card with working to show gives up the lead's extra lines
+        // before it gives up the working: the verdict, still as large, and
+        // the steps in view, rather than the steps behind a line to tap so
+        // that what the reader typed a moment ago can be said back to them.
+        if (!tuckSteps && stepsTucks.length > 1 && widget.shortLead != null) {
+          yield* sizes(tuckSteps: false, shortLead: true);
         }
       }
       // The longest cards in the bank, at thirteen: a footnote's size, and
@@ -1378,6 +1427,19 @@ class _CardRevealState extends State<CardReveal> {
             tucked: tucks.last,
             tuckSteps: stepsTucks.last,
             shortLead: true,
+          );
+        }
+      }
+      // Then the lead in as few words as it has.
+      if (widget.leastLead != null) {
+        for (final b in band(15, 13)) {
+          yield at(
+            b,
+            question: false,
+            gap: b > 14 ? 0.75 : 0.6,
+            tucked: tucks.last,
+            tuckSteps: stepsTucks.last,
+            leastLead: true,
           );
         }
       }

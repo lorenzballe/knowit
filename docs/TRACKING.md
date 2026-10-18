@@ -218,8 +218,7 @@ New in October 2026: `screen left`, `card closed`, `explore shelf seen`,
 `first card shown`, the read facts on `card advanced`, the session on
 `app paused`, `ms_to_deal` on `day started`, `interaction` on card facts;
 and, later in the month, a true story played on Explore (`explore story
-opened`, `finished`, `closed`) and how a year was gone to (`by` on
-`explore year`).
+opened`, `finished`, `closed`).
 
 ### 6.1 Launch and the sitting
 
@@ -328,7 +327,7 @@ is in its card facts.
 | `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
 | `explore answered`, `explore leaned` | a card answered on a shelf | `pill_id`, `right`, `side`, `confidence` | | P |
 | `explore did you know`, `explore surprise`, `explore spot`, `explore chart unmasked`, `explore slide checked`, `explore range bet`, `explore stake bet`, `explore bigger picked` | the shelf games | `pill_id`, `right`, `new`, `trick`, `off`, `width`, `hit`, `stake`, `won` | | P |
-| `explore mood`, `explore minutes`, `explore year`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `era`, `year`, `by` (on `explore year`: `typed`, or `random` for a year picked by chance), `right`, `answered`, `seconds` | `explore era` went with the ruler and its arrows: an age is only gone to through a year now | P |
+| `explore mood`, `explore minutes`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `right`, `answered`, `seconds` | `explore era` and `explore year` went with the Through time shelf, taken out of Explore | P |
 | `explore story opened` **new** | a true story starts playing, from its tile on Explore | card facts, `beats` (how many it has), `authored` (true for a story written to be played, its scenes and its question), `rank` (its place on the shelf, from 1) | which stories are opened, and from where on the shelf | P |
 | `explore story finished` **new** | a story reaches its last screen, once per opening | `pill_id`, `beats`, `authored`, `ms_to_finish` (from opening), `picked_right` (on a story written to be played: whether the outcome picked came true; absent when nothing was picked) | how many stories are told to the end, and how long one takes | P |
 | `explore story closed` **new** | a story is closed, however | `pill_id`, `beats`, `beats_seen` (how many of its beats were on screen), `finished`, `ms_in_story`, `taps_back` (taps on the left to go back), `holds` (fingers held down to stop it), `exit` (`closed` with its button, `swiped down`, `card` — the card opened in its place, `back` — the phone's back) | where readers leave a story, and how: the beats seen are counted on the phone and said once, never an event per beat | P |

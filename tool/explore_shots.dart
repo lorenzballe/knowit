@@ -1,8 +1,7 @@
 // Photographs Explore under the shelves that were always there: the month,
-// the round against the clock, the six ways to work a number out, a year
-// through time, the pile of facts, the charts unmasked, one card from
-// anywhere and something to use today at the end — each at rest and each
-// played.
+// the round against the clock, the six ways to work a number out, the pile
+// of facts, the charts unmasked, one card from anywhere and something to
+// use today at the end — each at rest and each played.
 //
 //   flutter test tool/explore_shots.dart --update-goldens
 //
@@ -264,11 +263,6 @@ void main() {
       await settle(tester);
     }
     await shoot(tester, 'play-unmask-after');
-
-    await reach(tester, 'mix-through-time');
-    await tester.tap(find.byKey(const ValueKey('era-random')));
-    await settle(tester);
-    await shoot(tester, 'play-through-time');
 
     await reach(tester, 'mix-did-you-know');
     final Finder pile = find.byWidgetPredicate(

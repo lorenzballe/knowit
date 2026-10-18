@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// Type set as large as the box will take.
@@ -11,8 +13,9 @@ import 'package:flutter/material.dart';
 class ScaledText extends StatelessWidget {
   final String text;
 
-  /// The band the type may move in. It never goes below [min]: past that,
-  /// filling the box costs more than it buys and the text scrolls instead.
+  /// The band the type may move in, as the reader sees it. It never goes
+  /// below [min]: past that, filling the box costs more than it buys and
+  /// the text scrolls instead.
   final double min;
   final double max;
 
@@ -32,25 +35,88 @@ class ScaledText extends StatelessWidget {
     this.alignment = Alignment.bottomLeft,
   });
 
-  bool _fits(double size, double width, double height) {
+  /// Whether [text] at [size] fits [width] by [height] as it will be drawn:
+  /// at the reader's text size, in the reader's direction, and with no word
+  /// broken across two lines.
+  ///
+  /// Measured at a text size of one, the size chosen fitted the box only
+  /// for a reader who never touched the setting: a step or two up, the
+  /// question was drawn larger than it had been measured and was cut off
+  /// in its own box.
+  bool _fits(
+    double size,
+    double width,
+    double height,
+    TextScaler scaler,
+    TextDirection direction,
+    String longest,
+  ) {
+    final TextStyle style = styleFor(size);
     final painter = TextPainter(
-      text: TextSpan(text: text, style: styleFor(size)),
-      textDirection: TextDirection.ltr,
+      text: TextSpan(text: text, style: style),
+      textDirection: direction,
+      textScaler: scaler,
     )..layout(maxWidth: width);
-    return painter.height <= height && painter.width <= width;
+    final bool fits = painter.height <= height && painter.width <= width;
+    painter.dispose();
+    if (!fits) return false;
+    // A word wider than the line is broken in the middle, which no size
+    // should buy: "tempera / tures".
+    final word = TextPainter(
+      text: TextSpan(text: longest, style: style),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final bool whole = word.width <= width;
+    word.dispose();
+    return whole;
+  }
+
+  /// The longest word, as it sets: the one a narrow box breaks first.
+  String _longestWord(TextDirection direction) {
+    String longest = '';
+    double widest = 0;
+    for (final String w in text.split(RegExp(r'\s+'))) {
+      final painter = TextPainter(
+        text: TextSpan(text: w, style: styleFor(max)),
+        textDirection: direction,
+        maxLines: 1,
+      )..layout();
+      if (painter.width > widest) {
+        widest = painter.width;
+        longest = w;
+      }
+      painter.dispose();
+    }
+    return longest;
   }
 
   /// Largest size that still fits, to within a tenth of a point.
-  double _fit(double width, double height) {
+  ///
+  /// Between [min] and [max] as sizes the reader sees: [max] grows with
+  /// their text size where the box has room for it, and [min] does not, so
+  /// a reader with larger text still gets the whole question, at the
+  /// smallest size it was designed for, rather than a third of it.
+  double _fit(
+    double width,
+    double height,
+    TextScaler scaler,
+    TextDirection direction,
+  ) {
     if (!width.isFinite || !height.isFinite || width <= 0 || height <= 0) {
       return min;
     }
-    if (_fits(max, width, height)) return max;
-    var lo = min;
+    final double floor = math.min(min, min * min / scaler.scale(min));
+    final String longest = _longestWord(direction);
+    bool fits(double size) =>
+        _fits(size, width, height, scaler, direction, longest);
+    if (fits(max)) return max;
+    var lo = floor;
     var hi = max;
     while (hi - lo > 0.1) {
       final mid = (lo + hi) / 2;
-      if (_fits(mid, width, height)) {
+      if (fits(mid)) {
         lo = mid;
       } else {
         hi = mid;
@@ -63,7 +129,12 @@ class ScaledText extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final size = _fit(constraints.maxWidth, constraints.maxHeight);
+        final size = _fit(
+          constraints.maxWidth,
+          constraints.maxHeight,
+          MediaQuery.textScalerOf(context),
+          Directionality.of(context),
+        );
         // Measured against the bounded box, then rendered in a scroll view:
         // when it fits there is nothing to scroll, and when even [min] was
         // too big the question stays reachable instead of being clipped.
