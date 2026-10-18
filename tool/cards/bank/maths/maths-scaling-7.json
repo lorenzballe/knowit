@@ -1,0 +1,40 @@
+{
+  "id": "maths-scaling-7",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Halve an A4 sheet and you get A5, the same shape. What ratio of sides allows that?",
+  "options": [
+    "3 to 2",
+    "The golden ratio, 1.618",
+    "Square root of 2, about 1.414"
+  ],
+  "correct": 2,
+  "answer": "The square root of 2, about 1.414. Halving the long side turns sides 1 and r into r/2 and 1, the same shape only if r² = 2. So A4's 297 by 210 mm is 1.414 to 1, and each size is half the one before, down from A0's square metre.",
+  "move": "A shape survives halving only if its sides stand at 1.414 to 1.",
+  "ask": "Which everyday design have I used for years without asking why it has its shape?",
+  "trap": "The golden ratio, the famous one for pleasing shapes.",
+  "keywords": [
+    "paper sizes",
+    "a4",
+    "square root of two",
+    "iso 216"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kuhn, International standard paper sizes, University of Cambridge",
+  "source_kind": "reference_work",
+  "reference": "https://www.cl.cam.ac.uk/~mgk25/iso-paper.html",
+  "written": "2026-10-17"
+}

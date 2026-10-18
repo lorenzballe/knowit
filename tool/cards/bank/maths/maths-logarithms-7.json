@@ -1,0 +1,42 @@
+{
+  "id": "maths-logarithms-7",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.logarithms",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Without a calculator, how many digits does 2 to the power 100 have?",
+  "value": 31,
+  "unit": "digits",
+  "answer": "31 digits: 2¹⁰⁰ = 1,267,650,600,228,229,401,496,703,205,376.",
+  "move": "A number's digit count is its base-10 logarithm, rounded down, plus one.",
+  "ask": "Which huge number could I size up just by counting its powers of ten?",
+  "trap": "100 digits, as if each doubling added a digit.",
+  "hint": "2¹⁰ = 1,024 is about 10³; raise both to the tenth power.",
+  "steps": [
+    "2¹⁰ = 1,024, a little over 10³.",
+    "2¹⁰⁰ = (2¹⁰)¹⁰, a little over (10³)¹⁰ = 10³⁰.",
+    "1.024¹⁰ ≈ 1.27, so 2¹⁰⁰ ≈ 1.27 × 10³⁰: 31 digits."
+  ],
+  "keywords": [
+    "powers of two",
+    "logarithms",
+    "mental arithmetic",
+    "digits"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OEIS A000079, the powers of 2",
+  "source_kind": "reference_work",
+  "reference": "https://oeis.org/A000079",
+  "written": "2026-10-17"
+}

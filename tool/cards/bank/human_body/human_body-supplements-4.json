@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Six supplements, and the reason each is taken. For which reasons do trials say the pill does its job?",
-  "answer": "The ones that work fill a gap someone really has. A baby forming a spine, a vegan with no animal foods, a breastfed infant: each lacks something specific. Healthy adults topping up a full tank get nothing measurable, which is why the big trials of fish oil and multivitamins came back flat.",
+  "answer": "The ones that work fill a gap someone really has. A baby forming a spine, a vegan with no animal foods, a breastfed infant: each lacks something specific. Healthy adults topping up a full tank gain little a trial can show: the big fish oil and multivitamin trials missed their main goals.",
   "move": "Ask what gap a pill fills before asking whether it works.",
   "ask": "Which pill do I take without knowing what I am short of?",
   "keywords": [
@@ -43,7 +43,7 @@
         "text": "Fish oil",
         "note": "Taken by healthy adults to protect the heart.",
         "pile": "right",
-        "verdict": "In a trial of nearly 26,000 adults, heart attacks were no rarer than on dummy pills."
+        "verdict": "Heart attacks, strokes and heart deaths together: no fewer than on dummy pills."
       },
       {
         "text": "Vitamin B12",

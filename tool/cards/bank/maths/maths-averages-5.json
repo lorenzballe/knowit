@@ -1,0 +1,40 @@
+{
+  "id": "maths-averages-5",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In Olympic diving, seven judges score each dive. Why are the two highest and two lowest scores thrown away?",
+  "options": [
+    "To keep totals on a fixed scale",
+    "So no single judge can swing it",
+    "Because extreme marks are usually mistakes"
+  ],
+  "correct": 1,
+  "answer": "So no single judge can swing it. Only the middle three marks count, summed and multiplied by the dive's difficulty, so a judge favouring a compatriot can barely move the total alone. A trimmed mean gives up a little information for a lot of protection against outliers, honest or not.",
+  "move": "To resist one bad number, drop the extremes and average the middle.",
+  "ask": "Which decision of mine rests on a single score that could be an outlier?",
+  "trap": "Thinking the extremes are dropped because they are probably mistakes.",
+  "keywords": [
+    "trimmed mean",
+    "diving",
+    "judging",
+    "outliers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USA Diving, judging and scoring",
+  "source_kind": "institution",
+  "reference": "https://www.usadiving.org/about-us/diving-101/judging-and-scoring",
+  "written": "2026-10-17"
+}

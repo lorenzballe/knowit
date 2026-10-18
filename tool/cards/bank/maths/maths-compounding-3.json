@@ -1,0 +1,223 @@
+{
+  "id": "maths-compounding-3",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.compounding",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A bank pays 100% a year on £1. What if it paid half that every six months, or a twelfth every month?",
+  "answer": "More, but never past £2.72. Twice a year gives 1.5 × 1.5 = £2.25; monthly, about £2.61; daily, about £2.71. Jacob Bernoulli posed this in 1683 and showed the limit lies between 2 and 3. It is e, 2.718…, the number behind all continuous growth.",
+  "move": "Compounding more often always helps, but the gains shrink towards a limit.",
+  "ask": "Which offer of more frequent compounding have I valued above its real worth?",
+  "keywords": [
+    "the number e",
+    "compound interest",
+    "jacob bernoulli",
+    "limits"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "Times a year interest is added",
+    "controlUnit": "times",
+    "readout": "£1 after one year at 100%",
+    "readoutUnit": "£",
+    "start": 1,
+    "step": 1,
+    "decimals": 2,
+    "points": [
+      [
+        1,
+        2.0
+      ],
+      [
+        2,
+        2.25
+      ],
+      [
+        3,
+        2.3704
+      ],
+      [
+        4,
+        2.4414
+      ],
+      [
+        5,
+        2.4883
+      ],
+      [
+        6,
+        2.5216
+      ],
+      [
+        7,
+        2.5465
+      ],
+      [
+        8,
+        2.5658
+      ],
+      [
+        9,
+        2.5812
+      ],
+      [
+        10,
+        2.5937
+      ],
+      [
+        11,
+        2.6042
+      ],
+      [
+        12,
+        2.613
+      ],
+      [
+        13,
+        2.6206
+      ],
+      [
+        14,
+        2.6272
+      ],
+      [
+        15,
+        2.6329
+      ],
+      [
+        16,
+        2.6379
+      ],
+      [
+        17,
+        2.6424
+      ],
+      [
+        18,
+        2.6464
+      ],
+      [
+        19,
+        2.65
+      ],
+      [
+        20,
+        2.6533
+      ],
+      [
+        21,
+        2.6563
+      ],
+      [
+        22,
+        2.659
+      ],
+      [
+        23,
+        2.6615
+      ],
+      [
+        24,
+        2.6637
+      ],
+      [
+        25,
+        2.6658
+      ],
+      [
+        26,
+        2.6678
+      ],
+      [
+        27,
+        2.6696
+      ],
+      [
+        28,
+        2.6713
+      ],
+      [
+        29,
+        2.6728
+      ],
+      [
+        30,
+        2.6743
+      ],
+      [
+        31,
+        2.6757
+      ],
+      [
+        32,
+        2.677
+      ],
+      [
+        33,
+        2.6782
+      ],
+      [
+        34,
+        2.6794
+      ],
+      [
+        35,
+        2.6804
+      ],
+      [
+        36,
+        2.6815
+      ],
+      [
+        37,
+        2.6824
+      ],
+      [
+        38,
+        2.6834
+      ],
+      [
+        39,
+        2.6842
+      ],
+      [
+        40,
+        2.6851
+      ]
+    ],
+    "notes": [
+      {
+        "at": 1,
+        "text": "Once a year: £1 becomes £2."
+      },
+      {
+        "at": 2,
+        "text": "Twice: 1.5 × 1.5 = £2.25. Splitting the interest helps."
+      },
+      {
+        "at": 12,
+        "text": "Monthly: £2.61. Each extra split adds less than the last."
+      },
+      {
+        "at": 40,
+        "text": "40 times: £2.69. Daily gives £2.71; the ceiling is e, about 2.718."
+      }
+    ]
+  },
+  "source": "MacTutor History of Mathematics, The number e",
+  "source_kind": "reference_work",
+  "reference": "https://mathshistory.st-andrews.ac.uk/HistTopics/e/",
+  "written": "2026-10-17"
+}

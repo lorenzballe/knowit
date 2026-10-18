@@ -1,0 +1,42 @@
+{
+  "id": "maths-algorithms-7",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Wimbledon's singles draw starts with 128 players. How many matches does it take to crown a champion?",
+  "value": 127,
+  "unit": "matches",
+  "answer": "127: each match knocks out exactly one player, and all but one must go.",
+  "move": "Count what each step removes, and the total follows without adding rounds.",
+  "ask": "Which tally could I get at once by counting what each step removes?",
+  "trap": "64, counting only the first round.",
+  "hint": "Each match knocks out exactly one player.",
+  "steps": [
+    "Every match ends with exactly one player out.",
+    "To leave one champion, 127 of the 128 must be knocked out.",
+    "So 127 matches: 64 + 32 + 16 + 8 + 4 + 2 + 1."
+  ],
+  "keywords": [
+    "knockout tournaments",
+    "counting",
+    "wimbledon",
+    "puzzles"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "All England Lawn Tennis Club, The Championships singles draws",
+  "source_kind": "institution",
+  "reference": "All England Lawn Tennis Club, The Championships, Wimbledon, singles draws of 128 players, 2025",
+  "written": "2026-10-17"
+}

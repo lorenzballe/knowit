@@ -1,0 +1,43 @@
+{
+  "id": "maths-fermi-8",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.fermi",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly what does the air in a room 4 m by 5 m, with a 2.5 m ceiling, weigh, in kilograms?",
+  "value": 60,
+  "unit": "kg",
+  "withinFactor": 3,
+  "answer": "About 60 kg, as much as a grown adult, floating unnoticed all around you.",
+  "move": "A slight density in a big volume adds up to a surprising weight.",
+  "ask": "What around me feels weightless only because I never multiplied it out?",
+  "trap": "A few grams, because air feels like nothing.",
+  "hint": "Find the room's volume, then the weight of one cubic metre of air.",
+  "steps": [
+    "Volume: 4 × 5 × 2.5 = 50 cubic metres.",
+    "A cubic metre of air at room temperature weighs about 1.2 kg.",
+    "50 × 1.2 ≈ 60 kg, as much as a grown adult."
+  ],
+  "keywords": [
+    "air density",
+    "fermi estimate",
+    "volume",
+    "weight of air"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 2533, Standard Atmosphere, 1975",
+  "source_kind": "standard",
+  "reference": "International Organization for Standardization, ISO 2533:1975 Standard Atmosphere, sea-level air density of 1.225 kg per cubic metre, 1975",
+  "written": "2026-10-17"
+}

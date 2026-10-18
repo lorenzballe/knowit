@@ -1,0 +1,43 @@
+{
+  "id": "maths-averages-3",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A school has three classes, of 10, 10 and 70 pupils. Ask every pupil their class size: what is the average answer?",
+  "value": 56.7,
+  "unit": "pupils",
+  "tolerance": 0.1,
+  "answer": "About 56.7, though the average class is 30: most pupils sit in the big one.",
+  "move": "Ask whose average it is: the classes', or the people's inside them.",
+  "ask": "Which average have I heard that counts places, when I care about people?",
+  "trap": "30, the average class, as if each class had one voice.",
+  "hint": "Weight each class size by the number of pupils who report it.",
+  "steps": [
+    "Ten pupils say 10, ten more say 10, and seventy say 70.",
+    "Total of the answers: 100 + 100 + 4,900 = 5,100.",
+    "5,100 ÷ 90 pupils ≈ 56.7, though the average class is 30."
+  ],
+  "keywords": [
+    "class size paradox",
+    "weighted average",
+    "averages",
+    "sampling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feld and Grofman, the class size paradox, 1977",
+  "source_kind": "paper",
+  "reference": "Scott Feld and Bernard Grofman, Variation in Class Size, the Class Size Paradox, and Some Consequences for Students, Research in Higher Education 6:215–222, 1977",
+  "written": "2026-10-17"
+}

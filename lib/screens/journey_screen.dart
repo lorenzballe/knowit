@@ -16,6 +16,7 @@ import '../widgets/share_day.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
+import 'mix_screen.dart' show kMixSubjects;
 import 'path_screen.dart';
 import 'progress_text.dart';
 import 'week_screen.dart';
@@ -1261,12 +1262,12 @@ class _InARowTile extends StatelessWidget {
 
 // ── The subjects ──────────────────────────────────────────────────────────
 
-/// The subjects round the wheel in the order of their colours, Thinking,
-/// which has none, last.
+/// The subjects round the wheel in the order of their colours, as the mix
+/// lays them out (Maths between Science and Language, Life at the pale
+/// end), Thinking, which has none, last.
 List<String> get _wheel {
   int rank(String key) {
-    final TopicStyle s = kTopics[key]!;
-    final int i = kSpectrum.indexOf(s.color);
+    final int i = kMixSubjects.indexWhere((s) => s.key == key);
     if (i >= 0) return i;
     return key == 'thinking' ? 1000 : 500;
   }

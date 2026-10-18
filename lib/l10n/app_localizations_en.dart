@@ -992,7 +992,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.';
+      'Everything is in. Slide a subject left to see less of it, or all the way to drop it.';
 
   @override
   String get next => 'Next';
@@ -1032,7 +1032,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Learn the why behind things, and how far to trust what you know';
 
   @override
-  String get introTopicsTitle => 'Nineteen topics, five cards';
+  String get introTopicsTitle => 'Twenty topics, five cards';
 
   @override
   String get introTopicsLine =>
@@ -1818,6 +1818,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yourMix => 'Your mix';
+
+  @override
+  String get genresTitle => 'Which parts?';
 
   @override
   String get genresLine =>

@@ -287,6 +287,116 @@
    ]
   }
  ],
+ "maths": [
+  {
+   "id": "maths.estimation",
+   "label": "Estimation",
+   "strands": [
+    {
+     "id": "maths.estimation.fermi",
+     "label": "Fermi problems"
+    },
+    {
+     "id": "maths.estimation.big_numbers",
+     "label": "Big numbers"
+    },
+    {
+     "id": "maths.estimation.units",
+     "label": "Units and scale"
+    }
+   ]
+  },
+  {
+   "id": "maths.statistics",
+   "label": "Statistics",
+   "strands": [
+    {
+     "id": "maths.statistics.averages",
+     "label": "Averages"
+    },
+    {
+     "id": "maths.statistics.charts",
+     "label": "Misleading charts"
+    },
+    {
+     "id": "maths.statistics.polls",
+     "label": "Samples and polls"
+    }
+   ]
+  },
+  {
+   "id": "maths.growth",
+   "label": "Growth",
+   "strands": [
+    {
+     "id": "maths.growth.percentages",
+     "label": "Percentages"
+    },
+    {
+     "id": "maths.growth.compounding",
+     "label": "Compounding"
+    },
+    {
+     "id": "maths.growth.logarithms",
+     "label": "Logarithms"
+    }
+   ]
+  },
+  {
+   "id": "maths.shapes",
+   "label": "Shapes",
+   "strands": [
+    {
+     "id": "maths.shapes.area_and_volume",
+     "label": "Area and volume"
+    },
+    {
+     "id": "maths.shapes.scaling",
+     "label": "Scaling"
+    },
+    {
+     "id": "maths.shapes.projections",
+     "label": "Maps and projections"
+    }
+   ]
+  },
+  {
+   "id": "maths.puzzles",
+   "label": "Puzzles",
+   "strands": [
+    {
+     "id": "maths.puzzles.paradoxes",
+     "label": "Paradoxes"
+    },
+    {
+     "id": "maths.puzzles.game_theory",
+     "label": "Game theory"
+    },
+    {
+     "id": "maths.puzzles.logic",
+     "label": "Logic"
+    }
+   ]
+  },
+  {
+   "id": "maths.everyday_maths",
+   "label": "Everyday maths",
+   "strands": [
+    {
+     "id": "maths.everyday_maths.money",
+     "label": "Money maths"
+    },
+    {
+     "id": "maths.everyday_maths.risk",
+     "label": "Everyday risk"
+    },
+    {
+     "id": "maths.everyday_maths.algorithms",
+     "label": "Algorithms"
+    }
+   ]
+  }
+ ],
  "space": [
   {
    "id": "space.black_holes",

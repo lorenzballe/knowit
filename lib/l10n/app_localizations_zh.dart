@@ -958,7 +958,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => '全部都在。把主题往下拖会少看到它，拖到零则移除。';
+  String get everythingIsInDrag => '全部都在。把主题向左滑会少看到它，滑到底则移除。';
 
   @override
   String get next => '下一步';
@@ -996,7 +996,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tagline => '弄懂事物背后的“为什么”，也看清自己知道的能信几分';
 
   @override
-  String get introTopicsTitle => '十九个主题，五张卡片';
+  String get introTopicsTitle => '二十个主题，五张卡片';
 
   @override
   String get introTopicsLine => '由模型提前写好，每一张都注明出处。';
@@ -1759,7 +1759,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yourMix => '你的组合';
 
   @override
-  String get genresLine => '点一下跳过某个类别。长按，里面的三条线索就在下面展开。';
+  String get genresTitle => '哪些部分？';
+
+  @override
+  String get genresLine => '点一下跳过某个类别。长按，里面更小的主题就在下面展开。';
 
   @override
   String get insideGenre => '里面有';

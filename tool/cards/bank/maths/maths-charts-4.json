@@ -1,0 +1,40 @@
+{
+  "id": "maths-charts-4",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A chart shows a moneybag twice as tall to mark doubled savings, drawn to keep its shape. How much more ink does it take?",
+  "options": [
+    "Twice as much",
+    "Four times as much",
+    "Eight times as much"
+  ],
+  "correct": 1,
+  "answer": "Four times as much. Doubling the height while keeping the shape doubles the width too, so the area is 2 × 2 = 4 times; seen as a solid bag, its volume is 8 times. Darrell Huff called this the one-dimensional picture in 1954: the number doubles, the eye sees far more.",
+  "move": "A picture grown in two directions grows by the square, and the eye sees area.",
+  "ask": "Which chart with pictures has impressed me more than its numbers deserved?",
+  "trap": "Twice as much, since only the height was meant to count.",
+  "keywords": [
+    "pictogram",
+    "misleading charts",
+    "area",
+    "darrell huff"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huff, How to Lie with Statistics, 1954",
+  "source_kind": "book",
+  "reference": "Darrell Huff, How to Lie with Statistics, W. W. Norton, 1954",
+  "written": "2026-10-17"
+}

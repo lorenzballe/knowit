@@ -995,7 +995,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'C\'è tutto. Trascina una materia verso il basso per vederne meno, o fino a zero per toglierla.';
+      'C\'è tutto. Fai scorrere una materia verso sinistra per vederne meno, o fino in fondo per toglierla.';
 
   @override
   String get next => 'Avanti';
@@ -1035,7 +1035,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Capisci il perché delle cose e scopri quanto fidarti di quello che sai';
 
   @override
-  String get introTopicsTitle => 'Diciannove materie, cinque carte';
+  String get introTopicsTitle => 'Venti materie, cinque carte';
 
   @override
   String get introTopicsLine =>
@@ -1825,6 +1825,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get yourMix => 'Il tuo mix';
+
+  @override
+  String get genresTitle => 'Quali parti?';
 
   @override
   String get genresLine =>

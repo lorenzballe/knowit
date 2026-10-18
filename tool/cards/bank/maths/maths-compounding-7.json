@@ -1,0 +1,42 @@
+{
+  "id": "maths-compounding-7",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.compounding",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Paper is 0.1 mm thick. How many times would you have to fold it in half to pass the Moon, 384,000 km away?",
+  "value": 42,
+  "unit": "folds",
+  "answer": "42 folds, in theory. In practice the record is 12, set in 2002 by Britney Gallivan, a high-school student, with a sheet 1.2 km long.",
+  "move": "Doubling reaches astronomical sizes in a few dozen steps.",
+  "ask": "What small thing of mine is doubling quietly, and where will it be in ten doublings?",
+  "trap": "Millions of folds, because each fold adds so little at first.",
+  "hint": "Count how many sheets thick the distance is, then find the power of two that passes it.",
+  "steps": [
+    "384,000 km = 384 billion mm: 3.84 trillion sheets of 0.1 mm.",
+    "Each fold doubles: 2⁴⁰ ≈ 1.1 trillion, 2⁴¹ ≈ 2.2 trillion, 2⁴² ≈ 4.4 trillion.",
+    "42 folds pass the Moon; 41 fall short."
+  ],
+  "keywords": [
+    "doubling",
+    "paper folding",
+    "exponential growth",
+    "powers of two"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guinness World Records, most times to fold a piece of paper",
+  "source_kind": "reference_work",
+  "reference": "https://guinnessworldrecords.com/world-records/494571-most-times-to-fold-a-piece-of-paper",
+  "written": "2026-10-17"
+}

@@ -996,7 +996,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Alles zit erin. Sleep een vak omlaag om er minder van te zien, of tot nul om het te laten vallen.';
+      'Alles zit erin. Schuif een vak naar links om er minder van te zien, of helemaal om het te laten vallen.';
 
   @override
   String get next => 'Volgende';
@@ -1036,7 +1036,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Begrijp het waarom van dingen en hoe ver je op je kennis kunt vertrouwen';
 
   @override
-  String get introTopicsTitle => 'Negentien vakken, vijf kaarten';
+  String get introTopicsTitle => 'Twintig vakken, vijf kaarten';
 
   @override
   String get introTopicsLine =>
@@ -1828,8 +1828,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get yourMix => 'Jouw mix';
 
   @override
+  String get genresTitle => 'Welke delen?';
+
+  @override
   String get genresLine =>
-      'Tik op een genre om het over te slaan. Houd het vast en de drie draden erin openen er vlak onder.';
+      'Tik op een genre om het over te slaan. Houd het vast en de kleinere onderwerpen erin openen er vlak onder.';
 
   @override
   String get insideGenre => 'Binnenin';

@@ -1,0 +1,43 @@
+{
+  "id": "maths-area-and-volume-4",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "You have 40 metres of rope to fence a pen. How much more area does a circle enclose than a square, in square metres?",
+  "value": 27.3,
+  "unit": "square metres",
+  "tolerance": 0.3,
+  "answer": "About 27.3 m² more, over a quarter extra from the same rope: of all shapes, the circle encloses the most.",
+  "move": "For a fixed boundary, the rounder the shape, the more it holds.",
+  "ask": "Where am I paying for boundary when what I need is the space inside?",
+  "trap": "No difference, since both use the same 40 metres.",
+  "hint": "Find each shape's size from the 40 m perimeter, then its area.",
+  "steps": [
+    "Square: sides of 10 m, so 10 × 10 = 100 m².",
+    "Circle: radius 40 ÷ (2 × 3.1416) ≈ 6.37 m, so area 3.1416 × 6.37² ≈ 127.3 m².",
+    "127.3 − 100 ≈ 27.3 m² more: over a quarter extra, from the same rope."
+  ],
+  "keywords": [
+    "isoperimetric problem",
+    "area",
+    "perimeter",
+    "circles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blåsjö, The isoperimetric problem, American Mathematical Monthly, 2005",
+  "source_kind": "paper",
+  "reference": "Viktor Blåsjö, The Isoperimetric Problem, American Mathematical Monthly 112(6):526–566, 2005",
+  "written": "2026-10-17"
+}

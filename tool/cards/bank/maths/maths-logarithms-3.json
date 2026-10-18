@@ -1,0 +1,33 @@
+{
+  "id": "maths-logarithms-3",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.logarithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a slide rule multiply two numbers by simply sliding one ruler along another?",
+  "answer": "By adding lengths. Its scales are marked by logarithm, so each number sits at a distance equal to its log, and log a + log b = log ab. Set 1 against 2, look along to 3, and you land on 6. From the 1620s until pocket calculators in the 1970s, engineers multiplied this way.",
+  "move": "Logarithms turn multiplying into adding, which is why they were invented.",
+  "ask": "Which hard sum could I make easy by changing the scale I measure it on?",
+  "keywords": [
+    "slide rule",
+    "logarithms",
+    "john napier",
+    "calculation"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smithsonian Institution, slide rules",
+  "source_kind": "institution",
+  "reference": "https://www.si.edu/spotlight/slide-rules",
+  "written": "2026-10-17"
+}

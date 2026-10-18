@@ -1,0 +1,43 @@
+{
+  "id": "maths-scaling-4",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A recipe fills a 20 cm round tin. How many times the batter does a 28 cm tin need, for a cake as deep?",
+  "value": 1.96,
+  "unit": "times the batter",
+  "tolerance": 0.05,
+  "answer": "1.96, about twice the batter, though the tin is only 40% wider.",
+  "move": "Scale a recipe by the tin's area, which grows as the width squared.",
+  "ask": "Which recipe or plan have I scaled by width when area was what mattered?",
+  "trap": "1.4 times, scaling the batter with the width.",
+  "hint": "Compare the areas of the two tins, not their widths.",
+  "steps": [
+    "A circle's area grows with the square of its width.",
+    "(28 ÷ 20)² = 1.4² = 1.96.",
+    "1.96, about twice the batter, though the tin is only 40% wider."
+  ],
+  "keywords": [
+    "cake tins",
+    "area scaling",
+    "baking",
+    "square law"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Euclid, Elements, Book XII, Proposition 2",
+  "source_kind": "book",
+  "reference": "https://mathcs.clarku.edu/~djoyce/java/elements/bookXII/propXII2.html",
+  "written": "2026-10-17"
+}

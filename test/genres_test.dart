@@ -8,6 +8,7 @@ import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/genres_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/subject_icon.dart';
 
 Future<AppState> _app(Map<String, double> mix) async {
@@ -102,7 +103,7 @@ void main() {
           expect(genreIdOf(strand.id), genre.id);
         }
       }
-      expect(kAllGenres, hasLength(196));
+      expect(kAllGenres, hasLength(202));
     });
   });
 
@@ -184,10 +185,35 @@ void main() {
       );
     });
 
-    testWidgets('the title is the wheel it belongs to', (tester) async {
+    testWidgets('the title asks its own question, not the wheel\'s again', (
+      tester,
+    ) async {
       final app = await _app({'history': 1.0});
       await _pump(tester, app);
-      expect(find.text('Your mix'), findsOneWidget);
+      expect(find.text('Which parts?'), findsOneWidget);
+      expect(find.text('Your mix'), findsNothing);
+    });
+
+    testWidgets('it stays dark like the wheel, whatever the phone\'s theme', (
+      tester,
+    ) async {
+      final app = await _app({'history': 1.0});
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAstutoTheme(Brightness.light),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),
+        ),
+      );
+      await tester.pump();
+      final Scaffold page = tester.widget(
+        find.descendant(
+          of: find.byType(GenresScreen),
+          matching: find.byType(Scaffold),
+        ),
+      );
+      expect(page.backgroundColor, Palette.dark.surface);
     });
   });
 
@@ -197,7 +223,7 @@ void main() {
     ) async {
       final app = await _app({'history': 1.0});
       await _pump(tester, app);
-      expect(find.text('Continue · 196 of 196 genres on'), findsOneWidget);
+      expect(find.text('Continue · 202 of 202 genres on'), findsOneWidget);
     });
 
     testWidgets('a genre tapped off is handed over at the end', (tester) async {
@@ -207,7 +233,7 @@ void main() {
 
       await tester.tap(find.text('Ancient Rome'));
       await tester.pump();
-      expect(find.text('Continue · 195 of 196 genres on'), findsOneWidget);
+      expect(find.text('Continue · 201 of 202 genres on'), findsOneWidget);
 
       await tester.tap(find.textContaining('Continue ·'));
       await tester.pump();
@@ -261,7 +287,7 @@ void main() {
       await app.setGenresOff({'history.ancient_rome'}, const {});
 
       await _pump(tester, app);
-      expect(find.text('Continue · 195 of 196 genres on'), findsOneWidget);
+      expect(find.text('Continue · 201 of 202 genres on'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.genresOff'), ['history.ancient_rome']);

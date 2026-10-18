@@ -119,8 +119,21 @@ class _GenresScreenState extends State<GenresScreen> {
     });
   }
 
+  /// The page's own theme: dark, whatever the phone's.
+  ///
+  /// This is the mix one layer down, the step after the wheel and a part of
+  /// it, and the intro and the wheel before it are black in either theme.
+  /// Following the phone, it alone turned cream in the middle of the first
+  /// run, as if the reader had been handed to a different app.
+  static final ThemeData _dark = buildAstutoTheme(Brightness.dark);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Theme(
+    data: _dark,
+    child: Builder(builder: _page),
+  );
+
+  Widget _page(BuildContext context) {
     final l = context.l10n;
     final Palette p = context.p;
 
@@ -148,8 +161,11 @@ class _GenresScreenState extends State<GenresScreen> {
                               Row(
                                 children: [
                                   Expanded(
+                                    // Its own question. It used to repeat
+                                    // the wheel's "Your mix", so the step
+                                    // read as the same screen again.
                                     child: Text(
-                                      l.yourMix,
+                                      l.genresTitle,
                                       style: AppText.display(
                                         size: 28,
                                         weight: FontWeight.w600,

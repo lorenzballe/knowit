@@ -1,0 +1,43 @@
+{
+  "id": "maths-risk-7",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "In 1654 the Chevalier de Méré bet on rolling at least one six in four throws of a die. What was his chance, in percent?",
+  "value": 51.8,
+  "unit": "percent",
+  "tolerance": 0.2,
+  "answer": "51.8%, a small edge. His other bet, a double six in 24 throws of two dice, came to 49.1% and lost; Pascal and Fermat's letters on such puzzles began probability theory.",
+  "move": "For at least once, find the chance of never, then subtract it from one.",
+  "ask": "Which at-least-once risk have I judged by adding chances together?",
+  "trap": "67%, adding four chances of one in six.",
+  "hint": "Work out the chance of no six at all, then subtract it from 1.",
+  "steps": [
+    "No six in one throw: 5/6.",
+    "No six in four: (5/6)⁴ = 625/1,296 ≈ 0.482.",
+    "At least one six: 1 − 0.482 ≈ 51.8%."
+  ],
+  "keywords": [
+    "de mere",
+    "dice",
+    "probability",
+    "pascal and fermat"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolfram MathWorld, de Méré's problem",
+  "source_kind": "reference_work",
+  "reference": "https://mathworld.wolfram.com/deMeresProblem.html",
+  "written": "2026-10-17"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "maths-risk-5",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Average speed on a rural road rises 10%. If fatal crashes grow as speed to the fourth power, by what percent do they rise?",
+  "value": 46,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "About 46% more fatal crashes, from just 10% more speed, by Nilsson's power model.",
+  "move": "When harm grows as a power of speed, small changes in speed matter a lot.",
+  "ask": "Which few km/h do I add on the road, thinking they barely matter?",
+  "trap": "10%, as if crashes grew in step with speed.",
+  "hint": "Raise 1.1 to the fourth power: square it, then square again.",
+  "steps": [
+    "Speed ratio: 1.1.",
+    "Fourth power: 1.1² = 1.21, and 1.21² ≈ 1.464.",
+    "About 46% more fatal crashes, from just 10% more speed."
+  ],
+  "keywords": [
+    "speed",
+    "road safety",
+    "power model",
+    "fatal crashes"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "International Transport Forum, Speed and crash risk, 2018",
+  "source_kind": "institution",
+  "reference": "https://www.itf-oecd.org/sites/default/files/docs/speed-changes-crash-risk.pdf",
+  "written": "2026-10-17"
+}

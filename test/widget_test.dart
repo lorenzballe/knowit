@@ -403,15 +403,23 @@ void main() {
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
-    expect(find.text('19 of 19 subjects in the mix'), findsOneWidget);
+    expect(find.text('Maths'), findsOneWidget);
+    expect(find.text('20 of 20 subjects in the mix'), findsOneWidget);
 
-    // Press at the very left of a tile — that is zero — and it leaves the
-    // mix, with the count saying so.
-    await tester.tapAt(
-      tester.getTopLeft(find.text('Science')).translate(-28, 6),
+    // A tap on a subject's name changes nothing: it is already in, and a
+    // tap is how every other picker says yes.
+    await tester.tap(find.text('Science'));
+    await _settle(tester);
+    expect(find.text('20 of 20 subjects in the mix'), findsOneWidget);
+
+    // Slid all the way to the left it leaves the mix, with the count
+    // saying so.
+    await tester.dragFrom(
+      tester.getCenter(find.text('Science')),
+      const Offset(-300, 0),
     );
     await _settle(tester);
-    expect(find.text('18 of 19 subjects in the mix'), findsOneWidget);
+    expect(find.text('19 of 20 subjects in the mix'), findsOneWidget);
 
     await tester.tap(find.text('Next'));
     await _settle(tester);
@@ -419,7 +427,7 @@ void main() {
     // Three: the same answer one layer finer — the six genres inside each
     // subject, most asked-for subject first. Walked past here; it has a
     // run of its own in test/genres_test.dart.
-    expect(find.text('Your mix'), findsOneWidget);
+    expect(find.text('Which parts?'), findsOneWidget);
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
@@ -2037,7 +2045,7 @@ void main() {
     await _settle(tester);
 
     // Three: the genres under it, which can be walked past.
-    expect(find.text('Your mix'), findsOneWidget);
+    expect(find.text('Which parts?'), findsOneWidget);
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
@@ -2058,7 +2066,7 @@ void main() {
     await _settle(tester);
     await tester.tap(find.text('Next'));
     await _settle(tester);
-    expect(find.text('Your mix'), findsOneWidget);
+    expect(find.text('Which parts?'), findsOneWidget);
     // Answered rather than walked past: the same road, to the cards.
     await tester.tap(find.textContaining('genres on'));
     await _settle(tester);
@@ -5172,7 +5180,7 @@ void main() {
       ];
       const titles = [
         'Astute',
-        'Nineteen topics, five cards',
+        'Twenty topics, five cards',
         'A question, how sure, then why',
         'You choose the mix',
         'Two minutes a day',
@@ -5239,7 +5247,7 @@ void main() {
           'Learn the why behind things, and how far to trust what you know',
         ),
         (
-          'Nineteen topics, five cards',
+          'Twenty topics, five cards',
           'Written ahead by a model, and each one names its source.',
         ),
         (

@@ -43,6 +43,7 @@ Come usare bene ognuna: le skill `mo-*` (vedi `SKILLS.md`).
 | Sport | `#A6FF00` | `#10100c` | `#5f9400` |
 | Nature | `#00D451` | `#10100c` | `#007a2f` |
 | Science | `#00E5A0` | `#10100c` | `#00835b` |
+| Maths | `#0E9A70` | `#ffffff` | `#085941` |
 | Language | `#00D9D9` | `#10100c` | `#007f80` |
 | Technology | `#00A6FF` | `#10100c` | `#005e91` |
 | Space | `#2B5CFF` | `#ffffff` | `#152f8f` |

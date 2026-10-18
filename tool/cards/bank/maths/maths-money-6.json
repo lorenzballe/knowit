@@ -1,0 +1,43 @@
+{
+  "id": "maths-money-6",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In 2023 many UK phone contracts rose by inflation plus 3.9%. With inflation at 10.5%, what did a £20 monthly bill become?",
+  "value": 22.88,
+  "unit": "pounds",
+  "tolerance": 0.02,
+  "answer": "£22.88 a month, 14.4% more. Ofcom banned inflation-linked rises in new contracts from January 2025: rises must now be set out in pounds and pence.",
+  "move": "Turn every percentage rise into pounds before agreeing to it.",
+  "ask": "Which contract of mine rises by a formula I have never turned into pounds?",
+  "trap": "£22.10, applying only the 10.5% inflation.",
+  "hint": "Add the 3.9 points to inflation first, then apply the total rise.",
+  "steps": [
+    "Inflation plus 3.9: 10.5 + 3.9 = 14.4%.",
+    "£20 × 1.144 = £22.88.",
+    "£2.88 more a month: £34.56 more over the year."
+  ],
+  "keywords": [
+    "mobile contracts",
+    "price rises",
+    "inflation",
+    "percentages"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Choose, Ofcom bans inflation-linked mid-contract price rises, 2024",
+  "source_kind": "news_archive",
+  "reference": "https://choose.co.uk/news/2024/ofcom-bans-inflation-linked-mid-contract-price-rises",
+  "written": "2026-10-17"
+}

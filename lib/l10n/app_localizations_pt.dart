@@ -995,7 +995,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Está tudo dentro. Arrasta um tema para baixo para ver menos, ou até zero para o tirar.';
+      'Está tudo dentro. Desliza um tema para a esquerda para ver menos, ou até ao fim para o tirar.';
 
   @override
   String get next => 'Seguinte';
@@ -1035,7 +1035,7 @@ class AppLocalizationsPt extends AppLocalizations {
       'Percebe o porquê das coisas e até que ponto podes confiar no que sabes';
 
   @override
-  String get introTopicsTitle => 'Dezanove temas, cinco cartas';
+  String get introTopicsTitle => 'Vinte temas, cinco cartas';
 
   @override
   String get introTopicsLine =>
@@ -1828,8 +1828,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get yourMix => 'A tua mistura';
 
   @override
+  String get genresTitle => 'Que partes?';
+
+  @override
   String get genresLine =>
-      'Toca num género para o saltar. Mantém premido e os três fios lá dentro abrem-se logo abaixo.';
+      'Toca num género para o saltar. Mantém premido e os temas mais pequenos lá dentro abrem-se logo abaixo.';
 
   @override
   String get insideGenre => 'Dentro';

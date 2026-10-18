@@ -1,0 +1,40 @@
+{
+  "id": "maths-averages-8",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A product online averages 3.5 stars. What do its individual ratings most likely look like?",
+  "options": [
+    "Mostly 3s and 4s",
+    "Mostly 5s, with a pile of 1s",
+    "Spread evenly from 1 to 5"
+  ],
+  "correct": 1,
+  "answer": "Mostly 5s, with a pile of 1s. Hu, Pavlou and Zhang found Amazon ratings usually form a J: heaps of 5-star reviews, a smaller heap of 1s and few in between, because mostly the delighted and the furious bother to write. An average of such ratings hides a split crowd.",
+  "move": "Before trusting an average, ask what shape the numbers behind it make.",
+  "ask": "Which average rating have I trusted without looking at how the votes split?",
+  "trap": "Mostly 3s and 4s, picturing the average as typical.",
+  "keywords": [
+    "online reviews",
+    "averages",
+    "self-selection",
+    "distributions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hu, Pavlou and Zhang, Overcoming the J-shaped distribution of product reviews, Communications of the ACM, 2009",
+  "source_kind": "paper",
+  "reference": "Nan Hu, Paul A. Pavlou and Jie Zhang, Overcoming the J-Shaped Distribution of Product Reviews, Communications of the ACM 52(10):144–147, 2009",
+  "written": "2026-10-17"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "maths-risk-3",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "EuroMillions: pick 5 numbers from 50 and 2 Lucky Stars from 12. What are the jackpot odds, in millions to one?",
+  "value": 139.8,
+  "unit": "million to one",
+  "tolerance": 0.5,
+  "answer": "About 140 million to one: with two draws a week, one ticket a draw would win about once in 1.3 million years.",
+  "move": "Count the combinations before trusting a feeling about the odds.",
+  "ask": "Which tiny chance am I paying for regularly without having counted it?",
+  "trap": "A few million to one, multiplying only the main numbers loosely.",
+  "hint": "Count the ways to choose 5 from 50, then 2 from 12, and multiply.",
+  "steps": [
+    "5 from 50: (50 × 49 × 48 × 47 × 46) ÷ (5 × 4 × 3 × 2 × 1) = 2,118,760.",
+    "2 from 12: (12 × 11) ÷ 2 = 66.",
+    "2,118,760 × 66 = 139,838,160: about 140 million to one."
+  ],
+  "keywords": [
+    "euromillions",
+    "lottery odds",
+    "combinations",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The National Lottery, EuroMillions odds of winning",
+  "source_kind": "company",
+  "reference": "The National Lottery (UK), EuroMillions game procedures and odds of winning, 2024",
+  "written": "2026-10-17"
+}

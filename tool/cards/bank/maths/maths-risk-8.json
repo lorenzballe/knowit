@@ -1,0 +1,43 @@
+{
+  "id": "maths-risk-8",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Each cereal box hides one of 6 toys, at random. On average, how many boxes does it take to collect all six?",
+  "value": 14.7,
+  "unit": "boxes",
+  "tolerance": 0.1,
+  "answer": "14.7 boxes, and the last toy alone takes 6 on average: the final few always cost the most.",
+  "move": "Completing a set costs most at the end, as new finds grow rare.",
+  "ask": "Which collection or checklist am I near finishing, and what will the last item cost?",
+  "trap": "6 boxes, one for each toy.",
+  "hint": "Add the average wait for each new toy: 6/6, then 6/5, and so on.",
+  "steps": [
+    "With k toys found, a new one turns up every 6 ÷ (6 − k) boxes on average.",
+    "6/6 + 6/5 + 6/4 + 6/3 + 6/2 + 6/1 = 1 + 1.2 + 1.5 + 2 + 3 + 6.",
+    "14.7 boxes, and the last toy alone takes 6."
+  ],
+  "keywords": [
+    "coupon collector",
+    "probability",
+    "expected value",
+    "collecting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ross, A First Course in Probability, 2019",
+  "source_kind": "book",
+  "reference": "Sheldon Ross, A First Course in Probability, tenth edition, Pearson, 2019",
+  "written": "2026-10-17"
+}

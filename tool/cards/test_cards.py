@@ -64,7 +64,7 @@ def thinking_card(**over) -> dict:
 class TheGenres(unittest.TestCase):
     def test_the_tree_is_read_off_the_app(self):
         tree = genres.by_topic()
-        self.assertEqual(len(tree), 19)
+        self.assertEqual(len(tree), 20)
         self.assertNotIn("thinking", tree)
         for topic, gs in tree.items():
             self.assertGreaterEqual(len(gs), 6, topic)

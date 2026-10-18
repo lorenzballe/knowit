@@ -1,0 +1,40 @@
+{
+  "id": "maths-money-8",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Bank A pays 4.00% once a year. Bank B pays 3.95% a year, credited monthly. Which earns more over a year?",
+  "options": [
+    "Bank A",
+    "Bank B",
+    "Exactly the same"
+  ],
+  "correct": 1,
+  "answer": "Bank B, just. Monthly credits earn interest on interest: (1 + 0.0395 ÷ 12)¹² ≈ 1.0402, an annual equivalent rate of 4.02%. That is what the AER quoted on UK savings accounts does: it folds the compounding into one number you can compare.",
+  "move": "Compare savings by the yearly equivalent rate, not the headline rate.",
+  "ask": "Which two rates have I compared that were compounded on different schedules?",
+  "trap": "Bank A, because 4.00 is bigger than 3.95.",
+  "keywords": [
+    "aer",
+    "compound interest",
+    "savings accounts",
+    "interest rates"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Financial Conduct Authority, Handbook glossary, annual equivalent rate",
+  "source_kind": "institution",
+  "reference": "Financial Conduct Authority, FCA Handbook glossary: annual equivalent rate (AER), 2024",
+  "written": "2026-10-17"
+}

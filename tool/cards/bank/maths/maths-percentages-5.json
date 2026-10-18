@@ -1,0 +1,43 @@
+{
+  "id": "maths-percentages-5",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Semi-skimmed milk: 1.8 g fat and 50 kcal per 100 ml. A gram of fat gives 9 kcal. What percent of its energy is fat?",
+  "value": 32,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "About 32% of its energy, though fat is under 2% of its weight.",
+  "move": "Ask what a percentage is out of: weight, energy or price.",
+  "ask": "Which label percentage have I read without asking what it was a share of?",
+  "trap": "About 2%, reading the fat by weight as its share of energy.",
+  "hint": "Turn the grams of fat into kilocalories, then compare with the total.",
+  "steps": [
+    "Energy from fat: 1.8 g × 9 kcal = 16.2 kcal.",
+    "Share of the total: 16.2 ÷ 50 ≈ 0.32.",
+    "About 32% of its energy, though fat is under 2% of its weight."
+  ],
+  "keywords": [
+    "food labels",
+    "percentages",
+    "milk",
+    "energy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Regulation 1169/2011 on food information, energy conversion factors",
+  "source_kind": "primary_document",
+  "reference": "https://eur-lex.europa.eu/eli/reg/2011/1169/oj",
+  "written": "2026-10-17"
+}

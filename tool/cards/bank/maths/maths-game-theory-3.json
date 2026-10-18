@@ -1,0 +1,40 @@
+{
+  "id": "maths-game-theory-3",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1997 Financial Times readers picked numbers from 0 to 100; the winner was closest to two-thirds of the average. What won?",
+  "options": [
+    "33",
+    "13",
+    "0"
+  ],
+  "correct": 1,
+  "answer": "13. If everyone picked at random, two-thirds of 50 would be 33; if everyone saw that, 22; and so on down to 0, the logical answer. Real readers stopped after a step or two, so the winner was 13. Against people, guess how far they think, not how far logic goes.",
+  "move": "In a game, out-think the players you face, not ideal ones.",
+  "ask": "Where am I planning for perfectly rational rivals instead of real ones?",
+  "trap": "Zero, the logical answer, as if everyone reasoned all the way.",
+  "keywords": [
+    "beauty contest",
+    "game theory",
+    "richard thaler",
+    "level-k thinking"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kreinovich et al., on Thaler's 1997 Financial Times contest, University of Texas at El Paso technical report",
+  "source_kind": "paper",
+  "reference": "https://scholarworks.utep.edu/cs_techrep/1197",
+  "written": "2026-10-17"
+}
