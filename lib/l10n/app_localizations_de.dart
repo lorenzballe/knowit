@@ -877,6 +877,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderAskOther => 'Andere Uhrzeit';
 
   @override
+  String get reminderAskUsual => 'Wann du meistens liest';
+
+  @override
   String get reminderAskYes => 'Erinnere mich';
 
   @override

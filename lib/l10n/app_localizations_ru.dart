@@ -915,6 +915,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get reminderAskOther => 'Другое время';
 
   @override
+  String get reminderAskUsual => 'Когда ты обычно читаешь';
+
+  @override
   String get reminderAskYes => 'Напоминать';
 
   @override

@@ -473,7 +473,7 @@ void main() {
     testWidgets('not in the sitting the reminder sheet was put in, but in the '
         'next', (tester) async {
       Push.useForTest(_Asker());
-      // The reminder's "Not now" was said yesterday: it is due again
+      // The reminder's "Not now" was said three days ago: it is due again
       // tonight, on the same evening the place sheet is first due.
       SharedPreferences.setMockInitialValues({
         'knowit.onboarded': true,
@@ -481,7 +481,7 @@ void main() {
         'knowit.reviewAsked': true,
         ..._finished(2),
         'knowit.pushDeferrals': 1,
-        'knowit.pushDeferredAfter': _key(_day(-1)),
+        'knowit.pushDeferredAfter': _key(_day(-3)),
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);

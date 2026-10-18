@@ -193,6 +193,7 @@
   "reminderAskLunch": "中午",
   "reminderAskEvening": "晚上",
   "reminderAskOther": "其他时间",
+  "reminderAskUsual": "你平时阅读的时间",
   "reminderAskYes": "提醒我",
   "reminderAskNotNow": "暂不",
   "placeAskTitle": "关于你住的地方的卡片",

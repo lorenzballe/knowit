@@ -609,7 +609,15 @@ class _AstutoRootState extends State<AstutoRoot> {
     _pushAskedThisSession = true;
     _askedThisSitting = true;
     _trialAskDue = false;
-    Analytics.capture('push preprompt shown', {'reason': reason});
+    // Where the sheet starts, and whether the reader's habit chose it: read
+    // against the time answered, it says whether the habit was the right
+    // guess.
+    final String? habit = habitReminderTime(_app);
+    Analytics.capture('push preprompt shown', {
+      'reason': reason,
+      'starts_on': habit ?? _app.notifyTime,
+      'from_habit': habit != null,
+    });
     final String? at = await showReminderAsk(context, _app);
     if (!mounted) return;
     Analytics.capture('push preprompt answered', {'choice': at ?? 'not now'});

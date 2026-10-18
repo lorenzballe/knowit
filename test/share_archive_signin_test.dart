@@ -520,7 +520,7 @@ void main() {
     });
   });
 
-  group('An account is offered once, after the first finished day', () {
+  group('An account is offered once, when the reader is back for a day', () {
     Future<AppState> app(Map<String, Object> prefs) async {
       SharedPreferences.setMockInitialValues(prefs);
       final AppState app = AppState(
@@ -534,12 +534,19 @@ void main() {
       return app;
     }
 
-    test('not before a day is behind the reader', () async {
+    test('not before a day is behind the reader, nor after only the '
+        'first', () async {
       expect((await app(_free())).shouldOfferAccount, isFalse);
+      expect(
+        (await app(_free(days: [_daysAgo(1)]))).shouldOfferAccount,
+        isFalse,
+      );
     });
 
-    test('after one, once, and again for somebody new', () async {
-      final AppState reader = await app(_free(days: [_daysAgo(1)]));
+    test('after another, once, and again for somebody new', () async {
+      final AppState reader = await app(
+        _free(days: [_daysAgo(2), _daysAgo(1)]),
+      );
       expect(reader.shouldOfferAccount, isTrue);
       await reader.notedAccountOffered();
       expect(reader.shouldOfferAccount, isFalse);

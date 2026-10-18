@@ -193,6 +193,7 @@
   "reminderAskLunch": "お昼",
   "reminderAskEvening": "夜",
   "reminderAskOther": "別の時間",
+  "reminderAskUsual": "いつも読んでいる時間",
   "reminderAskYes": "通知を受け取る",
   "reminderAskNotNow": "今はしない",
   "placeAskTitle": "あなたの住む場所のカード",

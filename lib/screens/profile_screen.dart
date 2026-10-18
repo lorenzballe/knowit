@@ -68,6 +68,31 @@ class ProfileScreen extends StatelessWidget {
     onToday?.call();
   }
 
+  /// The time of the daily nudge, on the phone's own clock. Chosen once on
+  /// the sheet that asked, it was then shown here and could not be moved.
+  Future<void> _pickNudgeTime(BuildContext context) async {
+    final List<String> parts = app.notifyTime.split(':');
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(
+        hour: int.tryParse(parts.first) ?? 8,
+        minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
+      ),
+    );
+    if (picked == null || !context.mounted) return;
+    final String at =
+        '${picked.hour.toString().padLeft(2, '0')}:'
+        '${picked.minute.toString().padLeft(2, '0')}';
+    if (at == app.notifyTime) return;
+    await app.setNotifyTime(at);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(context.l10n.dailyNudgeMovedTo(clockTime(context, at))),
+      ),
+    );
+  }
+
   Future<void> _editTopics(BuildContext context) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
@@ -406,32 +431,64 @@ class ProfileScreen extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.l10n.everyDayAt(
-                          clockTime(context, app.notifyTime),
-                        ),
-                        style: AppText.body(
-                          size: 14.5,
-                          weight: FontWeight.w500,
-                          height: 1.2,
-                          color: context.p.ink,
-                        ),
+                  // The time is the reader's to move while the nudge is on:
+                  // a tap on it opens the clock.
+                  child: Semantics(
+                    button: app.nudgeShownOn,
+                    child: GestureDetector(
+                      key: const ValueKey('nudge-time'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: app.nudgeShownOn
+                          ? () => _pickNudgeTime(context)
+                          : null,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  context.l10n.everyDayAt(
+                                    clockTime(context, app.notifyTime),
+                                  ),
+                                  style: AppText.body(
+                                    size: 14.5,
+                                    weight: FontWeight.w500,
+                                    height: 1.2,
+                                    color: context.p.ink,
+                                  ),
+                                ),
+                              ),
+                              if (app.nudgeShownOn) ...[
+                                const SizedBox(width: 2),
+                                Icon(
+                                  Icons.expand_more_rounded,
+                                  size: 18,
+                                  color: context.p.inkMuted,
+                                ),
+                              ],
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          // The first coffee only where the nudge comes
+                          // before ten: the sheet now starts on the hour the
+                          // reader reads at, and for most that is evening.
+                          Text(
+                            !remindersSupported
+                                ? context.l10n.browserOnlySpeaksOpen
+                                : app.notifyTime.compareTo('10:00') < 0 &&
+                                      app.notifyTime.compareTo('05:00') >= 0
+                                ? context.l10n.yourFivePillsBeforeCoffee
+                                : context.l10n.reminderAskLine,
+                            style: AppText.body(
+                              size: 12,
+                              height: 1.3,
+                              color: context.p.inkMuted,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        remindersSupported
-                            ? context.l10n.yourFivePillsBeforeCoffee
-                            : context.l10n.browserOnlySpeaksOpen,
-                        style: AppText.body(
-                          size: 12,
-                          height: 1.3,
-                          color: context.p.inkMuted,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 const SizedBox(width: 14),

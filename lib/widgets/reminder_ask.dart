@@ -10,6 +10,36 @@ import 'ui.dart';
 /// coffee, at lunch, and the evening, when most days are read.
 const List<String> kReminderTimes = ['08:30', '12:30', '19:00'];
 
+/// The reminder that suits a reader who starts reading [minute] minutes
+/// after midnight, as "HH:mm": one of the three, when it falls in the hour
+/// before that or a quarter of an hour after it; otherwise that time itself,
+/// to the quarter hour before. A nudge is worth most just as the reader
+/// would open the app anyway, and least once they have gone to bed.
+String reminderTimeFor(int minute) {
+  for (final String at in kReminderTimes) {
+    final int ahead = minute - _minuteOf(at);
+    if (ahead >= -15 && ahead <= 60) return at;
+  }
+  final int at = minute - minute % 15;
+  return '${(at ~/ 60).toString().padLeft(2, '0')}:'
+      '${(at % 60).toString().padLeft(2, '0')}';
+}
+
+/// The time the reader's habit points to ([AppState.usualReadMinute]), as
+/// a reminder would fall for it, while they have not picked one of their
+/// own; null once they have, or before there is a card to go by. Where the
+/// sheet starts, and what it says it started on.
+String? habitReminderTime(AppState app) {
+  if (app.notifyTimeChosen) return null;
+  final int? minute = app.usualReadMinute;
+  return minute == null ? null : reminderTimeFor(minute);
+}
+
+int _minuteOf(String at) {
+  final List<String> parts = at.split(':');
+  return int.parse(parts[0]) * 60 + int.parse(parts[1]);
+}
+
 /// Asks when to remind the reader, before the system asks whether it may.
 ///
 /// iOS shows its notification prompt once, and a no there closes the one
@@ -42,9 +72,14 @@ class ReminderAsk extends StatefulWidget {
 }
 
 class _ReminderAskState extends State<ReminderAsk> {
-  /// The time chosen, starting on the one the reminder is already set to:
-  /// what is armed should be what the sheet shows.
-  late String _at = widget.app.notifyTime;
+  /// The time the reader has been starting to read at, as a reminder would
+  /// fall for it, until they pick one of their own ([habitReminderTime]).
+  late final String? _usual = habitReminderTime(widget.app);
+
+  /// The time chosen, starting on the reader's habit, or on the time the
+  /// reminder is already set to once they have picked one: what is armed
+  /// should be what the sheet shows.
+  late String _at = _usual ?? widget.app.notifyTime;
 
   /// A time of the reader's own, once there is one: picked on the clock, or
   /// already set to something other than the three.
@@ -162,6 +197,7 @@ class _ReminderAskState extends State<ReminderAsk> {
               _Choice(
                 key: ValueKey('reminder-at-$at'),
                 label: label,
+                note: at == _usual ? l.reminderAskUsual : null,
                 time: _shown(at),
                 chosen: _at == at,
                 onTap: () => _choose(at),
@@ -171,6 +207,7 @@ class _ReminderAskState extends State<ReminderAsk> {
             _Choice(
               key: const ValueKey('reminder-at-own'),
               label: l.reminderAskOther,
+              note: own != null && own == _usual ? l.reminderAskUsual : null,
               time: own == null ? null : _shown(own),
               chosen: own != null && _at == own,
               onTap: own == null || _at == own ? _pickOwn : () => _choose(own),
@@ -196,9 +233,11 @@ class _ReminderAskState extends State<ReminderAsk> {
 }
 
 /// One time of day, as a row to tap: a ring, filled once it is the one,
-/// the name of the time, and the time itself at the far end.
+/// the name of the time, and the time itself at the far end. [note], under
+/// the name, says why the sheet started on it.
 class _Choice extends StatelessWidget {
   final String label;
+  final String? note;
   final String? time;
   final bool chosen;
   final VoidCallback onTap;
@@ -206,6 +245,7 @@ class _Choice extends StatelessWidget {
   const _Choice({
     super.key,
     required this.label,
+    this.note,
     required this.time,
     required this.chosen,
     required this.onTap,
@@ -254,14 +294,28 @@ class _Choice extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: Text(
-                  label,
-                  style: AppText.body(
-                    size: 14.5,
-                    weight: FontWeight.w500,
-                    height: 1.3,
-                    color: ink,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: AppText.body(
+                        size: 14.5,
+                        weight: FontWeight.w500,
+                        height: 1.3,
+                        color: ink,
+                      ),
+                    ),
+                    if (note case final String note)
+                      Text(
+                        note,
+                        style: AppText.body(
+                          size: 12,
+                          height: 1.3,
+                          color: ink.withValues(alpha: 0.66),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               if (time != null) ...[

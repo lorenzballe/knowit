@@ -1278,6 +1278,12 @@ abstract class AppLocalizations {
   /// **'Another time'**
   String get reminderAskOther;
 
+  /// A note under the time on the reminder sheet that the sheet started on, because the reader tends to start reading then.
+  ///
+  /// In en, this message translates to:
+  /// **'When you usually read'**
+  String get reminderAskUsual;
+
   /// The reminder sheet's button: keeps the time chosen, then the system asks whether the app may send notifications.
   ///
   /// In en, this message translates to:
