@@ -258,7 +258,7 @@
   "keepStreakTitle": "Не потеряй серию",
   "keepStreakLine": "Войди, и новый телефон продолжит с того места, где остановился этот: твоя серия, сохранённые карточки, твоя история.",
   "signInNotNow": "Не сейчас",
-  "subjectName": "{topic, select, thinking{Мышление} science{Наука} space{Космос} psychology{Психология} economics{Экономика} technology{Технологии} history{История} human_body{Тело человека} philosophy{Философия} pop_culture{Поп-культура} nature{Природа} language{Язык} weird_facts{Курьёзы} sport{Спорт} cinema{Кино} music{Музыка} art{Искусство} medicine{Медицина} food{Еда} life{Жизнь} other{{topic}}}",
+  "subjectName": "{topic, select, thinking{Мышление} science{Наука} maths{Математика} space{Космос} psychology{Психология} economics{Экономика} technology{Технологии} history{История} human_body{Тело человека} philosophy{Философия} pop_culture{Поп-культура} nature{Природа} language{Язык} weird_facts{Курьёзы} sport{Спорт} cinema{Кино} music{Музыка} art{Искусство} medicine{Медицина} food{Еда} life{Жизнь} other{{topic}}}",
   "cardsInEnglishNote": "Карточки пока на английском; приложение говорит на твоём языке.",
   "termsLine": "Продолжая, ты принимаешь {terms} и {privacy}",
   "termsLineTerms": "Условия использования",

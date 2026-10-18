@@ -1091,6 +1091,7 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(topic, {
       'thinking': '생각',
       'science': '과학',
+      'maths': '수학',
       'space': '우주',
       'psychology': '심리학',
       'economics': '경제',

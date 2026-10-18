@@ -1127,6 +1127,7 @@ class AppLocalizationsEs extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(topic, {
       'thinking': 'Pensamiento',
       'science': 'Ciencia',
+      'maths': 'Matemáticas',
       'space': 'Espacio',
       'psychology': 'Psicología',
       'economics': 'Economía',

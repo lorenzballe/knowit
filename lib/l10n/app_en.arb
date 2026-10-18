@@ -1065,7 +1065,7 @@
  "@signInNotNow": {
   "description": "The way past the sign-in sheet, without an account."
  },
- "subjectName": "{topic, select, thinking{Thinking} science{Science} space{Space} psychology{Psychology} economics{Economics} technology{Technology} history{History} human_body{Human body} philosophy{Philosophy} pop_culture{Pop culture} nature{Nature} language{Language} weird_facts{Weird facts} sport{Sport} cinema{Cinema} music{Music} art{Art} medicine{Medicine} food{Food} life{Life} other{{topic}}}",
+ "subjectName": "{topic, select, thinking{Thinking} science{Science} maths{Maths} space{Space} psychology{Psychology} economics{Economics} technology{Technology} history{History} human_body{Human body} philosophy{Philosophy} pop_culture{Pop culture} nature{Nature} language{Language} weird_facts{Weird facts} sport{Sport} cinema{Cinema} music{Music} art{Art} medicine{Medicine} food{Food} life{Life} other{{topic}}}",
  "@subjectName": {
   "description": "A subject's name, by its key. Shown on the mix, the cards, the shelves and wherever else a subject is named. Keep each short: the mix sets them on one line in half the screen's width.",
   "placeholders": {

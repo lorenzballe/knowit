@@ -1080,6 +1080,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(topic, {
       'thinking': '思维',
       'science': '科学',
+      'maths': '数学',
       'space': '太空',
       'psychology': '心理学',
       'economics': '经济',

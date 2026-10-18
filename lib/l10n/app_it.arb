@@ -258,7 +258,7 @@
   "keepStreakTitle": "Non perdere la tua serie",
   "keepStreakLine": "Accedi, e un nuovo telefono riparte da dove si ferma questo: la tua serie, le carte salvate, il tuo record.",
   "signInNotNow": "Non ora",
-  "subjectName": "{topic, select, thinking{Pensiero} science{Scienza} space{Spazio} psychology{Psicologia} economics{Economia} technology{Tecnologia} history{Storia} human_body{Corpo umano} philosophy{Filosofia} pop_culture{Cultura pop} nature{Natura} language{Lingua} weird_facts{Stranezze} sport{Sport} cinema{Cinema} music{Musica} art{Arte} medicine{Medicina} food{Cibo} life{Vita} other{{topic}}}",
+  "subjectName": "{topic, select, thinking{Pensiero} science{Scienza} maths{Matematica} space{Spazio} psychology{Psicologia} economics{Economia} technology{Tecnologia} history{Storia} human_body{Corpo umano} philosophy{Filosofia} pop_culture{Cultura pop} nature{Natura} language{Lingua} weird_facts{Stranezze} sport{Sport} cinema{Cinema} music{Musica} art{Arte} medicine{Medicina} food{Cibo} life{Vita} other{{topic}}}",
   "cardsInEnglishNote": "Le carte, per ora, sono in inglese; l’app parla la tua lingua.",
   "termsLine": "Continuando accetti i {terms} e la {privacy}",
   "termsLineTerms": "Termini d’uso",

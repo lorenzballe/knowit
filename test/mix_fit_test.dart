@@ -7,7 +7,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/data/topics.dart';
-import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/theme.dart';
 
@@ -60,15 +60,18 @@ void main() {
       if (error != null) {
         problems.add('[$locale] ${error.toString().split('\n').first}');
       }
+      final AppLocalizations l = lookupAppLocalizations(locale);
       for (final MixSubject s in kMixSubjects) {
-        final Finder name = find.text(s.name);
+        // Each tile carries its subject's name in the reader's language.
+        final String shown = l.subjectOf(s.name);
+        final Finder name = find.text(shown);
         if (name.evaluate().isEmpty) {
-          problems.add('[$locale] no tile named ${s.name}');
+          problems.add('[$locale] no tile named $shown');
           continue;
         }
         // The whole name, on one line, inside its tile.
         final RenderParagraph p = tester.renderObject(name);
-        if (p.didExceedMaxLines) problems.add('[$locale] ${s.name} is cut');
+        if (p.didExceedMaxLines) problems.add('[$locale] $shown is cut');
       }
     }
     expect(problems, isEmpty);

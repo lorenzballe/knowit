@@ -258,7 +258,7 @@
   "keepStreakTitle": "Não percas a tua sequência",
   "keepStreakLine": "Inicia sessão e um telemóvel novo continua onde este fica: a tua sequência, as tuas cartas guardadas, o teu registo.",
   "signInNotNow": "Agora não",
-  "subjectName": "{topic, select, thinking{Pensamento} science{Ciência} space{Espaço} psychology{Psicologia} economics{Economia} technology{Tecnologia} history{História} human_body{Corpo humano} philosophy{Filosofia} pop_culture{Cultura pop} nature{Natureza} language{Linguagem} weird_facts{Curiosidades} sport{Desporto} cinema{Cinema} music{Música} art{Arte} medicine{Medicina} food{Comida} life{Vida} other{{topic}}}",
+  "subjectName": "{topic, select, thinking{Pensamento} science{Ciência} maths{Matemática} space{Espaço} psychology{Psicologia} economics{Economia} technology{Tecnologia} history{História} human_body{Corpo humano} philosophy{Filosofia} pop_culture{Cultura pop} nature{Natureza} language{Linguagem} weird_facts{Curiosidades} sport{Desporto} cinema{Cinema} music{Música} art{Arte} medicine{Medicina} food{Comida} life{Vida} other{{topic}}}",
   "cardsInEnglishNote": "Por agora, as cartas estão em inglês; a app fala a tua língua.",
   "termsLine": "Ao continuares aceitas os nossos {terms} e a {privacy}",
   "termsLineTerms": "Termos de Utilização",
