@@ -376,7 +376,7 @@ is in its card facts.
 | --- | --- | --- | --- |
 | `reminder opened` | a reminder's tap opened or brought the app forward (also sets the sitting's `entry` to `notification`) | `slot`, `planned_for`, `launched_app` | P |
 | `reminder switched`, `reminder time set` | the reminder settings | `on`, `at` | P |
-| `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason`, `choice`, `granted` | P |
+| `push preprompt shown`, `push preprompt answered`, `push permission asked`, `push permission answered` | asking for notifications | `reason`, `starts_on` (the time the sheet starts on), `from_habit` (whether the reader's usual time chose it), `choice`, `granted` | P |
 | `app opened from widget` | a widget's tap (sets `entry` to `widget`) | `widget`, `pill_id`, `where` | P |
 | `widgets placed` | the set of placed widgets changed | `count`, `widgets`, `kinds` | P |
 

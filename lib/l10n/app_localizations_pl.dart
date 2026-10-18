@@ -911,6 +911,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get reminderAskOther => 'Inna godzina';
 
   @override
+  String get reminderAskUsual => 'Kiedy zwykle czytasz';
+
+  @override
   String get reminderAskYes => 'Przypominaj mi';
 
   @override

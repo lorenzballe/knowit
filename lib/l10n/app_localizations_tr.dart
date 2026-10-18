@@ -868,6 +868,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get reminderAskOther => 'Başka bir saat';
 
   @override
+  String get reminderAskUsual => 'Genelde okuduğun saat';
+
+  @override
   String get reminderAskYes => 'Hatırlat';
 
   @override

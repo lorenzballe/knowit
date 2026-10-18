@@ -106,6 +106,7 @@ class AppState extends ChangeNotifier {
   static const _kRungDates = 'knowit.rungDates';
   static const _kReadDays = 'knowit.readDays';
   static const _kDayLog = 'knowit.dayLog';
+  static const _kReadStarts = 'knowit.readStarts';
   static const _kSaidIds = 'knowit.saidIds';
   static const _kOwnIds = 'knowit.todayOwnIds';
   static const _kAnswers = 'knowit.answersJson';
@@ -113,6 +114,8 @@ class AppState extends ChangeNotifier {
   static const _kTheme = 'knowit.theme';
   static const _kPushAsked = 'knowit.pushAsked';
   static const _kPushDeferrals = 'knowit.pushDeferrals';
+  // The day of the last "Not now", under the name it had when it was the
+  // last day finished before it.
   static const _kPushDeferredAfter = 'knowit.pushDeferredAfter';
   static const _kReviewAsked = 'knowit.reviewAsked';
   static const _kAccountOffered = 'knowit.accountOffered';
@@ -205,6 +208,11 @@ class AppState extends ChangeNotifier {
   /// part of it, laid out as [kLogScore] and the rest say.
   Map<String, List<int>> dayLog = {};
 
+  /// When the reader starts reading: the minute after midnight the first
+  /// card of each day was read at, by date key, for the last fortnight.
+  /// What the reminder sheet starts on (see [usualReadMinute]).
+  Map<String, int> readStarts = {};
+
   /// Cards the reader has said out loud to somebody. The one thing the app
   /// cannot check and the only one that proves the card left the phone.
   List<String> saidIds = [];
@@ -255,13 +263,12 @@ class AppState extends ChangeNotifier {
 
   /// How many times the app's own question about reminders, the sheet that
   /// comes before the system's prompt, was answered "Not now". It comes back
-  /// after the next day finished, until [kPushDeferralsAllowed] of them.
+  /// [kPushAskGapDays] days later, until [kPushDeferralsAllowed] of them.
   int pushDeferrals = 0;
 
-  /// The last day the reader had finished when they last said "Not now", so
-  /// the sheet waits for a day finished after it. Null when they said it
-  /// before finishing any.
-  String? pushDeferredAfter;
+  /// The day the reader last said "Not now", as a date key, so the sheet
+  /// waits for a day finished [kPushAskGapDays] after it.
+  String? pushDeferredOn;
 
   /// The free trial the reader is in, as the store last described it, while
   /// it is set to charge; null otherwise. See [FreeTrial].
@@ -448,7 +455,7 @@ class AppState extends ChangeNotifier {
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
     pushAsked = _prefs.getBool(_kPushAsked) ?? false;
     pushDeferrals = _prefs.getInt(_kPushDeferrals) ?? 0;
-    pushDeferredAfter = _prefs.getString(_kPushDeferredAfter);
+    pushDeferredOn = _prefs.getString(_kPushDeferredAfter);
     reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
     accountOffered = _prefs.getBool(_kAccountOffered) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
@@ -469,6 +476,7 @@ class AppState extends ChangeNotifier {
     rungDates = _decodeDates(_prefs.getString(_kRungDates));
     readDays = _decodeHistory(_prefs.getString(_kReadDays));
     dayLog = _decodeDayLog(_prefs.getString(_kDayLog));
+    readStarts = _decodeReadStarts(_prefs.getString(_kReadStarts));
     // A phone that read before reading was written down by day: what each
     // day dealt says when most of it was read.
     if (readDays.isEmpty && seenIds.isNotEmpty) {
@@ -1148,6 +1156,39 @@ class AppState extends ChangeNotifier {
     if (card) log[kLogParts + partOfDay(DateTime.now().hour).index] += 1;
     dayLog[day] = log;
     await _prefs.setString(_kDayLog, jsonEncode(dayLog));
+    if (card && !readStarts.containsKey(day)) {
+      final DateTime now = _clock();
+      readStarts[day] = now.hour * 60 + now.minute;
+      final List<String> days = readStarts.keys.toList()..sort();
+      while (days.length > 14) {
+        readStarts.remove(days.removeAt(0));
+      }
+      await _prefs.setString(_kReadStarts, jsonEncode(readStarts));
+    }
+  }
+
+  static Map<String, int> _decodeReadStarts(String? raw) {
+    final parsed = _decodeJson(raw);
+    if (parsed is! Map) return {};
+    return {
+      for (final e in parsed.entries)
+        if (e.value is num) '${e.key}': (e.value as num).round(),
+    };
+  }
+
+  /// The minute after midnight the reader tends to start reading at: the
+  /// day's own while there are only a day or two to go by, and after that
+  /// the middle of the last five. A start before three in the morning is
+  /// the night before's, as a day is. Null before the first card.
+  int? get usualReadMinute {
+    if (readStarts.isEmpty) return null;
+    final List<String> days = readStarts.keys.toList()..sort();
+    if (days.length < 3) return readStarts[days.last];
+    int late(int minute) => minute < 180 ? minute + 1440 : minute;
+    final List<int> recent = [
+      for (final String day in days.reversed.take(5)) late(readStarts[day]!),
+    ]..sort();
+    return recent[(recent.length - 1) ~/ 2] % 1440;
   }
 
   static Map<String, List<int>> _decodeDayLog(String? raw) {
@@ -2008,6 +2049,11 @@ class AppState extends ChangeNotifier {
   /// re-arming waited for — the prompt comes next, and its answer re-arms
   /// everything again (see [notedPushAnswer]); a notification centre slow
   /// to answer must not hold the prompt back.
+  /// Whether the reader has picked the reminder's time: on the sheet, in
+  /// Profile or on the come-back screen. Until they have, [notifyTime] is
+  /// only the app's default, and the sheet starts on their habit instead.
+  bool get notifyTimeChosen => _prefs.containsKey(_kNotifyHour);
+
   Future<void> setNotifyTime(String time, {bool quietly = false}) async {
     notifyTime = time;
     await _prefs.setString(_kNotifyHour, time);
@@ -2890,6 +2936,7 @@ class AppState extends ChangeNotifier {
     rungDates = {};
     readDays = {};
     dayLog = {};
+    readStarts = {};
     saidIds = [];
     todayIndex = 0;
     pillsRead = 0;
@@ -2906,7 +2953,7 @@ class AppState extends ChangeNotifier {
     seenIds = {};
     pushAsked = false;
     pushDeferrals = 0;
-    pushDeferredAfter = null;
+    pushDeferredOn = null;
     trial = null;
     _trialWarnedFor = null;
     _trialWarnedAt = null;
@@ -2936,36 +2983,50 @@ class AppState extends ChangeNotifier {
   /// time it comes, and twice more.
   static const int kPushDeferralsAllowed = 3;
 
-  /// True when the question about notifications is waiting to be put: a day
-  /// is behind the reader, the system's prompt has not been spent, and the
-  /// daily nudge has not been switched off. Asking before a day is behind
-  /// them spends the single prompt iOS allows on someone who does not yet
-  /// know what the app is.
+  /// The days a "Not now" holds the reminder sheet back for.
+  static const int kPushAskGapDays = 3;
+
+  /// Whether the reader has come back: finished a day later than the first
+  /// one they read on. The first day is the app's, to show what it is; a
+  /// question at the end of it, about reminders or an account, lands on
+  /// somebody who has read five cards and decided nothing yet. A reader who
+  /// comes back another day has decided something, and is the one to ask.
+  bool get cameBack {
+    if (completedDates.isEmpty) return false;
+    final String last = completedDates.reduce(
+      (a, b) => a.compareTo(b) > 0 ? a : b,
+    );
+    bool before(String day) => day.compareTo(last) < 0;
+    return completedDates.any(before) || readDays.keys.any(before);
+  }
+
+  /// True when the question about notifications is waiting to be put: the
+  /// reader came back for a day and finished it ([cameBack]), the system's
+  /// prompt has not been spent, and the daily nudge has not been switched
+  /// off. Asked any sooner, it spends the single prompt iOS allows on
+  /// somebody who does not yet know what the app is.
   ///
   /// The question is the app's own sheet first (see main.dart), and "Not
-  /// now" there spends nothing: it comes back once another day has been
-  /// finished, and after the [kPushDeferralsAllowed]th it stops coming.
+  /// now" there spends nothing: it comes back on a day finished
+  /// [kPushAskGapDays] later, and after the [kPushDeferralsAllowed]th it
+  /// stops coming.
   bool get shouldAskForPush {
-    if (pushAsked || !notificationsOn || completedDates.isEmpty) return false;
+    if (pushAsked || !notificationsOn || !cameBack) return false;
     if (pushDeferrals >= kPushDeferralsAllowed) return false;
     if (pushDeferrals == 0) return true;
-    final String? last = lastCompletionDate;
-    final String? after = pushDeferredAfter;
-    return last != null && (after == null || last.compareTo(after) > 0);
+    final DateTime? last = _dateOf(lastCompletionDate);
+    final DateTime? said = _dateOf(pushDeferredOn);
+    return last != null &&
+        (said == null || daysBetween(said, last) >= kPushAskGapDays);
   }
 
   /// The reader answered the reminder sheet "Not now". Nothing of the
-  /// system's is spent; the sheet waits for the next day finished.
+  /// system's is spent; the sheet waits [kPushAskGapDays] days.
   Future<void> notedPushDeferred() async {
     pushDeferrals += 1;
-    pushDeferredAfter = lastCompletionDate;
+    pushDeferredOn = dateKey(today);
     await _prefs.setInt(_kPushDeferrals, pushDeferrals);
-    final String? after = pushDeferredAfter;
-    if (after == null) {
-      await _prefs.remove(_kPushDeferredAfter);
-    } else {
-      await _prefs.setString(_kPushDeferredAfter, after);
-    }
+    await _prefs.setString(_kPushDeferredAfter, pushDeferredOn!);
     notifyListeners();
   }
 
@@ -2990,12 +3051,13 @@ class AppState extends ChangeNotifier {
     await _prefs.setBool(_kReviewAsked, true);
   }
 
-  /// True when an account is worth offering of the app's own accord: a day
-  /// is behind the reader, so there is a streak a new phone would lose, and
-  /// the offer has not been made before. The intro no longer leads with a
-  /// sign-in, so this is where most readers first hear an account exists.
-  /// main.dart chooses the moment, and only where a sign-in can run.
-  bool get shouldOfferAccount => !accountOffered && completedDates.isNotEmpty;
+  /// True when an account is worth offering of the app's own accord: the
+  /// reader came back for a day and finished it ([cameBack]), so there are
+  /// days a new phone would lose, and the offer has not been made before.
+  /// The intro no longer leads with a sign-in, so this is where most readers
+  /// first hear an account exists. main.dart chooses the moment, after the
+  /// reminder sheet, and only where a sign-in can run.
+  bool get shouldOfferAccount => !accountOffered && cameBack;
 
   /// Noted before the sheet rises, so a sheet that fails to show is not a
   /// reason to put it again.
@@ -3054,8 +3116,9 @@ class AppState extends ChangeNotifier {
   static const Duration kPlaceRetryEvery = Duration(days: 1);
 
   /// The app's own sheet first asks once [kPlaceFirstAskDay] days are
-  /// finished: the reminder is asked after the first, and two questions on
-  /// one evening is one too many. "Not now" is asked once more, once
+  /// finished, and never in a sitting something else was asked in: the
+  /// reminder, due on the same evening, goes first. "Not now" is asked once
+  /// more, once
   /// [kPlaceLastAskDay] are, and that is the end of it: Profile keeps the
   /// switch.
   static const int kPlaceFirstAskDay = 2;

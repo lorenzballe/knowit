@@ -164,6 +164,14 @@ Map<String, Object> _installed() => {
   'knowit.plus': false,
 };
 
+/// A reader back for a second day: yesterday's five were read and kept.
+Map<String, Object> _readYesterday() => {
+  'knowit.streak': 1,
+  'knowit.bestStreak': 1,
+  'knowit.lastCompletionDate': _key(_daysFromToday(-1)),
+  'knowit.completedDates': [_key(_daysFromToday(-1))],
+};
+
 /// Today's five, already read: the app opens on the finished day.
 Map<String, Object> _todayRead() => {
   'knowit.todayDate': _key(DateTime.now()),
@@ -263,10 +271,33 @@ void main() {
     Subscription.useForTest(Subscription());
   });
 
-  group('after the first finished day', () {
+  group('on the first day', () {
+    testWidgets('the five are read, the card after them thrown, and nothing '
+        'is asked', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      for (var i = 0; i < 6; i++) {
+        await _throw(tester);
+      }
+      expect(_appOf(tester).dayClosed, isTrue);
+      expect(find.byType(PillCardStack), findsNothing);
+      await _wait(tester, seconds: 6);
+      expect(_sheet, findsNothing);
+      expect(asker.asked, 0);
+      expect(said.of('push preprompt shown'), isEmpty);
+      expect(_appOf(tester).shouldAskForPush, isFalse);
+      expect(_appOf(tester).shouldOfferAccount, isFalse);
+    });
+  });
+
+  group('back for another day, once it is finished', () {
     testWidgets('the sheet comes instead of the system\'s prompt, once the '
         'card after the fifth is off the table', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        ..._readYesterday(),
+      });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
@@ -294,15 +325,24 @@ void main() {
       // No trial, so no word of one.
       expect(find.byKey(const ValueKey('reminder-ask-trial')), findsNothing);
       expect(asker.asked, 0, reason: 'the system is not asked yet');
+      // Started on the time today's first card was read at, and said so.
+      final int startedAt = _appOf(tester).usualReadMinute!;
       expect(said.of('push preprompt shown'), [
-        {'reason': 'day done'},
+        {
+          'reason': 'day done',
+          'starts_on': reminderTimeFor(startedAt),
+          'from_habit': true,
+        },
       ]);
       expect(said.of('push permission asked'), isEmpty);
     });
 
     testWidgets('not over the paywall that card opens either, nor until the '
         'card is thrown', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        ..._readYesterday(),
+      });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       for (var i = 0; i < 5; i++) {
@@ -341,9 +381,12 @@ void main() {
       SharedPreferences.setMockInitialValues({
         ..._installed(),
         ..._todayRead(),
-        'knowit.streak': 1,
+        'knowit.streak': 2,
         'knowit.lastCompletionDate': _key(DateTime.now()),
-        'knowit.completedDates': [_key(DateTime.now())],
+        'knowit.completedDates': [
+          _key(_daysFromToday(-1)),
+          _key(DateTime.now()),
+        ],
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -395,7 +438,10 @@ void main() {
         ..._todayRead(),
         'knowit.notifyHour': '07:15',
         'knowit.lastCompletionDate': _key(DateTime.now()),
-        'knowit.completedDates': [_key(DateTime.now())],
+        'knowit.completedDates': [
+          _key(_daysFromToday(-1)),
+          _key(DateTime.now()),
+        ],
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -426,13 +472,239 @@ void main() {
     });
   });
 
+  group('the time it starts on', () {
+    test('just before the reader would open the app anyway', () {
+      for (final (String reads, String at) in [
+        ('19:40', '19:00'),
+        ('18:50', '19:00'),
+        ('20:00', '19:00'),
+        ('08:20', '08:30'),
+        ('08:45', '08:30'),
+        ('08:00', '08:00'),
+        ('07:10', '07:00'),
+        ('12:40', '12:30'),
+        ('13:20', '12:30'),
+        ('16:05', '16:00'),
+        ('21:50', '21:45'),
+        ('23:10', '23:00'),
+      ]) {
+        final List<int> hm = reads.split(':').map(int.parse).toList();
+        expect(reminderTimeFor(hm[0] * 60 + hm[1]), at, reason: reads);
+      }
+    });
+
+    test('the time the first card of each day was read at, kept', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final DateTime at = DateTime(2026, 10, 20, 21, 40);
+      final app = AppState(
+        clock: () => at,
+        hasPermission: () async => false,
+        askPermission: () async => false,
+        arm: (_) async {},
+        disarm: () async {},
+        pushWidget: (_) async {},
+      );
+      await app.init();
+      expect(app.usualReadMinute, isNull);
+      await app.advance();
+      await app.advance();
+      expect(app.readStarts, {'2026-10-20': 21 * 60 + 40});
+      expect(app.usualReadMinute, 21 * 60 + 40);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('knowit.readStarts'), '{"2026-10-20":1300}');
+    });
+
+    test('the day\'s own at first, then the middle of the last five, the '
+        'small hours counted with the night before', () async {
+      Future<int?> usual(Map<String, int> starts) async {
+        final state = _bare(
+          prefs: {
+            'knowit.readStarts':
+                '{${[for (final e in starts.entries) '"${e.key}":${e.value}'].join(',')}}',
+          },
+        ).app;
+        await state.init();
+        return state.usualReadMinute;
+      }
+
+      expect(
+        await usual({'2026-10-19': 8 * 60, '2026-10-20': 21 * 60}),
+        21 * 60,
+      );
+      expect(
+        await usual({
+          '2026-10-14': 7 * 60,
+          '2026-10-15': 22 * 60,
+          '2026-10-16': 21 * 60,
+          '2026-10-17': 21 * 60 + 30,
+          '2026-10-18': 13 * 60,
+          '2026-10-19': 20 * 60 + 50,
+        }),
+        21 * 60,
+      );
+      expect(
+        await usual({
+          '2026-10-18': 23 * 60 + 50,
+          '2026-10-19': 30,
+          '2026-10-20': 50,
+        }),
+        30,
+      );
+    });
+
+    Future<void> open(WidgetTester tester, AppState app) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: Scaffold(
+            body: Align(
+              alignment: Alignment.bottomCenter,
+              child: ReminderAsk(app: app),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+    }
+
+    bool chosen(WidgetTester tester, String key) => tester
+        .widget<Semantics>(
+          find
+              .descendant(
+                of: find.byKey(ValueKey(key)),
+                matching: find.byType(Semantics),
+              )
+              .first,
+        )
+        .properties
+        .selected!;
+
+    testWidgets('an evening reader\'s sheet starts on the evening, and says '
+        'why', (tester) async {
+      final AppState app = _bare(
+        prefs: {
+          'knowit.readStarts':
+              '{"${_key(_daysFromToday(-1))}":1170,"${_key(DateTime.now())}":1185}',
+        },
+      ).app;
+      await app.init();
+      await open(tester, app);
+      expect(chosen(tester, 'reminder-at-19:00'), isTrue);
+      expect(chosen(tester, 'reminder-at-08:30'), isFalse);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('reminder-at-19:00')),
+          matching: find.text('When you usually read'),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('a late reader\'s, on their own time', (tester) async {
+      final AppState app = _bare(
+        prefs: {
+          'knowit.readStarts':
+              '{"${_key(_daysFromToday(-1))}":1300,"${_key(DateTime.now())}":1310}',
+        },
+      ).app;
+      await app.init();
+      await open(tester, app);
+      expect(chosen(tester, 'reminder-at-own'), isTrue);
+      expect(find.text('9:45 PM'), findsOneWidget);
+      expect(find.text('When you usually read'), findsOneWidget);
+    });
+
+    testWidgets('a time the reader picked wins over the habit', (tester) async {
+      final AppState app = _bare(
+        prefs: {
+          'knowit.notifyHour': '12:30',
+          'knowit.readStarts': '{"${_key(DateTime.now())}":1310}',
+        },
+      ).app;
+      await app.init();
+      await open(tester, app);
+      expect(chosen(tester, 'reminder-at-12:30'), isTrue);
+      expect(find.text('When you usually read'), findsNothing);
+    });
+  });
+
+  group('the time, moved from the profile', () {
+    Future<void> open(WidgetTester tester, AppState app) async {
+      tester.view.physicalSize = const Size(402, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          // The app's root rebuilds the tabs whenever the state moves.
+          home: Scaffold(
+            body: ListenableBuilder(
+              listenable: app,
+              builder: (_, _) => ProfileScreen(
+                app: app,
+                account: Account(
+                  uidOverride: 'me',
+                  boardsOverride: MemoryBoardStore(),
+                ),
+                onSignedOut: () {},
+              ),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+    }
+
+    testWidgets('a tap on it opens the clock, and the time picked is kept', (
+      tester,
+    ) async {
+      final t = _bare(prefs: {'knowit.pushAsked': true});
+      await t.app.init();
+      await open(tester, t.app);
+      expect(find.text('Every day at 8:30 AM'), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('nudge-time')));
+      await _settle(tester);
+      expect(find.byType(TimePickerDialog), findsOneWidget);
+      await tester.tap(find.byIcon(Icons.keyboard_outlined));
+      await _settle(tester);
+      await tester.enterText(find.byType(TextField).at(0), '9');
+      await tester.enterText(find.byType(TextField).at(1), '15');
+      await tester.tap(find.text('OK'));
+      await _settle(tester);
+
+      expect(t.app.notifyTime, '09:15');
+      expect(t.app.notifyTimeChosen, isTrue);
+      expect(find.text('Daily nudge moved to 9:15 AM.'), findsOneWidget);
+      expect(find.text('Every day at 9:15 AM'), findsOneWidget);
+      // Armed for the new time.
+      expect(t.armed.last.where((r) => r.when.hour == 9), isNotEmpty);
+    });
+
+    testWidgets('not while the nudge is off', (tester) async {
+      final t = _bare(prefs: {'knowit.notifications': false});
+      await t.app.init();
+      await open(tester, t.app);
+      await tester.tap(find.byKey(const ValueKey('nudge-time')));
+      await _settle(tester);
+      expect(find.byType(TimePickerDialog), findsNothing);
+    });
+  });
+
   group('"Not now"', () {
     testWidgets('spends nothing of the system\'s', (tester) async {
       SharedPreferences.setMockInitialValues({
         ..._installed(),
         ..._todayRead(),
         'knowit.lastCompletionDate': _key(DateTime.now()),
-        'knowit.completedDates': [_key(DateTime.now())],
+        'knowit.completedDates': [
+          _key(_daysFromToday(-1)),
+          _key(DateTime.now()),
+        ],
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -455,25 +727,27 @@ void main() {
       expect(_sheet, findsNothing);
     });
 
-    testWidgets('it comes back after the next finished day', (tester) async {
-      // Said yesterday; today has been read since.
-      SharedPreferences.setMockInitialValues({
-        ..._installed(),
-        ..._todayRead(),
-        'knowit.lastCompletionDate': _key(DateTime.now()),
-        'knowit.completedDates': [
-          _key(_daysFromToday(-1)),
-          _key(DateTime.now()),
-        ],
-        'knowit.pushDeferrals': 1,
-        'knowit.pushDeferredAfter': _key(_daysFromToday(-1)),
+    for (final (int ago, bool again) in [(2, false), (3, true)]) {
+      testWidgets('said $ago days ago, with today read: '
+          '${again ? 'it comes back' : 'not yet'}', (tester) async {
+        SharedPreferences.setMockInitialValues({
+          ..._installed(),
+          ..._todayRead(),
+          'knowit.lastCompletionDate': _key(DateTime.now()),
+          'knowit.completedDates': [
+            _key(_daysFromToday(-ago)),
+            _key(DateTime.now()),
+          ],
+          'knowit.pushDeferrals': 1,
+          'knowit.pushDeferredAfter': _key(_daysFromToday(-ago)),
+        });
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        await _wait(tester, seconds: again ? 3 : 6);
+        expect(_sheet, again ? findsOneWidget : findsNothing);
+        expect(asker.asked, 0);
       });
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await _wait(tester);
-      expect(_sheet, findsOneWidget);
-      expect(asker.asked, 0);
-    });
+    }
 
     testWidgets('and stops after the third', (tester) async {
       SharedPreferences.setMockInitialValues({
@@ -485,7 +759,7 @@ void main() {
           _key(DateTime.now()),
         ],
         'knowit.pushDeferrals': 3,
-        'knowit.pushDeferredAfter': _key(_daysFromToday(-1)),
+        'knowit.pushDeferredAfter': _key(_daysFromToday(-3)),
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -494,9 +768,10 @@ void main() {
       expect(asker.asked, 0);
     });
 
-    test('waits for a day finished after it, three times at most', () async {
+    test('waits three days, three times at most', () async {
       final String today = _key(DateTime.now());
       final String yesterday = _key(_daysFromToday(-1));
+      String ago(int days) => _key(_daysFromToday(-days));
       Future<AppState> app(Map<String, Object> prefs) async {
         final state = _bare(prefs: prefs).app;
         await state.init();
@@ -505,33 +780,46 @@ void main() {
 
       final AppState fresh = await app({
         'knowit.lastCompletionDate': today,
-        'knowit.completedDates': [today],
+        'knowit.completedDates': [yesterday, today],
       });
       expect(fresh.shouldAskForPush, isTrue);
       await fresh.notedPushDeferred();
       expect(fresh.pushDeferrals, 1);
-      expect(fresh.pushDeferredAfter, today);
+      expect(fresh.pushDeferredOn, today);
       expect(fresh.shouldAskForPush, isFalse, reason: 'not the same day');
 
-      // The first, and twice more.
+      // The first, and twice more, each a day finished three days on.
       for (final (int said, bool again) in [(1, true), (2, true), (3, false)]) {
         final AppState later = await app({
           'knowit.lastCompletionDate': today,
-          'knowit.completedDates': [yesterday, today],
+          'knowit.completedDates': [ago(3), today],
           'knowit.pushDeferrals': said,
-          'knowit.pushDeferredAfter': yesterday,
+          'knowit.pushDeferredAfter': ago(3),
         });
         expect(later.shouldAskForPush, again, reason: '$said said');
       }
+      final AppState soon = await app({
+        'knowit.lastCompletionDate': today,
+        'knowit.completedDates': [ago(2), today],
+        'knowit.pushDeferrals': 1,
+        'knowit.pushDeferredAfter': ago(2),
+      });
+      expect(soon.shouldAskForPush, isFalse, reason: 'two days is not three');
 
-      // Said before any day was finished — on the sheet a trial brings —
-      // it waits for the first.
-      final AppState early = await app({'knowit.pushDeferrals': 1});
+      // Said on the first day, on the sheet a trial brings: it waits as
+      // long, and for a day finished.
+      final AppState early = await app({
+        'knowit.pushDeferrals': 1,
+        'knowit.pushDeferredAfter': ago(3),
+        'knowit.completedDates': [ago(3)],
+        'knowit.lastCompletionDate': ago(3),
+      });
       expect(early.shouldAskForPush, isFalse);
       final AppState thenRead = await app({
         'knowit.pushDeferrals': 1,
+        'knowit.pushDeferredAfter': ago(3),
         'knowit.lastCompletionDate': today,
-        'knowit.completedDates': [today],
+        'knowit.completedDates': [ago(3), today],
       });
       expect(thenRead.shouldAskForPush, isTrue);
 
@@ -539,9 +827,38 @@ void main() {
       final AppState off = await app({
         'knowit.notifications': false,
         'knowit.lastCompletionDate': today,
-        'knowit.completedDates': [today],
+        'knowit.completedDates': [yesterday, today],
       });
       expect(off.shouldAskForPush, isFalse);
+    });
+
+    test('not on the first day the reader read on, however it ends', () async {
+      final String today = _key(DateTime.now());
+      final String yesterday = _key(_daysFromToday(-1));
+      Future<AppState> app(Map<String, Object> prefs) async {
+        final state = _bare(prefs: prefs).app;
+        await state.init();
+        return state;
+      }
+
+      // The first five, finished: nothing yet.
+      final AppState first = await app({
+        'knowit.lastCompletionDate': today,
+        'knowit.completedDates': [today],
+      });
+      expect(first.cameBack, isFalse);
+      expect(first.shouldAskForPush, isFalse);
+      expect(first.shouldOfferAccount, isFalse);
+
+      // A card or two yesterday, and today finished: back, so asked.
+      final AppState back = await app({
+        'knowit.lastCompletionDate': today,
+        'knowit.completedDates': [today],
+        'knowit.readDays': '{"$yesterday": ["x-1"]}',
+      });
+      expect(back.cameBack, isTrue);
+      expect(back.shouldAskForPush, isTrue);
+      expect(back.shouldOfferAccount, isTrue);
     });
 
     test('is forgotten on signing out, like the prompt itself', () async {
@@ -554,7 +871,7 @@ void main() {
       await state.init();
       await state.signOut();
       expect(state.pushDeferrals, 0);
-      expect(state.pushDeferredAfter, isNull);
+      expect(state.pushDeferredOn, isNull);
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getInt('knowit.pushDeferrals'), isNull);
     });
@@ -562,7 +879,7 @@ void main() {
 
   testWidgets('no rating prompt in the session the sheet rose', (tester) async {
     // A seventh day in a row about to be read, by a reader who said "Not
-    // now" two days ago: the sheet is due tonight, and so, by the streak,
+    // now" three days ago: the sheet is due tonight, and so, by the streak,
     // would the stars be.
     final List<String> six = [
       for (var i = 6; i >= 1; i--) _key(_daysFromToday(-i)),
@@ -573,7 +890,7 @@ void main() {
       'knowit.lastCompletionDate': six.last,
       'knowit.completedDates': six,
       'knowit.pushDeferrals': 1,
-      'knowit.pushDeferredAfter': _key(_daysFromToday(-2)),
+      'knowit.pushDeferredAfter': _key(_daysFromToday(-3)),
     });
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -775,8 +1092,9 @@ void main() {
         find.text('We’ll remind you two days before your trial ends.'),
         findsOneWidget,
       );
+      // No card read yet, so nothing to go by: the default time.
       expect(said.of('push preprompt shown'), [
-        {'reason': 'trial'},
+        {'reason': 'trial', 'starts_on': '08:30', 'from_habit': false},
       ]);
 
       await tester.tap(find.byKey(const ValueKey('reminder-yes')));
@@ -890,6 +1208,11 @@ void main() {
       at: '07:15',
     );
     expect(started.warnsBeforeTrialEnds, isTrue);
+    // And the note on the time a reader's habit chose: their own, late.
+    final AppState habit = _bare(
+      prefs: {'knowit.readStarts': '{"${_key(DateTime.now())}":1310}'},
+    ).app;
+    await habit.init();
     // And every line the profile can: a trial ending tomorrow, with no
     // notifications. Its warning can only come late now, so the sheet no
     // longer promises one two days ahead.
@@ -922,6 +1245,19 @@ void main() {
       await _settle(tester);
       findings.addAll(_cut(tester).map((s) => '[$locale] sheet: $s'));
       expect(find.byKey(const ValueKey('reminder-ask-trial')), findsOneWidget);
+
+      await tester.pumpWidget(
+        host(
+          Scaffold(
+            body: Align(
+              alignment: Alignment.bottomCenter,
+              child: ReminderAsk(app: habit),
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      findings.addAll(_cut(tester).map((s) => '[$locale] habit: $s'));
 
       await tester.pumpWidget(
         host(

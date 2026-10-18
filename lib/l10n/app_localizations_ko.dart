@@ -854,6 +854,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reminderAskOther => '다른 시간';
 
   @override
+  String get reminderAskUsual => '평소에 읽는 시간';
+
+  @override
   String get reminderAskYes => '알림 받기';
 
   @override

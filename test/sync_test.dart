@@ -337,10 +337,19 @@ void main() {
       expect(app.shouldAskForPush, isFalse);
     });
 
-    test('once a day is behind the reader', () async {
+    test('not after the first day either: the reader has seen five cards '
+        'and decided nothing yet', () async {
       final app = await withPrefs({
         'knowit.onboarded': true,
         'knowit.completedDates': <String>['2026-08-30'],
+      });
+      expect(app.shouldAskForPush, isFalse);
+    });
+
+    test('once the reader came back for another day', () async {
+      final app = await withPrefs({
+        'knowit.onboarded': true,
+        'knowit.completedDates': <String>['2026-08-29', '2026-08-30'],
       });
       expect(app.shouldAskForPush, isTrue);
     });

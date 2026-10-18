@@ -799,6 +799,10 @@
  "@reminderAskOther": {
   "description": "A choice on the reminder sheet that opens a clock, to pick any other time."
  },
+ "reminderAskUsual": "When you usually read",
+ "@reminderAskUsual": {
+  "description": "A note under the time on the reminder sheet that the sheet started on, because the reader tends to start reading then."
+ },
  "reminderAskYes": "Remind me",
  "@reminderAskYes": {
   "description": "The reminder sheet's button: keeps the time chosen, then the system asks whether the app may send notifications."

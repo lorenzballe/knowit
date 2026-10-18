@@ -193,6 +193,7 @@
   "reminderAskLunch": "À midi",
   "reminderAskEvening": "Le soir",
   "reminderAskOther": "Une autre heure",
+  "reminderAskUsual": "Quand tu lis d’habitude",
   "reminderAskYes": "Rappelle-moi",
   "reminderAskNotNow": "Pas maintenant",
   "placeAskTitle": "Des cartes sur l'endroit où tu vis",

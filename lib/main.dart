@@ -600,7 +600,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// The app's own question about notifications: when, before the system
   /// asks whether. A time chosen is kept, and then the system's prompt is
   /// put exactly as it always was. "Not now" spends nothing, and the sheet
-  /// comes back after the next day finished (AppState.shouldAskForPush).
+  /// comes back three days later (AppState.shouldAskForPush).
   Future<void> _offerReminder(String reason) async {
     if (_askingForPush) return;
     _askingForPush = true;
@@ -609,7 +609,15 @@ class _AstutoRootState extends State<AstutoRoot> {
     _pushAskedThisSession = true;
     _askedThisSitting = true;
     _trialAskDue = false;
-    Analytics.capture('push preprompt shown', {'reason': reason});
+    // Where the sheet starts, and whether the reader's habit chose it: read
+    // against the time answered, it says whether the habit was the right
+    // guess.
+    final String? habit = habitReminderTime(_app);
+    Analytics.capture('push preprompt shown', {
+      'reason': reason,
+      'starts_on': habit ?? _app.notifyTime,
+      'from_habit': habit != null,
+    });
     final String? at = await showReminderAsk(context, _app);
     if (!mounted) return;
     Analytics.capture('push preprompt answered', {'choice': at ?? 'not now'});
