@@ -108,6 +108,9 @@ class _TodayScreenState extends State<TodayScreen> {
   /// How the card just thrown was read, until the day moves past it.
   CardStint? _thrown;
 
+  /// True once the deck has shown how a card is sent on, until one is.
+  bool _hinting = false;
+
   /// The card after the fifth, thrown.
   void _throwMagic() {
     if (!mounted || !_magic) return;
@@ -179,6 +182,12 @@ class _TodayScreenState extends State<TodayScreen> {
             streak: app.liveStreak,
             frozen: app.streakWasFrozen,
             onBack: widget.onBack,
+            // Said beside the day's name — the one place on the screen with
+            // room to spare on a first morning, which has no streak to show
+            // there — so the deck below never moves to make room for it.
+            hint: _hinting && app.pillsRead == 0
+                ? context.l10n.swipeForTheNextOne
+                : null,
           ),
           // On the reader's Sunday, the one card more of their own is said
           // once, quietly, where the day starts: under the day's name, and
@@ -242,6 +251,13 @@ class _TodayScreenState extends State<TodayScreen> {
               onMotion: widget.onCardMotion,
               // The card about where the reader lives says so on its front.
               home: app.place,
+              // Nothing else on the screen says how card two is reached,
+              // so the first card shows it, once, to a reader who has never
+              // sent a card on.
+              swipeHint: app.pillsRead == 0,
+              onSwipeHint: () {
+                if (mounted) setState(() => _hinting = true);
+              },
               reviewIds: app.reviewIdsToday,
               // Which cards are the reader's own, on the day that has
               // others: Astute+ has no others to tell them from.
@@ -309,10 +325,14 @@ class _ReadingHeader extends StatelessWidget {
   final int streak;
   final bool frozen;
   final VoidCallback? onBack;
+
+  /// How the card is sent on, once, at the far end of the row.
+  final String? hint;
   const _ReadingHeader({
     required this.streak,
     this.frozen = false,
     this.onBack,
+    this.hint,
   });
 
   @override
@@ -329,6 +349,7 @@ class _ReadingHeader extends StatelessWidget {
           // handset. The date gives way by a point or two rather than being
           // clipped, or overflowing, which is what it did.
           Flexible(
+            flex: 2,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
@@ -380,7 +401,67 @@ class _ReadingHeader extends StatelessWidget {
                 ],
               ),
             ),
+          if (hint != null) ...[
+            const SizedBox(width: 12),
+            // Three parts of the row's room to the day's name's two: the
+            // name keeps its size in every language, and the hint, which
+            // gives way, rarely has to.
+            Expanded(flex: 3, child: _SwipeHint(text: hint!)),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+/// How a card is sent on, said once: a hand's mark and a few words, quiet,
+/// flush to the far end of the header. It comes in as the card leans, and
+/// goes as the first card does. One line, given way by a point or two
+/// rather than wrapped, so the header never grows under it.
+class _SwipeHint extends StatelessWidget {
+  const _SwipeHint({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool still = MediaQuery.disableAnimationsOf(context);
+    final Color ink = context.p.inkFaint;
+    return TweenAnimationBuilder<double>(
+      key: const ValueKey('swipe-hint'),
+      tween: Tween(begin: 0, end: 1),
+      duration: Duration(milliseconds: still ? 0 : 420),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, child) => Opacity(
+        opacity: t,
+        child: Transform.translate(
+          offset: Offset(10 * (1 - t), 0),
+          child: child,
+        ),
+      ),
+      child: Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ExcludeSemantics(
+                child: Icon(Icons.swipe_left_rounded, size: 16, color: ink),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                text,
+                maxLines: 1,
+                style: AppText.body(
+                  size: 12.5,
+                  weight: FontWeight.w500,
+                  color: ink,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

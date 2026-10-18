@@ -102,6 +102,16 @@ class PillCardStack extends StatefulWidget {
   /// why it is here; null when they have not said.
   final Place? home;
 
+  /// Whether to show, once, how a card is sent on, for a reader who has
+  /// never sent one: a few seconds after the back of the card in front has
+  /// come round — or at once, when the reader turns it back to its front
+  /// looking for the way on — the card leans aside, as a hand starting to
+  /// throw it would, and settles back. [onSwipeHint] is told as it does,
+  /// so the screen can say it in words too; with motion reduced, the words
+  /// are all there is.
+  final bool swipeHint;
+  final VoidCallback? onSwipeHint;
+
   /// How many cards the stack holds: the deck, and the one after it.
   int get count => deck.length + (trailing != null ? 1 : 0);
 
@@ -127,6 +137,8 @@ class PillCardStack extends StatefulWidget {
     this.onStand,
     this.readBefore,
     this.home,
+    this.swipeHint = false,
+    this.onSwipeHint,
   });
 
   @override
@@ -193,12 +205,14 @@ class _PillCardStackState extends State<PillCardStack>
       _flipped = false;
       _answeredHere = false;
       _upAt = DateTime.now();
+      _hintTimer?.cancel();
     }
     _stand();
   }
 
   @override
   void dispose() {
+    _hintTimer?.cancel();
     _presence?.removeListener(_stand);
     final CardRead? read = _read;
     if (read != null) _close(read, 'gone');
@@ -248,6 +262,9 @@ class _PillCardStackState extends State<PillCardStack>
 
   void _onPanStart(DragStartDetails d) {
     if (widget.index >= widget.count) return;
+    // The reader has found the gesture, or is looking for it with a finger:
+    // nothing is shown while a card is held.
+    _hintTimer?.cancel();
     _controller.stop();
     _dragging = true;
     _dragTotalMove = 0;
@@ -363,6 +380,91 @@ class _PillCardStackState extends State<PillCardStack>
       _turnOver();
     } else {
       await _animateTo(Offset.zero);
+      if (_flipped) _hintIn(_hintAfterBack);
+    }
+  }
+
+  /// How long the back is read before the card shows how it is sent on,
+  /// and how soon after a turn back to the front, which is a reader looking
+  /// for the way on.
+  static const Duration _hintAfterBack = Duration(seconds: 4);
+  static const Duration _hintAfterFront = Duration(milliseconds: 600);
+
+  Timer? _hintTimer;
+
+  /// True once the hint has been shown here: it is shown once.
+  bool _hinted = false;
+
+  void _hintIn(Duration after) {
+    _hintTimer?.cancel();
+    if (!widget.swipeHint || _hinted) return;
+    _hintTimer = Timer(after, _hint);
+  }
+
+  void _hint() {
+    if (!mounted || !widget.swipeHint || _hinted) return;
+    if (_dragging || _throwing || widget.index >= widget.deck.length) return;
+    // Away for another tab or behind another screen: shown when it is
+    // back, after the same wait, rather than to nobody.
+    if (!(_presence?.showing ?? true)) {
+      _hintIn(_hintAfterBack);
+      return;
+    }
+    _hinted = true;
+    widget.onSwipeHint?.call();
+    if (!MediaQuery.disableAnimationsOf(context)) _lean();
+  }
+
+  /// The card leans aside and settles, twice, the second time less: the
+  /// start of a throw, shown rather than explained. The card behind rises
+  /// a little with it, as it does under a finger.
+  Future<void> _lean() async {
+    _controller.stop();
+    final Animation<double> lean = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.0,
+          end: -34.0,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -34.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeInOutCubic)),
+        weight: 32,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.0,
+          end: -14.0,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        weight: 18,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -14.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeInOutCubic)),
+        weight: 20,
+      ),
+    ]).animate(_controller);
+    void follow() {
+      if (mounted && !_dragging) setState(() => _drag = Offset(lean.value, 0));
+    }
+
+    _controller
+      ..duration = const Duration(milliseconds: 1400)
+      ..reset();
+    lean.addListener(follow);
+    try {
+      await _controller.forward().orCancel;
+    } on TickerCanceled {
+      // Taken by a finger part way: the card is the reader's from there.
+    } finally {
+      lean.removeListener(follow);
+      _controller.duration = const Duration(milliseconds: 300);
     }
   }
 
@@ -390,6 +492,7 @@ class _PillCardStackState extends State<PillCardStack>
     HapticFeedback.selectionClick();
     setState(() => _flipped = !_flipped);
     _read?.turned(toBack: _flipped);
+    _hintIn(_flipped ? _hintAfterBack : _hintAfterFront);
     // The turn itself, for the reader's own trace: a card turned over is a
     // card read, and the dealer hears it. PostHog hears it once, with the
     // rest of how the card was read, when the card leaves (CardRead).
@@ -555,6 +658,7 @@ class _PillCardStackState extends State<PillCardStack>
                           _flipped = true;
                         });
                         _read?.turned(toBack: true);
+                        _hintIn(_hintAfterBack);
                       },
               ),
               back: !isTop
