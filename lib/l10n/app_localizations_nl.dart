@@ -1756,7 +1756,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.';
+      'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, en wat je mist, komt terug. Vanaf morgen.';
 
   @override
   String get plusCardHeadline => 'Alle vijf van jou.';
@@ -1773,11 +1773,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn =>
-      'Een week volgehouden: morgen zijn drie van de vijf van jou.';
+      'Zeven dagen op rij: morgen zijn drie van de vijf van jou.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Een week volgehouden, en morgen is het zondag: vier van de vijf zijn van jou.';
+      'Zeven dagen op rij, en morgen is het zondag: vier van de vijf zijn van jou.';
 
   @override
   String get topOfTheWeek => 'Top van de week';

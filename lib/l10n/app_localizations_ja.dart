@@ -1697,7 +1697,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get magicLine =>
-      '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。';
+      '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、間違えたカードは戻ってきます。明日から。';
 
   @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
@@ -1712,10 +1712,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get archiveBeforeThisWeek => '今週より前のすべて';
 
   @override
-  String get weekKeptThreeOwn => '1週間続いた：明日は5枚のうち3枚があなたのカード。';
+  String get weekKeptThreeOwn => '7日連続：明日は5枚のうち3枚があなたのカード。';
 
   @override
-  String get weekKeptSundayFourOwn => '1週間続いて、明日は日曜日：5枚のうち4枚があなたのカード。';
+  String get weekKeptSundayFourOwn => '7日連続で、明日は日曜日：5枚のうち4枚があなたのカード。';
 
   @override
   String get topOfTheWeek => '今週のトップ';

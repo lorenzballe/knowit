@@ -1706,7 +1706,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get magicLine =>
-      '매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 읽은 카드는 다시 없이. 내일부터.';
+      '매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 틀린 카드는 다시 옵니다. 내일부터.';
 
   @override
   String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
@@ -1721,10 +1721,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get archiveBeforeThisWeek => '이번 주 이전의 모든 것';
 
   @override
-  String get weekKeptThreeOwn => '일주일 달성: 내일은 다섯 장 중 세 장이 당신의 카드.';
+  String get weekKeptThreeOwn => '7일 연속: 내일은 다섯 장 중 세 장이 당신의 카드.';
 
   @override
-  String get weekKeptSundayFourOwn => '일주일 달성, 내일은 일요일: 다섯 장 중 네 장이 당신의 카드.';
+  String get weekKeptSundayFourOwn => '7일 연속, 내일은 일요일: 다섯 장 중 네 장이 당신의 카드.';
 
   @override
   String get topOfTheWeek => '이번 주 인기 카드';

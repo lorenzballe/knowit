@@ -1744,7 +1744,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.';
+      'Her gün senin için seçilmiş beş kart: karışımından, seviyende, ve kaçırdıkların geri gelir. Yarından itibaren.';
 
   @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
@@ -1760,11 +1760,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get archiveBeforeThisWeek => 'Bu haftadan öncesi';
 
   @override
-  String get weekKeptThreeOwn => 'Bir hafta tamam: yarın beşten üçü senin.';
+  String get weekKeptThreeOwn => 'Yedi gün üst üste: yarın beşten üçü senin.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Bir hafta tamam, yarın da pazar: beşten dördü senin.';
+      'Yedi gün üst üste, yarın da pazar: beşten dördü senin.';
 
   @override
   String get topOfTheWeek => 'Haftanın en iyileri';

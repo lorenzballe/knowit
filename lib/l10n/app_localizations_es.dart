@@ -1759,7 +1759,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Cinco tarjetas al día elegidas para ti: de tu mezcla, a tu nivel, nunca una ya leída. Desde mañana.';
+      'Cinco tarjetas al día elegidas para ti: de tu mezcla, a tu nivel, y las que fallas vuelven. Desde mañana.';
 
   @override
   String get plusCardHeadline => 'Las cinco, tuyas.';
@@ -1776,11 +1776,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn =>
-      'Una semana seguida: mañana tres de las cinco son tuyas.';
+      'Siete días seguidos: mañana tres de las cinco son tuyas.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Una semana seguida, y mañana es domingo: cuatro de las cinco son tuyas.';
+      'Siete días seguidos, y mañana es domingo: cuatro de las cinco son tuyas.';
 
   @override
   String get topOfTheWeek => 'Top de la semana';

@@ -2634,10 +2634,10 @@ abstract class AppLocalizations {
   /// **'AGAIN'**
   String get againChip;
 
-  /// No description provided for @magicLine.
+  /// On the card after the fifth, offering Astute+: what it gives from tomorrow. All five chosen for the reader, at their level, and the cards they miss come back (reviews are Astute+ only).
   ///
   /// In en, this message translates to:
-  /// **'Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.'**
+  /// **'Five cards a day chosen for you: from your mix, at your level, and the ones you miss come back. From tomorrow.'**
   String get magicLine;
 
   /// No description provided for @plusCardHeadline.
@@ -2664,16 +2664,16 @@ abstract class AppLocalizations {
   /// **'Before this week'**
   String get archiveBeforeThisWeek;
 
-  /// No description provided for @weekKeptThreeOwn.
+  /// The note the evening of a seventh day in a row on the free plan: tomorrow has one more card of the reader's own, so three of the five are chosen for them. Not "a week kept", which is five days of a calendar week.
   ///
   /// In en, this message translates to:
-  /// **'A week kept: tomorrow three of the five are yours.'**
+  /// **'Seven days in a row: tomorrow three of the five are yours.'**
   String get weekKeptThreeOwn;
 
-  /// The note the evening a week is kept on the free plan, when tomorrow is also Sunday: the week's extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them.
+  /// The note the evening of a seventh day in a row on the free plan, when tomorrow is also Sunday: the extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them.
   ///
   /// In en, this message translates to:
-  /// **'A week kept, and tomorrow is Sunday: four of the five are yours.'**
+  /// **'Seven days in a row, and tomorrow is Sunday: four of the five are yours.'**
   String get weekKeptSundayFourOwn;
 
   /// No description provided for @topOfTheWeek.

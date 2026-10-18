@@ -1822,7 +1822,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Пять карточек в день, выбранных для тебя: из твоего микса, на твоём уровне, ни одной уже прочитанной. С завтрашнего дня.';
+      'Пять карточек в день, выбранных для тебя: из твоего микса, на твоём уровне, а те, где ты ошибаешься, возвращаются. С завтрашнего дня.';
 
   @override
   String get plusCardHeadline => 'Все пять — твои.';
@@ -1838,11 +1838,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get archiveBeforeThisWeek => 'До этой недели';
 
   @override
-  String get weekKeptThreeOwn => 'Неделя подряд: завтра три из пяти — твои.';
+  String get weekKeptThreeOwn => 'Семь дней подряд: завтра три из пяти — твои.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Неделя подряд, а завтра воскресенье: четыре из пяти — твои.';
+      'Семь дней подряд, а завтра воскресенье: четыре из пяти — твои.';
 
   @override
   String get topOfTheWeek => 'Топ недели';

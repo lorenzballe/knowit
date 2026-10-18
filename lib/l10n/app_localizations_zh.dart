@@ -1691,7 +1691,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get againChip => '再来一次';
 
   @override
-  String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。';
+  String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，答错的会再回来。明天开始。';
 
   @override
   String get plusCardHeadline => '让五张全都为你。';
@@ -1706,10 +1706,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get archiveBeforeThisWeek => '本周之前的一切';
 
   @override
-  String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
+  String get weekKeptThreeOwn => '连续七天：明天五张里有三张是你的。';
 
   @override
-  String get weekKeptSundayFourOwn => '坚持了一周，明天又是星期日：五张里有四张是你的。';
+  String get weekKeptSundayFourOwn => '连续七天，明天又是星期日：五张里有四张是你的。';
 
   @override
   String get topOfTheWeek => '本周热门';

@@ -1382,7 +1382,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String verdictSure(int pct) {
-    return 'Eri sicuro al $pct%.';
+    return 'Avevi detto $pct% sicuro.';
   }
 
   @override
@@ -1757,7 +1757,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Cinque carte al giorno scelte per te: dal tuo mix, al tuo livello, mai una già letta. Da domani.';
+      'Cinque carte al giorno scelte per te: dal tuo mix, al tuo livello, e quelle che sbagli tornano. Da domani.';
 
   @override
   String get plusCardHeadline => 'Tutte e cinque, tue.';
@@ -1774,11 +1774,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn =>
-      'Una settimana di fila: domani tre delle cinque sono tue.';
+      'Sette giorni di fila: domani tre delle cinque sono tue.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Una settimana di fila, e domani è domenica: quattro delle cinque sono tue.';
+      'Sette giorni di fila, e domani è domenica: quattro delle cinque sono tue.';
 
   @override
   String get topOfTheWeek => 'Top della settimana';
