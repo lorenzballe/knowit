@@ -47,7 +47,7 @@ int _minuteOf(String at) {
 /// and a better one: not whether, but when — a time the reader chose, rather
 /// than one they never saw. Returns that time as "HH:mm", or null for "Not
 /// now", which spends nothing: the system's prompt is still unasked, and the
-/// sheet comes back after another day.
+/// sheet comes back three days later.
 ///
 /// A sheet swiped away is a "Not now" too: nobody chose a time.
 Future<String?> showReminderAsk(BuildContext context, AppState app) {

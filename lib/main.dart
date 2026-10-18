@@ -600,7 +600,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// The app's own question about notifications: when, before the system
   /// asks whether. A time chosen is kept, and then the system's prompt is
   /// put exactly as it always was. "Not now" spends nothing, and the sheet
-  /// comes back after the next day finished (AppState.shouldAskForPush).
+  /// comes back three days later (AppState.shouldAskForPush).
   Future<void> _offerReminder(String reason) async {
     if (_askingForPush) return;
     _askingForPush = true;
