@@ -43,6 +43,7 @@ import 'theme.dart';
 import 'widgets/ambient.dart';
 import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
+import 'remote/remote.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 
@@ -213,6 +214,9 @@ class _AstutoAppState extends State<AstutoApp> {
   void initState() {
     super.initState();
     _app.addListener(_onChanged);
+    // A newer remote document redraws the whole app, as a change of state
+    // does: its words, its Explore and its looks are everywhere.
+    Remote.revision.addListener(_onChanged);
     _app.init();
   }
 
@@ -223,6 +227,7 @@ class _AstutoAppState extends State<AstutoApp> {
   @override
   void dispose() {
     _app.removeListener(_onChanged);
+    Remote.revision.removeListener(_onChanged);
     super.dispose();
   }
 
@@ -447,6 +452,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         // A store that did not answer is asked again: the network that was
         // missing at launch is often back by now.
         unawaited(Subscription.instance.reloadOffering());
+        // And the server, for whatever it now says about the app.
+        if (_app.ready) unawaited(_app.refreshRemote());
         // Where the reader lives, read again once a week for a reader who
         // allowed it, and never with a prompt.
         if (_app.ready) _app.refreshPlaceIfDue();

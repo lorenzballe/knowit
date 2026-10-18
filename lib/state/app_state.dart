@@ -25,6 +25,7 @@ import '../models/pill.dart';
 import '../models/place.dart';
 import '../models/reminder.dart';
 import '../models/trial.dart';
+import '../remote/remote.dart';
 import '../sync/place_finder.dart';
 import '../sync/reader_snapshot.dart';
 import '../sync/served.dart';
@@ -355,6 +356,9 @@ class AppState extends ChangeNotifier {
     // The newest bank the last run downloaded, before a card is dealt from
     // the one built in. Adopting later, mid-day, would re-deal the table.
     PillBank.restore(_prefs);
+    // And the remote document: what the server last said about the app,
+    // before anything reads a part of it.
+    Remote.restore(_prefs);
     today = _clock();
 
     // Stored state is read defensively. A value written by an older build,
@@ -384,7 +388,24 @@ class AppState extends ChangeNotifier {
     unawaited(refreshPlaceIfDue());
     // Nor on the bank: whatever it downloads is for tomorrow's start.
     unawaited(PillBank.refresh(_prefs));
+    // Nor on the server's word about the app, taken up when it arrives.
+    unawaited(Remote.refresh(_prefs));
   }
+
+  /// Asks the server for a newer remote document (lib/remote/remote.dart):
+  /// at every return to the app, never more than twice a minute.
+  Future<bool> refreshRemote() => Remote.refresh(_prefs);
+
+  /// Who is looking, for the audience of whatever the remote document
+  /// aims at somebody: a shelf, a look, a switch.
+  RemoteContext remoteContext(String language) => RemoteContext(
+    platform: Remote.platform,
+    build: Remote.build,
+    language: language,
+    plus: isPlus,
+    daysSinceInstall: daysSinceInstall,
+    now: _clock(),
+  );
 
   /// The day turned while the app stayed in memory: it is dealt as a launch
   /// would deal it — a freeze spent on a day missed, a lapsed streak said,
