@@ -1,0 +1,39 @@
+{
+  "id": "maths-averages-4",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: in 1841, when life expectancy in England and Wales was about 40, most adults died around 40.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The average was dragged down by deaths in childhood. A five-year-old in 1841 could expect to reach about 55, and a 50-year-old about 71. Life expectancy at birth is a mean over everyone, and many died as babies, so it says little about when adults died.",
+  "move": "An average over everyone can describe almost no one in particular.",
+  "ask": "Which average have I read as the typical case when a few extremes shaped it?",
+  "trap": "Reading life expectancy at birth as the usual age of death.",
+  "keywords": [
+    "life expectancy",
+    "child mortality",
+    "averages",
+    "victorian england"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Our World in Data, life expectancy improved at all ages",
+  "source_kind": "statistics",
+  "reference": "https://ourworldindata.org/its-not-just-about-child-mortality-life-expectancy-improved-at-all-ages",
+  "written": "2026-10-17"
+}

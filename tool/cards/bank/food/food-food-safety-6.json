@@ -37,7 +37,7 @@
         "text": "Rare steak",
         "note": "Pink all the way through the middle.",
         "pile": "right",
-        "verdict": "Germs sit on the outside of a whole cut, and searing kills them."
+        "verdict": "Surface germs die in the sear. Pregnant? The NHS says cook all meat through."
       },
       {
         "text": "Rare burger",
@@ -79,6 +79,6 @@
   },
   "source": "USDA FSIS; NHS; CDC",
   "source_kind": "institution",
-  "reference": "USDA FSIS, Molds on Food: Are They Dangerous?; USDA FSIS, Freezing and Food Safety; NHS, Can reheating rice cause food poisoning?; CDC, Say No to Raw Dough; Food Standards Agency, Rare burgers and steaks",
+  "reference": "USDA FSIS, Molds on Food: Are They Dangerous?; USDA FSIS, Freezing and Food Safety; NHS, Can reheating rice cause food poisoning?; CDC, Say No to Raw Dough; Food Standards Agency, Rare burgers and steaks; NHS, Foods to avoid in pregnancy",
   "written": "2026-10-07"
 }

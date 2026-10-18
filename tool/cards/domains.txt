@@ -216,6 +216,16 @@ efsa.europa.eu
 ars.usda.gov
 foodtimeline.org
 
+[preferred maths]
+ams.org
+maa.org
+plus.maths.org
+mathshistory.st-andrews.ac.uk
+oeis.org
+rss.org.uk
+ons.gov.uk
+nist.gov
+
 [kinds space]
 institution
 paper
@@ -347,3 +357,11 @@ institution
 statistics
 book
 reference_work
+
+[kinds maths]
+paper
+institution
+statistics
+book
+reference_work
+primary_document

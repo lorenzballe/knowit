@@ -1,0 +1,67 @@
+{
+  "id": "maths-algorithms-3",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "also": [
+    "maths.growth.logarithms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Think of a number from 1 to a million. If I may only ask higher or lower, how many guesses do I need?",
+  "answer": "Twenty, at most. Each answer halves what is left: a million, half a million, 250,000, and on down, and twenty halvings bring a million to one, since 2 to the 20th is 1,048,576. Double the list and it costs one more guess. This is binary search, how a computer finds one name among millions.",
+  "move": "When a list doubles, a good search needs only one more question.",
+  "ask": "Where do I search one by one when I could cut the pile in half?",
+  "keywords": [
+    "binary search",
+    "halving",
+    "guessing game",
+    "algorithms"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "guesses, at most",
+    "answer": 20,
+    "each": 1,
+    "eachLabel": "1 dot = 1 guess",
+    "arrange": "grid",
+    "compare": "A billion would take only 30",
+    "options": [
+      {
+        "label": "About 20",
+        "value": 20,
+        "note": "Right. Each answer halves the field, and 20 halvings take a million to one."
+      },
+      {
+        "label": "About 1,000",
+        "value": 1000,
+        "note": "Fifty times too many. Halving shrinks a million much faster than that."
+      },
+      {
+        "label": "About 50,000",
+        "value": 50000,
+        "note": "Far too many. Twenty halvings already leave a single number."
+      },
+      {
+        "label": "A million",
+        "value": 1000000,
+        "note": "That is asking one number at a time. Halving needs just 20."
+      }
+    ]
+  },
+  "source": "Khan Academy, Running time of binary search",
+  "source_kind": "institution",
+  "reference": "https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/running-time-of-binary-search",
+  "written": "2026-10-17"
+}

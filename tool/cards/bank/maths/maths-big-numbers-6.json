@@ -1,0 +1,43 @@
+{
+  "id": "maths-big-numbers-6",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Ten friends sit in a row of ten chairs each night, never in the same order twice. How many years until they run out?",
+  "value": 9935,
+  "unit": "years",
+  "tolerance": 10,
+  "answer": "About 9,935 years, for just ten people.",
+  "move": "Each extra person multiplies the possible orders rather than adding to them.",
+  "ask": "Where do I underestimate how many ways a few things can be arranged?",
+  "trap": "100 nights, from ten people times ten chairs.",
+  "hint": "Fill the chairs one at a time and count the choices left for each.",
+  "steps": [
+    "Chair 1 has 10 choices, chair 2 has 9, and so on down to 1.",
+    "10 × 9 × 8 × … × 1 = 3,628,800 seatings.",
+    "3,628,800 ÷ 365.25 ≈ 9,935 years."
+  ],
+  "keywords": [
+    "factorial",
+    "permutations",
+    "seating",
+    "combinatorics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OEIS A000142, the factorial numbers",
+  "source_kind": "reference_work",
+  "reference": "https://oeis.org/A000142",
+  "written": "2026-10-17"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "maths-area-and-volume-8",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Archimedes want carved on his tomb, and how did Cicero find it 137 years later?",
+  "answer": "A sphere inside a cylinder: his proof that the sphere holds two-thirds of the cylinder's volume, and has two-thirds of its surface too. In 75 BC Cicero, serving in Sicily, searched the overgrown graves outside Syracuse and spotted a small column topped with that figure. The locals had forgotten it existed.",
+  "move": "A proof settles every case at once, which is why Archimedes prized this one.",
+  "ask": "What would I want remembered from my own work?",
+  "keywords": [
+    "archimedes",
+    "sphere and cylinder",
+    "cicero",
+    "volume"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rorres, Archimedes: the tomb, on Cicero's Tusculan Disputations",
+  "source_kind": "reference_work",
+  "reference": "https://math.nyu.edu/Archimedes/Tomb/Cicero.html",
+  "written": "2026-10-17"
+}

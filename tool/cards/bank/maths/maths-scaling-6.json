@@ -1,0 +1,40 @@
+{
+  "id": "maths-scaling-6",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "When a city's population doubles, roughly how much more road and cable does it need?",
+  "options": [
+    "Exactly double",
+    "About 1.7 times",
+    "About 2.3 times"
+  ],
+  "correct": 1,
+  "answer": "About 1.7 times. Bettencourt and colleagues found infrastructure such as roads and cables scales with population to a power near 0.8, and 2^0.8 ≈ 1.74. Wages, patents and crime scale near 1.2: 2^1.2 ≈ 2.3. Bigger cities are thriftier with pipes and busier per person at once.",
+  "move": "Find how a quantity scales before assuming twice the size needs twice as much.",
+  "ask": "Which plan of mine assumes that doubling the size doubles every cost?",
+  "trap": "Exactly double, as if a city were two copies of itself.",
+  "keywords": [
+    "urban scaling",
+    "cities",
+    "power laws",
+    "infrastructure"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bettencourt et al., Growth, innovation, scaling, and the pace of life in cities, PNAS, 2007",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1852329/",
+  "written": "2026-10-17"
+}

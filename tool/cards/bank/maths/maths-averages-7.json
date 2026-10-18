@@ -1,0 +1,42 @@
+{
+  "id": "maths-averages-7",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Bradman reached his last Test innings with 6,996 runs, out 69 times. If out again, how many runs for an average of 100?",
+  "value": 4,
+  "unit": "runs",
+  "answer": "4 runs. He was bowled second ball for 0 at the Oval in 1948, leaving the most famous average in sport at 99.94.",
+  "move": "To reach a target average, work out the target total, then subtract.",
+  "ask": "Which average of mine could I steer by working out the total it needs?",
+  "trap": "100 runs, as if one innings had to average 100 by itself.",
+  "hint": "A batting average is runs divided by dismissals: what total do 70 dismissals need?",
+  "steps": [
+    "Out 70 times, an average of 100 needs 70 × 100 = 7,000 runs.",
+    "7,000 − 6,996 = 4 runs.",
+    "He was out for 0: 6,996 ÷ 70 = 99.94."
+  ],
+  "keywords": [
+    "don bradman",
+    "batting average",
+    "cricket",
+    "averages"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ESPNcricinfo, Don Bradman, Test batting statistics",
+  "source_kind": "statistics",
+  "reference": "https://www.espncricinfo.com/cricketers/don-bradman-4188",
+  "written": "2026-10-17"
+}

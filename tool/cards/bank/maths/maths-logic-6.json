@@ -1,0 +1,40 @@
+{
+  "id": "maths-logic-6",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "On an island, knights always tell the truth and knaves always lie. A says: we are both knaves. What are A and B?",
+  "options": [
+    "A is a knight, B a knave",
+    "A is a knave, B a knight",
+    "Both are knaves"
+  ],
+  "correct": 1,
+  "answer": "A is a knave, B a knight. A knight could never call himself a knave, so A lies. His claim that both are knaves is therefore false, and since A is a knave, B must be the knight. Raymond Smullyan built hundreds of puzzles on these two rules.",
+  "move": "Test each possibility against the rules; the impossible ones fall away.",
+  "ask": "Which claim could I test by asking what would follow if it were false?",
+  "trap": "Both are knaves, taking A at his word.",
+  "keywords": [
+    "knights and knaves",
+    "logic puzzles",
+    "raymond smullyan",
+    "deduction"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smullyan, What Is the Name of This Book?, 1978",
+  "source_kind": "book",
+  "reference": "Raymond Smullyan, What Is the Name of This Book? The Riddle of Dracula and Other Logical Puzzles, Prentice-Hall, 1978",
+  "written": "2026-10-17"
+}

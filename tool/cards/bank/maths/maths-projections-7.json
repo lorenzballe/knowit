@@ -1,0 +1,40 @@
+{
+  "id": "maths-projections-7",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Mercator designed his 1569 world map for sailors. What does it keep true that a navigator needs?",
+  "options": [
+    "The areas of land and sea",
+    "Compass bearings, as straight lines",
+    "Distances between ports"
+  ],
+  "correct": 1,
+  "answer": "Compass bearings. A course held on one bearing, a rhumb line, is a straight line on Mercator's map, so a navigator could rule a line, read its angle and steer by it. The price is area: the map stretches sizes away from the equator without limit.",
+  "move": "Judge a map by the job it was made for, not by every use.",
+  "ask": "Which tool am I blaming for failing at a job it was never built to do?",
+  "trap": "Areas, the thing the map is now best known for getting wrong.",
+  "keywords": [
+    "mercator projection",
+    "rhumb lines",
+    "navigation",
+    "map projections"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Monmonier, Rhumb Lines and Map Wars, 2004",
+  "source_kind": "book",
+  "reference": "Mark Monmonier, Rhumb Lines and Map Wars: A Social History of the Mercator Projection, University of Chicago Press, 2004",
+  "written": "2026-10-17"
+}

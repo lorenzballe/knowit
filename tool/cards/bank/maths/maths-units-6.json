@@ -1,0 +1,43 @@
+{
+  "id": "maths-units-6",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A flat is advertised at 50 square metres. A metre is 3.28 feet. How many square feet is that?",
+  "value": 538,
+  "unit": "square feet",
+  "tolerance": 2,
+  "answer": "About 538 square feet, not 164: an area takes the conversion twice.",
+  "move": "Areas convert by the square of the length factor, volumes by its cube.",
+  "ask": "When did I last convert an area or volume as if it were a length?",
+  "trap": "164 square feet, multiplying by 3.28 just once.",
+  "hint": "A square metre is a square: convert both of its sides.",
+  "steps": [
+    "A square metre is 3.28 feet by 3.28 feet.",
+    "3.28 × 3.28 ≈ 10.76 square feet.",
+    "50 × 10.76 ≈ 538 square feet."
+  ],
+  "keywords": [
+    "square feet",
+    "area conversion",
+    "floor space",
+    "units"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "National Bureau of Standards, refinement of the yard and the pound, 1959",
+  "source_kind": "standard",
+  "reference": "National Bureau of Standards, Refinement of Values for the Yard and the Pound, Federal Register, 1959",
+  "written": "2026-10-17"
+}

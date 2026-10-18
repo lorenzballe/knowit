@@ -1,0 +1,33 @@
+{
+  "id": "maths-algorithms-8",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Edsger Dijkstra work out, in 1956, how to find the shortest route between Dutch cities?",
+  "answer": "In about twenty minutes, over coffee on an Amsterdam café terrace, without pencil and paper. His method grows outwards from the start, always settling the nearest unsettled city next and updating its neighbours, so each distance is final once reached. Published in 1959, variants of it still run in route planners.",
+  "move": "Settle the nearest case first, and every later step can build on it.",
+  "ask": "Which tangled problem could I solve by settling the nearest piece first?",
+  "keywords": [
+    "dijkstra's algorithm",
+    "shortest path",
+    "route planning",
+    "graphs"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frana, An interview with Edsger W. Dijkstra, Communications of the ACM",
+  "source_kind": "primary_document",
+  "reference": "https://cacm.acm.org/news/an-interview-with-edsger-w-dijkstra/",
+  "written": "2026-10-17"
+}

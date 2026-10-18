@@ -1,0 +1,42 @@
+{
+  "id": "maths-big-numbers-3",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Chess offers about 1,000 ways to play each pair of moves, and games last about 40 pairs. How many zeros in the count of games?",
+  "value": 120,
+  "unit": "zeros",
+  "answer": "120 zeros, Shannon's 1950 figure: far more games than atoms in the observable universe, roughly 10⁸⁰.",
+  "move": "Chained choices multiply, and outgrow any count of real things.",
+  "ask": "Where am I adding up options that really multiply?",
+  "trap": "40,000, multiplying 1,000 by 40 instead of chaining the choices.",
+  "hint": "Write 1,000 as a power of ten, then multiply it by itself forty times.",
+  "steps": [
+    "Each pair of moves: 1,000 = 10³ ways.",
+    "Forty pairs in a row: (10³)⁴⁰ = 10 to the power 3 × 40.",
+    "10¹²⁰, a 1 with 120 zeros: Shannon's 1950 figure, more games than atoms in the observable universe."
+  ],
+  "keywords": [
+    "shannon number",
+    "chess",
+    "powers of ten",
+    "combinatorics"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shannon, Programming a Computer for Playing Chess, 1950",
+  "source_kind": "paper",
+  "reference": "Claude Shannon, Programming a Computer for Playing Chess, Philosophical Magazine 41(314):256–275, 1950",
+  "written": "2026-10-17"
+}

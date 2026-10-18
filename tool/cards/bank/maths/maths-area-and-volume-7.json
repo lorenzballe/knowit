@@ -1,0 +1,40 @@
+{
+  "id": "maths-area-and-volume-7",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A cocktail glass is a cone, point down. Filled to half its height, what fraction of the full glass holds drink?",
+  "options": [
+    "A half",
+    "A quarter",
+    "An eighth"
+  ],
+  "correct": 2,
+  "answer": "An eighth. The drink is a smaller cone of the same shape, half as tall and half as wide, so its volume is ½ × ½ × ½ = ⅛. Fill to three-quarters of the height and it still holds only about 42%: 0.75³. Euclid proved similar cones scale by the cube.",
+  "move": "Similar shapes scale their volume by the cube of their size.",
+  "ask": "Which half-full container have I misjudged by looking at its height?",
+  "trap": "A half, since the drink reaches half the height.",
+  "keywords": [
+    "volume of a cone",
+    "similar shapes",
+    "cube law",
+    "geometry"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Euclid, Elements, Book XII, Proposition 12",
+  "source_kind": "book",
+  "reference": "https://mathcs.clarku.edu/~djoyce/java/elements/bookXII/propXII12.html",
+  "written": "2026-10-17"
+}

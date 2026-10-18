@@ -1,0 +1,40 @@
+{
+  "id": "maths-game-theory-8",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "A dollar is auctioned: the top bid wins, but the runner-up also pays. Bids stand at 99 and 100 cents. What next?",
+  "options": [
+    "The 99-cent bidder gives up",
+    "The 99-cent bidder bids $1.01",
+    "Both agree to stop at a dollar"
+  ],
+  "correct": 1,
+  "answer": "The 99-cent bidder bids $1.01. Losing would cost 99 cents; winning at $1.01 costs just 1 cent net, so raising looks rational, and the same logic holds at every step. Martin Shubik described the game in 1971, finding total payments of three to five dollars not uncommon. The only winning move is not to start.",
+  "move": "Before entering an escalation, decide where you will stop.",
+  "ask": "Which contest am I still in only because of what I have already paid?",
+  "trap": "Giving up at a dollar, since nobody pays more than face value.",
+  "keywords": [
+    "dollar auction",
+    "escalation",
+    "sunk cost",
+    "game theory"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shubik, The dollar auction game, Journal of Conflict Resolution, 1971",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/002200277101500111",
+  "written": "2026-10-17"
+}

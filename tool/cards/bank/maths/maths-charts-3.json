@@ -1,0 +1,33 @@
+{
+  "id": "maths-charts-3",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Thirteen sets of points share the same averages, spreads and correlation, to two decimal places. Do their charts look alike?",
+  "answer": "No: one of them is a dinosaur. In 2017 Justin Matejka and George Fitzmaurice nudged Alberto Cairo's Datasaurus point by point, holding those five numbers fixed, into a star, a bullseye, stripes and a cross. Every summary fits all thirteen. It describes a shape it never shows; only the plot shows the shape.",
+  "move": "Look at the points before trusting the numbers that sum them up.",
+  "ask": "Which average have I trusted without ever seeing the data behind it?",
+  "keywords": [
+    "datasaurus",
+    "summary statistics",
+    "scatter plots",
+    "data visualisation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Matejka and Fitzmaurice, Same Stats, Different Graphs, CHI 2017",
+  "source_kind": "paper",
+  "reference": "https://www.autodesk.com/research/publications/same-stats-different-graphs",
+  "written": "2026-10-17"
+}

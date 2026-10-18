@@ -1,0 +1,33 @@
+{
+  "id": "maths-big-numbers-7",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the googol, a 1 followed by a hundred zeros, get its name?",
+  "answer": "From a child. The mathematician Edward Kasner asked his nine-year-old nephew, Milton Sirotta, to name it, and put the word in a 1940 book. Kasner used it to show that a number can be vast and still finite: the observable universe holds roughly 10⁸⁰ atoms, far short of a googol.",
+  "move": "A huge number becomes graspable once you set it beside a real count.",
+  "ask": "Which huge figure have I never set beside something I can picture?",
+  "keywords": [
+    "googol",
+    "edward kasner",
+    "large numbers",
+    "powers of ten"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kasner and Newman, Mathematics and the Imagination, 1940",
+  "source_kind": "book",
+  "reference": "Edward Kasner and James R. Newman, Mathematics and the Imagination, Simon and Schuster, 1940",
+  "written": "2026-10-17"
+}

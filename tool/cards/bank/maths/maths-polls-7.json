@@ -1,0 +1,43 @@
+{
+  "id": "maths-polls-7",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.polls",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A poll of 1,000 Britons includes about 100 aged 18 to 24. Roughly what is the margin of error for them, in points?",
+  "value": 10,
+  "unit": "points",
+  "tolerance": 1,
+  "answer": "About 10 points either way, so a ten-point jump in that group between two polls can be pure noise.",
+  "move": "Every slice of a poll carries the margin of its own small sample.",
+  "ask": "Which subgroup finding have I repeated without asking how many people it rests on?",
+  "trap": "3 points, the margin quoted for the whole poll.",
+  "hint": "The margin shrinks with the square root of the sample: try 1 ÷ square root of n.",
+  "steps": [
+    "For a share near 50%, the 95% margin is about 1 ÷ the square root of the sample.",
+    "Whole poll: the square root of 1,000 is about 31.6, and 1 ÷ 31.6 ≈ 0.032: about 3 points.",
+    "The 100 young people: 1 ÷ 10 = 0.1, about 10 points either way."
+  ],
+  "keywords": [
+    "margin of error",
+    "subgroups",
+    "opinion polls",
+    "sample size"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Office for National Statistics, uncertainty and how we measure it",
+  "source_kind": "institution",
+  "reference": "https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/uncertaintyandhowwemeasureit",
+  "written": "2026-10-17"
+}

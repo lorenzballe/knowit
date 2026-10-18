@@ -998,7 +998,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Tout est dedans. Fais glisser un sujet vers le bas pour en voir moins, ou jusqu\'à zéro pour le retirer.';
+      'Tout est dedans. Fais glisser un sujet vers la gauche pour en voir moins, ou jusqu\'au bout pour le retirer.';
 
   @override
   String get next => 'Suivant';
@@ -1038,7 +1038,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Comprends le pourquoi des choses et jusqu\'où te fier à ce que tu sais';
 
   @override
-  String get introTopicsTitle => 'Dix-neuf sujets, cinq cartes';
+  String get introTopicsTitle => 'Vingt sujets, cinq cartes';
 
   @override
   String get introTopicsLine =>
@@ -1129,6 +1129,7 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(topic, {
       'thinking': 'Réflexion',
       'science': 'Sciences',
+      'maths': 'Mathématiques',
       'space': 'Espace',
       'psychology': 'Psychologie',
       'economics': 'Économie',
@@ -1830,8 +1831,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get yourMix => 'Ton mélange';
 
   @override
+  String get genresTitle => 'Quelles parties ?';
+
+  @override
   String get genresLine =>
-      'Touche un genre pour le passer. Maintiens-le et les trois fils qu’il contient s’ouvrent juste dessous.';
+      'Touche un genre pour le passer. Maintiens-le et les sujets plus précis qu’il contient s’ouvrent juste dessous.';
 
   @override
   String get insideGenre => 'Dedans';

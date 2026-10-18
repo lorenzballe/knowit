@@ -967,7 +967,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get everythingIsInDrag => '모두 들어 있어요. 주제를 아래로 끌면 덜 보이고, 0까지 내리면 빠집니다.';
+  String get everythingIsInDrag => '모두 들어 있어요. 주제를 왼쪽으로 밀면 덜 보이고, 끝까지 밀면 빠집니다.';
 
   @override
   String get next => '다음';
@@ -1006,7 +1006,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tagline => '왜 그런지 배우고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요';
 
   @override
-  String get introTopicsTitle => '열아홉 개 주제, 다섯 장의 카드';
+  String get introTopicsTitle => '스무 개 주제, 다섯 장의 카드';
 
   @override
   String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처를 밝힙니다.';
@@ -1091,6 +1091,7 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(topic, {
       'thinking': '생각',
       'science': '과학',
+      'maths': '수학',
       'space': '우주',
       'psychology': '심리학',
       'economics': '경제',
@@ -1775,7 +1776,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get yourMix => '나의 믹스';
 
   @override
-  String get genresLine => '장르를 탭하면 건너뜁니다. 길게 누르면 안의 세 갈래가 바로 아래에 열립니다.';
+  String get genresTitle => '어떤 부분을?';
+
+  @override
+  String get genresLine => '장르를 탭하면 건너뜁니다. 길게 누르면 안의 작은 주제들이 바로 아래에 열립니다.';
 
   @override
   String get insideGenre => '이 안에';

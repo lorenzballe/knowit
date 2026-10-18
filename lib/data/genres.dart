@@ -142,6 +142,42 @@ const Map<String, List<Genre>> kGenres = {
       Strand('science.think_like_a_scientist.being_wrong', 'Being wrong'),
     ]),
   ],
+  // Maths as a reader uses it: sizing a claim, reading a chart, feeling
+  // growth, seeing a shape, playing the game, checking the bill. Six genres
+  // of three, as it first came in (ede17fd); the curios of pure maths stay
+  // with Science and the principles in the open with Thinking.
+  'maths': [
+    Genre('maths.estimation', 'Estimation', [
+      Strand('maths.estimation.fermi', 'Fermi problems'),
+      Strand('maths.estimation.big_numbers', 'Big numbers'),
+      Strand('maths.estimation.units', 'Units and scale'),
+    ]),
+    Genre('maths.statistics', 'Statistics', [
+      Strand('maths.statistics.averages', 'Averages'),
+      Strand('maths.statistics.charts', 'Misleading charts'),
+      Strand('maths.statistics.polls', 'Samples and polls'),
+    ]),
+    Genre('maths.growth', 'Growth', [
+      Strand('maths.growth.percentages', 'Percentages'),
+      Strand('maths.growth.compounding', 'Compounding'),
+      Strand('maths.growth.logarithms', 'Logarithms'),
+    ]),
+    Genre('maths.shapes', 'Shapes', [
+      Strand('maths.shapes.area_and_volume', 'Area and volume'),
+      Strand('maths.shapes.scaling', 'Scaling'),
+      Strand('maths.shapes.projections', 'Maps and projections'),
+    ]),
+    Genre('maths.puzzles', 'Puzzles', [
+      Strand('maths.puzzles.paradoxes', 'Paradoxes'),
+      Strand('maths.puzzles.game_theory', 'Game theory'),
+      Strand('maths.puzzles.logic', 'Logic'),
+    ]),
+    Genre('maths.everyday_maths', 'Everyday maths', [
+      Strand('maths.everyday_maths.money', 'Money maths'),
+      Strand('maths.everyday_maths.risk', 'Everyday risk'),
+      Strand('maths.everyday_maths.algorithms', 'Algorithms'),
+    ]),
+  ],
   'space': [
     Genre('space.black_holes', 'Black holes', [
       Strand('space.black_holes.event_horizons', 'Event horizons'),

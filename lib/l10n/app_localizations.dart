@@ -1455,7 +1455,7 @@ abstract class AppLocalizations {
   /// No description provided for @everythingIsInDrag.
   ///
   /// In en, this message translates to:
-  /// **'Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.'**
+  /// **'Everything is in. Slide a subject left to see less of it, or all the way to drop it.'**
   String get everythingIsInDrag;
 
   /// No description provided for @next.
@@ -1515,7 +1515,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Nineteen topics, five cards'**
+  /// **'Twenty topics, five cards'**
   String get introTopicsTitle;
 
   /// No description provided for @introTopicsLine.
@@ -1671,7 +1671,7 @@ abstract class AppLocalizations {
   /// A subject's name, by its key. Shown on the mix, the cards, the shelves and wherever else a subject is named. Keep each short: the mix sets them on one line in half the screen's width.
   ///
   /// In en, this message translates to:
-  /// **'{topic, select, thinking{Thinking} science{Science} space{Space} psychology{Psychology} economics{Economics} technology{Technology} history{History} human_body{Human body} philosophy{Philosophy} pop_culture{Pop culture} nature{Nature} language{Language} weird_facts{Weird facts} sport{Sport} cinema{Cinema} music{Music} art{Art} medicine{Medicine} food{Food} life{Life} other{{topic}}}'**
+  /// **'{topic, select, thinking{Thinking} science{Science} maths{Maths} space{Space} psychology{Psychology} economics{Economics} technology{Technology} history{History} human_body{Human body} philosophy{Philosophy} pop_culture{Pop culture} nature{Nature} language{Language} weird_facts{Weird facts} sport{Sport} cinema{Cinema} music{Music} art{Art} medicine{Medicine} food{Food} life{Life} other{{topic}}}'**
   String subjectName(String topic);
 
   /// Said once in the first run, on the mix, to a reader whose phone is not in English: the cards themselves are written in English for now.
@@ -2705,6 +2705,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your mix'**
   String get yourMix;
+
+  /// The title of the onboarding step after the mix, where the reader picks which genres of each subject they want.
+  ///
+  /// In en, this message translates to:
+  /// **'Which parts?'**
+  String get genresTitle;
 
   /// No description provided for @genresLine.
   ///

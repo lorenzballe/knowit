@@ -1,0 +1,40 @@
+{
+  "id": "maths-polls-4",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.polls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Polls before Britain's 2015 election showed a dead heat; the Conservatives won by six and a half points. What did the inquiry blame?",
+  "options": [
+    "Voters lying to pollsters",
+    "A late swing in the final days",
+    "Samples with the wrong mix of people"
+  ],
+  "correct": 2,
+  "answer": "Samples with the wrong mix of people. The inquiry led by Patrick Sturgis found the polls' samples held too many Labour voters and too few Conservatives, and weighting could not repair it. A late swing explained a point at most. A big sample is no cure for the wrong sample.",
+  "move": "A bigger sample cannot fix one drawn from the wrong people.",
+  "ask": "Whose opinions am I hearing most, and who never gets asked?",
+  "trap": "Blaming voters who hid their choice, the story most often told.",
+  "keywords": [
+    "opinion polls",
+    "2015 general election",
+    "sampling bias",
+    "polling inquiry"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "University of Southampton, on the 2015 polling inquiry, 2016",
+  "source_kind": "institution",
+  "reference": "https://www.southampton.ac.uk/news/2016/04/polls-apart.page",
+  "written": "2026-10-17"
+}

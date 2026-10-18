@@ -1,0 +1,43 @@
+{
+  "id": "maths-units-7",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A drive sold as 1 terabyte holds 10¹² bytes. Windows counts a gigabyte as 2³⁰ bytes. What size does it show, in GB?",
+  "value": 931,
+  "unit": "GB",
+  "tolerance": 1,
+  "answer": "931 GB: nothing is missing, the two gigabytes just differ by about 7%.",
+  "move": "When a number shrinks between labels, check that both use one unit.",
+  "ask": "Which shortfall have I blamed on someone when two units simply differed?",
+  "trap": "1,000 GB, assuming every gigabyte is a billion bytes.",
+  "hint": "Divide the bytes on the drive by the bytes in Windows' bigger gigabyte.",
+  "steps": [
+    "2³⁰ = 1,073,741,824 bytes: about 7% more than a billion.",
+    "10¹² ÷ 1,073,741,824 ≈ 931.",
+    "931 GB: nothing is missing, the two gigabytes just differ by about 7%."
+  ],
+  "keywords": [
+    "terabyte",
+    "gibibyte",
+    "binary prefixes",
+    "storage"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NIST, Prefixes for binary multiples",
+  "source_kind": "standard",
+  "reference": "https://physics.nist.gov/cuu/Units/binary.html",
+  "written": "2026-10-17"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "maths-money-7",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A receipt for £84 includes VAT at 20%. How much of the £84 is VAT, in pounds?",
+  "value": 14,
+  "unit": "pounds",
+  "answer": "£14, a sixth of the total, not £16.80: the 20% was charged on the price before tax.",
+  "move": "To strip out a percentage that was added, divide; never subtract it.",
+  "ask": "Which price have I reversed by subtracting a percentage that was added on?",
+  "trap": "£16.80, taking 20% of the total.",
+  "hint": "The £84 is 120% of the price before tax: find 100% first.",
+  "steps": [
+    "£84 is the price plus 20%: 120% of the pre-tax price.",
+    "Pre-tax price: 84 ÷ 1.2 = £70.",
+    "VAT: 84 − 70 = £14, not 20% of 84 = £16.80."
+  ],
+  "keywords": [
+    "vat",
+    "reverse percentages",
+    "receipts",
+    "tax"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "HMRC, VAT guide (VAT Notice 700), the VAT fraction",
+  "source_kind": "institution",
+  "reference": "https://www.gov.uk/guidance/vat-guide-notice-700",
+  "written": "2026-10-17"
+}

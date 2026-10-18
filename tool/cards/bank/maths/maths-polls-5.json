@@ -1,0 +1,39 @@
+{
+  "id": "maths-polls-5",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.polls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: a poll of 1,000 Maltese is about as precise as a poll of 1,000 Americans.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Precision depends on how many you ask, not how many there are: about three points either way for 1,000 people, whether the country has half a million people or 340 million. A spoonful tastes the soup the same whatever the size of the pot, provided it is stirred.",
+  "move": "A poll's precision comes from its sample size, not the population's.",
+  "ask": "Which small survey have I dismissed only because the population was huge?",
+  "trap": "Thinking a bigger country needs a proportionally bigger sample.",
+  "keywords": [
+    "sample size",
+    "margin of error",
+    "opinion polls",
+    "population size"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Freedman, Pisani and Purves, Statistics, 2007",
+  "source_kind": "book",
+  "reference": "David Freedman, Robert Pisani and Roger Purves, Statistics, fourth edition, W. W. Norton, 2007",
+  "written": "2026-10-17"
+}

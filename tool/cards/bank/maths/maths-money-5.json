@@ -1,0 +1,43 @@
+{
+  "id": "maths-money-5",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In 2016 Britain's 170 g Toblerone became 150 g, at the same price. By what percentage did the price per gram rise?",
+  "value": 13.3,
+  "unit": "percent",
+  "tolerance": 0.2,
+  "answer": "13.3% more per gram: removing 11.8% of the chocolate raised the unit price by 13.3%, because the base changed.",
+  "move": "Less in the pack at the same price is a bigger rise in unit price.",
+  "ask": "Which favourite product of mine might have shrunk while its price stood still?",
+  "trap": "11.8%, the share of chocolate removed.",
+  "hint": "Divide the old weight by the new: that is the change in price per gram.",
+  "steps": [
+    "Same price for less: the price per gram grows by 170 ÷ 150.",
+    "170 ÷ 150 = 1.133.",
+    "13.3% more per gram, though the weight fell by only 20 ÷ 170 = 11.8%."
+  ],
+  "keywords": [
+    "shrinkflation",
+    "toblerone",
+    "unit price",
+    "percentages"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fortune, Mondelez cuts the size of Toblerone, 2016",
+  "source_kind": "news_archive",
+  "reference": "https://fortune.com/2016/11/08/mondelez-cuts-the-size-of-toblerone-u-k-panics/",
+  "written": "2026-10-17"
+}

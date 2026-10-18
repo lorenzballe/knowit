@@ -1,0 +1,40 @@
+{
+  "id": "maths-charts-6",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which do readers judge most accurately: the angles of pie slices, the areas of circles, or positions along one axis?",
+  "options": [
+    "Angles of pie slices",
+    "Areas of circles",
+    "Positions along one axis"
+  ],
+  "correct": 2,
+  "answer": "Positions along one axis. In 1984 William Cleveland and Robert McGill tested how well people compare values coded in different ways: positions on a common scale came first, then lengths, angles and areas, with colour shading last. That is why dots or bars on a shared axis beat pies and bubbles.",
+  "move": "To make numbers comparable, put them on one shared scale.",
+  "ask": "Which pie chart have I squinted at when a row of bars would have answered?",
+  "trap": "Pie slices, because a pie shows parts of a whole.",
+  "keywords": [
+    "graphical perception",
+    "pie charts",
+    "data visualisation",
+    "cleveland and mcgill"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cleveland and McGill, Graphical perception, 1984",
+  "source_kind": "paper",
+  "reference": "William S. Cleveland and Robert McGill, Graphical Perception, Journal of the American Statistical Association 79(387):531–554, 1984",
+  "written": "2026-10-17"
+}
