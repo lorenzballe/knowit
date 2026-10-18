@@ -157,13 +157,12 @@ card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the moves you keep missing — the screen is Astute+; the profile keeps
 the record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
-fourteen days free, the only free trial there is, offered once at the end
-of the onboarding with "continue free" written under it — to a reader who
-set their mix. That is where most trials start, on the first day, and a
-trial asks for nothing today. One who skips the subjects goes straight to
-their first day: they have said nothing about what they want and seen no
-card. The card after the fifth offers it every evening, and the profile
-keeps the plans.
+fourteen days free, the only free trial there is. It is never offered in
+the first run: a new reader goes from the subjects to their first cards
+with no screen and no tap in between, and has not yet seen anything a plan
+would add to. The card after the fifth offers it every evening, the
+profile keeps the plans, and the features it opens offer it where they are
+locked.
 The paywall is sheet 111a, with the app's own three icon tiles; its button
 says the free days the store gives this reader (`Subscription.trialDays`):
 as many as the year's introductory offer holds, none for a reader Apple
@@ -180,9 +179,20 @@ door on what the habit adds up to. 'paywall shown' carries the variant
 and whether the reader has those numbers. The perks lead with the record,
 which only the journey shows, then five of your own cards, then what
 you've read. Under the button a trial is told as its days — today, the
-reminder two days before it ends, the day the store charges its own
-price — in place of "no charge today"; a short phone takes the headline
-and the perks down a size rather than scroll.
+reminder two days before it ends where the phone lets the app deliver it,
+the day the store charges its own price and that it renews until it is
+cancelled — and under them where and by when to cancel. A short phone
+takes the headline and the perks down a size, and leaves out today, which
+the button already says, rather than scroll; at the larger text sizes the
+page scrolls, everything at its full size.
+No price is shown until the store has given one. While it is being asked
+the paywall says so; when it cannot be reached it says that, with Try
+again (the store is asked again by itself after 3 s, 10 s, 30 s and two
+minutes, and whenever the app comes back). Restore purchases, the terms —
+Apple's licence on an iPhone, the site's own on Android — and the privacy
+policy are on screen either way. Only a debug build, which has no store to
+ask, shows the plans as sold (`Subscription.previewWithoutStore`). A free
+trial ends on "Free trial started.", not on a purchase.
 
 ## Today, done
 
@@ -1092,16 +1102,18 @@ dashboards, and has to agree with three names here.
   repository. An iPhone never asks — Apple's reviewers buy in the sandbox,
   and Apple does not allow codes that open what the app sells.
 - **Nothing to sell is not Astute+ for nothing.** When the store has put no
-  plan on sale, the buy button unlocks locally only on the web preview and
-  in debug builds, so their gated screens can be seen; a store build says
-  the purchase did not go through. And the developer tools at the foot of
-  the profile, which can switch Astute+ on, never reach a reader on an
-  iPhone: it shows them only on an install from TestFlight or Xcode. The
-  Android build for Google Play has to be made with
-  `--dart-define=DEBUG_TOOLS=false`. Apple's reviewers install with a
-  sandbox receipt too, so the build sent for review comes from the other
-  Codemagic workflow, *iOS · App Store (for review)*, made with
-  `DEBUG_TOOLS=false` (see *Debug tools*, under *What is not real yet*).
+  plan on sale, a store build shows no plan and no price at all, only that
+  the store could not be reached and a way to try again; only a debug
+  build shows the plans as sold and unlocks locally, so its gated screens
+  can be seen. And the developer tools at the foot of the profile, which
+  can switch Astute+ on, are in no build that does not ask for them with
+  `--dart-define=DEBUG_TOOLS=true`: not the App Store's, not Google
+  Play's, not the site's. Only the TestFlight builds ask, and an iPhone
+  shows them only on an install from TestFlight or Xcode. Apple's
+  reviewers install with a sandbox receipt too, so the build sent for
+  review comes from the other Codemagic workflow, *iOS · App Store (for
+  review)*, which does not ask (see *Debug tools*, under *What is not real
+  yet*).
 - **A way out of the account**, which Apple requires inside any app that
   makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
   account rows. Whoever signed in with Apple or Google confirms with the
@@ -1219,7 +1231,7 @@ changed — and `pill said`, a card that left the phone and was said to
 somebody, which is the one number this app is actually for.
 
 The paywall takes the gate that opened it as a required argument rather than a
-defaulted one, so `onboarding`, `sixth card`, `journey`, `archive` and
+defaulted one, so `sixth card`, `journey`, `archive`, `see the plans` and
 `calibration` can be told apart. A default is how a fifth of the traffic ends
 up labelled `unknown` by the end of the first week.
 
@@ -1233,20 +1245,29 @@ when something has been pushed over it. A visit sends `$screen` as it begins
 and `screen left` as it ends: the time in front, how far down it was
 scrolled, the drags and taps, and where the reader came from and went.
 
-**The reader's switch** sits at the foot of the settings, above the debug
-section, on by default and off in one tap, in all thirteen languages. It is
-applied to PostHog the moment it moves, and written back after a sign-out —
-sign-out clears every key the app holds, and a choice a wipe undoes is a delay
-rather than a choice. It turns off everything below as well.
+**Nothing is measured before a yes.** The intro's foot asks whether Astute
+may measure how the app is used — "Help make Astute better?", with No,
+thanks and Yes, share side by side and of one size — in all thirteen
+languages. It is not in the way: Start reading goes on without an answer,
+and no answer is a no. A reader who started without answering, or whose
+phone had the app before the question, is asked once more, as a sheet that
+waits for one of the two answers, after a finished day (after the reminder
+sheet, before the account's). PostHog is not even set up until the answer
+is yes: nothing is captured, queued or sent before it, and nothing after a
+no. What is stamped on every event, where the install came from and who the
+reader is are kept on the phone and said the moment a yes starts it.
 
-**Replays, with every word hidden.** Session replay is on, because PostHog's
-self-driving loop reads replays, errors and rage taps to find where readers
-get stuck and to propose fixes — but with `maskAllTexts`, so every word on
-the screen is a grey bar in the recording. The screen carries the reader's
-own written reasons, and a recording of them is not worth any finding;
-layout, taps and scrolls are what is left, and they are what a stuck reader
-looks like. `PostHogWidget` wraps the app for it, only where measurement is
-running.
+**The reader's switch** in the About box of Profile is the same answer, off
+until the reader has said yes. It is applied the moment it moves, and
+written back after a sign-out — sign-out clears every key the app holds,
+and a choice a wipe undoes is a delay rather than a choice. It turns off
+everything below as well.
+
+**No replays.** Session replay is off: a recording of a reader's screen is
+more than the count of what they did that they agreed to. A build can turn
+it on with `--dart-define=REPLAY=true`, and none does; it then records only
+after a yes, with every word and every picture hidden, under
+`PostHogWidget`.
 
 **Errors.** Every error the app does not catch — Flutter's, Dart's, the
 isolate's and the phone's own — goes to PostHog's error tracking with the
@@ -1420,13 +1441,13 @@ TestFlight's and Xcode's do and the App Store's does not, and shows the
 section only if it does. No answer within 300 ms is a no. Apple's reviewers
 install with a sandbox receipt as well, which is why `codemagic.yaml` has a
 second workflow, `ios-app-store` (*iOS · App Store (for review)*): the same
-build made with `DEBUG_TOOLS=false`, the one to submit. Every
-debug build has it. `--dart-define=DEBUG_TOOLS=false` takes it out of any
-build, except that the site, built that way, still shows it for a visit
-whose address says `?debug`. Android asks nothing, so the build for Google
-Play must be made with `DEBUG_TOOLS=false`. The decision itself is
-`debugToolsFor`, a pure function tested case by case in
-`test/debug_tools_test.dart`.
+build made without the tools, the one to submit. No build has the section
+unless it is made with `--dart-define=DEBUG_TOOLS=true` — only the
+TestFlight workflows are, and a developer running the app passes it too —
+except that the site, built without it, still shows it for a visit whose
+address says `?debug`. Android asks nothing, so a Google Play build is
+simply made without the flag. The decision itself is `debugToolsFor`, a
+pure function tested case by case in `test/debug_tools_test.dart`.
 
 ## What the evidence says, and what follows from it
 

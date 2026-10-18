@@ -17,7 +17,14 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('who gets the developer tools', () {
-    test('DEBUG_TOOLS=false takes them out of every build, whatever else is '
+    test('a build that does not ask for them has none', () {
+      // This one: the tests are built without DEBUG_TOOLS, as the App Store
+      // build, the Google Play build and the site are.
+      expect(kDebugTools, isFalse);
+      expect(debugToolsOn, isFalse);
+    });
+
+    test('a build without DEBUG_TOOLS=true has none, whatever else is '
         'true', () {
       for (final ToolsPlatform platform in _builds) {
         for (final bool testFlight in const [false, true]) {
@@ -37,7 +44,7 @@ void main() {
       }
     });
 
-    test('a debug build has them everywhere', () {
+    test('a debug build made with them has them everywhere', () {
       for (final ToolsPlatform platform in ToolsPlatform.values) {
         expect(
           debugToolsFor(
@@ -52,10 +59,10 @@ void main() {
       }
     });
 
-    test('an iPhone release build has them from TestFlight and nowhere '
-        'else', () {
-      // The binary testers get is the one the App Store gets, built the same
-      // way: only where it was installed from tells them apart.
+    test('an iPhone release build made with them has them from TestFlight '
+        'and nowhere else', () {
+      // A TestFlight build, made with DEBUG_TOOLS=true: only where it was
+      // installed from says whether to show them.
       expect(
         debugToolsFor(
           platform: ToolsPlatform.iOS,
@@ -77,7 +84,7 @@ void main() {
     });
 
     test('Android has whatever it was built with', () {
-      // Built as it is by default: on, in release as before.
+      // Built with DEBUG_TOOLS=true, as a tester's build would be.
       expect(
         debugToolsFor(
           platform: ToolsPlatform.android,
@@ -87,7 +94,7 @@ void main() {
         ),
         isTrue,
       );
-      // The build for Google Play, made with DEBUG_TOOLS=false.
+      // The build for Google Play, made without it.
       expect(
         debugToolsFor(
           platform: ToolsPlatform.android,
@@ -100,8 +107,8 @@ void main() {
     });
 
     test('the site keeps ?debug', () {
-      // Built with DEBUG_TOOLS=false, as deploy.yml builds it: off for
-      // everyone who opens it...
+      // Built without them, as deploy.yml builds it: off for everyone who
+      // opens it...
       expect(
         debugToolsFor(
           platform: ToolsPlatform.web,
@@ -122,7 +129,7 @@ void main() {
         ),
         isTrue,
       );
-      // Built without it, on as before.
+      // Built with them, on for everyone.
       expect(
         debugToolsFor(
           platform: ToolsPlatform.web,
@@ -220,20 +227,24 @@ void main() {
       expect(took.elapsed, lessThan(const Duration(seconds: 2)));
     });
 
-    test('a debug build settles without asking', () async {
+    test('a build that did not ask for them settles without asking, and '
+        'has none', () async {
+      // A debug build made without DEBUG_TOOLS, as the tests are: the phone
+      // is not asked, since nothing it said could turn the tools on.
       expect(kDebugMode, isTrue, reason: 'tests run as a debug build');
+      expect(kDebugTools, isFalse);
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
       var asked = false;
       messenger.setMockMethodCallHandler(channel, (call) async {
         asked = true;
-        return false;
+        return true;
       });
 
       await readDebugTools();
 
       expect(asked, isFalse);
-      expect(debugToolsOn, isTrue);
+      expect(debugToolsOn, isFalse);
     });
   });
 

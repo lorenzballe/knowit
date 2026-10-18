@@ -401,8 +401,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAccountQuestion => 'Delete your account?';
 
   @override
-  String get deleteAccountBody =>
-      'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'a subscription is managed in your App Store settings.',
+      'google': 'a subscription is managed in Google Play, under Payments & subscriptions.',
+      'other': 'a subscription is managed in the store you bought it from.',
+    });
+    return 'Your account and its backup are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Delete for good';
@@ -549,18 +555,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.';
 
   @override
-  String get howStep2Title => 'Checked against its source';
+  String get howStep2Title => 'Sourced, then read by a critic';
 
   @override
   String get howStep2Line =>
-      'Every card names where it comes from, and a second model reads it as a critic before it ships. What can\'t be backed up is cut.';
+      'Every card names where its facts come from, so you can check it yourself. Most are read by a second model acting as a critic, and what it can’t confirm goes on a list for a person to check. That list isn’t empty yet.';
 
   @override
   String get howStep3Title => 'Five, dealt each morning';
 
   @override
   String get howStep3Line =>
-      'From the subjects you picked, and never one you have already read.';
+      'From the subjects you picked, cards you haven’t read yet. One you got right comes back later, to see if it stuck.';
 
   @override
   String get howStep4Title => 'Kept honest by readers';
@@ -577,7 +583,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap the flag next to a card\'s source to report it.';
 
   @override
-  String get howFoot => 'Sources are checked again every month.';
+  String get howFoot =>
+      'We read every report, and we’d rather fix a card than defend it.';
 
   @override
   String get signingIn => 'Signing in…';
@@ -1159,8 +1166,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'The cards are in English for now; the app speaks your language.';
 
   @override
-  String get termsLine =>
-      'By continuing you agree to our Terms of Service & Privacy Policy';
+  String termsLine(String terms, String privacy) {
+    return 'By continuing you agree to our $terms and $privacy';
+  }
+
+  @override
+  String get termsLineTerms => 'Terms of Use';
+
+  @override
+  String get termsLinePrivacy => 'Privacy Policy';
 
   @override
   String get skip => 'Skip';
@@ -1234,9 +1248,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String subscribeFor(String price, String suffix) {
     return 'Subscribe for $price$suffix';
   }
-
-  @override
-  String get chargedTodayCancel => 'Charged today · cancel any time';
 
   @override
   String get paywallRecordTitle => 'See how much you really know.';
@@ -1325,15 +1336,63 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String trialCharge(int day, String price, String plan) {
     String _temp0 = intl.Intl.selectLogic(plan, {
-      'year': 'for a year',
+      'year': 'a year',
       'other': 'a month',
     });
-    return 'Day $day · $price $_temp0, unless you cancel';
+    return 'Day $day · $price $_temp0, renewing automatically until you cancel';
   }
 
   @override
-  String get trialStartedNoPayment =>
-      'Trial started. No payment is connected in this build.';
+  String chargedTodayRenews(String price, String suffix) {
+    return '$price$suffix charged today, renewing automatically until you cancel';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return 'Cancel any time in $where, at least 24 hours before it renews.';
+  }
+
+  @override
+  String get cancelWhereIos => 'Settings › your name › Subscriptions';
+
+  @override
+  String get cancelWhereAndroid =>
+      'Google Play › Payments & subscriptions › Subscriptions';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Asking the App Store for the prices…',
+      'other': 'Asking Google Play for the prices…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Couldn’t reach the App Store',
+      'other': 'Couldn’t reach Google Play',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine =>
+      'The prices and the free trial come from the store. Check your connection and try again.';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get purchasePending =>
+      'Waiting for approval. Astute+ opens as soon as the payment goes through.';
+
+  @override
+  String get oneMoment => 'One moment…';
+
+  @override
+  String get closeLabel => 'Close';
 
   @override
   String get thatDidNotGoThrough => 'That did not go through.';
@@ -1380,10 +1439,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancelAnyTime => 'Cancel any time';
-
-  @override
-  String get cancelAnyTimeNoPayment =>
-      'Cancel any time · No payment is taken in this build';
 
   @override
   String get restorePurchases => 'Restore purchases';
@@ -1749,6 +1804,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usageOff => 'Nothing more is measured.';
 
   @override
+  String get consentTitle => 'Help make Astute better?';
+
+  @override
+  String get consentLine =>
+      'Share how you use the app — never your name, your email or what you write.';
+
+  @override
+  String get consentNo => 'No, thanks';
+
+  @override
+  String get consentYes => 'Yes, share';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return 'You can change this any time in $profile, under $setting.';
+  }
+
+  @override
   String get yourMix => 'Your mix';
 
   @override
@@ -1802,9 +1875,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get plusCardLine =>
       'Five cards a day from your mix, at your level. Your journey. Your whole archive.';
-
-  @override
-  String get continueFree => 'Continue free';
 
   @override
   String get archiveBeforeThisWeek => 'Before this week';
@@ -2060,12 +2130,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseComplete => 'Purchase complete.';
 
   @override
+  String get trialStartedTitle => 'Free trial started.';
+
+  @override
   String get successWelcome =>
       'Welcome to Astute+. Today’s five cards are ready.';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Welcome to Astute+, $name. Today’s five cards are ready.';
+  }
+
+  @override
+  String get successWelcomeTomorrow =>
+      'Welcome to Astute+. Tomorrow’s five are all yours.';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Welcome to Astute+, $name. Tomorrow’s five are all yours.';
   }
 
   @override

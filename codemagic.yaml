@@ -5,6 +5,20 @@
 # developer tools on TestFlight installs, and "iOS · App Store (for review)",
 # the same build made without them — the one to submit (see the foot).
 #
+# The developer tools (lib/debug_flags.dart) can turn Astute+ on without a
+# purchase, so the app leaves them out of every build that does not ask for
+# them. Only "iOS · TestFlight" asks, with DEBUG_TOOLS: "true" in its own
+# variables; the build step passes DEBUG_TOOLS to the app and defaults it to
+# false, so a workflow added later, or this one with the variable removed,
+# builds without them. A Google Play build made from here should leave it
+# unset, like the review build.
+#
+# Build numbers: every build takes one more than the highest Apple has seen
+# for the app, in TestFlight or in an App Store version, and never less than
+# Codemagic's own counter, so two builds of either workflow never collide
+# and Apple never refuses an upload as a duplicate. The marketing version is
+# pubspec.yaml's, as before (see the build step).
+#
 # Signing, two ways, and nothing to set up for the first.
 #
 # As it always ran: every distribution certificate in the account is revoked
@@ -28,32 +42,38 @@ workflows:
       # reaches a codemagic.yaml build only through a group imported by name.
       groups:
         - signing
-      # Shared with the review build below, which adds DEBUG_TOOLS=false.
-      vars: &ios_vars
-        APP_STORE_APPLE_ID: 6806852300
-        BUNDLE_ID: "com.astuto.app"
-        # The home-screen widget is its own bundle inside the app's, signed
-        # with its own profile, and it shares the app's group so it can read
-        # what the app writes down for it.
-        WIDGET_BUNDLE_ID: "com.astuto.app.AstutWidget"
-        APP_GROUP: "group.com.astuto.app"
-        # RevenueCat's public SDK keys. They identify the app and grant
-        # nothing, which is why they ship inside the binary — unlike the
-        # secret key (sk_), which is for a server and must never be here.
-        # Declared once so an Android workflow can reuse them as they are.
-        REVENUECAT_IOS_KEY: "appl_HWZZHYAnvPnnzHgAtscRyFDUhPs"
-        REVENUECAT_ANDROID_KEY: "goog_YaeEfHnlTfzLXeDDjfmQcgCVpKl"
-        # Where PostHog's events go: Astute's own project, in an organization
-        # of its own so it keeps PostHog's free plan (one project each). The
-        # project key is public in the same way the RevenueCat keys are: it
-        # names the project to write into, reads nothing back, and ships
-        # inside the binary anyway — so it is written here, as the owner
-        # asked, like the other app's. The host has to be the project's
-        # region: a key sent to the other region is accepted by nobody,
-        # silently. A build made anywhere else, without these, measures
-        # nothing (see lib/analytics.dart).
-        POSTHOG_KEY: "phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF"
-        POSTHOG_HOST: "https://eu.i.posthog.com"
+      vars:
+        # The developer tools, in this build only: on a phone they show to
+        # installs from TestFlight and to no one else, but the copy Apple's
+        # reviewers install is a sandbox install too, so this build is never
+        # the one sent for review (see the foot).
+        DEBUG_TOOLS: "true"
+        # Shared with the review build below, which leaves the tools out.
+        <<: &ios_vars
+          APP_STORE_APPLE_ID: 6806852300
+          BUNDLE_ID: "com.astuto.app"
+          # The home-screen widget is its own bundle inside the app's, signed
+          # with its own profile, and it shares the app's group so it can read
+          # what the app writes down for it.
+          WIDGET_BUNDLE_ID: "com.astuto.app.AstutWidget"
+          APP_GROUP: "group.com.astuto.app"
+          # RevenueCat's public SDK keys. They identify the app and grant
+          # nothing, which is why they ship inside the binary — unlike the
+          # secret key (sk_), which is for a server and must never be here.
+          # Declared once so an Android workflow can reuse them as they are.
+          REVENUECAT_IOS_KEY: "appl_HWZZHYAnvPnnzHgAtscRyFDUhPs"
+          REVENUECAT_ANDROID_KEY: "goog_YaeEfHnlTfzLXeDDjfmQcgCVpKl"
+          # Where PostHog's events go: Astute's own project, in an organization
+          # of its own so it keeps PostHog's free plan (one project each). The
+          # project key is public in the same way the RevenueCat keys are: it
+          # names the project to write into, reads nothing back, and ships
+          # inside the binary anyway — so it is written here, as the owner
+          # asked, like the other app's. The host has to be the project's
+          # region: a key sent to the other region is accepted by nobody,
+          # silently. A build made anywhere else, without these, measures
+          # nothing (see lib/analytics.dart).
+          POSTHOG_KEY: "phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF"
+          POSTHOG_HOST: "https://eu.i.posthog.com"
       flutter: stable
       xcode: latest
       cocoapods: default
@@ -196,13 +216,39 @@ workflows:
       - name: Install CocoaPods dependencies
         script: find . -name "Podfile" -execdir pod install \;
 
-      - name: Build signed IPA (build number = latest TestFlight + 1)
+      - name: Build signed IPA (build number = highest Apple has + 1)
         script: |
-          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "0")
+          set -e
+          # The build number. One more than the highest Apple has for this
+          # app, TestFlight's or an App Store version's: the latest TestFlight
+          # build alone was all this used to ask, which says nothing of a
+          # build already in an App Store version, and both workflows upload
+          # to the same app. Never below Codemagic's own counter for the
+          # project, which no two builds share, so that a lookup that comes
+          # back empty does not send build 1 again. Anything that is not a
+          # whole number counts as no answer.
+          whole() { case "$1" in ''|*[!0-9]*) echo 0 ;; *) echo "$1" ;; esac; }
+          TF=$(whole "$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || true)")
+          AS=$(whole "$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || true)")
+          FLOOR=$(whole "${PROJECT_BUILD_NUMBER:-${BUILD_NUMBER:-0}}")
+          NEXT=$(( (TF > AS ? TF : AS) + 1 ))
+          if [ "$NEXT" -le "$FLOOR" ]; then NEXT=$FLOOR; fi
+          if [ "$TF" -eq 0 ] && [ "$AS" -eq 0 ]; then
+            if [ "$FLOOR" -eq 0 ]; then
+              echo "error: App Store Connect gave no build number, and there is no Codemagic counter to fall back on." >&2
+              exit 1
+            fi
+            echo "warning: App Store Connect gave no build number; using Codemagic's counter."
+          fi
+          # The marketing version stays pubspec.yaml's, which flutter build
+          # reads when it is given no --build-name.
+          VERSION=$(sed -n 's/^version: *\([^+ ]*\).*/\1/p' pubspec.yaml)
+          echo "Version $VERSION, build $NEXT (TestFlight had $TF, the App Store $AS, Codemagic's counter is $FLOOR)."
+          echo "Developer tools: ${DEBUG_TOOLS:-false}."
           flutter build ipa --release \
-            --build-number=$(($LATEST + 1)) \
+            --build-number=$NEXT \
             --dart-define=REVENUECAT_IOS_KEY=$REVENUECAT_IOS_KEY \
-            --dart-define=DEBUG_TOOLS=${DEBUG_TOOLS:-true} \
+            --dart-define=DEBUG_TOOLS=${DEBUG_TOOLS:-false} \
             --dart-define=POSTHOG_KEY=$POSTHOG_KEY \
             --dart-define=POSTHOG_HOST=$POSTHOG_HOST \
             --export-options-plist=/Users/builder/export_options.plist
@@ -222,13 +268,15 @@ workflows:
           failure: true
 
   # The build to submit for review. It is the TestFlight build in every
-  # respect but one: made with DEBUG_TOOLS=false, so the profile's developer
-  # tools are not in it at all. On a phone the TestFlight build shows them
-  # only to installs from TestFlight (lib/debug_flags.dart), but the copy
-  # Apple's reviewers install is a sandbox install too, and a reviewer who
-  # finds "Turn Astute+ on" has found a way round the purchase. It goes to
-  # TestFlight like the other, and is the one to pick for the version in App
-  # Store Connect.
+  # respect but one: the developer tools are not in it at all — it does not
+  # ask for them, and the app leaves them out of any build that does not. On
+  # a phone the TestFlight build shows them only to installs from TestFlight
+  # (lib/debug_flags.dart), but the copy Apple's reviewers install is a
+  # sandbox install too, and a reviewer who finds "Turn Astute+ on" has found
+  # a way round the purchase. It goes to TestFlight like the other, and is
+  # the one to pick for the version in App Store Connect: never a build of
+  # "iOS · TestFlight", whose number in the build list can be told by the
+  # log line "Developer tools: true".
   #
   # Before sending one for review, keep the signing key (see the top of this
   # file): without it, the next build of either workflow revokes the
@@ -244,6 +292,7 @@ workflows:
         - signing
       vars:
         <<: *ios_vars
+        # Said out loud, though it is what an unset variable means too.
         DEBUG_TOOLS: "false"
       flutter: stable
       xcode: latest

@@ -1,15 +1,25 @@
+import 'package:flutter/foundation.dart' show TargetPlatform;
 import 'package:url_launcher/url_launcher.dart';
 
-/// Where the paywall's two required links go.
+/// Where the terms and the privacy policy are, wherever the app links them:
+/// the paywall, the intro, Profile.
 ///
 /// Apple asks for both beside an auto-renewing subscription, in the app and
-/// in the App Store listing (guideline 3.1.2). The terms are Apple's own
-/// standard licence, which the App Store applies to any app that does not
-/// bring one; the privacy policy is a page of the site this repository
-/// publishes at astutetheapp.com, `site/privacy.html`.
-const String kTermsUrl =
+/// in the App Store listing (guideline 3.1.2). On an iPhone the terms are
+/// Apple's own standard licence, which the App Store applies to any app that
+/// does not bring one. Everywhere else they are the site's own
+/// (`site/terms.html`), which cover a purchase on Google Play and say that
+/// Apple's licence is the one on an iPhone: Apple's licence governs App
+/// Store purchases only, and Android's readers used to be sent to it. The
+/// privacy policy is a page of the same site, `site/privacy.html`.
+const String kAppleEulaUrl =
     'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+const String kSiteTermsUrl = 'https://astutetheapp.com/terms';
 const String kPrivacyUrl = 'https://astutetheapp.com/privacy';
+
+/// The terms a reader on [platform] buys under.
+String termsUrlFor(TargetPlatform platform) =>
+    platform == TargetPlatform.iOS ? kAppleEulaUrl : kSiteTermsUrl;
 
 /// What the privacy policy says about where a reader lives, word for word
 /// as site/privacy.html prints it, in both of its languages: the app's own

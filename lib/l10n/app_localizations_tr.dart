@@ -401,8 +401,14 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deleteAccountQuestion => 'Hesabın silinsin mi?';
 
   @override
-  String get deleteAccountBody =>
-      'Hesabın ve yedeği kalıcı olarak silinir ve bu cihaz en baştan başlar. Bu, Astute+ aboneliğini iptal etmez: abonelik App Store ayarlarından yönetilir.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'abonelik App Store ayarlarından yönetilir.',
+      'google': 'abonelik Google Play\'de, Ödemeler ve abonelikler bölümünden yönetilir.',
+      'other': 'abonelik, satın aldığın mağazadan yönetilir.',
+    });
+    return 'Hesabın ve yedeği kalıcı olarak silinir ve bu cihaz en baştan başlar. Bu, Astute+ aboneliğini iptal etmez: $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => 'Kalıcı olarak sil';
@@ -547,18 +553,18 @@ class AppLocalizationsTr extends AppLocalizations {
       'Her kart tek bir talimata göre yazılır: sormaya değer bir soru, nedenini söyleyen bir yanıt ve yeniden kullanabileceğin bir hamle.';
 
   @override
-  String get howStep2Title => 'Kaynağına göre kontrol edilir';
+  String get howStep2Title => 'Kaynaklı, sonra bir eleştirmen okur';
 
   @override
   String get howStep2Line =>
-      'Her kart nereden geldiğini söyler ve yayımlanmadan önce ikinci bir model onu eleştirmen gibi okur. Dayanağı olmayan çıkarılır.';
+      'Her kart bilgilerinin nereden geldiğini söyler, böylece kendin kontrol edebilirsin. Çoğunu eleştirmen rolündeki ikinci bir model okur; doğrulayamadığı şeyler bir insanın kontrol edeceği bir listeye girer. O liste henüz boş değil.';
 
   @override
   String get howStep3Title => 'Her sabah beş kart';
 
   @override
   String get howStep3Line =>
-      'Seçtiğin konulardan, ve asla daha önce okuduğun bir kart değil.';
+      'Seçtiğin konulardan, henüz okumadığın kartlar. Doğru bildiğin bir kart, aklında kalıp kalmadığını görmek için sonra geri gelir.';
 
   @override
   String get howStep4Title => 'Okurlar dürüst tutar';
@@ -575,7 +581,8 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bildirmek için bir kartın kaynağının yanındaki bayrağa dokun.';
 
   @override
-  String get howFoot => 'Kaynaklar her ay yeniden kontrol edilir.';
+  String get howFoot =>
+      'Her bildirimi okuyoruz; bir kartı savunmaktansa düzeltmeyi tercih ederiz.';
 
   @override
   String get signingIn => 'Giriş yapılıyor…';
@@ -1153,8 +1160,15 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kartlar şimdilik İngilizce; uygulama senin dilini konuşuyor.';
 
   @override
-  String get termsLine =>
-      'Devam ederek Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul etmiş olursun';
+  String termsLine(String terms, String privacy) {
+    return 'Devam ederek $terms ve $privacy kabul etmiş olursun';
+  }
+
+  @override
+  String get termsLineTerms => 'Kullanım Koşullarımızı';
+
+  @override
+  String get termsLinePrivacy => 'Gizlilik Politikamızı';
 
   @override
   String get skip => 'Atla';
@@ -1228,10 +1242,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String subscribeFor(String price, String suffix) {
     return '$price$suffix ile abone ol';
   }
-
-  @override
-  String get chargedTodayCancel =>
-      'Bugün ücretlendirilir · istediğin zaman iptal et';
 
   @override
   String get paywallRecordTitle => 'Gerçekten ne kadar bildiğini gör.';
@@ -1322,12 +1332,60 @@ class AppLocalizationsTr extends AppLocalizations {
       'year': 'yıllık',
       'other': 'aylık',
     });
-    return '$day. gün · $_temp0 $price, iptal etmezsen';
+    return '$day. gün · $_temp0 $price, iptal edene kadar otomatik yenilenir';
   }
 
   @override
-  String get trialStartedNoPayment =>
-      'Deneme başladı. Bu sürümde ödeme bağlı değil.';
+  String chargedTodayRenews(String price, String suffix) {
+    return '$price$suffix bugün ödenir, iptal edene kadar otomatik yenilenir';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return 'İstediğin zaman $where bölümünden iptal et; yenilemeden en az 24 saat önce.';
+  }
+
+  @override
+  String get cancelWhereIos => 'Ayarlar › adın › Abonelikler';
+
+  @override
+  String get cancelWhereAndroid =>
+      'Google Play › Ödemeler ve abonelikler › Abonelikler';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Fiyatlar App Store’dan alınıyor…',
+      'other': 'Fiyatlar Google Play’den alınıyor…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store’a ulaşılamadı',
+      'other': 'Google Play’e ulaşılamadı',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine =>
+      'Fiyatlar ve ücretsiz deneme mağazadan gelir. Bağlantını kontrol edip tekrar dene.';
+
+  @override
+  String get tryAgain => 'Tekrar dene';
+
+  @override
+  String get purchasePending =>
+      'Onay bekleniyor. Ödeme tamamlanır tamamlanmaz Astute+ açılacak.';
+
+  @override
+  String get oneMoment => 'Bir saniye…';
+
+  @override
+  String get closeLabel => 'Kapat';
 
   @override
   String get thatDidNotGoThrough => 'Bu gerçekleşmedi.';
@@ -1374,10 +1432,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get cancelAnyTime => 'İstediğin zaman iptal et';
-
-  @override
-  String get cancelAnyTimeNoPayment =>
-      'İstediğin zaman iptal et · Bu sürümde ödeme alınmaz';
 
   @override
   String get restorePurchases => 'Satın alımları geri yükle';
@@ -1743,6 +1797,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get usageOff => 'Artık hiçbir şey ölçülmüyor.';
 
   @override
+  String get consentTitle => 'Astute\'u daha iyi yapmamıza yardım eder misin?';
+
+  @override
+  String get consentLine =>
+      'Uygulamayı nasıl kullandığını paylaş — adın, e-postan ve yazdıkların asla gitmez.';
+
+  @override
+  String get consentNo => 'Hayır, teşekkürler';
+
+  @override
+  String get consentYes => 'Evet, paylaş';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return 'Bunu istediğin zaman $profile › $setting bölümünden değiştirebilirsin.';
+  }
+
+  @override
   String get yourMix => 'Senin karışımın';
 
   @override
@@ -1796,9 +1868,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get plusCardLine =>
       'Karışımından, seviyende günde beş kart. Yolculuğun. Tüm arşivin.';
-
-  @override
-  String get continueFree => 'Ücretsiz devam et';
 
   @override
   String get archiveBeforeThisWeek => 'Bu haftadan öncesi';
@@ -2055,11 +2124,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get purchaseComplete => 'Satın alma tamamlandı.';
 
   @override
+  String get trialStartedTitle => 'Ücretsiz deneme başladı.';
+
+  @override
   String get successWelcome => 'Astute+’a hoş geldin. Bugünün beş kartı hazır.';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Astute+’a hoş geldin, $name. Bugünün beş kartı hazır.';
+  }
+
+  @override
+  String get successWelcomeTomorrow =>
+      'Astute+’a hoş geldin. Yarının beş kartı tamamen senin.';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Astute+’a hoş geldin, $name. Yarının beş kartı tamamen senin.';
   }
 
   @override

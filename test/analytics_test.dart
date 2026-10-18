@@ -385,6 +385,110 @@ void main() {
       expect(sink.registered['rung'], isA<int>());
     });
   });
+
+  group('nothing is measured before the reader says yes', () {
+    test('a first launch sets nothing up, and sends nothing', () async {
+      SharedPreferences.setMockInitialValues({});
+      await Analytics.startForTest(sink);
+
+      expect(Analytics.answered, isFalse);
+      expect(Analytics.collecting, isFalse);
+      expect(Analytics.ready, isFalse);
+      expect(Analytics.failure, contains('not said'));
+      await Analytics.capture('app started');
+      await Analytics.screen('intro');
+      await Analytics.register('text_scale_bucket', 'default');
+      await Analytics.identify('uid-1');
+      expect(sink.events, isEmpty);
+      expect(sink.screens, isEmpty);
+      expect(sink.registered, isEmpty);
+      expect(sink.identified, isEmpty);
+    });
+
+    test(
+      'a yes starts it there and then, with what was kept meanwhile',
+      () async {
+        SharedPreferences.setMockInitialValues({});
+        await Analytics.startForTest(sink);
+        await Analytics.installedFrom('app_store');
+        await Analytics.register('text_scale_bucket', 'default');
+        await Analytics.identify('uid-1', anonymous: false, method: 'apple');
+        await Analytics.capture('intro skipped');
+
+        await Analytics.setCollecting(true);
+
+        expect(Analytics.ready, isTrue);
+        expect(Analytics.collecting, isTrue);
+        // What every later event is stamped with, where the install came
+        // from, and who the reader is: all said the moment it starts.
+        expect(sink.registered['text_scale_bucket'], 'default');
+        expect(sink.registered['install_channel'], 'app_store');
+        expect(sink.identified, ['uid-1']);
+        expect(sink.person['install_channel'], 'app_store');
+        // But not what happened before the yes.
+        expect(sink.names, isNot(contains('intro skipped')));
+        await Analytics.capture('usage sharing answered', {'on': true});
+        expect(sink.names, contains('usage sharing answered'));
+        final prefs = await SharedPreferences.getInstance();
+        expect(prefs.getBool('knowit.analytics'), isTrue);
+        expect(prefs.getBool('knowit.analytics.asked'), isTrue);
+      },
+    );
+
+    test('a no is kept, and the next launch sets nothing up either', () async {
+      SharedPreferences.setMockInitialValues({});
+      await Analytics.startForTest(sink);
+      await Analytics.setCollecting(false);
+      expect(Analytics.answered, isTrue);
+      expect(Analytics.ready, isFalse);
+
+      // The next launch.
+      await Analytics.startForTest(sink);
+      expect(Analytics.answered, isTrue);
+      expect(Analytics.collecting, isFalse);
+      expect(Analytics.ready, isFalse);
+      await Analytics.capture('app started');
+      expect(sink.events, isEmpty);
+    });
+
+    test('a yes kept from before starts it at launch', () async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.analytics': true,
+        'knowit.analytics.asked': true,
+      });
+      await Analytics.startForTest(sink);
+      expect(Analytics.ready, isTrue);
+    });
+
+    test('the old switch turned off is a no; left on, a question', () async {
+      // Before the question, the switch was on by default: off, the reader
+      // said no; on, nobody said anything.
+      SharedPreferences.setMockInitialValues({'knowit.analytics': false});
+      await Analytics.startForTest(sink);
+      expect(Analytics.answered, isTrue);
+      expect(Analytics.ready, isFalse);
+
+      SharedPreferences.setMockInitialValues({'knowit.analytics': true});
+      await Analytics.startForTest(sink);
+      expect(Analytics.answered, isFalse);
+      expect(Analytics.ready, isFalse);
+    });
+
+    test('signing out keeps the answer, and keeps no answer as none', () async {
+      final app = await _ready();
+      Analytics.useForTest(null);
+      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+      await Analytics.startForTest(sink);
+      await app.signOut();
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.analytics.asked'), isNull);
+      expect(Analytics.answered, isFalse);
+    });
+
+    test('no build records sessions unless it asks to', () {
+      expect(kSessionReplay, isFalse);
+    });
+  });
 }
 
 /// A sink where everything fails, which is the case the app must survive.

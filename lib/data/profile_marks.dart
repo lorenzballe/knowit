@@ -63,6 +63,16 @@ abstract final class ProfileMarks {
       'M5.8 6l.9 13.2a2 2 0 0 0 2 1.8h6.6a2 2 0 0 0 2-1.8l.9-13.2 '
       'M10 10.5v6.5 M14 10.5v6.5';
 
+  /// The privacy policy: a shield with a tick on it.
+  static const String shield =
+      'M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z '
+      'M8.8 12.2l2.2 2.2 4.3-4.4';
+
+  /// The terms: a page with its corner turned and two lines on it.
+  static const String page =
+      'M7 3h7l4.5 4.5V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z '
+      'M14 3v4.5h4.5 M8.5 12.5h7 M8.5 16h5';
+
   /// Where a row goes.
   static const String chevron = 'M9 6l6 6-6 6';
 }

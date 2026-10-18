@@ -1,0 +1,6 @@
+/* The permission prompts in this language. Info.plist holds the
+   English and says what each is for. */
+
+"NSLocationWhenInUseUsageDescription" = "Astute 会用你的位置，给你发关于你所住地方的卡片——它的历史、科学和意想不到的故事。只会保存你所在的城市，绝不保存你的精确位置。";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Astute 会用你的位置，给你发关于你所住地方的卡片——它的历史、科学和意想不到的故事。只会保存你所在的城市，绝不保存你的精确位置。";
+"NSPhotoLibraryAddUsageDescription" = "Astute 会把你选择保留的图片（你的一天、一张卡片、你的记录）保存到照片中。它从不查看你的照片图库。";

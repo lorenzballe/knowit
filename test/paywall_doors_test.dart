@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -12,7 +13,9 @@ import 'package:astuto/analytics.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
+import 'package:astuto/legal.dart';
 import 'package:astuto/screens/paywall_screen.dart';
+import 'package:astuto/screens/purchase_success_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/subscription.dart';
 import 'package:astuto/theme.dart';
@@ -140,8 +143,10 @@ void main() {
   });
 
   /// The paywall as [source] opens it, on a phone, for a reader on the free
-  /// plan unless told otherwise. [firstRun] is the onboarding's, with the
-  /// way past it written under the offer.
+  /// plan unless told otherwise, and one whose phone lets the app notify
+  /// them only when [notifies] says so. Pushed over a screen of its own, as
+  /// every door pushes it, so that it can be left. [app] stands in for the
+  /// reader's state where a test needs its own.
   Future<void> open(
     WidgetTester tester,
     String source, {
@@ -150,7 +155,8 @@ void main() {
     Size phone = const Size(390, 844),
     double notch = 47,
     Locale locale = const Locale('en'),
-    bool firstRun = false,
+    bool notifies = false,
+    AppState? app,
   }) async {
     tester.view.physicalSize = phone;
     tester.view.devicePixelRatio = 1.0;
@@ -162,22 +168,26 @@ void main() {
       'knowit.plus': plus,
       ...prefs,
     });
-    final app = AppState();
-    await app.init();
+    final AppState reader = app ?? AppState();
+    await reader.init();
+    reader.notificationsAllowed = notifies;
+    final GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
     await tester.pumpWidget(
       MaterialApp(
+        // A tree of its own each time: one paywall opened over another in
+        // the same test would keep the first one's state.
+        key: UniqueKey(),
+        navigatorKey: navigator,
         locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
-        // A paywall of its own each time, as every push is: one opened
-        // over another in the same test would keep the first one's state.
-        home: PaywallScreen(
-          key: UniqueKey(),
-          app: app,
-          source: source,
-          onClose: firstRun ? () {} : null,
-        ),
+        home: const Scaffold(body: Text('Under the paywall')),
+      ),
+    );
+    navigator.currentState!.push(
+      MaterialPageRoute<void>(
+        builder: (_) => PaywallScreen(app: reader, source: source),
       ),
     );
     for (var i = 0; i < 6; i++) {
@@ -202,7 +212,6 @@ void main() {
     for (final (String source, String headline, String letter) in const [
       ('journey', record, 'A'),
       ('calibration', record, 'A'),
-      ('onboarding', outcome, 'B'),
       ('see the plans', outcome, 'B'),
       ('manage plan', outcome, 'B'),
       ('site preview', outcome, 'B'),
@@ -228,7 +237,10 @@ void main() {
           'variant': letter,
           'has_number': false,
           'plan_shown': 'year',
+          // No store behind the test: a debug build's plans as sold, and
+          // measured as a paywall that could not sell.
           'store_answered': false,
+          'store': 'unreachable',
         });
       });
     }
@@ -242,7 +254,7 @@ void main() {
         'Every day you say how sure you are. Astute+ shows whether the gap '
         'between sure and right is closing, and the moves you keep missing.',
       );
-      await open(tester, 'onboarding');
+      await open(tester, 'see the plans');
       expect(
         line(tester),
         'Five cards a day at your level. The ones you miss come back until '
@@ -333,15 +345,15 @@ void main() {
     for (final Locale locale in const [Locale('en'), Locale('de')]) {
       testWidgets(locale.languageCode, (tester) async {
         final l = lookupAppLocalizations(locale);
-        for (final (String source, Map<String, Object> prefs, bool firstRun)
-            in [
-              ('journey', const <String, Object>{}, false),
-              ('journey', _judged(12, sure: 80, right: 7), false),
-              ('sixth card', const <String, Object>{}, false),
-              ('archive', const <String, Object>{}, false),
-              ('see the plans', const <String, Object>{}, false),
-              ('onboarding', const <String, Object>{}, true),
-            ]) {
+        for (final (String source, Map<String, Object> prefs) in [
+          ('journey', const <String, Object>{}),
+          ('journey', _judged(12, sure: 80, right: 7)),
+          ('sixth card', const <String, Object>{}),
+          ('archive', const <String, Object>{}),
+          ('see the plans', const <String, Object>{}),
+        ]) {
+          // The longest the small print gets: the trial's three days, the
+          // reminder among them, and how to cancel under them.
           await open(
             tester,
             source,
@@ -349,7 +361,7 @@ void main() {
             phone: const Size(375, 667),
             notch: 20,
             locale: locale,
-            firstRun: firstRun,
+            notifies: true,
           );
           expect(tester.takeException(), isNull, reason: source);
           for (final String perk in [
@@ -360,6 +372,8 @@ void main() {
             expect(find.text(perk), findsOneWidget, reason: '$source $perk');
           }
           expect(find.byKey(const ValueKey('paywall-trial')), findsOneWidget);
+          expect(find.byKey(const ValueKey('paywall-cancel')), findsOneWidget);
+          expect(find.text(l.restorePurchases), findsOneWidget);
           expect(find.byType(Scrollable), findsNothing);
         }
       });
@@ -369,15 +383,15 @@ void main() {
   group('a trial is told as its days', () {
     final Finder timeline = find.byKey(const ValueKey('paywall-trial'));
 
-    testWidgets('before the store answers: the plan as sold, two weeks', (
+    testWidgets('a debug build with no store: the plan as sold, two weeks', (
       tester,
     ) async {
-      await open(tester, 'onboarding');
+      await open(tester, 'see the plans', notifies: true);
       expect(timeline, findsOneWidget);
       for (final String step in const [
         'Today · all of Astute+, free',
         'Day 12 · we remind you',
-        'Day 14 · €29,99 for a year, unless you cancel',
+        'Day 14 · €29,99 a year, renewing automatically until you cancel',
       ]) {
         expect(
           find.descendant(of: timeline, matching: find.text(step)),
@@ -386,19 +400,47 @@ void main() {
       }
       // Said once: the days say what "no charge today" used to.
       expect(find.textContaining('No charge today'), findsNothing);
+      // And how to stop it, before anything has started.
+      expect(
+        find.text(
+          'Cancel any time in Google Play › Payments & subscriptions › '
+          'Subscriptions, at least 24 hours before it renews.',
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('the reminder is promised only where it can reach the reader', (
+      tester,
+    ) async {
+      // A phone that has not let the app notify: the reminder would be a
+      // notification nobody sees, so the days do not promise one.
+      await open(tester, 'see the plans');
+      expect(timeline, findsOneWidget);
+      expect(find.textContaining('we remind you'), findsNothing);
+      expect(
+        find.text(
+          'Day 14 · €29,99 a year, renewing automatically until you cancel',
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('the store\'s own days and its own price', (tester) async {
       store.answerForTest(
         offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.week, 1)),
       );
-      await open(tester, 'journey');
+      await open(tester, 'journey', notifies: true);
       expect(find.text('Day 5 · we remind you'), findsOneWidget);
       expect(
-        find.text('Day 7 · \$29.99 for a year, unless you cancel'),
+        find.text(
+          'Day 7 · \$29.99 a year, renewing automatically until you cancel',
+        ),
         findsOneWidget,
       );
-      expect(find.textContaining('€29,99 for a year'), findsNothing);
+      expect(find.textContaining('€29,99'), findsNothing);
+      expect(sink.last('paywall shown')!['store'], 'ready');
+      expect(sink.last('paywall shown')!['store_answered'], isTrue);
     });
 
     testWidgets('a trial too short for a reminder has no day for it', (
@@ -407,11 +449,13 @@ void main() {
       store.answerForTest(
         offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.day, 2)),
       );
-      await open(tester, 'archive');
+      await open(tester, 'archive', notifies: true);
       expect(timeline, findsOneWidget);
       expect(find.textContaining('we remind you'), findsNothing);
       expect(
-        find.text('Day 2 · \$29.99 for a year, unless you cancel'),
+        find.text(
+          'Day 2 · \$29.99 a year, renewing automatically until you cancel',
+        ),
         findsOneWidget,
       );
     });
@@ -420,7 +464,17 @@ void main() {
       store.answerForTest(offering: _yearAt('\$29.99'));
       await open(tester, 'sixth card');
       expect(timeline, findsNothing);
-      expect(find.text('Charged today · cancel any time'), findsOneWidget);
+      expect(
+        find.text(
+          '\$29.99/yr charged today, renewing automatically until you cancel',
+        ),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('paywall-cancel')), findsOneWidget);
+      // Only the year is on sale, so only the year is shown: no month at a
+      // price the store never gave.
+      expect(find.text('Monthly'), findsNothing);
+      expect(find.textContaining('€'), findsNothing);
     });
 
     testWidgets('none for a reader the store says has had it', (tester) async {
@@ -443,7 +497,9 @@ void main() {
       }
       expect(timeline, findsNothing);
       expect(
-        find.text('Cancel any time · No payment is taken in this build'),
+        find.text(
+          '€3,99/mo charged today, renewing automatically until you cancel',
+        ),
         findsOneWidget,
       );
     });
@@ -453,4 +509,209 @@ void main() {
       expect(timeline, findsNothing);
     });
   });
+
+  group('a store build shows only the prices the store gave', () {
+    final bool preview = Subscription.previewWithoutStore;
+    setUp(() => Subscription.previewWithoutStore = false);
+    tearDown(() => Subscription.previewWithoutStore = preview);
+
+    testWidgets('no answer: said as that, with a way to try again', (
+      tester,
+    ) async {
+      await open(tester, 'sixth card');
+      expect(find.text('Couldn’t reach Google Play'), findsOneWidget);
+      expect(
+        find.text(
+          'The prices and the free trial come from the store. Check your '
+          'connection and try again.',
+        ),
+        findsOneWidget,
+      );
+      // No price, no plan, and no button that would buy nothing.
+      expect(find.textContaining('€'), findsNothing);
+      expect(find.text('Yearly'), findsNothing);
+      expect(find.byKey(const ValueKey('paywall-buy')), findsNothing);
+      expect(find.textContaining('No payment is taken'), findsNothing);
+      // What Apple asks for beside a subscription is there all the same.
+      expect(find.text('Restore purchases'), findsOneWidget);
+      expect(find.text('Terms of Use'), findsOneWidget);
+      expect(find.text('Privacy Policy'), findsOneWidget);
+      expect(sink.last('paywall shown')!['store'], 'unreachable');
+      // Trying again asks the store; with none behind the test nothing
+      // changes, and nothing breaks.
+      await tester.tap(find.byKey(const ValueKey('paywall-try-again')));
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+      expect(find.text('Couldn’t reach Google Play'), findsOneWidget);
+    });
+
+    testWidgets('still asking: said as that, and the plans come with the '
+        'answer', (tester) async {
+      store.askingForTest(true);
+      await open(tester, 'journey');
+      expect(find.text('Asking Google Play for the prices…'), findsOneWidget);
+      expect(find.textContaining('€'), findsNothing);
+      expect(find.byKey(const ValueKey('paywall-buy')), findsNothing);
+      expect(sink.last('paywall shown')!['store'], 'asking');
+      store.answerForTest(
+        offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.week, 1)),
+      );
+      await tester.pump();
+      expect(find.text('Asking Google Play for the prices…'), findsNothing);
+      expect(find.text('Try 7 days free, then \$29.99/yr'), findsOneWidget);
+    });
+
+    testWidgets('on an iPhone: the App Store, and Settings to cancel', (
+      tester,
+    ) async {
+      await open(tester, 'sixth card');
+      expect(find.text('Couldn’t reach the App Store'), findsOneWidget);
+      store.answerForTest(offering: _yearAt('\$29.99'));
+      await tester.pump();
+      expect(
+        find.text(
+          'Cancel any time in Settings › your name › Subscriptions, at least '
+          '24 hours before it renews.',
+        ),
+        findsOneWidget,
+      );
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+
+    test('the terms are Apple’s on an iPhone and the site’s elsewhere', () {
+      expect(termsUrlFor(TargetPlatform.iOS), kAppleEulaUrl);
+      expect(termsUrlFor(TargetPlatform.android), kSiteTermsUrl);
+      expect(kSiteTermsUrl, 'https://astutetheapp.com/terms');
+    });
+  });
+
+  group('buying', () {
+    late _Till till;
+
+    setUp(() {
+      till = _Till();
+      Subscription.useForTest(till);
+      till.answerForTest(
+        offering: _yearAt('\$29.99', intro: _freeFor(PeriodUnit.week, 1)),
+      );
+    });
+
+    Future<void> frames(WidgetTester tester, [int n = 4]) async {
+      for (var i = 0; i < n; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+    }
+
+    final Finder buy = find.byKey(const ValueKey('paywall-buy'));
+
+    testWidgets('a second press starts no second purchase', (tester) async {
+      await open(tester, 'sixth card');
+      await tester.tap(buy);
+      await tester.pump();
+      await tester.tap(buy, warnIfMissed: false);
+      await tester.pump();
+      expect(till.buys, 1);
+      expect(find.text('One moment…'), findsOneWidget);
+      // Backed out of the store's sheet: the button is the offer again.
+      till.reply.complete(PurchaseOutcome.cancelled);
+      await frames(tester);
+      expect(find.text('Try 7 days free, then \$29.99/yr'), findsOneWidget);
+      await tester.tap(buy);
+      await tester.pump();
+      expect(till.buys, 2);
+    });
+
+    testWidgets('a payment waiting for approval is said as that', (
+      tester,
+    ) async {
+      till.reply.complete(PurchaseOutcome.pending);
+      await open(tester, 'journey');
+      await tester.tap(buy);
+      // The store's answer, then the paywall's way out: half a second of
+      // it, as every page leaves.
+      await frames(tester, 12);
+      expect(
+        find.text(
+          'Waiting for approval. Astute+ opens as soon as the payment goes '
+          'through.',
+        ),
+        findsOneWidget,
+      );
+      expect(find.byType(PaywallScreen), findsNothing);
+      expect(sink.last('purchase ended')!['outcome'], 'pending');
+      expect(sink.last('paywall closed')!['left_by'], 'pending');
+    });
+
+    testWidgets('the screen a purchase ends on comes before the plan is '
+        'written down', (tester) async {
+      final _SlowApp app = _SlowApp();
+      till.reply.complete(PurchaseOutcome.bought);
+      await open(tester, 'sixth card', app: app);
+      await tester.tap(buy);
+      // The store's answer, then the fade, a hundred and fifty
+      // milliseconds of it.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 160));
+      expect(app.asked, isTrue);
+      expect(app.gate.isCompleted, isFalse);
+      expect(find.byType(PurchaseSuccessScreen), findsOneWidget);
+      // A free trial is said as one: nothing was bought today.
+      expect(find.text('Free trial started.'), findsOneWidget);
+      expect(find.text('Purchase complete.'), findsNothing);
+      // The reader starts, and the paywall waits for the plan before it
+      // goes.
+      await frames(tester, 30);
+      await tester.tap(find.text('Let’s start'));
+      await frames(tester);
+      expect(find.byType(PurchaseSuccessScreen), findsNothing);
+      expect(find.byType(PaywallScreen), findsOneWidget);
+      app.gate.complete();
+      await frames(tester, 12);
+      expect(app.isPlus, isTrue);
+      expect(find.byType(PaywallScreen), findsNothing);
+      expect(sink.last('paywall closed')!['left_by'], 'bought');
+    });
+
+    testWidgets('a plan charged today is a purchase complete', (tester) async {
+      till.answerForTest(offering: _yearAt('\$29.99'));
+      till.reply.complete(PurchaseOutcome.bought);
+      await open(tester, 'sixth card');
+      await tester.tap(buy);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 160));
+      expect(find.text('Purchase complete.'), findsOneWidget);
+      expect(find.text('Free trial started.'), findsNothing);
+    });
+  });
+}
+
+/// A store that answers a purchase when the test says, and counts how often
+/// it was asked to start one.
+class _Till extends Subscription {
+  _Till() : super(keyOverride: '');
+
+  int buys = 0;
+
+  /// Made on first use, inside the test's own clock: one made in setUp
+  /// would answer on the real clock, which the test's frames never reach.
+  late final Completer<PurchaseOutcome> reply = Completer<PurchaseOutcome>();
+
+  @override
+  Future<PurchaseOutcome> buy(Package package) {
+    buys += 1;
+    return reply.future;
+  }
+}
+
+/// A reader's state whose plan takes as long to be written down as the test
+/// says.
+class _SlowApp extends AppState {
+  final Completer<void> gate = Completer<void>();
+  bool asked = false;
+
+  @override
+  Future<void> applyEntitlement(bool active) async {
+    asked = true;
+    await gate.future;
+    await super.applyEntitlement(active);
+  }
 }

@@ -399,8 +399,14 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deleteAccountQuestion => '계정을 삭제할까요?';
 
   @override
-  String get deleteAccountBody =>
-      '계정과 백업이 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
+  String deleteAccountBody(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '구독은 App Store 설정에서 관리하세요.',
+      'google': '구독은 Google Play의 ‘결제 및 정기 결제’에서 관리하세요.',
+      'other': '구독은 구매한 스토어에서 관리하세요.',
+    });
+    return '계정과 백업이 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. $_temp0';
+  }
 
   @override
   String get deleteAccountConfirm => '영구 삭제';
@@ -541,17 +547,18 @@ class AppLocalizationsKo extends AppLocalizations {
       '모든 카드는 하나의 지침을 따릅니다. 던질 가치가 있는 질문, 이유를 말해 주는 답, 다시 쓸 수 있는 한 수.';
 
   @override
-  String get howStep2Title => '출처와 대조합니다';
+  String get howStep2Title => '출처를 달고, 비평가가 읽습니다';
 
   @override
   String get howStep2Line =>
-      '모든 카드는 출처를 밝히고, 공개 전에 두 번째 모델이 비평가로서 읽습니다. 뒷받침되지 않는 내용은 빠집니다.';
+      '모든 카드는 사실의 출처를 밝혀서 직접 확인할 수 있어요. 대부분은 비평가 역할을 하는 두 번째 모델이 읽고, 확인하지 못한 내용은 사람이 검토하는 목록에 올라가요. 그 목록은 아직 비어 있지 않아요.';
 
   @override
   String get howStep3Title => '매일 아침 다섯 장';
 
   @override
-  String get howStep3Line => '고른 주제에서, 이미 읽은 카드는 다시 나오지 않아요.';
+  String get howStep3Line =>
+      '고른 주제에서, 아직 읽지 않은 카드를 보내요. 맞힌 카드는 기억에 남았는지 보려고 나중에 다시 나와요.';
 
   @override
   String get howStep4Title => '독자가 정직함을 지킵니다';
@@ -566,7 +573,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get howReportLine => '카드 출처 옆의 깃발을 누르면 신고할 수 있어요.';
 
   @override
-  String get howFoot => '출처는 매달 다시 확인합니다.';
+  String get howFoot => '신고는 모두 읽어요. 카드를 변호하기보다 고치는 쪽을 택해요.';
 
   @override
   String get signingIn => '로그인 중…';
@@ -1127,7 +1134,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get cardsInEnglishNote => '카드는 아직 영어로만 되어 있어요. 앱은 당신의 언어로 표시돼요.';
 
   @override
-  String get termsLine => '계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다';
+  String termsLine(String terms, String privacy) {
+    return '계속하면 $terms과 $privacy에 동의하게 됩니다';
+  }
+
+  @override
+  String get termsLineTerms => '이용약관';
+
+  @override
+  String get termsLinePrivacy => '개인정보 처리방침';
 
   @override
   String get skip => '건너뛰기';
@@ -1201,9 +1216,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String subscribeFor(String price, String suffix) {
     return '$price$suffix에 구독하기';
   }
-
-  @override
-  String get chargedTodayCancel => '오늘 결제됨 · 언제든 취소 가능';
 
   @override
   String get paywallRecordTitle => '진짜 얼마나 아는지 확인하세요.';
@@ -1289,11 +1301,58 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String trialCharge(int day, String price, String plan) {
     String _temp0 = intl.Intl.selectLogic(plan, {'year': '연', 'other': '월'});
-    return '$day일째 · 취소하지 않으면 $_temp0 $price';
+    return '$day일째 · $_temp0 $price, 해지할 때까지 자동 갱신';
   }
 
   @override
-  String get trialStartedNoPayment => '체험이 시작됐어요. 이 빌드에는 결제가 연결되어 있지 않습니다.';
+  String chargedTodayRenews(String price, String suffix) {
+    return '오늘 $price$suffix가 청구되고, 해지할 때까지 자동으로 갱신돼요';
+  }
+
+  @override
+  String cancelHow(String where) {
+    return '$where에서 언제든 해지할 수 있어요. 갱신 24시간 전까지 해지하세요.';
+  }
+
+  @override
+  String get cancelWhereIos => '설정 › 내 이름 › 구독';
+
+  @override
+  String get cancelWhereAndroid => 'Google Play › 결제 및 정기 결제 › 정기 결제';
+
+  @override
+  String storeAsking(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store에서 가격을 불러오는 중…',
+      'other': 'Google Play에서 가격을 불러오는 중…',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String storeUnreachable(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store에 연결할 수 없어요',
+      'other': 'Google Play에 연결할 수 없어요',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get storeUnreachableLine =>
+      '가격과 무료 체험은 스토어에서 받아와요. 연결을 확인하고 다시 시도해 주세요.';
+
+  @override
+  String get tryAgain => '다시 시도';
+
+  @override
+  String get purchasePending => '승인을 기다리고 있어요. 결제가 완료되면 바로 Astute+가 열려요.';
+
+  @override
+  String get oneMoment => '잠시만요…';
+
+  @override
+  String get closeLabel => '닫기';
 
   @override
   String get thatDidNotGoThrough => '처리되지 않았어요.';
@@ -1340,9 +1399,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get cancelAnyTime => '언제든 취소 가능';
-
-  @override
-  String get cancelAnyTimeNoPayment => '언제든 취소 가능 · 이 빌드에서는 결제되지 않음';
 
   @override
   String get restorePurchases => '구매 복원';
@@ -1704,6 +1760,23 @@ class AppLocalizationsKo extends AppLocalizations {
   String get usageOff => '더 이상 아무것도 측정하지 않습니다.';
 
   @override
+  String get consentTitle => 'Astute를 더 좋게 만드는 걸 도와줄래요?';
+
+  @override
+  String get consentLine => '앱 사용 방식을 공유해요. 이름, 이메일, 쓴 내용은 보내지 않아요.';
+
+  @override
+  String get consentNo => '아니요, 괜찮아요';
+
+  @override
+  String get consentYes => '네, 공유할게요';
+
+  @override
+  String consentChangeLater(String profile, String setting) {
+    return '$profile의 ‘$setting’에서 언제든 바꿀 수 있어요.';
+  }
+
+  @override
   String get yourMix => '나의 믹스';
 
   @override
@@ -1755,9 +1828,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get plusCardLine => '당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 나의 여정. 모든 기록.';
-
-  @override
-  String get continueFree => '무료로 계속하기';
 
   @override
   String get archiveBeforeThisWeek => '이번 주 이전의 모든 것';
@@ -1995,11 +2065,23 @@ class AppLocalizationsKo extends AppLocalizations {
   String get purchaseComplete => '구매가 완료되었습니다.';
 
   @override
+  String get trialStartedTitle => '무료 체험이 시작됐어요.';
+
+  @override
   String get successWelcome => 'Astute+에 오신 것을 환영해요. 오늘의 카드 다섯 장이 준비됐어요.';
 
   @override
   String successWelcomeNamed(String name) {
     return 'Astute+에 오신 것을 환영해요, $name님. 오늘의 카드 다섯 장이 준비됐어요.';
+  }
+
+  @override
+  String get successWelcomeTomorrow =>
+      'Astute+에 오신 것을 환영해요. 내일의 다섯 장은 모두 당신을 위한 카드예요.';
+
+  @override
+  String successWelcomeTomorrowNamed(String name) {
+    return 'Astute+에 오신 것을 환영해요, $name님. 내일의 다섯 장은 모두 당신을 위한 카드예요.';
   }
 
   @override

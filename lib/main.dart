@@ -41,6 +41,7 @@ import 'utils/reminders.dart' show remindersSupported;
 import 'utils/upright.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
+import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
@@ -92,16 +93,20 @@ Future<void> main() async {
   await Cloud.start();
   final int cloudMs = cloud.elapsedMilliseconds;
   // Nor this, and for the same reason: see Analytics.start. It goes before
-  // runApp so that the reader's opt-out is read before the first event could
-  // be sent, and not one launch later.
+  // runApp so that the reader's answer is read before the first event could
+  // be sent: measurement is set up only if they have said yes.
   await Analytics.start();
   if (Analytics.ready) {
     // Stamped before the first event, so a reviewer's phone or a robot is
     // told apart from its very first one.
     await Analytics.installedFrom(await installChannel);
-    // How smoothly the phone draws, counted per session (see Session).
-    Session.instance.frames.listen();
+  } else {
+    // Kept for a yes given later, which stamps it on everything after.
+    unawaited(installChannel.then(Analytics.installedFrom));
   }
+  // How smoothly the phone draws, counted per session (see Session), once
+  // measurement is up: now, or the moment the reader says yes.
+  Analytics.whenStarted(() => Session.instance.frames.listen());
   // Said once measurement is up: a Firebase that would not start is the
   // cause of half the bug reports this app could ever get.
   Analytics.capture('cloud started', {
@@ -112,10 +117,11 @@ Future<void> main() async {
   // Explore's top list, with the launch crowd under the real counts until
   // there are enough of them. See TopSeed.
   Tallies.instance = Tallies(seed: launchCrowd());
-  // Session replay takes its pictures from under this widget. Only where
-  // measurement is running and the platform records at all.
+  // Session replay takes its pictures from under this widget. Only in a
+  // build that records (kSessionReplay, off in every store build), for a
+  // reader who said yes, where the platform records at all.
   runApp(
-    Analytics.ready && !kIsWeb
+    Analytics.ready && kSessionReplay && !kIsWeb
         ? const PostHogWidget(child: AstutoApp())
         : const AstutoApp(),
   );
@@ -281,12 +287,14 @@ class _PhoneFrame extends StatelessWidget {
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
 /// The onboarding is the intro that says what the app is, then the subject
-/// run that fills the deck, then the offer, once, and then the first day.
+/// run that fills the deck, and then the first day. Nothing stands between
+/// the last of those and the first card: no offer, no sign-in, no
+/// permission. Astute+ is offered by the card after the fifth, in Profile
+/// and at the features it opens, once the reader has seen what it adds to.
 enum _Stage {
   intro,
   subjects,
   genres,
-  offer,
   comeback,
   shell;
 
@@ -297,7 +305,6 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
-    _Stage.offer => 'onboarding offer',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -377,6 +384,11 @@ class _AstutoRootState extends State<AstutoRoot> {
   bool _askingForAccount = false;
   Timer? _accountAskTimer;
 
+  /// True while a reader past the first run who never answered is asked
+  /// whether Astute may measure how the app is used (showConsentSheet).
+  bool _askingForConsent = false;
+  Timer? _consentAskTimer;
+
   bool _askingForReview = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
@@ -415,6 +427,8 @@ class _AstutoRootState extends State<AstutoRoot> {
         _placeAskTimer = null;
         _accountAskTimer?.cancel();
         _accountAskTimer = null;
+        _consentAskTimer?.cancel();
+        _consentAskTimer = null;
       },
       onDetach: () {
         _account.flush();
@@ -430,6 +444,9 @@ class _AstutoRootState extends State<AstutoRoot> {
         if (_app.ready) _app.refreshAnalytics();
         _app.refreshDailyReminder();
         _app.refreshHomeWidget();
+        // A store that did not answer is asked again: the network that was
+        // missing at launch is often back by now.
+        unawaited(Subscription.instance.reloadOffering());
         // Where the reader lives, read again once a week for a reader who
         // allowed it, and never with a prompt.
         if (_app.ready) _app.refreshPlaceIfDue();
@@ -442,7 +459,9 @@ class _AstutoRootState extends State<AstutoRoot> {
         );
         _sayWidgets();
         // A new sitting can be the moment of the account's sheet or the
-        // place's: a finished day still on the screen.
+        // place's, or of the question about measuring: a finished day still
+        // on the screen.
+        _considerConsentAsk();
         _considerAccountAsk();
         _considerPlaceAsk();
       },
@@ -467,9 +486,16 @@ class _AstutoRootState extends State<AstutoRoot> {
     }
   }
 
-  /// The account comes first: the store is told who the reader is, so the
-  /// entitlement follows them to a new phone rather than staying on this one.
+  /// The store and the account, side by side. The store used to wait for
+  /// the account — the Firebase sign-in and the backup fold behind it — so
+  /// a phone whose account was slow to come up could not buy at all. Now
+  /// it starts at once, under the account the phone already has if it has
+  /// one, and is told who the reader is the moment the account is there:
+  /// the entitlement follows them to a new phone rather than staying here.
   Future<void> _startAccountAndStore() async {
+    final Subscription store = Subscription.instance
+      ..addListener(_onEntitlementChanged);
+    final Future<void> storeStarted = store.start(accountId: _account.uid);
     await _account.ensureAnonymous(_app);
     if (!mounted) return;
     _identify();
@@ -479,9 +505,9 @@ class _AstutoRootState extends State<AstutoRoot> {
     // account or a signal.
     Reports.instance.flush();
     await _sayWidgets();
-    final Subscription store = Subscription.instance
-      ..addListener(_onEntitlementChanged);
-    await store.start(accountId: _account.uid);
+    await storeStarted;
+    if (!mounted) return;
+    await store.switchTo(_account.uid);
   }
 
   /// Takes the widget whose tap brought the app forward, if one did, and
@@ -654,13 +680,15 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (!_app.ready || _stage != _Stage.shell) return null;
     if (!_onTop || _deckOnTable) return null;
     if (_askingForPush || _askingForPlace || _askedThisSitting) return null;
-    if (_askingForAccount) return null;
+    if (_askingForAccount || _askingForConsent) return null;
+    if (_consentAskReason() != null || (_consentAskTimer?.isActive ?? false)) {
+      return null;
+    }
     if (_reminderAskReason() != null ||
         (_reminderAskTimer?.isActive ?? false)) {
       return null;
     }
-    if (_accountAskReason() != null ||
-        (_accountAskTimer?.isActive ?? false)) {
+    if (_accountAskReason() != null || (_accountAskTimer?.isActive ?? false)) {
       return null;
     }
     if (!_app.dayClosed || !_app.shouldAskForPlace) return null;
@@ -717,6 +745,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     // stack: a paywall pushed over the tabs, and the moment it closes.
     _onTop = ModalRoute.isCurrentOf(context) ?? true;
     _considerReminderAsk();
+    _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
   }
@@ -754,10 +783,12 @@ class _AstutoRootState extends State<AstutoRoot> {
         !_placeAskedThisSitting &&
         !_askingForPlace &&
         !_askingForAccount &&
+        !_askingForConsent &&
         !_trialAskDue) {
       _askForReview();
     }
     // Last, so that a rating sheet decided just now has this sitting.
+    _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
   }
@@ -791,6 +822,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _reminderAskTimer?.cancel();
     _placeAskTimer?.cancel();
     _accountAskTimer?.cancel();
+    _consentAskTimer?.cancel();
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
@@ -819,9 +851,10 @@ class _AstutoRootState extends State<AstutoRoot> {
       ..reset()
       ..start();
     setState(() => _stage = stage);
-    // Arriving on the tabs can be the sheet's moment: the onboarding's offer
-    // closing on a trial just started.
+    // The sheets wait for the tabs: arriving on them, each is asked whether
+    // this is its moment.
     _considerReminderAsk();
+    _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
   }
@@ -832,6 +865,67 @@ class _AstutoRootState extends State<AstutoRoot> {
       'step': from.screen,
       'ms_on_step': _stageClock.elapsedMilliseconds,
     });
+  }
+
+  /// Why the question about measuring would rise now, as a sheet, or null
+  /// when this is not its moment: a reader past the first run who has not
+  /// answered it — who started reading without answering it on the intro,
+  /// or whose phone had the app before it asked — once a day is finished,
+  /// at rest, after the reminder sheet and before the account's. Only in a
+  /// build that has somewhere to send what it would measure.
+  String? _consentAskReason() {
+    if (!_app.ready || _stage != _Stage.shell) return null;
+    if (!_onTop || _deckOnTable) return null;
+    if (_askingForPush || _askingForPlace || _askingForAccount) return null;
+    if (_askingForConsent || _askedThisSitting) return null;
+    if (_reminderAskReason() != null ||
+        (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (!_app.dayClosed) return null;
+    if (!Analytics.canAsk || Analytics.answered) return null;
+    return 'day done';
+  }
+
+  /// Raises the question a beat after its moment arrives, as the other
+  /// sheets rise, and only if the moment is still there.
+  void _considerConsentAsk() {
+    if (!mounted || _askingForConsent) return;
+    if (_consentAskReason() == null) {
+      _consentAskTimer?.cancel();
+      _consentAskTimer = null;
+      return;
+    }
+    if (_consentAskTimer?.isActive ?? false) return;
+    _consentAskTimer = Timer(_kReminderAskBeat, () {
+      _consentAskTimer = null;
+      if (!mounted || _consentAskReason() == null) return;
+      _offerConsent();
+    });
+  }
+
+  /// The question as a sheet, which waits for an answer either way.
+  Future<void> _offerConsent() async {
+    if (_askingForConsent) return;
+    _askingForConsent = true;
+    _askedThisSitting = true;
+    try {
+      final bool? yes = await showConsentSheet(context);
+      if (yes != null && mounted) await _answerConsent(yes, from: 'sheet');
+    } finally {
+      _askingForConsent = false;
+    }
+  }
+
+  /// The reader's answer, from the intro or the sheet. A yes sets
+  /// measurement up there and then, and its first event is that yes; a no
+  /// is kept, and nothing is sent about it.
+  Future<void> _answerConsent(bool yes, {required String from}) async {
+    await Analytics.setCollecting(yes);
+    if (!yes) return;
+    Analytics.capture('usage sharing answered', {'on': true, 'from': from});
+    // The reader's profile, said now that there is somewhere to say it.
+    if (_app.ready) _app.refreshAnalytics();
   }
 
   /// Why the account sheet would rise now — after a finished day — or null
@@ -846,9 +940,12 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (!_app.ready || _stage != _Stage.shell) return null;
     if (!_onTop || _deckOnTable) return null;
     if (_askingForPush || _askingForPlace || _askingForAccount) return null;
-    if (_askedThisSitting) return null;
+    if (_askingForConsent || _askedThisSitting) return null;
     if (_reminderAskReason() != null ||
         (_reminderAskTimer?.isActive ?? false)) {
+      return null;
+    }
+    if (_consentAskReason() != null || (_consentAskTimer?.isActive ?? false)) {
       return null;
     }
     if (!_app.dayClosed || !_app.shouldOfferAccount) return null;
@@ -939,9 +1036,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       child: KeyedSubtree(
         key: ValueKey(_stage),
         // Each step of the first run is a screen of its own, named for the
-        // funnel. The offer is the paywall, which names itself under the
-        // step's name, and the tabs name their own three.
-        child: _stage == _Stage.shell || _stage == _Stage.offer
+        // funnel, and the tabs name their own three.
+        child: _stage == _Stage.shell
             ? _stageScreen()
             : ScreenView(name: _stage.screen, child: _stageScreen()),
       ),
@@ -952,6 +1048,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     switch (_stage) {
       case _Stage.intro:
         return IntroScreen(
+          askConsent: Analytics.canAsk && !Analytics.answered,
+          onConsent: (yes) => _answerConsent(yes, from: 'intro'),
           onContinue: () => _go(_Stage.subjects),
           onSignIn: (context) => showSignInSheet(
             context,
@@ -967,11 +1065,8 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          // Skipping the mix skips the offer too, straight to the first
-          // day: a reader who has said nothing about what they want to
-          // read, and has not seen a card yet, does not know what Astute+
-          // would be selling them. The card after the fifth offers it
-          // every evening instead.
+          // Skipping the mix skips the genres under it too, straight to the
+          // first day: there is nothing to narrow in a mix nobody set.
           onSkip: () {
             _noteSkipped(_Stage.subjects);
             _finishOnboarding();
@@ -980,34 +1075,22 @@ class _AstutoRootState extends State<AstutoRoot> {
 
       // The same answer, one layer finer: which six of each subject, and
       // which three inside those. The wheel decides how much; this decides
-      // what of it.
+      // what of it. And the last step of the first run: answered or passed
+      // over, it opens on the first day's cards. There used to be an offer
+      // of Astute+ here, the paywall with "continue free" under it — one
+      // more screen, and one more tap, between a new reader and the first
+      // card, for a plan they had not yet seen anything of.
       case _Stage.genres:
         return GenresScreen(
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            if (mounted) _go(_Stage.offer);
+            if (mounted) await _finishOnboarding();
           },
           onSkip: () {
             _noteSkipped(_Stage.genres);
-            _go(_Stage.offer);
+            _finishOnboarding();
           },
-        );
-
-      // The offer, once, straight after the mix: the reader has just said
-      // what they want to read about, and this is where the day made of
-      // exactly that is sold. What it sells first is the free trial, so
-      // nothing is paid today, and the way past it is written under it.
-      // Most trials start on the first day, which is why it is here and not
-      // only on the card after the fifth. Passing over the genres lands
-      // here too, because the subjects were set; passing over the subjects
-      // does not (see above).
-      case _Stage.offer:
-        return PaywallScreen(
-          app: _app,
-          source: 'onboarding',
-          screen: _Stage.offer.screen,
-          onClose: _finishOnboarding,
         );
 
       case _Stage.comeback:
@@ -1027,6 +1110,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           onDeckOnTable: (onTable) {
             _deckOnTable = onTable;
             _considerReminderAsk();
+            _considerConsentAsk();
             _considerAccountAsk();
             _considerPlaceAsk();
           },

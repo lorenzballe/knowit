@@ -19,11 +19,20 @@ import '../widgets/ui.dart' show ScreenView;
 /// one for each thing that just opened below. The seal stays on the ring;
 /// the plan rises from the bottom; one button to begin.
 ///
-/// Everything runs off a single clock, in seconds since the screen opened,
-/// with the design's own delays, durations and curves.
+/// Everything runs off a single clock, in the design's seconds, with its own
+/// delays, durations and curves — and the clock runs [kSuccessPace] times
+/// as fast as the wall's, so the take that was drawn to last about 4.3
+/// seconds lands in about three. Only what loops for ever once the take is
+/// over — the ring's turn, the glow's drift, the logo's breath — keeps the
+/// wall's pace: faster, it would read as agitated rather than alive.
 class PurchaseSuccessScreen extends StatefulWidget {
-  /// The reader's first name, or null when the app does not know it.
-  final String? firstName;
+  /// The title: "Purchase complete." or, for a free trial, that the trial
+  /// has started — never a purchase that did not happen.
+  final String title;
+
+  /// The line under it: today's five ready, or tomorrow's all the reader's
+  /// when today's are already read.
+  final String welcome;
 
   /// "Astute+ Yearly" or "Astute+ Monthly", already worded.
   final String planName;
@@ -40,16 +49,53 @@ class PurchaseSuccessScreen extends StatefulWidget {
 
   const PurchaseSuccessScreen({
     super.key,
-    required this.firstName,
+    required this.title,
+    required this.welcome,
     required this.planName,
     required this.planLine,
     required this.foot,
     this.onReceipt,
   });
 
+  /// The two pictures the take draws, decoded ahead — the paywall asks for
+  /// them as it opens — so its first frames are whole rather than waiting
+  /// on a file. Kept for the life of the app: they are small, and a second
+  /// purchase is rare.
+  static ui.Image? _imageA;
+  static ui.Image? _imageM;
+  static Future<void>? _decoding;
+
+  static Future<void> precache() {
+    if (_imageA != null && _imageM != null) return Future<void>.value();
+    return _decoding ??= () async {
+      _imageA ??= await _load('assets/brand/success-a.png');
+      _imageM ??= await _load('assets/brand/success-mark.png');
+      // A file that would not decode is asked for again next time.
+      _decoding = null;
+    }();
+  }
+
+  static Future<ui.Image?> _load(String asset) async {
+    try {
+      final data = await rootBundle.load(asset);
+      final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+      return (await codec.getNextFrame()).image;
+    } catch (_) {
+      return null;
+    }
+  }
+
   @override
   State<PurchaseSuccessScreen> createState() => _PurchaseSuccessScreenState();
 }
+
+/// How much faster than the wall's the take's clock runs: the take was
+/// drawn at about 4.3 seconds, and lands at about three.
+const double kSuccessPace = 1.4;
+
+/// Seconds of the take as seconds of the wall, for what loops for ever once
+/// the take is over and keeps the wall's pace.
+double _wall(double t) => t / kSuccessPace;
 
 // The design's curves.
 const Curve _ease = Cubic(.25, .1, .25, 1);
@@ -83,8 +129,8 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
     with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
   final ValueNotifier<double> _t = ValueNotifier<double>(0);
-  ui.Image? _imgA;
-  ui.Image? _imgM;
+  ui.Image? _imgA = PurchaseSuccessScreen._imageA;
+  ui.Image? _imgM = PurchaseSuccessScreen._imageM;
   late final List<_Piece> _confetti = _Piece.burst(40);
   bool _pressed = false;
 
@@ -92,23 +138,18 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
   void initState() {
     super.initState();
     _ticker = createTicker((elapsed) {
-      _t.value = elapsed.inMicroseconds / 1e6;
+      _t.value = elapsed.inMicroseconds / 1e6 * kSuccessPace;
     })..start();
-    _load('assets/brand/success-a.png').then((im) {
-      if (mounted) setState(() => _imgA = im);
-    });
-    _load('assets/brand/success-mark.png').then((im) {
-      if (mounted) setState(() => _imgM = im);
-    });
-  }
-
-  static Future<ui.Image?> _load(String asset) async {
-    try {
-      final data = await rootBundle.load(asset);
-      final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
-      return (await codec.getNextFrame()).image;
-    } catch (_) {
-      return null;
+    // Decoded already when the paywall opened it; only a screen opened some
+    // other way waits for them, and the take draws itself meanwhile.
+    if (_imgA == null || _imgM == null) {
+      PurchaseSuccessScreen.precache().then((_) {
+        if (!mounted) return;
+        setState(() {
+          _imgA = PurchaseSuccessScreen._imageA;
+          _imgM = PurchaseSuccessScreen._imageM;
+        });
+      });
     }
   }
 
@@ -129,7 +170,6 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
     final l = context.l10n;
     final bool still = MediaQuery.disableAnimationsOf(context);
     final EdgeInsets pad = MediaQuery.viewPaddingOf(context);
-    final String? first = widget.firstName;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -198,7 +238,7 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
                             18,
                             _up,
                             Text(
-                              l.purchaseComplete,
+                              widget.title,
                               textAlign: TextAlign.center,
                               style: AppText.display(
                                 size: 40,
@@ -221,9 +261,7 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
                                   maxWidth: 320,
                                 ),
                                 child: Text(
-                                  first == null
-                                      ? l.successWelcome
-                                      : l.successWelcomeNamed(first),
+                                  widget.welcome,
                                   textAlign: TextAlign.center,
                                   style: AppText.body(
                                     size: 17,
@@ -318,14 +356,13 @@ class _PurchaseSuccessScreenState extends State<PurchaseSuccessScreen>
       return h;
     }
 
-    final String? first = widget.firstName;
     final double title = measure(
-      l.purchaseComplete,
+      widget.title,
       AppText.display(size: 40, height: 1.04, spacing: -1.5),
       width,
     );
     final double sub = measure(
-      first == null ? l.successWelcome : l.successWelcomeNamed(first),
+      widget.welcome,
       AppText.body(size: 17, height: 1.45),
       math.min(320, width),
     );
@@ -563,7 +600,8 @@ class _Bloom extends StatelessWidget {
     ], _easeOut);
     double dx = 0, dy = 0;
     if (t > 3) {
-      final double q = ((t - 3) % 14) / 14;
+      // At the wall's pace: a drift, not a fidget.
+      final double q = (_wall(t - 3) % 14) / 14;
       final double k = _keys(q, [
         [0, 0],
         [.5, 1],
@@ -640,7 +678,8 @@ class _Hero extends StatelessWidget {
     // suFloat: the logo breathes once it has settled.
     double float = 0;
     if (t > 4) {
-      final double cycle = (t - 4) / 3.4;
+      // At the wall's pace, as a breath is.
+      final double cycle = _wall(t - 4) / 3.4;
       final double u = cycle % 1;
       final double k = _easeInOut.transform(cycle.floor().isEven ? u : 1 - u);
       float = -8 * k;
@@ -740,7 +779,8 @@ class _RingPainter extends CustomPainter {
       [.08, 1],
       [1, 1],
     ]);
-    final double spin = t > 1.1 ? ((t - 1.1) / 16 % 1) * 2 * math.pi : 0;
+    // A turn every sixteen seconds of the wall's, however fast the take ran.
+    final double spin = t > 1.1 ? (_wall(t - 1.1) / 16 % 1) * 2 * math.pi : 0;
     canvas.save();
     canvas.translate(c.dx, c.dy);
     canvas.rotate(spin - math.pi / 2);
@@ -975,6 +1015,11 @@ class _Piece {
 
 /// The confetti, thrown from the centre at 1.05 s — the moment the purchase
 /// is confirmed.
+///
+/// On the take's clock, like the pulse it is thrown with and the plan that
+/// rises after it: a burst that lands on time and is gone before the button
+/// comes. At the take's pace a piece flies for a little over a second, which
+/// still reads as a throw that settles rather than a flicker.
 class _ConfettiPainter extends CustomPainter {
   final double t;
   final List<_Piece> pieces;

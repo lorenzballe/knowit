@@ -10,6 +10,7 @@ import 'mix_screen.dart';
 import '../analytics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
+import '../legal.dart';
 import '../models/place.dart';
 import '../state/app_state.dart';
 import '../state/music_sound.dart';
@@ -47,6 +48,12 @@ class ProfileScreen extends StatelessWidget {
     required this.account,
     required this.onSignedOut,
   });
+
+  /// Opens the privacy policy or the terms, and says which.
+  void _openLegal(String page, String url) {
+    Analytics.capture('legal page opened', {'page': page, 'from': 'profile'});
+    openLink(url);
+  }
 
   Future<void> _editTopics(BuildContext context) async {
     await Navigator.of(context).push(
@@ -129,7 +136,13 @@ class ProfileScreen extends StatelessWidget {
           style: AppText.display(size: 19, color: context.p.ink),
         ),
         content: Text(
-          l.deleteAccountBody,
+          // Where the subscription deleting does not cancel is managed: the
+          // reader's own store, named.
+          l.deleteAccountBody(switch (Theme.of(context).platform) {
+            TargetPlatform.iOS || TargetPlatform.macOS => 'apple',
+            TargetPlatform.android => 'google',
+            _ => 'other',
+          }),
           style: AppText.body(
             size: 14,
             height: 1.45,
@@ -579,7 +592,25 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () => Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
               ),
-              const _UsageSwitch(),
+              // What the reader agreed to, a tap away and not only on the
+              // first screen: the privacy policy, and the terms — Apple's
+              // licence on an iPhone, the site's own everywhere else.
+              ProfileRow(
+                key: const ValueKey('profile-privacy'),
+                mark: ProfileMarks.shield,
+                label: context.l10n.privacyPolicy,
+                onTap: () => _openLegal('privacy', kPrivacyUrl),
+              ),
+              ProfileRow(
+                key: const ValueKey('profile-terms'),
+                mark: ProfileMarks.page,
+                label: context.l10n.termsOfUse,
+                onTap: () => _openLegal(
+                  'terms',
+                  termsUrlFor(Theme.of(context).platform),
+                ),
+              ),
+              _UsageSwitch(app: app),
             ],
           ),
           // Deleting the account, for anyone who has one — the phone makes
@@ -793,8 +824,14 @@ class _SoundRow extends StatelessWidget {
   }
 }
 
+/// The reader's answer to whether Astute may measure how the app is used —
+/// the same answer the intro and the sheet after the first finished day
+/// ask for, kept in the same place (Analytics.setCollecting). Off until the
+/// reader has said yes.
 class _UsageSwitch extends StatefulWidget {
-  const _UsageSwitch();
+  const _UsageSwitch({required this.app});
+
+  final AppState app;
 
   @override
   State<_UsageSwitch> createState() => _UsageSwitchState();
@@ -817,6 +854,9 @@ class _UsageSwitchState extends State<_UsageSwitch> {
     await Analytics.setCollecting(v);
     if (v) {
       Analytics.capture('usage sharing switched', {'on': true});
+      // A yes may just have started measurement: the reader's profile is
+      // said now that there is somewhere to say it.
+      if (widget.app.ready) widget.app.refreshAnalytics();
     }
     messenger
       ..hideCurrentSnackBar()

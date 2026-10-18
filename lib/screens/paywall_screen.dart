@@ -1,7 +1,8 @@
+import 'dart:async' show unawaited;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
@@ -16,6 +17,7 @@ import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
+import '../utils/reminders.dart' show remindersSupported;
 import '../widgets/chunky.dart';
 import '../widgets/fit_text.dart';
 import '../data/topics.dart';
@@ -195,7 +197,9 @@ int? yearlySaving() {
 }
 
 /// What the store charges for [plan], or the price written into the app
-/// when it has not answered.
+/// when it has not answered — which only a debug build's paywall shows (see
+/// Subscription.previewWithoutStore); a store build shows no price until
+/// the store has given one.
 String planPrice(Plan plan) {
   final Subscription store = Subscription.instance;
   final Package? package = plan == Plan.year ? store.yearly : store.monthly;
@@ -243,18 +247,34 @@ Future<void> showPurchaseSuccess(
   final String? first = name.isEmpty || name == 'You'
       ? null
       : name.split(RegExp(r'\s+')).first;
+  // Today's five are the reader's own from now on — unless today's are
+  // already read, and then it is tomorrow's.
+  final bool tomorrow = app.dayClosed;
+  final String welcome = switch (first) {
+    null when tomorrow => l.successWelcomeTomorrow,
+    null => l.successWelcome,
+    final String n when tomorrow => l.successWelcomeTomorrowNamed(n),
+    final String n => l.successWelcomeNamed(n),
+  };
   final bool iOS = Theme.of(context).platform == TargetPlatform.iOS;
   Analytics.capture('purchase success shown', {
     'source': source,
     'plan': bought.name,
     'trial': days != null,
   });
+  // Asked for again here for a screen opened without the paywall — the
+  // debug tools, the site — and already done when the paywall opened it.
+  unawaited(PurchaseSuccessScreen.precache());
   await Navigator.of(context).push(
     PageRouteBuilder<void>(
-      transitionDuration: const Duration(milliseconds: 250),
-      reverseTransitionDuration: const Duration(milliseconds: 250),
+      // A short fade: the take starts as the store's sheet goes.
+      transitionDuration: const Duration(milliseconds: 150),
+      reverseTransitionDuration: const Duration(milliseconds: 150),
       pageBuilder: (context, _, _) => PurchaseSuccessScreen(
-        firstName: first,
+        // What happened, as it happened: a free trial is not a purchase,
+        // and nothing was paid today.
+        title: end != null ? l.trialStartedTitle : l.purchaseComplete,
+        welcome: welcome,
         planName: l.successPlanName(
           bought == Plan.year ? l.planYearly : l.planMonthly,
         ),
@@ -278,11 +298,17 @@ Future<void> showPurchaseSuccess(
 
 /// Astute+.
 ///
-/// Prices come from the store when it answers, so what is shown is what the
-/// reader's App Store will actually charge, in their currency. Where it has
-/// not answered — no key in this build, or a product not yet approved — the
-/// prices written into the app stand in, and the CTA says plainly that
-/// nothing was charged rather than implying a purchase happened.
+/// Prices come from the store, so what is shown is what the reader's store
+/// will actually charge, in their currency. Until it has answered there is
+/// no price on screen at all: the paywall says it is asking, and when the
+/// store cannot be reached it says that, with a way to try again. A price
+/// written into the app is shown only by a debug build, which has no store
+/// to ask (Subscription.previewWithoutStore).
+///
+/// Pushed over the screen whose door opened it — the card after the fifth,
+/// Profile, a locked feature — and never part of the first run: a new
+/// reader goes from the subjects to their first cards with nothing in
+/// between.
 class PaywallScreen extends StatefulWidget {
   final AppState app;
 
@@ -292,23 +318,7 @@ class PaywallScreen extends StatefulWidget {
   /// a fifth of the traffic labelled `unknown` within a week.
   final String source;
 
-  /// Where the screen goes when it is done — the way out, and where a trial
-  /// lands. Set by the onboarding, where this is a stage rather than a
-  /// route pushed over another screen and there is nothing to pop back to;
-  /// absent, the screen pops itself.
-  final VoidCallback? onClose;
-
-  /// The name the screen goes by in the funnel: `paywall`, or the
-  /// onboarding's own step when it is that step.
-  final String screen;
-
-  const PaywallScreen({
-    super.key,
-    required this.app,
-    required this.source,
-    this.onClose,
-    this.screen = 'paywall',
-  });
+  const PaywallScreen({super.key, required this.app, required this.source});
 
   @override
   State<PaywallScreen> createState() => _PaywallScreenState();
@@ -324,14 +334,41 @@ class _PaywallScreenState extends State<PaywallScreen> {
   String _leftBy = 'back';
   int _planChanges = 0;
 
+  /// True from the press that starts a purchase until the store answers:
+  /// the button says so and takes no second press. A second press used to
+  /// start a second purchase, and one sandbox purchase was counted twice.
+  bool _buying = false;
+
   Subscription get _store => Subscription.instance;
 
   /// What this door opens on.
   PaywallVariant get _variant => PaywallVariant.of(widget.source);
 
+  /// What the paywall can show of the plans: the store's own, a debug
+  /// build's plans as sold (see Subscription.previewWithoutStore), the
+  /// web's word that Astute+ is in the app, or where the store stands.
+  _Offer get _offer {
+    if (_store.answer == StoreAnswer.ready) return _Offer.plans;
+    if (kIsWeb) return _Offer.inTheApp;
+    if (Subscription.previewWithoutStore) return _Offer.preview;
+    return _store.answer == StoreAnswer.asking
+        ? _Offer.asking
+        : _Offer.unreachable;
+  }
+
+  /// The store as the strings name it.
+  static String get _storeName =>
+      defaultTargetPlatform == TargetPlatform.iOS ? 'apple' : 'google';
+
   @override
   void initState() {
     super.initState();
+    // A store that has not answered is asked again as the paywall opens:
+    // the reader is here to look at the prices.
+    unawaited(_store.reloadOffering());
+    // And the screen a purchase ends on has its pictures ready before it is
+    // needed, so its first frames are whole.
+    unawaited(PurchaseSuccessScreen.precache());
     Analytics.capture('paywall shown', {
       'source': widget.source,
       // Which opening the door gave, and whether the reader has numbers of
@@ -340,10 +377,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
       'variant': _variant.letter,
       'has_number': _readerNumbers(widget.app) != null,
       'plan_shown': _plan.name,
-      // Whether the prices on screen are the store's or the ones written
-      // into the app. A conversion rate measured against a made-up price is
-      // not a conversion rate.
-      'store_answered': _store.ready && _store.offering != null,
+      // Whether the store's prices are on screen. A conversion rate measured
+      // against a paywall that could not sell is not a conversion rate.
+      'store_answered': _store.answer == StoreAnswer.ready,
+      'store': _store.answer.name,
     });
   }
 
@@ -351,46 +388,84 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   int? _freeDays(Plan plan) => planFreeDays(plan);
 
-  String get _cta {
-    if (widget.app.isPlus) return context.l10n.plusIsActive;
-    final String suffix = _plan == Plan.year
-        ? context.l10n.perYearShort
-        : context.l10n.perMonthShort;
-    final String price = _priceFor(_plan);
-    final int? days = _freeDays(_plan);
-    return days != null
-        ? context.l10n.tryFreeThen(days, price, suffix)
-        : context.l10n.subscribeFor(price, suffix);
+  /// The plans there are to choose between: both, unless the store put
+  /// only one on sale — a plan the store does not sell is not shown at a
+  /// price written into the app.
+  List<Plan> get _plansOnSale => _offer == _Offer.preview
+      ? Plan.values
+      : [
+          if (_store.yearly != null) Plan.year,
+          if (_store.monthly != null) Plan.month,
+        ];
+
+  /// The plan on screen: the one picked, or the one on sale when only one
+  /// is.
+  Plan get _shown {
+    final List<Plan> sale = _plansOnSale;
+    return sale.isEmpty || sale.contains(_plan) ? _plan : sale.first;
   }
+
+  String get _cta {
+    final l = context.l10n;
+    if (widget.app.isPlus) return l.plusIsActive;
+    if (_buying) return l.oneMoment;
+    final Plan plan = _shown;
+    final String suffix = plan == Plan.year ? l.perYearShort : l.perMonthShort;
+    final String price = _priceFor(plan);
+    final int? days = _freeDays(plan);
+    return days != null
+        ? l.tryFreeThen(days, price, suffix)
+        : l.subscribeFor(price, suffix);
+  }
+
+  /// Where a plan is cancelled, as the reader's store names it.
+  String get _cancelWhere => defaultTargetPlatform == TargetPlatform.iOS
+      ? context.l10n.cancelWhereIos
+      : context.l10n.cancelWhereAndroid;
 
   /// The line under the button when the plan on screen has no free days:
-  /// what happens today. With no store behind this build nothing is ever
-  /// charged, and a month "charged today" would be a lie, so that case says
-  /// so instead. A plan with free days has the trial's steps there instead,
-  /// which say "nothing today" and "cancel" with the days on them.
+  /// what is charged today, and that it renews by itself until cancelled.
+  /// A plan with free days has the trial's steps there instead, which end
+  /// on the same.
   String get _terms {
     final l = context.l10n;
-    return _package != null ? l.chargedTodayCancel : l.cancelAnyTimeNoPayment;
+    final Plan plan = _shown;
+    return l.chargedTodayRenews(
+      _priceFor(plan),
+      plan == Plan.year ? l.perYearShort : l.perMonthShort,
+    );
   }
 
+  /// Whether the reminder two days before a trial ends can be delivered to
+  /// this reader: the system lets the app notify them. Promised only then —
+  /// the reminder is a notification on the phone, and a reader who has not
+  /// allowed one would wait for a warning that never comes.
+  bool get _canRemind => remindersSupported && widget.app.notificationsAllowed;
+
   /// The free trial as it will go, when the plan on screen starts with one
-  /// this reader can have: today, the reminder, and the day it is charged,
-  /// at the store's own price. Null when there is no trial to show.
-  List<String>? get _trialSteps {
-    final int? days = _freeDays(_plan);
+  /// this reader can have: today, the reminder where it can reach them, and
+  /// the day it is charged, at the store's own price. Null when there is no
+  /// trial to show.
+  ///
+  /// A [short] phone leaves today out — the button above it already says
+  /// the days are free — so that the renewal and the way to cancel fit
+  /// beside the three perks on one screen.
+  List<String>? _trialSteps({required bool short}) {
+    final Plan plan = _shown;
+    final int? days = _freeDays(plan);
     if (days == null || widget.app.isPlus) return null;
     final l = context.l10n;
     return [
-      l.trialToday,
+      if (!short) l.trialToday,
       // The app reminds the reader two days before a trial ends. A trial
       // too short to have that day has no step for it.
-      if (days >= 3) l.trialReminder(days - 2),
-      l.trialCharge(days, _priceFor(_plan), _plan.name),
+      if (days >= 3 && _canRemind) l.trialReminder(days - 2),
+      l.trialCharge(days, _priceFor(plan), plan.name),
     ];
   }
 
   /// The package for the plan on screen, if the store has offered one.
-  Package? get _package => _plan == Plan.year ? _store.yearly : _store.monthly;
+  Package? get _package => _shown == Plan.year ? _store.yearly : _store.monthly;
 
   @override
   void dispose() {
@@ -406,7 +481,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   void _pick(Plan plan) {
-    if (plan == _plan) return;
+    if (plan == _plan || _buying) return;
     _planChanges += 1;
     Analytics.capture('paywall plan selected', {
       'source': widget.source,
@@ -431,57 +506,42 @@ class _PaywallScreenState extends State<PaywallScreen> {
     openLink(url);
   }
 
-  /// The way out, whichever way this screen was reached.
-  void _leave() {
-    final VoidCallback? onClose = widget.onClose;
-    if (onClose != null) {
-      onClose();
-    } else {
-      Navigator.of(context).pop();
-    }
-  }
+  /// The way out. Every door pushes the paywall over the screen it was
+  /// opened from, so it pops itself.
+  void _leave() => Navigator.of(context).pop();
+
+  void _say(String message) =>
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   Future<void> _start() async {
+    if (_buying) return;
+    final Plan plan = _shown;
     final Package? package = _package;
     Analytics.capture('purchase started', {
       'source': widget.source,
-      'plan': _plan.name,
+      'plan': plan.name,
       'has_package': package != null,
     });
 
-    // No store to buy from. While developing, unlock locally so the gated
-    // screens can be seen, and say so rather than let it look like a
-    // purchase. Anywhere else — a store build whose store did not answer, or
-    // the web app, which has none — buying nothing must not open Astute+.
-    if (package == null && !kDebugMode) {
-      Analytics.capture('purchase unavailable', {'source': widget.source});
-      // The web app has no store: Astute+ is bought in the app, and never
-      // opened here for nothing.
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            kIsWeb
-                ? context.l10n.plusInTheApp
-                : context.l10n.thatDidNotGoThrough,
-          ),
-        ),
-      );
-      return;
-    }
+    // No store to buy from. Only a debug build gets here — anywhere else the
+    // button is not on screen until the store has answered — and there it
+    // unlocks Astute+ on the phone, so the screens behind it can be seen,
+    // and says so rather than let it look like a purchase.
     if (package == null) {
+      if (!Subscription.previewWithoutStore) return;
       await widget.app.startPlusTrial();
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.trialStartedNoPayment)),
-      );
+      _say('Astute+ is on for this phone, without a store: a debug build.');
       _leaveBy('unlocked without a store');
       return;
     }
 
+    setState(() => _buying = true);
     final outcome = await _store.buy(package);
     Analytics.capture('purchase ended', {
       'source': widget.source,
-      'plan': _plan.name,
+      'plan': plan.name,
       'outcome': outcome.name,
       'product': package.storeProduct.identifier,
       'price': package.storeProduct.price,
@@ -493,26 +553,35 @@ class _PaywallScreenState extends State<PaywallScreen> {
     if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.bought:
-        await widget.app.applyEntitlement(true);
-        if (!mounted) return;
-        await _celebrate();
+        // The answer to the purchase comes at once: the screen it ends on is
+        // pushed while the plan is still being written down, and the plan is
+        // waited for only on the way out. Nothing on that screen reads it.
+        final Future<void> applied = widget.app.applyEntitlement(true);
+        await _celebrate(plan);
+        await applied;
         if (mounted) _leaveBy('bought');
+        return;
       case PurchaseOutcome.cancelled:
         break;
+      case PurchaseOutcome.pending:
+        // Waiting on someone's approval: said as that, and the store says
+        // when it goes through.
+        _say(context.l10n.purchasePending);
+        _leaveBy('pending');
+        return;
       case PurchaseOutcome.failed:
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.thatDidNotGoThrough)),
-        );
+        _say(context.l10n.thatDidNotGoThrough);
     }
+    setState(() => _buying = false);
   }
 
   /// The screen a purchase ends on (design 129a). Returns when the reader
   /// starts.
-  Future<void> _celebrate() => showPurchaseSuccess(
+  Future<void> _celebrate(Plan plan) => showPurchaseSuccess(
     context,
     widget.app,
     source: widget.source,
-    plan: _plan,
+    plan: plan,
   );
 
   /// Google Play's reviewers cannot pay, so they type the code Play Console
@@ -527,48 +596,61 @@ class _PaywallScreenState extends State<PaywallScreen> {
     final bool open = await _store.redeemReviewCode(code);
     if (!mounted) return;
     if (!open) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('That code is not right.')));
+      _say('That code is not right.');
       return;
     }
     await widget.app.applyEntitlement(true);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Astute+ is on for this device.')),
-    );
+    _say('Astute+ is on for this device.');
     _leaveBy('review access');
   }
 
-  /// Apple requires a way back to something already paid for, and a reader on
-  /// a new phone needs it before they will trust the first purchase.
+  /// Apple requires a way back to something already paid for, and a reader
+  /// on a new phone needs it before they will trust the first purchase. It
+  /// is on screen whether or not the plans have come: it needs none of
+  /// them.
   Future<void> _restore() async {
-    final bool restored = await _store.restore();
-    Analytics.capture('purchases restored', {'found': restored});
+    final RestoreOutcome outcome = await _store.restore();
+    Analytics.capture('purchases restored', {
+      'found': outcome == RestoreOutcome.restored,
+      'outcome': outcome.name,
+    });
     if (!mounted) return;
-    if (restored) await widget.app.applyEntitlement(true);
+    if (outcome == RestoreOutcome.restored) {
+      await widget.app.applyEntitlement(true);
+    }
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          restored ? context.l10n.plusIsBack : context.l10n.nothingToRestore,
-        ),
-      ),
-    );
+    final l = context.l10n;
+    _say(switch (outcome) {
+      RestoreOutcome.restored => l.plusIsBack,
+      RestoreOutcome.nothing => l.nothingToRestore,
+      RestoreOutcome.unreachable => l.storeUnreachable(_storeName),
+    });
   }
 
   @override
-  Widget build(BuildContext context) =>
-      ScreenView(name: widget.screen, child: _page(context));
+  Widget build(BuildContext context) => ScreenView(
+    name: 'paywall',
+    // The store can answer while the screen is open — a try after a wait,
+    // Try again — and the plans come in when it does.
+    child: ListenableBuilder(
+      listenable: _store,
+      builder: (context, _) => _page(context),
+    ),
+  );
 
   Widget _page(BuildContext context) {
     final l = context.l10n;
     final p = context.p;
     final bool dark = p.isDark;
-    final bool store = _store.offering != null;
     final double homeBar = MediaQuery.viewPaddingOf(context).bottom;
     final opening = _opening(l, _variant, widget.app);
-    final List<String>? trial = _trialSteps;
+    final double scale = MediaQuery.textScalerOf(context).scale(100) / 100;
+    // One screen with nothing to scroll, up to a little past the default
+    // text size. Past that the words need more than one screen has, and
+    // the page scrolls, everything at its full size, rather than cut the
+    // price, the terms or the way out.
+    final bool oneScreen = scale <= 1.2;
     // A short phone — an SE, or a test's 800 by 600 — sets the headline and
     // the air around it a size smaller, so the perks keep room for all three
     // under the line the door adds and the trial's days over the links.
@@ -576,12 +658,151 @@ class _PaywallScreenState extends State<PaywallScreen> {
         MediaQuery.sizeOf(context).height -
             MediaQuery.paddingOf(context).vertical <
         700;
+
+    final Widget top = Row(
+      children: [
+        GestureDetector(
+          // Google Play's reviewers get in here with the code Play Console
+          // gives them; see review_access.dart.
+          onLongPress: reviewCodeOffered ? _askReviewCode : null,
+          child: Container(
+            height: 34,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: p.inverse,
+              borderRadius: BorderRadius.circular(99),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: dark ? 0.4 : 0.12),
+                  blurRadius: 18,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Text(
+              l.plusNameCaps,
+              style: AppText.label(
+                size: 12,
+                weight: FontWeight.w700,
+                spacing: 2.4,
+                height: 1,
+                color: p.onInverse,
+              ),
+            ),
+          ),
+        ),
+        const Spacer(),
+        Semantics(
+          button: true,
+          label: l.closeLabel,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _leaveBy('close'),
+            // A finger's room around a mark drawn smaller.
+            child: SizedBox(
+              width: 44,
+              height: 44,
+              child: Center(
+                child: Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: p.ink.withValues(alpha: 0.06),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.close_rounded,
+                    size: 16,
+                    color: p.ink.withValues(alpha: 0.6),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+    final List<Widget> opener = [
+      // Ten less than the air under the row used to be, now that the way
+      // out is a finger's height: the headline stays where it was.
+      SizedBox(height: short ? 4 : 12),
+      _Headline(
+        key: const ValueKey('paywall-headline'),
+        text: opening.title,
+        mark: opening.mark,
+        size: short ? 34 : 40,
+      ),
+      // What the door was reached for, in a line: the record, the whole
+      // day, the days, or what the habit adds up to.
+      Padding(
+        padding: EdgeInsets.only(top: short ? 8 : 10),
+        child: FitText(
+          opening.line,
+          key: const ValueKey('paywall-line'),
+          maxLines: 3,
+          minSize: 12.5,
+          style: AppText.body(
+            size: short ? 14 : 15,
+            height: 1.38,
+            color: p.ink.withValues(alpha: 0.62),
+          ),
+        ),
+      ),
+    ];
+
+    final List<Widget> foot = [
+      SizedBox(height: short ? 8 : 12),
+      ..._offerBlock(
+        context,
+        short: short,
+        stacked: scale >= 1.6,
+        oneScreen: oneScreen,
+      ),
+      // What Apple requires beside a subscription, always on screen: a way
+      // back to something already paid for — which needs no plans, so it is
+      // there while the store is not — and the terms and the privacy
+      // policy. The web has no store to restore from.
+      Padding(
+        padding: EdgeInsets.only(top: short ? 6 : 10),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            if (!kIsWeb) ...[
+              _SmallLink(
+                l.restorePurchases,
+                key: const ValueKey('paywall-restore'),
+                onTap: _restore,
+                link: false,
+              ),
+              _SmallLink.dot(context),
+            ],
+            _SmallLink(
+              l.termsOfUse,
+              onTap: () =>
+                  _openLink('terms', termsUrlFor(defaultTargetPlatform)),
+            ),
+            _SmallLink.dot(context),
+            _SmallLink(
+              l.privacyPolicy,
+              onTap: () => _openLink('privacy', kPrivacyUrl),
+            ),
+          ],
+        ),
+      ),
+    ];
+
+    final EdgeInsets padding = EdgeInsets.fromLTRB(
+      22,
+      6,
+      22,
+      homeBar > 0 ? 0 : 16,
+    );
     return Scaffold(
       backgroundColor: p.surface,
-      // One screen, no scrolling. What is for sale is read at a glance or
-      // it is not read: the three perks sit in whatever height the opening,
-      // the plans and the button leave them, and a phone too short for
-      // their lines shows their titles alone rather than a scrollbar.
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -594,332 +815,380 @@ class _PaywallScreenState extends State<PaywallScreen> {
             child: _Lights(),
           ),
           SafeArea(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(22, 6, 22, homeBar > 0 ? 0 : 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // The badge and the way out share a row.
-                  Row(
-                    children: [
-                      GestureDetector(
-                        // Google Play's reviewers get in here with the code
-                        // Play Console gives them; see review_access.dart.
-                        onLongPress: reviewCodeOffered ? _askReviewCode : null,
-                        child: Container(
-                          height: 34,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: p.inverse,
-                            borderRadius: BorderRadius.circular(99),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(
-                                  alpha: dark ? 0.4 : 0.12,
-                                ),
-                                blurRadius: 18,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
+            child: oneScreen
+                // One screen, no scrolling. What is for sale is read at a
+                // glance or it is not read: the three perks sit in whatever
+                // height the opening, the plans and the button leave them,
+                // and a phone too short for their lines shows their titles
+                // alone rather than a scrollbar.
+                ? Padding(
+                    padding: padding,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        top,
+                        ...opener,
+                        Expanded(child: _perksInRoom(l)),
+                        ...foot,
+                      ],
+                    ),
+                  )
+                : SingleChildScrollView(
+                    padding: padding.copyWith(bottom: padding.bottom + 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        top,
+                        ...opener,
+                        const SizedBox(height: 18),
+                        for (final (int i, perk) in _perks(l).indexed) ...[
+                          if (i > 0) const SizedBox(height: _Perk.gap),
+                          _Perk(
+                            icon: perk.icon,
+                            title: perk.title,
+                            sub: perk.sub,
+                            colour: kSpectrum[(i * 4) % kSpectrum.length],
                           ),
-                          child: Text(
-                            l.plusNameCaps,
-                            style: AppText.label(
-                              size: 12,
-                              weight: FontWeight.w700,
-                              spacing: 2.4,
-                              height: 1,
-                              color: p.onInverse,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      Semantics(
-                        button: true,
-                        label: 'Close',
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () => _leaveBy('close'),
-                          child: Container(
-                            width: 34,
-                            height: 34,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: p.ink.withValues(alpha: 0.06),
-                            ),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.close_rounded,
-                              size: 16,
-                              color: p.ink.withValues(alpha: 0.6),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: short ? 14 : 22),
-                  _Headline(
-                    key: const ValueKey('paywall-headline'),
-                    text: opening.title,
-                    mark: opening.mark,
-                    size: short ? 34 : 40,
-                  ),
-                  // What the door was reached for, in a line: the record,
-                  // the whole day, the days, or what the habit adds up to.
-                  Padding(
-                    padding: EdgeInsets.only(top: short ? 8 : 10),
-                    child: FitText(
-                      opening.line,
-                      key: const ValueKey('paywall-line'),
-                      maxLines: 3,
-                      minSize: 12.5,
-                      style: AppText.body(
-                        size: short ? 14 : 15,
-                        height: 1.38,
-                        color: p.ink.withValues(alpha: 0.62),
-                      ),
+                        ],
+                        const SizedBox(height: 6),
+                        ...foot,
+                      ],
                     ),
                   ),
-                  Expanded(
-                    child: LayoutBuilder(
-                      builder: (context, room) {
-                        final perks = _perks(l);
-                        // Never right up against the line above or the
-                        // plans below, however short the phone.
-                        final double air = math.min(
-                          _Perk.leastAir,
-                          room.maxHeight / 2,
-                        );
-                        final double height = room.maxHeight - 2 * air;
-                        final _PerkSize size = _PerkSize.values.firstWhere(
-                          (s) => height >= _Perk.needs(s, perks.length),
-                          orElse: () => _PerkSize.tight,
-                        );
-                        // A phone too short even for three small titles
-                        // keeps as many as there is room for, in order,
-                        // rather than overflow: the record first.
-                        final int shown =
-                            height >= _Perk.needs(size, perks.length)
-                            ? perks.length
-                            : math.min(
-                                perks.length,
-                                (height + _Perk.gapAt(size)) ~/
-                                    (_Perk.heightAt(size) + _Perk.gapAt(size)),
-                              );
-                        // Spread through the room rather than huddled in
-                        // the middle of it: three things, each with air
-                        // around it, is what three things looks like.
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: air),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              for (final (int i, perk)
-                                  in perks.take(shown).indexed) ...[
-                                if (i > 0 && size != _PerkSize.full)
-                                  SizedBox(height: _Perk.gapAt(size)),
-                                RiseIn.staggered(
-                                  i,
-                                  step: const Duration(milliseconds: 50),
-                                  child: _Perk(
-                                    icon: perk.icon,
-                                    title: perk.title,
-                                    sub: perk.sub,
-                                    // Three points, three hues off the
-                                    // wheel — the same wheel the reader's
-                                    // own record is drawn in.
-                                    colour:
-                                        kSpectrum[(i * 4) % kSpectrum.length],
-                                    size: size,
-                                  ),
-                                ),
-                              ],
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // Side by side, the same height on their own: three lines
-                  // each, every line fitted to the tile's width.
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: _PlanTile(
-                          label: l.planYearly,
-                          price: _priceFor(Plan.year),
-                          per: l.perYearShort,
-                          note: l.aMonth(
-                            yearPerMonth(
-                              locale: Localizations.localeOf(context)
-                                  .toString(),
-                            ),
-                          ),
-                          badge: switch (yearlySaving()) {
-                            final int saving => l.savePercent(saving),
-                            null => null,
-                          },
-                          selected: _plan == Plan.year,
-                          onTap: () => _pick(Plan.year),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: _PlanTile(
-                          label: l.planMonthly,
-                          price: _priceFor(Plan.month),
-                          per: l.perMonthShort,
-                          note: l.billedMonthly,
-                          selected: _plan == Plan.month,
-                          onTap: () => _pick(Plan.month),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: short ? 14 : 18),
-                  // Sixty high on a five-point edge: the face and its edge
-                  // together are sixty-five.
-                  ChunkyButton(
-                    label: _cta,
-                    height: 65,
-                    depth: 5,
-                    radius: 22,
-                    labelSize: 16.5,
-                    labelSpacing: 0.3,
-                    fill: p.inverse,
-                    ink: p.onInverse,
-                    edge: dark ? const Color(0xFFA8A59D) : null,
-                    shadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(
-                          alpha: dark ? 0.45 : 0.15,
-                        ),
-                        blurRadius: 34,
-                        offset: const Offset(0, 16),
-                      ),
-                    ],
-                    onPressed: widget.app.isPlus ? null : _start,
-                  ),
-                  // A reader already on Astute+ is sent to the store's own
-                  // place for their plan. This used to say "Cancel the
-                  // trial" and turn a flag off on the phone, while the store
-                  // went on and charged them.
-                  if (widget.app.isPlus)
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        Analytics.capture('manage subscription opened', {
-                          'is_plus': true,
-                          'from': 'paywall',
-                        });
-                        Subscription.instance.presentCustomerCenter();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          l.manageSubscription,
-                          textAlign: TextAlign.center,
-                          style: _smallPrint(context),
-                        ),
-                      ),
-                    )
-                  else ...[
-                    // What today costs, and when that changes. The thing
-                    // that stops people starting is not the price, it is
-                    // not knowing when they will be charged: with a trial,
-                    // its days; without one, a line.
-                    if (trial != null)
-                      Padding(
-                        padding: EdgeInsets.only(top: short ? 10 : 12),
-                        child: _TrialTimeline(
-                          key: const ValueKey('paywall-trial'),
-                          steps: trial,
-                        ),
-                      )
-                    else
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          _terms,
-                          textAlign: TextAlign.center,
-                          style: _smallPrint(context),
-                        ),
-                      ),
-                    // What Apple requires beside a subscription, on one
-                    // line so the screen still does not scroll: a way back
-                    // to something already paid for, which only means
-                    // anything when there is a store, and the terms and the
-                    // privacy policy.
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (store) ...[
-                              _SmallLink(
-                                l.restorePurchases,
-                                onTap: _restore,
-                                link: false,
-                              ),
-                              _SmallLink.dot(context),
-                            ],
-                            _SmallLink(
-                              l.termsOfUse,
-                              onTap: () => _openLink('terms', kTermsUrl),
-                            ),
-                            _SmallLink.dot(context),
-                            _SmallLink(
-                              l.privacyPolicy,
-                              onTap: () => _openLink('privacy', kPrivacyUrl),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // In the onboarding the way out is written down, under
-                    // the offer — a soft paywall says so rather than leaving
-                    // the reader to find the cross.
-                    if (widget.onClose != null)
-                      Semantics(
-                        button: true,
-                        label: l.continueFree,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () => _leaveBy('continue free'),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 14),
-                            child: Text(
-                              l.continueFree,
-                              textAlign: TextAlign.center,
-                              style: AppText.body(
-                                size: 15,
-                                weight: FontWeight.w600,
-                                height: 1,
-                                color: p.ink.withValues(alpha: 0.62),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                ],
-              ),
-            ),
           ),
         ],
       ),
     );
   }
 
-  TextStyle _smallPrint(BuildContext context) => _smallPrintStyle(context);
+  /// The three perks in the height the rest of the screen leaves them.
+  Widget _perksInRoom(AppLocalizations l) => LayoutBuilder(
+    builder: (context, room) {
+      final perks = _perks(l);
+      // Never right up against the line above or the plans below, however
+      // short the phone.
+      final double air = math.min(_Perk.leastAir, room.maxHeight / 2);
+      final double height = room.maxHeight - 2 * air;
+      final _PerkSize size = _PerkSize.values.firstWhere(
+        (s) => height >= _Perk.needs(s, perks.length),
+        orElse: () => _PerkSize.tight,
+      );
+      // A phone too short even for three small titles keeps as many as
+      // there is room for, in order, rather than overflow: the record first.
+      final int shown = height >= _Perk.needs(size, perks.length)
+          ? perks.length
+          : math.max(
+              0,
+              math.min(
+                perks.length,
+                (height + _Perk.gapAt(size)) ~/
+                    (_Perk.heightAt(size) + _Perk.gapAt(size)),
+              ),
+            );
+      // Spread through the room rather than huddled in the middle of it:
+      // three things, each with air around it, is what three things looks
+      // like.
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: air),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final (int i, perk) in perks.take(shown).indexed) ...[
+              if (i > 0 && size != _PerkSize.full)
+                SizedBox(height: _Perk.gapAt(size)),
+              RiseIn.staggered(
+                i,
+                step: const Duration(milliseconds: 50),
+                child: _Perk(
+                  icon: perk.icon,
+                  title: perk.title,
+                  sub: perk.sub,
+                  // Three points, three hues off the wheel — the same
+                  // wheel the reader's own record is drawn in.
+                  colour: kSpectrum[(i * 4) % kSpectrum.length],
+                  size: size,
+                ),
+              ),
+            ],
+          ],
+        ),
+      );
+    },
+  );
+
+  /// The plans, the button and the terms under it — or, where the store has
+  /// not put the plans on screen, why not and what to do.
+  List<Widget> _offerBlock(
+    BuildContext context, {
+    required bool short,
+    required bool stacked,
+    required bool oneScreen,
+  }) {
+    final l = context.l10n;
+    final p = context.p;
+    final bool dark = p.isDark;
+    final _Offer offer = _offer;
+    if (offer != _Offer.plans && offer != _Offer.preview) {
+      return [
+        _StorePanel(
+          key: const ValueKey('paywall-store'),
+          offer: offer,
+          storeName: _storeName,
+          onTryAgain: () => _store.reloadOffering(),
+        ),
+      ];
+    }
+    final List<Plan> sale = _plansOnSale;
+    final Plan shown = _shown;
+    final List<Widget> tiles = [
+      for (final Plan plan in sale)
+        plan == Plan.year
+            ? _PlanTile(
+                label: l.planYearly,
+                price: _priceFor(Plan.year),
+                per: l.perYearShort,
+                note: l.aMonth(
+                  yearPerMonth(
+                    locale: Localizations.localeOf(context).toString(),
+                  ),
+                ),
+                badge: sale.length < 2
+                    ? null
+                    : switch (yearlySaving()) {
+                        final int saving => l.savePercent(saving),
+                        null => null,
+                      },
+                selected: shown == Plan.year,
+                onTap: () => _pick(Plan.year),
+              )
+            : _PlanTile(
+                label: l.planMonthly,
+                price: _priceFor(Plan.month),
+                per: l.perMonthShort,
+                note: l.billedMonthly,
+                selected: shown == Plan.month,
+                onTap: () => _pick(Plan.month),
+              ),
+    ];
+    final List<String>? trial = _trialSteps(short: short && oneScreen);
+    return [
+      // Side by side, the same height on their own: three lines each, every
+      // line fitted to the tile's width. At the largest text sizes, one
+      // under the other, so a price is never broken across two lines.
+      if (stacked || tiles.length < 2)
+        for (final (int i, Widget tile) in tiles.indexed) ...[
+          if (i > 0) const SizedBox(height: 14),
+          tile,
+        ]
+      else
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: tiles[0]),
+            const SizedBox(width: 10),
+            Expanded(child: tiles[1]),
+          ],
+        ),
+      SizedBox(height: short ? 10 : 18),
+      // Sixty high on a five-point edge: the face and its edge together
+      // are sixty-five — five less on a short phone, where the small print
+      // under it needs the room.
+      ChunkyButton(
+        key: const ValueKey('paywall-buy'),
+        label: _cta,
+        height: short ? 60 : 65,
+        depth: 5,
+        radius: 22,
+        labelSize: 16.5,
+        labelSpacing: 0.3,
+        fill: p.inverse,
+        ink: p.onInverse,
+        edge: dark ? const Color(0xFFA8A59D) : null,
+        shadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: dark ? 0.45 : 0.15),
+            blurRadius: 34,
+            offset: const Offset(0, 16),
+          ),
+        ],
+        onPressed: widget.app.isPlus || _buying ? null : _start,
+      ),
+      // A reader already on Astute+ is sent to the store's own place for
+      // their plan. This used to say "Cancel the trial" and turn a flag off
+      // on the phone, while the store went on and charged them.
+      if (widget.app.isPlus)
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            Analytics.capture('manage subscription opened', {
+              'is_plus': true,
+              'from': 'paywall',
+            });
+            Subscription.instance.presentCustomerCenter();
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              l.manageSubscription,
+              textAlign: TextAlign.center,
+              style: _smallPrintStyle(context),
+            ),
+          ),
+        )
+      else ...[
+        // What today costs, when that changes, and that it goes on until it
+        // is cancelled. The thing that stops people starting is not the
+        // price, it is not knowing when they will be charged: with a trial,
+        // its days; without one, a line.
+        if (trial != null)
+          Padding(
+            padding: EdgeInsets.only(top: short ? 8 : 12),
+            child: _TrialTimeline(
+              key: const ValueKey('paywall-trial'),
+              steps: trial,
+              pad: short ? 1 : 2,
+            ),
+          )
+        else
+          Padding(
+            padding: EdgeInsets.only(top: short ? 8 : 10),
+            child: Text(
+              _terms,
+              key: const ValueKey('paywall-terms'),
+              textAlign: TextAlign.center,
+              style: _smallPrintStyle(context),
+            ),
+          ),
+        // And how to stop it, said before the purchase rather than after:
+        // where, and by when.
+        Padding(
+          padding: EdgeInsets.only(top: short ? 4 : 6),
+          child: Text(
+            l.cancelHow(_cancelWhere),
+            key: const ValueKey('paywall-cancel'),
+            textAlign: TextAlign.center,
+            style: _smallPrintStyle(context),
+          ),
+        ),
+      ],
+    ];
+  }
+}
+
+/// What the paywall can show of the plans.
+enum _Offer {
+  /// The store's own plans, at its prices.
+  plans,
+
+  /// A debug build's plans as sold, with no store behind them.
+  preview,
+
+  /// The web app, which has no store: Astute+ is bought in the app.
+  inTheApp,
+
+  /// Waiting on the store's answer.
+  asking,
+
+  /// No answer from the store.
+  unreachable,
+}
+
+/// Where the plans would be, when the store has not put them on screen:
+/// still asking, could not be reached — with the one thing to do about it —
+/// or, on the web, where Astute+ is sold instead. Never a price written
+/// into the app standing in for the store's.
+class _StorePanel extends StatelessWidget {
+  const _StorePanel({
+    super.key,
+    required this.offer,
+    required this.storeName,
+    required this.onTryAgain,
+  });
+
+  final _Offer offer;
+  final String storeName;
+  final VoidCallback onTryAgain;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Palette p = context.p;
+    final TextStyle line = AppText.body(
+      size: 14,
+      height: 1.4,
+      color: p.ink.withValues(alpha: 0.62),
+    );
+    final Widget body = switch (offer) {
+      _Offer.asking => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: p.ink.withValues(alpha: 0.5),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Flexible(
+            child: Text(
+              l.storeAsking(storeName),
+              key: const ValueKey('paywall-asking'),
+              style: line,
+            ),
+          ),
+        ],
+      ),
+      _Offer.inTheApp => Text(
+        l.plusInTheApp,
+        textAlign: TextAlign.center,
+        style: line,
+      ),
+      _ => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l.storeUnreachable(storeName),
+            key: const ValueKey('paywall-unreachable'),
+            textAlign: TextAlign.center,
+            style: AppText.body(
+              size: 16,
+              weight: FontWeight.w600,
+              height: 1.3,
+              color: p.ink,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            l.storeUnreachableLine,
+            textAlign: TextAlign.center,
+            style: line,
+          ),
+          const SizedBox(height: 16),
+          ChunkyButton(
+            key: const ValueKey('paywall-try-again'),
+            label: l.tryAgain,
+            height: 56,
+            radius: 20,
+            fill: p.inverse,
+            ink: p.onInverse,
+            onPressed: onTryAgain,
+          ),
+        ],
+      ),
+    };
+    return Container(
+      padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
+      decoration: BoxDecoration(
+        color: p.surfaceRaised,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: p.ink.withValues(alpha: 0.09), width: 1.5),
+      ),
+      child: Semantics(liveRegion: true, child: body),
+    );
+  }
 }
 
 TextStyle _smallPrintStyle(BuildContext context) => AppText.body(
@@ -929,7 +1198,6 @@ TextStyle _smallPrintStyle(BuildContext context) => AppText.body(
   color: context.p.ink.withValues(alpha: 0.45),
 );
 
-/// A piece of the last line of small print that does something when
 /// Asks a reviewer for their code. Its own widget so the field's controller
 /// lives exactly as long as the dialog does.
 class _ReviewCodeDialog extends StatefulWidget {
@@ -972,10 +1240,16 @@ class _ReviewCodeDialogState extends State<_ReviewCodeDialog> {
   );
 }
 
+/// A piece of the last line of small print that does something when
 /// tapped — restore, the terms, the privacy policy — and the dot between two
 /// of them.
 class _SmallLink extends StatelessWidget {
-  const _SmallLink(this.label, {required this.onTap, this.link = true});
+  const _SmallLink(
+    this.label, {
+    super.key,
+    required this.onTap,
+    this.link = true,
+  });
 
   final String label;
   final VoidCallback onTap;
@@ -1008,13 +1282,13 @@ class _SmallLink extends StatelessWidget {
 /// one the reader is on. Centred as a block under the button, its steps
 /// aligned on their dots, and as wide as its longest step.
 class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({super.key, required this.steps});
+  const _TrialTimeline({super.key, required this.steps, this.pad = 2});
 
   final List<String> steps;
 
   /// Above and below each step's words, inside the step, so the rail runs
-  /// unbroken from one dot to the next.
-  static const double _pad = 2;
+  /// unbroken from one dot to the next. Less on a short phone.
+  final double pad;
 
   @override
   Widget build(BuildContext context) {
@@ -1038,7 +1312,7 @@ class _TrialTimeline extends StatelessWidget {
                       width: 9,
                       child: CustomPaint(
                         painter: _RailPainter(
-                          dotAt: _pad + line / 2,
+                          dotAt: pad + line / 2,
                           first: i == 0,
                           last: i == steps.length - 1,
                           ink: ink,
@@ -1049,7 +1323,7 @@ class _TrialTimeline extends StatelessWidget {
                     const SizedBox(width: 9),
                     Flexible(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: _pad),
+                        padding: EdgeInsets.symmetric(vertical: pad),
                         child: Text(
                           step,
                           style: i == 0
