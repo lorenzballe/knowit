@@ -1796,7 +1796,7 @@ class _SceneChips extends StatelessWidget {
     'Psychology',
     'Economics',
     'History',
-    'Language',
+    'Maths',
     'Nature',
     'Technology',
     'Philosophy',
@@ -1814,7 +1814,8 @@ class _SceneChips extends StatelessWidget {
     Color(0xFFFF4E2D),
     Color(0xFFFFC93C),
     Color(0xFFC97B2E),
-    Color(0xFF00C2A8),
+    // Maths in its own blackboard jade, as the mix shows it a step later.
+    kMathsJade,
     Color(0xFF2FA84F),
     Color(0xFF00A3FF),
     Color(0xFFC24BE0),
@@ -1833,19 +1834,36 @@ class _SceneChips extends StatelessWidget {
       // it, with the last row still short of the band's foot.
       child: Padding(
         padding: const EdgeInsets.only(top: 18),
-        child: Wrap(
-          spacing: 10,
-          runSpacing: 12,
-          alignment: WrapAlignment.center,
-          runAlignment: WrapAlignment.center,
-          children: [
-            for (int i = 0; i < _names.length; i++)
-              _Pop(
-                duration: const Duration(milliseconds: 620),
-                delay: Duration(milliseconds: (120 + i * 60)),
-                child: _chip(context.l10n.subjectOf(_names[i]), i),
-              ),
-          ],
+        // The rows are set, not wrapped: where the names run long, as in
+        // French, a wrap pushed one chip onto a fifth row of its own. A row
+        // too wide for the band shrinks the whole grid a touch instead, all
+        // of it alike, so no row is set smaller than the next.
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (int row = 0; row < _names.length; row += 3)
+                  Padding(
+                    padding: EdgeInsets.only(top: row == 0 ? 0 : 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        for (int i = row; i < row + 3; i++) ...[
+                          if (i > row) const SizedBox(width: 10),
+                          _Pop(
+                            duration: const Duration(milliseconds: 620),
+                            delay: Duration(milliseconds: (120 + i * 60)),
+                            child: _chip(context.l10n.subjectOf(_names[i]), i),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -1856,7 +1874,7 @@ class _SceneChips extends StatelessWidget {
     // Yellow and orange want dark type on them; everything else takes white.
     final bool pale = base.computeLuminance() > 0.45;
     return Container(
-      // Tight enough that three settle into each row.
+      // Tight enough that three fit a row at full size in most languages.
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
         color: base,
