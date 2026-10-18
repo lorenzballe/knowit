@@ -793,15 +793,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get welcomeBack => 'Tekrar hoş geldin';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n gün\nkaçırdın.',
-      one: 'Bir gün\nkaçırdın.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Seni yeniden görmek güzel.';
+
+  @override
+  String get comebackStillYours => 'Hâlâ senin';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -812,20 +807,6 @@ class AppLocalizationsTr extends AppLocalizations {
       one: 'Bir gün',
     );
     return '$_temp0 hâlâ rekorun. Bugünün beşlisini oku, sayaç yeniden birden başlar.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Sen yokken';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n kart okunmadan kaldı',
-      one: '1 kart okunmadan kaldı',
-    );
-    return '$_temp0';
   }
 
   @override

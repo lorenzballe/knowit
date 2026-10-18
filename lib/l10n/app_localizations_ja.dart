@@ -777,15 +777,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get welcomeBack => 'おかえりなさい';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n日\n空きました。',
-      one: '1日\n空きました。',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'また会えてうれしいです。';
+
+  @override
+  String get comebackStillYours => '今もあなたのもの';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -796,20 +791,6 @@ class AppLocalizationsJa extends AppLocalizations {
       one: '1日',
     );
     return '$_temp0が今も最高記録です。今日の5枚を読めば、カウンターは1から再開します。';
-  }
-
-  @override
-  String get whileYouWereAway => '離れている間に';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n枚が未読のまま',
-      one: '1枚が未読のまま',
-    );
-    return '$_temp0';
   }
 
   @override

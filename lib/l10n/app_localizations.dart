@@ -1188,29 +1188,23 @@ abstract class AppLocalizations {
   /// **'Welcome back'**
   String get welcomeBack;
 
-  /// No description provided for @youMissedDays.
+  /// The come-back screen's title, under "Welcome back", for a reader whose streak lapsed: glad they are here, never what they missed.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}'**
-  String youMissedDays(int n);
+  /// **'Good to see you again.'**
+  String get comebackTitle;
+
+  /// Over what a lapsed streak did not take, on the come-back screen: the weeks kept, the most kept subject, the cards due back. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Still yours'**
+  String get comebackStillYours;
 
   /// No description provided for @bestStreakStillRecord.
   ///
   /// In en, this message translates to:
   /// **'{n, plural, =1{One day is} other{{n} days are}} still your record. Read today\'s five and the counter starts again from one.'**
   String bestStreakStillRecord(int n);
-
-  /// No description provided for @whileYouWereAway.
-  ///
-  /// In en, this message translates to:
-  /// **'While you were away'**
-  String get whileYouWereAway;
-
-  /// No description provided for @pillsWentUnread.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 card went unread} other{{n} cards went unread}}'**
-  String pillsWentUnread(int n);
 
   /// No description provided for @stillMostKeptTopic.
   ///

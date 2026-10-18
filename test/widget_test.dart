@@ -4965,7 +4965,9 @@ void main() {
     await _settle(tester);
 
     expect(find.text('WELCOME BACK'), findsOneWidget);
-    expect(find.textContaining('You missed'), findsOneWidget);
+    // Glad, not a bill: nothing about what was missed.
+    expect(find.text('Good to see you again.'), findsOneWidget);
+    expect(find.textContaining('missed'), findsNothing);
 
     await tester.tap(find.text("Start again with today's five"));
     await _settle(tester);

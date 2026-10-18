@@ -772,15 +772,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcomeBack => '欢迎回来';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '你错过了\n$n 天。',
-      one: '你错过了\n一天。',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => '很高兴再见到你。';
+
+  @override
+  String get comebackStillYours => '依然属于你';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -791,20 +786,6 @@ class AppLocalizationsZh extends AppLocalizations {
       one: '1 天',
     );
     return '$_temp0仍是你的最佳记录。读完今天的五张，计数就从一重新开始。';
-  }
-
-  @override
-  String get whileYouWereAway => '你离开的这段时间';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '有 $n 张卡片未读',
-      one: '有 1 张卡片未读',
-    );
-    return '$_temp0';
   }
 
   @override

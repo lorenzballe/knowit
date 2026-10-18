@@ -798,15 +798,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get welcomeBack => 'Welkom terug';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Je hebt\n$n dagen gemist.',
-      one: 'Je hebt\neen dag gemist.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Fijn je weer te zien.';
+
+  @override
+  String get comebackStillYours => 'Nog steeds van jou';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -817,20 +812,6 @@ class AppLocalizationsNl extends AppLocalizations {
       one: 'Eén dag is',
     );
     return '$_temp0 nog steeds je record. Lees de vijf van vandaag en de teller begint weer bij één.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Terwijl je weg was';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n kaarten bleven ongelezen',
-      one: '1 kaart bleef ongelezen',
-    );
-    return '$_temp0';
   }
 
   @override

@@ -212,6 +212,21 @@ class Eyebrow extends StatelessWidget {
   }
 }
 
+/// A time of day kept as 'HH:mm', written the way the phone writes one:
+/// 8:30 AM or 08:30, as the phone is set — the way the reminder sheet
+/// shows it, so the time it set reads the same everywhere else.
+String clockTime(BuildContext context, String at) {
+  final List<String> parts = at.split(':');
+  final TimeOfDay time = TimeOfDay(
+    hour: int.tryParse(parts.first) ?? 8,
+    minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
+  );
+  return MaterialLocalizations.of(context).formatTimeOfDay(
+    time,
+    alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+  );
+}
+
 /// The 7-day streak strip shown on the recap, the profile and the come-back
 /// screen.
 class WeekStrip extends StatelessWidget {
@@ -235,15 +250,17 @@ class WeekStrip extends StatelessWidget {
     this.barHeight = 38,
   });
 
-  static const _letters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-
   @override
   Widget build(BuildContext context) {
-    // The strip always ends on today, so line the letters up with real days.
-    final todayWeekday = DateTime.now().weekday; // 1 = Monday
+    // The strip always ends on today, so line the letters up with real days
+    // — in the phone's own letters, Sunday first, where they were English
+    // capitals in every language.
+    final DateTime now = DateTime.now();
+    final List<String> letters = MaterialLocalizations.of(context)
+        .narrowWeekdays;
     return Row(
       children: List.generate(7, (i) {
-        final weekdayIndex = (todayWeekday - 1 - (6 - i)) % 7;
+        final DateTime day = DateTime(now.year, now.month, now.day - (6 - i));
         return Expanded(
           child: Padding(
             padding: EdgeInsets.only(right: i == 6 ? 0 : 6),
@@ -260,7 +277,7 @@ class WeekStrip extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  _letters[weekdayIndex < 0 ? weekdayIndex + 7 : weekdayIndex],
+                  letters[day.weekday % 7],
                   style: AppText.label(
                     size: 10,
                     color: labelColor ?? context.p.inkFaint,

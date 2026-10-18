@@ -705,25 +705,16 @@
  },
  "freePlan": "Free plan",
  "welcomeBack": "Welcome back",
- "youMissedDays": "{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}",
- "@youMissedDays": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
+ "comebackTitle": "Good to see you again.",
+ "comebackStillYours": "Still yours",
+ "@comebackStillYours": {
+  "description": "Over what a lapsed streak did not take, on the come-back screen: the weeks kept, the most kept subject, the cards due back. Shown in capitals."
+ },
+ "@comebackTitle": {
+  "description": "The come-back screen's title, under \"Welcome back\", for a reader whose streak lapsed: glad they are here, never what they missed."
  },
  "bestStreakStillRecord": "{n, plural, =1{One day is} other{{n} days are}} still your record. Read today's five and the counter starts again from one.",
  "@bestStreakStillRecord": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "whileYouWereAway": "While you were away",
- "pillsWentUnread": "{n, plural, =1{1 card went unread} other{{n} cards went unread}}",
- "@pillsWentUnread": {
   "placeholders": {
    "n": {
     "type": "int"

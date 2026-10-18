@@ -835,17 +835,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get welcomeBack => 'С возвращением';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Ты пропустил\n$n дня.',
-      many: 'Ты пропустил\n$n дней.',
-      few: 'Ты пропустил\n$n дня.',
-      one: 'Ты пропустил\n$n день.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Рады видеть тебя снова.';
+
+  @override
+  String get comebackStillYours => 'Всё ещё твоё';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -858,22 +851,6 @@ class AppLocalizationsRu extends AppLocalizations {
       one: '$n день —',
     );
     return '$_temp0 по-прежнему твой рекорд. Прочитай сегодняшнюю пятёрку, и счётчик снова начнёт с одного.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Пока тебя не было';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n карточки остались непрочитанными',
-      many: '$n карточек остались непрочитанными',
-      few: '$n карточки остались непрочитанными',
-      one: '$n карточка осталась непрочитанной',
-    );
-    return '$_temp0';
   }
 
   @override

@@ -780,15 +780,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get welcomeBack => '다시 오신 걸 환영해요';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n일을\n놓쳤어요.',
-      one: '하루를\n놓쳤어요.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => '다시 만나서 반가워요.';
+
+  @override
+  String get comebackStillYours => '여전히 당신의 것';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -799,20 +794,6 @@ class AppLocalizationsKo extends AppLocalizations {
       one: '1일',
     );
     return '$_temp0이 여전히 최고 기록입니다. 오늘의 다섯 장을 읽으면 카운터가 1부터 다시 시작해요.';
-  }
-
-  @override
-  String get whileYouWereAway => '떠나 있는 동안';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n장을 읽지 않았어요',
-      one: '1장을 읽지 않았어요',
-    );
-    return '$_temp0';
   }
 
   @override

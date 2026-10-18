@@ -831,17 +831,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get welcomeBack => 'Witaj z powrotem';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Opuściłeś\n$n dni.',
-      many: 'Opuściłeś\n$n dni.',
-      few: 'Opuściłeś\n$n dni.',
-      one: 'Opuściłeś\njeden dzień.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Dobrze cię znowu widzieć.';
+
+  @override
+  String get comebackStillYours => 'Wciąż twoje';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -854,22 +847,6 @@ class AppLocalizationsPl extends AppLocalizations {
       one: 'Jeden dzień to',
     );
     return '$_temp0 wciąż twój rekord. Przeczytaj dzisiejszą piątkę, a licznik ruszy znów od jednego.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Gdy cię nie było';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n kart zostało nieprzeczytanych',
-      many: '$n kart zostało nieprzeczytanych',
-      few: '$n karty zostały nieprzeczytane',
-      one: '1 karta została nieprzeczytana',
-    );
-    return '$_temp0';
   }
 
   @override
