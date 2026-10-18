@@ -87,6 +87,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get shareThisPill => 'Deze kaart delen';
 
   @override
+  String get share => 'Delen';
+
+  @override
   String cardOf(int k, int n) {
     return 'Kaart $k van $n';
   }
@@ -803,15 +806,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get welcomeBack => 'Welkom terug';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Je hebt\n$n dagen gemist.',
-      one: 'Je hebt\neen dag gemist.',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'Fijn je weer te zien.';
+
+  @override
+  String get comebackStillYours => 'Nog steeds van jou';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -822,20 +820,6 @@ class AppLocalizationsNl extends AppLocalizations {
       one: 'Eén dag is',
     );
     return '$_temp0 nog steeds je record. Lees de vijf van vandaag en de teller begint weer bij één.';
-  }
-
-  @override
-  String get whileYouWereAway => 'Terwijl je weg was';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n kaarten bleven ongelezen',
-      one: '1 kaart bleef ongelezen',
-    );
-    return '$_temp0';
   }
 
   @override
@@ -1191,9 +1175,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get barMoveCaps => 'OM TE ONTHOUDEN';
 
   @override
-  String get theBarMoveCaps => 'DE ZIN VOOR AAN DE BAR';
-
-  @override
   String get widgetFootPlain => 'Vijf kaarten, twee minuten.';
 
   @override
@@ -1471,17 +1452,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tapToReveal => 'Tik om te onthullen';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return 'Dichtbij · het is $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'Je zei $given · het is $answer, en $band telt';
   }
-
-  @override
-  String get youGotIt => 'Goed';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1491,6 +1464,20 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · je zei $pct% zeker';
+  }
+
+  @override
+  String get verdictRight => 'Goed.';
+
+  @override
+  String get verdictClose => 'Dichtbij genoeg.';
+
+  @override
+  String get verdictWrong => 'Niet helemaal.';
+
+  @override
+  String verdictSure(int pct) {
+    return 'Je was $pct% zeker.';
   }
 
   @override
@@ -1604,6 +1591,17 @@ class AppLocalizationsNl extends AppLocalizations {
   String get thatWasTheOnlyOne => 'Dat was de enige';
 
   @override
+  String get lastOne => 'De laatste';
+
+  @override
+  String deckEndTitle(String word) {
+    return 'Dat waren ze alle $word.';
+  }
+
+  @override
+  String get deckEndAgain => 'Opnieuw vanaf de eerste';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1622,9 +1620,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => 'De bron gaat mee';
-
-  @override
-  String get fiveADayALittleSharper => 'Vijf per dag. Een beetje scherper.';
 
   @override
   String get shareMyDay => 'Delen';
@@ -1875,7 +1870,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get magicLine =>
-      'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.';
+      'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, en wat je mist, komt terug. Vanaf morgen.';
 
   @override
   String get plusCardHeadline => 'Alle vijf van jou.';
@@ -1889,11 +1884,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn =>
-      'Een week volgehouden: morgen zijn drie van de vijf van jou.';
+      'Zeven dagen op rij: morgen zijn drie van de vijf van jou.';
 
   @override
   String get weekKeptSundayFourOwn =>
-      'Een week volgehouden, en morgen is het zondag: vier van de vijf zijn van jou.';
+      'Zeven dagen op rij, en morgen is het zondag: vier van de vijf zijn van jou.';
 
   @override
   String get topOfTheWeek => 'Top van de week';
@@ -2825,9 +2820,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get corrections => 'Rectificaties';
-
-  @override
   String get didYouKnow => 'Wist je dat?';
 
   @override
@@ -2865,53 +2857,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => 'Dat was de editie van vandaag';
-
-  @override
-  String get editionTomorrow => 'Die van morgen verschijnt \'s ochtends';
-
-  @override
-  String get eraAncient => 'De oudheid';
-
-  @override
-  String get eraAncientWhen => 'Vóór 500';
-
-  @override
-  String get eraEarlyModern => 'De vroegmoderne tijd';
-
-  @override
-  String get eraEarlyModernWhen => '1500 tot 1800';
-
-  @override
-  String get eraMedieval => 'De middeleeuwen';
-
-  @override
-  String get eraMedievalWhen => '500 tot 1500';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Nog $n uit deze tijd',
-      one: 'Nog 1 uit deze tijd',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => 'De negentiende eeuw';
-
-  @override
-  String get eraNineteenthWhen => '1800 tot 1900';
-
-  @override
-  String get eraRecent => 'Deze eeuw';
-
-  @override
-  String get eraRecentWhen => 'Sinds 2000';
-
-  @override
   String get eraShortAncient => 'Oudheid';
 
   @override
@@ -2928,12 +2873,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '20e eeuw';
-
-  @override
-  String get eraTwentieth => 'De vorige eeuw';
-
-  @override
-  String get eraTwentiethWhen => '1900 tot 2000';
 
   @override
   String get fewCards => 'In een paar kaarten';
@@ -2958,9 +2897,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get howSure => 'Hoe zeker ben ik, en waarom?';
-
-  @override
-  String get inNumbers => 'In cijfers';
 
   @override
   String inRange(int pts, String said) {
@@ -3099,18 +3035,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get pickOneFirst => 'Kies er eerst een';
 
   @override
-  String get puzzleOfTheDay => 'De puzzel van de dag';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts pt';
   }
 
   @override
   String get rightLastTime => 'Vorige keer goed';
-
-  @override
-  String get sameForEveryoneCaps => 'Voor iedereen hetzelfde';
 
   @override
   String get sayFalse => 'Niet waar';
@@ -3237,19 +3167,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'Opening';
-
-  @override
-  String get throughTime => 'Door de tijd';
-
-  @override
-  String get throughTimeLine =>
-      'Van de oudheid tot dit jaar. Typ een jaartal, of laat het toeval kiezen';
-
-  @override
   String leanHint(String or) {
     return 'Schuif het ‘$or’ naar waar jij staat';
   }
@@ -3284,7 +3201,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get spotTitle => 'Welke is niet waar?';
 
   @override
-  String get spotLine => 'Drie zijn waar. Eén niet.';
+  String get spotLine => 'Vier beweringen. Drie zijn waar, één is niet waar.';
 
   @override
   String get spotPrompt => 'Tik op de bewering die volgens jou niet klopt';
@@ -3306,68 +3223,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get spotYours => 'Jouw keuze';
 
   @override
-  String get yearHint => 'Typ een jaar';
-
-  @override
-  String get yearAd => 'n.Chr.';
-
-  @override
-  String get yearBc => 'v.Chr.';
-
-  @override
-  String yearNamed(String year) {
-    return '$year';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '$year n.Chr.';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '$year v.Chr.';
-  }
-
-  @override
-  String get yearGo => 'Ga naar dit jaar';
-
-  @override
-  String get yearRandom => 'Willekeurig';
-
-  @override
-  String get yearRandomHint =>
-      'Gaat naar een jaar dat een van de kaarten noemt';
-
-  @override
-  String yearNearest(String year) {
-    return 'Het dichtst bij $year eerst';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return 'Geen kaart hier noemt een jaar rond $year. Deze komen uit zijn tijdperk.';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return 'Vandaag niets van rond $year. Dit is het dichtstbijzijnde tijdperk.';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year moet nog komen. Hier is deze eeuw.';
-  }
-
-  @override
-  String get yearZero =>
-      'Een jaar 0 bestond niet. Probeer 1 v.Chr. of 1 n.Chr.';
-
-  @override
   String get todayLabel => 'Vandaag';
-
-  @override
-  String get todaysEdition => 'Editie van vandaag';
 
   @override
   String get toneCurious => 'Nieuwsgierig';
@@ -3446,7 +3302,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => 'Zondag: één kaart extra, voor jou gekozen';
+  String get sundayOneMore => 'Zondag: één extra, voor jou gekozen';
 
   @override
   String get whereYouLive => 'Waar je woont';

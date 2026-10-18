@@ -10,11 +10,11 @@ import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
-import 'package:astuto/widgets/pill_card_stack.dart';
+import 'package:astuto/widgets/pill_card.dart';
 
 /// Sunday carries one more card chosen for the reader: on the free plan one
 /// of the five that would have come at random is their own instead, and
-/// Today says so. Astute+ is all the reader's own every day, so its Sunday
+/// the first of their own says so, under its head. Astute+ is all the reader's own every day, so its Sunday
 /// is like any other. The server deals the same (functions/src/deal.ts,
 /// tested in deal.test.ts with readers' clocks either side of midnight).
 
@@ -172,27 +172,45 @@ void main() {
       }
     }
 
-    testWidgets('a line under the day\'s name on a Sunday, on a small and a '
-        'large phone', (tester) async {
+    testWidgets('the first of the reader\'s own cards says so under its '
+        'head, on a small and a large phone', (tester) async {
       for (final MapEntry<String, Size> phone in phones.entries) {
         final AppState app = await _openedAt(DateTime(2026, 10, 11, 9));
+        expect(app.sundayExtraToday, isTrue);
+        final int first = app.todaysDeck.indexWhere(
+          (p) => app.ownIdsToday.contains(p.id),
+        );
+        // Brought to the top, so the line is read where the reader meets it.
+        app.todayIndex = first;
         await pumpToday(tester, app, phone.value);
         expect(tester.takeException(), isNull, reason: phone.key);
-        final Finder line = find.byKey(const ValueKey('sunday-line'));
-        expect(line, findsOneWidget, reason: phone.key);
-        expect(
-          find.text('Sunday: one more card chosen for you'),
-          findsOneWidget,
+
+        // Nothing over the deck any more.
+        expect(find.byKey(const ValueKey('sunday-line')), findsNothing);
+
+        final Finder note = find.byKey(const ValueKey('card-note'));
+        expect(note, findsOneWidget, reason: phone.key);
+        expect(find.text('Sunday: one more chosen for you'), findsOneWidget);
+        // On the card in front, under its head, inside its edges.
+        final Finder card = find.byWidgetPredicate(
+          (w) =>
+              w is PillCard &&
+              w.pill.id == app.todaysDeck[first].id &&
+              !w.flipped,
         );
-        // Above the bars and the deck, inside the screen.
-        expect(
-          tester.getRect(line).bottom,
-          lessThan(tester.getRect(find.byType(PillCardStack)).top),
-        );
-        expect(
-          tester.getRect(line).right,
-          lessThanOrEqualTo(phone.value.width),
-        );
+        final Rect face = tester.getRect(card);
+        final Rect line = tester.getRect(note);
+        expect(line.top, greaterThan(face.top), reason: phone.key);
+        expect(line.top, lessThan(face.top + 90), reason: phone.key);
+        expect(line.left, greaterThanOrEqualTo(face.left), reason: phone.key);
+        expect(line.right, lessThanOrEqualTo(face.right), reason: phone.key);
+
+        // One card says it: the first of the reader's own, and no other.
+        final List<PillCard> said = tester
+            .widgetList<PillCard>(find.byType(PillCard))
+            .where((c) => c.note != null)
+            .toList();
+        expect(said.map((c) => c.pill.id).toSet(), {app.todaysDeck[first].id});
       }
     });
 
@@ -203,12 +221,13 @@ void main() {
         await _openedAt(DateTime(2026, 10, 10, 9)),
         phone,
       );
-      expect(find.byKey(const ValueKey('sunday-line')), findsNothing);
+      expect(find.byKey(const ValueKey('card-note')), findsNothing);
       await pumpToday(
         tester,
         await _openedAt(DateTime(2026, 10, 11, 9), plus: true),
         phone,
       );
+      expect(find.byKey(const ValueKey('card-note')), findsNothing);
       expect(find.byKey(const ValueKey('sunday-line')), findsNothing);
       expect(tester.takeException(), isNull);
       expect(_saturday.weekday, DateTime.saturday);

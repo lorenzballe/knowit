@@ -9,6 +9,8 @@ import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import '../sync/trace.dart';
+import '../theme.dart';
+import 'card_edge.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
 
@@ -58,6 +60,10 @@ class PillCardStack extends StatefulWidget {
   /// them — on the free plan, where the others came at random.
   final Set<String> ownIds;
 
+  /// A line a card carries on its front, under its head, by the card's id:
+  /// why it is in front of the reader today.
+  final Map<String, String> notes;
+
   /// True while a card is under the finger, so the chrome can step out of
   /// the way of the gesture.
   final ValueChanged<bool>? onMotion;
@@ -100,6 +106,16 @@ class PillCardStack extends StatefulWidget {
   /// why it is here; null when they have not said.
   final Place? home;
 
+  /// Whether to show, once, how a card is sent on, for a reader who has
+  /// never sent one: a few seconds after the back of the card in front has
+  /// come round — or at once, when the reader turns it back to its front
+  /// looking for the way on — the card leans aside, as a hand starting to
+  /// throw it would, and settles back. [onSwipeHint] is told as it does,
+  /// so the screen can say it in words too; with motion reduced, the words
+  /// are all there is.
+  final bool swipeHint;
+  final VoidCallback? onSwipeHint;
+
   /// How many cards the stack holds: the deck, and the one after it.
   int get count => deck.length + (trailing != null ? 1 : 0);
 
@@ -113,6 +129,7 @@ class PillCardStack extends StatefulWidget {
     required this.onAnswer,
     required this.reviewIds,
     this.ownIds = const {},
+    this.notes = const {},
     required this.isSaved,
     required this.onSave,
     required this.onShare,
@@ -125,6 +142,8 @@ class PillCardStack extends StatefulWidget {
     this.onStand,
     this.readBefore,
     this.home,
+    this.swipeHint = false,
+    this.onSwipeHint,
   });
 
   @override
@@ -191,12 +210,14 @@ class _PillCardStackState extends State<PillCardStack>
       _flipped = false;
       _answeredHere = false;
       _upAt = DateTime.now();
+      _hintTimer?.cancel();
     }
     _stand();
   }
 
   @override
   void dispose() {
+    _hintTimer?.cancel();
     _presence?.removeListener(_stand);
     final CardRead? read = _read;
     if (read != null) _close(read, 'gone');
@@ -246,6 +267,9 @@ class _PillCardStackState extends State<PillCardStack>
 
   void _onPanStart(DragStartDetails d) {
     if (widget.index >= widget.count) return;
+    // The reader has found the gesture, or is looking for it with a finger:
+    // nothing is shown while a card is held.
+    _hintTimer?.cancel();
     _controller.stop();
     _dragging = true;
     _dragTotalMove = 0;
@@ -361,6 +385,91 @@ class _PillCardStackState extends State<PillCardStack>
       _turnOver();
     } else {
       await _animateTo(Offset.zero);
+      if (_flipped) _hintIn(_hintAfterBack);
+    }
+  }
+
+  /// How long the back is read before the card shows how it is sent on,
+  /// and how soon after a turn back to the front, which is a reader looking
+  /// for the way on.
+  static const Duration _hintAfterBack = Duration(seconds: 4);
+  static const Duration _hintAfterFront = Duration(milliseconds: 600);
+
+  Timer? _hintTimer;
+
+  /// True once the hint has been shown here: it is shown once.
+  bool _hinted = false;
+
+  void _hintIn(Duration after) {
+    _hintTimer?.cancel();
+    if (!widget.swipeHint || _hinted) return;
+    _hintTimer = Timer(after, _hint);
+  }
+
+  void _hint() {
+    if (!mounted || !widget.swipeHint || _hinted) return;
+    if (_dragging || _throwing || widget.index >= widget.deck.length) return;
+    // Away for another tab or behind another screen: shown when it is
+    // back, after the same wait, rather than to nobody.
+    if (!(_presence?.showing ?? true)) {
+      _hintIn(_hintAfterBack);
+      return;
+    }
+    _hinted = true;
+    widget.onSwipeHint?.call();
+    if (!MediaQuery.disableAnimationsOf(context)) _lean();
+  }
+
+  /// The card leans aside and settles, twice, the second time less: the
+  /// start of a throw, shown rather than explained. The card behind rises
+  /// a little with it, as it does under a finger.
+  Future<void> _lean() async {
+    _controller.stop();
+    final Animation<double> lean = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.0,
+          end: -34.0,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -34.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeInOutCubic)),
+        weight: 32,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: 0.0,
+          end: -14.0,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+        weight: 18,
+      ),
+      TweenSequenceItem(
+        tween: Tween(
+          begin: -14.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeInOutCubic)),
+        weight: 20,
+      ),
+    ]).animate(_controller);
+    void follow() {
+      if (mounted && !_dragging) setState(() => _drag = Offset(lean.value, 0));
+    }
+
+    _controller
+      ..duration = const Duration(milliseconds: 1400)
+      ..reset();
+    lean.addListener(follow);
+    try {
+      await _controller.forward().orCancel;
+    } on TickerCanceled {
+      // Taken by a finger part way: the card is the reader's from there.
+    } finally {
+      lean.removeListener(follow);
+      _controller.duration = const Duration(milliseconds: 300);
     }
   }
 
@@ -388,6 +497,7 @@ class _PillCardStackState extends State<PillCardStack>
     HapticFeedback.selectionClick();
     setState(() => _flipped = !_flipped);
     _read?.turned(toBack: _flipped);
+    _hintIn(_flipped ? _hintAfterBack : _hintAfterFront);
     // The turn itself, for the reader's own trace: a card turned over is a
     // card read, and the dealer hears it. PostHog hears it once, with the
     // rest of how the card was read, when the card leaves (CardRead).
@@ -441,6 +551,18 @@ class _PillCardStackState extends State<PillCardStack>
   /// The least black kept above and below the deck.
   static const double _air = 10;
 
+  /// How much of the card behind shows under the one being read, on every
+  /// phone. It used to be sixteen points down less what the smaller card
+  /// lost: eight on a small phone, five on a large one, where the sliver
+  /// thinned to a line and its rounded ends to nothing.
+  static const double _peek = 10;
+
+  /// How much smaller each card further back is drawn.
+  static const double _shrink = 0.035;
+
+  /// How far a card further back is drawn toward the page's own colour.
+  static double _dimBehind(Palette p) => p.isDark ? 0.4 : 0.45;
+
   @override
   Widget build(BuildContext context) {
     final remaining = widget.count - widget.index;
@@ -449,7 +571,42 @@ class _PillCardStackState extends State<PillCardStack>
     // so what is on screen is never more than the next question.
     final visible = math.min(3, remaining);
     if (visible <= 0) return const SizedBox.shrink();
+
+    // As big as the room allows, short of a slab: the card takes the
+    // height it is given, minus a little black at each end so the deck
+    // reads as sitting in a space rather than jammed into one, and stops
+    // at a card's tallest proportion.
+    //
+    // A card's own scrolling — a back too long for a very large text size —
+    // is the card's, measured by the card, and goes no further: the screen
+    // the deck is on does not scroll when a card does.
+    return NotificationListener<ScrollMetricsNotification>(
+      onNotification: (_) => true,
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (_) => true,
+        child: Center(
+          child: LayoutBuilder(
+            builder: (context, box) {
+              final double height = math.min(
+                math.max(0, box.maxHeight - _air * 2),
+                box.maxWidth * _cardAspect,
+              );
+              return SizedBox(
+                width: box.maxWidth,
+                height: height,
+                child: Stack(children: _layers(context, visible, height)),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// The cards on the table, the one furthest back first.
+  List<Widget> _layers(BuildContext context, int visible, double height) {
     final progress = _progress;
+    final Palette palette = context.p;
 
     final layers = <Widget>[];
     for (var d = visible - 1; d >= 0; d--) {
@@ -480,6 +637,7 @@ class _PillCardStackState extends State<PillCardStack>
                 isReview: widget.reviewIds.contains(pill.id),
                 isOwn: widget.ownIds.contains(pill.id),
                 home: widget.home,
+                note: widget.notes[pill.id],
                 given: controls ? given : null,
                 saved: controls && widget.isSaved(pill.id),
                 onSave: controls ? () => widget.onSave(pill) : null,
@@ -491,13 +649,22 @@ class _PillCardStackState extends State<PillCardStack>
                 onAnswer: !controls || !widget.answering
                     ? null
                     : (response, confidence, reason) {
-                        HapticFeedback.mediumImpact();
+                        // The answer's own feel, on the frame it is given:
+                        // firmer for right, light for wrong — acknowledged,
+                        // never punished.
+                        if (pill.isGraded &&
+                            !pill.challenge.accepts(response)) {
+                          HapticFeedback.lightImpact();
+                        } else {
+                          HapticFeedback.mediumImpact();
+                        }
                         widget.onAnswer(pill.id, response, confidence, reason);
                         setState(() {
                           _answeredHere = true;
                           _flipped = true;
                         });
                         _read?.turned(toBack: true);
+                        _hintIn(_hintAfterBack);
                       },
               ),
               back: !isTop
@@ -521,22 +688,25 @@ class _PillCardStackState extends State<PillCardStack>
 
       // Continuous depth: 1 becomes 0 as the top card leaves.
       final depth = isTop ? 0.0 : d - progress;
-      final translateY = depth * 16.0;
-      final scale = 1 - depth * 0.035;
+      final translateY = depth * (_peek + height * _shrink / 2);
+      final scale = 1 - depth * _shrink;
       // The card being dragged stays solid. Fading it turned it into a
       // window onto the card underneath, and two legible questions printed
       // over each other read as a fault rather than as one card leaving. It
       // travels far enough to clear the screen on its own.
       //
-      // Behind it, only the next one. A stack that fades every card it
-      // holds shows four questions at once, which is three more than the
-      // reader asked for and a spoiler of the rest of the day. The third
-      // is drawn at nothing and arrives only as the top card goes.
-      final opacity = isTop
-          ? 1.0
-          : depth <= 1
-          ? math.pow(0.5, depth).toDouble()
-          : (0.5 * (2 - depth)).clamp(0.0, 0.5);
+      // Behind it, only the next one, solid and quieter: drawn toward the
+      // page's colour, and brought back to its own as the top card goes.
+      // It used to be faded, and a faded card is a window — the shadow of
+      // the card in front and the page showed through, and the edge of the
+      // deck read as a grey or olive band. A stack that showed every card
+      // it holds would show four questions at once, which is three more
+      // than the reader asked for and a spoiler of the rest of the day, so
+      // the third is drawn at nothing and arrives only as the top card goes.
+      final double dim = isTop
+          ? 0.0
+          : math.min(depth, 1.0) * _dimBehind(palette);
+      final double opacity = depth <= 1 ? 1.0 : (2 - depth).clamp(0.0, 1.0);
 
       card = Opacity(
         opacity: opacity,
@@ -553,7 +723,12 @@ class _PillCardStackState extends State<PillCardStack>
             // Tilt follows the sideways travel only: a card lifted straight
             // up should rise, not spin.
             ..rotateZ(isTop ? _drag.dx * 0.035 * math.pi / 180 : 0.0),
-          child: card,
+          child: CardDim(
+            amount: dim,
+            ground: palette.surface,
+            radius: 34,
+            child: card,
+          ),
         ),
       );
 
@@ -589,31 +764,6 @@ class _PillCardStackState extends State<PillCardStack>
       );
     }
 
-    // As big as the room allows, short of a slab: the card takes the
-    // height it is given, minus a little black at each end so the deck
-    // reads as sitting in a space rather than jammed into one, and stops
-    // at a card's tallest proportion.
-    //
-    // A card's own scrolling — a back too long for a very large text size —
-    // is the card's, measured by the card, and goes no further: the screen
-    // the deck is on does not scroll when a card does.
-    return NotificationListener<ScrollMetricsNotification>(
-      onNotification: (_) => true,
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (_) => true,
-        child: Center(
-          child: LayoutBuilder(
-            builder: (context, box) => SizedBox(
-              width: box.maxWidth,
-              height: math.min(
-                math.max(0, box.maxHeight - _air * 2),
-                box.maxWidth * _cardAspect,
-              ),
-              child: Stack(children: layers),
-            ),
-          ),
-        ),
-      ),
-    );
+    return layers;
   }
 }

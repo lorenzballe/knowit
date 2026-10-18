@@ -172,9 +172,10 @@ kept in every case, because it is the line the card is quoted by.
 - Every step is redone by the critic with a calculator. One wrong step, no card.
 - The question states the unit of the expected answer (*"in thousands of
   tonnes"*), so nobody is wrong on format.
-- The `value` stays under 10,000: the app reads a typed comma as a decimal
-  point, so "11,268" arrives as 11.268. Choose the unit that keeps the
-  number small (*"in millions"*, *"in km"*).
+- The app reads a typed number the way the reader's language writes it
+  ("11,268" in English, "11.268" in Italian are both 11268), but a small
+  number is still kinder to type: choose the unit that keeps it small
+  (*"in millions"*, *"in km"*).
 
 ## 9. The debate (`debate`)
 

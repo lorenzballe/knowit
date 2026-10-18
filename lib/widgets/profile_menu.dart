@@ -8,6 +8,7 @@ import '../data/profile_marks.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../theme.dart';
+import 'card_edge.dart';
 import 'subject_icon.dart';
 import 'ui.dart';
 
@@ -521,6 +522,42 @@ class CardFan extends StatelessWidget {
   }
 }
 
+/// The corner of a card in a hand: the deck's, in proportion, and a touch
+/// rounder, since a corner this small cut to scale reads as a point.
+const double _miniRadius = 6.5;
+
+/// How each card of a hand meets the row it lies on and the cards it
+/// overlaps, the top card [marked].
+///
+/// On paper, a card whose colour is the row's own gets a hairline, and
+/// every card a shadow close under it, which is what parts it from the
+/// card behind. On black, every card is cut out by a thin line of the
+/// row's own colour, so two cards of a near colour never run together, and
+/// only the top one throws its colour on the row: four glows, each over
+/// the cards behind it, blurred the edges between them.
+BoxDecoration _miniFace(BuildContext context, Color colour, bool marked) {
+  final Palette p = context.p;
+  return BoxDecoration(
+    color: colour,
+    borderRadius: BorderRadius.circular(_miniRadius),
+    border: p.isDark
+        ? Border.all(color: p.surfaceRaised)
+        : cardHairline(colour, p.surfaceRaised),
+    boxShadow: p.isDark
+        ? [
+            if (marked)
+              BoxShadow(color: colour.withValues(alpha: 0.28), blurRadius: 16),
+          ]
+        : [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.13),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+  );
+}
+
 /// A card's face, small: its colour, and on the top card its subject's mark.
 class _MiniCard extends StatelessWidget {
   const _MiniCard(this.pill, {required this.marked});
@@ -530,33 +567,13 @@ class _MiniCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool dark = context.p.isDark;
     return Container(
       key: ValueKey('fan-card-${pill.id}'),
       width: CardFan.cardWidth,
       height: CardFan.cardHeight,
       padding: const EdgeInsets.all(CardFan.cardWidth * 0.11),
       alignment: AlignmentDirectional.topStart,
-      decoration: BoxDecoration(
-        color: pill.color,
-        borderRadius: BorderRadius.circular(9),
-        // On black a card glows in its own colour; on paper it sits, with
-        // a shadow under it.
-        boxShadow: dark
-            ? [
-                BoxShadow(
-                  color: pill.color.withValues(alpha: 0.32),
-                  blurRadius: 18,
-                ),
-              ]
-            : [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.16),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-      ),
+      decoration: _miniFace(context, pill.color, marked),
       child: marked
           ? SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink)
           : null,
@@ -579,31 +596,17 @@ class _EmptyHand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final bool dark = p.isDark;
     Widget card(int i) => Container(
       key: i == 0 ? const ValueKey('fan-empty') : null,
       width: CardFan.cardWidth,
       height: CardFan.cardHeight,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        // Mixed into the row rather than see-through, so the cards behind
-        // do not show through the one in front.
-        color: Color.alphaBlend(
-          tint.withValues(alpha: _strength[i]),
-          p.surfaceRaised,
-        ),
-        borderRadius: BorderRadius.circular(9),
-        boxShadow: i > 0
-            ? null
-            : dark
-            ? [BoxShadow(color: tint.withValues(alpha: 0.32), blurRadius: 18)]
-            : [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.16),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+      // Mixed into the row rather than see-through, so the cards behind do
+      // not show through the one in front.
+      decoration: _miniFace(
+        context,
+        Color.alphaBlend(tint.withValues(alpha: _strength[i]), p.surfaceRaised),
+        i == 0,
       ),
       child: i == 0 ? ProfileMark(mark, size: 22, color: Colors.white) : null,
     );

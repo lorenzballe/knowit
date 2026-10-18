@@ -1,3 +1,7 @@
+/// The site, as an image that leaves the app prints it: short enough to be
+/// read off a screenshot and typed into a browser.
+const String kSiteHost = 'astutetheapp.com';
+
 /// Which share a link left the app in, as the site reads it in `ref`.
 ///
 /// A card, a day or a record in someone else's chat is the only free
@@ -21,5 +25,5 @@ enum ShareRef {
   final String ref;
 
   /// The site, carrying [ref].
-  String get link => 'https://astutetheapp.com/?ref=$ref';
+  String get link => 'https://$kSiteHost/?ref=$ref';
 }

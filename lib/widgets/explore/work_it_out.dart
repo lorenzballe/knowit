@@ -9,6 +9,7 @@ import '../../models/pill.dart';
 import '../../state/explore_play.dart';
 import '../../theme.dart';
 import 'parts.dart';
+import '../card_edge.dart';
 
 /// Every card on the row is this size, whatever its game: a row of cards of
 /// six heights read as six shelves run together. Tall enough for the most a
@@ -259,10 +260,7 @@ class _Frame extends StatelessWidget {
         width: kWorkCardWidth,
         height: kWorkCardHeight,
         padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: pill.color,
-          borderRadius: BorderRadius.circular(22),
-        ),
+        decoration: cardFace(context, pill.color, radius: 22),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

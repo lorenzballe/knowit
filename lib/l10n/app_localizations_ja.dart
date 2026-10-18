@@ -87,6 +87,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareThisPill => 'このカードを共有';
 
   @override
+  String get share => '共有';
+
+  @override
   String cardOf(int k, int n) {
     return '$n枚中$k枚目';
   }
@@ -781,15 +784,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get welcomeBack => 'おかえりなさい';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n日\n空きました。',
-      one: '1日\n空きました。',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => 'また会えてうれしいです。';
+
+  @override
+  String get comebackStillYours => '今もあなたのもの';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -800,20 +798,6 @@ class AppLocalizationsJa extends AppLocalizations {
       one: '1日',
     );
     return '$_temp0が今も最高記録です。今日の5枚を読めば、カウンターは1から再開します。';
-  }
-
-  @override
-  String get whileYouWereAway => '離れている間に';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n枚が未読のまま',
-      one: '1枚が未読のまま',
-    );
-    return '$_temp0';
   }
 
   @override
@@ -1150,9 +1134,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get barMoveCaps => '持ち帰ること';
 
   @override
-  String get theBarMoveCaps => '会話のひと言';
-
-  @override
   String get widgetFootPlain => '5枚のカード、2分。';
 
   @override
@@ -1419,17 +1400,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tapToReveal => 'タップで表示';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return '惜しい · 正解は$answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return 'あなたの答え$given · 正解は$answer、$bandは正解扱い';
   }
-
-  @override
-  String get youGotIt => '正解';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1439,6 +1412,20 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · 自信$pct%と答えた';
+  }
+
+  @override
+  String get verdictRight => '正解。';
+
+  @override
+  String get verdictClose => '十分近い。';
+
+  @override
+  String get verdictWrong => '惜しい。';
+
+  @override
+  String verdictSure(int pct) {
+    return '自信は$pct%でした。';
   }
 
   @override
@@ -1551,6 +1538,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get thatWasTheOnlyOne => 'これが最後の1枚でした';
 
   @override
+  String get lastOne => '最後の1枚';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word枚、これで全部です。';
+  }
+
+  @override
+  String get deckEndAgain => '最初からもう一度';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1569,9 +1567,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '出典も一緒に';
-
-  @override
-  String get fiveADayALittleSharper => '1日5枚。少しだけ鋭く。';
 
   @override
   String get shareMyDay => 'シェア';
@@ -1811,7 +1806,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get magicLine =>
-      '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。';
+      '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、間違えたカードは戻ってきます。明日から。';
 
   @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
@@ -1823,10 +1818,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get archiveBeforeThisWeek => '今週より前のすべて';
 
   @override
-  String get weekKeptThreeOwn => '1週間続いた：明日は5枚のうち3枚があなたのカード。';
+  String get weekKeptThreeOwn => '7日連続：明日は5枚のうち3枚があなたのカード。';
 
   @override
-  String get weekKeptSundayFourOwn => '1週間続いて、明日は日曜日：5枚のうち4枚があなたのカード。';
+  String get weekKeptSundayFourOwn => '7日連続で、明日は日曜日：5枚のうち4枚があなたのカード。';
 
   @override
   String get topOfTheWeek => '今週のトップ';
@@ -2691,9 +2686,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get corrections => '訂正';
-
-  @override
   String get didYouKnow => '知ってた？';
 
   @override
@@ -2728,52 +2720,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => '今日の号はここまで';
-
-  @override
-  String get editionTomorrow => '明日の号は朝に届きます';
-
-  @override
-  String get eraAncient => '古代の世界';
-
-  @override
-  String get eraAncientWhen => '500年より前';
-
-  @override
-  String get eraEarlyModern => '近世';
-
-  @override
-  String get eraEarlyModernWhen => '1500年〜1800年';
-
-  @override
-  String get eraMedieval => '中世';
-
-  @override
-  String get eraMedievalWhen => '500年〜1500年';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'この時代からあと$n枚',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19世紀';
-
-  @override
-  String get eraNineteenthWhen => '1800年〜1900年';
-
-  @override
-  String get eraRecent => '今世紀';
-
-  @override
-  String get eraRecentWhen => '2000年以降';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2790,12 +2736,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '1900年代';
-
-  @override
-  String get eraTwentieth => '前世紀';
-
-  @override
-  String get eraTwentiethWhen => '1900年〜2000年';
 
   @override
   String get fewCards => '数枚で分かる';
@@ -2819,9 +2759,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get howSure => 'どれくらい確かで、なぜそう思う？';
-
-  @override
-  String get inNumbers => '数字で見る';
 
   @override
   String inRange(int pts, String said) {
@@ -2955,18 +2892,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pickOneFirst => 'まず1つ選んで';
 
   @override
-  String get puzzleOfTheDay => '今日のパズル';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w・${pts}pt';
   }
 
   @override
   String get rightLastTime => '前回は正解';
-
-  @override
-  String get sameForEveryoneCaps => 'みんな同じ';
 
   @override
   String get sayFalse => '間違い';
@@ -3091,18 +3022,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => 'トップ記事';
-
-  @override
-  String get throughTime => '時代をめぐる';
-
-  @override
-  String get throughTimeLine => '古代から今年まで。年を入力するか、偶然に任せよう';
-
-  @override
   String leanHint(String or) {
     return '「$or」を自分の立場までスライド';
   }
@@ -3137,7 +3056,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotTitle => '間違いを見つけよう';
 
   @override
-  String get spotLine => '3つは正しく、1つは間違い。';
+  String get spotLine => '4つの主張。3つは正しく、1つは間違い。';
 
   @override
   String get spotPrompt => '間違いだと思うものをタップ';
@@ -3158,66 +3077,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get spotYours => 'あなたの選択';
 
   @override
-  String get yearHint => '年を入力';
-
-  @override
-  String get yearAd => '西暦';
-
-  @override
-  String get yearBc => '紀元前';
-
-  @override
-  String yearNamed(String year) {
-    return '$year年';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '西暦$year年';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '紀元前$year年';
-  }
-
-  @override
-  String get yearGo => 'この年へ';
-
-  @override
-  String get yearRandom => 'ランダム';
-
-  @override
-  String get yearRandomHint => 'カードに出てくる年のどれかへ';
-
-  @override
-  String yearNearest(String year) {
-    return '$yearに近い順';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '$yearに近い年を挙げるカードはありません。同じ時代のカードです。';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '今日は$yearごろのカードがありません。いちばん近い時代です。';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$yearはまだ先。今世紀をどうぞ。';
-  }
-
-  @override
-  String get yearZero => '0年はありません。紀元前1年か西暦1年を試して。';
-
-  @override
   String get todayLabel => '今日';
-
-  @override
-  String get todaysEdition => '今日の号';
 
   @override
   String get toneCurious => '好奇心';
@@ -3296,7 +3156,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => '日曜日：あなたのために選んだカードがもう1枚';
+  String get sundayOneMore => '日曜日：あなたのためにもう1枚';
 
   @override
   String get whereYouLive => 'あなたの住む場所';

@@ -585,24 +585,12 @@ Unmask the chart is the shelf of pictures, and it plays them.
     eight for everybody that day, and the score and the misses at the end.
 14. **Your mood, your minutes** (140b). Pick a tone and the time you have;
     the cards are from the bank, not the reader's own.
-15. **Today's edition** (141f): the same front page for everybody, the lead,
-    two columns, the day in numbers, a correction and a puzzle.
-16. **Through time** (141c). It opens on an age, a different one each day,
-    and has two ways in: type a year, before Christ or after, or let chance
-    pick one — **Random** goes to a year one of the cards names. The year
-    rolls into place, the age that holds it is named over it, and the cards
-    are the ones whose questions name the nearest years — a card naming the
-    year itself before one naming its decade — looked for through every
-    card of that age no other shelf holds. A year no card is near, an age
-    with nothing today, a year still to come and a year 0 are each said
-    plainly. The ruler and its arrows went: they only ever said roughly
-    when, and two ways of browsing beside a field was one too many.
-17. **Did you know?** (141b): a pile to turn over, new to me or knew it.
-18. **Not sure where to start** (138f): one card from anywhere.
+15. **Did you know?** (141b): a pile to turn over, new to me or knew it.
+16. **Not sure where to start** (138f): one card from anywhere.
 
 **To end on.**
 
-19. **Use it today** (131's list), the last thing on the page: something to
+17. **Use it today** (131's list), the last thing on the page: something to
     try, or to drop into a conversation, before tonight. Each row is the
     thing itself and opens its card. The rings to tick one off as tried are
     gone: nobody could tell what they were for.

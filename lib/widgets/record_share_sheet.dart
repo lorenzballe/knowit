@@ -211,7 +211,13 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
             const SizedBox(height: 20),
             RepaintBoundary(
               key: _cardKey,
-              child: RecordCard(summary: _summary),
+              // An image, not a screen: one size whatever the reader's
+              // text size, so a large setting cannot push it off its card.
+              child: MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: TextScaler.noScaling),
+                child: RecordCard(summary: _summary),
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -236,7 +242,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
             Center(
               child: Text(
                 'Nobody else can see your answers',
-                style: AppText.body(size: 12, color: context.p.inkFaint),
+                style: AppText.body(size: 12, color: context.p.inkMuted),
               ),
             ),
           ],
@@ -333,13 +339,29 @@ class RecordCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  'Astute',
-                  style: AppText.display(
-                    size: 14,
-                    weight: FontWeight.w600,
-                    color: _ink.withValues(alpha: 0.6),
-                  ),
+                // The name, and the address a picture needs to be found by.
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Astute',
+                      style: AppText.display(
+                        size: 14,
+                        weight: FontWeight.w600,
+                        color: _ink.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      kSiteHost,
+                      style: AppText.body(
+                        size: 10.5,
+                        weight: FontWeight.w600,
+                        spacing: 0.2,
+                        color: _ink.withValues(alpha: 0.5),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

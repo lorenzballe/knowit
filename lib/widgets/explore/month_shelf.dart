@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/pill.dart';
 import '../subject_icon.dart';
 import 'parts.dart';
+import '../card_edge.dart';
 
 /// A month of one subject — artboard 131f's bento, with 132b's signature.
 ///
@@ -101,10 +102,7 @@ class _Lead extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 214,
-        decoration: BoxDecoration(
-          color: pill.color,
-          borderRadius: BorderRadius.circular(22),
-        ),
+        decoration: cardFace(context, pill.color, radius: 22),
         clipBehavior: Clip.antiAlias,
         child: Stack(
           children: [
@@ -170,10 +168,7 @@ class _Small extends StatelessWidget {
       child: Container(
         width: 168,
         padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: pill.color,
-          borderRadius: BorderRadius.circular(19),
-        ),
+        decoration: cardFace(context, pill.color, radius: 19),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

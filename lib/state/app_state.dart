@@ -584,7 +584,8 @@ class AppState extends ChangeNotifier {
       ownCardsFor(plus: isPlus, streak: liveStreak, sunday: isSunday(day));
 
   /// True on the reader's Sunday when today's five hold the one more card
-  /// chosen for them, which Today says in a line of its own. Read off the
+  /// chosen for them, which the first of their own says under its head on
+  /// Today. Read off the
   /// deal itself, whoever dealt it, so the line never promises a card a
   /// day does not have; never on Astute+, whose five are all the reader's
   /// own every day.
@@ -1960,15 +1961,43 @@ class AppState extends ChangeNotifier {
   /// it was checked or asked. False until then.
   bool notificationsAllowed = false;
 
+  /// True from the switch being turned on to the system answering whether
+  /// the app may notify; and, after, true for the rest of the session.
+  bool _askingToNotify = false;
+  bool _askedToNotify = false;
+
+  /// What the daily nudge's switch shows.
+  ///
+  /// The setting is on from the install, so the switch showing the setting
+  /// alone said "on, every day at 08:30" to a reader the app had never
+  /// asked, for whom nothing was ever going to arrive. So it is off until
+  /// the system has been asked; on from the tap that asks, so it answers
+  /// the tap rather than the system's prompt; and after that the setting,
+  /// with the system's answer said beside it when it was no. Where the
+  /// phone build is needed to deliver at all, it is the setting.
+  bool get nudgeShownOn {
+    if (!notificationsOn) return false;
+    if (!remindersSupported) return true;
+    return notificationsAllowed ||
+        pushAsked ||
+        _askingToNotify ||
+        _askedToNotify;
+  }
+
   Future<void> setNotifications(bool on) async {
     notificationsOn = on;
+    _askingToNotify = on;
     await _prefs.setBool(_kNotifications, on);
     Analytics.capture('reminder switched', {'on': on, 'at': notifyTime});
     // The switch shows the setting, not the platform's response time. Told
     // only after the notification centre answered, it sat on its old value
     // for as long as that took — and a second tap then flipped it back.
     notifyListeners();
-    await _applyReminder();
+    try {
+      await _applyReminder();
+    } finally {
+      _askingToNotify = false;
+    }
     notifyListeners();
   }
 
@@ -2021,7 +2050,12 @@ class AppState extends ChangeNotifier {
         await (allowed ? _armNow() : _disarm());
         return;
       }
-      final granted = await _askPermission();
+      final bool granted;
+      try {
+        granted = await _askPermission();
+      } finally {
+        _askedToNotify = true;
+      }
       _noteAllowed(granted);
       if (!granted) {
         remindersLive = false;

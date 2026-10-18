@@ -54,6 +54,10 @@
  "removeFromSaved": "Remove from saved",
  "saveThisPill": "Save this card",
  "shareThisPill": "Share this card",
+ "share": "Share",
+ "@share": {
+  "description": "The share sheet's main button: sends the card's picture."
+ },
  "cardOf": "Card {k} of {n}",
  "@cardOf": {
   "placeholders": {
@@ -718,25 +722,16 @@
  },
  "freePlan": "Free plan",
  "welcomeBack": "Welcome back",
- "youMissedDays": "{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}",
- "@youMissedDays": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
+ "comebackTitle": "Good to see you again.",
+ "comebackStillYours": "Still yours",
+ "@comebackStillYours": {
+  "description": "Over what a lapsed streak did not take, on the come-back screen: the weeks kept, the most kept subject, the cards due back. Shown in capitals."
+ },
+ "@comebackTitle": {
+  "description": "The come-back screen's title, under \"Welcome back\", for a reader whose streak lapsed: glad they are here, never what they missed."
  },
  "bestStreakStillRecord": "{n, plural, =1{One day is} other{{n} days are}} still your record. Read today's five and the counter starts again from one.",
  "@bestStreakStillRecord": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "whileYouWereAway": "While you were away",
- "pillsWentUnread": "{n, plural, =1{1 card went unread} other{{n} cards went unread}}",
- "@pillsWentUnread": {
   "placeholders": {
    "n": {
     "type": "int"
@@ -1106,7 +1101,6 @@
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
  "barMoveCaps": "WHAT TO KEEP",
- "theBarMoveCaps": "THE BAR MOVE",
  "widgetFootPlain": "Five cards, two minutes.",
  "@widgetFootPlain": {
   "description": "The home-screen widget's foot on a morning with no streak to show."
@@ -1408,14 +1402,6 @@
  "pickASideNoRightAnswer": "Pick a side. There is no right answer.",
  "estimateCloseEnough": "Estimate. Close enough counts.",
  "tapToReveal": "Tap to reveal",
- "closeEnoughItIs": "Close enough · it is {answer}",
- "@closeEnoughItIs": {
-  "placeholders": {
-   "answer": {
-    "type": "String"
-   }
-  }
- },
  "youSaidItIsCounted": "You said {given} · it is {answer}, and {band} counted",
  "@youSaidItIsCounted": {
   "placeholders": {
@@ -1430,7 +1416,6 @@
    }
   }
  },
- "youGotIt": "You got it",
  "youSaidItIs": "You said {given} · it is {answer}",
  "@youSaidItIs": {
   "placeholders": {
@@ -1448,6 +1433,27 @@
    "line": {
     "type": "String"
    },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "verdictRight": "Right.",
+ "@verdictRight": {
+  "description": "The verdict on the back of a card answered right, set large."
+ },
+ "verdictClose": "Close enough.",
+ "@verdictClose": {
+  "description": "The verdict on the back of an estimate placed close enough, set large."
+ },
+ "verdictWrong": "Not quite.",
+ "@verdictWrong": {
+  "description": "The verdict on the back of a card answered wrong, set large: kind, not a scolding."
+ },
+ "verdictSure": "You were {pct}% sure.",
+ "@verdictSure": {
+  "description": "Under the verdict: how sure the reader said they were. {pct} is 50 to 90.",
+  "placeholders": {
    "pct": {
     "type": "int"
    }
@@ -1541,6 +1547,23 @@
  "musicSoundIsOff": "Sound is off for music cards.",
  "musicSoundTurnOn": "Turn on",
  "thatWasTheOnlyOne": "That was the only one",
+ "lastOne": "The last one",
+ "@lastOne": {
+  "description": "Under the re-read deck, on its last card: the next throw ends the deck."
+ },
+ "deckEndTitle": "That's all {word}.",
+ "@deckEndTitle": {
+  "description": "The card after the last one in a re-read deck. {word} is how many cards there were, as countWord says it: 'eight'.",
+  "placeholders": {
+   "word": {
+    "type": "String"
+   }
+  }
+ },
+ "deckEndAgain": "Start again from the first",
+ "@deckEndAgain": {
+  "description": "The quiet button on the card after the last one: back to the first card of the deck."
+ },
  "indexOfN": "{i}/{n}",
  "@indexOfN": {
   "placeholders": {
@@ -1557,7 +1580,6 @@
  "copiedToClipboard": "Copied to clipboard.",
  "rendering": "Rendering…",
  "theSourceGoesWithIt": "The source goes with it",
- "fiveADayALittleSharper": "Five a day. A little sharper.",
  "shareMyDay": "Share day",
  "climbedTo": "Today took you up to {rung}",
  "@climbedTo": {
@@ -1796,14 +1818,20 @@
  "mixFull": "Full",
  "forYouChip": "FOR YOU",
  "againChip": "AGAIN",
- "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
+ "magicLine": "Five cards a day chosen for you: from your mix, at your level, and the ones you miss come back. From tomorrow.",
+ "@magicLine": {
+  "description": "On the card after the fifth, offering Astute+: what it gives from tomorrow. All five chosen for the reader, at their level, and the cards they miss come back (reviews are Astute+ only)."
+ },
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "archiveBeforeThisWeek": "Before this week",
- "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
- "weekKeptSundayFourOwn": "A week kept, and tomorrow is Sunday: four of the five are yours.",
+ "weekKeptThreeOwn": "Seven days in a row: tomorrow three of the five are yours.",
+ "@weekKeptThreeOwn": {
+  "description": "The note the evening of a seventh day in a row on the free plan: tomorrow has one more card of the reader's own, so three of the five are chosen for them. Not \"a week kept\", which is five days of a calendar week."
+ },
+ "weekKeptSundayFourOwn": "Seven days in a row, and tomorrow is Sunday: four of the five are yours.",
  "@weekKeptSundayFourOwn": {
-  "description": "The note the evening a week is kept on the free plan, when tomorrow is also Sunday: the week's extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them."
+  "description": "The note the evening of a seventh day in a row on the free plan, when tomorrow is also Sunday: the extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them."
  },
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
@@ -2817,7 +2845,6 @@
    }
   }
  },
- "corrections": "Corrections",
  "didYouKnow": "Did you know?",
  "didYouKnowLine": "Turn it over, then: new to you, or knew it?",
  "dragToSet": "Drag to set",
@@ -2838,34 +2865,12 @@
    }
   }
  },
- "editionEnd": "That's today's edition",
- "editionTomorrow": "Tomorrow's is out in the morning",
- "eraAncient": "The ancient world",
- "eraAncientWhen": "Before 500",
- "eraEarlyModern": "The early modern age",
- "eraEarlyModernWhen": "1500 to 1800",
- "eraMedieval": "The Middle Ages",
- "eraMedievalWhen": "500 to 1500",
- "eraMore": "{n, plural, =1{1 more from this age} other{{n} more from this age}}",
- "@eraMore": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "eraNineteenth": "The nineteenth century",
- "eraNineteenthWhen": "1800 to 1900",
- "eraRecent": "This century",
- "eraRecentWhen": "Since 2000",
  "eraShortAncient": "Antiquity",
  "eraShortEarlyModern": "1500–1800",
  "eraShortMedieval": "Middle Ages",
  "eraShortNineteenth": "1800s",
  "eraShortRecent": "2000s",
  "eraShortTwentieth": "1900s",
- "eraTwentieth": "The last century",
- "eraTwentiethWhen": "1900 to 2000",
  "fewCards": "In a few cards",
  "fewCardsLine": "When one card isn't enough to explain it",
  "firstLabel": "First",
@@ -2880,7 +2885,6 @@
   }
  },
  "howSure": "How sure am I, and why?",
- "inNumbers": "In numbers",
  "inRange": "In range: +{pts} points. It is {said}.",
  "@inRange": {
   "placeholders": {
@@ -2989,7 +2993,6 @@
  "notSureTitle": "Not sure where to start?",
  "openWord": "Open",
  "pickOneFirst": "Pick one first",
- "puzzleOfTheDay": "Puzzle of the day",
  "rangeWidth": "±{w} · {pts} pts",
  "@rangeWidth": {
   "placeholders": {
@@ -3002,7 +3005,6 @@
   }
  },
  "rightLastTime": "Right last time",
- "sameForEveryoneCaps": "The same for everyone",
  "sayFalse": "False",
  "sayTrue": "True",
  "seriesAnchors": "First impressions",
@@ -3109,10 +3111,6 @@
    }
   }
  },
- "theAstute": "The Astute",
- "theLead": "The lead",
- "throughTime": "Through time",
- "throughTimeLine": "From the ancient world to this year. Type a year, or let chance pick",
  "leanHint": "Slide the “{or}” to where you stand",
  "@leanHint": {
   "description": "Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.",
@@ -3160,79 +3158,14 @@
   }
  },
  "spotTitle": "Spot the false one",
- "spotLine": "Three are true. One is not.",
+ "spotLine": "Four claims. Three are true, one is false.",
  "spotPrompt": "Tap the one you think is false",
  "spotConfirm": "That's the false one",
  "spotFound": "Found it. The other three are true.",
  "spotMissed": "Not that one: it's true. The false one is struck out.",
  "spotWhy": "Tap any of them to read why",
  "spotYours": "Your pick",
- "yearHint": "Type a year",
- "yearAd": "AD",
- "yearBc": "BC",
- "yearNamed": "{year}",
- "@yearNamed": {
-  "description": "A year from 1000 on, inside a sentence.",
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearAdOf": "AD {year}",
- "@yearAdOf": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearBcOf": "{year} BC",
- "@yearBcOf": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearGo": "Go to this year",
- "yearRandom": "Random",
- "yearRandomHint": "Goes to a year one of the cards names",
- "yearNearest": "Nearest to {year} first",
- "@yearNearest": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearNoneNamed": "No card here names a year near {year}. These are from its age.",
- "@yearNoneNamed": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearNoAge": "Nothing from around {year} here today. This is the nearest age.",
- "@yearNoAge": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearFuture": "{year} is still to come. Here is this century.",
- "@yearFuture": {
-  "placeholders": {
-   "year": {
-    "type": "String"
-   }
-  }
- },
- "yearZero": "There was no year 0. Try 1 BC or AD 1.",
  "todayLabel": "Today",
- "todaysEdition": "Today's edition",
  "toneCurious": "Curious",
  "toneLight": "Light",
  "toneSerious": "Serious",
@@ -3293,9 +3226,9 @@
    }
   }
  },
- "sundayOneMore": "Sunday: one more card chosen for you",
+ "sundayOneMore": "Sunday: one more chosen for you",
  "@sundayOneMore": {
-  "description": "A small line on Today on the reader's Sunday, on the free plan: one of the five cards that would have come at random is chosen for them instead."
+  "description": "On the reader's Sunday, on the free plan, a quiet line under the head of the first of their own cards: one of the five that would have come at random was chosen for them instead. The card is the one more, so it need not say 'card'."
  },
  "whereYouLive": "Where you live",
  "@whereYouLive": {

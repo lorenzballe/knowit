@@ -7,6 +7,7 @@ import '../../state/explore_play.dart';
 import '../../theme.dart';
 import '../../analytics.dart';
 import 'parts.dart';
+import '../card_edge.dart';
 
 /// Sixty seconds — artboard 140d's round.
 ///
@@ -241,10 +242,7 @@ class _SixtySecondsState extends State<SixtySeconds>
       key: const ValueKey('sixty-round'),
       constraints: const BoxConstraints(minHeight: 300),
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: p.color,
-        borderRadius: BorderRadius.circular(24),
-      ),
+      decoration: cardFace(context, p.color, radius: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -464,10 +462,7 @@ class _SixtySecondsState extends State<SixtySeconds>
               height: 22,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: p.color,
-                borderRadius: BorderRadius.circular(7),
-              ),
+              decoration: cardFace(context, p.color, radius: 7),
               child: Text(
                 upper(
                   context,

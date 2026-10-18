@@ -87,6 +87,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareThisPill => '分享这张卡片';
 
   @override
+  String get share => '分享';
+
+  @override
   String cardOf(int k, int n) {
     return '第 $k 张，共 $n 张';
   }
@@ -776,15 +779,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcomeBack => '欢迎回来';
 
   @override
-  String youMissedDays(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '你错过了\n$n 天。',
-      one: '你错过了\n一天。',
-    );
-    return '$_temp0';
-  }
+  String get comebackTitle => '很高兴再见到你。';
+
+  @override
+  String get comebackStillYours => '依然属于你';
 
   @override
   String bestStreakStillRecord(int n) {
@@ -795,20 +793,6 @@ class AppLocalizationsZh extends AppLocalizations {
       one: '1 天',
     );
     return '$_temp0仍是你的最佳记录。读完今天的五张，计数就从一重新开始。';
-  }
-
-  @override
-  String get whileYouWereAway => '你离开的这段时间';
-
-  @override
-  String pillsWentUnread(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '有 $n 张卡片未读',
-      one: '有 1 张卡片未读',
-    );
-    return '$_temp0';
   }
 
   @override
@@ -1143,9 +1127,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get barMoveCaps => '值得记住';
 
   @override
-  String get theBarMoveCaps => '饭桌上的那句话';
-
-  @override
   String get widgetFootPlain => '五张卡片，两分钟。';
 
   @override
@@ -1410,17 +1391,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tapToReveal => '点按揭晓';
 
   @override
-  String closeEnoughItIs(String answer) {
-    return '够接近 · 答案是 $answer';
-  }
-
-  @override
   String youSaidItIsCounted(String given, String answer, String band) {
     return '你说 $given · 答案是 $answer，$band 之内算对';
   }
-
-  @override
-  String get youGotIt => '答对了';
 
   @override
   String youSaidItIs(String given, String answer) {
@@ -1430,6 +1403,20 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String lineYouSaidSure(String line, int pct) {
     return '$line · 你说有 $pct% 的把握';
+  }
+
+  @override
+  String get verdictRight => '答对了。';
+
+  @override
+  String get verdictClose => '足够接近。';
+
+  @override
+  String get verdictWrong => '差一点。';
+
+  @override
+  String verdictSure(int pct) {
+    return '你当时有 $pct% 的把握。';
   }
 
   @override
@@ -1542,6 +1529,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get thatWasTheOnlyOne => '只有这一张';
 
   @override
+  String get lastOne => '最后一张';
+
+  @override
+  String deckEndTitle(String word) {
+    return '$word张，就这些了。';
+  }
+
+  @override
+  String get deckEndAgain => '从第一张重新开始';
+
+  @override
   String indexOfN(int i, int n) {
     return '$i/$n';
   }
@@ -1560,9 +1558,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get theSourceGoesWithIt => '来源一并附上';
-
-  @override
-  String get fiveADayALittleSharper => '每天五张，更敏锐一点。';
 
   @override
   String get shareMyDay => '分享';
@@ -1804,7 +1799,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get againChip => '再来一次';
 
   @override
-  String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。';
+  String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，答错的会再回来。明天开始。';
 
   @override
   String get plusCardHeadline => '让五张全都为你。';
@@ -1816,10 +1811,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get archiveBeforeThisWeek => '本周之前的一切';
 
   @override
-  String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
+  String get weekKeptThreeOwn => '连续七天：明天五张里有三张是你的。';
 
   @override
-  String get weekKeptSundayFourOwn => '坚持了一周，明天又是星期日：五张里有四张是你的。';
+  String get weekKeptSundayFourOwn => '连续七天，明天又是星期日：五张里有四张是你的。';
 
   @override
   String get topOfTheWeek => '本周热门';
@@ -2699,9 +2694,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get corrections => '更正';
-
-  @override
   String get didYouKnow => '你知道吗？';
 
   @override
@@ -2736,52 +2728,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get editionEnd => '今天这一期就到这里';
-
-  @override
-  String get editionTomorrow => '明天的一期早上发布';
-
-  @override
-  String get eraAncient => '古代世界';
-
-  @override
-  String get eraAncientWhen => '公元500年以前';
-
-  @override
-  String get eraEarlyModern => '近代早期';
-
-  @override
-  String get eraEarlyModernWhen => '1500年至1800年';
-
-  @override
-  String get eraMedieval => '中世纪';
-
-  @override
-  String get eraMedievalWhen => '500年至1500年';
-
-  @override
-  String eraMore(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '这个时代还有 $n 张',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get eraNineteenth => '19世纪';
-
-  @override
-  String get eraNineteenthWhen => '1800年至1900年';
-
-  @override
-  String get eraRecent => '本世纪';
-
-  @override
-  String get eraRecentWhen => '2000年以来';
-
-  @override
   String get eraShortAncient => '古代';
 
   @override
@@ -2798,12 +2744,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get eraShortTwentieth => '20世纪';
-
-  @override
-  String get eraTwentieth => '上个世纪';
-
-  @override
-  String get eraTwentiethWhen => '1900年至2000年';
 
   @override
   String get fewCards => '几张卡片讲明白';
@@ -2827,9 +2767,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get howSure => '我有多确定？为什么？';
-
-  @override
-  String get inNumbers => '数字看点';
 
   @override
   String inRange(int pts, String said) {
@@ -2963,18 +2900,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pickOneFirst => '先选一个';
 
   @override
-  String get puzzleOfTheDay => '今日谜题';
-
-  @override
   String rangeWidth(int w, int pts) {
     return '±$w · $pts 分';
   }
 
   @override
   String get rightLastTime => '上次答对了';
-
-  @override
-  String get sameForEveryoneCaps => '人人相同';
 
   @override
   String get sayFalse => '假';
@@ -3099,18 +3030,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get theAstute => 'The Astute';
-
-  @override
-  String get theLead => '头条';
-
-  @override
-  String get throughTime => '穿越时间';
-
-  @override
-  String get throughTimeLine => '从古代到今年。输入一个年份，或者交给运气';
-
-  @override
   String leanHint(String or) {
     return '把“$or”滑到你的立场';
   }
@@ -3145,7 +3064,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get spotTitle => '找出假的那条';
 
   @override
-  String get spotLine => '三条是真的，一条不是。';
+  String get spotLine => '四条说法。三条是真的，一条是假的。';
 
   @override
   String get spotPrompt => '点你认为是假的那条';
@@ -3166,66 +3085,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get spotYours => '你的选择';
 
   @override
-  String get yearHint => '输入年份';
-
-  @override
-  String get yearAd => '公元';
-
-  @override
-  String get yearBc => '公元前';
-
-  @override
-  String yearNamed(String year) {
-    return '$year年';
-  }
-
-  @override
-  String yearAdOf(String year) {
-    return '公元$year年';
-  }
-
-  @override
-  String yearBcOf(String year) {
-    return '公元前$year年';
-  }
-
-  @override
-  String get yearGo => '前往这一年';
-
-  @override
-  String get yearRandom => '随机';
-
-  @override
-  String get yearRandomHint => '前往某张卡片提到的年份';
-
-  @override
-  String yearNearest(String year) {
-    return '离$year最近的在前';
-  }
-
-  @override
-  String yearNoneNamed(String year) {
-    return '这里没有卡片提到$year附近的年份。这些来自同一时代。';
-  }
-
-  @override
-  String yearNoAge(String year) {
-    return '今天没有$year前后的卡片。这是最近的时代。';
-  }
-
-  @override
-  String yearFuture(String year) {
-    return '$year还没到来。这是本世纪。';
-  }
-
-  @override
-  String get yearZero => '没有公元0年。试试公元前1年或公元1年。';
-
-  @override
   String get todayLabel => '今天';
-
-  @override
-  String get todaysEdition => '今日版';
 
   @override
   String get toneCurious => '好奇';
@@ -3304,7 +3164,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get sundayOneMore => '星期日：多一张为你挑选的卡片';
+  String get sundayOneMore => '星期日：再为你多选一张';
 
   @override
   String get whereYouLive => '你住的地方';

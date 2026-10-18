@@ -216,6 +216,12 @@ abstract class AppLocalizations {
   /// **'Share this card'**
   String get shareThisPill;
 
+  /// The share sheet's main button: sends the card's picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
   /// No description provided for @cardOf.
   ///
   /// In en, this message translates to:
@@ -1182,29 +1188,23 @@ abstract class AppLocalizations {
   /// **'Welcome back'**
   String get welcomeBack;
 
-  /// No description provided for @youMissedDays.
+  /// The come-back screen's title, under "Welcome back", for a reader whose streak lapsed: glad they are here, never what they missed.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}'**
-  String youMissedDays(int n);
+  /// **'Good to see you again.'**
+  String get comebackTitle;
+
+  /// Over what a lapsed streak did not take, on the come-back screen: the weeks kept, the most kept subject, the cards due back. Shown in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Still yours'**
+  String get comebackStillYours;
 
   /// No description provided for @bestStreakStillRecord.
   ///
   /// In en, this message translates to:
   /// **'{n, plural, =1{One day is} other{{n} days are}} still your record. Read today\'s five and the counter starts again from one.'**
   String bestStreakStillRecord(int n);
-
-  /// No description provided for @whileYouWereAway.
-  ///
-  /// In en, this message translates to:
-  /// **'While you were away'**
-  String get whileYouWereAway;
-
-  /// No description provided for @pillsWentUnread.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 card went unread} other{{n} cards went unread}}'**
-  String pillsWentUnread(int n);
 
   /// No description provided for @stillMostKeptTopic.
   ///
@@ -1716,12 +1716,6 @@ abstract class AppLocalizations {
   /// **'WHAT TO KEEP'**
   String get barMoveCaps;
 
-  /// No description provided for @theBarMoveCaps.
-  ///
-  /// In en, this message translates to:
-  /// **'THE BAR MOVE'**
-  String get theBarMoveCaps;
-
   /// The home-screen widget's foot on a morning with no streak to show.
   ///
   /// In en, this message translates to:
@@ -2148,23 +2142,11 @@ abstract class AppLocalizations {
   /// **'Tap to reveal'**
   String get tapToReveal;
 
-  /// No description provided for @closeEnoughItIs.
-  ///
-  /// In en, this message translates to:
-  /// **'Close enough · it is {answer}'**
-  String closeEnoughItIs(String answer);
-
   /// No description provided for @youSaidItIsCounted.
   ///
   /// In en, this message translates to:
   /// **'You said {given} · it is {answer}, and {band} counted'**
   String youSaidItIsCounted(String given, String answer, String band);
-
-  /// No description provided for @youGotIt.
-  ///
-  /// In en, this message translates to:
-  /// **'You got it'**
-  String get youGotIt;
 
   /// No description provided for @youSaidItIs.
   ///
@@ -2177,6 +2159,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{line} · you said {pct}% sure'**
   String lineYouSaidSure(String line, int pct);
+
+  /// The verdict on the back of a card answered right, set large.
+  ///
+  /// In en, this message translates to:
+  /// **'Right.'**
+  String get verdictRight;
+
+  /// The verdict on the back of an estimate placed close enough, set large.
+  ///
+  /// In en, this message translates to:
+  /// **'Close enough.'**
+  String get verdictClose;
+
+  /// The verdict on the back of a card answered wrong, set large: kind, not a scolding.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite.'**
+  String get verdictWrong;
+
+  /// Under the verdict: how sure the reader said they were. {pct} is 50 to 90.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {pct}% sure.'**
+  String verdictSure(int pct);
 
   /// No description provided for @giveMeANudge.
   ///
@@ -2352,6 +2358,24 @@ abstract class AppLocalizations {
   /// **'That was the only one'**
   String get thatWasTheOnlyOne;
 
+  /// Under the re-read deck, on its last card: the next throw ends the deck.
+  ///
+  /// In en, this message translates to:
+  /// **'The last one'**
+  String get lastOne;
+
+  /// The card after the last one in a re-read deck. {word} is how many cards there were, as countWord says it: 'eight'.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s all {word}.'**
+  String deckEndTitle(String word);
+
+  /// The quiet button on the card after the last one: back to the first card of the deck.
+  ///
+  /// In en, this message translates to:
+  /// **'Start again from the first'**
+  String get deckEndAgain;
+
   /// No description provided for @indexOfN.
   ///
   /// In en, this message translates to:
@@ -2387,12 +2411,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The source goes with it'**
   String get theSourceGoesWithIt;
-
-  /// No description provided for @fiveADayALittleSharper.
-  ///
-  /// In en, this message translates to:
-  /// **'Five a day. A little sharper.'**
-  String get fiveADayALittleSharper;
 
   /// No description provided for @shareMyDay.
   ///
@@ -2760,10 +2778,10 @@ abstract class AppLocalizations {
   /// **'AGAIN'**
   String get againChip;
 
-  /// No description provided for @magicLine.
+  /// On the card after the fifth, offering Astute+: what it gives from tomorrow. All five chosen for the reader, at their level, and the cards they miss come back (reviews are Astute+ only).
   ///
   /// In en, this message translates to:
-  /// **'Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.'**
+  /// **'Five cards a day chosen for you: from your mix, at your level, and the ones you miss come back. From tomorrow.'**
   String get magicLine;
 
   /// No description provided for @plusCardHeadline.
@@ -2784,16 +2802,16 @@ abstract class AppLocalizations {
   /// **'Before this week'**
   String get archiveBeforeThisWeek;
 
-  /// No description provided for @weekKeptThreeOwn.
+  /// The note the evening of a seventh day in a row on the free plan: tomorrow has one more card of the reader's own, so three of the five are chosen for them. Not "a week kept", which is five days of a calendar week.
   ///
   /// In en, this message translates to:
-  /// **'A week kept: tomorrow three of the five are yours.'**
+  /// **'Seven days in a row: tomorrow three of the five are yours.'**
   String get weekKeptThreeOwn;
 
-  /// The note the evening a week is kept on the free plan, when tomorrow is also Sunday: the week's extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them.
+  /// The note the evening of a seventh day in a row on the free plan, when tomorrow is also Sunday: the extra card of the reader's own and Sunday's both, so four of the five cards are chosen for them.
   ///
   /// In en, this message translates to:
-  /// **'A week kept, and tomorrow is Sunday: four of the five are yours.'**
+  /// **'Seven days in a row, and tomorrow is Sunday: four of the five are yours.'**
   String get weekKeptSundayFourOwn;
 
   /// No description provided for @topOfTheWeek.
@@ -4086,12 +4104,6 @@ abstract class AppLocalizations {
   /// **'Right: it is more than {v}.'**
   String closerYesMore(String v);
 
-  /// No description provided for @corrections.
-  ///
-  /// In en, this message translates to:
-  /// **'Corrections'**
-  String get corrections;
-
   /// No description provided for @didYouKnow.
   ///
   /// In en, this message translates to:
@@ -4128,84 +4140,6 @@ abstract class AppLocalizations {
   /// **'{n, plural, =0{Nothing new today} =1{1 new to you} other{{n} new to you}}'**
   String dykNew(int n);
 
-  /// No description provided for @editionEnd.
-  ///
-  /// In en, this message translates to:
-  /// **'That\'s today\'s edition'**
-  String get editionEnd;
-
-  /// No description provided for @editionTomorrow.
-  ///
-  /// In en, this message translates to:
-  /// **'Tomorrow\'s is out in the morning'**
-  String get editionTomorrow;
-
-  /// No description provided for @eraAncient.
-  ///
-  /// In en, this message translates to:
-  /// **'The ancient world'**
-  String get eraAncient;
-
-  /// No description provided for @eraAncientWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'Before 500'**
-  String get eraAncientWhen;
-
-  /// No description provided for @eraEarlyModern.
-  ///
-  /// In en, this message translates to:
-  /// **'The early modern age'**
-  String get eraEarlyModern;
-
-  /// No description provided for @eraEarlyModernWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'1500 to 1800'**
-  String get eraEarlyModernWhen;
-
-  /// No description provided for @eraMedieval.
-  ///
-  /// In en, this message translates to:
-  /// **'The Middle Ages'**
-  String get eraMedieval;
-
-  /// No description provided for @eraMedievalWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'500 to 1500'**
-  String get eraMedievalWhen;
-
-  /// No description provided for @eraMore.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 more from this age} other{{n} more from this age}}'**
-  String eraMore(int n);
-
-  /// No description provided for @eraNineteenth.
-  ///
-  /// In en, this message translates to:
-  /// **'The nineteenth century'**
-  String get eraNineteenth;
-
-  /// No description provided for @eraNineteenthWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'1800 to 1900'**
-  String get eraNineteenthWhen;
-
-  /// No description provided for @eraRecent.
-  ///
-  /// In en, this message translates to:
-  /// **'This century'**
-  String get eraRecent;
-
-  /// No description provided for @eraRecentWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'Since 2000'**
-  String get eraRecentWhen;
-
   /// No description provided for @eraShortAncient.
   ///
   /// In en, this message translates to:
@@ -4241,18 +4175,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1900s'**
   String get eraShortTwentieth;
-
-  /// No description provided for @eraTwentieth.
-  ///
-  /// In en, this message translates to:
-  /// **'The last century'**
-  String get eraTwentieth;
-
-  /// No description provided for @eraTwentiethWhen.
-  ///
-  /// In en, this message translates to:
-  /// **'1900 to 2000'**
-  String get eraTwentiethWhen;
 
   /// No description provided for @fewCards.
   ///
@@ -4295,12 +4217,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How sure am I, and why?'**
   String get howSure;
-
-  /// No description provided for @inNumbers.
-  ///
-  /// In en, this message translates to:
-  /// **'In numbers'**
-  String get inNumbers;
 
   /// No description provided for @inRange.
   ///
@@ -4518,12 +4434,6 @@ abstract class AppLocalizations {
   /// **'Pick one first'**
   String get pickOneFirst;
 
-  /// No description provided for @puzzleOfTheDay.
-  ///
-  /// In en, this message translates to:
-  /// **'Puzzle of the day'**
-  String get puzzleOfTheDay;
-
   /// No description provided for @rangeWidth.
   ///
   /// In en, this message translates to:
@@ -4535,12 +4445,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Right last time'**
   String get rightLastTime;
-
-  /// No description provided for @sameForEveryoneCaps.
-  ///
-  /// In en, this message translates to:
-  /// **'The same for everyone'**
-  String get sameForEveryoneCaps;
 
   /// No description provided for @sayFalse.
   ///
@@ -4722,30 +4626,6 @@ abstract class AppLocalizations {
   /// **'The answer: {said}.'**
   String theAnswer(String said);
 
-  /// No description provided for @theAstute.
-  ///
-  /// In en, this message translates to:
-  /// **'The Astute'**
-  String get theAstute;
-
-  /// No description provided for @theLead.
-  ///
-  /// In en, this message translates to:
-  /// **'The lead'**
-  String get theLead;
-
-  /// No description provided for @throughTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Through time'**
-  String get throughTime;
-
-  /// No description provided for @throughTimeLine.
-  ///
-  /// In en, this message translates to:
-  /// **'From the ancient world to this year. Type a year, or let chance pick'**
-  String get throughTimeLine;
-
   /// Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.
   ///
   /// In en, this message translates to:
@@ -4785,7 +4665,7 @@ abstract class AppLocalizations {
   /// No description provided for @spotLine.
   ///
   /// In en, this message translates to:
-  /// **'Three are true. One is not.'**
+  /// **'Four claims. Three are true, one is false.'**
   String get spotLine;
 
   /// No description provided for @spotPrompt.
@@ -4824,101 +4704,11 @@ abstract class AppLocalizations {
   /// **'Your pick'**
   String get spotYours;
 
-  /// No description provided for @yearHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Type a year'**
-  String get yearHint;
-
-  /// No description provided for @yearAd.
-  ///
-  /// In en, this message translates to:
-  /// **'AD'**
-  String get yearAd;
-
-  /// No description provided for @yearBc.
-  ///
-  /// In en, this message translates to:
-  /// **'BC'**
-  String get yearBc;
-
-  /// A year from 1000 on, inside a sentence.
-  ///
-  /// In en, this message translates to:
-  /// **'{year}'**
-  String yearNamed(String year);
-
-  /// No description provided for @yearAdOf.
-  ///
-  /// In en, this message translates to:
-  /// **'AD {year}'**
-  String yearAdOf(String year);
-
-  /// No description provided for @yearBcOf.
-  ///
-  /// In en, this message translates to:
-  /// **'{year} BC'**
-  String yearBcOf(String year);
-
-  /// No description provided for @yearGo.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to this year'**
-  String get yearGo;
-
-  /// No description provided for @yearRandom.
-  ///
-  /// In en, this message translates to:
-  /// **'Random'**
-  String get yearRandom;
-
-  /// No description provided for @yearRandomHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Goes to a year one of the cards names'**
-  String get yearRandomHint;
-
-  /// No description provided for @yearNearest.
-  ///
-  /// In en, this message translates to:
-  /// **'Nearest to {year} first'**
-  String yearNearest(String year);
-
-  /// No description provided for @yearNoneNamed.
-  ///
-  /// In en, this message translates to:
-  /// **'No card here names a year near {year}. These are from its age.'**
-  String yearNoneNamed(String year);
-
-  /// No description provided for @yearNoAge.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing from around {year} here today. This is the nearest age.'**
-  String yearNoAge(String year);
-
-  /// No description provided for @yearFuture.
-  ///
-  /// In en, this message translates to:
-  /// **'{year} is still to come. Here is this century.'**
-  String yearFuture(String year);
-
-  /// No description provided for @yearZero.
-  ///
-  /// In en, this message translates to:
-  /// **'There was no year 0. Try 1 BC or AD 1.'**
-  String get yearZero;
-
   /// No description provided for @todayLabel.
   ///
   /// In en, this message translates to:
   /// **'Today'**
   String get todayLabel;
-
-  /// No description provided for @todaysEdition.
-  ///
-  /// In en, this message translates to:
-  /// **'Today\'s edition'**
-  String get todaysEdition;
 
   /// No description provided for @toneCurious.
   ///
@@ -5052,10 +4842,10 @@ abstract class AppLocalizations {
   /// **'Your country · {place}'**
   String placeYourCountry(String place);
 
-  /// A small line on Today on the reader's Sunday, on the free plan: one of the five cards that would have come at random is chosen for them instead.
+  /// On the reader's Sunday, on the free plan, a quiet line under the head of the first of their own cards: one of the five that would have come at random was chosen for them instead. The card is the one more, so it need not say 'card'.
   ///
   /// In en, this message translates to:
-  /// **'Sunday: one more card chosen for you'**
+  /// **'Sunday: one more chosen for you'**
   String get sundayOneMore;
 
   /// Title of the Explore shelf of cards about the reader's city, region and country.

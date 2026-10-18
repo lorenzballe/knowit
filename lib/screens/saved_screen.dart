@@ -21,13 +21,20 @@ enum Shelf { saved, liked }
 
 class SavedScreen extends StatefulWidget {
   final AppState app;
+
+  /// The empty shelf's way on: the Today tab, where cards are kept from.
   final VoidCallback onBackToToday;
+
+  /// The way back to the screen this was opened over. Left null, the
+  /// screen is popped.
+  final VoidCallback? onBack;
   final Shelf shelf;
 
   const SavedScreen({
     super.key,
     required this.app,
     required this.onBackToToday,
+    this.onBack,
     this.shelf = Shelf.saved,
   });
 
@@ -102,7 +109,10 @@ class _SavedScreenState extends State<SavedScreen> {
                 children: [
                   // The way back. This screen is pushed over the profile and
                   // had nothing but the phone's own gesture to leave it.
-                  BackCircle(onPressed: widget.onBackToToday),
+                  BackCircle(
+                    onPressed:
+                        widget.onBack ?? () => Navigator.of(context).maybePop(),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     // One line, at whatever size one line takes: "Saved"
@@ -132,7 +142,8 @@ class _SavedScreenState extends State<SavedScreen> {
                         ),
                       ),
                     ),
-                    child: Padding(
+                    child: Container(
+                      constraints: const BoxConstraints(minHeight: 44),
                       padding: const EdgeInsets.only(left: 10),
                       child: Row(
                         children: [
@@ -436,32 +447,68 @@ class _SavedRow extends StatelessWidget {
                 ],
               ),
             ),
+            // In ink, not the subject's colour: yellow and lime on a white
+            // row were 1.3 to 1 against it, under the 3 to 1 a mark that
+            // means something needs. The subject's colour is the dot.
             Column(
               children: [
-                IconButton(
-                  onPressed: onUnsave,
-                  tooltip: liked
+                _RowAction(
+                  label: liked
                       ? context.l10n.removeFromLiked
                       : context.l10n.removeFromSaved,
-                  icon: Icon(
-                    liked ? Icons.favorite_rounded : Icons.bookmark_rounded,
-                    size: 18,
-                  ),
-                  color: pill.color,
-                  splashRadius: 18,
-                  visualDensity: VisualDensity.compact,
+                  icon: liked ? Icons.favorite_rounded : Icons.bookmark_rounded,
+                  size: 18,
+                  color: context.p.ink,
+                  onTap: onUnsave,
                 ),
-                IconButton(
-                  onPressed: onShare,
-                  tooltip: context.l10n.shareThisPill,
-                  icon: const Icon(Icons.ios_share_rounded, size: 17),
-                  color: context.p.inkFaint,
-                  splashRadius: 18,
-                  visualDensity: VisualDensity.compact,
+                _RowAction(
+                  label: context.l10n.shareThisPill,
+                  icon: Icons.ios_share_rounded,
+                  size: 17,
+                  color: context.p.inkMuted,
+                  onTap: onShare,
                 ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A mark at the end of a kept card's row, in a target a finger finds.
+class _RowAction extends StatelessWidget {
+  const _RowAction({
+    required this.label,
+    required this.icon,
+    required this.size,
+    required this.color,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final double size;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      child: Tooltip(
+        message: label,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Center(
+              child: Icon(icon, size: size, color: color),
+            ),
+          ),
         ),
       ),
     );

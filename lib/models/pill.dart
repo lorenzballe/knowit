@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show NumberFormat;
 
 import 'diagram.dart';
 import 'place.dart';
@@ -73,10 +74,84 @@ class TypeNumber extends Challenge {
 
   const TypeNumber({required this.answer, this.unit = '', this.tolerance = 0});
 
-  /// Reads a typed answer, tolerating spaces and either decimal separator.
+  /// Reads a kept answer, tolerating spaces and either decimal separator.
+  ///
+  /// What the reader types is put into plain form by [read] before it is
+  /// kept, so this only meets the plain form, and the answers kept before
+  /// there was a [read].
   static num? parse(String response) {
     final cleaned = response.trim().replaceAll(' ', '').replaceAll(',', '.');
     return cleaned.isEmpty ? null : num.tryParse(cleaned);
+  }
+
+  /// What the reader typed, read the way their language writes numbers,
+  /// in the plain form an answer is kept in; null when it is no number.
+  ///
+  /// "9,455" is nine thousand four hundred and fifty-five in English and
+  /// nine point four five five in Italian, which writes the first "9.455".
+  /// Reading every comma as a decimal point marked an English reader who
+  /// was right as wrong. So the language's own decimal mark is a decimal
+  /// mark; the other one groups thousands where three digits follow it,
+  /// and is a decimal point where they do not ("0,5" typed anywhere is a
+  /// half). A mark written twice, or both marks together, can only mean
+  /// one thing. Spaces of any width group thousands, as French does.
+  static String? read(String typed, {required String locale}) {
+    String s = typed.trim().replaceAll(RegExp(r"[\s'’]"), '');
+    String sign = '';
+    if (s.startsWith('-') || s.startsWith('−')) {
+      sign = '-';
+      s = s.substring(1);
+    } else if (s.startsWith('+')) {
+      s = s.substring(1);
+    }
+    if (!RegExp(r'^[\d.,]*\d[\d.,]*$').hasMatch(s)) return null;
+    final String point = _decimalMark(locale);
+    bool grouped(String digits, String mark) =>
+        RegExp('^\\d{1,3}(${RegExp.escape(mark)}\\d{3})+\$').hasMatch(digits);
+
+    String whole = s;
+    String fraction = '';
+    final bool dots = s.contains('.');
+    final bool commas = s.contains(',');
+    if (dots && commas) {
+      // Both: the one written last is the decimal point.
+      final String last = s.lastIndexOf('.') > s.lastIndexOf(',') ? '.' : ',';
+      final String group = last == '.' ? ',' : '.';
+      final List<String> parts = s.split(last);
+      if (parts.length != 2 || !grouped(parts[0], group)) return null;
+      whole = parts[0].replaceAll(group, '');
+      fraction = parts[1];
+    } else if (dots || commas) {
+      final String mark = dots ? '.' : ',';
+      final List<String> parts = s.split(mark);
+      if (parts.length > 2) {
+        if (!grouped(s, mark)) return null;
+        whole = s.replaceAll(mark, '');
+      } else if (mark != point &&
+          parts[1].length == 3 &&
+          parts[0].isNotEmpty &&
+          parts[0].length <= 3) {
+        whole = parts[0] + parts[1];
+      } else {
+        whole = parts[0];
+        fraction = parts[1];
+      }
+    }
+    if (whole.isEmpty) whole = '0';
+    final String plain = fraction.isEmpty
+        ? '$sign$whole'
+        : '$sign$whole.$fraction';
+    return num.tryParse(plain) == null ? null : plain;
+  }
+
+  /// The decimal mark [locale] writes: a comma across most of Europe, a
+  /// point in English and in Chinese, Japanese and Korean.
+  static String _decimalMark(String locale) {
+    try {
+      return NumberFormat.decimalPattern(locale).symbols.DECIMAL_SEP;
+    } catch (_) {
+      return '.';
+    }
   }
 
   @override
