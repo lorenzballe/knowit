@@ -2209,13 +2209,14 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
+    // The time as the phone writes one, as the reminder sheet does.
     await tester.scrollUntilVisible(
-      find.text('Every day at 08:30'),
+      find.text('Every day at 8:30 AM'),
       200,
       scrollable: _profileList,
     );
     await _settle(tester);
-    expect(find.text('Every day at 08:30'), findsOneWidget);
+    expect(find.text('Every day at 8:30 AM'), findsOneWidget);
 
     // Named rather than found by type: the settings carry a second switch of
     // the same kind — the one over anonymous usage — and "the only switch on
@@ -2223,15 +2224,28 @@ void main() {
     final nudge = find.byWidgetPredicate(
       (w) => w is NudgeSwitch && w.label == 'Daily nudge',
     );
+    bool shown() => tester.widget<NudgeSwitch>(nudge).value;
+
+    // On from the install, the setting said a nudge would come before the
+    // system was ever asked whether the app may notify: off until it is.
+    final prefs = await SharedPreferences.getInstance();
+    expect(shown(), isFalse);
+
+    // The tap asks; this host has no notification centre to answer, so
+    // from here the switch is the setting.
+    await tester.tap(nudge);
+    await _settle(tester);
+    expect(shown(), isTrue);
+    expect(prefs.getBool('knowit.notifications') ?? true, isTrue);
 
     await tester.tap(nudge);
     await _settle(tester);
-
-    final prefs = await SharedPreferences.getInstance();
+    expect(shown(), isFalse);
     expect(prefs.getBool('knowit.notifications'), isFalse);
 
     await tester.tap(nudge);
     await _settle(tester);
+    expect(shown(), isTrue);
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
 

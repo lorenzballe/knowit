@@ -400,7 +400,9 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.l10n.everyDayAt(app.notifyTime),
+                        context.l10n.everyDayAt(
+                          clockTime(context, app.notifyTime),
+                        ),
                         style: AppText.body(
                           size: 14.5,
                           weight: FontWeight.w500,
@@ -424,7 +426,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 14),
                 NudgeSwitch(
-                  value: app.notificationsOn,
+                  value: app.nudgeShownOn,
                   label: context.l10n.dailyNudge,
                   onChanged: (v) async {
                     await app.setNotifications(v);
@@ -435,7 +437,9 @@ class ProfileScreen extends StatelessWidget {
                           !v
                               ? context.l10n.nudgeOff
                               : app.remindersLive
-                              ? context.l10n.nudgeOnEveryDayAt(app.notifyTime)
+                              ? context.l10n.nudgeOnEveryDayAt(
+                                  clockTime(context, app.notifyTime),
+                                )
                               : remindersSupported
                               ? context.l10n.nudgeOnSystemSaidNo
                               : context.l10n.nudgeOnNeedsPhone,
