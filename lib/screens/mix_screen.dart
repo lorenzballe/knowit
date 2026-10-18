@@ -114,90 +114,157 @@ class _MixScreenState extends State<MixScreen> {
   @override
   Widget build(BuildContext context) {
     final EdgeInsets safe = MediaQuery.paddingOf(context);
+    // Up to a little past the default text size the mix is one screen, the
+    // rows sharing what the heading and the button leave. Set larger, ten
+    // rows of named tiles no longer fit a phone, so the page scrolls: the
+    // tiles keep the height their names need and the text keeps the size
+    // the reader asked for.
+    final bool large = MediaQuery.textScalerOf(context).scale(10) > 11.5;
     return Scaffold(
       // 49a has nothing behind it. The tiles are the colour on this screen,
       // and blooms behind them would only mute what they are being chosen for.
       backgroundColor: Colors.black,
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          18,
-          // Right under the notch, where the genres screen puts its heading
-          // too. The canvas's 54 was its own drawn status bar: added on a
-          // screen that has none (the web app, most Android phones) it left
-          // a band of nothing above the title. Skip takes no room here: it
-          // ends the heading's row.
-          safe.top > 14 ? safe.top : 14,
-          18,
-          // 22, as the canvas has it. The artboard is already a phone with a
-          // home indicator and the designer put the button here; only a
-          // device whose bar is deeper than an iPhone's gets pushed further
-          // up.
-          22 + (safe.bottom > 34 ? safe.bottom - 34 : 0),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _MixHeading(onSkip: widget.onSkip),
-            const SizedBox(height: 14),
-            // grid-auto-rows:1fr — the nine rows share whatever height is
-            // left, so a shorter phone gets shorter tiles instead of a
-            // scrollbar. The mix is one thing you see at once or it is not
-            // a mix.
-            Expanded(
-              child: _MixGrid(value: _value, onDragAt: _setAt),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              context.l10n.subjectsInTheMix(_inMix, kMixSubjects.length),
-              textAlign: TextAlign.center,
-              style: AppText.body(
-                size: 12,
-                weight: FontWeight.w500,
-                color: Colors.white.withValues(alpha: 0.38),
+      body: large
+          ? LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: box.maxHeight),
+                  child: _page(context, safe, scrolls: true),
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            _StartButton(onTap: _finish),
-          ],
+            )
+          : _page(context, safe, scrolls: false),
+    );
+  }
+
+  Widget _page(BuildContext context, EdgeInsets safe, {required bool scrolls}) {
+    final Widget top = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _MixHeading(onSkip: widget.onSkip),
+        const SizedBox(height: 14),
+      ],
+    );
+    final Widget bottom = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 14),
+        Text(
+          context.l10n.subjectsInTheMix(_inMix, kMixSubjects.length),
+          textAlign: TextAlign.center,
+          style: AppText.body(
+            size: 12,
+            weight: FontWeight.w500,
+            color: Colors.white.withValues(alpha: 0.38),
+          ),
         ),
+        const SizedBox(height: 10),
+        _StartButton(onTap: _finish),
+      ],
+    );
+    final Widget grid = _MixGrid(
+      value: _value,
+      onDragAt: _setAt,
+      fixed: scrolls,
+    );
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        18,
+        // Right under the notch, where the genres screen puts its heading
+        // too. The canvas's 54 was its own drawn status bar: added on a
+        // screen that has none (the web app, most Android phones) it left
+        // a band of nothing above the title. Skip takes no room here: it
+        // ends the heading's row.
+        safe.top > 14 ? safe.top : 14,
+        18,
+        // 22, as the canvas has it. The artboard is already a phone with a
+        // home indicator and the designer put the button here; only a
+        // device whose bar is deeper than an iPhone's gets pushed further
+        // up.
+        22 + (safe.bottom > 34 ? safe.bottom - 34 : 0),
       ),
+      child: scrolls
+          // The button still ends the page when everything fits.
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [top, grid],
+                ),
+                bottom,
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                top,
+                // grid-auto-rows:1fr — the ten rows share whatever height
+                // is left, so a shorter phone gets shorter tiles instead of
+                // a scrollbar. The mix is one thing you see at once or it
+                // is not a mix.
+                Expanded(child: grid),
+                bottom,
+              ],
+            ),
     );
   }
 }
 
 class _MixGrid extends StatelessWidget {
-  const _MixGrid({required this.value, required this.onDragAt});
+  const _MixGrid({
+    required this.value,
+    required this.onDragAt,
+    required this.fixed,
+  });
 
   final Map<String, int> value;
   final void Function(MixSubject, double dx, double width) onDragAt;
 
+  /// Rows of their own height, on a page that scrolls, instead of rows
+  /// sharing the height the screen leaves.
+  final bool fixed;
+
   @override
   Widget build(BuildContext context) {
-    const int columns = 2;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    // Two columns while a name fits half the width; at a large text size,
+    // one, so that no subject is known only by its first few letters.
+    final int columns = fixed && scaler.scale(10) > 14 ? 1 : 2;
     final int rows = (kMixSubjects.length / columns).ceil();
+    // A row on a scrolling page: the name's line at the reader's text size,
+    // with the air a tile has around it at the default size.
+    final double height = scaler.scale(13.5) * 1.1 + 22;
+    Widget row(int r) => Row(
+      children: [
+        for (int c = 0; c < columns; c++) ...[
+          if (c > 0) const SizedBox(width: 8),
+          Expanded(
+            child: r * columns + c < kMixSubjects.length
+                ? _MixTile(
+                    subject: kMixSubjects[r * columns + c],
+                    value: value[kMixSubjects[r * columns + c].name]!,
+                    index: r * columns + c,
+                    onDragAt: onDragAt,
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ],
+    );
     return Column(
+      mainAxisSize: fixed ? MainAxisSize.min : MainAxisSize.max,
       children: [
         for (int r = 0; r < rows; r++) ...[
           if (r > 0) const SizedBox(height: 8),
-          Expanded(
-            child: Row(
-              children: [
-                for (int c = 0; c < columns; c++) ...[
-                  if (c > 0) const SizedBox(width: 8),
-                  Expanded(
-                    child: r * columns + c < kMixSubjects.length
-                        ? _MixTile(
-                            subject: kMixSubjects[r * columns + c],
-                            value: value[kMixSubjects[r * columns + c].name]!,
-                            index: r * columns + c,
-                            onDragAt: onDragAt,
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ],
-              ],
-            ),
-          ),
+          if (fixed)
+            SizedBox(height: height, child: row(r))
+          else
+            Expanded(child: row(r)),
         ],
       ],
     );

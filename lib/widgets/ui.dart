@@ -115,8 +115,10 @@ class SkipCorner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
+    // [height] at the reader's own text size; taller when large text needs
+    // it, or the word is cut through its middle.
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: height),
       child: Align(
         alignment: Alignment.centerRight,
         child: GestureDetector(
