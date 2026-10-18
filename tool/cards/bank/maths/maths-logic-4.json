@@ -1,0 +1,40 @@
+{
+  "id": "maths-logic-4",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "What is the fewest given numbers a Sudoku can start with and still have exactly one solution?",
+  "options": [
+    "12",
+    "17",
+    "22"
+  ],
+  "correct": 1,
+  "answer": "17. Gary McGuire's team proved in 2012, by an exhaustive computer search, that no 16-clue puzzle has a unique solution. Collectors had already gathered tens of thousands of 17-clue puzzles but never one with 16. Proving that something never exists took checking every case.",
+  "move": "Showing something never happens can take far more work than one example.",
+  "ask": "Which never have I stated that I have not actually checked?",
+  "trap": "Guessing far fewer, since a clever puzzle seems to need little.",
+  "keywords": [
+    "sudoku",
+    "proof by computer",
+    "combinatorics",
+    "puzzles"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGuire, Tugemann and Civario, There is no 16-clue Sudoku, 2012",
+  "source_kind": "paper",
+  "reference": "https://arxiv.org/abs/1201.0749",
+  "written": "2026-10-17"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "maths-paradoxes-3",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: two coin games that each lose money on their own can win money when played alternately.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Gregory Harmer and Derek Abbott showed it in Nature in 1999, from Juan Parrondo's idea: one game loses slightly; the other's odds depend on your capital, and alone it loses too. Switching between them keeps the capital landing on its winning values. Two losers alone can make a winner together.",
+  "move": "Judge a combination by how its parts interact, not one by one.",
+  "ask": "Which two weak options have I dismissed separately that might work together?",
+  "trap": "Thinking two losers combined can only lose faster.",
+  "keywords": [
+    "parrondo's paradox",
+    "game theory",
+    "probability",
+    "ratchets"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harmer and Abbott, Losing strategies can win by Parrondo's paradox, Nature, 1999",
+  "source_kind": "paper",
+  "reference": "Gregory Harmer and Derek Abbott, Losing strategies can win by Parrondo's paradox, Nature 402:864, 1999",
+  "written": "2026-10-17"
+}

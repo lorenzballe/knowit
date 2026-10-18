@@ -290,6 +290,7 @@ a well-read reader reaches for; the principle names why they reach for it.
 | `art` | Making and reading images; materials, markets, attribution |
 | `medicine` | Diagnosis, trials, treatments — where the numbers live |
 | `food` | Cooking, agriculture, nutrition; the chemistry and the trade |
+| `maths` | Maths a reader uses: sizing a claim, reading a chart, growth, shapes, games, the bill — every number redone |
 
 Every topic gets every kind: reads, choices, numbers, an occasional debate.
 

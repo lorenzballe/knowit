@@ -1,0 +1,40 @@
+{
+  "id": "maths-charts-5",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In May 2020 Georgia's health department posted a chart of COVID cases that seemed to fall day after day. What was wrong?",
+  "options": [
+    "The axis started far above zero",
+    "The days were sorted by caseload",
+    "Each bar showed a weekly total"
+  ],
+  "correct": 1,
+  "answer": "The dates were out of order. The days were sorted by caseload, biggest first, instead of by date, so the bars could only slope down. The department apologised and redrew it in date order. Sorted that way, any data at all looks like a decline.",
+  "move": "Before reading a trend, check that time runs in order along the axis.",
+  "ask": "Which trend have I trusted without checking the order of the dates?",
+  "trap": "Blaming the axis, the usual suspect, without reading the dates.",
+  "keywords": [
+    "misleading charts",
+    "covid-19",
+    "georgia",
+    "sorting"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Route Fifty (AP), officials apologize and retool coronavirus chart, 2020",
+  "source_kind": "news_archive",
+  "reference": "https://route-fifty.com/management/2020/05/officials-apologize-retool-coronavirus-graph-after-backlash/165478",
+  "written": "2026-10-17"
+}

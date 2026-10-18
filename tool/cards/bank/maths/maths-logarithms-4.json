@@ -1,0 +1,40 @@
+{
+  "id": "maths-logarithms-4",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.logarithms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the nautilus shell grows in a golden spiral, widening by the golden ratio, 1.618.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The shell is a logarithmic spiral, growing by a fixed ratio, but measured shells give ratios near 1.33, from about 1.24 to 1.43. A golden spiral would need 1.618. The story survives because any logarithmic spiral looks golden to the eye; measured shells do not come close.",
+  "move": "Before believing a pattern, measure it: famous ratios rarely survive a ruler.",
+  "ask": "Which elegant pattern have I repeated without anyone measuring it?",
+  "trap": "Trusting a famous claim instead of a ruler.",
+  "keywords": [
+    "nautilus",
+    "golden ratio",
+    "logarithmic spiral",
+    "myths"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Science News, on the nautilus and the golden ratio",
+  "source_kind": "news_archive",
+  "reference": "https://www.sciencenews.org/?p=26206",
+  "quote": "It seems highly unlikely that there exists any nautilus shell that is within 2 percent of the golden ratio.",
+  "written": "2026-10-17"
+}

@@ -81,6 +81,8 @@ const List<String> kMonthSubjects = [
   'weird_facts',
   'medicine',
   'life',
+  // Added last, so every month already named keeps its subject.
+  'maths',
 ];
 
 /// The topic key the month on [on] belongs to. The same for everybody, and

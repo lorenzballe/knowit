@@ -1,0 +1,40 @@
+{
+  "id": "maths-algorithms-6",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A QR code can still scan with a chunk torn away. At most, how much of it can be lost?",
+  "options": [
+    "Almost none",
+    "Up to about 30%",
+    "Up to about 70%"
+  ],
+  "correct": 1,
+  "answer": "Up to about 30%, at the highest of four error correction levels; the others recover about 7%, 15% and 25%. Reed–Solomon codes store extra symbols worked out from the data, so missing parts can be rebuilt. That spare capacity is what lets a logo sit in the middle.",
+  "move": "Deliberate redundancy is what lets a message survive damage.",
+  "ask": "Which important thing of mine has no spare copy if part of it is lost?",
+  "trap": "Almost none, since one missing square seems fatal.",
+  "keywords": [
+    "qr codes",
+    "error correction",
+    "reed-solomon",
+    "redundancy"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Denso Wave, QR code error correction",
+  "source_kind": "company",
+  "reference": "https://www.qrcode.com/en/about/error_correction.html",
+  "written": "2026-10-17"
+}

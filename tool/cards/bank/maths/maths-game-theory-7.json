@@ -1,0 +1,41 @@
+{
+  "id": "maths-game-theory-7",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On Earth Day 1990 New York closed 42nd Street to traffic, and officials braced for gridlock. What happened?",
+  "options": [
+    "Midtown traffic seized up for hours",
+    "Traffic flowed as well or better",
+    "Drivers simply stayed at home"
+  ],
+  "correct": 1,
+  "answer": "Traffic flowed as well or better. Dietrich Braess showed in 1968 that when each driver takes the quickest route for himself, adding a road can slow everyone, so removing one can speed them up. New York's transport commissioner said many had predicted doomsday. Selfish choices can make a network worse than planned.",
+  "move": "In a network of selfish choices, more options can make everyone slower.",
+  "ask": "Which extra option in my life might be making everything slower?",
+  "trap": "Assuming less road always means more traffic.",
+  "keywords": [
+    "braess's paradox",
+    "traffic",
+    "networks",
+    "game theory"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "New York Times news service, The solution to traffic jams: close down a street, 1990",
+  "source_kind": "news_archive",
+  "reference": "https://www.tampabay.com/archive/1990/12/25/the-solution-to-traffic-jams-close-down-a-street",
+  "quote": "Many predicted it would be doomsday",
+  "written": "2026-10-17"
+}

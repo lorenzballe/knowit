@@ -894,3 +894,41 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - music-rhythm-11 | Earl Palmer recalled learning to clap on 2 and 4 behind New Orleans (Treme) brass bands; confirmed in 64 Parishes summary, not checked in Scherman's Backbeat itself | "Scherman Backbeat Earl Palmer clapping 2 and 4 brass band Treme"
 - music-hooks-11 | "mi contra fa est diabolus in musica" first documented in Werckmeister, Harmonologia Musica, 1702 (Store norske leksikon); no medieval ban recorded | "Werckmeister 1702 Harmonologia Musica diabolus in musica earliest source"
 - music-hearing-4 | Waves MaxxBass adds harmonics so the ear hears bass below a small speaker's limit (Waves product material, not a paper) | "Waves MaxxBass missing fundamental psychoacoustic bass patent"
+
+## Maths (written 2026-10-17, 101 cards)
+
+Researched through web search only: the sandbox could not open the pages
+themselves, so a card carries a quote only where search results showed
+the exact words, and every figure below was confirmed by summaries or
+secondary sources rather than read at its source. The arithmetic on every
+card was redone by the critic. Most doubtful first.
+
+- maths-big-numbers-5 | Harold Wilson's 1974 written answer that ministers would use billion for a thousand million; the day and Hansard column were not found | "Harold Wilson 1974 written answer billion thousand million Maxwell-Hyslop Hansard"
+- maths-game-theory-4 | Golden Balls players split 53% of the time (quoted from summaries of the paper, not its text) | "van den Assem van Dolder Thaler 2012 Split or Steal 53 percent split"
+- maths-logic-8 | Appel and Haken's 1,936 configurations (later counts 1,476 or 1,482); simpler proof 1996; Gonthier's computer-checked proof 2005 | "Appel Haken 1976 1936 configurations; Robertson Sanders Seymour Thomas 633; Gonthier 2005 Coq"
+- maths-averages-6 | Galton's published figures: middlemost 1,207 lb, dressed weight 1,198 lb, 787 tickets (Wallis 2014 finds the draft said 1,208 and the organiser 1,197) | "Galton 1907 Vox Populi Nature 75 450; Wallis 2014 revisiting Galton's forecasting competition"
+- maths-game-theory-8 | Shubik 1971 found total payments of three to five dollars not uncommon | "Shubik 1971 dollar auction total of payments between three and five dollars"
+- maths-compounding-8 | S&P 500 closes of 1,565.15 (9 October 2007) and 676.53 (9 March 2009); the 2007 high regained in March 2013 | "S&P 500 close 9 October 2007 1565.15 9 March 2009 676.53 record March 28 2013"
+- maths-game-theory-3 | Thaler's 1997 Financial Times contest was won by 13 (12 or 13 depending on the count) | "Thaler Financial Times 1997 two-thirds of the average winning number 13"
+- maths-money-6 | UK contracts rose in 2023 by inflation plus 3.9%, with December 2022 CPI at 10.5% (one source gives rises of up to 17.3% on RPI) | "2023 mid-contract price rise CPI 10.5% plus 3.9% 14.4% EE BT Vodafone"
+- maths-percentages-5 | typical UK semi-skimmed label: 1.8 g fat and 50 kcal per 100 ml | "semi-skimmed milk nutrition per 100ml 1.8g fat 50 kcal"
+- maths-fermi-7 | London's average rainfall about 600 mm a year (Met Office 1991–2020) | "Met Office climate averages London 1991-2020 annual rainfall mm"
+- maths-scaling-6 | Bettencourt et al. 2007: infrastructure scales near 0.8, wages, patents and crime near 1.2 | "Bettencourt 2007 PNAS urban scaling exponents table infrastructure 0.8 1.2"
+- maths-averages-8 | Hu, Pavlou and Zhang 2009: Amazon ratings are J-shaped | "Hu Pavlou Zhang 2009 J-shaped distribution product reviews Amazon"
+- maths-logic-4 | McGuire's 2012 search; tens of thousands of 17-clue puzzles already collected | "McGuire 2012 no 16-clue sudoku Royle 49,151 17-clue puzzles"
+- maths-paradoxes-6 | Gamow on the second floor, Stern on the sixth, of a seven-storey building | "Gamow Stern Puzzle-Math 1958 elevator second floor sixth floor"
+- maths-averages-7 | Bradman bowled second ball for 0 by Hollies at the Oval, 1948: 6,996 runs, 70 dismissals, 99.94 | "Bradman last innings Oval 1948 Hollies second ball 6996 runs 99.94"
+- maths-compounding-6 | rice grains about 25 mg; FAOSTAT world paddy production about 776 million tonnes in 2022 | "FAOSTAT rice paddy production 2022 world 776 million tonnes; thousand grain weight rice"
+- maths-units-4 | the 1929 Monaco conference fixed the nautical mile at 1,852 m; a minute of latitude runs from about 1,843 to 1,862 m | "International Extraordinary Hydrographic Conference Monaco 1929 nautical mile 1852 m"
+- maths-projections-6 | Robinson 1963, used by National Geographic from 1988; Winkel tripel from 1998; Gall 1855; Mollweide 1805 | "Robinson projection 1963 National Geographic 1988 Winkel tripel 1998 Gall 1855 Mollweide 1805"
+- maths-polls-6 | Rugg's 1941 figures, 75% would not allow, 54% would forbid, from the CBS summary | "Rugg 1941 forbid allow speeches against democracy 75% 54% Public Opinion Quarterly"
+- maths-big-numbers-7 | Kasner's nine-year-old nephew Milton Sirotta named the googol (Mathematics and the Imagination, 1940) | "Kasner Newman 1940 googol nine-year-old nephew Milton Sirotta"
+- maths-fermi-5 | UN World Population Prospects 2024: about 132 million births in 2023 | "World Population Prospects 2024 births 2023 132 million"
+- maths-logic-3 | London's population near 9 million (ONS mid-2023); scalps carry about 100,000 to 150,000 hairs | "ONS mid-2023 population London; number of hairs on human scalp"
+- maths-risk-3 | EuroMillions jackpot odds of 1 in 139,838,160 (worked out; the operator's page was not opened) | "EuroMillions odds jackpot 1 in 139,838,160"
+- maths-game-theory-6 | tit for tat was the shortest program entered and won both of Axelrod's tournaments | "Axelrod 1980 tournament tit for tat Rapoport shortest program both tournaments"
+- maths-fermi-6 | Mehl et al. 2007: 396 participants, about 16,000 words a day for women and men | "Mehl 2007 Science are women really more talkative 396 16,000 words"
+- maths-paradoxes-8 | the 1954 translation of Bernoulli's paper: Econometrica 22(1):23–36 | "Bernoulli Exposition of a New Theory on the Measurement of Risk Econometrica 1954 22 23-36"
+- maths-logic-5 | Gál and Miltersen (ICALP 2003) as the 100 prisoners puzzle's first appearance | "100 prisoners problem Gál Miltersen 2003 origin"
+- maths-algorithms-8 | Dijkstra's twenty minutes on an Amsterdam café terrace, 1956 (CACM interview; exact wording not confirmed) | "Dijkstra interview Frana twenty minutes cafe terrace 1956 shortest path"
+- maths-area-and-volume-5, maths-money-4, maths-money-8, maths-risk-6, maths-risk-8, maths-algorithms-7 | arithmetic cards whose reference is a dated citation (Fermat's Library post, Vanguard 2012, FCA glossary, Epstein, Ross, Wimbledon's 128-player draw) rather than a page opened | check that each reference says what the card leans on

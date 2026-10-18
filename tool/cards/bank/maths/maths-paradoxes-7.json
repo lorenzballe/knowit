@@ -1,0 +1,40 @@
+{
+  "id": "maths-paradoxes-7",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Buses come every 10 minutes on average, at random. Arriving at a random moment, how long do you wait on average?",
+  "options": [
+    "About 5 minutes",
+    "About 10 minutes",
+    "About 20 minutes"
+  ],
+  "correct": 1,
+  "answer": "About 10 minutes, if arrivals are truly random. You are more likely to turn up during a long gap than a short one, so the gap you land in averages 20 minutes, and you wait half of it. Only buses keeping perfect time would make it 5.",
+  "move": "Arriving at random lands you in the long gaps more often than the short.",
+  "ask": "Where do I keep landing in the long gaps and blaming bad luck?",
+  "trap": "Half the average gap, as if buses kept perfect time.",
+  "keywords": [
+    "inspection paradox",
+    "waiting time",
+    "buses",
+    "probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feller, An Introduction to Probability Theory and Its Applications, Volume II, 1971",
+  "source_kind": "book",
+  "reference": "William Feller, An Introduction to Probability Theory and Its Applications, Volume II, second edition, Wiley, 1971",
+  "written": "2026-10-17"
+}

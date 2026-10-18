@@ -1,0 +1,54 @@
+{
+  "id": "maths-game-theory-4",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A TV jackpot at stake. Both split: half each. One steals: the stealer takes all. Both steal: nothing. Split or steal?",
+  "answer": "Players split 53% of the time. Stealing never pays less, whatever the other does: if they split you take everything, and if they steal you get nothing either way. Yet about half chose to share. Van den Assem, van Dolder and Thaler found cooperation dipped as stakes rose but stayed far above pure self-interest.",
+  "move": "Predict people from what they do, not from what logic says they should.",
+  "ask": "Where do I assume others will act purely for themselves, against the evidence?",
+  "keywords": [
+    "golden balls",
+    "prisoner's dilemma",
+    "cooperation",
+    "game theory"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Golden Balls players, UK TV",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Split",
+            "share": 53,
+            "mirror": "Like most players. Splitting shares the pot, if the other splits too."
+          },
+          {
+            "label": "Steal",
+            "share": 47,
+            "mirror": "Like nearly half. Stealing never earns less, whatever the other does."
+          }
+        ]
+      }
+    ],
+    "why": "Logic says steal, since it never pays less; yet about half split, even for thousands."
+  },
+  "source": "van den Assem, van Dolder and Thaler, Split or steal? Cooperative behavior when the stakes are large, Management Science, 2012",
+  "source_kind": "paper",
+  "reference": "https://repub.eur.nl/pub/31292",
+  "written": "2026-10-17"
+}

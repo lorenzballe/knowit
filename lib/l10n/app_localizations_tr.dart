@@ -986,7 +986,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get everythingIsInDrag =>
-      'Her şey içeride. Daha az görmek için bir konuyu aşağı sürükle, çıkarmak için sıfıra kadar.';
+      'Her şey içeride. Daha az görmek için bir konuyu sola kaydır, çıkarmak için sonuna kadar.';
 
   @override
   String get next => 'İleri';
@@ -1026,7 +1026,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Olayların nedenini anla, bildiklerine ne kadar güvenebileceğini gör';
 
   @override
-  String get introTopicsTitle => 'On dokuz konu, beş kart';
+  String get introTopicsTitle => 'Yirmi konu, beş kart';
 
   @override
   String get introTopicsLine =>
@@ -1116,6 +1116,7 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.selectLogic(topic, {
       'thinking': 'Düşünme',
       'science': 'Bilim',
+      'maths': 'Matematik',
       'space': 'Uzay',
       'psychology': 'Psikoloji',
       'economics': 'Ekonomi',
@@ -1813,8 +1814,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yourMix => 'Senin karışımın';
 
   @override
+  String get genresTitle => 'Hangi kısımlar?';
+
+  @override
   String get genresLine =>
-      'Atlamak için bir türe dokun. Basılı tut, içindeki üç damar hemen altında açılsın.';
+      'Atlamak için bir türe dokun. Basılı tut, içindeki küçük konular hemen altında açılsın.';
 
   @override
   String get insideGenre => 'İçinde';

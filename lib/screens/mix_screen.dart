@@ -21,18 +21,20 @@ class MixSubject {
   final Color color;
 }
 
-/// The eighteen subjects of artboard 50a, in the canvas's own order and
-/// hues: the second pass at the palette, which walks the wheel from pure
-/// yellow all the way round to amber and stops the two greens colliding.
+/// The subjects in the canvas's own order and hues (artboard 50a): the wheel
+/// from pure yellow all the way round to amber, with the two greens kept
+/// apart. Two came later and sit where their hues fall: Maths, a deeper
+/// blackboard jade, between Science and Language; Life, pale peach, after
+/// History at the end.
 ///
-/// Every one of them can be chosen. Six have nothing written for them yet
-/// and simply stay quiet until they do — offering a subject and then
-/// refusing it is worse than offering one that has not arrived.
+/// Twenty, ten rows of two, so the grid is full to its last tile.
 const List<MixSubject> kMixSubjects = [
   MixSubject('economics', 'Economics', Color(0xFFFFE600)),
   MixSubject('sport', 'Sport', Color(0xFFA6FF00)),
   MixSubject('nature', 'Nature', Color(0xFF00D451)),
   MixSubject('science', 'Science', Color(0xFF00E5A0)),
+  // Blackboard jade (kMathsJade), where its hue falls on the wheel.
+  MixSubject('maths', 'Maths', Color(0xFF0E9A70)),
   MixSubject('language', 'Language', Color(0xFF00D9D9)),
   MixSubject('technology', 'Technology', Color(0xFF00A6FF)),
   MixSubject('space', 'Space', Color(0xFF2B5CFF)),
@@ -80,6 +82,8 @@ class _MixScreenState extends State<MixScreen> {
 
   int get _inMix => _value.values.where((int v) => v > kMixFloor).length;
 
+  /// The bar of [subject] set to where the finger is, [dx] along a tile
+  /// [width] wide: anything left of the tile is zero, right of it all in.
   void _setAt(MixSubject subject, double dx, double width) {
     final int next = ((dx / width).clamp(0.0, 1.0) * 100).round();
     final int was = _value[subject.name]!;
@@ -111,90 +115,157 @@ class _MixScreenState extends State<MixScreen> {
   @override
   Widget build(BuildContext context) {
     final EdgeInsets safe = MediaQuery.paddingOf(context);
+    // Up to a little past the default text size the mix is one screen, the
+    // rows sharing what the heading and the button leave. Set larger, ten
+    // rows of named tiles no longer fit a phone, so the page scrolls: the
+    // tiles keep the height their names need and the text keeps the size
+    // the reader asked for.
+    final bool large = MediaQuery.textScalerOf(context).scale(10) > 11.5;
     return Scaffold(
       // 49a has nothing behind it. The tiles are the colour on this screen,
       // and blooms behind them would only mute what they are being chosen for.
       backgroundColor: Colors.black,
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          18,
-          // Right under the notch, where the genres screen puts its heading
-          // too. The canvas's 54 was its own drawn status bar: added on a
-          // screen that has none (the web app, most Android phones) it left
-          // a band of nothing above the title. Skip takes no room here: it
-          // ends the heading's row.
-          safe.top > 14 ? safe.top : 14,
-          18,
-          // 22, as the canvas has it. The artboard is already a phone with a
-          // home indicator and the designer put the button here; only a
-          // device whose bar is deeper than an iPhone's gets pushed further
-          // up.
-          22 + (safe.bottom > 34 ? safe.bottom - 34 : 0),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _MixHeading(onSkip: widget.onSkip),
-            const SizedBox(height: 14),
-            // grid-auto-rows:1fr — the nine rows share whatever height is
-            // left, so a shorter phone gets shorter tiles instead of a
-            // scrollbar. The mix is one thing you see at once or it is not
-            // a mix.
-            Expanded(
-              child: _MixGrid(value: _value, onDragAt: _setAt),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              context.l10n.subjectsInTheMix(_inMix, kMixSubjects.length),
-              textAlign: TextAlign.center,
-              style: AppText.body(
-                size: 12,
-                weight: FontWeight.w500,
-                color: Colors.white.withValues(alpha: 0.38),
+      body: large
+          ? LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: box.maxHeight),
+                  child: _page(context, safe, scrolls: true),
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            _StartButton(onTap: _finish),
-          ],
+            )
+          : _page(context, safe, scrolls: false),
+    );
+  }
+
+  Widget _page(BuildContext context, EdgeInsets safe, {required bool scrolls}) {
+    final Widget top = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _MixHeading(onSkip: widget.onSkip),
+        const SizedBox(height: 14),
+      ],
+    );
+    final Widget bottom = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 14),
+        Text(
+          context.l10n.subjectsInTheMix(_inMix, kMixSubjects.length),
+          textAlign: TextAlign.center,
+          style: AppText.body(
+            size: 12,
+            weight: FontWeight.w500,
+            color: Colors.white.withValues(alpha: 0.38),
+          ),
         ),
+        const SizedBox(height: 10),
+        _StartButton(onTap: _finish),
+      ],
+    );
+    final Widget grid = _MixGrid(
+      value: _value,
+      onDragAt: _setAt,
+      fixed: scrolls,
+    );
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        18,
+        // Right under the notch, where the genres screen puts its heading
+        // too. The canvas's 54 was its own drawn status bar: added on a
+        // screen that has none (the web app, most Android phones) it left
+        // a band of nothing above the title. Skip takes no room here: it
+        // ends the heading's row.
+        safe.top > 14 ? safe.top : 14,
+        18,
+        // 22, as the canvas has it. The artboard is already a phone with a
+        // home indicator and the designer put the button here; only a
+        // device whose bar is deeper than an iPhone's gets pushed further
+        // up.
+        22 + (safe.bottom > 34 ? safe.bottom - 34 : 0),
       ),
+      child: scrolls
+          // The button still ends the page when everything fits.
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [top, grid],
+                ),
+                bottom,
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                top,
+                // grid-auto-rows:1fr — the ten rows share whatever height
+                // is left, so a shorter phone gets shorter tiles instead of
+                // a scrollbar. The mix is one thing you see at once or it
+                // is not a mix.
+                Expanded(child: grid),
+                bottom,
+              ],
+            ),
     );
   }
 }
 
 class _MixGrid extends StatelessWidget {
-  const _MixGrid({required this.value, required this.onDragAt});
+  const _MixGrid({
+    required this.value,
+    required this.onDragAt,
+    required this.fixed,
+  });
 
   final Map<String, int> value;
   final void Function(MixSubject, double dx, double width) onDragAt;
 
+  /// Rows of their own height, on a page that scrolls, instead of rows
+  /// sharing the height the screen leaves.
+  final bool fixed;
+
   @override
   Widget build(BuildContext context) {
-    const int columns = 2;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    // Two columns while a name fits half the width; at a large text size,
+    // one, so that no subject is known only by its first few letters.
+    final int columns = fixed && scaler.scale(10) > 14 ? 1 : 2;
     final int rows = (kMixSubjects.length / columns).ceil();
+    // A row on a scrolling page: the name's line at the reader's text size,
+    // with the air a tile has around it at the default size.
+    final double height = scaler.scale(13.5) * 1.1 + 22;
+    Widget row(int r) => Row(
+      children: [
+        for (int c = 0; c < columns; c++) ...[
+          if (c > 0) const SizedBox(width: 8),
+          Expanded(
+            child: r * columns + c < kMixSubjects.length
+                ? _MixTile(
+                    subject: kMixSubjects[r * columns + c],
+                    value: value[kMixSubjects[r * columns + c].name]!,
+                    index: r * columns + c,
+                    onDragAt: onDragAt,
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ],
+    );
     return Column(
+      mainAxisSize: fixed ? MainAxisSize.min : MainAxisSize.max,
       children: [
         for (int r = 0; r < rows; r++) ...[
           if (r > 0) const SizedBox(height: 8),
-          Expanded(
-            child: Row(
-              children: [
-                for (int c = 0; c < columns; c++) ...[
-                  if (c > 0) const SizedBox(width: 8),
-                  Expanded(
-                    child: r * columns + c < kMixSubjects.length
-                        ? _MixTile(
-                            subject: kMixSubjects[r * columns + c],
-                            value: value[kMixSubjects[r * columns + c].name]!,
-                            index: r * columns + c,
-                            onDragAt: onDragAt,
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ],
-              ],
-            ),
-          ),
+          if (fixed)
+            SizedBox(height: height, child: row(r))
+          else
+            Expanded(child: row(r)),
         ],
       ],
     );
@@ -281,131 +352,145 @@ class _MixTile extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         void at(Offset local) => onDragAt(subject, local.dx, box.maxWidth);
-        // A raw Listener, as the canvas has it: once the pointer goes down on
-        // a tile every move belongs to that tile, whichever way it travels.
-        return Listener(
-          behavior: HitTestBehavior.opaque,
-          onPointerDown: (e) => at(e.localPosition),
-          onPointerMove: (e) => at(e.localPosition),
-          child: _TileIn(
-            delay: Duration(milliseconds: 30 + index * 20),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                // Opaque, not translucent white. A CSS outer glow is clipped
-                // out from under its own element; Flutter paints the shadow
-                // straight through a see-through fill, which washed the empty
-                // half of a turned-down tile in a dim version of its colour.
-                // The canvas leaves that half black.
-                color: Color.alphaBlend(
-                  Colors.white.withValues(alpha: live ? 0.055 : 0.028),
-                  Colors.black,
+        // Only a sideways drag moves the bar. It used to follow the finger
+        // from the moment it touched, so a reader tapping a subject's name
+        // to choose it quietly turned that subject down to a quarter: the
+        // first decision in the app, undone by the gesture every other
+        // picker uses to say yes. Now a tap does nothing, and once the
+        // finger has travelled sideways the bar follows it, wherever it
+        // goes, the whole way to zero.
+        return Semantics(
+          slider: true,
+          label: subject.name,
+          value: '$value%',
+          increasedValue: '${(value + 20).clamp(0, 100)}%',
+          decreasedValue: '${(value - 20).clamp(0, 100)}%',
+          onIncrease: () => at(Offset((value + 20) / 100 * box.maxWidth, 0)),
+          onDecrease: () => at(Offset((value - 20) / 100 * box.maxWidth, 0)),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            excludeFromSemantics: true,
+            onHorizontalDragStart: (d) => HapticFeedback.selectionClick(),
+            onHorizontalDragUpdate: (d) => at(d.localPosition),
+            child: _TileIn(
+              delay: Duration(milliseconds: 30 + index * 20),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  // Opaque, not translucent white. A CSS outer glow is clipped
+                  // out from under its own element; Flutter paints the shadow
+                  // straight through a see-through fill, which washed the empty
+                  // half of a turned-down tile in a dim version of its colour.
+                  // The canvas leaves that half black.
+                  color: Color.alphaBlend(
+                    Colors.white.withValues(alpha: live ? 0.055 : 0.028),
+                    Colors.black,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: live
+                      ? [
+                          BoxShadow(
+                            color: subject.color.withValues(alpha: 0.27),
+                            blurRadius: 22,
+                          ),
+                        ]
+                      : null,
                 ),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: live
-                    ? [
-                        BoxShadow(
-                          color: subject.color.withValues(alpha: 0.27),
-                          blurRadius: 22,
-                        ),
-                      ]
-                    : null,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  children: [
-                    // The inset top highlight. It sits under the fill, the
-                    // way an inset shadow sits under an element's children,
-                    // so it shows on whatever part of the tile is still empty.
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      height: 1,
-                      child: ColoredBox(
-                        color: Colors.white.withValues(
-                          alpha: live ? 0.28 : 0.05,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Stack(
+                    children: [
+                      // The inset top highlight. It sits under the fill, the
+                      // way an inset shadow sits under an element's children,
+                      // so it shows on whatever part of the tile is still empty.
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        height: 1,
+                        child: ColoredBox(
+                          color: Colors.white.withValues(
+                            alpha: live ? 0.28 : 0.05,
+                          ),
                         ),
                       ),
-                    ),
-                    // How much of this subject, as a length rather than a
-                    // number: there is nothing to read, only something to see.
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: AnimatedFractionallySizedBox(
-                        duration: const Duration(milliseconds: 90),
-                        curve: Curves.linear,
-                        widthFactor: value / 100,
-                        heightFactor: 1,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                subject.color,
-                                subject.color.withValues(alpha: 0.851),
-                              ],
+                      // How much of this subject, as a length rather than a
+                      // number: there is nothing to read, only something to see.
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: AnimatedFractionallySizedBox(
+                          duration: const Duration(milliseconds: 90),
+                          curve: Curves.linear,
+                          widthFactor: value / 100,
+                          heightFactor: 1,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  subject.color,
+                                  subject.color.withValues(alpha: 0.851),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    // inset:0 — the row has to fill the tile, or an
-                    // unpositioned Stack child takes only the height it needs
-                    // and the label rides at the top instead of the middle.
-                    Positioned.fill(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 13),
-                        child: Row(
-                          children: [
-                            // The subject's own mark, not a tick. Every
-                            // tile carried the same check, which told you a
-                            // tile was on and nothing about what it was.
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 150),
-                              opacity: live ? 0.92 : 0.34,
-                              child: SizedBox(
-                                width: 17,
-                                height: 17,
-                                child: SvgPicture.string(
-                                  subjectIconSvg(subject.name),
+                      // inset:0 — the row has to fill the tile, or an
+                      // unpositioned Stack child takes only the height it needs
+                      // and the label rides at the top instead of the middle.
+                      Positioned.fill(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 13),
+                          child: Row(
+                            children: [
+                              // The subject's own mark, not a tick. Every
+                              // tile carried the same check, which told you a
+                              // tile was on and nothing about what it was.
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 150),
+                                opacity: live ? 0.92 : 0.34,
+                                child: SizedBox(
+                                  width: 17,
+                                  height: 17,
+                                  child: SvgPicture.string(
+                                    subjectIconSvg(subject.name),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 9),
-                            // A size smaller rather than dots: the names
-                            // are the reader's language now, and some of
-                            // them are longer than half a phone allows.
-                            Expanded(
-                              child: FitText(
-                                context.l10n.subjectOf(subject.name),
-                                maxLines: 1,
-                                minSize: 10,
-                                style: AppText.body(
-                                  size: 13.5,
-                                  weight: FontWeight.w700,
-                                  height: 1.1,
-                                  spacing: -0.3,
-                                  // Dark on a pale fill, but only once the
-                                  // fill is under it; a dimmed tile's label
-                                  // sits on black either way.
-                                  color:
-                                      (live &&
-                                                  kPaleSubjects.contains(
-                                                    subject.name,
-                                                  )
-                                              ? const Color(0xFF10100C)
-                                              : Colors.white)
-                                          .withValues(alpha: live ? 0.95 : 0.3),
+                              const SizedBox(width: 9),
+                              Expanded(
+                                child: FitText(
+                                  context.l10n.subjectOf(subject.name),
+                                  maxLines: 1,
+                                  minSize: 10,
+                                  style: AppText.body(
+                                    size: 13.5,
+                                    weight: FontWeight.w700,
+                                    height: 1.1,
+                                    spacing: -0.3,
+                                    // Dark on a pale fill, but only once the
+                                    // fill is under it; a dimmed tile's label
+                                    // sits on black either way.
+                                    color:
+                                        (live &&
+                                                    kPaleSubjects.contains(
+                                                      subject.name,
+                                                    )
+                                                ? const Color(0xFF10100C)
+                                                : Colors.white)
+                                            .withValues(
+                                              alpha: live ? 0.95 : 0.3,
+                                            ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

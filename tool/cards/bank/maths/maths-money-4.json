@@ -1,0 +1,43 @@
+{
+  "id": "maths-money-4",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "You invest £100 a month in a fund priced £10, then £5, then £10 a unit. What did each unit cost you on average?",
+  "value": 7.5,
+  "unit": "pounds",
+  "tolerance": 0.05,
+  "answer": "£7.50, below the £8.33 average price: a fixed sum buys more units when they are cheap.",
+  "move": "Spending a fixed sum each time buys more when prices dip.",
+  "ask": "Where would a fixed regular sum serve me better than trying to time a price?",
+  "trap": "£8.33, averaging the three prices instead of the units bought.",
+  "hint": "Count the units each £100 bought, then divide the total spent by the total units.",
+  "steps": [
+    "Units bought: 100 ÷ 10 = 10, then 100 ÷ 5 = 20, then 10 again.",
+    "40 units for £300.",
+    "£300 ÷ 40 = £7.50 a unit, below the £8.33 average price."
+  ],
+  "keywords": [
+    "pound-cost averaging",
+    "investing",
+    "averages",
+    "harmonic mean"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vanguard Research, Dollar-cost averaging just means taking risk later, 2012",
+  "source_kind": "arithmetic",
+  "reference": "Vanguard Research, Dollar-cost averaging just means taking risk later, 2012",
+  "written": "2026-10-17"
+}

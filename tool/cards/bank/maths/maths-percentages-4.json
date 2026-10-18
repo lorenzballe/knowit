@@ -1,0 +1,43 @@
+{
+  "id": "maths-percentages-4",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A coat is 40% off, with an extra 25% off at the till. What is the total discount, in percent?",
+  "value": 55,
+  "unit": "percent",
+  "answer": "55%, not 65%: the second discount comes off an already reduced price.",
+  "move": "Discounts taken one after another multiply; they never simply add up.",
+  "ask": "Which deal with stacked discounts have I added up instead of multiplying?",
+  "trap": "65%, adding the two discounts together.",
+  "hint": "Turn each discount into the share you still pay, then multiply.",
+  "steps": [
+    "After 40% off you pay 0.60 of the price.",
+    "The extra 25% comes off that: 0.60 × 0.75 = 0.45.",
+    "You pay 45%: a 55% discount, not 65%."
+  ],
+  "keywords": [
+    "discounts",
+    "percentages",
+    "sales",
+    "consumer maths"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chen and Rao, When two plus two is not equal to four, Journal of Consumer Research, 2007",
+  "source_kind": "paper",
+  "reference": "https://carlsonschool.umn.edu/sites/carlsonschool.umn.edu/files/2024-06/Chen%20and%20Rao%202007.pdf",
+  "quote": "Sequential percentage discounts generate more purchasers, sales, revenue, and profit than the economically equivalent single percentage discount.",
+  "written": "2026-10-17"
+}

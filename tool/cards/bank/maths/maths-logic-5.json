@@ -1,0 +1,40 @@
+{
+  "id": "maths-logic-5",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "100 prisoners each open 50 of 100 boxes to find their own number; all must succeed. With the best strategy, what's the chance?",
+  "options": [
+    "Almost zero",
+    "About 31%",
+    "About 50%"
+  ],
+  "correct": 1,
+  "answer": "About 31%. Each prisoner opens the box with their own number, then the box named inside it, and so on round a loop. All succeed exactly when no loop of boxes is longer than 50, which happens about 31% of the time. Opening boxes at random would give (½)¹⁰⁰: effectively nothing.",
+  "move": "Coordinated choices can succeed where independent ones almost surely fail.",
+  "ask": "Where could my group coordinate instead of each of us guessing alone?",
+  "trap": "Almost zero, multiplying a hundred coin flips together.",
+  "keywords": [
+    "100 prisoners problem",
+    "permutations",
+    "probability",
+    "strategy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gál and Miltersen, The cell probe complexity of succinct data structures, 2003",
+  "source_kind": "paper",
+  "reference": "Anna Gál and Peter Bro Miltersen, The Cell Probe Complexity of Succinct Data Structures, ICALP, 2003",
+  "written": "2026-10-17"
+}

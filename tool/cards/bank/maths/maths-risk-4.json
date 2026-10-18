@@ -1,0 +1,40 @@
+{
+  "id": "maths-risk-4",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Is playing the lottery numbers 1, 2, 3, 4, 5, 6 any worse than playing six random numbers?",
+  "options": [
+    "Yes, it is less likely to come up",
+    "No, it is exactly the same",
+    "Same odds, but a smaller prize"
+  ],
+  "correct": 2,
+  "answer": "Same odds, but a smaller prize. Every combination is equally likely, but in 2010 about 2,100 New Zealanders played 1 to 6 every draw, so a win would be split thousands of ways. Choosing numbers others avoid, such as those above 31, cannot raise your chance, only your share.",
+  "move": "Equal odds can still mean unequal payouts; ask who else picks the same.",
+  "ask": "Where am I choosing what everyone else chooses, and sharing the prize?",
+  "trap": "Thinking a neat pattern is less likely to be drawn.",
+  "keywords": [
+    "lottery",
+    "number choice",
+    "shared jackpots",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Newshub, over 2,000 play 1-2-3-4-5-6 Lotto numbers, 2010",
+  "source_kind": "news_archive",
+  "reference": "https://www.newshub.co.nz/entertainment/over-2000-play-1-2-3-4-5-6-lotto-numbers-2010100812",
+  "written": "2026-10-17"
+}

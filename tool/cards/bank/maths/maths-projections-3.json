@@ -1,0 +1,64 @@
+{
+  "id": "maths-projections-3",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On a Mercator world map Greenland looks about as big as Africa. How many Greenlands would really fit inside Africa?",
+  "answer": "About 14. Africa covers some 30.4 million km² and Greenland 2.17 million. Mercator's map stretches everything away from the equator, four times in area at 60° and far more near the poles, so Greenland swells. Boston's schools moved to an equal-area map in 2017 partly for this reason.",
+  "move": "Before comparing sizes on a map, ask what the projection preserves.",
+  "ask": "Which map have I used to judge a size it was never meant to show?",
+  "keywords": [
+    "mercator projection",
+    "greenland",
+    "africa",
+    "map projections"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "Greenlands inside Africa",
+    "answer": 14,
+    "each": 1,
+    "eachLabel": "1 dot = one Greenland",
+    "arrange": "grid",
+    "compare": "Africa 30.4m km², Greenland 2.2m",
+    "options": [
+      {
+        "label": "Just 1",
+        "value": 1,
+        "note": "That is the map talking: Mercator inflates Greenland near the pole."
+      },
+      {
+        "label": "About 3",
+        "value": 3,
+        "note": "Still far too few: Africa is about 30 million km², Greenland 2.2."
+      },
+      {
+        "label": "About 14",
+        "value": 14,
+        "note": "Right: 30.4 ÷ 2.17 ≈ 14 Greenlands fit inside Africa."
+      },
+      {
+        "label": "About 50",
+        "value": 50,
+        "note": "Too many: Greenland is still bigger than Mexico."
+      }
+    ]
+  },
+  "source": "Florida International University News, on Boston's switch of world map, 2017",
+  "source_kind": "news_archive",
+  "reference": "https://news.fiu.edu/2017/03/a-different-world-map-makes-classroom-debut/110071",
+  "written": "2026-10-17"
+}

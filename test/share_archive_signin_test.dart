@@ -475,7 +475,7 @@ void main() {
       await _settle(tester);
       expect(find.byType(IntroScreen), findsNothing);
       expect(find.byType(MixScreen), findsOneWidget);
-      expect(find.text('19 of 19 subjects in the mix'), findsOneWidget);
+      expect(find.text('20 of 20 subjects in the mix'), findsOneWidget);
       expect(find.byType(SnackBar), findsNothing);
     });
 

@@ -1,0 +1,40 @@
+{
+  "id": "maths-paradoxes-6",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "On the second floor of a seven-storey building, the first lift to arrive is usually going down. Why?",
+  "options": [
+    "Lifts rest at the ground floor",
+    "Most of the shaft lies above you",
+    "People call lifts downwards more"
+  ],
+  "correct": 1,
+  "answer": "Most of the shaft lies above you. A lift is equally likely to be anywhere on its round trip, and five of the six other floors are above the second, so it usually reaches you on its way down. George Gamow, on the second floor, and Marvin Stern, on the sixth, saw opposite patterns.",
+  "move": "What you see depends on where you stand; ask what your position samples.",
+  "ask": "Which pattern have I noticed that might just reflect where I happen to stand?",
+  "trap": "Blaming the lift's programming instead of where you stand.",
+  "keywords": [
+    "elevator paradox",
+    "george gamow",
+    "probability",
+    "sampling"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolfram MathWorld, Elevator paradox",
+  "source_kind": "reference_work",
+  "reference": "https://mathworld.wolfram.com/ElevatorParadox.html",
+  "written": "2026-10-17"
+}

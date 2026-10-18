@@ -1,0 +1,40 @@
+{
+  "id": "maths-paradoxes-5",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Early in 2020, fewer smokers than expected turned up among COVID patients in hospital. Did smoking protect them?",
+  "options": [
+    "Yes, nicotine guarded against it",
+    "Not shown: hospital samples can mislead",
+    "Yes, smokers avoided infection"
+  ],
+  "correct": 1,
+  "answer": "Not shown. Studying only people in hospital selects on an outcome that smoking and COVID can each cause, and that can make them look linked, even in reverse. Griffith and colleagues showed in 2020 how this collider bias could fake a protective effect; larger studies linked smoking to severe COVID.",
+  "move": "Ask how people got into the data before trusting any link within it.",
+  "ask": "Which pattern have I seen in a selected group and assumed holds for everyone?",
+  "trap": "Reading a pattern among hospital patients as true of everyone.",
+  "keywords": [
+    "collider bias",
+    "selection bias",
+    "covid-19",
+    "smoking"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Griffith et al., Collider bias undermines our understanding of COVID-19 disease risk and severity, Nature Communications, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41467-020-19478-2",
+  "written": "2026-10-17"
+}

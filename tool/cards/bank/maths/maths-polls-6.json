@@ -1,0 +1,70 @@
+{
+  "id": "maths-polls-6",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.polls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Should America allow public speeches against democracy? And should it forbid them?",
+  "answer": "In a test published in 1941, 75% said it should not allow them, yet only 54% said it should forbid them. The same policy lost 21 points when it had to be called forbidding. Donald Rugg's experiment is why pollsters test wordings, and why one question never shows the public's whole mind.",
+  "move": "Read a poll's exact question before reading its percentages.",
+  "ask": "Which poll result have I quoted without ever reading the question asked?",
+  "keywords": [
+    "question wording",
+    "opinion polls",
+    "forbid or allow",
+    "survey design"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "US survey, Rugg 1941",
+    "questions": [
+      {
+        "prompt": "Should the US allow public speeches against democracy?",
+        "tag": "Asked to allow",
+        "options": [
+          {
+            "label": "Yes, allow them",
+            "share": 25
+          },
+          {
+            "label": "No, don't allow them",
+            "share": 75
+          }
+        ]
+      },
+      {
+        "prompt": "Should the US forbid public speeches against democracy?",
+        "tag": "Asked to forbid",
+        "options": [
+          {
+            "label": "No, don't forbid them",
+            "share": 46
+          },
+          {
+            "label": "Yes, forbid them",
+            "share": 54
+          }
+        ]
+      }
+    ],
+    "why": "Forbid sounds harsher than not allow, so people shrink from saying it, though both mean the same.",
+    "same": "You held steady. The public moved 21 points with the word.",
+    "switched": "You moved with the word, as many did: 21 points apart."
+  },
+  "source": "CBS News, on Rugg's forbid or allow experiment",
+  "source_kind": "news_archive",
+  "reference": "https://www.cbsnews.com/news/forbid-or-allow/",
+  "written": "2026-10-17"
+}
