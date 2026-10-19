@@ -60,7 +60,8 @@ Widget _framed(ExploreHost host, ExploreSection section, Widget child) =>
 
 /// The cards of [section] whose questions a box of [box] drawn as [look]
 /// sets whole, at most [count] of them, from three times as many asked of
-/// the source.
+/// the source — measured in order, and no further than the [count]th that
+/// fits.
 List<Pill> _fitting(
   BuildContext context,
   ExploreHost host,
@@ -68,10 +69,16 @@ List<Pill> _fitting(
   required int count,
   required Size box,
   required TileLook look,
-}) => [
-  for (final Pill pill in host.cardsFor(section, limit: count * 3))
-    if (questionFits(context, pill, box, look, read: host.isRead(pill))) pill,
-].take(count).toList();
+}) {
+  final List<Pill> out = [];
+  for (final Pill pill in host.cardsFor(section, limit: count * 3)) {
+    if (out.length == count) break;
+    if (questionFits(context, pill, box, look, read: host.isRead(pill))) {
+      out.add(pill);
+    }
+  }
+  return out;
+}
 
 /// A card's tile, tapped open among [shelf], keyed as every card on
 /// Explore is.

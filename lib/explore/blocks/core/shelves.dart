@@ -461,6 +461,7 @@ class ExploreShelves {
   // ── Sources ─────────────────────────────────────────────────────────
 
   final Map<String, List<Pill>> _cards = {};
+  final Map<String, List<Pill>> _queries = {};
 
   /// The cards [section] asks for through its `source`, in order, at most
   /// [limit] — or the section's own `limit`, or what the source holds by
@@ -504,7 +505,14 @@ class ExploreShelves {
       found = _ids(ids);
       natural = found.length;
     } else if (source['query'] case final Map query) {
-      found = _query(section, query);
+      // A pass over the whole bank, the same until the subject, the day's
+      // deal or the bank changes: kept across builds, where the other
+      // sources are worked out again on every one.
+      final String key =
+          '${section.id}|${_keyOf(query)}|${_subject ?? ''}|$_dealtOn|'
+          '${PillBank.version}';
+      if (_queries.length > 200) _queries.clear();
+      found = _queries[key] ??= _query(section, query);
       final Object? own = query['limit'];
       natural = own is num && own > 0 ? own.toInt() : 12;
     } else if (source['mine'] case final String mine) {

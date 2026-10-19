@@ -547,17 +547,20 @@ bool questionFits(
   final bool? known = _fitted[key];
   if (known != null) return known;
 
-  double lineOf(TextStyle style, {double? width, int? lines}) {
-    final TextPainter painter = TextPainter(
-      text: TextSpan(text: 'Ag', style: style),
-      textDirection: direction,
-      textScaler: scaler,
-      maxLines: lines,
-    )..layout(maxWidth: width ?? double.infinity);
-    final double height = painter.height;
-    painter.dispose();
-    return height;
-  }
+  // A line of the head or the foot is the same height on every card: its
+  // colour is the card's, its metrics are the style's.
+  double lineOf(TextStyle style) =>
+      _lines['${style.fontFamily}|${style.fontSize}|${style.fontWeight}|'
+          '${style.letterSpacing}|${style.height}|${scaler.scale(10)}'] ??= () {
+        final TextPainter painter = TextPainter(
+          text: TextSpan(text: 'Ag', style: style),
+          textDirection: direction,
+          textScaler: scaler,
+        )..layout();
+        final double height = painter.height;
+        painter.dispose();
+        return height;
+      }();
 
   final double width = box.width - look.padding * 2;
   double room = box.height - look.padding * 2;
@@ -598,20 +601,21 @@ bool questionFits(
     fits = painter.height <= room && painter.width <= width;
     painter.dispose();
     if (fits) {
-      for (final String word in pill.question.split(RegExp(r'\s+'))) {
-        final TextPainter one = TextPainter(
-          text: TextSpan(text: word, style: style),
-          textDirection: direction,
-          textScaler: scaler,
-          maxLines: 1,
-        )..layout();
-        final bool whole = one.width <= width;
-        one.dispose();
-        if (!whole) {
-          fits = false;
-          break;
-        }
-      }
+      // A word wider than its line would be broken in the middle, which no
+      // size should buy. Every word on a line of its own, laid out once: the
+      // widest of them is how wide the lines come out. Laid out one word at
+      // a time, for every card on every shelf, it was most of what a page of
+      // them cost.
+      final TextPainter words = TextPainter(
+        text: TextSpan(
+          text: pill.question.split(RegExp(r'\s+')).join('\n'),
+          style: style,
+        ),
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout();
+      fits = words.width <= width;
+      words.dispose();
     }
   }
   if (_fitted.length > 4000) _fitted.clear();
@@ -621,6 +625,10 @@ bool questionFits(
 /// What [questionFits] found, by card, box and text size: a grid asks of
 /// the same cards on every build, and the answer only changes with them.
 final Map<String, bool> _fitted = {};
+
+/// How tall a line of a tile's head or foot is, by its style and the text
+/// size.
+final Map<String, double> _lines = {};
 
 /// The cards to put in boxes of [boxes], in order, from [cards] in theirs:
 /// each box the first card not yet placed whose question it holds whole.
