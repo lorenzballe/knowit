@@ -167,6 +167,7 @@ class CloserTile extends StatelessWidget {
     final pill = answer.pill;
     final BetsDay day = BetsDay.instance;
     final BetInk ink = BetInk.of(context, pill, shelf.tone());
+    final double inner = size.inner(MediaQuery.sizeOf(context).width);
     final BetNumbers n = BetNumbers(
       Localizations.localeOf(context).languageCode,
     );
@@ -217,7 +218,7 @@ class CloserTile extends StatelessWidget {
           : (truthMore ? l.betsCloserNoMore(v) : l.betsCloserNoLess(v));
     }
 
-    Widget ask({bool ghost = false}) => Column(
+    Widget ask() => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -244,46 +245,42 @@ class CloserTile extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        Row(
-          children: [
-            for (final bool more in const [false, true]) ...[
-              if (more) const SizedBox(width: 8),
-              Expanded(
-                child: BetChip(
-                  key: ghost
-                      ? null
-                      : ValueKey(
-                          'bets-closer-${pill.id}-${more ? 'more' : 'less'}',
-                        ),
-                  label: more ? l.betsMore : l.betsLess,
-                  icon: more
-                      ? Icons.arrow_upward_rounded
-                      : Icons.arrow_downward_rounded,
-                  ink: ink,
-                  height: 42,
-                  radius: 12,
-                  size: 13.5,
-                  onTap: ghost ? null : () => tap(more),
-                ),
-              ),
-            ],
-          ],
+        // Less and more side by side, or one over the other where a word
+        // and its arrow would not fit half the row.
+        BetChips(
+          labels: [l.betsLess, l.betsMore],
+          width: inner,
+          style: AppText.body(size: 13.5, weight: FontWeight.w700),
+          chrome: 16 + 15 + 7,
+          gap: 8,
+          builder: (i) => BetChip(
+            key: ValueKey('bets-closer-${pill.id}-${i == 1 ? 'more' : 'less'}'),
+            label: i == 1 ? l.betsMore : l.betsLess,
+            icon: i == 1
+                ? Icons.arrow_upward_rounded
+                : Icons.arrow_downward_rounded,
+            ink: ink,
+            height: 42,
+            radius: 12,
+            size: 13.5,
+            onTap: () => tap(i == 1),
+          ),
         ),
         const SizedBox(height: 14),
         BetVerdict(
           message(game),
-          key: ghost ? null : ValueKey('bets-closer-said-${pill.id}'),
+          key: ValueKey('bets-closer-said-${pill.id}'),
           ink: ink,
         ),
       ],
     );
 
-    Widget over({bool ghost = false, CloserGame? as}) => Column(
+    Widget over() => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BetVerdict(
-          message(as ?? game),
-          key: ghost ? null : ValueKey('bets-closer-said-${pill.id}'),
+          message(game),
+          key: ValueKey('bets-closer-said-${pill.id}'),
           ink: ink,
         ),
         BetWhy(pill, ink: ink),
@@ -339,12 +336,6 @@ class CloserTile extends StatelessWidget {
       children: [track(), const SizedBox(height: 14), foot],
     );
 
-    // The longest the game's end can read: every step said wrong.
-    final CloserGame worst = CloserGame.of(
-      List.filled(steps, 'M').join(),
-      answer.value < 50 ? 0 : 100,
-      steps,
-    );
     return BetFrame(
       pill: pill,
       ink: ink,
@@ -354,16 +345,7 @@ class CloserTile extends StatelessWidget {
           ? () =>
                 host.open(shelf.section, [for (final c in cards) c.pill], pill)
           : null,
-      game: BetRoom(
-        keep: size.inRow,
-        ghosts: [
-          if (!done) ...[
-            whole(ask(ghost: true)),
-            whole(over(ghost: true, as: worst)),
-          ],
-        ],
-        child: whole(done ? over() : ask()),
-      ),
+      game: whole(done ? over() : ask()),
     );
   }
 }

@@ -155,10 +155,13 @@ class FriendPanel extends StatelessWidget {
     final int? said = bet == null ? null : int.tryParse(bet.said);
     final List<String> options = answer.options;
     final String note = said != null && said >= 0 && said < options.length
-        ? l.betsFriendNoteSaid(options[said])
+        ? l.betsFriendNoteSaid(inSentence(options[said]))
         : l.betsFriendNote;
     final bool wide = size == 'l';
     final double bubble = wide ? double.infinity : 250;
+    // The panel's own width: the page's, less the shelf's margins and the
+    // panel's padding.
+    final double panelInner = MediaQuery.sizeOf(context).width - 40 - 32;
 
     Future<void> send() async {
       host.note(shelf.section, 'bet sent', {'pill_id': pill.id});
@@ -222,35 +225,22 @@ class FriendPanel extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (options.isEmpty)
-                        Expanded(
-                          child: BetChip(
-                            label: answer.unit.isEmpty
-                                ? '?'
-                                : '? ${answer.unit}',
-                            ink: card,
-                            height: 30,
-                            radius: 9,
-                            weight: FontWeight.w600,
-                          ),
-                        )
-                      else
-                        for (int j = 0; j < options.length; j++) ...[
-                          if (j > 0) const SizedBox(width: 5),
-                          Expanded(
-                            child: BetChip(
-                              label: options[j],
-                              ink: card,
-                              height: 30,
-                              radius: 9,
-                              weight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                    ],
+                  BetChips(
+                    labels: options.isEmpty
+                        ? [answer.unit.isEmpty ? '?' : '? ${answer.unit}']
+                        : options,
+                    width: (wide ? panelInner : 250) - 28,
+                    style: AppText.body(size: 11, weight: FontWeight.w600),
+                    gap: 5,
+                    builder: (j) => BetChip(
+                      label: options.isEmpty
+                          ? (answer.unit.isEmpty ? '?' : '? ${answer.unit}')
+                          : options[j],
+                      ink: card,
+                      height: 30,
+                      radius: 9,
+                      weight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),

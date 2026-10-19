@@ -99,23 +99,32 @@ class MagnitudeTile extends StatelessWidget {
     final double inner = size.inner(MediaQuery.sizeOf(context).width);
     final int count = notches.values.length;
 
-    // The language's short form where every label fits its notch; powers
-    // of ten where one would not.
-    final TextStyle labelStyle = AppText.body(
-      size: 12,
-      weight: FontWeight.w700,
-      height: 1.1,
-    );
+    // The language's short form where every label fits its notch on one
+    // stair, a little smaller where it must be; powers of ten where only
+    // they do; and where neither does, at a large text size, the short
+    // form on a staircase that turns.
+    TextStyle styleAt(double size) =>
+        AppText.body(size: size, weight: FontWeight.w700, height: 1.1);
     final double room = (inner - 4 * (count - 1)) / count - 8;
+    double sizeFor(List<String> all) =>
+        chipSizeFor(context, all, room, max: 12, min: 10.5);
+    bool fit(List<String> all, double size) =>
+        all.every((s) => betTextWidth(context, s, styleAt(size)) <= room);
     final List<String> short = [
       for (final double v in notches.values) n.compact(v),
     ];
-    final bool fits = short.every(
-      (s) => _width(context, s, labelStyle) <= room,
-    );
-    final List<String> labels = fits
-        ? short
-        : [for (final double v in notches.values) BetNumbers.power(v)];
+    final List<String> powers = [
+      for (final double v in notches.values) BetNumbers.power(v),
+    ];
+    final double shortSize = sizeFor(short);
+    final double powerSize = sizeFor(powers);
+    final bool shortFits = fit(short, shortSize);
+    final bool asPowers = !shortFits && fit(powers, powerSize);
+    final List<String> labels = asPowers ? powers : short;
+    final double labelSize = asPowers
+        ? powerSize
+        : (shortFits ? shortSize : 12);
+    final TextStyle labelStyle = styleAt(labelSize);
 
     Future<void> lay(int at, int? sure) async {
       final String response = notches.responseAt(at);
@@ -151,47 +160,45 @@ class MagnitudeTile extends StatelessWidget {
       }
     }
 
-    Widget stairs({bool ghost = false}) => Row(
+    Widget stairs() => BetChips(
+      labels: labels,
+      width: inner,
+      style: labelStyle,
+      chrome: 8,
+      gap: 4,
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        for (int j = 0; j < count; j++) ...[
-          if (j > 0) const SizedBox(width: 4),
-          Expanded(
-            child: BetChip(
-              key: ghost ? null : ValueKey('bets-magnitude-${pill.id}-$j'),
-              label: labels[j],
-              ink: ink,
-              on: laid ? j == notches.right : j == picked,
-              ring: laid && j == picked && j != notches.right,
-              dim: laid && j != notches.right && j != picked,
-              height: count > 3 ? 28.0 + 4 * j : 30.0 + 9 * j,
-              radius: 10,
-              size: 12,
-              padding: 2,
-              semantics: answer.odds
-                  ? l.betsOneIn(n.plain(notches.values[j], decimals: 0))
-                  : '${n.plain(notches.values[j], decimals: 3)} '
-                        '${answer.unit}',
-              onTap: open && !ghost && j != picked ? () => pick(j) : null,
-            ),
-          ),
-        ],
-      ],
+      builder: (j) => BetChip(
+        key: ValueKey('bets-magnitude-${pill.id}-$j'),
+        label: labels[j],
+        ink: ink,
+        on: laid ? j == notches.right : j == picked,
+        ring: laid && j == picked && j != notches.right,
+        dim: laid && j != notches.right && j != picked,
+        height: count > 3 ? 28.0 + 4 * j : 30.0 + 9 * j,
+        radius: 10,
+        size: labelSize,
+        padding: 2,
+        semantics: answer.odds
+            ? l.betsOneIn(n.plain(notches.values[j], decimals: 0))
+            : '${n.plain(notches.values[j], decimals: 3)} '
+                  '${answer.unit}',
+        onTap: open && j != picked ? () => pick(j) : null,
+      ),
     );
 
-    Widget settled({bool ghost = false, int? off, int? sure}) {
-      final int o = off ?? (bet?.facts['off'] as num?)?.toInt() ?? 0;
-      final bool right = ghost ? false : (bet?.right ?? false);
+    Widget settled() {
+      final int o = (bet?.facts['off'] as num?)?.toInt() ?? 0;
+      final bool right = bet?.right ?? false;
       final String verdict = right || o == 0
           ? l.betsMagnitudeRight
           : l.betsMagnitudeOff(o);
-      final int? s = sure ?? bet?.confidence;
+      final int? s = bet?.confidence;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BetVerdict(
             s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}',
-            key: ghost ? null : ValueKey('bets-magnitude-said-${pill.id}'),
+            key: ValueKey('bets-magnitude-said-${pill.id}'),
             ink: ink,
           ),
           BetWhy(pill, ink: ink),
@@ -199,20 +206,20 @@ class MagnitudeTile extends StatelessWidget {
       );
     }
 
-    Widget sureStep({bool ghost = false}) => SureStep(
-      key: ghost ? null : ValueKey('bets-magnitude-sure-${pill.id}'),
+    Widget sureStep() => SureStep(
+      key: ValueKey('bets-magnitude-sure-${pill.id}'),
       pill: pill,
       ink: ink,
       width: inner,
-      onPick: ghost || picked == null ? (_) {} : (s) => lay(picked, s),
+      onPick: picked == null ? (_) {} : (s) => lay(picked, s),
     );
 
-    Widget game(Widget foot, {bool ghost = false}) => Column(
+    Widget game(Widget foot) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BetKicker(answer.odds ? l.betsOneInLabel : answer.unit, color: ink.sub),
         const SizedBox(height: 7),
-        stairs(ghost: ghost),
+        stairs(),
         const SizedBox(height: 12),
         foot,
       ],
@@ -241,28 +248,7 @@ class MagnitudeTile extends StatelessWidget {
           ? () =>
                 host.open(shelf.section, [for (final c in cards) c.pill], pill)
           : null,
-      game: BetRoom(
-        keep: size.inRow,
-        ghosts: [
-          if (!laid) ...[
-            game(settled(ghost: true, off: 4, sure: 90), ghost: true),
-            if (shelf.asksSure) game(sureStep(ghost: true), ghost: true),
-          ],
-        ],
-        child: game(foot),
-      ),
+      game: game(foot),
     );
-  }
-
-  static double _width(BuildContext context, String text, TextStyle style) {
-    final TextPainter p = TextPainter(
-      text: TextSpan(text: text, style: style),
-      textDirection: Directionality.of(context),
-      textScaler: MediaQuery.textScalerOf(context),
-      maxLines: 1,
-    )..layout();
-    final double w = p.width;
-    p.dispose();
-    return w;
   }
 }

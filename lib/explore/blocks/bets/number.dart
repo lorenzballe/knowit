@@ -154,53 +154,78 @@ class NumberTile extends StatelessWidget {
       }
     }
 
-    Widget steppers({bool ghost = false}) => Row(
-      children: [
-        for (final double by in [
-          -scale.big,
-          -scale.small,
-          scale.small,
-          scale.big,
-        ]) ...[
-          Expanded(
-            child: _Stepper(
-              key: ghost ? null : ValueKey('bets-number-${pill.id}-$by'),
-              label: '${by < 0 ? '−' : '+'}${say(by.abs())}',
-              ink: ink,
-              enabled: open && !ghost && (by > 0 || v > 0),
-              onStep: () => day.keepDraft(key, {'v': scale.move(now(), by)}),
-            ),
-          ),
-          const SizedBox(width: 6),
-        ],
-        Expanded(
-          flex: 13,
-          child: BetChip(
-            key: ghost ? null : ValueKey('bets-number-lock-${pill.id}'),
-            label: l.betsLock,
-            ink: ink,
-            on: true,
-            height: 40,
-            radius: 12,
-            size: 13,
-            onTap: open && !ghost ? lock : null,
-          ),
-        ),
-      ],
+    final List<double> steps = [
+      -scale.big,
+      -scale.small,
+      scale.small,
+      scale.big,
+    ];
+    final List<String> stepLabels = [
+      for (final double by in steps) '${by < 0 ? '−' : '+'}${say(by.abs())}',
+    ];
+    Widget stepper(int i) => _Stepper(
+      key: ValueKey('bets-number-${pill.id}-${steps[i]}'),
+      label: stepLabels[i],
+      ink: ink,
+      enabled: open && (steps[i] > 0 || v > 0),
+      onStep: () => day.keepDraft(key, {'v': scale.move(now(), steps[i])}),
     );
+    final Widget lockChip = BetChip(
+      key: ValueKey('bets-number-lock-${pill.id}'),
+      label: l.betsLock,
+      ink: ink,
+      on: true,
+      height: 40,
+      radius: 12,
+      size: 13,
+      onTap: open ? lock : null,
+    );
+    // Four steppers and the lock a third wider than one of them, on one
+    // line as the canvas has them, where every label fits; otherwise the
+    // steppers in rows of their own and the lock under them.
+    final TextStyle stepStyle = AppText.body(size: 13, weight: FontWeight.w700);
+    final double share = (inner - 4 * 6) / 53;
+    final bool oneLine =
+        stepLabels.every(
+          (s) => betTextWidth(context, s, stepStyle) + 8 <= share * 10,
+        ) &&
+        betTextWidth(context, l.betsLock, stepStyle) + 16 <= share * 13;
+    Widget steppers() => oneLine
+        ? Row(
+            children: [
+              for (int i = 0; i < steps.length; i++) ...[
+                Expanded(flex: 10, child: stepper(i)),
+                const SizedBox(width: 6),
+              ],
+              Expanded(flex: 13, child: lockChip),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              BetChips(
+                labels: stepLabels,
+                width: inner,
+                style: stepStyle,
+                chrome: 8,
+                builder: stepper,
+              ),
+              const SizedBox(height: 6),
+              lockChip,
+            ],
+          );
 
-    Widget settled({bool ghost = false, double? at, int? sure}) {
-      final double you = at ?? v;
-      final String response = plainResponse(you);
-      final double off = (you - answer.value).abs();
+    Widget settled() {
+      final String response = plainResponse(v);
+      final double off = (v - answer.value).abs();
       final bool right = answer.accepts(response);
       final String verdict = right && off < 1e-9
           ? l.betsSpotOn
           : right
           ? l.betsCloseEnough(amount(off))
           : l.betsOffBy(amount(off));
-      final int? s = sure ?? bet?.confidence;
-      final double top = niceAbove(math.max(you, answer.value) / 0.8);
+      final int? s = bet?.confidence;
+      final double top = niceAbove(math.max(v, answer.value) / 0.8);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -209,7 +234,7 @@ class NumberTile extends StatelessWidget {
             child: CustomPaint(
               painter: _Scale(
                 ink: ink,
-                you: top == 0 ? 0 : you / top,
+                you: top == 0 ? 0 : v / top,
                 answer: top == 0 ? 0 : answer.value / top,
               ),
             ),
@@ -219,11 +244,12 @@ class NumberTile extends StatelessWidget {
             ink: ink,
             from: say(0),
             to: unit.length <= 12 ? amount(top) : say(top),
+            width: inner,
           ),
           const SizedBox(height: 10),
           BetVerdict(
             s == null ? verdict : '$verdict ${l.betsYouWereSure(s)}',
-            key: ghost ? null : ValueKey('bets-number-said-${pill.id}'),
+            key: ValueKey('bets-number-said-${pill.id}'),
             ink: ink,
           ),
           BetWhy(pill, ink: ink),
@@ -231,12 +257,12 @@ class NumberTile extends StatelessWidget {
       );
     }
 
-    Widget sureStep({bool ghost = false}) => SureStep(
-      key: ghost ? null : ValueKey('bets-number-sure-${pill.id}'),
+    Widget sureStep() => SureStep(
+      key: ValueKey('bets-number-sure-${pill.id}'),
       pill: pill,
       ink: ink,
       width: inner,
-      onPick: ghost ? (_) {} : (s) => lay(s),
+      onPick: (s) => lay(s),
     );
 
     Widget game(Widget foot) => Column(
@@ -299,8 +325,6 @@ class NumberTile extends StatelessWidget {
             ),
           )
         : steppers();
-    // The longest a verdict can come to: off by about the answer itself.
-    final double far = answer.value * 4 + scale.big * 7;
     return BetFrame(
       pill: pill,
       ink: ink,
@@ -310,16 +334,7 @@ class NumberTile extends StatelessWidget {
           ? () =>
                 host.open(shelf.section, [for (final c in cards) c.pill], pill)
           : null,
-      game: BetRoom(
-        keep: size.inRow,
-        ghosts: [
-          if (!laid) ...[
-            game(settled(ghost: true, at: far, sure: 90)),
-            if (shelf.asksSure) game(sureStep(ghost: true)),
-          ],
-        ],
-        child: game(foot),
-      ),
+      game: game(foot),
     );
   }
 }
@@ -445,13 +460,23 @@ class _Scale extends CustomPainter {
       old.you != you || old.answer != answer || old.ink.ink != ink.ink;
 }
 
-/// Under the scale: where it starts, what the marks are, where it ends.
+/// Under the scale: where it starts, what the marks are, where it ends —
+/// on one line where they fit, the marks on a line of their own under the
+/// ends where they do not.
 class _Legend extends StatelessWidget {
-  const _Legend({required this.ink, required this.from, required this.to});
+  const _Legend({
+    required this.ink,
+    required this.from,
+    required this.to,
+    required this.width,
+  });
 
   final BetInk ink;
   final String from;
   final String to;
+
+  /// The room the legend has.
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -488,16 +513,46 @@ class _Legend extends StatelessWidget {
         Text(l.betsAnswer, style: style),
       ],
     );
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    double w(String s) => betTextWidth(context, s, style);
+    final double need =
+        w(from) +
+        w(to) +
+        8 +
+        4 +
+        w(l.betsYou) +
+        w('  ·  ') +
+        3 +
+        4 +
+        w(l.betsAnswer) +
+        2 * 8;
+    // A little to spare, for the rounding of each word's width.
+    if (need + 4 <= width) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(from, style: style),
+          const SizedBox(width: 8),
+          Expanded(child: Center(child: marks)),
+          const SizedBox(width: 8),
+          Text(to, textAlign: TextAlign.right, style: style),
+        ],
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(from, style: style),
-        const SizedBox(width: 8),
-        Expanded(child: Center(child: marks)),
-        const SizedBox(width: 8),
-        Flexible(
-          child: Text(to, textAlign: TextAlign.right, style: style),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(from, style: style),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(to, textAlign: TextAlign.right, style: style),
+            ),
+          ],
         ),
+        const SizedBox(height: 4),
+        Center(child: marks),
       ],
     );
   }

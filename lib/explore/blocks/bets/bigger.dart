@@ -123,6 +123,12 @@ class BiggerBlock extends BetBlock {
         ?BetsDay.instance.betOn('bigger', cards[i * 2].pill.id),
     ];
     final int right = picked.where((b) => b.right).length;
+    final bool stacked = BiggerPair.stacks(
+      context,
+      shelf,
+      cards.take(pairs * 2).toList(),
+      size,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -140,6 +146,7 @@ class BiggerBlock extends BetBlock {
             a: cards[i * 2],
             b: cards[i * 2 + 1],
             size: size,
+            stacked: stacked,
           ),
         ),
         const SizedBox(height: 12),
@@ -172,6 +179,7 @@ class BiggerPair extends StatelessWidget {
     required this.a,
     required this.b,
     required this.size,
+    this.stacked = false,
   });
 
   final ExploreHost host;
@@ -181,6 +189,40 @@ class BiggerPair extends StatelessWidget {
 
   /// `s`, `m` or `l`: how tall the two are and how large their figures.
   final String size;
+
+  /// One over the other rather than side by side: see [stacks].
+  final bool stacked;
+
+  /// Whether the [pairs] of a shelf go one over the other: where a figure
+  /// or a word of a question would not fit half the row, or half the row
+  /// holds fewer than eight letters or so of the question a line — at a
+  /// large text size. One answer for the whole shelf, so its pairs all
+  /// stand alike.
+  static bool stacks(
+    BuildContext context,
+    BetSection shelf,
+    List<BetAnswer> pairs,
+    String size,
+  ) {
+    final BetNumbers n = BetNumbers(
+      Localizations.localeOf(context).languageCode,
+    );
+    final (_, double figure, double words) = _Figure.metrics(size);
+    final double room = (MediaQuery.sizeOf(context).width - 40 - 8) / 2 - 28;
+    if (MediaQuery.textScalerOf(context).scale(words) * 8 > room) return true;
+    final TextStyle number = AppText.display(
+      size: figure,
+      weight: FontWeight.w600,
+      spacing: -1,
+    );
+    final TextStyle body = AppText.body(size: words, weight: FontWeight.w500);
+    return pairs.any(
+      (c) =>
+          betTextWidth(context, n.percent(c.value), number) > room ||
+          widestWord(context, _Figure.labelOf(context, shelf, c.pill), body) >
+              room,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +263,40 @@ class BiggerPair extends StatelessWidget {
           : () => host.open(shelf.section, [a.pill, b.pill], c.pill),
     );
 
+    final Widget or = IgnorePointer(
+      child: Container(
+        width: 30,
+        height: 30,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: context.p.surface,
+          shape: BoxShape.circle,
+          border: Border.all(color: context.p.ink.withValues(alpha: 0.18)),
+        ),
+        child: Text(
+          context.l10n.betsOr,
+          style: AppText.display(
+            size: 12,
+            weight: FontWeight.w600,
+            height: 1,
+            color: context.p.ink,
+          ),
+        ),
+      ),
+    );
+
+    if (stacked) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          IntrinsicHeight(child: half(0, a)),
+          const SizedBox(height: 4),
+          Center(child: or),
+          const SizedBox(height: 4),
+          IntrinsicHeight(child: half(1, b)),
+        ],
+      );
+    }
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -234,27 +310,7 @@ class BiggerPair extends StatelessWidget {
             ],
           ),
         ),
-        IgnorePointer(
-          child: Container(
-            width: 30,
-            height: 30,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: context.p.surface,
-              shape: BoxShape.circle,
-              border: Border.all(color: context.p.ink.withValues(alpha: 0.18)),
-            ),
-            child: Text(
-              context.l10n.betsOr,
-              style: AppText.display(
-                size: 12,
-                weight: FontWeight.w600,
-                height: 1,
-                color: context.p.ink,
-              ),
-            ),
-          ),
-        ),
+        or,
       ],
     );
   }
@@ -281,6 +337,14 @@ class _Figure extends StatelessWidget {
   final int side;
   final int bigger;
   final VoidCallback onTap;
+
+  /// How tall a figure of [size] is at the least, how large its number is
+  /// set and how large its words.
+  static (double, double, double) metrics(String size) => switch (size) {
+    's' => (112.0, 24.0, 11.5),
+    'l' => (168.0, 38.0, 13.5),
+    _ => (136.0, 30.0, 12.0),
+  };
 
   /// What the figure is the answer to: the section's own words for it, in
   /// the reader's language, or the card's question.
@@ -322,11 +386,7 @@ class _Figure extends StatelessWidget {
         : big
         ? (picked == side ? l.betsBiggerGotIt : l.betsBigger)
         : (picked == side ? l.betsYourPick : '');
-    final (double minHeight, double figure, double words) = switch (size) {
-      's' => (112.0, 24.0, 11.5),
-      'l' => (168.0, 38.0, 13.5),
-      _ => (136.0, 30.0, 12.0),
-    };
+    final (double minHeight, double figure, double words) = metrics(size);
     final Duration motion = betMotion(context, 300);
     return Semantics(
       button: true,

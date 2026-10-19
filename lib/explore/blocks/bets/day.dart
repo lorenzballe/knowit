@@ -194,18 +194,17 @@ class DayTile extends StatelessWidget {
       }
     }
 
-    Widget settled({bool ghost = false, double? at, int? sure}) {
-      final double you = at ?? guess;
-      final int off = (you - answer.value).abs().round();
-      final int? s = sure ?? bet?.confidence;
+    Widget settled() {
+      final int off = (guess - answer.value).abs().round();
+      final int? s = bet?.confidence;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Semantics(
-            liveRegion: !ghost,
+            liveRegion: true,
             child: Text(
               '${l.betsItIs(said)} ${l.betsPointsOff(off)}',
-              key: ghost ? null : ValueKey('bets-day-said-${pill.id}'),
+              key: ValueKey('bets-day-said-${pill.id}'),
               style: AppText.display(
                 size: 17,
                 weight: FontWeight.w600,
@@ -261,7 +260,7 @@ class DayTile extends StatelessWidget {
             ),
           );
 
-    Widget game(Widget foot, {bool ghost = false}) => Column(
+    Widget game(Widget foot) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -276,16 +275,14 @@ class DayTile extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         BetTrack(
-          key: ghost ? null : ValueKey('bets-day-track-${pill.id}'),
+          key: ValueKey('bets-day-track-${pill.id}'),
           ink: ink,
           value: guess,
           filled: true,
           label: l.betsYourGuess,
           say: n.percent,
           answer: laid ? (answer.value, answer.value) : null,
-          onChanged: open && !ghost
-              ? (v) => day.keepDraft(key, {'g': v})
-              : null,
+          onChanged: open ? (v) => day.keepDraft(key, {'g': v}) : null,
         ),
         const SizedBox(height: 14),
         foot,
@@ -317,17 +314,7 @@ class DayTile extends StatelessWidget {
           ? () =>
                 host.open(shelf.section, [for (final c in cards) c.pill], pill)
           : null,
-      game: BetRoom(
-        keep: size.inRow,
-        ghosts: [
-          if (!laid)
-            game(
-              settled(ghost: true, at: answer.value < 50 ? 100 : 0, sure: 90),
-              ghost: true,
-            ),
-        ],
-        child: game(foot),
-      ),
+      game: game(foot),
     );
   }
 }

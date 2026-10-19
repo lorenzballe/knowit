@@ -123,6 +123,17 @@ class RangeTile extends StatelessWidget {
         ? (bet.facts['w'] as num?)?.toInt() ?? middle
         : ((draft['w'] as num?)?.toInt() ?? middle).clamp(0, widths.length - 1);
     final RangeWidth width = widths[wi.clamp(0, widths.length - 1)];
+    // The widths set alike on one line each: the room a chip has, less its
+    // padding and its edge.
+    final List<String> widthLabels = [
+      for (final RangeWidth w in widths) l.betsRangeWidth(w.half, w.pays),
+    ];
+    final double inner = size.inner(MediaQuery.sizeOf(context).width);
+    final double chipSize = chipSizeFor(
+      context,
+      widthLabels,
+      (inner - 6 * (widths.length - 1)) / widths.length - 16,
+    );
     final double lo = math.max(0, guess - width.half).toDouble();
     final double hi = math.min(100, guess + width.half).toDouble();
     final bool laid = bet != null;
@@ -166,12 +177,12 @@ class RangeTile extends StatelessWidget {
 
     // What the tile shows under the widths: the bet to lay, or what it came
     // to. Room is kept for the longest of what it can come to.
-    Widget settled(String verdict, {bool ghost = false}) => Column(
+    Widget settled(String verdict) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BetVerdict(
           verdict,
-          key: ghost ? null : ValueKey('bets-range-said-${pill.id}'),
+          key: ValueKey('bets-range-said-${pill.id}'),
           ink: ink,
         ),
         BetWhy(pill, ink: ink),
@@ -198,7 +209,7 @@ class RangeTile extends StatelessWidget {
             ),
           );
 
-    Widget game(Widget foot, {bool ghost = false}) => Column(
+    Widget game(Widget foot) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -232,45 +243,41 @@ class RangeTile extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         BetTrack(
-          key: ghost ? null : ValueKey('bets-range-track-${pill.id}'),
+          key: ValueKey('bets-range-track-${pill.id}'),
           ink: ink,
           value: guess,
           band: width.half.toDouble(),
           label: l.betsYourGuess,
           say: n.percent,
           answer: laid ? (answer.value, answer.value) : null,
-          onChanged: open && !ghost ? (v) => keep(g: v) : null,
+          onChanged: open ? (v) => keep(g: v) : null,
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            for (int j = 0; j < widths.length; j++) ...[
-              if (j > 0) const SizedBox(width: 6),
-              Expanded(
-                child: BetChip(
-                  key: ghost ? null : ValueKey('bets-range-${pill.id}-w$j'),
-                  label: l.betsRangeWidth(widths[j].half, widths[j].pays),
-                  ink: ink,
-                  on: j == wi,
-                  dim: !open && j != wi,
-                  onTap: open && !ghost
-                      ? () {
-                          if (j == wi) return;
-                          BetFeel.tick();
-                          keep(w: j);
-                        }
-                      : null,
-                ),
-              ),
-            ],
-          ],
+        BetChips(
+          labels: widthLabels,
+          width: inner,
+          style: AppText.body(size: chipSize, weight: FontWeight.w700),
+          builder: (j) => BetChip(
+            key: ValueKey('bets-range-${pill.id}-w$j'),
+            label: widthLabels[j],
+            size: chipSize,
+            ink: ink,
+            on: j == wi,
+            dim: !open && j != wi,
+            onTap: open
+                ? () {
+                    if (j == wi) return;
+                    BetFeel.tick();
+                    keep(w: j);
+                  }
+                : null,
+          ),
         ),
         const SizedBox(height: 12),
         foot,
       ],
     );
 
-    final int most = widths.map((w) => w.pays).reduce(math.max);
     return BetFrame(
       pill: pill,
       ink: ink,
@@ -280,14 +287,7 @@ class RangeTile extends StatelessWidget {
           ? null
           : () =>
                 host.open(shelf.section, [for (final c in cards) c.pill], pill),
-      game: BetRoom(
-        keep: size.inRow,
-        ghosts: [
-          if (!laid)
-            game(settled(l.betsInRange(most, said), ghost: true), ghost: true),
-        ],
-        child: game(foot),
-      ),
+      game: game(foot),
     );
   }
 }

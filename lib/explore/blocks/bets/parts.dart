@@ -185,6 +185,63 @@ double betTextHeight(
   return h;
 }
 
+/// How wide [text] sets on one line in [style], at the reader's text size,
+/// rounded up to the next whole pixel and one more: what fits by this
+/// measure fits once laid out, whatever the fractions of a pixel the line
+/// breaker comes to on the way.
+double betTextWidth(BuildContext context, String text, TextStyle style) {
+  final TextPainter painter = TextPainter(
+    text: TextSpan(text: text, style: style),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final double w = painter.width;
+  painter.dispose();
+  return w.ceilToDouble() + 1;
+}
+
+/// Whether [text] in [style] sets in [lines] lines or fewer in [width], at
+/// the reader's text size.
+bool betFitsLines(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double width, {
+  int lines = 2,
+}) {
+  if (width <= 0) return false;
+  final TextPainter painter = TextPainter(
+    text: TextSpan(text: text, style: style),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: lines,
+  )..layout(maxWidth: width);
+  final bool fits = !painter.didExceedMaxLines;
+  painter.dispose();
+  return fits;
+}
+
+/// The largest size from [max] down to [min] at which every one of
+/// [labels] sets on one line in [room]: a row of chips set alike, a little
+/// smaller where a language runs long, rather than some on two lines.
+double chipSizeFor(
+  BuildContext context,
+  List<String> labels,
+  double room, {
+  double max = 11,
+  double min = 9.5,
+  FontWeight weight = FontWeight.w700,
+}) {
+  for (double size = max; size > min; size -= 0.5) {
+    final TextStyle style = AppText.body(size: size, weight: weight);
+    if (labels.every((s) => betTextWidth(context, s, style) <= room)) {
+      return size;
+    }
+  }
+  return min;
+}
+
 /// How many lines [text] takes in [style] at [width], at the reader's text
 /// size, and whether its longest word fits a line whole.
 (int, bool) _setIn(
@@ -495,10 +552,18 @@ class BetFrame extends StatelessWidget {
               : null,
         ),
         const SizedBox(height: 12),
-        Text(pill.question, style: questionStyle(qSize, ink.ink)),
-        // In a row the tiles are as tall as the tallest, and every game
-        // sits on its tile's foot, level with its neighbours'.
-        if (size.inRow) const Spacer() else const SizedBox(height: 0),
+        // In a row the question has the room of four lines whatever its
+        // length, as the canvas gives it, so every game on the row starts
+        // level with its neighbours'; a tile grows downwards when its bet
+        // comes in, and nothing above the finger moves.
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: size.inRow
+                ? MediaQuery.textScalerOf(context).scale(qSize * 1.15 * 4.25)
+                : 0,
+          ),
+          child: Text(pill.question, style: questionStyle(qSize, ink.ink)),
+        ),
         const SizedBox(height: 14),
         game,
       ],
@@ -577,51 +642,6 @@ class BetWhy extends StatelessWidget {
   }
 }
 
-/// Room kept for the tallest of a tile's states, so a row of tiles does
-/// not grow under the reader's finger when a bet is laid: the state it
-/// will come to laid out unseen, and the one it is in drawn over it, on
-/// the tile's foot. In a column, where a tile growing moves nothing the
-/// finger is on, the room is not kept.
-class BetRoom extends StatelessWidget {
-  const BetRoom({
-    super.key,
-    required this.child,
-    this.ghosts = const [],
-    this.keep = true,
-  });
-
-  final Widget child;
-
-  /// The states to keep room for.
-  final List<Widget> ghosts;
-
-  /// Whether to keep it.
-  final bool keep;
-
-  @override
-  Widget build(BuildContext context) {
-    if (ghosts.isEmpty || !keep) return child;
-    return Stack(
-      alignment: Alignment.bottomLeft,
-      children: [
-        for (final Widget g in ghosts)
-          ExcludeSemantics(
-            child: IgnorePointer(
-              child: Visibility(
-                visible: false,
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                child: g,
-              ),
-            ),
-          ),
-        child,
-      ],
-    );
-  }
-}
-
 // ── Controls ─────────────────────────────────────────────────────────────
 
 /// A chip on a tile: a width, an option, a stake, a step. Lit in the
@@ -667,10 +687,13 @@ class BetChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final Duration motion = betMotion(context, 200);
     final Color fg = on ? ink.onInk : ink.ink;
+    // Two lines is what a row of chips is set for; a third, and then an
+    // ellipsis, only for a label too long for a chip a row to itself.
     final Widget text = Text(
       label,
       textAlign: TextAlign.center,
-      maxLines: 2,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
       style: AppText.body(size: size, weight: weight, height: 1.1, color: fg),
     );
     return Semantics(
@@ -689,7 +712,6 @@ class BetChip extends StatelessWidget {
             curve: Curves.easeOutCubic,
             constraints: BoxConstraints(minHeight: height),
             padding: EdgeInsets.symmetric(horizontal: padding, vertical: 4),
-            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: on
                   ? ink.ink
@@ -700,19 +722,113 @@ class BetChip extends StatelessWidget {
                 width: 2,
               ),
             ),
-            child: icon == null
-                ? text
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ExcludeSemantics(child: Icon(icon, size: 15, color: fg)),
-                      const SizedBox(width: 7),
-                      Flexible(child: text),
-                    ],
-                  ),
+            // Centred in whatever width the chip is given, and no wider
+            // than its words where it is given room to choose: a chip in a
+            // wrapping row keeps to its label.
+            child: Center(
+              widthFactor: 1,
+              heightFactor: 1,
+              child: icon == null
+                  ? text
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ExcludeSemantics(
+                          child: Icon(icon, size: 15, color: fg),
+                        ),
+                        const SizedBox(width: 7),
+                        Flexible(child: text),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The widest word of [label] in [style], at the reader's text size: the
+/// least a chip may be and still break its words only between them.
+double widestWord(BuildContext context, String label, TextStyle style) {
+  double widest = 0;
+  for (final String word in label.split(RegExp(r'\s+'))) {
+    widest = math.max(widest, betTextWidth(context, word, style));
+  }
+  return widest;
+}
+
+/// Chips as wide as one another, side by side where every label fits its
+/// share of the row in two lines with no word broken; otherwise in rows of
+/// fewer, down to one a row — at a large text size, or in a language that
+/// runs long. The rows are kept as even as the count allows: six chips go
+/// three and three, not five and one.
+class BetChips extends StatelessWidget {
+  const BetChips({
+    super.key,
+    required this.labels,
+    required this.width,
+    required this.style,
+    required this.builder,
+    this.chrome = 16,
+    this.gap = 6,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+  });
+
+  final List<String> labels;
+
+  /// The room the row has.
+  final double width;
+
+  /// How the labels are set, to measure them.
+  final TextStyle style;
+
+  /// The chip for the [i]th label.
+  final Widget Function(int i) builder;
+
+  /// What a chip takes besides its words: its padding and its edge.
+  final double chrome;
+  final double gap;
+
+  /// How chips of different heights in a row line up: by their tops, or
+  /// by their feet for a staircase.
+  final CrossAxisAlignment crossAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    final int n = labels.length;
+    final double word = labels
+        .map((s) => widestWord(context, s, style))
+        .fold(0.0, math.max);
+    bool fits(int across) {
+      final double room = (width - (across - 1) * gap) / across - chrome;
+      return word <= room &&
+          labels.every((s) => betFitsLines(context, s, style, room));
+    }
+
+    int across = n;
+    while (across > 1 && !fits(across)) {
+      across--;
+    }
+    if (across < n) across = (n / (n / across).ceil()).ceil();
+    Widget row(int from) => Row(
+      crossAxisAlignment: crossAxisAlignment,
+      children: [
+        for (int i = from; i < from + across; i++) ...[
+          if (i > from) SizedBox(width: gap),
+          Expanded(child: i < n ? builder(i) : const SizedBox.shrink()),
+        ],
+      ],
+    );
+    if (across == n) return row(0);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (int from = 0; from < n; from += across) ...[
+          if (from > 0) SizedBox(height: gap),
+          row(from),
+        ],
+      ],
     );
   }
 }
@@ -781,7 +897,11 @@ class SureStep extends StatelessWidget {
       height: 1,
     );
     // One row of five where five fit; otherwise as many as fit on a line.
-    final double widest = _widthOf(context, '${kConfidenceLevels.last}%', chip);
+    final double widest = betTextWidth(
+      context,
+      '${kConfidenceLevels.last}%',
+      chip,
+    );
     final bool row = 5 * (widest + 14) + 4 * 6 <= width;
     Widget level(int pct) => BetChip(
       key: ValueKey('bets-sure-${pill.id}-$pct'),
@@ -829,18 +949,6 @@ class SureStep extends StatelessWidget {
           ),
       ],
     );
-  }
-
-  static double _widthOf(BuildContext context, String text, TextStyle style) {
-    final TextPainter p = TextPainter(
-      text: TextSpan(text: text, style: style),
-      textDirection: Directionality.of(context),
-      textScaler: MediaQuery.textScalerOf(context),
-      maxLines: 1,
-    )..layout();
-    final double w = p.width;
-    p.dispose();
-    return w;
   }
 }
 

@@ -3,6 +3,8 @@
 /// are going.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../data/pill_bank.dart';
@@ -230,48 +232,99 @@ class _Row extends StatelessWidget {
               color: bet.right ? good : ink.sub,
             ),
           );
+    final TextStyle nameStyle = AppText.body(
+      size: 13,
+      weight: FontWeight.w600,
+      height: 1.2,
+      color: ink.ink,
+    );
+    final TextStyle saidStyle = AppText.body(
+      size: 12,
+      weight: FontWeight.w500,
+      height: 1.2,
+      color: ink.sub,
+    );
+    // The row's width: the page's, less the panel's margins and padding.
+    final double inner = MediaQuery.sizeOf(context).width - 76;
+    final double end = MediaQuery.textScalerOf(context).scale(36);
+    final Widget outcome = SizedBox(
+      width: end,
+      child: Align(alignment: Alignment.centerRight, child: result),
+    );
+    // The name, what was said and what it came to on one line where every
+    // word of the name fits what the other two leave it, and what was said
+    // fits its two fifths in two lines; the name on a line of its own where
+    // they do not, at a large text size.
+    final double saidWidth = math.min(
+      betTextWidth(context, said, saidStyle),
+      inner * 0.4,
+    );
+    final bool oneLine =
+        widestWord(context, name, nameStyle) <= inner - 20 - saidWidth - end &&
+        betFitsLines(context, said, saidStyle, inner * 0.4);
     return CustomPaint(
       painter: _Dashes(ink.hair),
       child: Padding(
         padding: const EdgeInsets.only(top: 11),
-        child: Row(
-          key: ValueKey('bets-slip-${bet.kind}-${bet.pill}'),
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Text(
-                name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(
-                  size: 13,
-                  weight: FontWeight.w600,
-                  height: 1.2,
-                  color: ink.ink,
-                ),
+        child: oneLine
+            ? Row(
+                key: ValueKey('bets-slip-${bet.kind}-${bet.pill}'),
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: nameStyle,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  // What was said keeps to its own width, up to two fifths
+                  // of the row, and ends where every row's does: the column
+                  // of what each bet came to is the same width all the way
+                  // down.
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: inner * 0.4),
+                    child: Text(
+                      said,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.right,
+                      style: saidStyle,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  outcome,
+                ],
+              )
+            : Column(
+                key: ValueKey('bets-slip-${bet.kind}-${bet.pill}'),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: nameStyle,
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          said,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: saidStyle,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      outcome,
+                    ],
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Text(
-                said,
-                maxLines: 2,
-                textAlign: TextAlign.right,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w500,
-                  height: 1.2,
-                  color: ink.sub,
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: 34),
-              child: Align(alignment: Alignment.centerRight, child: result),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -287,10 +340,10 @@ class _Row extends StatelessWidget {
       case 'stake':
         final int? o = int.tryParse(bet.said);
         final List<String> options = a?.options ?? const [];
-        final String picked = o != null && o >= 0 && o < options.length
+        // The stake is in what it came to, plus or minus.
+        return o != null && o >= 0 && o < options.length
             ? options[o]
             : bet.said;
-        return '$picked · ${(bet.facts['stake'] as num?)?.toInt() ?? 0}';
       case 'number':
         final double v = double.tryParse(bet.said) ?? 0;
         final int places = (bet.facts['places'] as num?)?.toInt() ?? 2;
