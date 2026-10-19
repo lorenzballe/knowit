@@ -28,7 +28,6 @@ import 'kit.dart';
 /// A shelf of tiles of one form: the form's own name and line unless the
 /// section gives its own, and its cards in a row.
 Widget formShelf({
-  required BuildContext context,
   required ExploreHost host,
   required ExploreSection section,
   required String title,
@@ -107,7 +106,6 @@ class InYourHeadBlock extends ExploreBlock {
     final l = context.l10n;
     final TileSize size = sizeOf(section, sizes);
     return formShelf(
-      context: context,
       host: host,
       section: section,
       title: l.themeWorkItOut,
@@ -535,7 +533,6 @@ class SeenBlock extends ExploreBlock {
     final l = context.l10n;
     final TileSize size = sizeOf(section, sizes);
     return formShelf(
-      context: context,
       host: host,
       section: section,
       title: l.themeSeen,
@@ -713,7 +710,6 @@ class MechanismBlock extends ExploreBlock {
     final l = context.l10n;
     final TileSize size = sizeOf(section, sizes);
     return formShelf(
-      context: context,
       host: host,
       section: section,
       title: l.themeHowItWorks,
@@ -835,7 +831,6 @@ class CuriousBlock extends ExploreBlock {
     final l = context.l10n;
     final double across = sizeOf(section, sizes);
     return formShelf(
-      context: context,
       host: host,
       section: section,
       title: l.themeCurious,
@@ -943,7 +938,6 @@ class MovingBlock extends ExploreBlock {
     }
 
     return formShelf(
-      context: context,
       host: host,
       section: section,
       title: l.themeMoving,
