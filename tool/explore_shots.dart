@@ -7,6 +7,7 @@
 //
 // A camera, not a check, so it lives outside test/ like the other shots.
 // The pictures land in tool/shots/explore/.
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -15,8 +16,12 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
+import 'package:astuto/models/pill.dart';
 import 'package:astuto/state/explore_play.dart';
+import 'package:astuto/sync/served.dart';
 
 Future<void> _loadFonts() async {
   final fonts = {
@@ -109,6 +114,142 @@ void main() {
     final double top = tester.getTopLeft(target).dy;
     await tester.drag(down(), Offset(0, -(top - above)));
     await settle(tester);
+  }
+
+  // Today's Explore on the three phones, at night and on paper: every
+  // screenful from the top, and the whole page in one picture at one pixel
+  // a point, which is what two runs are compared by. Into the gallery,
+  // which is not kept, under the label given:
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "three phones" \
+  //     --update-goldens --dart-define=EXPLORE_LABEL=before
+  const String label = String.fromEnvironment(
+    'EXPLORE_LABEL',
+    defaultValue: 'now',
+  );
+  const Map<String, Size> phones = {
+    '375': Size(375, 667),
+    '402': Size(402, 874),
+    '430': Size(430, 932),
+  };
+  for (final MapEntry<String, Size> phone in phones.entries) {
+    for (final bool paper in [false, true]) {
+      final String name = '${phone.key}-${paper ? 'light' : 'dark'}';
+      testWidgets('today on three phones: $name', (tester) async {
+        Future<void> take(String shot) => expectLater(
+          find.byType(MaterialApp).first,
+          matchesGoldenFile('shots/gallery/explore/today/$label/$shot.png'),
+        );
+        size(phone.value, 3);
+        await open(tester, paper: paper);
+        final ScrollableState list = tester.state(down());
+        final double step = phone.value.height * 0.75;
+        for (int i = 0; i < 60; i++) {
+          await take('$name-${i.toString().padLeft(2, '0')}');
+          final double before = list.position.pixels;
+          list.position.jumpTo(
+            (before + step).clamp(0, list.position.maxScrollExtent),
+          );
+          await settle(tester);
+          if (list.position.pixels == before) break;
+        }
+        // The app again from nothing, on a phone as tall as the page.
+        await tester.pumpWidget(const SizedBox());
+        size(Size(phone.value.width, 16000), 1);
+        await open(tester, paper: paper);
+        await take('$name-full');
+      });
+    }
+  }
+
+  // Today's Explore for a reader with a past: the server's Explore, as the
+  // phone kept it the last time it had signal, with the top list, loved
+  // since the start and the reader's own subject on it; a place with cards
+  // written about it; answers come back to be answered again; and every
+  // card of Economics read, so that subject has nothing left to find. The
+  // whole page, then the page narrowed to Economics.
+  Future<void> openAsReader(WidgetTester tester, {bool paper = false}) async {
+    final List<Pill> bank = PillBank.cards;
+    List<Pill> of(String topic, int n) =>
+        bank.where((p) => p.topic == topic).take(n).toList();
+    final List<Pill> due = bank
+        .where((p) => p.challenge is PickOne && p.topic == 'History')
+        .take(4)
+        .toList();
+    final String yesterday = dateKey(
+      DateTime.now().subtract(const Duration(days: 1)),
+    );
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      if (paper) 'knowit.theme': 'light',
+      'knowit.seenIds': [
+        for (final p in bank)
+          if (p.topic == 'Economics') p.id,
+        for (final p in of('Nature', 6)) p.id,
+      ],
+      'knowit.topicWeights': jsonEncode({'space': 1.0, 'history': 0.4}),
+      'knowit.place': jsonEncode({
+        'country': 'IT',
+        'region': 'IT-45',
+        'city': 'Bologna',
+        'lat': 44.494,
+        'lon': 11.343,
+      }),
+      'knowit.answersJson': jsonEncode({
+        for (int i = 0; i < due.length; i++)
+          due[i].id: {'r': '0', 's': i.isEven ? 1 : 0, 'd': yesterday},
+      }),
+    });
+    List<ServedRank> ranked(List<Pill> cards) => [
+      for (int i = 0; i < cards.length; i++) ServedRank(cards[i], 90 - i * 7),
+    ];
+    final ServedExplore served = ServedExplore(
+      day: dateKey(DateTime.now()),
+      today: pickedPills(seed: 'served-today', count: 24),
+      asking: askingPills(seed: 'served-asking', count: 40),
+      topWeek: ranked([...of('Psychology', 3), ...of('Space', 3)]),
+      topMonth: ranked([...of('History', 3), ...of('Food', 3)]),
+      loved: ranked([...of('Art', 3), ...of('Music', 3), ...of('Cinema', 2)]),
+      bySubject: const {},
+      because: 'space',
+      mine: of('Space', 10),
+      local: PillBank.placeCards
+          .where((p) => p.place?.city == 'Bologna')
+          .toList(),
+      fromCache: true,
+    );
+    // ignore: invalid_use_of_visible_for_testing_member
+    Served.useForTest(
+      Served(
+        storeOverride: MemoryServedStore()..shelves = served,
+        uidOverride: 'reader',
+      ),
+    );
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await settle(tester);
+  }
+
+  for (final MapEntry<String, Size> phone in phones.entries) {
+    for (final bool paper in [false, true]) {
+      final String name = '${phone.key}-${paper ? 'light' : 'dark'}';
+      testWidgets('today for a reader: $name', (tester) async {
+        Future<void> take(String shot) => expectLater(
+          find.byType(MaterialApp).first,
+          matchesGoldenFile('shots/gallery/explore/reader/$label/$shot.png'),
+        );
+        // ignore: invalid_use_of_visible_for_testing_member
+        addTearDown(() => Served.useForTest(Served()));
+        size(Size(phone.value.width, 16000), 1);
+        await openAsReader(tester, paper: paper);
+        await take('$name-full');
+        await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
+        await settle(tester);
+        await take('$name-economics');
+      });
+    }
   }
 
   testWidgets('Explore, top to bottom', (tester) async {
