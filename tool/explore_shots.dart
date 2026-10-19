@@ -20,6 +20,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/remote/remote.dart';
 import 'package:astuto/state/explore_play.dart';
 import 'package:astuto/sync/served.dart';
 
@@ -248,6 +249,59 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
         await settle(tester);
         await take('$name-economics');
+      });
+    }
+  }
+
+  // remote/examples/explore-gallery.json, taken up as the remote document
+  // would be: every core block at every size, on the three phones, at night
+  // and on paper, and on the small phone at a large text size. The whole
+  // page at two pixels a point, into the gallery under the label given:
+  //
+  //   flutter test tool/explore_shots.dart --plain-name "gallery" \
+  //     --update-goldens --dart-define=EXPLORE_LABEL=now
+  final Map<String, Object?> gallery = jsonDecode(
+    File('remote/examples/explore-gallery.json').readAsStringSync(),
+  ) as Map<String, Object?>;
+  for (final MapEntry<String, Size> phone in phones.entries) {
+    for (final (bool paper, double text) in [
+      (false, 1.0),
+      (true, 1.0),
+      if (phone.key == '375') (false, 1.35),
+    ]) {
+      final String name =
+          '${phone.key}-${paper ? 'light' : 'dark'}'
+          '${text == 1 ? '' : '-text${(text * 100).round()}'}';
+      testWidgets('gallery: $name', (tester) async {
+        Remote.adopt(
+          RemoteConfig(
+            hash: 'gallery',
+            schema: kRemoteSchema,
+            parts: {'explore': gallery},
+          ),
+        );
+        // ignore: invalid_use_of_visible_for_testing_member
+        addTearDown(Remote.reset);
+        tester.platformDispatcher.textScaleFactorTestValue = text;
+        addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+        size(Size(phone.value.width, 26000), 1);
+        // ignore: invalid_use_of_visible_for_testing_member
+        SharedPreferences.setMockInitialValues({
+          'knowit.onboarded': true,
+          if (paper) 'knowit.theme': 'light',
+          'knowit.savedIds': [
+            for (final p in PillBank.cards.take(400))
+              if (p.topic == 'Art') p.id,
+          ],
+        });
+        await tester.pumpWidget(const AstutoApp());
+        await settle(tester);
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await settle(tester);
+        await expectLater(
+          find.byType(MaterialApp).first,
+          matchesGoldenFile('shots/gallery/explore/core/$label/$name.png'),
+        );
       });
     }
   }

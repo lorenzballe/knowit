@@ -75,10 +75,11 @@ def _number(section: dict, field: str, low: float, high: float, label: str, whol
 
 def tile_look(width: float, height: float) -> dict:
     side = min(width, height)
+    tiny = side < 100
     return {
-        "padding": round(min(max(side * 0.085, 8), 24)),
-        "icon": 12 if side < 110 else 14 if side < 170 else 15 if side < 260 else 18,
-        "gap": round(min(max(side * 0.06, 5), 16)),
+        "padding": 7 if tiny else round(min(max(side * 0.085, 8), 24)),
+        "icon": 11 if tiny else 12 if side < 110 else 14 if side < 170 else 15 if side < 260 else 18,
+        "gap": 4 if tiny else round(min(max(side * 0.06, 5), 16)),
         "foot": height >= 200 and width >= 180,
         "min": 9.5 if side < 110 else 10 if side < 150 else 10.5 if side < 200 else 12 if side < 260 else 14,
     }

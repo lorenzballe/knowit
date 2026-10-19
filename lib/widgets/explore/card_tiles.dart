@@ -230,17 +230,26 @@ class TileLook {
       38,
     );
     final bool foot = box.height >= 200 && box.width >= 180;
+    // Under a hundred points, every point of margin is a word of the
+    // question: the margin, the mark and the room under it are the least
+    // that still read as a card. A four-column grid on the narrowest phone
+    // holds a fifth more of the bank for it.
+    final bool tiny = side < 100;
     return TileLook(
-      padding: (side * 0.085).clamp(8, 24).roundToDouble(),
+      padding: tiny ? 7 : (side * 0.085).clamp(8, 24).roundToDouble(),
       radius: (side * 0.11).clamp(13, 30).roundToDouble(),
-      icon: side < 110
+      icon: tiny
+          ? 11
+          : side < 110
           ? 12
           : side < 170
           ? 14
           : side < 260
           ? 15
           : 18,
-      tick: side < 110
+      tick: tiny
+          ? 10
+          : side < 110
           ? 11
           : side < 170
           ? 13
@@ -250,7 +259,7 @@ class TileLook {
       label: box.width >= 150,
       labelSize: box.width >= 260 ? 10 : 9,
       labelGap: box.width >= 260 ? 8 : 7,
-      questionGap: (side * 0.06).clamp(5, 16).roundToDouble(),
+      questionGap: tiny ? 4 : (side * 0.06).clamp(5, 16).roundToDouble(),
       min: min,
       max: max,
       lineHeight: max >= 24 ? 1.1 : 1.15,

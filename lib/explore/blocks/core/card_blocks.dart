@@ -196,7 +196,7 @@ class GridBlock extends ExploreBlock with SectionLayout {
         ? rawShape
         : 'portrait';
     final Size tile = tileFor(_across(context), columns, shape);
-    final List<Pill> cards = _fitting(
+    final List<Pill> fitting = _fitting(
       context,
       host,
       section,
@@ -204,7 +204,13 @@ class GridBlock extends ExploreBlock with SectionLayout {
       box: tile,
       look: TileLook.forBox(tile),
     );
-    if (cards.isEmpty) return null;
+    if (fitting.isEmpty) return null;
+    // Whole rows, once there is more than one: a grid that ends with a gap
+    // in its last row reads as a card gone missing. Fewer than a row stand
+    // as they are.
+    final List<Pill> cards = fitting.length > columns
+        ? fitting.take(fitting.length - fitting.length % columns).toList()
+        : fitting;
     final double gap = gapFor(columns);
     return _framed(
       host,
@@ -566,14 +572,19 @@ class _BannerTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // The mark level with the middle of the question, whatever its
+          // length, and the tick of a card read under it.
           SizedBox(
             width: side,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SubjectIcon(subject: pill.topic, size: 24, ink: pill.ink),
-                if (read) ReadTick(pill: pill, color: pill.ink, size: 15),
+                if (read) ...[
+                  const SizedBox(height: 8),
+                  ReadTick(pill: pill, color: pill.ink, size: 15),
+                ],
               ],
             ),
           ),
@@ -980,13 +991,16 @@ class _SmallDeckState extends State<SmallDeck>
     widget.onShown(top);
     final bool calm = MediaQuery.disableAnimationsOf(context);
     final List<Widget> layers = [
+      // The cards behind stand a step to the right of the one in front and
+      // a little smaller about their right edge, so each shows a strip of
+      // itself beside it, as a pile held in the hand.
       for (int d = behind; d >= 1; d--)
         Positioned(
           left: d * _fan,
-          top: d * _fan * 0.6,
+          top: 0,
           child: Transform.scale(
-            scale: 1 - d * 0.045,
-            alignment: Alignment.topLeft,
+            scale: 1 - d * 0.06,
+            alignment: Alignment.centerRight,
             child: CardDim(
               amount: context.p.isDark ? 0.32 * d : 0.36 * d,
               ground: context.p.surface,
@@ -1031,7 +1045,7 @@ class _SmallDeckState extends State<SmallDeck>
       child: Center(
         child: SizedBox(
           width: box.width + behind * _fan,
-          height: box.height + behind * _fan * 0.6,
+          height: box.height,
           child: Stack(clipBehavior: Clip.none, children: layers),
         ),
       ),

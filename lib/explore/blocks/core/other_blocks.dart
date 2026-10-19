@@ -127,22 +127,16 @@ class TextBlock extends ExploreBlock with SectionLayout {
       line: section.subtitle(host.language),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
+        // A headline stands against a rule of its subject's colour, as
+        // tall as the headline is, whatever it wraps to.
         child: section.json['kind'] == 'headline' && !centred
-            ? IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      width: 4,
-                      decoration: BoxDecoration(
-                        color: accent,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(child: body),
-                  ],
+            ? Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 14),
+                decoration: BoxDecoration(
+                  border: Border(left: BorderSide(color: accent, width: 4)),
                 ),
+                child: body,
               )
             : SizedBox(width: double.infinity, child: body),
       ),
