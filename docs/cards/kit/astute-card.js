@@ -206,7 +206,8 @@ const Kit = (() => {
     no: '<svg viewBox="0 0 24 24" width="56%" height="56%" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>'};
   function sure(host, question, onPick, words = {}) {
     const w = Object.assign({right: 'Right', wrong: 'Wrong', said: n => `you said ${n}%`}, words);
-    const build = () => { host.className = 'sure off'; host.innerHTML = `<span class="sq">${question}</span><div class="row">${LEVELS.map(v => `<button class="sb" data-v="${v}">${v}%</button>`).join('')}</div>`; };
+    // A row kept hidden until the answer is in (class gone) stays hidden when it is built.
+    const build = () => { host.className = 'sure off' + (host.classList.contains('gone') ? ' gone' : ''); host.innerHTML = `<span class="sq">${question}</span><div class="row">${LEVELS.map(v => `<button class="sb" data-v="${v}">${v}%</button>`).join('')}</div>`; };
     build();
     host.addEventListener('click', e => {
       const b = e.target.closest('.sb'); if (!b || !host.classList.contains('sure') || host.classList.contains('off')) return;

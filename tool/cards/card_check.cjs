@@ -202,7 +202,8 @@ async function single() {
     const s = await open(vp, opts);
     // Ready is a message to the app: wait for it to arrive, up to six seconds.
     for (let t = 0; t < 60 && !s.heard.some(m => m.t === 'ready'); t++) await s.page.waitForTimeout(100);
-    await s.page.waitForTimeout(400);
+    // Then for its entrance to settle: the start photographed is the start a reader looks at.
+    await s.page.waitForTimeout(1500);
     return s;
   }
   await browser.close();
