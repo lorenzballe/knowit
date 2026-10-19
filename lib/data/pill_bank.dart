@@ -159,10 +159,15 @@ class PillBank {
   /// goes only to the readers who live there, from [placeCards], so every
   /// deal, shelf, search and widget that reads this — the question of the
   /// day, the edition's cards, the cards at random and the reader's own,
-  /// every shelf of Explore — can never hand it to anybody else.
+  /// every shelf of Explore — can never hand it to anybody else. Nor is a
+  /// free card whose page needs a later kit than this build carries: an
+  /// older build skips what it does not know.
   static List<Pill> get cards => _dealable ??= List.unmodifiable(
     _bundle.cards.where(
-      (p) => !_bundle.retired.contains(p.id) && !p.isAboutAPlace,
+      (p) =>
+          !_bundle.retired.contains(p.id) &&
+          !p.isAboutAPlace &&
+          !p.needsLaterKit,
     ),
   );
 
@@ -170,7 +175,10 @@ class PillBank {
   /// (lib/data/local_cards.dart).
   static List<Pill> get placeCards => _local ??= List.unmodifiable(
     _bundle.cards.where(
-      (p) => !_bundle.retired.contains(p.id) && p.isAboutAPlace,
+      (p) =>
+          !_bundle.retired.contains(p.id) &&
+          p.isAboutAPlace &&
+          !p.needsLaterKit,
     ),
   );
 
