@@ -1022,6 +1022,7 @@ class AppState extends ChangeNotifier {
     TypeNumber() => 'type_number',
     Estimate() => 'estimate',
     TakeASide() => 'take_a_side',
+    PageJudged() => 'on_page',
   };
 
   /// When the card in front of the reader came up, for how long they

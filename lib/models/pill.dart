@@ -211,6 +211,39 @@ class TakeASide extends Challenge {
   }
 }
 
+/// Asked and marked by the card's own page: a free card (see [WebFace]),
+/// whose answer can be anything the page makes of it — a pin dropped on a
+/// map, chips stacked on a table, a line drawn — which only the page can
+/// tell right from wrong.
+///
+/// So the page says both, what the reader did and whether it was right,
+/// and the two are kept together as the response. The card can then be
+/// marked again without its page: on its back, on the journey, when it
+/// comes back for review, on a phone that cannot show the page at all.
+class PageJudged extends Challenge {
+  /// Whether the page says right or wrong. A page that asks for a guess
+  /// with nothing right about it is not marked, as a debate is not.
+  final bool graded;
+
+  const PageJudged({this.graded = true});
+
+  /// The response a page's answer is kept as: what the reader said, after
+  /// `1|` when it was right, `0|` when it was wrong, `-|` when nothing is.
+  static String encode(String choice, bool? correct) =>
+      '${correct == null ? '-' : (correct ? '1' : '0')}|$choice';
+
+  @override
+  bool accepts(String response) => graded && response.startsWith('1|');
+
+  @override
+  bool get isGraded => graded;
+
+  @override
+  String describe(String response) => response.length > 1 && response[1] == '|'
+      ? response.substring(2)
+      : response;
+}
+
 /// What the reader committed to: the answer, and how sure they were.
 ///
 /// Confidence is the whole point of calibration — being right matters less
@@ -341,6 +374,12 @@ const List<int> kReviewLadder = [2, 7, 21];
 /// without turning every card into a form.
 const List<int> kConfidenceLevels = [50, 60, 70, 80, 90];
 
+/// The level [sure] is nearest, for how sure a reader said they were
+/// somewhere the app did not draw the five: on a free card's page.
+int nearestConfidence(int sure) => kConfidenceLevels.reduce(
+  (a, b) => (a - sure).abs() <= (b - sure).abs() ? a : b,
+);
+
 /// How far a reader leant to a side of a debate, from 1 to 4, kept as how
 /// sure they are of that side on the same scale: a step past the middle is
 /// 60, the end of the track 90, the most sure the app lets anyone say they
@@ -407,6 +446,63 @@ enum Principle {
   final String oneLine;
 
   bool get isReal => this != Principle.none;
+}
+
+/// The card kit this build carries (docs/cards/kit, shipped as assets). A
+/// page made with a later kit may use what this one does not have, so it is
+/// never dealt here; a card that reaches the phone anyway — saved on
+/// another one, say — is drawn natively instead.
+const int kCardKit = 1;
+
+/// How a free card's page shares the finger with the deck.
+enum WebTouch {
+  /// Taps go to the page; a drag throws the card, as on any card.
+  taps,
+
+  /// The page also takes every touch that starts on the parts it holds the
+  /// finger itself — a slider, a canvas to draw on, a game — and the deck
+  /// keeps every drag that starts anywhere else.
+  drags,
+}
+
+/// The face of a free card: a web page made with the card kit, drawn
+/// inside the native card frame, where anything at all can be on a card.
+///
+/// The card keeps everything else a card has — its question, answer, line
+/// to keep, source and tags — because search, the widgets, notifications,
+/// sharing, the journey and screen readers read those, and because a phone
+/// that cannot show the page shows them instead.
+class WebFace {
+  /// The page, whole. It links the kit as `kit/…` and nothing else; the app
+  /// puts the kit, its libraries and its fonts inside it before it is shown
+  /// (lib/widgets/web/card_kit.dart).
+  final String html;
+
+  /// The version of the kit the page was made with (see [kCardKit]).
+  final int kit;
+
+  /// How it shares the finger with the deck.
+  final WebTouch touch;
+
+  /// What the face shows and asks, said in words, for a reader who cannot
+  /// see it.
+  final String label;
+
+  /// The colour the page is drawn on, where it is not its subject's: a
+  /// night card, dark with the subject only as an accent. The frame and the
+  /// poster under the page take it, so nothing flashes when the page is up.
+  final Color? ground;
+
+  const WebFace({
+    required this.html,
+    this.kit = 1,
+    this.touch = WebTouch.taps,
+    this.label = '',
+    this.ground,
+  });
+
+  /// Whether this build carries the kit the page needs.
+  bool get showable => kit <= kCardKit;
 }
 
 /// How much work a card expects.
@@ -536,6 +632,10 @@ class Pill {
   /// never to anybody else, by any road. Null on a card for everybody.
   final CardPlace? place;
 
+  /// The card's face as a web page, on a free card (see [WebFace]): the
+  /// page is the front, and the back is the card's own, as on any card.
+  final WebFace? web;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -575,6 +675,7 @@ class Pill {
     this.diagram,
     this.scene,
     this.place,
+    this.web,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card
@@ -603,6 +704,13 @@ class Pill {
   /// Whether the card is about a place, and so goes only to the readers who
   /// live there.
   bool get isAboutAPlace => place != null;
+
+  /// Whether the card's face is a page this build can show.
+  bool get hasPage => web?.showable ?? false;
+
+  /// Whether the card's page needs a later kit than this build carries: it
+  /// is never dealt here (see [kCardKit]).
+  bool get needsLaterKit => web != null && !web!.showable;
 
   bool get asksSomething => challenge is! NoChallenge;
   bool get hasHint => hint.isNotEmpty;

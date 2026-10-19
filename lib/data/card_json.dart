@@ -12,12 +12,15 @@
 /// two thousand files.
 library;
 
+import 'package:flutter/painting.dart' show Color;
+
 import '../models/pill.dart';
 import '../models/place.dart';
 import 'topics.dart';
 
-/// The kinds a card can be, as the bank names them.
-const kCardKinds = ['read', 'pickOne', 'number', 'estimate', 'debate'];
+/// The kinds a card can be, as the bank names them. `page` is a free card
+/// that asks on its page and is marked there (see [PageJudged]).
+const kCardKinds = ['read', 'pickOne', 'number', 'estimate', 'debate', 'page'];
 
 /// The topic key for a card, from the display name the model carries.
 String topicKeyOf(String topicName) {
@@ -34,6 +37,7 @@ String kindOf(Challenge c) => switch (c) {
   TypeNumber() => 'number',
   Estimate() => 'estimate',
   TakeASide() => 'debate',
+  PageJudged() => 'page',
 };
 
 /// The card as a JSON object. Optional fields are written only when set,
@@ -61,7 +65,7 @@ Map<String, Object?> cardToJson(Pill p) {
       out['withinFactor'] = withinFactor;
     case TakeASide(:final positions):
       out['sides'] = positions;
-    case NoChallenge():
+    case NoChallenge() || PageJudged():
       break;
   }
   out['answer'] = p.answer;
@@ -94,8 +98,67 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.figure.isNotEmpty) out['figure'] = p.figure;
   if (p.diagram != null) out['diagram'] = p.diagram!.raw;
   if (p.scene != null) out['scene'] = p.scene!.raw;
+  if (p.web != null) out['web'] = webToJson(p.web!, challenge: p.challenge);
   out['source'] = p.source;
   return out;
+}
+
+/// A free card's face as the bundle carries it: the page, inlined by
+/// tool/cards/bundle.py from the file kept beside the card, and what the
+/// app needs to show it. Whether a page that asks says right or wrong is
+/// the challenge's, and is written here because the bank keeps it here.
+Map<String, Object?> webToJson(WebFace web, {required Challenge challenge}) => {
+  'kit': web.kit,
+  'touch': web.touch.name,
+  if (challenge is PageJudged && !challenge.graded) 'graded': false,
+  if (web.label.isNotEmpty) 'label': web.label,
+  if (web.ground case final Color ground) 'ground': colourHex(ground),
+  'html': web.html,
+};
+
+/// A colour as the bank writes one: `#rrggbb`.
+String colourHex(Color c) =>
+    '#${(c.toARGB32() & 0xffffff).toRadixString(16).padLeft(6, '0')}';
+
+/// A free card's face from its JSON object, or null when the card has none.
+/// Throws [FormatException] on a face the app could not draw: no page, a
+/// way of touching it this build does not know, a ground that is no colour.
+WebFace? webFromJson(Object? raw, {Object? id}) {
+  if (raw == null) return null;
+  if (raw is! Map) throw FormatException('web is not an object', id);
+  final Object? html = raw['html'];
+  if (html is! String || html.trim().isEmpty) {
+    throw FormatException('a free card carries its page', id);
+  }
+  final Object? kit = raw['kit'] ?? 1;
+  if (kit is! int || kit < 1) throw FormatException('web.kit is a version', id);
+  // A page made with a later kit is not shown here at all, so whatever it
+  // says about the finger is the later kit's to read, not a fault in it.
+  final Object? touch = raw['touch'] ?? 'taps';
+  final WebTouch? way = WebTouch.values
+      .where((t) => t.name == touch)
+      .firstOrNull;
+  if (way == null && kit <= kCardKit) {
+    throw FormatException('web.touch "$touch" is unknown', id);
+  }
+  final Object? label = raw['label'] ?? '';
+  if (label is! String) throw FormatException('web.label is not text', id);
+  final Object? ground = raw['ground'];
+  Color? colour;
+  if (ground != null) {
+    final Match? m = ground is String
+        ? RegExp(r'^#([0-9a-fA-F]{6})$').firstMatch(ground)
+        : null;
+    if (m == null) throw FormatException('web.ground is #rrggbb', id);
+    colour = Color(0xff000000 | int.parse(m.group(1)!, radix: 16));
+  }
+  return WebFace(
+    html: html,
+    kit: kit,
+    touch: way ?? WebTouch.taps,
+    label: label,
+    ground: colour,
+  );
 }
 
 /// A card from its JSON object. Throws [FormatException] on anything the
@@ -148,6 +211,9 @@ Pill cardFromJson(Map<String, Object?> raw) {
       withinFactor: number('withinFactor', fallback: 3),
     ),
     'debate' => TakeASide(positions: list('sides')),
+    'page' => PageJudged(
+      graded: raw['web'] is! Map || (raw['web'] as Map)['graded'] != false,
+    ),
     _ => throw FormatException('unknown kind "$kind"', id),
   };
   if (challenge is PickOne &&
@@ -173,6 +239,12 @@ Pill cardFromJson(Map<String, Object?> raw) {
       .firstOrNull;
   if (principle == null) {
     throw FormatException('unknown principle "$principleName"', id);
+  }
+
+  // A card marked on its page has to bring the page.
+  final WebFace? web = webFromJson(raw['web'], id: id);
+  if (challenge is PageJudged && web == null) {
+    throw FormatException('a page card has no page', id);
   }
 
   // A place the app cannot read refuses the card, and the bundle with it:
@@ -224,5 +296,6 @@ Pill cardFromJson(Map<String, Object?> raw) {
     diagram: Diagram.fromJson(raw['diagram'], id: id),
     scene: Scene.fromJson(raw['scene'], id: id),
     place: place,
+    web: web,
   );
 }
