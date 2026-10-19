@@ -73,6 +73,7 @@ class ShapeVocabulary {
     this.fewest = 3,
     this.fields = const [],
     this.style = const {},
+    this.signatureKinds = const {},
   });
 
   /// The designs of the canvas it was drawn from (docs/explore/shapes.md).
@@ -100,12 +101,21 @@ class ShapeVocabulary {
   /// The keys it reads under `style`.
   final Map<String, ShapeStyleKey> style;
 
+  /// The kind its shelf keeps to with a signature that makes it another
+  /// shelf, when the section names none: a grid of figures is numbers.
+  final Map<String, String> signatureKinds;
+
+  /// The kind a shelf keeps to, with [signature], when its section names
+  /// none.
+  String kindWith(String signature) => signatureKinds[signature] ?? kind;
+
   /// As the checker's shapes.json writes it.
   Map<String, Object?> toJson() => {
     'canvas': canvas,
     'kind': kind,
     'sizes': kShapeSizes,
     'signatures': signatures,
+    'signatureKinds': signatureKinds,
     'limit': [limit, most],
     'min': fewest,
     'fields': fields,

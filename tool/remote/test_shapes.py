@@ -32,6 +32,9 @@ class WordsTest(unittest.TestCase):
             self.assertIn(spec["kind"], shapes.WORDS["kinds"], name)
             self.assertEqual(spec["sizes"], ["s", "m", "l"], name)
             self.assertTrue(spec["signatures"], name)
+            for signature, kind in spec["signatureKinds"].items():
+                self.assertIn(signature, spec["signatures"], name)
+                self.assertIn(kind, shapes.WORDS["kinds"], name)
 
     def test_the_explore_part_knows_every_block(self):
         known = explore.blocks()
@@ -95,6 +98,19 @@ class SectionTest(unittest.TestCase):
         self.assertEqual(check("shape-grid", subject="space"), [])
         self.assertTrue(check("shape-grid", subject="thinking"))
         self.assertIn("only for a month", check("shape-fold", subject="space")[0])
+
+    def test_a_signature_can_make_the_shelf_another_kind(self):
+        # A grid of figures keeps to numbers, as the app reads it: a month's
+        # subject means nothing to it unless the section says it is a month.
+        self.assertEqual(shapes.WORDS["blocks"]["shape-grid"]["signatureKinds"], {"figure": "numbers"})
+        self.assertIn("only for a month", check("shape-grid", signature="figure", subject="space")[0])
+        self.assertEqual(check("shape-grid", signature="figure", kind="month", subject="space"), [])
+        self.assertEqual(check("shape-grid", signature="none", subject="space"), [])
+        # A signature the block does not carry is refused, and the kind is
+        # the one the app falls back to.
+        problems = check("shape-grid", signature="quote", subject="space")
+        self.assertEqual(len(problems), 1)
+        self.assertIn("signature 'quote'", problems[0])
 
     def test_style_keys_are_the_blocks_own_and_of_their_kind(self):
         self.assertEqual(check("shape-stamp", style={"tilt": True}), [])

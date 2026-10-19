@@ -46,11 +46,14 @@ class GridBlock extends ShapeBlock {
   @override
   String get name => 'shape-grid';
 
+  /// A grid of figures is a shelf of numbers that surprise (132b): with the
+  /// figure signature the grid keeps to numbers unless told otherwise.
   @override
   ShapeVocabulary get words => const ShapeVocabulary(
     canvas: ['131c', '132b'],
     kind: 'month',
     signatures: ['none', 'figure'],
+    signatureKinds: {'figure': 'numbers'},
     limit: 4,
     most: 8,
     fewest: 2,

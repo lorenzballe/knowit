@@ -84,6 +84,11 @@ abstract class ShapeBlock extends ExploreBlock {
   /// What it reads from its section.
   ShapeVocabulary get words;
 
+  /// The kind of card [section]'s shelf keeps to when it names none: the
+  /// block's own, unless its signature makes it another shelf.
+  String kindFor(ExploreSection section) =>
+      words.kindWith(signatureOf(section));
+
   /// The cards it shows first when it has more than it needs, each lot in
   /// the order they came: none, unless a shape has a reason to prefer some.
   bool Function(Pill)? first(ExploreSection section) => null;
@@ -121,6 +126,7 @@ abstract class ShapeBlock extends ExploreBlock {
       host,
       section,
       words,
+      kind: kindFor(section),
       first: first(section),
       keep: keep(section),
       spare: spare,

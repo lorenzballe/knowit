@@ -122,7 +122,13 @@ def checker(name: str) -> Callable[[dict], list[str]]:
             isinstance(least, bool) or not isinstance(least, int) or not 1 <= least <= min(limit, most)
         ):
             problems.append(f"min is a whole number from 1 to the limit ({limit}), not {least!r}")
-        kind = section.get("kind", spec["kind"])
+        # The kind it keeps to when the section names none: the block's own,
+        # unless the signature it carries makes it another shelf, as the app
+        # reads it (a grid of figures is numbers).
+        signature = section.get("signature")
+        if signature not in spec["signatures"]:
+            signature = spec["signatures"][0]
+        kind = section.get("kind", spec["signatureKinds"].get(signature, spec["kind"]))
         if "kind" in section and kind not in WORDS["kinds"]:
             problems.append(f"kind {kind!r} is not one a shape keeps to: {', '.join(WORDS['kinds'])}")
         if "variant" in section:

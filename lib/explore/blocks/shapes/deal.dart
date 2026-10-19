@@ -38,10 +38,14 @@ class ShapeDeal {
   /// the kind: a list of figures takes only cards with a figure. A shape
   /// with slots of different sizes asks for [spare] cards beyond those it
   /// shows, to choose among.
+  ///
+  /// The shelf keeps to [kind] when the section names none: the block's own
+  /// unless the block says otherwise for this section.
   static ShapeDeal? of(
     ExploreHost host,
     ExploreSection section,
     ShapeVocabulary words, {
+    String? kind,
     bool Function(Pill)? first,
     bool Function(Pill)? keep,
     int spare = 0,
@@ -49,7 +53,7 @@ class ShapeDeal {
   }) {
     final ShapeAim aim = ShapeAim.of(
       section,
-      words.kind,
+      kind ?? words.kind,
       now ?? DateTime.now(),
     );
     final int limit = math.min(section.limit ?? words.limit, words.most);
