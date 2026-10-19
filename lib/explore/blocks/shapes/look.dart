@@ -139,22 +139,23 @@ int? sideTaken(Pill p, Answer? given) {
 String yearLabel(BuildContext context, Pill p) => OriginRow.when(context, p);
 
 /// Where a card falls on a line of time, for laying a shelf out in order:
-/// the year its question names, or the middle of the age it is set in, and
-/// cards set in no age last.
+/// where what it is labelled with begins — the year its question names, the
+/// first year of a decade, or the first of the age it is set in — so a line
+/// reads in order as it is read, "1900s" before "1915". Cards set in no age
+/// go last.
 double timeKey(Pill p) {
   final String? year = questionYear(p);
   if (year != null) {
     final double? y = double.tryParse(year.replaceAll('s', ''));
-    // "The 1820s" is the middle of the decade, not its first year.
-    if (y != null) return year.endsWith('s') ? y + 5 : y;
+    if (y != null) return y;
   }
   return switch (p.era) {
-    'ancient' => -500,
-    'medieval' => 1000,
-    'early_modern' => 1650,
-    'nineteenth' => 1850,
-    'twentieth' => 1950,
-    'recent' => 2010,
+    'ancient' => -800,
+    'medieval' => 500,
+    'early_modern' => 1500,
+    'nineteenth' => 1800,
+    'twentieth' => 1900,
+    'recent' => 2000,
     _ => 1e9,
   };
 }

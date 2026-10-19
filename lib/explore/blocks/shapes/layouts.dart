@@ -385,8 +385,10 @@ class TwoRowsBlock extends ShapeBlock {
         _sizes[sizeOf(deal.section)]!;
     final List<Pill> cards = deal.cards;
     final int columns = (cards.length / 2).ceil();
+    // The row keeps two points above and below its cards, as every
+    // sideways shelf does.
     return SideRow(
-      height: height * 2 + 10,
+      height: height * 2 + 10 + 4,
       count: columns,
       itemBuilder: (context, c) => SizedBox(
         width: width,

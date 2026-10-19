@@ -8,8 +8,10 @@ library;
 
 import '../explore_block.dart';
 import 'shapes/layouts.dart';
+import 'shapes/lists.dart';
 import 'shapes/rows.dart';
 import 'shapes/specials.dart';
+import 'shapes/stacks.dart';
 import 'shapes/years.dart';
 
 /// The blocks of this family, in the order the catalogue lists them.
@@ -41,4 +43,11 @@ const List<ExploreBlock> blocks = [
   BentoBlock(),
   TwoRowsBlock(),
   MasonryBlock(),
+  RowsBlock(),
+  ChecklistBlock(),
+  FiguresBlock(),
+  TimelineBlock(),
+  DeckBlock(),
+  PagerBlock(),
+  HandBlock(),
 ];
