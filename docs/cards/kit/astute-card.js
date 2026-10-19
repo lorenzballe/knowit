@@ -220,6 +220,8 @@ const Kit = (() => {
       grade(ok, pct, note) {
         host.className = 'grade ' + (ok ? 'ok' : 'no');
         host.innerHTML = `<i>${ok ? MARK.yes : MARK.no}</i><span>${note ? note + ' · ' : (ok ? w.right : w.wrong) + ' · '}${w.said(pct)}</span>`;
+        // A quick reader grades the row while it is still coming in: its own entrance gives way.
+        if (has()) { gsap.killTweensOf(host); gsap.set(host, {opacity: 1, y: 0}); }
         if (has() && !calm()) gsap.from(host, {opacity: 0, y: 6, duration: .35, ease: 'power3.out'});
       }
     };
