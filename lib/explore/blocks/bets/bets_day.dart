@@ -1,6 +1,7 @@
 /// What the reader bet on Explore today, kept on the phone.
 library;
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -218,14 +219,21 @@ class BetsDay extends ChangeNotifier {
   }
 
   /// A new day on the calendar starts clean, whenever it is first asked.
+  ///
+  /// It is asked while something is being drawn, which is no time to
+  /// redraw anything; so what shows the day — the points left beside a
+  /// shelf's name, which is drawn once and only redrawn when told — is told
+  /// as soon as the drawing is done.
   void _roll() {
     final String now = today;
     if (_day == now) return;
+    final bool started = _day.isNotEmpty;
     _day = now;
     _points = dailyPoints;
     _slip = [];
     _play = {};
     _deals = {};
+    if (started) scheduleMicrotask(notifyListeners);
   }
 
   /// The points left to stake today.

@@ -355,8 +355,11 @@ class StepScale {
     double? small;
     for (final double step in [magnitude / 10, magnitude / 20]) {
       if (step < 0.01 - 1e-12) break;
+      // Reached when the card itself counts the nearest step right: 27 is
+      // 0.3 from 27.3 in arithmetic and a hair more in a double, and the
+      // card judges the double.
       final double nearest = (a / step).round() * step;
-      if ((nearest - a).abs() <= answer.tolerance + 1e-9) {
+      if (answer.accepts(plainResponse(nearest))) {
         small = step;
         break;
       }

@@ -105,13 +105,14 @@ How each block reads a card's answer as a number (`BetAnswer.of`):
 
 What each block plays: the range and the bet of the day a share the card
 has typed or estimated; the stake any pick of amounts; the steppers a typed
-number that is not a share and that steps of a tenth or a twentieth of its
-size reach exactly within its tolerance (457 to the unit is left to the
-card); the magnitudes an estimate a power of ten is close enough to for the
+number that is not a share, where the card itself counts right the step of
+a tenth or a twentieth of its size nearest the answer (457 to the unit, or
+1.83 within 0.02, is left to the card: no step lands where the card would
+count it right); the magnitudes an estimate a power of ten is close enough to for the
 card to count right, or a pick of odds; the bigger of two and closer any
 share; the friend and the slip any card with a number for an answer. Across
 the bank today that is 54 cards for the range and the bet of the day, 133
-for stakes, 193 for steppers, 108 for the bigger of two and closer, 39 for
+for stakes, 190 for steppers, 108 for the bigger of two and closer, 39 for
 magnitudes, 438 for the friend and the slip.
 
 The first answer stands. A card already answered, here or anywhere, shows

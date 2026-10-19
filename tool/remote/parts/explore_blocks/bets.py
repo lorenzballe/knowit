@@ -265,8 +265,9 @@ def step_scale(card: dict, a: dict) -> Optional[dict]:
     for step in (magnitude / 10, magnitude / 20):
         if step < 0.01 - 1e-12:
             break
+        # Reached when the card itself counts the nearest step right.
         nearest = dart_round(v / step) * step
-        if abs(nearest - v) <= (a.get("tolerance") or 0.0) + 1e-9:
+        if accepts(card, plain_response(nearest)):
             small = step
             break
     if small is None:

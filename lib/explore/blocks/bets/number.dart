@@ -265,6 +265,36 @@ class NumberTile extends StatelessWidget {
       onPick: (s) => lay(s),
     );
 
+    // The number with its unit beside it, as the canvas has it, where both
+    // fit the tile; the unit under it where they do not, and the number
+    // itself set smaller rather than cut where it is wider than the tile —
+    // at a large text size, or a long number in a narrow tile.
+    final TextStyle numberStyle = AppText.display(
+      size: 46,
+      weight: FontWeight.w600,
+      height: 1,
+      spacing: -1.6,
+      color: ink.ink,
+    );
+    final TextStyle unitStyle = AppText.body(
+      size: 15,
+      weight: FontWeight.w600,
+      height: 1.15,
+      color: ink.sub,
+    );
+    final String shown = say(v);
+    final bool beside =
+        unit.isEmpty ||
+        betTextWidth(context, shown, numberStyle) +
+                7 +
+                widestWord(context, unit, unitStyle) <=
+            inner;
+    final Widget number = FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: AlignmentDirectional.centerStart,
+      child: Text(shown, maxLines: 1, style: numberStyle),
+    );
+    final Widget unitText = Text(unit, maxLines: 2, style: unitStyle);
     Widget game(Widget foot) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -273,37 +303,26 @@ class NumberTile extends StatelessWidget {
           label: l.betsNumberTitle,
           value: amount(v),
           child: ExcludeSemantics(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text(
-                  say(v),
-                  style: AppText.display(
-                    size: 46,
-                    weight: FontWeight.w600,
-                    height: 1,
-                    spacing: -1.6,
-                    color: ink.ink,
+            child: beside
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      number,
+                      if (unit.isNotEmpty) ...[
+                        const SizedBox(width: 7),
+                        Flexible(child: unitText),
+                      ],
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(width: inner, child: number),
+                      const SizedBox(height: 4),
+                      unitText,
+                    ],
                   ),
-                ),
-                if (unit.isNotEmpty) ...[
-                  const SizedBox(width: 7),
-                  Flexible(
-                    child: Text(
-                      unit,
-                      maxLines: 2,
-                      style: AppText.body(
-                        size: 15,
-                        weight: FontWeight.w600,
-                        height: 1.15,
-                        color: ink.sub,
-                      ),
-                    ),
-                  ),
-                ],
-              ],
-            ),
           ),
         ),
         const SizedBox(height: 14),
