@@ -3185,4 +3185,383 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '开启';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '要做的 $toDo 张，要读的 $toRead 张';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '做 $toDo · 读 $toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => '读';
+
+  @override
+  String get purposeFilterToDo => '做';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': '是真是假',
+      'pick': '选一个',
+      'typeNumber': '填个数字',
+      'bet': '押个数字',
+      'side': '选一边',
+      'youFirst': '你先答',
+      'moveIt': '拖动看看',
+      'whatNext': '接下来会怎样？',
+      'spotTrick': '找出花招',
+      'drawIt': '画出来',
+      'sortThem': '分一分',
+      'putInOrder': '排好顺序',
+      'holdIt': '长按',
+      'growSample': '扩大样本',
+      'askWhy': '追问为什么',
+      'sayPlainly': '说得简单些',
+      'pairUp': '配对',
+      'followClues': '顺着线索',
+      'look': '只管看',
+      'listen': '听一听',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return '阅读 · $n 分钟';
+  }
+
+  @override
+  String get purposeCommitNote => '先在这里作答，再打开卡片看看对不对。自己认定的答案，记得更久。';
+
+  @override
+  String get purposeCommitTitle => '先作答';
+
+  @override
+  String get purposeCommitLine => '先说出你的想法，再打开卡片';
+
+  @override
+  String get purposeInYourHeadLine => '在脑子里算出的数字';
+
+  @override
+  String get purposeInYourHead => '心算';
+
+  @override
+  String get purposeMoveKicker => '一招';
+
+  @override
+  String purposeMoveNew(int points) {
+    return '新招 · 掌握后 +$points';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '基础比率',
+      'survivorship': '幸存者偏差',
+      'regression': '均值回归',
+      'confirmation': '证实偏差',
+      'anchoring': '锚定',
+      'sampling': '抽样',
+      'confounding': '混杂因素',
+      'counterfactual': '跟什么比',
+      'multipleComparisons': '多次尝试',
+      'availability': '可得性',
+      'sunkCost': '沉没成本',
+      'conjunction': '合取',
+      'conditional': '条件概率',
+      'independence': '独立性',
+      'coincidence': '巧合',
+      'exponential': '指数增长',
+      'reflection': '快速答案',
+      'simpson': '汇总陷阱',
+      'estimation': '估算',
+      'computation': '算出来',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '检测准不准，不等于你有多大可能中招',
+      'survivorship': '你手上的数据，是活下来的数据',
+      'regression': '极端值会自己回到平均',
+      'confirmation': '只找“是”，算不上检验',
+      'anchoring': '第一个说出口的数字，会带动后面所有数字',
+      'sampling': '谁进了样本，决定了它能说明什么',
+      'confounding': '也许是别的东西同时导致了两者',
+      'counterfactual': '没有对照组，变化说明不了什么',
+      'multipleComparisons': '试得够多，总有一个会过',
+      'availability': '容易想到，不等于常见',
+      'sunkCost': '花掉的就花掉了，能决定的只有剩下的',
+      'conjunction': '细节让故事更可信，却更不可能',
+      'conditional': '你得知的信息会改变概率',
+      'independence': '运气没有记忆',
+      'coincidence': '尝试够多，罕见的事就会常见',
+      'exponential': '没人对翻倍有直觉',
+      'reflection': '最先冒出来的答案，正是该检查的答案',
+      'simpson': '整体可以偏向任何部分都不偏的方向',
+      'estimation': '把答不上的问题拆成能估的小块',
+      'computation': '一个你真能算完的问题',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '它本来有多常见？',
+      'survivorship': '什么从没进过数据？',
+      'regression': '会不会只是极端值回落？',
+      'confirmation': '什么能证明我错了？',
+      'anchoring': '最先出现的是哪个数字？',
+      'sampling': '谁被算进去了？',
+      'confounding': '还有什么能同时导致两者？',
+      'counterfactual': '跟什么比？',
+      'multipleComparisons': '一共试了多少样？',
+      'availability': '是真常见，还是只是容易想到？',
+      'sunkCost': '从这里起，还有什么可以决定？',
+      'conjunction': '每多一个细节，可能性是不是更低？',
+      'conditional': '知道这一点会改变什么？',
+      'independence': '上一次结果会影响下一次吗？',
+      'coincidence': '一共有多少次机会？',
+      'exponential': '再翻一倍会怎样？',
+      'reflection': '第一个答案是对的吗？',
+      'simpson': '每个部分都朝同一个方向偏吗？',
+      'estimation': '一路上我能估出什么？',
+      'computation': '能一步一步算出来吗？',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => '再难一级';
+
+  @override
+  String get purposeStepAboveLine => '比你平时读的难一点';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return '你读得最少：$subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$subject只读了 $percent%，是你读得最少的';
+  }
+
+  @override
+  String get purposeOtherSide => '另一边';
+
+  @override
+  String get purposeOtherSideLine => '你选了一边。这是反方最有力的理由';
+
+  @override
+  String purposeYouSaid(String side) {
+    return '你说$side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return '“$side”一方的理由';
+  }
+
+  @override
+  String get purposeMechanism => '机制';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return '$date更新';
+  }
+
+  @override
+  String get purposeMovingYears => '几年内可能会变';
+
+  @override
+  String get purposeMovingMonths => '今年就可能变';
+
+  @override
+  String get purposeWhy => '啊，原来如此';
+
+  @override
+  String get purposeWhyLine => '一个机制，讲到你恍然大悟';
+
+  @override
+  String purposeWhyBand(int n) {
+    return '为什么 · $n 分钟';
+  }
+
+  @override
+  String get purposeMe => '说的就是我';
+
+  @override
+  String get purposeMeLine => '你不知不觉在做的事';
+
+  @override
+  String get purposeMeFooter => '给说中你的卡片做个记号。';
+
+  @override
+  String get purposeAboutYou => '原来如此，还和我有关';
+
+  @override
+  String get purposeAboutYouLine => '你的身体、你的健康、你的概率';
+
+  @override
+  String get purposeHeadline => '在标题里';
+
+  @override
+  String get purposeHeadlineLine => '听起来比实际更好的研究和说法';
+
+  @override
+  String get purposeTheClaim => '说法';
+
+  @override
+  String get purposeNumber => '在数字里';
+
+  @override
+  String get purposeNumberLine => '值得再看一眼的概率和百分比';
+
+  @override
+  String get purposeOutOfWhat => '基数是多少？';
+
+  @override
+  String get purposeOffer => '在优惠里';
+
+  @override
+  String get purposeOfferLine => '价格、交易，以及到底谁在买单';
+
+  @override
+  String get purposeArgument => '在争论里';
+
+  @override
+  String get purposeArgumentLine => '推理失足的地方';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': '一个能识破大多数花招的问题',
+      '2': '两个能识破大多数花招的问题',
+      '3': '三个能识破大多数花招的问题',
+      '4': '四个能识破大多数花招的问题',
+      '5': '五个能识破大多数花招的问题',
+      'other': '$n 个能识破大多数花招的问题',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '金钱',
+      'work': '工作与时间',
+      'clock': '时间',
+      'body': '你的身体',
+      'relationships': '人际关系',
+      'belief': '你相信的事',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '我是在为真正用到的东西付钱吗？',
+      'work': '怎样让明天更容易开始？',
+      'clock': '我的时间到底去了哪里？',
+      'body': '我对自己身体的了解还对吗？',
+      'relationships': '身边的人真正需要什么？',
+      'belief': '我有多确定？为什么？',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '金钱',
+      'work': '工作',
+      'clock': '时间',
+      'body': '身体',
+      'relationships': '人际关系',
+      'belief': '我相信的事',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => '你想在哪方面问出更好的问题？';
+
+  @override
+  String get purposeLifeFooter => '随便选几个，相关的卡片就会出现在这里。';
+
+  @override
+  String get purposeSpotTrick => '找出花招';
+
+  @override
+  String get purposeSpotTrickLine => '哪个问题能识破它？';
+
+  @override
+  String get purposePlayed => '今天玩过的';
+
+  @override
+  String get purposePlayedOff => '平均偏差（点）';
+
+  @override
+  String get purposePlayedTricks => '识破的花招';
+
+  @override
+  String get purposePlayedAnswered => '在书架上作答';
+
+  @override
+  String get purposePlayedFooter => '在书架上作答，也会像“今天”里的回答一样计入“你的旅程”。';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n/$of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '已读 $n/$of';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return '$n 张全部读完。这个书架再轮到时，会加入新卡。';
+  }
+
+  @override
+  String get purposeComplete => '已集齐';
+
+  @override
+  String get purposeStampsFooter => '每读一张卡，就盖上一枚邮票。';
+
+  @override
+  String get purposeSets => '你的合集';
+
+  @override
+  String get purposeSetsLine => '读了就算数。不用作答也能集满。';
+
+  @override
+  String get purposeTomorrow => '明天的书架';
+
+  @override
+  String get purposeTomorrowLine => '书架每天都在换。接下来是这些';
+
+  @override
+  String get purposeEnd => '“探索”到底了';
+
+  @override
+  String get purposeEndLine => '明天见';
 }

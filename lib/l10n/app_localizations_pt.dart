@@ -3332,4 +3332,394 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Ativar';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '$toDo para fazer, $toRead para ler';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '$toDo para fazer · $toRead para ler';
+  }
+
+  @override
+  String get purposeFilterToRead => 'Ler';
+
+  @override
+  String get purposeFilterToDo => 'Fazer';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': 'Verdadeiro ou falso',
+      'pick': 'Escolhe uma',
+      'typeNumber': 'Escreve um número',
+      'bet': 'Aposta no número',
+      'side': 'Escolhe um lado',
+      'youFirst': 'Tu primeiro',
+      'moveIt': 'Mexe e vê',
+      'whatNext': 'O que acontece a seguir?',
+      'spotTrick': 'Descobre o truque',
+      'drawIt': 'Desenha',
+      'sortThem': 'Separa-os',
+      'putInOrder': 'Põe por ordem',
+      'holdIt': 'Mantém premido',
+      'growSample': 'Aumenta a amostra',
+      'askWhy': 'Pergunta porquê',
+      'sayPlainly': 'Di-lo de forma simples',
+      'pairUp': 'Emparelha',
+      'followClues': 'Segue as pistas',
+      'look': 'Só olhar',
+      'listen': 'Ouve',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return 'Ler · $n min';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'Responde aqui e depois abre a carta para veres se acertaste. Um palpite com que te comprometes fica contigo mais tempo.';
+
+  @override
+  String get purposeCommitTitle => 'Primeiro responde';
+
+  @override
+  String get purposeCommitLine => 'Diz o que pensas e depois abre a carta';
+
+  @override
+  String get purposeInYourHeadLine => 'Um número a que chegar de cabeça';
+
+  @override
+  String get purposeInYourHead => 'De cabeça';
+
+  @override
+  String get purposeMoveKicker => 'Uma jogada';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'Nova · +$points quando a dominares';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Taxas de base',
+      'survivorship': 'Sobrevivência',
+      'regression': 'Regressão à média',
+      'confirmation': 'Confirmação',
+      'anchoring': 'Ancoragem',
+      'sampling': 'Amostragem',
+      'confounding': 'Fator de confusão',
+      'counterfactual': 'Comparado com quê',
+      'multipleComparisons': 'Muitas tentativas',
+      'availability': 'Disponibilidade',
+      'sunkCost': 'Custo afundado',
+      'conjunction': 'Conjunção',
+      'conditional': 'Probabilidade condicionada',
+      'independence': 'Independência',
+      'coincidence': 'Coincidência',
+      'exponential': 'Crescimento exponencial',
+      'reflection': 'A resposta rápida',
+      'simpson': 'Totais',
+      'estimation': 'Estimativa',
+      'computation': 'Fazer as contas',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'A precisão de um teste não é a probabilidade de seres tu',
+      'survivorship': 'Os dados que tens são os que sobreviveram',
+      'regression': 'Os extremos voltam sozinhos à média',
+      'confirmation': 'Procurar um sim não é um teste',
+      'anchoring': 'O primeiro número dito mexe em todos os seguintes',
+      'sampling': 'Quem foi parar à amostra decide o que ela pode dizer',
+      'confounding': 'Talvez outra coisa cause as duas',
+      'counterfactual': 'Uma mudança não diz nada sem um grupo de controlo',
+      'multipleComparisons': 'Testa coisas suficientes e uma passa',
+      'availability': 'Fácil de imaginar não é o mesmo que frequente',
+      'sunkCost': 'O que se gastou está gasto; só se decide sobre o que resta',
+      'conjunction':
+          'O pormenor torna uma história mais credível e menos provável',
+      'conditional': 'O que te disseram muda as probabilidades',
+      'independence': 'O acaso não tem memória',
+      'coincidence': 'O raro é comum quando há muitas tentativas',
+      'exponential': 'Ninguém tem intuição para o que duplica',
+      'reflection': 'A resposta que chega primeiro é a que deves verificar',
+      'simpson': 'Um todo pode pender para onde nenhuma parte pende',
+      'estimation':
+          'Parte o impossível de responder em coisas que consegues estimar',
+      'computation': 'Um problema que consegues mesmo acabar',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Quão comum era à partida?',
+      'survivorship': 'O que nunca chegou aos dados?',
+      'regression': 'É só um extremo a voltar ao normal?',
+      'confirmation': 'O que provaria que me engano?',
+      'anchoring': 'Que número veio primeiro?',
+      'sampling': 'Quem foi contado?',
+      'confounding': 'Que outra coisa poderia causar as duas?',
+      'counterfactual': 'Comparado com quê?',
+      'multipleComparisons': 'Quantas coisas se experimentaram?',
+      'availability': 'É comum, ou só fácil de imaginar?',
+      'sunkCost': 'O que falta decidir a partir daqui?',
+      'conjunction': 'Cada pormenor torna-o menos provável?',
+      'conditional': 'O que muda saber isso?',
+      'independence': 'O último resultado muda o próximo?',
+      'coincidence': 'Quantas oportunidades houve?',
+      'exponential': 'O que acontece quando volta a duplicar?',
+      'reflection': 'A primeira resposta é a certa?',
+      'simpson': 'Todas as partes pendem para o mesmo lado?',
+      'estimation': 'O que posso estimar pelo caminho?',
+      'computation': 'Consigo calculá-lo passo a passo?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => 'Um degrau acima';
+
+  @override
+  String get purposeStepAboveLine => 'Mais difícil do que costumas ler';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'O que menos lês: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return 'Leste $percent% de $subject, o que menos leste';
+  }
+
+  @override
+  String get purposeOtherSide => 'O outro lado';
+
+  @override
+  String get purposeOtherSideLine =>
+      'Escolheste um lado. Eis o melhor argumento contra';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'Disseste $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return 'As razões do «$side»';
+  }
+
+  @override
+  String get purposeMechanism => 'O mecanismo';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return 'Atualizado a $date';
+  }
+
+  @override
+  String get purposeMovingYears => 'Pode mudar daqui a uns anos';
+
+  @override
+  String get purposeMovingMonths => 'Pode mudar ainda este ano';
+
+  @override
+  String get purposeWhy => 'Ah, então é por isso';
+
+  @override
+  String get purposeWhyLine => 'Um mecanismo, explicado até fazer clique';
+
+  @override
+  String purposeWhyBand(int n) {
+    return 'O porquê · $n min';
+  }
+
+  @override
+  String get purposeMe => 'Sou eu';
+
+  @override
+  String get purposeMeLine => 'Coisas que fazes sem reparar';
+
+  @override
+  String get purposeMeFooter => 'Marca as cartas em que te reconheces.';
+
+  @override
+  String get purposeAboutYou => 'Novo para mim, e sobre mim';
+
+  @override
+  String get purposeAboutYouLine =>
+      'O teu corpo, a tua saúde, as tuas probabilidades';
+
+  @override
+  String get purposeHeadline => 'Num título';
+
+  @override
+  String get purposeHeadlineLine =>
+      'Estudos e afirmações que soam melhor do que são';
+
+  @override
+  String get purposeTheClaim => 'A afirmação';
+
+  @override
+  String get purposeNumber => 'Num número';
+
+  @override
+  String get purposeNumberLine =>
+      'Probabilidades e percentagens que pedem um segundo olhar';
+
+  @override
+  String get purposeOutOfWhat => 'De quantos?';
+
+  @override
+  String get purposeOffer => 'Numa oferta';
+
+  @override
+  String get purposeOfferLine => 'Preços, negócios e quem paga mesmo';
+
+  @override
+  String get purposeArgument => 'Numa discussão';
+
+  @override
+  String get purposeArgumentLine => 'Onde o raciocínio escorrega';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'Uma pergunta que desmascara quase tudo isto',
+      '2': 'Duas perguntas que desmascaram quase tudo isto',
+      '3': 'Três perguntas que desmascaram quase tudo isto',
+      '4': 'Quatro perguntas que desmascaram quase tudo isto',
+      '5': 'Cinco perguntas que desmascaram quase tudo isto',
+      'other': '$n perguntas que desmascaram quase tudo isto',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Dinheiro',
+      'work': 'Trabalho e tempo',
+      'clock': 'Tempo',
+      'body': 'O teu corpo',
+      'relationships': 'Relações',
+      'belief': 'Aquilo em que acreditas',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Estou a pagar pelo que uso mesmo?',
+      'work': 'O que tornaria amanhã mais fácil de começar?',
+      'clock': 'Para onde vai mesmo o meu tempo?',
+      'body': 'O que sei sobre o meu corpo ainda é verdade?',
+      'relationships': 'De que precisam mesmo as pessoas próximas de mim?',
+      'belief': 'Até que ponto tenho a certeza, e porquê?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Dinheiro',
+      'work': 'Trabalho',
+      'clock': 'Tempo',
+      'body': 'Corpo',
+      'relationships': 'Relações',
+      'belief': 'Aquilo em que acredito',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => 'Sobre o que queres melhores perguntas?';
+
+  @override
+  String get purposeLifeFooter =>
+      'Escolhe os que quiseres e as cartas sobre isso aparecem aqui.';
+
+  @override
+  String get purposeSpotTrick => 'Descobre o truque';
+
+  @override
+  String get purposeSpotTrickLine => 'Que pergunta o desmascararia?';
+
+  @override
+  String get purposePlayed => 'O que jogaste hoje';
+
+  @override
+  String get purposePlayedOff => 'pontos de desvio, em média';
+
+  @override
+  String get purposePlayedTricks => 'truques descobertos';
+
+  @override
+  String get purposePlayedAnswered => 'respondidas numa estante';
+
+  @override
+  String get purposePlayedFooter =>
+      'As respostas dadas numa estante contam em «A tua viagem», como as de Hoje.';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n de $of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$n de $of lidas';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return 'Lidas as $n. Quando a estante voltar, juntam-se novas.';
+  }
+
+  @override
+  String get purposeComplete => 'Completa';
+
+  @override
+  String get purposeStampsFooter => 'Cada carta que lês acrescenta o seu selo.';
+
+  @override
+  String get purposeSets => 'As tuas coleções';
+
+  @override
+  String get purposeSetsLine =>
+      'Ler conta. Não precisas de responder para completar uma coleção.';
+
+  @override
+  String get purposeTomorrow => 'Amanhã nas estantes';
+
+  @override
+  String get purposeTomorrowLine =>
+      'As estantes mudam todos os dias. Estas vêm a seguir';
+
+  @override
+  String get purposeEnd => 'Chegaste ao fim de Explorar';
+
+  @override
+  String get purposeEndLine => 'Até amanhã';
 }

@@ -3271,4 +3271,394 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Aç';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '$toDo yapılacak, $toRead okunacak';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '$toDo yapılacak · $toRead okunacak';
+  }
+
+  @override
+  String get purposeFilterToRead => 'Oku';
+
+  @override
+  String get purposeFilterToDo => 'Yap';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': 'Doğru mu yanlış mı',
+      'pick': 'Birini seç',
+      'typeNumber': 'Sayı yaz',
+      'bet': 'Sayıya bahse gir',
+      'side': 'Taraf seç',
+      'youFirst': 'Önce sen',
+      'moveIt': 'Kaydır ve izle',
+      'whatNext': 'Sonra ne olacak?',
+      'spotTrick': 'Hileyi bul',
+      'drawIt': 'Çiz',
+      'sortThem': 'Ayıkla',
+      'putInOrder': 'Sıraya diz',
+      'holdIt': 'Basılı tut',
+      'growSample': 'Örneklemi büyüt',
+      'askWhy': 'Neden diye sor',
+      'sayPlainly': 'Sade söyle',
+      'pairUp': 'Eşleştir',
+      'followClues': 'İpuçlarını izle',
+      'look': 'Sadece bak',
+      'listen': 'Dinle',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return 'Oku · $n dk';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'Burada cevapla, sonra kartı açıp haklı mıymışsın gör. Kendini bağladığın bir tahmin aklında daha uzun kalır.';
+
+  @override
+  String get purposeCommitTitle => 'Önce cevapla';
+
+  @override
+  String get purposeCommitLine => 'Ne düşündüğünü söyle, sonra kartı aç';
+
+  @override
+  String get purposeInYourHeadLine => 'Kafadan bulunacak bir sayı';
+
+  @override
+  String get purposeInYourHead => 'Kafadan';
+
+  @override
+  String get purposeMoveKicker => 'Bir hamle';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'Yeni · ustalaşınca +$points';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Taban oranlar',
+      'survivorship': 'Hayatta kalan yanılgısı',
+      'regression': 'Ortalamaya dönüş',
+      'confirmation': 'Doğrulama',
+      'anchoring': 'Çapalama',
+      'sampling': 'Örneklem',
+      'confounding': 'Karıştırıcı etken',
+      'counterfactual': 'Neye göre',
+      'multipleComparisons': 'Çok deneme',
+      'availability': 'Akla gelebilirlik',
+      'sunkCost': 'Batık maliyet',
+      'conjunction': 'Birleşim',
+      'conditional': 'Koşullu olasılık',
+      'independence': 'Bağımsızlık',
+      'coincidence': 'Tesadüf',
+      'exponential': 'Üstel büyüme',
+      'reflection': 'Hızlı cevap',
+      'simpson': 'Toplamlar',
+      'estimation': 'Tahmin',
+      'computation': 'Hesaplama',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate':
+          'Bir testin isabeti, senin o durumda olma olasılığın değildir',
+      'survivorship': 'Elindeki veri, hayatta kalan veridir',
+      'regression': 'Uç değerler kendiliğinden ortalamaya döner',
+      'confirmation': 'Evet aramak bir sınama değildir',
+      'anchoring': 'İlk söylenen sayı, sonraki her sayıyı kaydırır',
+      'sampling': 'Örnekleme kimin girdiği, onun ne söyleyebileceğini belirler',
+      'confounding': 'İkisine de başka bir şey yol açıyor olabilir',
+      'counterfactual':
+          'Karşılaştırma grubu olmadan bir değişim hiçbir şey ifade etmez',
+      'multipleComparisons': 'Yeterince şey dene, biri geçer',
+      'availability': 'Kolay hayal edilen, sık görülen demek değildir',
+      'sunkCost': 'Harcanan harcandı; karar ancak kalan için verilir',
+      'conjunction':
+          'Ayrıntı, hikâyeyi daha inandırıcı ama daha az olası yapar',
+      'conditional': 'Sana söylenen şey olasılıkları değiştirir',
+      'independence': 'Şansın hafızası yoktur',
+      'coincidence': 'Deneme çoksa nadir olan sık görülür',
+      'exponential': 'Kimsenin ikiye katlanmaya dair sezgisi yoktur',
+      'reflection': 'İlk gelen cevap, kontrol edilmesi gereken cevaptır',
+      'simpson': 'Bütün, hiçbir parçanın eğilmediği yöne eğilebilir',
+      'estimation': 'Cevaplanamayanı tahmin edebileceğin parçalara böl',
+      'computation': 'Gerçekten bitirebileceğin bir problem',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Başta ne kadar yaygındı?',
+      'survivorship': 'Verilere hiç girmeyen ne?',
+      'regression': 'Sadece ortalamaya dönen bir uç değer mi?',
+      'confirmation': 'Yanıldığımı ne gösterirdi?',
+      'anchoring': 'Hangi sayı önce geldi?',
+      'sampling': 'Kimler sayıldı?',
+      'confounding': 'İkisine birden ne yol açmış olabilir?',
+      'counterfactual': 'Neye göre?',
+      'multipleComparisons': 'Kaç şey denendi?',
+      'availability': 'Yaygın mı, yoksa sadece kolay mı canlanıyor?',
+      'sunkCost': 'Buradan sonra karar verilecek ne kaldı?',
+      'conjunction': 'Her ayrıntı onu daha az olası yapıyor mu?',
+      'conditional': 'Bunu bilmek neyi değiştirir?',
+      'independence': 'Son sonuç bir sonrakini değiştirir mi?',
+      'coincidence': 'Kaç fırsat vardı?',
+      'exponential': 'Bir kez daha ikiye katlanınca ne olur?',
+      'reflection': 'İlk cevap doğru olan mı?',
+      'simpson': 'Her parça aynı yöne mi eğiliyor?',
+      'estimation': 'Yolda neyi tahmin edebilirim?',
+      'computation': 'Adım adım hesaplayabilir miyim?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => 'Bir basamak yukarı';
+
+  @override
+  String get purposeStepAboveLine => 'Genelde okuduklarından daha zor';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'En az okuduğun: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$subject rafının %$percent kadarı okundu, en azı bu';
+  }
+
+  @override
+  String get purposeOtherSide => 'Öbür taraf';
+
+  @override
+  String get purposeOtherSideLine =>
+      'Bir taraf seçtin. İşte ona karşı en güçlü argüman';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'Cevabın: $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return '«$side» diyenlerin gerekçeleri';
+  }
+
+  @override
+  String get purposeMechanism => 'Mekanizma';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return '$date tarihinde güncellendi';
+  }
+
+  @override
+  String get purposeMovingYears => 'Birkaç yıl içinde değişebilir';
+
+  @override
+  String get purposeMovingMonths => 'Bu yıl içinde değişebilir';
+
+  @override
+  String get purposeWhy => 'Ha, demek bu yüzden';
+
+  @override
+  String get purposeWhyLine => 'Tek bir mekanizma, kafana yatana kadar';
+
+  @override
+  String purposeWhyBand(int n) {
+    return 'Nedeni · $n dk';
+  }
+
+  @override
+  String get purposeMe => 'Bu benim';
+
+  @override
+  String get purposeMeLine => 'Fark etmeden yaptığın şeyler';
+
+  @override
+  String get purposeMeFooter => 'Kendini bulduğun kartları işaretle.';
+
+  @override
+  String get purposeAboutYou => 'Bilmiyordum, üstelik benimle ilgili';
+
+  @override
+  String get purposeAboutYouLine => 'Bedenin, sağlığın, olasılıkların';
+
+  @override
+  String get purposeHeadline => 'Bir manşette';
+
+  @override
+  String get purposeHeadlineLine =>
+      'Olduğundan iyi görünen araştırmalar ve iddialar';
+
+  @override
+  String get purposeTheClaim => 'İddia';
+
+  @override
+  String get purposeNumber => 'Bir sayıda';
+
+  @override
+  String get purposeNumberLine =>
+      'İkinci kez bakılması gereken olasılıklar ve yüzdeler';
+
+  @override
+  String get purposeOutOfWhat => 'Kaçta kaç?';
+
+  @override
+  String get purposeOffer => 'Bir teklifte';
+
+  @override
+  String get purposeOfferLine =>
+      'Fiyatlar, fırsatlar ve gerçekte kimin ödediği';
+
+  @override
+  String get purposeArgument => 'Bir tartışmada';
+
+  @override
+  String get purposeArgumentLine => 'Akıl yürütmenin kaydığı yer';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'Bunların çoğunu yakalayan bir soru',
+      '2': 'Bunların çoğunu yakalayan iki soru',
+      '3': 'Bunların çoğunu yakalayan üç soru',
+      '4': 'Bunların çoğunu yakalayan dört soru',
+      '5': 'Bunların çoğunu yakalayan beş soru',
+      'other': 'Bunların çoğunu yakalayan $n soru',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Para',
+      'work': 'İş ve zaman',
+      'clock': 'Zaman',
+      'body': 'Bedenin',
+      'relationships': 'İlişkiler',
+      'belief': 'İnandıkların',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Gerçekten kullandığım şeye mi para ödüyorum?',
+      'work': 'Yarına başlamayı ne kolaylaştırırdı?',
+      'clock': 'Zamanım gerçekte nereye gidiyor?',
+      'body': 'Bedenim hakkında bildiklerim hâlâ doğru mu?',
+      'relationships': 'Yakınımdaki insanların gerçekten neye ihtiyacı var?',
+      'belief': 'Ne kadar eminim, ve neden?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Para',
+      'work': 'İş',
+      'clock': 'Zaman',
+      'body': 'Beden',
+      'relationships': 'İlişkiler',
+      'belief': 'İnandıklarım',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => 'Hangi konuda daha iyi sorular istersin?';
+
+  @override
+  String get purposeLifeFooter =>
+      'İstediklerini seç, onlarla ilgili kartlar burada çıksın.';
+
+  @override
+  String get purposeSpotTrick => 'Hileyi bul';
+
+  @override
+  String get purposeSpotTrickLine => 'Hangi soru onu yakalardı?';
+
+  @override
+  String get purposePlayed => 'Bugün oynadıkların';
+
+  @override
+  String get purposePlayedOff => 'ortalama sapma puanı';
+
+  @override
+  String get purposePlayedTricks => 'yakalanan hile';
+
+  @override
+  String get purposePlayedAnswered => 'rafta cevaplanan';
+
+  @override
+  String get purposePlayedFooter =>
+      'Rafta verdiğin cevaplar, Bugün\'dekiler gibi Yolculuğun\'da sayılır.';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$of içinde $n';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$of karttan $n okundu';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return '$n kartın hepsi okundu. Raf yeniden gelince yenileri eklenecek.';
+  }
+
+  @override
+  String get purposeComplete => 'Tamamlandı';
+
+  @override
+  String get purposeStampsFooter => 'Okuduğun her kart pulunu ekler.';
+
+  @override
+  String get purposeSets => 'Setlerin';
+
+  @override
+  String get purposeSetsLine =>
+      'Okumak da sayılır. Bir seti doldurmak için cevaplaman gerekmez.';
+
+  @override
+  String get purposeTomorrow => 'Yarın raflarda';
+
+  @override
+  String get purposeTomorrowLine => 'Raflar her gün değişir. Sırada bunlar var';
+
+  @override
+  String get purposeEnd => 'Keşfet\'in sonuna geldin';
+
+  @override
+  String get purposeEndLine => 'Yarın görüşürüz';
 }

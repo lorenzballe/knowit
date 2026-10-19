@@ -3177,4 +3177,384 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'オンにする';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return 'やる$toDo枚、読む$toRead枚';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return 'やる$toDo · 読む$toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => '読む';
+
+  @override
+  String get purposeFilterToDo => 'やる';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': '正しい？間違い？',
+      'pick': '1つ選ぶ',
+      'typeNumber': '数字を入れる',
+      'bet': '数字に賭ける',
+      'side': 'どちらかを選ぶ',
+      'youFirst': 'まず自分で',
+      'moveIt': '動かして見る',
+      'whatNext': '次に何が起こる？',
+      'spotTrick': 'トリックを見抜く',
+      'drawIt': '描いてみる',
+      'sortThem': '仕分ける',
+      'putInOrder': '順番に並べる',
+      'holdIt': '長押しする',
+      'growSample': 'サンプルを増やす',
+      'askWhy': 'なぜかを問う',
+      'sayPlainly': 'やさしく言い換える',
+      'pairUp': '組み合わせる',
+      'followClues': '手がかりをたどる',
+      'look': 'ただ見る',
+      'listen': '聴く',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return '読む · $n分';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'ここで答えてから、カードを開いて合っていたか確かめよう。自分で決めた答えは、長く記憶に残る。';
+
+  @override
+  String get purposeCommitTitle => 'まず答える';
+
+  @override
+  String get purposeCommitLine => '考えを決めてから、カードを開こう';
+
+  @override
+  String get purposeInYourHeadLine => '頭の中でたどり着く数字';
+
+  @override
+  String get purposeInYourHead => '頭の中で';
+
+  @override
+  String get purposeMoveKicker => 'ひとつの手';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'はじめて · 身につけたら+$points';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '基準率',
+      'survivorship': '生存者バイアス',
+      'regression': '平均への回帰',
+      'confirmation': '確証バイアス',
+      'anchoring': 'アンカリング',
+      'sampling': 'サンプル',
+      'confounding': '交絡',
+      'counterfactual': '何と比べて',
+      'multipleComparisons': '何度も試す',
+      'availability': '利用可能性',
+      'sunkCost': 'サンクコスト',
+      'conjunction': '連言',
+      'conditional': '条件付き確率',
+      'independence': '独立',
+      'coincidence': '偶然の一致',
+      'exponential': '指数関数的成長',
+      'reflection': 'とっさの答え',
+      'simpson': '集計',
+      'estimation': '見積もり',
+      'computation': '計算する',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '検査の正確さは、あなたが当てはまる確率ではない',
+      'survivorship': '手元のデータは、生き残ったデータだ',
+      'regression': '極端な値は、ひとりでに平均へ戻る',
+      'confirmation': '「はい」を探すのは検証ではない',
+      'anchoring': '最初に聞いた数字が、その後のすべてを動かす',
+      'sampling': '誰がサンプルに入ったかで、言えることが決まる',
+      'confounding': '別の何かが両方を引き起こしているのかも',
+      'counterfactual': '比べる相手がなければ、変化は何も語らない',
+      'multipleComparisons': 'たくさん試せば、どれかは通る',
+      'availability': '思い浮かべやすいことが、よくあることとは限らない',
+      'sunkCost': '使ったものは戻らない。決められるのは残りだけ',
+      'conjunction': '細部は話をもっともらしくし、確率を下げる',
+      'conditional': '教えられたことで、確率は変わる',
+      'independence': '偶然には記憶がない',
+      'coincidence': '試行が多ければ、まれなこともよく起こる',
+      'exponential': '倍々に増えることは、誰の直感にもない',
+      'reflection': '真っ先に浮かんだ答えこそ、確かめるべき答え',
+      'simpson': '全体は、どの部分も傾かない方へ傾くことがある',
+      'estimation': '答えようのない問いを、見積もれる部分に分ける',
+      'computation': '最後まで解き切れる問題',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'そもそも、どれくらいありふれていた？',
+      'survivorship': 'データに入らなかったものは？',
+      'regression': '極端な値が戻っただけでは？',
+      'confirmation': '何があれば自分の間違いがわかる？',
+      'anchoring': '最初に出た数字はどれ？',
+      'sampling': '誰が数えられた？',
+      'confounding': '両方を引き起こすほかの何かは？',
+      'counterfactual': '何と比べて？',
+      'multipleComparisons': 'いくつ試した？',
+      'availability': 'よくあることか、思い浮かべやすいだけか？',
+      'sunkCost': 'ここから決められることは何？',
+      'conjunction': '細部が増えるたびに、確率は下がっていない？',
+      'conditional': 'それを知ると何が変わる？',
+      'independence': '前の結果は次に影響する？',
+      'coincidence': 'チャンスは何回あった？',
+      'exponential': 'もう一度倍になったらどうなる？',
+      'reflection': '最初の答えで本当に合っている？',
+      'simpson': 'どの部分も同じ方向に傾いている？',
+      'estimation': '途中で何を見積もれる？',
+      'computation': '一歩ずつ計算できる？',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => '一段上へ';
+
+  @override
+  String get purposeStepAboveLine => 'いつも読むものより少し難しい';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'あまり読んでいない：$subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$subjectは$percent%しか読んでいない。いちばん少ない';
+  }
+
+  @override
+  String get purposeOtherSide => '反対の側';
+
+  @override
+  String get purposeOtherSideLine => 'あなたはどちらかを選んだ。その反論でいちばん強いものを';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'あなたは$side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return '「$side」側の言い分';
+  }
+
+  @override
+  String get purposeMechanism => '仕組み';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return '$date更新';
+  }
+
+  @override
+  String get purposeMovingYears => '数年で変わるかも';
+
+  @override
+  String get purposeMovingMonths => '今年中に変わるかも';
+
+  @override
+  String get purposeWhy => 'なるほど、そういうことか';
+
+  @override
+  String get purposeWhyLine => 'ひとつの仕組みを、腑に落ちるまで';
+
+  @override
+  String purposeWhyBand(int n) {
+    return '理由 · $n分';
+  }
+
+  @override
+  String get purposeMe => 'これは自分だ';
+
+  @override
+  String get purposeMeLine => '気づかずにやっていること';
+
+  @override
+  String get purposeMeFooter => '自分のことだと思うカードに印をつけよう。';
+
+  @override
+  String get purposeAboutYou => '知らなかった、しかも自分のこと';
+
+  @override
+  String get purposeAboutYouLine => 'あなたの体、健康、確率';
+
+  @override
+  String get purposeHeadline => '見出しの中に';
+
+  @override
+  String get purposeHeadlineLine => '実際よりよく聞こえる研究や主張';
+
+  @override
+  String get purposeTheClaim => '主張';
+
+  @override
+  String get purposeNumber => '数字の中に';
+
+  @override
+  String get purposeNumberLine => 'もう一度見直したい確率と割合';
+
+  @override
+  String get purposeOutOfWhat => '何のうち？';
+
+  @override
+  String get purposeOffer => 'お得な話の中に';
+
+  @override
+  String get purposeOfferLine => '値段、取引、そして本当に払うのは誰か';
+
+  @override
+  String get purposeArgument => '議論の中に';
+
+  @override
+  String get purposeArgumentLine => '推論がつまずくところ';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'これらの大半を見抜く、ひとつの問い',
+      '2': 'これらの大半を見抜く、ふたつの問い',
+      '3': 'これらの大半を見抜く、みっつの問い',
+      '4': 'これらの大半を見抜く、よっつの問い',
+      '5': 'これらの大半を見抜く、いつつの問い',
+      'other': 'これらの大半を見抜く、$nつの問い',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'お金',
+      'work': '仕事と時間',
+      'clock': '時間',
+      'body': 'あなたの体',
+      'relationships': '人間関係',
+      'belief': '信じていること',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '本当に使っているものにお金を払っている？',
+      'work': '明日を始めやすくするには？',
+      'clock': '自分の時間は本当はどこへ行っている？',
+      'body': '体について知っていることは、今も正しい？',
+      'relationships': '身近な人が本当に必要としているものは？',
+      'belief': 'どれくらい確かで、なぜそう思う？',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'お金',
+      'work': '仕事',
+      'clock': '時間',
+      'body': '体',
+      'relationships': '人間関係',
+      'belief': '信じていること',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => '何について、いい問いがほしい？';
+
+  @override
+  String get purposeLifeFooter => '好きなだけ選ぶと、それを問うカードがここに出てくる。';
+
+  @override
+  String get purposeSpotTrick => 'トリックを見抜く';
+
+  @override
+  String get purposeSpotTrickLine => 'どの問いなら見抜ける？';
+
+  @override
+  String get purposePlayed => '今日あそんだもの';
+
+  @override
+  String get purposePlayedOff => '平均のずれ（ポイント）';
+
+  @override
+  String get purposePlayedTricks => '見抜いたトリック';
+
+  @override
+  String get purposePlayedAnswered => '棚で答えた';
+
+  @override
+  String get purposePlayedFooter => '棚で答えたものも、「今日」と同じく「あなたの旅」に数えられる。';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$of中$n';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$of枚中$n枚読んだ';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return '$n枚すべて読んだ。棚がまた巡ってきたら、新しいカードが加わる。';
+  }
+
+  @override
+  String get purposeComplete => '完了';
+
+  @override
+  String get purposeStampsFooter => 'カードを読むたびに、切手が1枚増える。';
+
+  @override
+  String get purposeSets => 'あなたのセット';
+
+  @override
+  String get purposeSetsLine => '読むだけで数に入る。答えなくてもセットは埋まる。';
+
+  @override
+  String get purposeTomorrow => '明日の棚';
+
+  @override
+  String get purposeTomorrowLine => '棚は毎日変わる。次に来るのはこれ';
+
+  @override
+  String get purposeEnd => '「探す」はここまで';
+
+  @override
+  String get purposeEndLine => 'また明日';
 }
