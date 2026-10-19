@@ -101,7 +101,7 @@ enum CommitKind {
   /// A debate's two sides.
   side('side'),
 
-  /// Two or three options, one under the other.
+  /// Three amounts, one under the other.
   pick('pick'),
 
   /// Each card as it asks.
@@ -116,7 +116,9 @@ enum CommitKind {
   /// take: a number to type, a scene to play.
   static CommitKind? of(Pill p) => switch (p.challenge) {
     PickOne() when isTrueOrFalse(p) => CommitKind.trueFalse,
-    PickOne() => CommitKind.pick,
+    // Three amounts, the canvas's: options that are sentences want the
+    // card's own room, not a shelf's.
+    PickOne() when isNumberPick(p) => CommitKind.pick,
     TakeASide(:final positions) when positions.length >= 2 => CommitKind.side,
     _ => null,
   };
@@ -158,13 +160,16 @@ class CommitBlock extends ExploreBlock {
     final CommitKind kind =
         CommitKind.values.where((k) => k.word == asked).firstOrNull ??
         CommitKind.any;
+    final Set<String> said = PurposePlay.setOf('said');
     final List<Pill> cards = cardsOf(
       host,
       section,
       limit: 8,
       canDraw: (p) {
         final CommitKind? own = CommitKind.of(p);
-        return own != null && (kind == CommitKind.any || own == kind);
+        return own != null &&
+            (kind == CommitKind.any || own == kind) &&
+            askable(host, p, said);
       },
     );
     if (cards.isEmpty) return null;
@@ -293,8 +298,6 @@ class _CommitTileState extends State<CommitTile> {
                 child: Text(
                   verdict,
                   key: ValueKey('commit-verdict-${p.id}'),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                   style: AppText.body(
                     size: 12,
                     weight: FontWeight.w700,
@@ -350,34 +353,38 @@ class _CommitTileState extends State<CommitTile> {
     };
     final bool graded = p.isGraded;
     final String? right = graded ? '${(p.challenge as PickOne).correct}' : null;
-    return Row(
-      children: [
-        for (int i = 0; i < sides.length; i++) ...[
-          if (i > 0) const SizedBox(width: 6),
-          Expanded(
-            child: _AnswerButton(
-              key: ValueKey('commit-${p.id}-${sides[i].$2}'),
-              pill: p,
-              label: sides[i].$1,
-              height: 40,
-              radius: 12,
-              size: 13,
-              centred: true,
-              solid: answer == sides[i].$2,
-              struck: answer == sides[i].$2 && graded && answer != right,
-              ringed:
-                  answer != null &&
-                  answer != sides[i].$2 &&
-                  sides[i].$2 == right,
-              faded:
-                  answer != null &&
-                  answer != sides[i].$2 &&
-                  sides[i].$2 != right,
-              onTap: answer == null ? () => _say(sides[i].$2) : null,
+    // A side that runs to two lines makes both buttons as tall.
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (int i = 0; i < sides.length; i++) ...[
+            if (i > 0) const SizedBox(width: 6),
+            Expanded(
+              child: _AnswerButton(
+                key: ValueKey('commit-${p.id}-${sides[i].$2}'),
+                pill: p,
+                label: sides[i].$1,
+                height: 40,
+                radius: 12,
+                size: 13,
+                centred: true,
+                solid: answer == sides[i].$2,
+                struck: answer == sides[i].$2 && graded && answer != right,
+                ringed:
+                    answer != null &&
+                    answer != sides[i].$2 &&
+                    sides[i].$2 == right,
+                faded:
+                    answer != null &&
+                    answer != sides[i].$2 &&
+                    sides[i].$2 != right,
+                onTap: answer == null ? () => _say(sides[i].$2) : null,
+              ),
             ),
-          ),
+          ],
         ],
-      ],
+      ),
     );
   }
 
@@ -411,6 +418,14 @@ class _CommitTileState extends State<CommitTile> {
   }
 }
 
+/// Whether [p] can still be answered first: neither read nor answered —
+/// committing to an answer already seen commits to nothing — unless it was
+/// answered on one of these shelves today, which keeps its verdict on the
+/// shelf rather than taking the card away the moment it is answered.
+bool askable(ExploreHost host, Pill p, Set<String> said) =>
+    said.contains(p.id) ||
+    (!host.isRead(p) && host.app.answerFor(p.id) == null);
+
 /// "Yes, require the record" reads as Yes on a button: the word before the
 /// comma when there is one and it is short, the whole side otherwise — as
 /// the debate shelf above has it.
@@ -443,6 +458,8 @@ class _AnswerButton extends StatelessWidget {
 
   final Pill pill;
   final String label;
+
+  /// How tall the button is with its label on one line.
   final double height;
   final double radius;
   final double size;
@@ -458,16 +475,16 @@ class _AnswerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Pill p = pill;
     final Color fore = solid ? p.color : p.ink;
+    // Never cut: a side or an amount longer than the button is wide runs
+    // to a second line, and the button grows to hold it.
     final Widget text = Text(
       label,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
       textAlign: centred ? TextAlign.center : TextAlign.start,
       style:
           AppText.body(
             size: size,
             weight: FontWeight.w700,
-            height: 1,
+            height: 1.15,
             color: fore,
           ).copyWith(
             decoration: struck ? TextDecoration.lineThrough : null,
@@ -486,8 +503,8 @@ class _AnswerButton extends StatelessWidget {
           opacity: faded ? 0.4 : 1,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
-            height: height,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            constraints: BoxConstraints(minHeight: height),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             alignment: centred ? Alignment.center : Alignment.centerLeft,
             decoration: BoxDecoration(
               color: solid ? p.ink : fillOn(p),

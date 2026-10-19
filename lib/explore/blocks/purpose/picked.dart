@@ -335,6 +335,7 @@ class _ShareBar extends StatelessWidget {
           // Never less than a dot: a share of nothing still shows where the
           // bar starts.
           widthFactor: share.clamp(0.012, 1.0),
+          heightFactor: 1,
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: colour,
@@ -506,8 +507,13 @@ class OtherSideTile extends StatelessWidget {
                   ),
                   Container(
                     key: ValueKey('case-for-${p.id}'),
-                    height: 40,
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    // One line as the canvas has it; a long side takes two
+                    // rather than being cut.
+                    constraints: const BoxConstraints(minHeight: 40),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: p.ink,
                       borderRadius: BorderRadius.circular(12),
@@ -517,12 +523,10 @@ class OtherSideTile extends StatelessWidget {
                         Expanded(
                           child: Text(
                             l.purposeCaseFor(theirs),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                             style: AppText.body(
                               size: 13,
                               weight: FontWeight.w700,
-                              height: 1,
+                              height: 1.2,
                               color: p.color,
                             ),
                           ),

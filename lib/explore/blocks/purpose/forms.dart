@@ -22,6 +22,7 @@ import '../../../theme.dart';
 import '../../../widgets/card_edge.dart';
 import '../../../widgets/subject_icon.dart';
 import '../../explore_block.dart';
+import 'commit.dart' show askable;
 import 'kit.dart';
 
 /// A shelf of tiles of one form: the form's own name and line unless the
@@ -95,11 +96,12 @@ class InYourHeadBlock extends ExploreBlock {
     ExploreHost host,
     ExploreSection section,
   ) {
+    final Set<String> said = PurposePlay.setOf('said');
     final List<Pill> cards = cardsOf(
       host,
       section,
       limit: 8,
-      canDraw: (p) => numberAnswer(p) != null,
+      canDraw: (p) => numberAnswer(p) != null && askable(host, p, said),
     );
     if (cards.isEmpty) return null;
     final l = context.l10n;
@@ -215,12 +217,17 @@ class _HeadTileState extends State<HeadTile> {
       final String shown = isPercent(unit)
           ? '$answer%'
           : (unit.isEmpty ? answer : '$answer $unit');
-      box = Text(
-        shown,
-        key: ValueKey('head-said-${p.id}'),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: figure,
+      // A long unit is set smaller rather than cut: "12 minutes shot per
+      // minute used" is still the answer.
+      box = FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Text(
+          shown,
+          key: ValueKey('head-said-${p.id}'),
+          maxLines: 1,
+          style: figure,
+        ),
       );
     } else if (_typing) {
       box = Row(
@@ -270,7 +277,17 @@ class _HeadTileState extends State<HeadTile> {
         children: [
           Container(width: 2, height: 20, color: p.ink),
           const SizedBox(width: 8),
-          Text(template, maxLines: 1, style: figure.copyWith(color: subOn(p))),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                template,
+                maxLines: 1,
+                style: figure.copyWith(color: subOn(p)),
+              ),
+            ),
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Align(
@@ -329,8 +346,6 @@ class _HeadTileState extends State<HeadTile> {
                       ? l.tfRight
                       : l.tfWrong(numberAnswer(p)!),
                   key: ValueKey('head-verdict-${p.id}'),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                   style: AppText.body(
                     size: 12,
                     weight: FontWeight.w700,
@@ -589,10 +604,21 @@ class SilhouettePainter extends CustomPainter {
       case SilhouetteKind.bars:
         final int n = shape.values.length;
         const double gap = 5;
-        final double w = (size.width - gap * (n - 1)) / n;
+        // A bar is never wider than one of six, so two bars read as two
+        // bars of a chart rather than as two blocks; fewer stand centred.
+        final double w = math.min(
+          (size.width - gap * (n - 1)) / n,
+          (size.width - gap * 5) / 6,
+        );
+        final double left = (size.width - (w * n + gap * (n - 1))) / 2;
         for (int i = 0; i < n; i++) {
           final double h = size.height * shape.values[i];
-          final Rect r = Rect.fromLTWH(i * (w + gap), size.height - h, w, h);
+          final Rect r = Rect.fromLTWH(
+            left + i * (w + gap),
+            size.height - h,
+            w,
+            h,
+          );
           fill.color = shape.lit.contains(i) ? ink : tone;
           canvas.drawRRect(
             RRect.fromRectAndCorners(
@@ -736,8 +762,6 @@ class MechanismBlock extends ExploreBlock {
                       Flexible(
                         child: Text(
                           upper(context, l.purposeMechanism),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                           style: AppText.label(
                             size: 9,
                             weight: FontWeight.w700,
@@ -938,9 +962,15 @@ class MovingBlock extends ExploreBlock {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                height: 30,
+                // A band of one line, as the canvas has it; a longer one,
+                // in a longer language or a larger text, takes two rather
+                // than being cut.
+                constraints: const BoxConstraints(minHeight: 30),
                 color: shade(p.color, 0.86),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: Row(
                   children: [
                     Container(
@@ -956,13 +986,11 @@ class MovingBlock extends ExploreBlock {
                       child: Text(
                         upper(context, band(p)),
                         key: ValueKey('moving-band-${p.id}'),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                         style: AppText.label(
                           size: 9,
                           weight: FontWeight.w700,
                           spacing: 1.2,
-                          height: 1,
+                          height: 1.25,
                           color: p.ink,
                         ),
                       ),

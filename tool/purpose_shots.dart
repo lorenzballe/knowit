@@ -75,6 +75,16 @@ List<Pill> get _read => [
   for (int i = 0; i < PillBank.cards.length; i += 9) PillBank.cards[i],
 ];
 
+/// The same, in the order a mixed source deals them, so a set of them is
+/// of many subjects rather than of the bank's first.
+List<Pill> get _readDealt {
+  final Set<String> read = {for (final Pill p in _read) p.id};
+  return [
+    for (final Pill p in _dealt)
+      if (read.contains(p.id)) p,
+  ];
+}
+
 /// Taps the [n]th widget of the private type [type].
 Future<void> _tapType(WidgetTester tester, String type, [int n = 0]) async {
   final Finder found = find.byWidgetPredicate(
@@ -170,7 +180,7 @@ final List<_Spec> _specs = [
     {..._sizes('purpose.moving', _sml), 'updated': _one('purpose.moving')},
     adjust: (label, json) {
       if (label != 'updated') return json;
-      final List<Pill> moving = PillBank.cards
+      final List<Pill> moving = _dealt
           .where((p) => p.shelfLife == 'years' || p.shelfLife == 'months')
           .take(3)
           .toList();
@@ -291,14 +301,18 @@ final List<_Spec> _specs = [
       await tester.pump(const Duration(milliseconds: 200));
     },
   ),
-  _Spec('purpose.set', {
-    ..._sizes('purpose.set', _sml),
-    'myths': _one('purpose.set', {'theme': 'myths'}),
-    'finished': _one('purpose.set', {
-      'source': {'kind': 'ids'},
-      'title': {'en': 'Paradoxes'},
-    }),
-  }, cards: (label) => label == 'finished' ? _read.take(8).toList() : null),
+  _Spec(
+    'purpose.set',
+    {
+      ..._sizes('purpose.set', _sml),
+      'myths': _one('purpose.set', {'theme': 'myths'}),
+      'finished': _one('purpose.set', {
+        'source': {'kind': 'ids'},
+        'title': {'en': 'Paradoxes'},
+      }),
+    },
+    cards: (label) => label == 'finished' ? _readDealt.take(8).toList() : null,
+  ),
   _Spec(
     'purpose.stamps',
     {
@@ -359,9 +373,7 @@ final List<_Spec> _specs = [
 /// Twelve cards of Europe, the first five of them read.
 List<Pill> _europe() {
   final Set<String> read = {for (final Pill p in _read) p.id};
-  final List<Pill> europe = PillBank.cards
-      .where((p) => p.region == 'europe')
-      .toList();
+  final List<Pill> europe = _dealt.where((p) => p.region == 'europe').toList();
   return [
     ...europe.where((p) => read.contains(p.id)).take(5),
     ...europe.where((p) => !read.contains(p.id)).take(7),

@@ -301,7 +301,7 @@ brought up to date, or, without a date, how soon it could change.
 
 ```json
 {"id": "moving", "block": "purpose.moving",
- "updated": {"technology-emergent-abilities-1": "2026-10-04"}}
+ "updated": {"economics-subscriptions-10": "2026-10-04"}}
 ```
 
 ### `purpose.why` (138a)

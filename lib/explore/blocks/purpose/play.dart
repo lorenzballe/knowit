@@ -188,8 +188,6 @@ class TrickTile extends StatelessWidget {
                     ? l.tfRight
                     : l.tfWrong(l.purposeMoveName(p.principle.name)),
                 key: ValueKey('trick-verdict-${p.id}'),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
                 style: AppText.body(
                   size: 13,
                   weight: FontWeight.w600,
@@ -240,8 +238,10 @@ class _Option extends StatelessWidget {
         child: Opacity(
           opacity: faded ? 0.4 : 1,
           child: Container(
-            height: 38,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
+            // 38 high as the canvas draws it; a move's name too long for
+            // one line, at a larger text size, takes two.
+            constraints: const BoxConstraints(minHeight: 38),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
               color: right ? p.ink : fillOn(p),
@@ -252,13 +252,11 @@ class _Option extends StatelessWidget {
                 Expanded(
                   child: Text(
                     label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                     style:
                         AppText.body(
                           size: 13,
                           weight: FontWeight.w600,
-                          height: 1,
+                          height: 1.2,
                           color: fore,
                         ).copyWith(
                           decoration: struck

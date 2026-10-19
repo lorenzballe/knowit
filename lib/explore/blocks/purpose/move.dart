@@ -161,23 +161,25 @@ class MoveBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            // The badge in the far corner, as the canvas has it; a badge too
+            // long for the line beside A MOVE, in a longer language or at a
+            // larger text size, goes under it whole rather than cut.
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 10,
+              runSpacing: 8,
               children: [
-                Expanded(
-                  child: Text(
-                    upper(context, context.l10n.purposeMoveKicker),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.label(
-                      size: 9.5,
-                      weight: FontWeight.w700,
-                      spacing: 1.4,
-                      color: ink.withValues(alpha: 0.45),
-                    ),
+                Text(
+                  upper(context, context.l10n.purposeMoveKicker),
+                  style: AppText.label(
+                    size: 9.5,
+                    weight: FontWeight.w700,
+                    spacing: 1.4,
+                    color: ink.withValues(alpha: 0.45),
                   ),
                 ),
-                const SizedBox(width: 10),
-                Flexible(flex: 3, child: badge),
+                badge,
               ],
             ),
             const SizedBox(height: 9),

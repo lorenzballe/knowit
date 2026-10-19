@@ -252,32 +252,37 @@ class LifeShelf extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  if (about.isNotEmpty) ...[
-                    Flexible(
-                      child: Text(
-                        upper(context, about),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.label(
-                          size: 9.5,
-                          weight: FontWeight.w700,
-                          spacing: 1.3,
-                          height: 1,
-                          color: ink.withValues(alpha: 0.45),
+              // What it is about, and a rule running from it to the edge: the
+              // words never wider than most of the line, so the rule shows.
+              LayoutBuilder(
+                builder: (context, box) => Row(
+                  children: [
+                    if (about.isNotEmpty) ...[
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: box.maxWidth * 0.8,
+                        ),
+                        child: Text(
+                          upper(context, about),
+                          style: AppText.label(
+                            size: 9.5,
+                            weight: FontWeight.w700,
+                            spacing: 1.3,
+                            height: 1.1,
+                            color: ink.withValues(alpha: 0.45),
+                          ),
                         ),
                       ),
+                      const SizedBox(width: 10),
+                    ],
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: ink.withValues(alpha: 0.12),
+                      ),
                     ),
-                    const SizedBox(width: 10),
                   ],
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: ink.withValues(alpha: 0.12),
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 9),
               Semantics(
@@ -462,19 +467,18 @@ class TopicPicker extends StatelessWidget {
                     key: ValueKey('life-$name-${on ? 'on' : 'off'}'),
                     behavior: HitTestBehavior.opaque,
                     onTap: () => onPick(name),
-                    child: SizedBox(
-                      height: 44,
-                      child: Center(
-                        child: Container(
-                          height: 36,
-                          padding: const EdgeInsets.symmetric(horizontal: 13),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: on
-                                ? pal.ink
-                                : pal.ink.withValues(alpha: 0.06),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Container(
+                        height: 36,
+                        padding: const EdgeInsets.symmetric(horizontal: 13),
+                        decoration: BoxDecoration(
+                          color: on ? pal.ink : pal.ink.withValues(alpha: 0.06),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        // As wide as its word: a chip, not a row.
+                        child: Center(
+                          widthFactor: 1,
                           child: Text(
                             words,
                             maxLines: 1,

@@ -360,8 +360,6 @@ class FigureTile extends StatelessWidget {
               padding: const EdgeInsets.only(top: 9),
               child: Text(
                 upper(context, context.l10n.purposeOutOfWhat),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: AppText.label(
                   size: 9,
                   weight: FontWeight.w700,
@@ -815,8 +813,6 @@ class KeepBox extends StatelessWidget {
               Expanded(
                 child: Text(
                   upper(context, context.l10n.barMoveCaps),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                   style: AppText.label(
                     size: 9,
                     weight: FontWeight.w700,
