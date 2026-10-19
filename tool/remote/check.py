@@ -8,7 +8,8 @@ it and its whole danger, so it is held to the standard of the bank: what
 does not pass is not bundled. The document is in parts, and each part is
 checked by its own module in `tool/remote/parts/` — `check(doc)` returns a
 list of problems, each a line a person can act on. The part's module also
-says where its sources live, if not in `remote/<part>.json`.
+says where its sources live, if not in `remote/<part>.json`. The examples
+in `remote/examples/` are checked by the same modules, and never bundled.
 """
 from __future__ import annotations
 
@@ -20,6 +21,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 REMOTE = ROOT / "remote"
+
+# Documents written to show what a part can do — remote/examples/<part>-<name>.json
+# — checked like the part they are an example of, and never bundled: an
+# example the docs point at is one the app could take as it is.
+EXAMPLES = REMOTE / "examples"
 
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
@@ -53,7 +59,27 @@ def load_and_check() -> tuple[dict, list[str]]:
             continue
         module = importlib.import_module(f"parts.{name}")
         problems.extend(f"{name}: {p}" for p in module.check(parts[name]))
+    problems.extend(check_examples())
     return parts, problems
+
+
+def check_examples() -> list[str]:
+    """The problems with the examples, each under its file's name."""
+    problems: list[str] = []
+    for path in sorted(EXAMPLES.glob("*.json")) if EXAMPLES.is_dir() else []:
+        where = f"examples/{path.name}"
+        part = path.stem.split("-", 1)[0]
+        if part not in PARTS:
+            problems.append(f"{where}: is named for no part of the document ({', '.join(PARTS)})")
+            continue
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as e:
+            problems.append(f"{where}: not JSON: {e}")
+            continue
+        module = importlib.import_module(f"parts.{part}")
+        problems.extend(f"{where}: {p}" for p in module.check(doc))
+    return problems
 
 
 def main() -> int:
