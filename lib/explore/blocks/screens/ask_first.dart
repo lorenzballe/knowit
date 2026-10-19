@@ -155,7 +155,11 @@ class _AskState extends State<_Ask> {
     _settle = Timer(const Duration(milliseconds: 280), () => _ask(text));
   }
 
-  Future<void> _ask(String text) async {
+  /// Finds the answers to [text]. A question the reader [sent] — with the
+  /// keyboard's search, or a word to try — is noted; the answers that come
+  /// up as they type are not, or one question would be noted at every
+  /// pause in the typing.
+  Future<void> _ask(String text, {bool sent = false}) async {
     final String question = text.trim();
     final int asking = ++_asking;
     final ExploreHost host = widget.host;
@@ -182,6 +186,7 @@ class _AskState extends State<_Ask> {
       _found = hits!.take(most).toList();
       _kept = false;
     });
+    if (!sent) return;
     host.note(widget.section, 'asked', {
       'words': askWords(question).length,
       'results': _found.length,
@@ -193,7 +198,7 @@ class _AskState extends State<_Ask> {
     _field.text = word;
     _field.selection = TextSelection.collapsed(offset: word.length);
     _settle?.cancel();
-    _ask(word);
+    _ask(word, sent: true);
   }
 
   void _clear() {
@@ -338,7 +343,7 @@ class _AskState extends State<_Ask> {
               onChanged: _typed,
               onSubmitted: (text) {
                 _settle?.cancel();
-                if (text.trim().isNotEmpty) _ask(text);
+                if (text.trim().isNotEmpty) _ask(text, sent: true);
               },
               textInputAction: TextInputAction.search,
               textCapitalization: TextCapitalization.sentences,

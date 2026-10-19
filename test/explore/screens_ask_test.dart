@@ -109,6 +109,43 @@ void main() {
     _noWords(host);
   });
 
+  testWidgets('a question is noted once it is sent, not at every pause', (
+    tester,
+  ) async {
+    final AppState app = await screensReader();
+    final host = FakeExploreHost(app);
+    await pumpBlock(
+      tester,
+      const AskFirstBlock(),
+      screensSection('ask-first', {
+        'try': ['Venice'],
+      }),
+      host,
+    );
+    final Finder field = find.byKey(const ValueKey('ask-field-x'));
+    // The answers follow the typing, pause after pause, unnoted.
+    for (final String typed in const [
+      'Why do',
+      'Why do onions',
+      'Why do onions make you cry',
+    ]) {
+      await tester.enterText(field, typed);
+      await tester.pump(const Duration(milliseconds: 400));
+    }
+    expect(find.byKey(const ValueKey('ask-answers')), findsOneWidget);
+    expect(host.notes, isEmpty);
+    // Sent with the keyboard, it is noted once.
+    await tester.testTextInput.receiveAction(TextInputAction.search);
+    await settle(tester);
+    expect(host.notes.single.$2, 'asked');
+    expect(host.notes.single.$3['words'], 3);
+    // A word to try is sent with its tap.
+    await tester.tap(find.text('Venice'));
+    await settle(tester);
+    expect(host.notes, hasLength(2));
+    _noWords(host);
+  });
+
   testWidgets('a question no card answers can be kept, and waits', (
     tester,
   ) async {
