@@ -64,6 +64,7 @@ bool _isDebate(Pill p) => p.challenge is TakeASide;
 /// myth or a sum, which have parts of their own.
 bool isLead(Pill p) =>
     !_isDebate(p) &&
+    !isPuzzle(p) &&
     const {'story', 'paradox', 'mechanism', 'origin'}.contains(p.hook);
 
 /// A figure for "In numbers": a card about a number whose question has one.
@@ -72,9 +73,13 @@ bool isFigure(Pill p) => p.hook == 'number' && shelfFigure(p) != null;
 /// A correction: what almost everyone believes.
 bool isCorrection(Pill p) => p.hook == 'misconception';
 
-/// A puzzle: a sum to work out, or a card that is one.
+/// A puzzle: a sum to work out, or a card that is one — but not a card
+/// about a number, whose figure belongs to In numbers.
 bool isPuzzle(Pill p) =>
-    p.challenge is TypeNumber || p.challenge is Estimate || p.hook == 'puzzle';
+    p.hook != 'number' &&
+    (p.challenge is TypeNumber ||
+        p.challenge is Estimate ||
+        p.hook == 'puzzle');
 
 /// The day's date as a paper prints it, in the reader's language.
 String frontDate(BuildContext context, DateTime on) {
@@ -364,9 +369,16 @@ class FrontColumnsBlock extends ExploreBlock {
           .where((p) => !_isDebate(p) && p.hook == 'practical')
           .firstOrNull;
       cards = [?side, ?use];
+      // Short of either, a card no other part of the page would take.
       for (final Pill p in pool) {
         if (cards.length >= 2) break;
-        if (!cards.contains(p) && !isLead(p)) cards.add(p);
+        if (!cards.contains(p) &&
+            !isLead(p) &&
+            !isFigure(p) &&
+            !isCorrection(p) &&
+            !isPuzzle(p)) {
+          cards.add(p);
+        }
       }
     }
     if (cards.length < 2) return null;

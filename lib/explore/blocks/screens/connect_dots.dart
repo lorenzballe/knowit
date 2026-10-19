@@ -190,10 +190,14 @@ class _Dots extends StatelessWidget {
     final Palette p = context.p;
     final ScreenSize size = screenSizeOf(section);
     final List<DotMeeting> all = meetings[hub]!;
-    final List<String> others = [];
+    // The subjects it meets most go round it first: past seven the map has
+    // no room, and the strongest links are the ones worth drawing.
+    final Map<String, int> met = {};
     for (final DotMeeting m in all) {
-      if (!others.contains(m.other)) others.add(m.other);
+      met[m.other] = (met[m.other] ?? 0) + 1;
     }
+    final List<String> others = met.keys.toList()
+      ..sort((a, b) => met[b]!.compareTo(met[a]!));
     // One card for each subject met before a second for any: five cards
     // of one pair would be one meeting told five times.
     final List<DotMeeting> listed = [];

@@ -481,6 +481,9 @@ class _Ruler extends StatelessWidget {
                 onDecrease: at > 0 ? () => onGo(at - 1) : null,
                 child: GestureDetector(
                   key: const ValueKey('time-ruler'),
+                  // A screen reader moves along it as along a slider, a
+                  // stop at a time; a tap at its left edge is no way to.
+                  excludeFromSemantics: true,
                   behavior: HitTestBehavior.opaque,
                   onTapDown: (d) => onGo(nearest(d.localPosition.dx)),
                   onHorizontalDragUpdate: (d) =>

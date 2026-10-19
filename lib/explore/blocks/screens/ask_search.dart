@@ -47,9 +47,10 @@ const Set<String> kAskStopWords = {
   'met', 'zijn',
 };
 
-/// A word brought to its stem: lower case, accents off, and the commonest
-/// English endings taken away, so "onions" meets "onion" and "studies"
-/// meets "study".
+/// A word brought to its stem: lower case, accents off, the commonest
+/// English endings taken away, and no more than six letters kept, so
+/// "onions" meets "onion", "studies" meets "study" and "accurate" meets
+/// "accuracy".
 String askStem(String word) {
   String w = _plainLetters(word.toLowerCase());
   if (w.length > 4 && w.endsWith('ies')) {
@@ -66,7 +67,7 @@ String askStem(String word) {
   } else if (w.length > 4 && w.endsWith('ed')) {
     w = w.substring(0, w.length - 2);
   }
-  return w.length > 7 ? w.substring(0, 7) : w;
+  return w.length > 6 ? w.substring(0, 6) : w;
 }
 
 const Map<String, String> _accents = {

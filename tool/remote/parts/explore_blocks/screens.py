@@ -83,8 +83,9 @@ def says_true(card: dict) -> bool:
     return is_true_or_false(card) and isinstance(correct, int) and str(options[correct]).lower() == "true"
 
 
-# shelfFigure in lib/data/themed_shelves.dart, word for word: the figure a
-# numbers card is about, the first number in its question that is not a year.
+# shelfFigure in lib/data/themed_shelves.dart, by the same pattern: the
+# figure a numbers card is about, the first number in its question that is
+# not a year. What the checker needs of it is whether there is one.
 _FIGURE = re.compile(
     r"([$€£])?(?<![\w.^/])(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)(\s?%|/\d+)?"
     r"(?:\s(thousand|million|billion|trillion)\b)?(?![\w^])",
