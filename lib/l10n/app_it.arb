@@ -828,6 +828,7 @@
   "purposeMe": "Sono io",
   "purposeMeLine": "Cose che fai senza accorgertene",
   "purposeMeFooter": "Segna le carte in cui ti riconosci.",
+  "purposeMeMarked": "{n, plural, =1{Una carta segnata con «Sono io».} other{{n} carte segnate con «Sono io».}}",
   "purposeAboutYou": "Non lo sapevo, e parla di me",
   "purposeAboutYouLine": "Il tuo corpo, la tua salute, le tue probabilità",
   "purposeHeadline": "In un titolo",

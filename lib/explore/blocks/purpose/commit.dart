@@ -202,7 +202,10 @@ class CommitBlock extends ExploreBlock {
               read: host.isRead(p),
               given: host.app.answerFor(p.id)?.response,
               onOpen: () => host.open(section, cards, p),
-              onCommit: (response) => host.commit(p, response),
+              onCommit: (response) {
+                PurposePlay.said(p.id);
+                host.commit(p, response);
+              },
             );
           },
         ),

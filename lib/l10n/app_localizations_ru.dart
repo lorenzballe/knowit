@@ -3682,6 +3682,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get purposeMeFooter => 'Отметь карточки, в которых узнаёшь себя.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки с отметкой «Это про меня».',
+      many: '$n карточек с отметкой «Это про меня».',
+      few: '$n карточки с отметкой «Это про меня».',
+      one: '$n карточка с отметкой «Это про меня».',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => 'Новое для меня — и обо мне';
 
   @override

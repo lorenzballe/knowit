@@ -828,6 +828,7 @@
   "purposeMe": "To ja",
   "purposeMeLine": "Rzeczy, które robisz, nie zauważając",
   "purposeMeFooter": "Zaznacz karty, w których się rozpoznajesz.",
+  "purposeMeMarked": "{n, plural, =1{Jedna karta oznaczona „To ja”.} few{{n} karty oznaczone „To ja”.} many{{n} kart oznaczonych „To ja”.} other{{n} karty oznaczone „To ja”.}}",
   "purposeAboutYou": "Nowe dla mnie i o mnie",
   "purposeAboutYouLine": "Twoje ciało, twoje zdrowie, twoje szanse",
   "purposeHeadline": "W nagłówku",

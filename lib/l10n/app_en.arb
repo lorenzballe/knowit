@@ -3469,6 +3469,15 @@
  "@purposeMeFooter": {
   "description": "Beside the count of cards the reader marked That's me."
  },
+ "purposeMeMarked": "{n, plural, =1{One card marked “That's me”.} other{{n} cards marked “That's me”.}}",
+ "@purposeMeMarked": {
+  "description": "Beside the count, once the reader has marked cards That's me today.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "purposeAboutYou": "News to me, and about me",
  "@purposeAboutYou": {
   "description": "A shelf of discoveries about the reader's own body and health."

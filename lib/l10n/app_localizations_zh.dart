@@ -3409,6 +3409,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get purposeMeFooter => '给说中你的卡片做个记号。';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已标记“说的就是我”的卡片：$n 张。',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => '原来如此，还和我有关';
 
   @override

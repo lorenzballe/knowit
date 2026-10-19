@@ -3500,6 +3500,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get purposeMeFooter => 'Kendini bulduğun kartları işaretle.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '«Bu benim» diye işaretlenen kart: $n.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => 'Bilmiyordum, üstelik benimle ilgili';
 
   @override

@@ -3523,6 +3523,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purposeMeFooter => 'Mark the cards that sound like you.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards marked “That\'s me”.',
+      one: 'One card marked “That\'s me”.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => 'News to me, and about me';
 
   @override

@@ -828,6 +828,7 @@
   "purposeMe": "Das bin ich",
   "purposeMeLine": "Was du tust, ohne es zu merken",
   "purposeMeFooter": "Markiere die Karten, in denen du dich wiedererkennst.",
+  "purposeMeMarked": "{n, plural, =1{Eine Karte mit „Das bin ich“ markiert.} other{{n} Karten mit „Das bin ich“ markiert.}}",
   "purposeAboutYou": "Neu für mich, und über mich",
   "purposeAboutYouLine": "Dein Körper, deine Gesundheit, deine Chancen",
   "purposeHeadline": "In einer Schlagzeile",

@@ -13,7 +13,6 @@ import '../../../data/topics.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
 import '../../../theme.dart';
-import '../../../widgets/card_edge.dart';
 import '../../explore_block.dart';
 import 'commit.dart' show shortSide;
 import 'kit.dart';
@@ -342,57 +341,6 @@ class _ShareBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(9),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// A card as itself: its head and its question, nothing else.
-class PlainTile extends StatelessWidget {
-  const PlainTile({
-    super.key,
-    required this.pill,
-    required this.size,
-    required this.onOpen,
-    this.read = false,
-  });
-
-  final Pill pill;
-  final TileSize size;
-  final VoidCallback onOpen;
-  final bool read;
-
-  @override
-  Widget build(BuildContext context) {
-    final Pill p = pill;
-    return CardTap(
-      pill: p,
-      onTap: onOpen,
-      child: Container(
-        width: size.width,
-        height: size.height,
-        padding: const EdgeInsets.all(16),
-        decoration: cardFace(context, p.color, radius: 22),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PurposeHead(
-              pill: p,
-              trailing: read ? ReadMark(pill: p) : null,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: CardQuestion(
-                  text: p.question,
-                  color: p.ink,
-                  min: 11,
-                  max: size.width < 190 ? 15.5 : 17,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

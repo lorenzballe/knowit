@@ -3553,6 +3553,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Markiere die Karten, in denen du dich wiedererkennst.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Karten mit „Das bin ich“ markiert.',
+      one: 'Eine Karte mit „Das bin ich“ markiert.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => 'Neu für mich, und über mich';
 
   @override

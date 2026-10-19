@@ -111,8 +111,9 @@ class MoveBlock extends ExploreBlock {
   static Principle? _moveFor(ExploreHost host, List<Pill> pool) {
     final Map<Principle, int> counts = {};
     for (final Pill p in pool) {
-      if (p.principle.isReal)
+      if (p.principle.isReal) {
         counts[p.principle] = (counts[p.principle] ?? 0) + 1;
+      }
     }
     final List<Principle> shown = [
       for (final MapEntry<Principle, int> e in counts.entries)

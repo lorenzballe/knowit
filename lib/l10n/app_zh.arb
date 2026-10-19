@@ -828,6 +828,7 @@
   "purposeMe": "说的就是我",
   "purposeMeLine": "你不知不觉在做的事",
   "purposeMeFooter": "给说中你的卡片做个记号。",
+  "purposeMeMarked": "{n, plural, other{已标记“说的就是我”的卡片：{n} 张。}}",
   "purposeAboutYou": "原来如此，还和我有关",
   "purposeAboutYouLine": "你的身体、你的健康、你的概率",
   "purposeHeadline": "在标题里",

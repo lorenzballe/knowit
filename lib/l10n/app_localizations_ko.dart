@@ -3420,6 +3420,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get purposeMeFooter => '내 얘기 같은 카드에 표시해 보세요.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '‘이건 나야’로 표시한 카드 $n장.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => '몰랐는데, 내 얘기네';
 
   @override

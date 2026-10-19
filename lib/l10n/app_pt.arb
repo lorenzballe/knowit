@@ -828,6 +828,7 @@
   "purposeMe": "Sou eu",
   "purposeMeLine": "Coisas que fazes sem reparar",
   "purposeMeFooter": "Marca as cartas em que te reconheces.",
+  "purposeMeMarked": "{n, plural, =1{Uma carta marcada com «Sou eu».} other{{n} cartas marcadas com «Sou eu».}}",
   "purposeAboutYou": "Novo para mim, e sobre mim",
   "purposeAboutYouLine": "O teu corpo, a tua saúde, as tuas probabilidades",
   "purposeHeadline": "Num título",

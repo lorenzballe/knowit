@@ -828,6 +828,7 @@
   "purposeMe": "C'est moi",
   "purposeMeLine": "Ce que tu fais sans t'en rendre compte",
   "purposeMeFooter": "Marque les cartes où tu te reconnais.",
+  "purposeMeMarked": "{n, plural, =1{Une carte marquée « C'est moi ».} other{{n} cartes marquées « C'est moi ».}}",
   "purposeAboutYou": "Nouveau pour moi, et sur moi",
   "purposeAboutYouLine": "Ton corps, ta santé, tes probabilités",
   "purposeHeadline": "Dans un titre",

@@ -3555,6 +3555,17 @@ class AppLocalizationsNl extends AppLocalizations {
   String get purposeMeFooter => 'Markeer de kaarten waarin je jezelf herkent.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten gemarkeerd met ‘Dat ben ik’.',
+      one: 'Eén kaart gemarkeerd met ‘Dat ben ik’.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => 'Nieuw voor mij, en over mij';
 
   @override

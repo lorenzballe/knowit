@@ -828,6 +828,7 @@
   "purposeMe": "これは自分だ",
   "purposeMeLine": "気づかずにやっていること",
   "purposeMeFooter": "自分のことだと思うカードに印をつけよう。",
+  "purposeMeMarked": "{n, plural, other{「これは自分だ」をつけたカード：{n}枚。}}",
   "purposeAboutYou": "知らなかった、しかも自分のこと",
   "purposeAboutYouLine": "あなたの体、健康、確率",
   "purposeHeadline": "見出しの中に",

@@ -120,7 +120,7 @@ class InYourHeadBlock extends ExploreBlock {
         given: host.app.answerFor(p.id)?.response,
         onOpen: () => host.open(section, shelf, p),
         onCommit: (response) {
-          PurposePlay.writeSet('said', PurposePlay.setOf('said')..add(p.id));
+          PurposePlay.said(p.id);
           host.commit(p, response);
         },
       ),

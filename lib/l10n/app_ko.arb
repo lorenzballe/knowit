@@ -828,6 +828,7 @@
   "purposeMe": "이건 나야",
   "purposeMeLine": "모르는 새 하고 있는 일",
   "purposeMeFooter": "내 얘기 같은 카드에 표시해 보세요.",
+  "purposeMeMarked": "{n, plural, other{‘이건 나야’로 표시한 카드 {n}장.}}",
   "purposeAboutYou": "몰랐는데, 내 얘기네",
   "purposeAboutYouLine": "내 몸, 내 건강, 내 확률",
   "purposeHeadline": "헤드라인 속에",

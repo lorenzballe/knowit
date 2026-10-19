@@ -828,6 +828,7 @@
   "purposeMe": "Así soy yo",
   "purposeMeLine": "Cosas que haces sin darte cuenta",
   "purposeMeFooter": "Marca las cartas en las que te reconoces.",
+  "purposeMeMarked": "{n, plural, =1{Una carta marcada con «Así soy yo».} other{{n} cartas marcadas con «Así soy yo».}}",
   "purposeAboutYou": "Nuevo para mí, y sobre mí",
   "purposeAboutYouLine": "Tu cuerpo, tu salud, tus probabilidades",
   "purposeHeadline": "En un titular",

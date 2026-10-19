@@ -5088,6 +5088,12 @@ abstract class AppLocalizations {
   /// **'Mark the cards that sound like you.'**
   String get purposeMeFooter;
 
+  /// Beside the count, once the reader has marked cards That's me today.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card marked “That\'s me”.} other{{n} cards marked “That\'s me”.}}'**
+  String purposeMeMarked(int n);
+
   /// A shelf of discoveries about the reader's own body and health.
   ///
   /// In en, this message translates to:

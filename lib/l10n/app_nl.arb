@@ -828,6 +828,7 @@
   "purposeMe": "Dat ben ik",
   "purposeMeLine": "Dingen die je doet zonder het te merken",
   "purposeMeFooter": "Markeer de kaarten waarin je jezelf herkent.",
+  "purposeMeMarked": "{n, plural, =1{Eén kaart gemarkeerd met ‘Dat ben ik’.} other{{n} kaarten gemarkeerd met ‘Dat ben ik’.}}",
   "purposeAboutYou": "Nieuw voor mij, en over mij",
   "purposeAboutYouLine": "Je lichaam, je gezondheid, je kansen",
   "purposeHeadline": "In een kop",

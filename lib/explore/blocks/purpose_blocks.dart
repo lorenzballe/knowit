@@ -7,13 +7,20 @@
 library;
 
 import '../explore_block.dart';
+import 'purpose/bottom.dart';
 import 'purpose/commit.dart';
+import 'purpose/feelings.dart';
 import 'purpose/forms.dart';
+import 'purpose/life.dart';
 import 'purpose/move.dart';
 import 'purpose/picked.dart';
+import 'purpose/play.dart';
 import 'purpose/read_or_do.dart';
+import 'purpose/sets.dart';
+import 'purpose/tricks.dart';
 
-/// The blocks of this family, in the order the catalogue lists them.
+/// The blocks of this family, in the order the catalogue lists them: the
+/// canvas's, from 133a to 138f.
 const List<ExploreBlock> blocks = [
   ReadOrDoBlock(),
   CommitNoteBlock(),
@@ -27,4 +34,21 @@ const List<ExploreBlock> blocks = [
   MechanismBlock(),
   CuriousBlock(),
   MovingBlock(),
+  WhyBlock(),
+  ThatsMeBlock(),
+  AboutYouBlock(),
+  HeadlineBlock(),
+  OutOfWhatBlock(),
+  PriceTagBlock(),
+  ArgumentBlock(),
+  KeepBlock(),
+  LifeQuestionBlock(),
+  LifeTopicsBlock(),
+  SpotTrickBlock(),
+  PlayedBlock(),
+  SetBlock(),
+  StampsBlock(),
+  SetsBlock(),
+  TomorrowBlock(),
+  EndBlock(),
 ];

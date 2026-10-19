@@ -828,6 +828,7 @@
   "purposeMe": "Bu benim",
   "purposeMeLine": "Fark etmeden yaptığın şeyler",
   "purposeMeFooter": "Kendini bulduğun kartları işaretle.",
+  "purposeMeMarked": "{n, plural, other{«Bu benim» diye işaretlenen kart: {n}.}}",
   "purposeAboutYou": "Bilmiyordum, üstelik benimle ilgili",
   "purposeAboutYouLine": "Bedenin, sağlığın, olasılıkların",
   "purposeHeadline": "Bir manşette",

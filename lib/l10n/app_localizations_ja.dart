@@ -3402,6 +3402,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get purposeMeFooter => '自分のことだと思うカードに印をつけよう。';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '「これは自分だ」をつけたカード：$n枚。',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => '知らなかった、しかも自分のこと';
 
   @override

@@ -9,6 +9,9 @@
 /// margins and radii, the same Fraunces question set to the space it has.
 library;
 
+import 'dart:ui' show PathMetric;
+
+import 'package:flutter/foundation.dart' show listEquals, setEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,6 +22,7 @@ import '../../../models/pill.dart';
 import '../../../state/explore_play.dart';
 import '../../../theme.dart';
 import '../../../widgets/balanced_text.dart';
+import '../../../widgets/card_edge.dart';
 import '../../../widgets/explore/parts.dart';
 import '../../../widgets/subject_icon.dart';
 import '../../explore_block.dart';
@@ -154,6 +158,7 @@ class PurposeShelf extends StatelessWidget {
     this.trailing,
     this.trailingAtFoot = false,
     this.under,
+    this.underGap = 8,
     this.gap = 11,
   });
 
@@ -167,8 +172,10 @@ class PurposeShelf extends StatelessWidget {
   final Widget? trailing;
   final bool trailingAtFoot;
 
-  /// Between the head and the cards: a bar of progress.
+  /// Between the head and the cards: a bar of progress, [underGap] under
+  /// the head.
   final Widget? under;
+  final double underGap;
 
   /// The room between the head and the cards.
   final double gap;
@@ -242,7 +249,7 @@ class PurposeShelf extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               head,
-              if (under != null) ...[const SizedBox(height: 8), under!],
+              if (under != null) ...[SizedBox(height: underGap), under!],
             ],
           ),
         ),
@@ -337,6 +344,133 @@ class PurposeHead extends StatelessWidget {
 /// name a subject by it.
 String subjectKey(Pill p) => subjectKeyOf(p);
 
+// ── A plain card ──────────────────────────────────────────────────────────
+
+/// A card as the shelves draw one when its form is the shelf's and not the
+/// card's: the head, the question set to the space it has, a tap from the
+/// card.
+class PlainTile extends StatelessWidget {
+  const PlainTile({
+    super.key,
+    required this.pill,
+    required this.size,
+    required this.onOpen,
+    this.read = false,
+    this.radius = 22,
+    this.max,
+  });
+
+  final Pill pill;
+  final TileSize size;
+  final VoidCallback onOpen;
+  final bool read;
+  final double radius;
+
+  /// The question's largest size; by default, the size the tile's width
+  /// takes on the shelves above.
+  final double? max;
+
+  @override
+  Widget build(BuildContext context) {
+    final Pill p = pill;
+    return CardTap(
+      pill: p,
+      onTap: onOpen,
+      child: Container(
+        width: size.width,
+        height: size.height,
+        padding: const EdgeInsets.all(16),
+        decoration: cardFace(context, p.color, radius: radius),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PurposeHead(
+              pill: p,
+              trailing: read ? ReadMark(pill: p) : null,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: CardQuestion(
+                  text: p.question,
+                  color: p.ink,
+                  min: 11,
+                  max: max ?? (size.width < 190 ? 15.5 : 17),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── A card in a shape of its own ──────────────────────────────────────────
+
+/// A card's face in a shape that is not a rounded box — a price tag, a
+/// speech bubble, a stamp — cut from the page the way [cardFace] cuts a box:
+/// its colour, and the hairline only where the colour would melt into the
+/// page. With [outline], only the shape's edge, a point wide, and with
+/// [dashed], dashed: the frame inside a stamp, and a stamp not yet had.
+class ShapedFace extends CustomPainter {
+  ShapedFace({
+    required this.shape,
+    required this.colour,
+    required this.ground,
+    this.outline = false,
+    this.dashed = false,
+  });
+
+  /// The outline, for the size the face is painted at.
+  final Path Function(Size size) shape;
+  final Color colour;
+
+  /// What the card lies on: the page.
+  final Color ground;
+  final bool outline;
+  final bool dashed;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Path path = shape(size);
+    if (outline || dashed) {
+      final Paint pen = Paint()
+        ..color = colour
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1;
+      if (!dashed) {
+        canvas.drawPath(path, pen);
+        return;
+      }
+      for (final PathMetric line in path.computeMetrics()) {
+        for (double at = 0; at < line.length; at += 6) {
+          canvas.drawPath(line.extractPath(at, at + 3), pen);
+        }
+      }
+      return;
+    }
+    canvas.drawPath(path, Paint()..color = colour);
+    if (cardHairline(colour, ground) != null) {
+      canvas.drawPath(
+        path,
+        Paint()
+          ..color = cardEdgeColour(colour)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(ShapedFace old) =>
+      old.colour != colour ||
+      old.ground != ground ||
+      old.outline != outline ||
+      old.dashed != dashed ||
+      old.shape != shape;
+}
+
 // ── Marks ─────────────────────────────────────────────────────────────────
 
 /// The marks the canvas draws that are not subjects, as path data on the
@@ -387,6 +521,11 @@ abstract final class Glyphs {
   static const String note =
       'M9.5 17.75V5.75l10-2v12 M9.5 17.75a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z '
       'M19.5 15.75a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z';
+
+  /// The canvas's bulb over WHAT TO KEEP.
+  static const String bulb =
+      'M9.5 18h5 M10.5 21h3 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5'
+      'c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z';
 }
 
 /// One of [Glyphs], recoloured to whatever ink it sits on.
@@ -429,6 +568,30 @@ class PurposeGlyph extends StatelessWidget {
     );
   }
 }
+
+// ── The moves ─────────────────────────────────────────────────────────────
+
+/// The moves that catch a trick: every move but the ones that are ways of
+/// working (reflection, estimation, computation), which nothing hides in.
+const Set<Principle> kTraps = {
+  Principle.baseRate,
+  Principle.survivorship,
+  Principle.regression,
+  Principle.confirmation,
+  Principle.anchoring,
+  Principle.sampling,
+  Principle.confounding,
+  Principle.counterfactual,
+  Principle.multipleComparisons,
+  Principle.availability,
+  Principle.sunkCost,
+  Principle.conjunction,
+  Principle.conditional,
+  Principle.independence,
+  Principle.coincidence,
+  Principle.exponential,
+  Principle.simpson,
+};
 
 // ── The themes ────────────────────────────────────────────────────────────
 
@@ -525,6 +688,32 @@ List<Pill> themeSet(
 /// Today, as the themes count days.
 int today() => themeDay(DateTime.now());
 
+/// The theme a set stands for this week, when a section names none: the
+/// themes in the order the app turns them, one a week, among [among] and
+/// those [pool] holds at least [least] cards of, so a set is the same set
+/// all week and a different one the next. Null when the pool fills none.
+(ShelfTheme, int)? weekTheme(
+  List<Pill> pool, {
+  required int day,
+  Iterable<ShelfTheme> among = kThemeCycle,
+  int least = kThemeMinimum,
+}) {
+  final List<ShelfTheme> order = [
+    for (final ShelfTheme t in kThemeCycle)
+      if (among.contains(t)) t,
+  ];
+  final int week = day ~/ 7;
+  for (int i = 0; i < order.length; i++) {
+    final ShelfTheme theme = order[(week + i) % order.length];
+    final int variant = themeVariant(theme, week * 7);
+    final int count = pool
+        .where((p) => fitsTheme(theme, p, variant: variant))
+        .length;
+    if (count >= least) return (theme, variant);
+  }
+  return null;
+}
+
 // ── The day's play ────────────────────────────────────────────────────────
 
 /// What this family keeps in the day's play (lib/state/explore_play.dart),
@@ -533,6 +722,10 @@ int today() => themeDay(DateTime.now());
 /// for good is an answer, and goes through the host.
 abstract final class PurposePlay {
   static const String _prefix = 'purpose:';
+
+  /// What a block listens to, to be drawn again when the day's play
+  /// changes: a pick here, a slider checked on a shelf above.
+  static Listenable get listenable => ExplorePlay.instance;
 
   /// What was kept under [key] for today, or null.
   static Object? read(String key) => ExplorePlay.instance['$_prefix$key'];
@@ -554,4 +747,61 @@ abstract final class PurposePlay {
   /// Keeps [values] under [key], in a stable order.
   static void writeSet(String key, Set<String> values) =>
       write(key, values.isEmpty ? null : (values.toList()..sort()));
+
+  /// Notes that the card [id] was answered on a shelf of this family
+  /// today, for the count of what was played.
+  static void said(String id) => writeSet('said', setOf('said')..add(id));
+}
+
+/// Draws [builder] again when what [select] reads from the day's play
+/// changes, and only then. A slider dragged on a shelf above changes the
+/// day's play many times a second; a shelf that does not show it is not
+/// laid out again each time.
+class PlayWatch<T> extends StatefulWidget {
+  const PlayWatch({super.key, required this.select, required this.builder});
+
+  /// What the shelf shows of the day's play: a value that compares equal
+  /// when nothing it shows has changed (a set, a list, a record).
+  final T Function() select;
+  final Widget Function(BuildContext context, T value) builder;
+
+  @override
+  State<PlayWatch<T>> createState() => _PlayWatchState<T>();
+}
+
+class _PlayWatchState<T> extends State<PlayWatch<T>> {
+  late final Listenable _play = PurposePlay.listenable;
+  late T _value = widget.select();
+
+  @override
+  void initState() {
+    super.initState();
+    _play.addListener(_changed);
+  }
+
+  @override
+  void didUpdateWidget(PlayWatch<T> old) {
+    super.didUpdateWidget(old);
+    _value = widget.select();
+  }
+
+  @override
+  void dispose() {
+    _play.removeListener(_changed);
+    super.dispose();
+  }
+
+  void _changed() {
+    final T now = widget.select();
+    if (!_same(now, _value)) setState(() => _value = now);
+  }
+
+  static bool _same(Object? a, Object? b) => switch ((a, b)) {
+    (final Set<Object?> x, final Set<Object?> y) => setEquals(x, y),
+    (final List<Object?> x, final List<Object?> y) => listEquals(x, y),
+    _ => a == b,
+  };
+
+  @override
+  Widget build(BuildContext context) => widget.builder(context, _value);
 }

@@ -3557,6 +3557,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purposeMeFooter => 'Segna le carte in cui ti riconosci.';
 
   @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n carte segnate con «Sono io».',
+      one: 'Una carta segnata con «Sono io».',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get purposeAboutYou => 'Non lo sapevo, e parla di me';
 
   @override
