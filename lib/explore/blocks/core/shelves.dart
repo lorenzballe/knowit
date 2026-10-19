@@ -613,7 +613,7 @@ class ExploreShelves {
       fits,
       salt: salt,
       day: turn,
-      count: own is num && own > 0 ? own.toInt() : 40,
+      count: own is num && own > 0 ? own.toInt() : 120,
       perTopic: perSubject,
     );
   }

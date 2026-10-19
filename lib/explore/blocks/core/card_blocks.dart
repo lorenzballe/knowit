@@ -59,7 +59,7 @@ Widget _framed(ExploreHost host, ExploreSection section, Widget child) =>
     );
 
 /// The cards of [section] whose questions a box of [box] drawn as [look]
-/// sets whole, at most [count] of them, from three times as many asked of
+/// sets whole, at most [count] of them, from six times as many asked of
 /// the source — measured in order, and no further than the [count]th that
 /// fits.
 List<Pill> _fitting(
@@ -71,7 +71,7 @@ List<Pill> _fitting(
   required TileLook look,
 }) {
   final List<Pill> out = [];
-  for (final Pill pill in host.cardsFor(section, limit: count * 3)) {
+  for (final Pill pill in host.cardsFor(section, limit: count * 6)) {
     if (out.length == count) break;
     if (questionFits(context, pill, box, look, read: host.isRead(pill))) {
       out.add(pill);
@@ -353,7 +353,7 @@ class BentoBlock extends ExploreBlock with SectionLayout {
       unit * s.columns + spacing * (s.columns - 1),
       rowHeight * s.rows + spacing * (s.rows - 1),
     );
-    final List<Pill> cards = host.cardsFor(section, limit: spans.length * 3);
+    final List<Pill> cards = host.cardsFor(section, limit: spans.length * 6);
     final List<Pill?> placed = fitCards(context, cards, [
       for (final s in spans) boxOf(s),
     ], isRead: host.isRead);

@@ -32,7 +32,7 @@ the same way.
 **A question is never cut.** Each tile has a smallest size it sets a question
 at (9.5 points in the smallest boxes, 14 in the largest), and a card whose
 question cannot be set whole at that size, in that box, at the reader's own
-text size, is not put in it: the block asks its source for three times as
+text size, is not put in it: the block asks its source for six times as
 many cards as it has boxes and takes the ones that fit, the smallest boxes
 choosing first. A small box gets a short question; a long one waits for a
 bigger box.
