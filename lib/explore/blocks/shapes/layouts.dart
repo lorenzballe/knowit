@@ -4,6 +4,8 @@
 /// subject's mark).
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../models/pill.dart';
@@ -297,31 +299,58 @@ class BentoBlock extends ShapeBlock {
     );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SizedBox(
-        height: height,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(flex: 3, child: card(lead, big)),
-            const SizedBox(width: 10),
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (int i = 0; i < two.length; i++) ...[
-                    if (i > 0) const SizedBox(height: 10),
-                    Expanded(child: card(two[i], small)),
-                  ],
-                  if (two.length < 2) ...[
-                    const SizedBox(height: 10),
-                    const Expanded(child: SizedBox()),
-                  ],
-                ],
-              ),
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // The canvas's height, or taller when the lead or one of the two
+          // beside it needs it to hold its question.
+          final double room = box.maxWidth - 10;
+          double tallest = math.max(
+            height,
+            tileHeightFor(
+              context,
+              lead,
+              big,
+              width: room * 3 / 5,
+              read: host.isRead(lead),
             ),
-          ],
-        ),
+          );
+          for (final Pill p in two) {
+            final double each = tileHeightFor(
+              context,
+              p,
+              small,
+              width: room * 2 / 5,
+              read: host.isRead(p),
+            );
+            tallest = math.max(tallest, each * 2 + 10);
+          }
+          return SizedBox(
+            height: tallest,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(flex: 3, child: card(lead, big)),
+                const SizedBox(width: 10),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (int i = 0; i < two.length; i++) ...[
+                        if (i > 0) const SizedBox(height: 10),
+                        Expanded(child: card(two[i], small)),
+                      ],
+                      if (two.length < 2) ...[
+                        const SizedBox(height: 10),
+                        const Expanded(child: SizedBox()),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -384,10 +413,18 @@ class TwoRowsBlock extends ShapeBlock {
 
   @override
   Widget lay(BuildContext context, ExploreHost host, ShapeDeal deal) {
-    final (double width, double height, TileLook look) =
+    final (double width, double canvas, TileLook look) =
         _sizes[sizeOf(deal.section)]!;
     final List<Pill> cards = deal.cards;
     final int columns = (cards.length / 2).ceil();
+    // Every tile as tall as the canvas's, or as the longest question needs.
+    double height = canvas;
+    for (final Pill p in cards) {
+      height = math.max(
+        height,
+        tileHeightFor(context, p, look, width: width, read: host.isRead(p)),
+      );
+    }
     // The row keeps two points above and below its cards, as every
     // sideways shelf does.
     return SideRow(
@@ -455,7 +492,7 @@ class MasonryBlock extends ShapeBlock {
 
   @override
   Widget lay(BuildContext context, ExploreHost host, ShapeDeal deal) {
-    final (double tall, double short, double min, double max, EdgeInsets pad) =
+    final (double high, double low, double min, double max, EdgeInsets pad) =
         _sizes[sizeOf(deal.section)]!;
     final bool mark = signatureOf(deal.section) == 'mark';
     // An even number, laid two at a time: the left column starts tall and
@@ -470,7 +507,7 @@ class MasonryBlock extends ShapeBlock {
       min: min,
       max: max,
     );
-    Widget card(Pill p, bool isTall) => SizedBox(
+    Widget card(Pill p, bool isTall, double tall, double short) => SizedBox(
       height: isTall ? tall : short,
       child: _tile(
         host,
@@ -485,21 +522,46 @@ class MasonryBlock extends ShapeBlock {
         ),
       ),
     );
-    Widget column(int side) => Expanded(
-      child: Column(
-        children: [
-          for (int i = side; i < cards.length; i += 2) ...[
-            if (i > side) const SizedBox(height: 10),
-            card(cards[i], _isTall(i)),
-          ],
-        ],
-      ),
-    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [column(0), const SizedBox(width: 10), column(1)],
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // The canvas's heights, or taller where a question needs it; the
+          // tall places stay as much taller than the short ones as they
+          // were drawn, so the columns stay out of step.
+          final double width = (box.maxWidth - 10) / 2;
+          double short = low;
+          double tall = high;
+          for (int i = 0; i < cards.length; i++) {
+            final double need = tileHeightFor(
+              context,
+              cards[i],
+              look,
+              width: width,
+              read: host.isRead(cards[i]),
+            );
+            if (_isTall(i)) {
+              tall = math.max(tall, need);
+            } else {
+              short = math.max(short, need);
+            }
+          }
+          tall = math.max(tall, short + high - low);
+          Widget column(int side) => Expanded(
+            child: Column(
+              children: [
+                for (int i = side; i < cards.length; i += 2) ...[
+                  if (i > side) const SizedBox(height: 10),
+                  card(cards[i], _isTall(i), tall, short),
+                ],
+              ],
+            ),
+          );
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [column(0), const SizedBox(width: 10), column(1)],
+          );
+        },
       ),
     );
   }

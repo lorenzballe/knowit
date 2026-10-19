@@ -476,24 +476,32 @@ class TicketBlock extends ShapeBlock {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16 * k),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        subjectLabel(context, p),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: tileLabel(subOn(p)),
-                      ),
+                // The subject at one end of the stub and the time at the
+                // other, or one over the other when a line will not hold
+                // both: at the largest text sizes.
+                child: Center(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10,
+                      runSpacing: 1,
+                      children: [
+                        FitLabel(
+                          subjectLabel(context, p),
+                          style: tileLabel(subOn(p)),
+                          maxLines: 1,
+                        ),
+                        FitLabel(
+                          '${upper(context, l.todayLabel)} · '
+                          '${upper(context, l.minutesShort(minutesFor(p)))}',
+                          style: tileLabel(p.ink),
+                          maxLines: 1,
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Text(
-                      '${upper(context, l.todayLabel)} · '
-                      '${upper(context, l.minutesShort(minutesFor(p)))}',
-                      maxLines: 1,
-                      style: tileLabel(p.ink),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -561,15 +569,67 @@ class TryBlock extends ShapeBlock {
     'l': (232, 222, 44, 11.5, 17),
   };
 
+  /// How tall the tile of [p] [w] wide must stand for its question to fit
+  /// whole at its smallest, with its band as deep as TRY TODAY makes it.
+  static double _need(
+    BuildContext context,
+    Pill p,
+    double w,
+    double band,
+    TileLook look,
+  ) {
+    final l = context.l10n;
+    final TextScaler scaler = MediaQuery.textScalerOf(context);
+    final TextDirection direction = Directionality.of(context);
+    final TextPainter minutes = TextPainter(
+      text: TextSpan(
+        text: upper(context, l.minutesShort(minutesFor(p))),
+        style: tileLabel(subOn(p)),
+      ),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final double label = FitLabel.heightFor(
+      upper(context, l.tryToday),
+      tileLabel(p.ink),
+      w - 28 - 15 - 8 - 8 - minutes.width,
+      scaler: scaler,
+      direction: direction,
+    );
+    final double foot = math.max(
+      band,
+      math.max(15, math.max(label, minutes.height)) + 14,
+    );
+    minutes.dispose();
+    return 14 +
+        ShapeHead.heightFor(context, p, width: w - 28) +
+        10 +
+        questionHeight(context, p.question, look, w - 28) +
+        1 +
+        10 +
+        foot;
+  }
+
   @override
   Widget lay(BuildContext context, ExploreHost host, ShapeDeal deal) {
     final (double w, double h, double band, double min, double max) =
         _sizes[sizeOf(deal.section)]!;
     final l = context.l10n;
+    // As tall as the canvas drew it, or as the longest question needs.
+    final TileLook look = TileLook(
+      outline: const RoundOutline(19),
+      min: min,
+      max: max,
+    );
+    double height = h;
+    for (final Pill p in deal.cards) {
+      height = math.max(height, _need(context, p, w, band, look) + 4);
+    }
     return _row(
       host,
       deal,
-      height: h,
+      height: height,
       width: w,
       tile: (p) {
         final bool read = host.isRead(p);
@@ -600,10 +660,16 @@ class TryBlock extends ShapeBlock {
                   ),
                 ),
               ),
+              // A band of the canvas's height, deeper where TRY TODAY takes
+              // two lines: in a language that says it in three words, or at
+              // the largest text sizes.
               Container(
-                height: band,
+                constraints: BoxConstraints(minHeight: band),
                 color: tone(p, Tones.half),
-                padding: const EdgeInsets.symmetric(horizontal: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 7,
+                ),
                 child: Row(
                   children: [
                     Semantics(
@@ -633,10 +699,8 @@ class TryBlock extends ShapeBlock {
                     ),
                     const SizedBox(width: 8),
                     Expanded(
-                      child: Text(
+                      child: FitLabel(
                         upper(context, l.tryToday),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                         style: tileLabel(p.ink),
                       ),
                     ),
@@ -732,7 +796,8 @@ class TwinsBlock extends ShapeBlock {
 
 /// A debate, the card in two halves, a side at the foot of each: a tap on
 /// one takes it, the answer the card itself records for that side. The rest
-/// of the card opens it.
+/// of the card opens it, and so does the foot once a side is taken, where
+/// the other side can be read.
 class SidesBlock extends ShapeBlock {
   const SidesBlock();
 

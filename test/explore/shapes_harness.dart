@@ -74,13 +74,14 @@ class Pumped {
 
 /// Pumps [block] alone on a phone [width] wide, its section [json] (beside
 /// an id of `x` and its own name), the host holding [cards] for it, the
-/// reader having read [read].
+/// reader having read [read] and answered [answers].
 Future<Pumped> pumpShape(
   WidgetTester tester,
   ShapeBlock block, {
   Map<String, Object?> json = const {},
   List<Pill>? cards,
   Set<String> read = const {},
+  Map<String, Answer> answers = const {},
   Brightness theme = Brightness.dark,
   double width = 375,
   double height = 900,
@@ -95,7 +96,9 @@ Future<Pumped> pumpShape(
     'block': block.name,
     ...json,
   });
-  final AppState app = AppState()..seenIds = {...read};
+  final AppState app = AppState()
+    ..seenIds = {...read}
+    ..answers = {...answers};
   final FakeExploreHost host = FakeExploreHost(
     app,
     language: locale.languageCode,

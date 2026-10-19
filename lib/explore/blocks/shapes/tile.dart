@@ -3,6 +3,8 @@
 /// set to the room there is — Explore's card, in the shape of its shelf.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../models/pill.dart';
@@ -122,6 +124,81 @@ class FigureText extends StatelessWidget {
   }
 }
 
+/// How tall [text] stands set by [look] [width] wide at its smallest, as the
+/// reader sees it: the question of a tile that has the least room for it.
+///
+/// Measured as the app's own fitting sets it (ScaledText): at the reader's
+/// text size, at the smallest size the reader will see, and in their
+/// direction.
+double questionHeight(
+  BuildContext context,
+  String text,
+  TileLook look,
+  double width,
+) {
+  final TextScaler scaler = MediaQuery.textScalerOf(context);
+  final double least = math.min(
+    look.min,
+    look.min * look.min / scaler.scale(look.min),
+  );
+  final TextPainter painter = TextPainter(
+    text: TextSpan(
+      text: text,
+      style: AppText.display(
+        size: least,
+        weight: FontWeight.w600,
+        height: look.lineHeight,
+        spacing: look.tracking * least,
+      ),
+    ),
+    textDirection: Directionality.of(context),
+    textScaler: scaler,
+  )..layout(maxWidth: math.max(0, width));
+  final double height = painter.height;
+  painter.dispose();
+  return height;
+}
+
+/// How tall a tile [width] wide, cut and set by [look], must stand for
+/// [pill]'s question to fit whole at its smallest, so it never has to be
+/// scrolled inside its tile: a shape whose tiles are shorter than this for
+/// a card it is dealt grows to it, all its tiles alike.
+///
+/// [read] and [figure] are what the tile shows beside the question: the
+/// tick of a card read, the figure of a number.
+double tileHeightFor(
+  BuildContext context,
+  Pill pill,
+  TileLook look, {
+  required double width,
+  bool read = false,
+  bool figure = false,
+}) {
+  final double inner = width - look.padding.horizontal;
+  // The mark and the tick, on the tiles that centre them.
+  const double marks = 15;
+  final double above = switch (look.words) {
+    TileWords.top || TileWords.middle =>
+      ShapeHead.heightFor(
+            context,
+            pill,
+            width: inner - look.markInset,
+            named: look.named,
+            read: read,
+          ) +
+          look.gap,
+    TileWords.centred => marks + look.gap,
+    TileWords.figure =>
+      marks + look.gap + (figure ? look.figureSize * 0.95 + 8 : 0),
+    TileWords.figureTop => look.figureSize * 0.86 + look.gap,
+  };
+  // A pixel over, for the fractions a paragraph is laid out in.
+  return look.padding.vertical +
+      above +
+      questionHeight(context, pill.question, look, inner) +
+      1;
+}
+
 /// One card, cut and set by [look], with [art] painted and [behind] laid
 /// under its words.
 class ShapeTile extends StatelessWidget {
@@ -132,7 +209,6 @@ class ShapeTile extends StatelessWidget {
     this.read = false,
     this.art = const [],
     this.behind,
-    this.trailing,
     this.figure,
     this.figureColour,
     this.ground,
@@ -143,9 +219,6 @@ class ShapeTile extends StatelessWidget {
   final bool read;
   final List<FaceArt> art;
   final Widget? behind;
-
-  /// What the head ends with: a country's code, on a stamp.
-  final Widget? trailing;
 
   /// The figure, for a tile whose words set one.
   final String? figure;
@@ -202,7 +275,6 @@ class ShapeTile extends StatelessWidget {
         pill: pill,
         named: look.named,
         read: read,
-        trailing: trailing,
         tickBeside: look.tickBeside,
       ),
     );

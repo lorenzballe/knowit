@@ -2,6 +2,8 @@
 /// tile of its own cut: rounds 131b to 131d and the signatures of 132a.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../models/pill.dart';
@@ -21,8 +23,39 @@ class RowTile {
   const RowTile(this.width, this.height, this.look);
 
   final double width;
+
+  /// The row's height, as the canvas drew it: the tiles stand 4 points
+  /// shorter, within the 2 the row keeps above and below them.
   final double height;
   final TileLook look;
+
+  /// The row's height for [cards], where [read] says which the reader has
+  /// read: the canvas's, or taller when a question needs it, so that none
+  /// has to scroll inside its tile.
+  double heightFor(
+    BuildContext context,
+    List<Pill> cards,
+    bool Function(Pill) read,
+  ) {
+    final bool figures =
+        look.words == TileWords.figure || look.words == TileWords.figureTop;
+    double tallest = height;
+    for (final Pill p in cards) {
+      tallest = math.max(
+        tallest,
+        tileHeightFor(
+              context,
+              p,
+              look,
+              width: width,
+              read: read(p),
+              figure: figures && figureOf(p) != null,
+            ) +
+            4,
+      );
+    }
+    return tallest;
+  }
 }
 
 /// What a signature paints on the face of [p], for the ones a tile's face
@@ -74,7 +107,7 @@ class ShapeRow extends ShapeBlock {
     final List<Pill> cards = deal.cards;
     final TileOutline outline = tile.look.outline;
     return SideRow(
-      height: tile.height,
+      height: tile.heightFor(context, cards, host.isRead),
       gap: gap,
       count: cards.length,
       itemBuilder: (context, i) {

@@ -4,6 +4,8 @@
 /// beside its question, and what a card is said to be about in time.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../data/explore_mix.dart';
@@ -30,13 +32,142 @@ TextStyle tileLabel(Color color, {double size = 9, double spacing = 1.2}) =>
 String subjectLabel(BuildContext context, Pill p) =>
     upper(context, context.l10n.subjectOf(p.topic));
 
+/// Small words set whole, never cut short: on as many as [maxLines] lines,
+/// broken only between words, at the reader's text size — and smaller only
+/// as far as it takes when even that will not hold them, a long word in a
+/// narrow band at the largest text sizes, or a language that says TRY
+/// TODAY in three words.
+///
+/// Explore's own labels keep to one line and end in dots. A label is often
+/// the only thing that says what a tile is (a subject, how long something
+/// takes), and a shape's tiles are set at sizes the dots would come to
+/// often, so here the label gives way in size before it gives way in words.
+class FitLabel extends StatelessWidget {
+  const FitLabel(
+    this.text, {
+    super.key,
+    required this.style,
+    this.maxLines = 2,
+    this.textAlign = TextAlign.start,
+  });
+
+  final String text;
+  final TextStyle style;
+  final int maxLines;
+  final TextAlign textAlign;
+
+  /// The text size [text] is set at in [width]: the reader's own [scaler]
+  /// when it fits, and otherwise the largest, in steps of a twentieth, at
+  /// which every word fits a line and the whole fits [maxLines].
+  static TextScaler scalerFor(
+    String text,
+    TextStyle style,
+    double width, {
+    required TextScaler scaler,
+    required TextDirection direction,
+    int maxLines = 2,
+  }) {
+    if (!width.isFinite ||
+        _fits(text, style, width, scaler, direction, maxLines)) {
+      return scaler;
+    }
+    final double size = style.fontSize ?? 14;
+    final double reader = scaler.scale(size) / size;
+    for (double k = 0.95; k > 0.4; k -= 0.05) {
+      final TextScaler smaller = TextScaler.linear(reader * k);
+      if (_fits(text, style, width, smaller, direction, maxLines)) {
+        return smaller;
+      }
+    }
+    return TextScaler.linear(reader * 0.4);
+  }
+
+  /// How tall [text] stands set as a [FitLabel] [width] wide.
+  static double heightFor(
+    String text,
+    TextStyle style,
+    double width, {
+    required TextScaler scaler,
+    required TextDirection direction,
+    int maxLines = 2,
+  }) {
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: direction,
+      textScaler: scalerFor(
+        text,
+        style,
+        width,
+        scaler: scaler,
+        direction: direction,
+        maxLines: maxLines,
+      ),
+      maxLines: maxLines,
+    )..layout(maxWidth: width.isFinite ? math.max(0, width) : double.infinity);
+    final double height = painter.height;
+    painter.dispose();
+    return height;
+  }
+
+  static bool _fits(
+    String text,
+    TextStyle style,
+    double width,
+    TextScaler scaler,
+    TextDirection direction,
+    int maxLines,
+  ) {
+    final TextPainter whole = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: maxLines,
+    )..layout(maxWidth: math.max(0, width));
+    final bool fits = !whole.didExceedMaxLines && whole.width <= width;
+    whole.dispose();
+    if (!fits) return false;
+    for (final String word in text.split(RegExp(r'\s+'))) {
+      final TextPainter one = TextPainter(
+        text: TextSpan(text: word, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final bool whole = one.width <= width;
+      one.dispose();
+      if (!whole) return false;
+    }
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) => Text(
+        text,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        style: style,
+        textScaler: scalerFor(
+          text,
+          style,
+          box.maxWidth,
+          scaler: MediaQuery.textScalerOf(context),
+          direction: Directionality.of(context),
+          maxLines: maxLines,
+        ),
+      ),
+    );
+  }
+}
+
 /// The head of a tile: the subject's mark, and its name where the tile has
 /// room for it, and the tick of a card read.
 ///
 /// Explore's own head (CardHead) keeps the name to one line and ends it with
 /// dots; a shape's tiles are set at sizes and text sizes that one line will
-/// not always hold, so here the name may take a second line and the tile's
-/// question, which is fitted to whatever is left, gives way.
+/// not always hold, so here the name may take a second line (a [FitLabel])
+/// and the tile's question, which is fitted to whatever is left, gives way.
 class ShapeHead extends StatelessWidget {
   const ShapeHead({
     super.key,
@@ -72,6 +203,39 @@ class ShapeHead extends StatelessWidget {
   /// The mark's size.
   final double size;
 
+  /// The tick's size.
+  static const double _tick = 14;
+
+  /// The style of the subject's name, on [pill] or in [ink].
+  static TextStyle _label(Pill pill, Color? ink) =>
+      tileLabel(ink == null ? subOn(pill) : ink.withValues(alpha: 0.66));
+
+  /// How tall the head of [pill] stands, [width] wide, set as a head with
+  /// these words would set it — for a shape that makes room for its
+  /// questions before it lays its tiles out.
+  static double heightFor(
+    BuildContext context,
+    Pill pill, {
+    required double width,
+    bool named = false,
+    bool read = false,
+    double size = 15,
+  }) {
+    final double marks = math.max(size, read ? _tick : 0);
+    if (!named) return marks;
+    final double room = width - size - 7 - (read ? 6 + _tick : 0);
+    return math.max(
+      marks,
+      FitLabel.heightFor(
+        subjectLabel(context, pill),
+        _label(pill, null),
+        room,
+        scaler: MediaQuery.textScalerOf(context),
+        direction: Directionality.of(context),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color mark = ink ?? pill.ink;
@@ -83,13 +247,9 @@ class ShapeHead extends StatelessWidget {
         if (named) ...[
           const SizedBox(width: 7),
           Flexible(
-            child: Text(
+            child: FitLabel(
               subjectLabel(context, pill),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: tileLabel(
-                ink == null ? subOn(pill) : mark.withValues(alpha: 0.66),
-              ),
+              style: _label(pill, ink),
             ),
           ),
           if (read) ...[const SizedBox(width: 6), tick],

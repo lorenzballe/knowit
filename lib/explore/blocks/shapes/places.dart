@@ -17,8 +17,8 @@
 /// and lamb shipped from New Zealand to Britain is neither. Phrases that
 /// hold a country's name without being it (Isaiah Berlin, the East India
 /// Company, Latin America) are taken out before anything is looked for.
-/// Every match this finds in the bank, 434 cards, was read through by hand
-/// when it was written.
+/// Every stamp this gives a card of the bank, 336 of them when it was
+/// written, was read through by hand.
 library;
 
 import '../../../models/pill.dart';
@@ -238,10 +238,14 @@ String? stampCountry(Pill p, [Map<String, Object?> codes = const {}]) {
     question = question.replaceAll(phrase, '');
   }
   // A question that names places in two parts of the world is about both,
-  // or about neither, and its stamp would be a guess either way.
+  // or about neither, and its stamp would be a guess either way. A country
+  // that lies in both (Egypt, Turkey) is the card's own, whichever part of
+  // the world the other list puts it in.
   for (final MapEntry<String, Map<String, RegExp>> other in _patterns.entries) {
     if (other.key == p.region) continue;
-    if (other.value.values.any((r) => r.hasMatch(question))) return null;
+    for (final MapEntry<String, RegExp> e in other.value.entries) {
+      if (!names.containsKey(e.key) && e.value.hasMatch(question)) return null;
+    }
   }
   String? found;
   int at = 1 << 30;

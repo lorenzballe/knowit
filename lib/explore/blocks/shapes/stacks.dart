@@ -374,8 +374,9 @@ class _PagerSize {
 
 /// Debates, one at a time across the page, a swipe from one to the next,
 /// and at the foot of each its two sides: a tap on one takes it, the answer
-/// the card itself records (131e). With the halves signature the card is in
-/// two halves and an "or" stands between the sides (132b).
+/// the card itself records (131e), and once one is taken the foot opens the
+/// card like the rest of it. With the halves signature the card is in two
+/// halves and an "or" stands between the sides (132b).
 class PagerBlock extends ShapeBlock {
   const PagerBlock();
 
