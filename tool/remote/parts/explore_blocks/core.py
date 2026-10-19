@@ -130,7 +130,7 @@ BENTO_SPAN = re.compile(r"^([1-4])x([1-3])$")
 BENTO_DEFAULTS = {
     2: ["2x1", "1x2", "1x1", "1x1"],
     3: ["2x2", "1x1", "1x1", "1x1", "2x1"],
-    4: ["2x2", "2x1", "1x1", "1x1", "4x1"],
+    4: ["2x2", "2x1", "2x1", "4x1"],
 }
 
 
@@ -188,7 +188,7 @@ def grid(section: dict) -> list[str]:
 
 
 def bento(section: dict) -> list[str]:
-    problems = _fields(section, WORDS | {"source", "columns", "items", "ratio", "limit"}) + _needs_source(section)
+    problems = _fields(section, WORDS | {"source", "columns", "items", "ratio"}) + _needs_source(section)
     columns = section.get("columns", 3)
     if columns not in (2, 3, 4) or isinstance(columns, bool):
         return problems + ["`columns` is 2, 3 or 4"]

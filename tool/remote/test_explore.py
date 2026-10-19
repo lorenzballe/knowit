@@ -7,6 +7,7 @@ what does not says what to change.
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -251,6 +252,23 @@ class ExamplesTest(unittest.TestCase):
                 self.assertIn((block, size), shown)
         blocks = {s["block"] for s in doc["sections"]}
         self.assertTrue({"grid", "bento", "single", "text", "countdown", "promo", "spacer", "divider", "web"} <= blocks)
+
+    def test_every_example_in_the_catalogue_passes(self):
+        text = (ROOT / "docs" / "explore" / "core.md").read_text(encoding="utf-8")
+        examples = re.findall(r"```json\n(.*?)\n```", text, re.S)
+        self.assertGreaterEqual(len(examples), 18)
+        for example in examples:
+            section = json.loads(example)
+            with self.subTest(section=section["id"]):
+                self.assertEqual(explore.check({"sections": [section]}), [])
+
+    def test_the_document_in_docs_remote_passes(self):
+        text = (ROOT / "docs" / "REMOTE.md").read_text(encoding="utf-8")
+        documents = [json.loads(d) for d in re.findall(r"```json\n(.*?)\n```", text, re.S)]
+        self.assertTrue(any("sections" in d for d in documents))
+        for doc in documents:
+            if "sections" in doc:
+                self.assertEqual(explore.check(doc), [])
 
     def test_an_example_of_no_part_is_refused(self):
         stray = check.EXAMPLES / "nothing-at-all.json"

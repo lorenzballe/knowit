@@ -261,7 +261,7 @@ BentoSpan? bentoSpan(Object? raw, int columns) {
 const Map<int, List<String>> kBentoDefaults = {
   2: ['2x1', '1x2', '1x1', '1x1'],
   3: ['2x2', '1x1', '1x1', '1x1', '2x1'],
-  4: ['2x2', '2x1', '1x1', '1x1', '4x1'],
+  4: ['2x2', '2x1', '2x1', '4x1'],
 };
 
 /// Where each item of a mosaic sits: its column and row, packed in order,
