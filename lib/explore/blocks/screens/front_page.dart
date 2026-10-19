@@ -9,15 +9,19 @@
 /// puzzle for an ordinary Explore.
 ///
 /// With a source of its own a part shows the cards it is given, in order.
-/// Without one it takes, from what Explore gives it, the kind of card the
-/// part is for — a story or a mechanism to lead with, a side to pick and a
-/// thing to use in the columns, a figure, a myth, a sum — so the parts of a
-/// page made only of defaults never print the same card twice.
+/// Without one it deals, by the day, from all the cards Explore has for it,
+/// the kind of card the part is for — a story or a mechanism to lead with,
+/// a side to pick and a thing to use in the columns, a figure, a myth, a
+/// sum. Every card is for one part at most, so the parts of a page made
+/// only of defaults never print the same card twice; and the deal is the
+/// day's, not the reader's, so the page is the same for everyone who opens
+/// it that day, read or not, as the masthead says.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../../../data/explore_mix.dart';
 import '../../../data/themed_shelves.dart';
 import '../../../l10n/l10n.dart';
 import '../../../models/pill.dart';
@@ -26,8 +30,10 @@ import '../../../widgets/balanced_text.dart';
 import '../../explore_block.dart';
 import 'parts.dart';
 
-/// How many cards a part looks for its kind among.
-const int kFrontPool = 120;
+/// How many of Explore's cards a part deals from when the section names
+/// none: all of them, so that the day's deal can land on any card and does
+/// not hang on the order Explore keeps them in.
+const int kFrontPool = 10000;
 
 /// Whether the section names its cards one by one, in which case they are
 /// shown as named: the page's editor chose them.
@@ -36,50 +42,98 @@ bool handPicked(ExploreSection section) {
   return source is Map && source['ids'] is List;
 }
 
-/// The cards for a part: those named, or those of its kind from Explore's,
-/// the rest after them when there are too few of its kind.
+/// The parts of the page a card can be for.
+enum FrontPart { lead, column, figure, correction, puzzle }
+
+/// The part [pill] is for when nobody named it, or null for a card no part
+/// is for. A figure goes to In numbers, a myth to the corrections, a sum to
+/// the puzzle, a side to pick or a thing to use to the columns, and a
+/// story, paradox, mechanism or origin to the lead, in that order.
+FrontPart? frontPartOf(Pill pill) {
+  if (pill.hook == 'number') {
+    // A number with no figure in its question has nothing to set large,
+    // and is no puzzle either: its answer is the figure.
+    return shelfFigure(pill) != null ? FrontPart.figure : null;
+  }
+  if (pill.hook == 'misconception') return FrontPart.correction;
+  if (pill.challenge is TypeNumber ||
+      pill.challenge is Estimate ||
+      pill.hook == 'puzzle') {
+    return FrontPart.puzzle;
+  }
+  if (pill.challenge is TakeASide || pill.hook == 'practical') {
+    return FrontPart.column;
+  }
+  if (const {'story', 'paradox', 'mechanism', 'origin'}.contains(pill.hook)) {
+    return FrontPart.lead;
+  }
+  return null;
+}
+
+/// A lead: something that happened, a paradox, a mechanism, an origin.
+bool isLead(Pill p) => frontPartOf(p) == FrontPart.lead;
+
+/// A figure for "In numbers": a card about a number whose question has one.
+bool isFigure(Pill p) => frontPartOf(p) == FrontPart.figure;
+
+/// A correction: what almost everyone believes.
+bool isCorrection(Pill p) => frontPartOf(p) == FrontPart.correction;
+
+/// A puzzle: a sum to work out, or a card that is one.
+bool isPuzzle(Pill p) => frontPartOf(p) == FrontPart.puzzle;
+
+/// The cards for [part]: those the section names, in order; or the day's
+/// deal of [count] of its kind from all Explore has, one per subject while
+/// there are subjects enough. [on] is the day, today unless a test says.
 List<Pill> frontCards(
   ExploreHost host,
   ExploreSection section,
-  bool Function(Pill) kind, {
+  FrontPart part, {
   required int count,
-  bool fill = true,
+  DateTime? on,
 }) {
   if (handPicked(section)) return host.cardsFor(section, limit: count);
+  return dealCards(
+    host
+        .cardsFor(section, limit: kFrontPool)
+        .where((p) => frontPartOf(p) == part),
+    salt: 'front-${part.name}',
+    day: themeDay(on ?? DateTime.now()),
+    count: count,
+    perTopic: 1,
+  );
+}
+
+/// The two columns: a side to pick and a thing to use, dealt by the day;
+/// short of either, another card for the columns, then a card no part is
+/// for, so that the columns never take another part's card.
+List<Pill> frontColumns(
+  ExploreHost host,
+  ExploreSection section, {
+  DateTime? on,
+}) {
+  if (handPicked(section)) return host.cardsFor(section, limit: 2);
   final List<Pill> pool = host.cardsFor(section, limit: kFrontPool);
-  final List<Pill> out = [
+  final int day = themeDay(on ?? DateTime.now());
+  List<Pill> deal(Iterable<Pill> fits, String salt, int count) =>
+      dealCards(fits, salt: 'front-$salt', day: day, count: count, perTopic: 1);
+  final List<Pill> columns = [
     for (final Pill p in pool)
-      if (kind(p)) p,
-  ].take(count).toList();
-  if (fill && out.length < count) {
-    out.addAll(pool.where((p) => !out.contains(p)).take(count - out.length));
+      if (frontPartOf(p) == FrontPart.column) p,
+  ];
+  final List<Pill> out = [
+    ...deal(columns.where((p) => p.challenge is TakeASide), 'side', 1),
+    ...deal(columns.where((p) => p.challenge is! TakeASide), 'use', 1),
+  ];
+  for (final (Iterable<Pill> fits, String salt) in [
+    (columns, 'column'),
+    (pool.where((p) => frontPartOf(p) == null), 'other'),
+  ]) {
+    if (out.length >= 2) break;
+    out.addAll(deal(fits.where((p) => !out.contains(p)), salt, 2 - out.length));
   }
   return out;
 }
-
-bool _isDebate(Pill p) => p.challenge is TakeASide;
-
-/// A lead: something that happened, a paradox, a mechanism, an origin —
-/// the kinds a front page opens on — and never a side to pick, a figure, a
-/// myth or a sum, which have parts of their own.
-bool isLead(Pill p) =>
-    !_isDebate(p) &&
-    !isPuzzle(p) &&
-    const {'story', 'paradox', 'mechanism', 'origin'}.contains(p.hook);
-
-/// A figure for "In numbers": a card about a number whose question has one.
-bool isFigure(Pill p) => p.hook == 'number' && shelfFigure(p) != null;
-
-/// A correction: what almost everyone believes.
-bool isCorrection(Pill p) => p.hook == 'misconception';
-
-/// A puzzle: a sum to work out, or a card that is one — but not a card
-/// about a number, whose figure belongs to In numbers.
-bool isPuzzle(Pill p) =>
-    p.hook != 'number' &&
-    (p.challenge is TypeNumber ||
-        p.challenge is Estimate ||
-        p.hook == 'puzzle');
 
 /// The day's date as a paper prints it, in the reader's language.
 String frontDate(BuildContext context, DateTime on) {
@@ -222,7 +276,12 @@ class FrontLeadBlock extends ExploreBlock {
     ExploreHost host,
     ExploreSection section,
   ) {
-    final List<Pill> cards = frontCards(host, section, isLead, count: 1);
+    final List<Pill> cards = frontCards(
+      host,
+      section,
+      FrontPart.lead,
+      count: 1,
+    );
     if (cards.isEmpty) return null;
     final Pill lead = cards.first;
     host.seen(section, lead);
@@ -359,28 +418,7 @@ class FrontColumnsBlock extends ExploreBlock {
     ExploreHost host,
     ExploreSection section,
   ) {
-    List<Pill> cards;
-    if (handPicked(section)) {
-      cards = host.cardsFor(section, limit: 2);
-    } else {
-      final List<Pill> pool = host.cardsFor(section, limit: kFrontPool);
-      final Pill? side = pool.where(_isDebate).firstOrNull;
-      final Pill? use = pool
-          .where((p) => !_isDebate(p) && p.hook == 'practical')
-          .firstOrNull;
-      cards = [?side, ?use];
-      // Short of either, a card no other part of the page would take.
-      for (final Pill p in pool) {
-        if (cards.length >= 2) break;
-        if (!cards.contains(p) &&
-            !isLead(p) &&
-            !isFigure(p) &&
-            !isCorrection(p) &&
-            !isPuzzle(p)) {
-          cards.add(p);
-        }
-      }
-    }
+    final List<Pill> cards = frontColumns(host, section);
     if (cards.length < 2) return null;
     final Palette p = context.p;
     final ScreenSize size = screenSizeOf(section);
@@ -459,9 +497,8 @@ class FrontNumbersBlock extends ExploreBlock {
       for (final Pill p in frontCards(
         host,
         section,
-        isFigure,
+        FrontPart.figure,
         count: count,
-        fill: false,
       ))
         if (shelfFigure(p) != null) p,
     ];
@@ -567,9 +604,8 @@ class FrontCorrectionBlock extends ExploreBlock {
     final List<Pill> cards = frontCards(
       host,
       section,
-      isCorrection,
+      FrontPart.correction,
       count: 1,
-      fill: false,
     );
     if (cards.isEmpty) return null;
     final Pill fix = cards.first;
@@ -666,9 +702,8 @@ class FrontPuzzleBlock extends ExploreBlock {
     final List<Pill> cards = frontCards(
       host,
       section,
-      isPuzzle,
+      FrontPart.puzzle,
       count: 1,
-      fill: false,
     );
     if (cards.isEmpty) return null;
     final Pill puzzle = cards.first;
@@ -748,6 +783,7 @@ class EditionEndBlock extends ExploreBlock {
   ) {
     final l = context.l10n;
     final Palette p = context.p;
+    final ScreenSize size = screenSizeOf(section);
     final String line =
         section.subtitle(host.language) ?? l.screensFrontTomorrow;
     return host.watch(
@@ -760,7 +796,7 @@ class EditionEndBlock extends ExploreBlock {
               section.title(host.language) ?? l.screensFrontEnd,
               textAlign: TextAlign.center,
               style: AppText.display(
-                size: 17,
+                size: bySize(size, s: 15, m: 17, l: 19),
                 weight: FontWeight.w600,
                 height: 1.2,
                 spacing: -0.3,

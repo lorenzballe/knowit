@@ -2,7 +2,8 @@
 // the lead and a standfirst that never gives the answer away; two columns,
 // three figures, a correction and a puzzle, each of its own kind; the last
 // line. Made only of defaults from one pool, the parts never print the
-// same card twice; given their cards, they print those.
+// same card twice, and deal them by the day, whatever order Explore keeps
+// its cards in; given their cards, they print those.
 //
 //   flutter test test/explore/screens_front_test.dart
 import 'package:flutter/material.dart';
@@ -140,6 +141,41 @@ void main() {
     expect(isCorrection(card(printed['front-correction']!.single)), isTrue);
     expect(isPuzzle(card(printed['front-puzzle']!.single)), isTrue);
   });
+
+  test(
+    'the deal is the day\'s, not the order Explore keeps its cards in',
+    () async {
+      final app = await screensReader();
+      final List<Pill> pool = bankWhere((p) => true, most: 800);
+      final DateTime monday = DateTime(2026, 10, 19);
+      List<String> dealt(List<Pill> cards, DateTime on) {
+        final host = FakeExploreHost(app)..cards['x'] = cards;
+        final ExploreSection section = screensSection('front-lead');
+        return [
+          for (final FrontPart part in FrontPart.values)
+            for (final Pill p in frontCards(
+              host,
+              section,
+              part,
+              count: 2,
+              on: on,
+            ))
+              p.id,
+          for (final Pill p in frontColumns(host, section, on: on)) p.id,
+        ];
+      }
+
+      final List<String> today = dealt(pool, monday);
+      expect(today, hasLength(12));
+      expect(dealt(pool.reversed.toList(), monday), today);
+      // Another day, another page.
+      final Set<String> leads = {
+        for (int d = 0; d < 7; d++)
+          dealt(pool, monday.add(Duration(days: d))).first,
+      };
+      expect(leads.length, greaterThan(1));
+    },
+  );
 
   testWidgets('the figures are set large, and only cards with one count', (
     tester,

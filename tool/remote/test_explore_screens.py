@@ -152,8 +152,26 @@ class ScreensBlocksTest(unittest.TestCase):
         self.assertRefused({"block": "through-time", "limit": 3}, "from 1 to 2")
 
     def test_parts_with_no_cards_take_no_source(self):
-        for name in ("masthead", "edition-end", "questions-asked"):
+        for name in ("masthead", "edition-end", "questions-asked", "keep-asking"):
             self.assertRefused({"block": name, "source": {"ids": []}}, "source is not read")
+
+    def test_words_a_part_draws_nothing_from_are_refused(self):
+        self.assertRefused({"block": "front-lead", "title": "The lead"}, "title is not read: the lead's words are its headline and deck")
+        self.assertRefused({"block": "front-columns", "subtitle": "Two views"}, "subtitle is not read")
+        self.assertRefused({"block": "front-columns", "limit": 2}, "limit is not read")
+        self.assertRefused({"block": "front-puzzle", "subtitle": "Think"}, "subtitle is not read")
+        self.assertRefused({"block": "front-numbers", "subtitle": "Three figures"}, "subtitle is not read")
+        self.assertRefused({"block": "masthead", "subtitle": "Daily"}, "its lines are the kicker, left and right")
+        self.assertRefused({"block": "ask-first", "subtitle": "Ask"}, "subtitle is not read")
+        # What the parts do read passes.
+        for section in (
+            {"block": "front-numbers", "title": "By the numbers", "limit": 4},
+            {"block": "front-correction", "title": "Corrected", "subtitle": "What we got wrong"},
+            {"block": "front-puzzle", "title": "Sunday puzzle", "button": "Solve it"},
+            {"block": "edition-end", "title": "That was Sunday", "subtitle": "Monday at seven", "size": "s"},
+            {"block": "ask-first", "title": "What puzzles you?", "hint": "A word will do"},
+        ):
+            self.assertEqual(problems(section), [], section["block"])
 
     def test_the_figure_is_found_as_the_app_finds_it(self):
         self.assertEqual(screens.shelf_figure("Of 76 highly cited animal studies, how many?"), "76")

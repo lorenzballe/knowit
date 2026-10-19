@@ -202,6 +202,12 @@ def unknown_fields(item: dict, known: set[str], where: str) -> list[str]:
     return [f"{where}: {key!r} is not a field it reads (it reads: {', '.join(sorted(known))})" for key in item if key not in known]
 
 
+def unread_problems(section: dict, unread: dict[str, str]) -> list[str]:
+    """Fields any section may carry that this block draws nothing from, each
+    with what the block draws instead."""
+    return [f"{field} is not read: {instead}" for field, instead in unread.items() if field in section]
+
+
 def source_ids(source, where: str) -> tuple[list[dict], list[str]]:
     """The cards a source names one by one, and what is wrong with them: each
     must be in the bank, still dealt, and not about a place, which only the
@@ -254,8 +260,15 @@ def subject_problems(value, where: str) -> list[str]:
     return [f"{where} {value!r} is not a subject the app knows ({', '.join(sorted(SUBJECTS))})"]
 
 
-def common(section: dict, extra: set[str], styles: set[str], limit: tuple[int | None, int | None]) -> list[str]:
+def common(
+    section: dict,
+    extra: set[str],
+    styles: set[str],
+    limit: tuple[int | None, int | None],
+    unread: dict[str, str] | None = None,
+) -> list[str]:
     problems = unknown_fields(section, COMMON | extra, "the section")
+    problems += unread_problems(section, unread or {})
     problems += text_problems(section.get("title"), "title", most=80)
     problems += text_problems(section.get("subtitle"), "subtitle", most=140)
     problems += size_problems(section)
@@ -353,23 +366,24 @@ def check_connect_dots(section: dict) -> list[str]:
 
 
 def check_ask_first(section: dict) -> list[str]:
-    problems = common(section, {"hint", "try"}, {"try", "asked"}, (1, 10))
+    problems = common(
+        section, {"hint", "try"}, {"try", "asked"}, (1, 10),
+        {"subtitle": "the field to ask in has its title over it and no line under it"},
+    )
     problems += text_problems(section.get("hint"), "hint", most=60)
     problems += word_list_problems(section.get("try"), "try")
     return problems
 
 
 def check_questions_asked(section: dict) -> list[str]:
-    problems = common(section, set(), {"head"}, (1, 10))
-    if "source" in section:
-        problems.append("source is not read: the questions are the reader's own")
-    return problems
+    return common(section, set(), {"head"}, (1, 10), {"source": "the questions are the reader's own"})
 
 
 def check_keep_asking(section: dict) -> list[str]:
-    problems = common(section, {"chains", "chain"}, {"head", "holes", "meter"}, (None, None))
-    if "source" in section:
-        problems.append("source is not read: each chain names its own cards")
+    problems = common(
+        section, {"chains", "chain"}, {"head", "holes", "meter"}, (None, None),
+        {"source": "each chain names its own cards"},
+    )
     chains = section.get("chains")
     if not isinstance(chains, list) or not chains:
         return problems + ["chains is missing: a chain of whys is the section's own words, at least one"]
@@ -483,16 +497,26 @@ def check_say_it_tonight(section: dict) -> list[str]:
 
 
 def check_masthead(section: dict) -> list[str]:
-    problems = common(section, {"kicker", "left", "right"}, set(), (None, None))
-    if "source" in section:
-        problems.append("source is not read: the masthead shows no cards")
+    problems = common(
+        section, {"kicker", "left", "right"}, set(), (None, None),
+        {"source": "the masthead shows no cards", "subtitle": "its lines are the kicker, left and right"},
+    )
     for field in ("kicker", "left", "right"):
         problems += text_problems(section.get(field), field, most=40)
     return problems
 
 
-def _front(section: dict, extra: set[str], low: int, high: int, what: str, fits: Callable[[dict], str | None] | None = None) -> list[str]:
-    problems = common(section, extra, set(), (None, None) if high == 1 else (low, high))
+def _front(
+    section: dict,
+    extra: set[str],
+    low: int,
+    high: int,
+    what: str,
+    fits: Callable[[dict], str | None] | None = None,
+    unread: dict[str, str] | None = None,
+) -> list[str]:
+    # A part that always shows the same number of cards reads no limit.
+    problems = common(section, extra, set(), (None, None) if low == high else (low, high), unread)
     cards, bad = source_ids(section.get("source"), "source")
     problems += bad + card_count_problems(cards, low, high, what)
     if fits:
@@ -504,21 +528,23 @@ def _front(section: dict, extra: set[str], low: int, high: int, what: str, fits:
 
 
 def check_front_lead(section: dict) -> list[str]:
-    problems = _front(section, {"headline", "deck"}, 1, 1, "the lead")
+    words = "the lead's words are its headline and deck"
+    problems = _front(section, {"headline", "deck"}, 1, 1, "the lead", unread={"title": words, "subtitle": words})
     problems += text_problems(section.get("headline"), "headline", most=140)
     problems += text_problems(section.get("deck"), "deck", most=160)
     return problems
 
 
 def check_front_columns(section: dict) -> list[str]:
-    return _front(section, set(), 2, 2, "the columns")
+    plain = "the columns have no head"
+    return _front(section, set(), 2, 2, "the columns", unread={"title": plain, "subtitle": plain})
 
 
 def check_front_numbers(section: dict) -> list[str]:
     def fits(card):
         return None if shelf_figure(card.get("question", "")) else "has no figure in its question to set large"
 
-    return _front(section, set(), 2, 4, "In numbers", fits)
+    return _front(section, set(), 2, 4, "In numbers", fits, {"subtitle": "In numbers has its title and no line under it"})
 
 
 def check_front_correction(section: dict) -> list[str]:
@@ -526,16 +552,13 @@ def check_front_correction(section: dict) -> list[str]:
 
 
 def check_front_puzzle(section: dict) -> list[str]:
-    problems = _front(section, {"button"}, 1, 1, "the puzzle")
+    problems = _front(section, {"button"}, 1, 1, "the puzzle", unread={"subtitle": "the puzzle's words are its title and its button"})
     problems += text_problems(section.get("button"), "button", most=24)
     return problems
 
 
 def check_edition_end(section: dict) -> list[str]:
-    problems = common(section, set(), set(), (None, None))
-    if "source" in section:
-        problems.append("source is not read: the end of the edition shows no cards")
-    return problems
+    return common(section, set(), set(), (None, None), {"source": "the end of the edition shows no cards"})
 
 
 # block name -> check(section) returning a list of problems, each a line a
