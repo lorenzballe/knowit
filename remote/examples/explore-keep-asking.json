@@ -1,0 +1,144 @@
+{
+  "sections": [
+    {
+      "id": "whys",
+      "block": "keep-asking",
+      "chains": [
+        {
+          "id": "sky",
+          "subject": "science",
+          "source": "Bohren and Clothiaux, Fundamentals of Atmospheric Radiation, Wiley, 2006; G. S. Smith, American Journal of Physics 73, 590, 2005",
+          "cards": ["space-martian-weather-10"],
+          "steps": [
+            {
+              "q": {
+                "en": "Why is the sky blue?",
+                "it": "Perché il cielo è azzurro?"
+              },
+              "a": {
+                "en": "Air scatters the short, blue wavelengths of sunlight far more than the long, red ones, so blue light reaches you from every part of the sky.",
+                "it": "L'aria diffonde le lunghezze d'onda corte e blu della luce del sole molto più di quelle lunghe e rosse, così la luce blu ti arriva da ogni punto del cielo."
+              }
+            },
+            {
+              "q": {
+                "en": "Then why are sunsets red?",
+                "it": "E allora perché i tramonti sono rossi?"
+              },
+              "a": {
+                "en": "At sunset the light crosses far more air to reach you. Most of the blue is scattered away on the way, and the reds and oranges are what is left.",
+                "it": "Al tramonto la luce attraversa molta più aria per arrivare a te. Lungo la strada quasi tutto il blu viene diffuso via, e restano i rossi e gli arancioni."
+              }
+            },
+            {
+              "q": {
+                "en": "Violet is shorter still. Why isn't the sky violet?",
+                "it": "Il viola è ancora più corto. Perché il cielo non è viola?"
+              },
+              "a": {
+                "en": "Sunlight carries less violet, some of it is absorbed high up, and your eyes are less sensitive to it. The mix you see reads as blue.",
+                "it": "La luce del sole contiene meno viola, una parte viene assorbita in alto e i tuoi occhi sono meno sensibili a quel colore. La miscela che vedi ti appare azzurra."
+              }
+            },
+            {
+              "q": {
+                "en": "So why are clouds white?",
+                "it": "E perché le nuvole sono bianche?"
+              },
+              "a": {
+                "en": "Cloud droplets are far bigger than the wavelengths of light, so they scatter every colour about equally, and all of them together look white.",
+                "it": "Le goccioline delle nuvole sono molto più grandi delle lunghezze d'onda della luce, quindi diffondono tutti i colori più o meno allo stesso modo, e tutti insieme appaiono bianchi."
+              }
+            }
+          ]
+        },
+        {
+          "id": "onions",
+          "subject": "food",
+          "source": "Imai and colleagues, An onion enzyme that makes the eyes water, Nature 419, 685, 2002",
+          "cards": ["science-cooking-reactions-3"],
+          "steps": [
+            {
+              "q": {
+                "en": "Why do onions make you cry?",
+                "it": "Perché le cipolle ti fanno piangere?"
+              },
+              "a": {
+                "en": "Cutting breaks the onion's cells, and two of its enzymes turn the sulfur compounds they held into a gas, syn-propanethial-S-oxide, that drifts up to your eyes.",
+                "it": "Tagliandola rompi le cellule della cipolla, e due suoi enzimi trasformano i composti di zolfo che contenevano in un gas, il syn-propantial-S-ossido, che sale fino ai tuoi occhi."
+              }
+            },
+            {
+              "q": {
+                "en": "Why would an onion make a gas like that?",
+                "it": "Perché mai una cipolla produce un gas così?"
+              },
+              "a": {
+                "en": "It is a defence. The enzymes and the compounds are kept apart in the cell until something bites or cuts it, so the irritant is made only when an attacker is already there.",
+                "it": "È una difesa. Enzimi e composti restano separati nella cellula finché qualcosa non la morde o la taglia: così l'irritante nasce solo quando l'aggressore è già lì."
+              }
+            },
+            {
+              "q": {
+                "en": "And why does the gas bring tears?",
+                "it": "E perché quel gas fa lacrimare?"
+              },
+              "a": {
+                "en": "It irritates the nerve endings on the surface of the eye, and the eye answers an irritant the way it answers dust: with tears that wash it away.",
+                "it": "Irrita le terminazioni nervose sulla superficie dell'occhio, e l'occhio risponde a un irritante come risponde alla polvere: con lacrime che lo portano via."
+              }
+            }
+          ]
+        },
+        {
+          "id": "prices",
+          "subject": "economics",
+          "source": "Bank of England, Knowledge Bank: inflation and the 2% target",
+          "cards": ["economics-hyperinflation-6", "economics-hyperinflation-8"],
+          "steps": [
+            {
+              "q": {
+                "en": "Why do prices keep going up?",
+                "it": "Perché i prezzi continuano a salire?"
+              },
+              "a": {
+                "en": "Because most central banks aim for it: prices rising about 2% a year. They steer towards that by making borrowing dearer or cheaper.",
+                "it": "Perché è quello a cui mirano quasi tutte le banche centrali: prezzi che crescono di circa il 2% l'anno. Ci arrivano rendendo i prestiti più cari o più convenienti."
+              }
+            },
+            {
+              "q": {
+                "en": "Why aim for rising prices, not steady ones?",
+                "it": "Perché puntare a prezzi che salgono, e non fermi?"
+              },
+              "a": {
+                "en": "A small rise leaves a cushion above zero, which keeps the economy away from falling prices, and official figures tend to overstate inflation a little anyway.",
+                "it": "Un piccolo aumento lascia un margine sopra lo zero, che tiene l'economia lontana dai prezzi in calo, e comunque le statistiche ufficiali tendono a sovrastimare un po' l'inflazione."
+              }
+            },
+            {
+              "q": {
+                "en": "What is so bad about falling prices?",
+                "it": "Che cosa c'è di male nei prezzi che scendono?"
+              },
+              "a": {
+                "en": "If things will be cheaper next month, waiting pays, so spending drops. And a debt stays the same size while wages and prices shrink, so it weighs more. Japan fought exactly that for years.",
+                "it": "Se il mese prossimo le cose costeranno meno, conviene aspettare, e la spesa cala. E un debito resta della stessa cifra mentre stipendi e prezzi scendono, quindi pesa di più. Il Giappone ha combattuto proprio questo per anni."
+              }
+            },
+            {
+              "q": {
+                "en": "Then why not aim higher than 2%?",
+                "it": "Allora perché non puntare più in alto del 2%?"
+              },
+              "a": {
+                "en": "Higher inflation is harder to keep steady, eats into savings and fixed incomes, and makes prices a worse guide to what things are worth. Two per cent is the compromise most central banks settled on.",
+                "it": "Un'inflazione più alta è più difficile da tenere stabile, erode risparmi e redditi fissi e rende i prezzi una guida peggiore di quanto valgono le cose. Il 2% è il compromesso su cui si sono fermate quasi tutte le banche centrali."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

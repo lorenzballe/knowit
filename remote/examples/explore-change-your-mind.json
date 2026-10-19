@@ -1,0 +1,15 @@
+{
+  "sections": [
+    {
+      "id": "mind",
+      "block": "change-your-mind",
+      "source": {
+        "ids": [
+          "science-cold-myths-1",
+          "medicine-when-not-to-take-them-1",
+          "science-quantum-3"
+        ]
+      }
+    }
+  ]
+}

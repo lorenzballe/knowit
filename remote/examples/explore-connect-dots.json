@@ -1,0 +1,10 @@
+{
+  "sections": [
+    {
+      "id": "dots",
+      "block": "connect-dots",
+      "subject": "economics",
+      "subjects": ["economics", "music", "science", "history", "psychology", "food"]
+    }
+  ]
+}
