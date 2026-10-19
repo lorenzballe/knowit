@@ -12,8 +12,11 @@ the shelf, every shelf a set to finish, and the very end.
 
 The code is `lib/explore/blocks/purpose/`, listed in
 `lib/explore/blocks/purpose_blocks.dart`; each block's checker is in
-`tool/remote/parts/explore_blocks/purpose.py`. Every block is named
-`purpose.<name>`, so the family's names can never meet another family's.
+`tool/remote/parts/explore_blocks/purpose.py`, tested in
+`tool/remote/test_purpose.py` against the app's own sources. Every block
+is named `purpose.<name>`, so the family's names can never meet another
+family's. The blocks are tested in `test/explore/purpose_*_test.dart` and
+photographed by `tool/purpose_shots.dart`.
 
 ## Every piece, and whose it is
 
@@ -28,10 +31,10 @@ draws nothing different.
 | A card that ends on what you will do with it: bet, call it, answer first, read and how long | 133a | the card's challenge and scene | `purpose.read-or-do` |
 | A shelf's own count, "3 to do · 1 to read" | 133a | its cards | `purpose.read-or-do` |
 | The lock note: answer here, then open the card | 133b | words (the app's, or the section's) | `purpose.commit-note` |
-| True or false as two buttons on the card | 133b | true-or-false cards; the reader's answers | `purpose.commit` |
-| Pick a side as Yes and No on the card | 133b | debates; the reader's answers | `purpose.commit` |
-| Three amounts to pick from | 133b | pick-one cards; the reader's answers | `purpose.commit` |
-| A move set large in a box of its own: A MOVE, its name, its line, how often you met it | 133c | the card's principle; the reader's mastery | `purpose.move` |
+| True or false as two buttons on a plain card | 133b | true-or-false cards; the reader's answers | `purpose.commit` (core answers them on its own True or false shelf, in 133e's diagonal form) |
+| Pick a side as Yes and No on a plain card | 133b | debates; the reader's answers | `purpose.commit` (core's Pick a side leans on two halves, 132's signature) |
+| Three amounts to pick from, a shelf of them | 133b | pick-one cards whose options are figures; the reader's answers | `purpose.commit` (core plays the same card among the games of its Work it out row) |
+| A move set large in a box of its own: A MOVE, its name, its line, how often you met it | 133c | the card's principle; the reader's mastery | `purpose.move` (core's One move shelf names the move as a shelf's title instead: the app's own choice, kept as core) |
 | A card that says where the move hides, "In a test result" | 133c | the card's genre | `purpose.move` |
 | Came back: after how long, right or wrong last time | 133d | the reviews waiting | core (Came back) |
 | A step above: dark card ringed in its colour, the difficulty in bars | 133d | the card's difficulty; the reader's measured level per subject | `purpose.step-above` |
@@ -55,7 +58,7 @@ draws nothing different.
 | In an offer: the card as a price tag | 138b | cards on prices, deals and who pays | `purpose.price-tag` |
 | In an argument: the card as a speech bubble | 138b | cards on arguments and persuasion | `purpose.argument` |
 | What to keep: three questions that catch most of these | 138b | the moves' questions (the app's, or the section's) | `purpose.keep` |
-| A question for your own life, set large over its cards | 138c | the question and what it is about (the app's four, or the section's); cards for it | `purpose.life-question` |
+| A question for your own life, set large over its cards | 138c | the question and what it is about (the app's six, or the section's); cards for it | `purpose.life-question` (core's How sure am I, and why? is the one about what you believe; this block draws the form for every part of life) |
 | What do you want better questions about? and its chips | 138c | the topics; the day's picks | `purpose.life-topics` |
 | Move it, then check: a slider set and checked | 138d | cards whose answer is a share | core (Work it out's slider) |
 | Spot the trick: which move would catch it | 138d | cards with a move; the day's picks | `purpose.spot-trick` |
@@ -102,7 +105,21 @@ writes down already, through `host.app` (lib/state/app_state.dart):
 
 What the reader does here that the app had no record of — a card marked
 That's me, a topic picked, a trick spotted — is noted with `host.note`,
-and kept for the day in the day's play like every game on a shelf.
+and kept for the day in the day's play like every game on a shelf. An
+answer is the one thing kept for good, and it goes through `host.commit`
+as the card itself would record it.
+
+| What the reader did | Kept for the day under | Noted as |
+|---|---|---|
+| Narrowed a read-or-do | `purpose:filter:<section>` | `read or do` `{filter: all, read or toDo}` |
+| Marked a card That's me | `purpose:me:<section>` | `thats me` `{pill_id, on}` |
+| Picked a part of life | `purpose:life:<section>` | `life topics` `{topic, on}` |
+| Picked the move that catches a trick | `purpose:tricks` | `trick spotted` `{pill_id, move, right}` |
+| Answered a card on a shelf | `purpose:said` | the answer, through `host.commit` |
+
+A shelf that shows any of this is drawn again when what it shows changes,
+and only then (`PlayWatch`): a slider dragged on core's Work it out
+changes the day's play many times a second.
 
 ## Every section, whatever its block
 
@@ -129,11 +146,14 @@ and kept for the day in the day's play like every game on a shelf.
   source: they choose from it.
 - `size`: the block's own sizes, below; `m` is the canvas. A size the
   build does not know is drawn at `m`.
-- `limit`: the most cards shown.
+- `limit`: the most cards shown, 1 to 24 (`kPurposeMost`).
 - `fit`: `true` (the default) keeps only the cards the form is for — the
   mechanisms on How it really works; `false` takes the source's cards as
   they come, for a shelf curated by hand. A form that cannot draw a card
   (true-or-false buttons on a card that asks for a number) never takes it.
+- Anything else is the block's own, below. The checker refuses a field
+  the block does not read: a misspelt `thme` would otherwise be passed
+  over in silence, and the shelf would be the wrong one.
 
 Every block wraps itself once in `host.watch(section, …)`, says each card
 it builds with `host.seen`, and opens a card with `host.open`. It returns
@@ -185,7 +205,13 @@ The lock, and the line that says why the shelves under it ask first.
 The answer given on the shelf, before the card opens: true or false as two
 buttons, a debate as its two sides, three amounts as three rows. It is
 recorded as the card would record it (`host.commit`), and the card says at
-once whether it was right; the why, or the other side, is the card.
+once whether it was right; the why, or the other side, is the card. Only
+cards the reader has neither read nor answered are asked — committing to
+an answer already seen commits to nothing — except those answered on one
+of these shelves today, which keep their verdict where they were answered.
+Three amounts are the canvas's: a pick-one card whose three options are
+figures; a card whose options are sentences is left to the card itself.
+A side or an amount too long for its button takes a second line.
 
 - `kind`: `true-false`, `side`, `pick` or `any` (the default: each card
   as it asks). The default title follows it.
@@ -249,8 +275,10 @@ their side, and the way to the best case against it, which is the card.
 ### `purpose.in-your-head` (133e)
 
 A number to reach in your head: under the question, an answer box with
-its unit, which takes the answer on the shelf and records it as the card
-would; then the verdict, and the card for the working.
+its unit, which takes the answer on the shelf, read the way the reader's
+language writes numbers, and records it as the card would; then the
+verdict, and the card for the working. Cards as for `purpose.commit`:
+neither read nor answered, or answered here today.
 
 - sizes `s` 200×212, `m` 222×228, `l` 250×252.
 
@@ -306,8 +334,9 @@ brought up to date, or, without a date, how soon it could change.
 
 ### `purpose.why` (138a)
 
-Ah, so that's why: a band at the foot in the card's darker tone, THE WHY
-and how long, and an arrow.
+Ah, so that's why: mechanisms (the cards whose hook is a mechanism), a
+band at the foot in the card's darker tone, THE WHY and how long, and an
+arrow.
 
 - sizes `s` 180×240, `m` 206×268, `l` 236×296.
 
@@ -317,10 +346,14 @@ and how long, and an arrow.
 
 ### `purpose.thats-me` (138a)
 
-Cards as wide rows, each with That's me to mark it, and under them how
-many the reader marked. A mark is noted (`thats me`) and kept for the day.
+Things you do without noticing — cards of the genres about habits,
+attention, memory, moods, bias and decisions (`kAboutMeGenres`), never a
+story, a debate or a sum — as wide rows, each with That's me to mark it,
+and under them how many the reader marked today. A mark is noted
+(`thats me`) and kept for the day; nothing else is claimed for it.
 
-- `footer`: the line beside the count, per language; default the app's.
+- `footer`: the line beside the count before anything is marked, per
+  language; default the app's.
 - sizes `s`, `m`, `l`: how large the questions are set. `limit` 3.
 
 ```json
@@ -329,10 +362,12 @@ many the reader marked. A mark is noted (`thats me`) and kept for the day.
 
 ### `purpose.about-you` (138a)
 
-News to me, and about me: two by two, the subject's mark drawn large
-behind each card.
+News to me, and about me: cards of the body and of medicine (not its
+history), and of eating and sleep, never a story about somebody else; two
+by two, the subject's mark drawn large behind each card.
 
-- sizes `s`, `m`, `l` (184 high at `m`). `limit` 4.
+- sizes `s`, `m`, `l`: the tiles 164, 184 and 204 high, each half the
+  shelf wide. `limit` 4.
 
 ```json
 {"id": "about-you", "block": "purpose.about-you"}
@@ -341,7 +376,9 @@ behind each card.
 ### `purpose.headline` (138b)
 
 The claim as a paper prints it: a double rule, THE CLAIM and the subject,
-then the headline.
+then the headline. Cards of the genres about reading a claim (a study, a
+health claim, the money news, truth online) and findings reported with a
+trick in them.
 
 - sizes `s` 210×212, `m` 240×236, `l` 270×262.
 
@@ -351,8 +388,9 @@ then the headline.
 
 ### `purpose.out-of-what` (138b)
 
-The figure the question rests on, large, and OUT OF WHAT? under it; the
-question at the foot.
+The share or the odds the question rests on (`99%`, `1 in 100`), large,
+and OUT OF WHAT? under it; the question at the foot. Cards whose question
+states one, and whose move is one that catches a trick.
 
 - sizes `s` 172×208, `m` 194×228, `l` 220×252.
 
@@ -362,7 +400,9 @@ question at the foot.
 
 ### `purpose.price-tag` (138b)
 
-The card as a price tag: the point, the hole, the dashed line.
+The card as a price tag: the point, the hole punched through it, the
+dashed line it tears along. Cards about prices, deals and who pays
+(`kOfferGenres`).
 
 - sizes `s` 240×146, `m` 270×160, `l` 300×178.
 
@@ -372,9 +412,11 @@ The card as a price tag: the point, the hole, the dashed line.
 
 ### `purpose.argument` (138b)
 
-The card as a speech bubble, its tail at the foot.
+The card as a speech bubble, its tail at the foot. Cards about arguing,
+persuading and changing your mind (`kArgumentGenres`).
 
-- sizes `s` 228×152, `m` 258×168, `l` 288×186.
+- sizes `s` 228×152, `m` 258×168, `l` 288×186 (the bubble; the tail
+  reaches 10 below).
 
 ```json
 {"id": "argument", "block": "purpose.argument"}
@@ -383,13 +425,16 @@ The card as a speech bubble, its tail at the foot.
 ### `purpose.keep` (138b)
 
 What to keep: the questions that catch most of the tricks above it, each
-the question a move asks and the line that says the move.
+the question a move asks and the line that says the move, numbered, on a
+Thinking card.
 
 - `moves`: principles, in order (default `counterfactual`, `sampling`,
-  `baseRate`), with the app's words.
-- `items`: or the questions themselves, `[{"ask": {...}, "line": {...}}]`.
+  `baseRate`), with the app's words. Moves this build does not know are
+  passed over; a box whose every move is unknown is left out.
+- `items`: or the questions themselves, `[{"ask": {...}, "line": {...}}]`;
+  given, they are shown and `moves` is passed over.
 - `heading`: per language; default "Three questions that catch most of
-  these", counted.
+  these", counted. Five questions at most.
 
 ```json
 {"id": "keep", "block": "purpose.keep",
@@ -399,13 +444,20 @@ the question a move asks and the line that says the move.
 ### `purpose.life-question` (138c)
 
 A question to ask of your own life, set large under what it is about, and
-the cards that ask it in other words.
+the cards that ask it in other words: Am I paying for what I actually use?
+over the cards on prices and money decisions, What would make tomorrow
+easier to start? over work and habits, and so on (`kLifeTopics`, each
+with the genres its cards come from).
 
 - `topic`: `money`, `work`, `time`, `body`, `relationships` or `belief`,
-  with the app's words and the cards for it. Default: one a day.
+  with the app's words and the cards for it. Default: one a day among
+  those with three cards or more. A topic this build does not know is
+  drawn only with a `question` of the section's own, over its source's
+  cards as they come; otherwise the section is left out.
 - `about`, `question`: the words instead, per language.
-- sizes `s` 176×200, `m` 200×226, `wide` 250×176, `l` 290×196; each topic
-  has the canvas's as its default.
+- sizes `s` 176×200, `m` 200×226, `wide` 250×176, `l` 290×196; without
+  one, each topic has the canvas's (money `m`, work and time `wide`, body
+  `s`, belief `l`, relationships `m`).
 
 ```json
 {"id": "life-money", "block": "purpose.life-question", "topic": "money"}
@@ -415,10 +467,13 @@ the cards that ask it in other words.
 
 What do you want better questions about? — chips to pick, and under them,
 the cards that ask about what was picked. A pick is noted (`life topics`)
-and kept for the day.
+and kept for the day. Only the parts of life the pool has cards for get a
+chip.
 
-- `topics`: which, in order (default all six).
+- `topics`: which, in order (default all six); unknown ones are passed
+  over.
 - `question`, `footer`: per language; default the app's.
+- sizes `s`, `m`, `l`: the cards under the chips.
 
 ```json
 {"id": "life-topics", "block": "purpose.life-topics"}
@@ -426,11 +481,14 @@ and kept for the day.
 
 ### `purpose.spot-trick` (138d)
 
-Which move would catch it: three moves to pick from, the card's own and
-two others; the pick says whether it was the one, and the card says why.
-Noted (`trick spotted`) and kept for the day.
+Which question would catch it: three moves to pick from, the card's own
+and two others, in an order of the card's own. Once picked, the card's
+move is filled, a wrong pick struck through, the rest let go, and a line
+says which it was; the card says why. One pick a card, noted (`trick
+spotted`) and kept for the day. Cards whose move catches a trick
+(`kTraps`: not reflection, estimation or computation).
 
-- sizes `s` 270, `m` 300, `l` 330 wide.
+- sizes `s` 270×288, `m` 300×300, `l` 330×312.
 
 ```json
 {"id": "spot-trick", "block": "purpose.spot-trick"}
@@ -438,9 +496,15 @@ Noted (`trick spotted`) and kept for the day.
 
 ### `purpose.played` (138d)
 
-What was played on the shelves today, as the day's play holds it: how far
-off the sliders were on average, how many tricks were spotted, how many
-cards were answered on a shelf of this family.
+What was played on the shelves today, as the day's play holds it: how
+far off the sliders checked on core's Work it out were, on average, for
+the cards in the section's pool; how many tricks were spotted of those
+picked; how many cards were answered on this family's shelves. A dash
+until there is something to count. Left out when the pool is empty and
+nothing was played.
+
+- `footer`: per language; default the app's, which says only what is
+  true: answers given on a shelf count in Your journey.
 
 ```json
 {"id": "played", "block": "purpose.played"}
@@ -448,13 +512,17 @@ cards were answered on a shelf of this family.
 
 ### `purpose.set` (138e)
 
-A shelf as a set to finish: n of m read, a bar in as many segments as it
+A shelf as a set to finish: n of m read, a bar in as many pieces as it
 has cards, READ on each card read — reading counts as much as answering.
 Once every card is read, the set is a fan of its cards, a tick, and the
 line that says new ones join when it comes round.
 
 - `theme`: the set is that theme's cards, in an order that does not turn
-  with the day. Default: the source's cards, or the week's theme.
+  with the day (`themeSet`). A theme this build does not know leaves the
+  set out.
+- `source` with a `title`: the source's cards, in its order, under that
+  name; without a title it is left out.
+- Neither: this week's theme, the same set all week.
 - sizes `s` 156×180, `m` 180×204, `l` 206×232. `limit` 12.
 
 ```json
@@ -463,12 +531,14 @@ line that says new ones join when it comes round.
 
 ### `purpose.stamps` (138e)
 
-A set as stamps: one for each card, in its colour once read, dashed
-until then, a tap from its card.
+A set as stamps: one for each card, perforated, in its colour once read,
+faint and dashed until then, a tap from its card.
 
-- `labels`: card id to the stamp's word (`"HU"`); without one, the
-  subject's mark.
-- `theme`: as for a set. Default: the week's place.
+- `labels`: card id to the stamp's word, three letters at most (`"HU"`);
+  without one, the card's country when it has one, or its subject's mark.
+- `theme` or `source` and `title`: as for a set. Default: this week's
+  place, or this week's theme when the pool has no place to make one of.
+- `footer`: per language; default the app's.
 - sizes `s` (7 a row), `m` (6), `l` (5). `limit` 12.
 
 ```json
@@ -480,8 +550,10 @@ until then, a tap from its card.
 Every set, with a ring for how far along it is, green once complete; a tap
 opens the first card of the set not yet read.
 
-- `sets`: `[{"id", "title", "theme" or "source"}]`. Default: every theme
-  the pool can make a set of.
+- `sets`: `[{"id", "theme" or "source" and "title", "limit"}]`; one this
+  build cannot make is passed over. Default: every theme the pool has four
+  cards or more of, in the order the app turns them, eight at most
+  (`limit`).
 
 ```json
 {"id": "your-sets", "block": "purpose.sets"}
