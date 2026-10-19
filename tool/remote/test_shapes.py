@@ -2,6 +2,8 @@
 and a problem for everything else, said so a person can fix it."""
 from __future__ import annotations
 
+import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -163,6 +165,25 @@ class DocumentTest(unittest.TestCase):
         problems = explore.check(doc)
         self.assertEqual(len(problems), 1)
         self.assertTrue(problems[0].startswith("section 'myths': size 'xl'"))
+
+    def test_every_example_in_the_family_page_passes(self):
+        # docs/explore/shapes.md shows a section of every block, and whole
+        # documents: what it shows the server is what the checker passes,
+        # and no block goes without an example.
+        page = (HERE.parent.parent / "docs" / "explore" / "shapes.md").read_text(encoding="utf-8")
+        examples = re.findall(r"```json\n(.*?)```", page, re.S)
+        self.assertTrue(examples)
+        named = set()
+        for example in examples:
+            text = example.strip()
+            if text.startswith('{"sections"'):
+                docs = [json.loads(text)]
+            else:
+                docs = [{"sections": [json.loads(line)]} for line in text.splitlines() if line.strip()]
+            for doc in docs:
+                self.assertEqual(explore.check(doc), [], doc)
+                named |= {s["block"] for s in doc["sections"]}
+        self.assertEqual(named, set(shapes.BLOCKS))
 
 
 if __name__ == "__main__":
