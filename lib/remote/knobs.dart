@@ -228,9 +228,9 @@ abstract final class Experiments {
   /// one variant. Weights are equal when left out.
   ///
   /// The first time in a sitting that it gives a reader a variant, it says
-  /// so: `experiment exposed`, and the variant on the reader's profile, as
-  /// `experiment_<name>` (docs/TRACKING.md). So it is read where the
-  /// variants part ways, and not before.
+  /// so: `experiment exposed`, and the variant on every later event and on
+  /// the reader's profile, as `experiment_<name>` (docs/TRACKING.md). So it
+  /// is read where the variants part ways, and not before.
   static String? variant(
     String name,
     RemoteContext at, {
@@ -273,6 +273,9 @@ abstract final class Experiments {
       'variant': variant,
       'remote_hash': Remote.config.hash,
     });
+    // On every later event, and on the profile: a funnel cut by variant
+    // needs no join (docs/TRACKING.md, §3 and §4).
+    Analytics.register(personProperty(name), variant);
     Analytics.person(set: {personProperty(name): variant});
   }
 

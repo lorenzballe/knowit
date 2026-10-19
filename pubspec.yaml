@@ -90,6 +90,11 @@ dependencies:
   # 10 holds win32 at 5.
   geolocator: ^14.0.2
   geocoding: ^5.0.0
+  # The build number the phone is running — the `+n` of the version, which
+  # the stores call CFBundleVersion and versionCode — read once at start, so
+  # the server can ask an old build to update, or aim a switch at a new one
+  # (lib/remote/build_number.dart, docs/REMOTE.md).
+  package_info_plus: ^9.0.1
 
 dev_dependencies:
   flutter_test:

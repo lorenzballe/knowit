@@ -43,7 +43,13 @@ import 'theme.dart';
 import 'widgets/ambient.dart';
 import 'widgets/consent.dart';
 import 'widgets/place_ask.dart';
+import 'remote/build_number.dart';
+import 'remote/gate.dart';
+import 'remote/knobs.dart';
 import 'remote/remote.dart';
+import 'remote/remote_strings.dart';
+import 'screens/gate_screen.dart';
+import 'store_links.dart';
 import 'widgets/reminder_ask.dart';
 import 'widgets/sign_in_sheet.dart';
 
@@ -80,6 +86,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Upright on a phone, said before the first frame and not waited for.
   unawaited(holdUpright());
+  // Which build this is, asked of the phone now and answered while the rest
+  // starts: the update gate is decided from it, before the first frame.
+  final Future<int> build = readBuildNumber();
   // Where this install came from — the App Store, TestFlight, Google Play,
   // a test lab's robot — asked of the phone now, and answered while the
   // rest starts: by the time measurement is up it has long been said.
@@ -118,6 +127,10 @@ Future<void> main() async {
   // Explore's top list, with the launch crowd under the real counts until
   // there are enough of them. See TopSeed.
   Tallies.instance = Tallies(seed: launchCrowd());
+  // The build, and what the server last said about it, before anything is
+  // built: a build the server no longer lets run shows nothing of itself —
+  // offline, and even if its state never finishes loading (GateKeeper).
+  await _restoreRemote(build);
   // Session replay takes its pictures from under this widget. Only in a
   // build that records (kSessionReplay, off in every store build), for a
   // reader who said yes, where the platform records at all.
@@ -127,6 +140,24 @@ Future<void> main() async {
         : const AstutoApp(),
   );
   WidgetsBinding.instance.addPostFrameCallback((_) => _saidStarted());
+}
+
+/// Sets the build number every audience is measured by (Remote.build),
+/// takes up the document the last run kept, with what the gate keeps
+/// beside it, and asks the server for a newer one — not waited for: it is
+/// taken up the moment it arrives. AppState restores and asks again as it
+/// starts, which by then is the same document and the same question.
+Future<void> _restoreRemote(Future<int> build) async {
+  Remote.build = await build;
+  try {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Remote.restore(prefs);
+    UpdateGate.restore(prefs);
+    unawaited(Remote.refresh(prefs));
+  } catch (error) {
+    // A phone whose storage will not open has the document it shipped with.
+    debugPrint('Astute: the remote document was not restored: $error');
+  }
 }
 
 /// The first frame is on screen: how long the reader waited for it, and the
@@ -248,7 +279,14 @@ class _AstutoAppState extends State<AstutoApp> {
       navigatorObservers: [_screens],
       home: AstutoRoot(app: _app),
       scrollBehavior: const _DragAnywhereScrollBehavior(),
-      builder: (context, child) => _PhoneFrame(child: child),
+      // Above the navigator, so that nothing the app pushes is ever drawn
+      // over the gate, and every screen's words are redrawn when a newer
+      // document brings new ones.
+      builder: (context, child) => _PhoneFrame(
+        child: RemoteWordsScope(
+          child: GateKeeper(app: _app, child: child ?? const SizedBox.shrink()),
+        ),
+      ),
     );
   }
 }
@@ -395,6 +433,18 @@ class _AstutoRootState extends State<AstutoRoot> {
   Timer? _consentAskTimer;
 
   bool _askingForReview = false;
+
+  /// True while the sheet that says a newer build is out is up, and whether
+  /// it was put in this sitting: once it has been, nothing else is asked
+  /// in it.
+  bool _askingForUpdate = false;
+  bool _updateAskedThisSitting = false;
+  Timer? _updateAskTimer;
+
+  /// Whether the update gate is closed over the app (GateKeeper): it is out
+  /// of sight then, and puts no question to anybody.
+  bool _gated = false;
+
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
@@ -425,9 +475,14 @@ class _AstutoRootState extends State<AstutoRoot> {
         // hear of everything since the last card: a card of today's shelf
         // read in Explore is not offered there again.
         if (_app.ready) _app.refreshHomeWidget();
-        // The sitting is over, and the questions put in it with it.
+        // The sitting is over, and the questions put in it with it — and
+        // the experiments it was in, said again in the next one.
         _askedThisSitting = false;
         _placeAskedThisSitting = false;
+        _updateAskedThisSitting = false;
+        _updateAskTimer?.cancel();
+        _updateAskTimer = null;
+        Experiments.sittingEnded();
         _placeAskTimer?.cancel();
         _placeAskTimer = null;
         _accountAskTimer?.cancel();
@@ -471,8 +526,13 @@ class _AstutoRootState extends State<AstutoRoot> {
         _considerConsentAsk();
         _considerAccountAsk();
         _considerPlaceAsk();
+        _considerUpdateAsk();
       },
     );
+    // A newer document from the server can switch a sheet on or off, or
+    // suggest a newer build: each sheet is asked again whether this is its
+    // moment.
+    Remote.revision.addListener(_onRemoteChanged);
     // A widget's tap: the one that started the app, and any that brings it
     // back, which the phone also says the moment it arrives.
     onWidgetOpened(_takeWidgetOpen);
@@ -653,8 +713,10 @@ class _AstutoRootState extends State<AstutoRoot> {
   String? _reminderAskReason() {
     if (_stage != _Stage.shell || !_onTop || !_canOfferReminder) return null;
     if (_app.pushAsked || !_app.notificationsOn) return null;
-    // Not over the place sheet, nor in the sitting it was put in.
+    // Not over the place sheet, nor in the sitting it was put in; nor over
+    // the update sheet, nor in its sitting.
     if (_askingForPlace || _placeAskedThisSitting) return null;
+    if (_askingForUpdate || _updateAskedThisSitting) return null;
     if (_trialAskDue) return 'trial';
     if (_app.shouldAskForPush && _app.dayClosed && !_deckOnTable) {
       return 'day done';
@@ -757,12 +819,15 @@ class _AstutoRootState extends State<AstutoRoot> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Told again whenever the route stops or starts being the top of the
-    // stack: a paywall pushed over the tabs, and the moment it closes.
-    _onTop = ModalRoute.isCurrentOf(context) ?? true;
+    // stack: a paywall pushed over the tabs, and the moment it closes. The
+    // update gate closing over everything is something over them too.
+    _gated = GateKeeper.closes(context);
+    _onTop = !_gated && (ModalRoute.isCurrentOf(context) ?? true);
     _considerReminderAsk();
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerUpdateAsk();
   }
 
   void _onAppStateChanged() {
@@ -788,24 +853,33 @@ class _AstutoRootState extends State<AstutoRoot> {
       }
     });
     _noteTrialStart();
-    if (_stage == _Stage.shell && _app.shouldAskForPush && !_canOfferReminder) {
+    if (_stage == _Stage.shell &&
+        !_gated &&
+        _app.shouldAskForPush &&
+        !_canOfferReminder) {
       _askForPush();
     }
     _considerReminderAsk();
     if (_stage == _Stage.shell &&
+        !_gated &&
         _app.shouldAskForReview &&
         !_pushAskedThisSession &&
         !_placeAskedThisSitting &&
         !_askingForPlace &&
         !_askingForAccount &&
         !_askingForConsent &&
+        !_askingForUpdate &&
+        !_updateAskedThisSitting &&
         !_trialAskDue) {
       _askForReview();
     }
-    // Last, so that a rating sheet decided just now has this sitting.
+    // Last, so that a rating sheet decided just now has this sitting; and
+    // the update sheet after the rest, since a day's own questions are due
+    // only at its end and a newer build waits for any moment at all.
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerUpdateAsk();
   }
 
   /// The store's own rating sheet, once, at the end of a seventh day in a
@@ -818,7 +892,9 @@ class _AstutoRootState extends State<AstutoRoot> {
     _askedThisSitting = true;
     await _app.notedReviewAsked();
     await Future<void>.delayed(const Duration(seconds: 2));
-    if (!mounted) return;
+    // The store's sheet is the phone's own, drawn over everything: never
+    // over a gate that closed in the meantime.
+    if (!mounted || _gated) return;
     try {
       final InAppReview review = InAppReview.instance;
       if (!await review.isAvailable()) return;
@@ -838,6 +914,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     _placeAskTimer?.cancel();
     _accountAskTimer?.cancel();
     _consentAskTimer?.cancel();
+    _updateAskTimer?.cancel();
+    Remote.revision.removeListener(_onRemoteChanged);
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
@@ -872,6 +950,7 @@ class _AstutoRootState extends State<AstutoRoot> {
     _considerConsentAsk();
     _considerAccountAsk();
     _considerPlaceAsk();
+    _considerUpdateAsk();
   }
 
   /// A step passed over rather than answered.
@@ -1005,6 +1084,91 @@ class _AstutoRootState extends State<AstutoRoot> {
     }
   }
 
+  /// The app's language, as the gate's and the switches' rules read it.
+  String get _language => Localizations.localeOf(context).languageCode;
+
+  /// The build the server suggests this phone moves to, when this is the
+  /// moment to say so (UpdateGate.suggestion), or null.
+  ///
+  /// The build still works, so the sheet waits for a moment that costs the
+  /// reader nothing: the tabs on top with nothing over them and nothing
+  /// else being asked, in a sitting nothing has been asked in yet, and
+  /// never in the middle of the five — before the first card is thrown, or
+  /// once the day is done.
+  int? _updateAskBuild() {
+    if (!_app.ready || _stage != _Stage.shell || !_onTop) return null;
+    if (_askingForPush || _askingForPlace || _askingForAccount) return null;
+    if (_askingForConsent || _askingForUpdate || _askedThisSitting) {
+      return null;
+    }
+    if (_app.todayIndex > 0 && !_app.dayClosed) return null;
+    return UpdateGate.suggestion(_app.remoteContext(_language));
+  }
+
+  /// Raises the update sheet a beat after its moment arrives, as the other
+  /// sheets rise, and only if the moment is still there then.
+  void _considerUpdateAsk() {
+    if (!mounted || _askingForUpdate) return;
+    if (_updateAskBuild() == null) {
+      _updateAskTimer?.cancel();
+      _updateAskTimer = null;
+      return;
+    }
+    if (_updateAskTimer?.isActive ?? false) return;
+    _updateAskTimer = Timer(_kReminderAskBeat, () {
+      _updateAskTimer = null;
+      if (!mounted) return;
+      final int? build = _updateAskBuild();
+      if (build != null) _offerUpdate(build);
+    });
+  }
+
+  /// The sheet itself, once for the build it names, whatever the answer;
+  /// Update opens the store.
+  Future<void> _offerUpdate(int build) async {
+    if (_askingForUpdate) return;
+    _askingForUpdate = true;
+    _askedThisSitting = true;
+    _updateAskedThisSitting = true;
+    try {
+      await UpdateGate.noteSuggested(build);
+      if (!mounted) return;
+      Analytics.capture('update suggested', {
+        'build': Remote.build,
+        'suggested_build': build,
+      });
+      final bool update = await showUpdateSheet(
+        context,
+        platform: Remote.platform,
+        message: UpdateGate.message('soft', _language),
+      );
+      Analytics.capture('update suggestion answered', {
+        'choice': update ? 'update' : 'later',
+        'suggested_build': build,
+      });
+      if (!update) return;
+      final bool opened = await openStorePage(Remote.platform);
+      Analytics.capture('update store opened', {
+        'from': 'sheet',
+        'opened': opened,
+        'build': Remote.build,
+      });
+    } finally {
+      _askingForUpdate = false;
+    }
+  }
+
+  /// A newer remote document was taken up. Its switches can put a sheet
+  /// on or take one off, and it can suggest a newer build: each is asked
+  /// again whether this is its moment.
+  void _onRemoteChanged() {
+    _considerReminderAsk();
+    _considerConsentAsk();
+    _considerAccountAsk();
+    _considerPlaceAsk();
+    _considerUpdateAsk();
+  }
+
   /// Tells the funnel which account this phone is, without telling it who.
   ///
   /// The id is the Firebase uid: the same one the backup is keyed by, so a
@@ -1128,6 +1292,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             _considerConsentAsk();
             _considerAccountAsk();
             _considerPlaceAsk();
+            _considerUpdateAsk();
           },
           onSignedOut: () {
             // Back at the first screen, as a stranger: AppState.signOut has

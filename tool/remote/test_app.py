@@ -1,8 +1,10 @@
 """The app part's checker: the update gate, the switches, the numbers and the
-experiments, each held to what the app can read, item by item."""
+experiments, each held to what the app can read, item by item — and the
+store links the gate sends readers to, held to the site's."""
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -188,10 +190,40 @@ class KnobsTest(unittest.TestCase):
         }
         self.assertEqual(problems(doc), [])
 
+    def test_the_docs_list_every_knob(self):
+        docs = (ROOT / "docs" / "REMOTE.md").read_text(encoding="utf-8")
+        for kind, names in app.knobs().items():
+            for name in names:
+                with self.subTest(name=name):
+                    self.assertTrue(f"`{name}`" in docs, f"docs/REMOTE.md says nothing of the {kind[:-1]} {name}")
+
     def test_the_sources_as_they_are_pass(self):
         parts, said = check.load_and_check()
         self.assertEqual([p for p in said if p.startswith("app:")], [])
         self.assertIn("experiments", parts["app"])
+
+
+class StoreLinksTest(unittest.TestCase):
+    """The app's store links (lib/store_links.dart) are the site's."""
+
+    def test_the_app_and_the_site_send_readers_to_the_same_pages(self):
+        dart = (ROOT / "lib" / "store_links.dart").read_text(encoding="utf-8")
+
+        def const(name: str) -> str:
+            m = re.search(name + r"\s*=\s*'([^']+)'", dart)
+            self.assertIsNotNone(m, name)
+            return m.group(1)
+
+        chrome = (ROOT / "tool" / "site" / "chrome.py").read_text(encoding="utf-8")
+        site_app_store = re.search(r"^APP_STORE = '([^']+)'", chrome, re.M).group(1)
+        site_play = re.search(r"^GOOGLE_PLAY = '([^']+)'", chrome, re.M).group(1)
+        self.assertEqual(const("kAppStoreUrl"), site_app_store)
+        self.assertEqual(const("kGooglePlayUrl"), site_play)
+        account = (ROOT / "site" / "assets" / "account.js").read_text(encoding="utf-8")
+        self.assertIn(f"'{const('kAppStoreUrl')}'", account)
+        self.assertIn(f"'{const('kGooglePlayUrl')}'", account)
+        self.assertIn(const("kAppStoreSubscriptionsUrl"), account)
+        self.assertIn(const("kGooglePlaySubscriptionsUrl"), account)
 
 
 if __name__ == "__main__":

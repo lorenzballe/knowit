@@ -125,6 +125,7 @@ Map<String, Object?> _listed() {
 class _Said implements AnalyticsSink {
   final List<(String, Map<String, Object>)> events = [];
   final List<Map<String, Object>> person = [];
+  final Map<String, Object> stamped = {};
 
   Iterable<Map<String, Object>> of(String event) =>
       events.where((e) => e.$1 == event).map((e) => e.$2);
@@ -143,7 +144,7 @@ class _Said implements AnalyticsSink {
   Future<void> reset() async {}
 
   @override
-  Future<void> register(String key, Object value) async {}
+  Future<void> register(String key, Object value) async => stamped[key] = value;
 
   @override
   Future<void> setCollecting(bool on) async {}
@@ -379,7 +380,9 @@ void main() {
         'variant': 'firstDay',
         'remote_hash': Remote.config.hash,
       });
-      // On the profile, written with the rest of it as the app leaves.
+      // On every later event, and on the profile, written with the rest of
+      // it as the app leaves.
+      expect(said.stamped, {'experiment_push_first_ask': 'firstDay'});
       expect(said.person, isEmpty);
       await Analytics.flushPerson(force: true);
       expect(said.person.single, {'experiment_push_first_ask': 'firstDay'});

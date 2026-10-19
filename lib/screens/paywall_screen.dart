@@ -14,6 +14,8 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../state/app_state.dart';
 import '../state/progress.dart' show kCalibrationFloor;
+import '../store_links.dart'
+    show kAppStoreSubscriptionsUrl, kGooglePlaySubscriptionsUrl;
 import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
@@ -285,9 +287,7 @@ Future<void> showPurchaseSuccess(
             ? l.successFootFirstCharge(end)
             : l.successFootRenews(day(renew)),
         onReceipt: () => openLink(
-          iOS
-              ? 'https://apps.apple.com/account/subscriptions'
-              : 'https://play.google.com/store/account/subscriptions',
+          iOS ? kAppStoreSubscriptionsUrl : kGooglePlaySubscriptionsUrl,
         ),
       ),
       transitionsBuilder: (context, animation, _, child) =>
