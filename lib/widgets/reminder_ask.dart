@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../l10n/l10n.dart';
+import '../remote/knobs.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import 'ui.dart';
@@ -10,13 +11,26 @@ import 'ui.dart';
 /// coffee, at lunch, and the evening, when most days are read.
 const List<String> kReminderTimes = ['08:30', '12:30', '19:00'];
 
+/// The three, as the server may move them (`push.times`): each within the
+/// part of the day its word names — the morning before eleven, lunchtime
+/// before three, the evening from five to eleven — so "Morning" never
+/// stands beside a time in the afternoon.
+const RemoteTimes kReminderTimesKnob = RemoteTimes(
+  'push.times',
+  fallback: kReminderTimes,
+  windows: [('05:00', '11:00'), ('11:00', '15:00'), ('17:00', '23:00')],
+);
+
+/// The times the sheet offers now: [kReminderTimes], or the server's.
+List<String> reminderTimes() => kReminderTimesKnob.value;
+
 /// The reminder that suits a reader who starts reading [minute] minutes
 /// after midnight, as "HH:mm": one of the three, when it falls in the hour
 /// before that or a quarter of an hour after it; otherwise that time itself,
 /// to the quarter hour before. A nudge is worth most just as the reader
 /// would open the app anyway, and least once they have gone to bed.
 String reminderTimeFor(int minute) {
-  for (final String at in kReminderTimes) {
+  for (final String at in reminderTimes()) {
     final int ahead = minute - _minuteOf(at);
     if (ahead >= -15 && ahead <= 60) return at;
   }
@@ -72,6 +86,10 @@ class ReminderAsk extends StatefulWidget {
 }
 
 class _ReminderAskState extends State<ReminderAsk> {
+  /// The three times this sheet offers, read once as it rises: a newer
+  /// document does not move a row under the reader's finger.
+  late final List<String> _times = reminderTimes();
+
   /// The time the reader has been starting to read at, as a reminder would
   /// fall for it, until they pick one of their own ([habitReminderTime]).
   late final String? _usual = habitReminderTime(widget.app);
@@ -83,7 +101,7 @@ class _ReminderAskState extends State<ReminderAsk> {
 
   /// A time of the reader's own, once there is one: picked on the clock, or
   /// already set to something other than the three.
-  late String? _own = kReminderTimes.contains(_at) ? null : _at;
+  late String? _own = _times.contains(_at) ? null : _at;
 
   static TimeOfDay _timeOf(String at) {
     final List<String> parts = at.split(':');
@@ -121,7 +139,7 @@ class _ReminderAskState extends State<ReminderAsk> {
     HapticFeedback.selectionClick();
     setState(() {
       _at = at;
-      _own = kReminderTimes.contains(at) ? null : at;
+      _own = _times.contains(at) ? null : at;
     });
   }
 
@@ -131,9 +149,9 @@ class _ReminderAskState extends State<ReminderAsk> {
     final Palette p = context.p;
     final String? own = _own;
     final List<(String, String)> times = [
-      (kReminderTimes[0], l.reminderAskMorning),
-      (kReminderTimes[1], l.reminderAskLunch),
-      (kReminderTimes[2], l.reminderAskEvening),
+      (_times[0], l.reminderAskMorning),
+      (_times[1], l.reminderAskLunch),
+      (_times[2], l.reminderAskEvening),
     ];
     return Container(
       key: const ValueKey('reminder-ask'),

@@ -1,0 +1,23 @@
+{
+ "flags": {
+  "push.ask": {"default": true},
+  "account.offer": {"default": true},
+  "place.ask": {"default": true},
+  "review.ask": {"default": true}
+ },
+ "tunables": {
+  "push.askGapDays": {"type": "count", "default": 3, "min": 1, "max": 30},
+  "push.deferralsAllowed": {"type": "count", "default": 3, "min": 1, "max": 10},
+  "push.times": {
+   "type": "times",
+   "default": ["08:30", "12:30", "19:00"],
+   "windows": [["05:00", "11:00"], ["11:00", "15:00"], ["17:00", "23:00"]]
+  },
+  "place.firstAskDay": {"type": "count", "default": 2, "min": 1, "max": 20},
+  "place.lastAskDay": {"type": "count", "default": 7, "min": 2, "max": 30, "after": "place.firstAskDay"},
+  "review.streakDays": {"type": "count", "default": 7, "min": 3, "max": 60}
+ },
+ "experiments": {
+  "push.firstAsk": {"variants": ["cameBack", "firstDay"], "default": "cameBack"}
+ }
+}
