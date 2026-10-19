@@ -256,7 +256,7 @@ void main() {
   // remote/examples/explore-gallery.json, taken up as the remote document
   // would be: every core block at every size, on the three phones, at night
   // and on paper, and on the small phone at a large text size. The whole
-  // page at two pixels a point, into the gallery under the label given:
+  // page at one pixel a point, into the gallery under the label given:
   //
   //   flutter test tool/explore_shots.dart --plain-name "gallery" \
   //     --update-goldens --dart-define=EXPLORE_LABEL=now
