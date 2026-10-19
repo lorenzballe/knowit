@@ -3185,4 +3185,341 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '开启';
+
+  @override
+  String get betsRangeTitle => '押一个区间';
+
+  @override
+  String get betsRangeLine => '区间越窄，猜中赢得越多';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts 分';
+  }
+
+  @override
+  String get betsBet => '下注';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return '命中：+$pts 分。答案是 $said。';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return '没中：答案是 $said。';
+  }
+
+  @override
+  String get betsYourGuess => '你的猜测';
+
+  @override
+  String get betsAnsweredAlready => '已作答';
+
+  @override
+  String get betsOpenCard => '打开卡片';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天还剩 $n 分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => '你的投注单';
+
+  @override
+  String betsSlipToday(String points) {
+    return '今天 $points';
+  }
+
+  @override
+  String get betsSlipEmpty => '还没有下注。每一注都会出现在这里。';
+
+  @override
+  String get betsSlipTipTwice => '有把握就押窄：赢得是两倍。';
+
+  @override
+  String get betsSlipTipThrice => '有把握就押窄：赢得是三倍。';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: '有把握就押窄：赢得是 $times 倍。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return '窄区间命中：$n 次中 $right 次。';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return '$n 次答对 $right 次，平均把握 $pct%。';
+  }
+
+  @override
+  String get betsRight => '答对';
+
+  @override
+  String get betsWrong => '答错';
+
+  @override
+  String betsOneIn(String n) {
+    return '$n 分之 1';
+  }
+
+  @override
+  String get betsOneInLabel => '几分之一';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$steps 步中 $right 步';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return '$steps 步答对 $right 步。';
+  }
+
+  @override
+  String get betsStakeTitle => '下注吧';
+
+  @override
+  String betsStakeLine(int points) {
+    return '每天 $points 分。赢了，赌注翻倍';
+  }
+
+  @override
+  String get betsStakeLabel => '押注';
+
+  @override
+  String betsBetN(int n) {
+    return '下注 $n';
+  }
+
+  @override
+  String get betsPickFirst => '先选一个';
+
+  @override
+  String get betsNotEnough => '积分不足';
+
+  @override
+  String betsWin(int n) {
+    return '赢得 $n。';
+  }
+
+  @override
+  String betsLose(int n) {
+    return '输掉 $n。';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return '你当时有 $pct% 的把握。';
+  }
+
+  @override
+  String get betsFriendTitle => '和朋友打个赌';
+
+  @override
+  String get betsFriendLine => '发一道题过去，然后比比谁猜得更准';
+
+  @override
+  String get betsFriendNote => '你的猜测只留在你的手机上。卡片会连同答案一起发出，所以先问问对方怎么猜。';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return '你猜的是 $said。卡片会连同答案一起发出，所以先问问对方怎么猜。';
+  }
+
+  @override
+  String get betsFriendSend => '发给朋友';
+
+  @override
+  String get betsFriendCopy => '复制题目';
+
+  @override
+  String get betsFriendCopied => '题目已复制';
+
+  @override
+  String get betsFriendAsk => '你怎么看？';
+
+  @override
+  String get betsNumberTitle => '你的数字';
+
+  @override
+  String get betsNumberLine => '调好、锁定，看看差了多少';
+
+  @override
+  String get betsLock => '锁定';
+
+  @override
+  String get betsSpotOn => '分毫不差。';
+
+  @override
+  String betsCloseEnough(String by) {
+    return '足够接近：差了 $by。';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return '差了 $by。';
+  }
+
+  @override
+  String get betsYou => '你';
+
+  @override
+  String get betsAnswer => '答案';
+
+  @override
+  String get betsBiggerTitle => '哪个更大？';
+
+  @override
+  String get betsBiggerLine => '两个可以算出来的数字。点更大的那个';
+
+  @override
+  String get betsTapIfBigger => '更大就点';
+
+  @override
+  String get betsBiggerGotIt => '更大 · 答对了';
+
+  @override
+  String get betsBigger => '更大';
+
+  @override
+  String get betsYourPick => '你的选择';
+
+  @override
+  String get betsOr => '还是';
+
+  @override
+  String get betsBiggerFoot => '每个数字都是一张卡片的答案。选完后点一下就能打开那张卡片。';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return '$n 次答对 $right 次。';
+  }
+
+  @override
+  String get betsCloserTitle => '越来越近';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': '用 $steps 次“多还是少”逼近这个数字',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {'other': '$steps 步逼近答案。'});
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return '比 $v 多还是少？';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return '第 $at/$of 步';
+  }
+
+  @override
+  String get betsMore => '更多';
+
+  @override
+  String get betsLess => '更少';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return '对：比 $v 多。';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return '对：比 $v 少。';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return '不对：比 $v 多。';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return '不对：比 $v 少。';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return '正好是 $said。';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return '答案是 $said。$steps 步答对 $right 步。';
+  }
+
+  @override
+  String get betsMagnitudeTitle => '数量级';
+
+  @override
+  String get betsMagnitudeLine => '十、一千还是一百万？选一个量级';
+
+  @override
+  String get betsMagnitudeRight => '数量级猜对了。';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 个数量级。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => '今日一赌';
+
+  @override
+  String get betsDayLine => '锁定你的猜测，再看看差了多少';
+
+  @override
+  String get betsDayTag => '今日一赌';
+
+  @override
+  String get betsDayTagSame => '今日一赌 · 人人同题';
+
+  @override
+  String get betsLockIn => '锁定';
+
+  @override
+  String betsItIs(String said) {
+    return '答案是 $said。';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 个百分点。',
+      zero: '分毫不差。',
+    );
+    return '$_temp0';
+  }
 }

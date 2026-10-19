@@ -4883,6 +4883,498 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch it on'**
   String get whereYouLiveSwitchOn;
+
+  /// Explore, bets: the name of the shelf where a share is bet on with a range, narrow or wide.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet a range'**
+  String get betsRangeTitle;
+
+  /// Under the shelf's name: a narrow range pays more, but only when the answer is in it.
+  ///
+  /// In en, this message translates to:
+  /// **'The narrower you go, the more it pays, if you\'re right'**
+  String get betsRangeLine;
+
+  /// One of the range widths: plus or minus w percentage points either side of the guess, and the points it pays when the answer is in it. Short: it sits in a chip.
+  ///
+  /// In en, this message translates to:
+  /// **'±{w} · {pts} pts'**
+  String betsRangeWidth(int w, int pts);
+
+  /// The button that lays a range bet.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet'**
+  String get betsBet;
+
+  /// After a range bet whose range held the answer: the points won, and the answer, said as a share ("21%").
+  ///
+  /// In en, this message translates to:
+  /// **'In range: +{pts} points. It is {said}.'**
+  String betsInRange(int pts, String said);
+
+  /// After a range bet whose range missed the answer: the answer, said as a share.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed: it is {said}.'**
+  String betsMissedRange(String said);
+
+  /// What a screen reader calls the track a share is set on.
+  ///
+  /// In en, this message translates to:
+  /// **'Your guess'**
+  String get betsYourGuess;
+
+  /// On a bet whose card the reader already answered somewhere else: nothing left to bet on.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered already'**
+  String get betsAnsweredAlready;
+
+  /// What a screen reader says a settled bet's tile does when tapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the card'**
+  String get betsOpenCard;
+
+  /// What a screen reader says for the points pill beside a shelf of bets: the points left of the day's hundred.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point left today} other{{n} points left today}}'**
+  String betsWalletSays(int n);
+
+  /// The panel listing every bet laid today.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bet slip'**
+  String get betsSlipTitle;
+
+  /// Beside the slip's name: the points won or lost today, already signed ("+30", "−10").
+  ///
+  /// In en, this message translates to:
+  /// **'{points} today'**
+  String betsSlipToday(String points);
+
+  /// The slip before any bet is laid.
+  ///
+  /// In en, this message translates to:
+  /// **'No bets yet. Each one you place lands here.'**
+  String get betsSlipEmpty;
+
+  /// At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays twice what the widest does.
+  ///
+  /// In en, this message translates to:
+  /// **'Go narrow when you\'re sure: it pays twice as much.'**
+  String get betsSlipTipTwice;
+
+  /// At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays three times what the widest does.
+  ///
+  /// In en, this message translates to:
+  /// **'Go narrow when you\'re sure: it pays three times as much.'**
+  String get betsSlipTipThrice;
+
+  /// At the foot of the slip under the range bets, before any narrow bet: how many times more the narrowest range pays than the widest, four or more.
+  ///
+  /// In en, this message translates to:
+  /// **'{times, plural, other{Go narrow when you\'re sure: it pays {times} times as much.}}'**
+  String betsSlipTipTimes(int times);
+
+  /// At the foot of the slip: how many of the narrowest range bets held the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow bets right: {right} of {n}.'**
+  String betsSlipNarrow(int right, int n);
+
+  /// At the foot of the slip: of the bets laid with how sure, how many were right, and how sure the reader said they were on average.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on {right} of {n}, at {pct}% sure on average.'**
+  String betsSlipSure(int right, int n, int pct);
+
+  /// What a screen reader says for the tick beside a bet on the slip that was right.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get betsRight;
+
+  /// What a screen reader says for the cross beside a bet on the slip that was wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong'**
+  String get betsWrong;
+
+  /// Odds, as a bet on them is said again on the slip and to a screen reader: "1 in 1K".
+  ///
+  /// In en, this message translates to:
+  /// **'1 in {n}'**
+  String betsOneIn(String n);
+
+  /// Small capitals over a row of odds to pick from, whose notches say only the n of "1 in n": 10, 100, 1K.
+  ///
+  /// In en, this message translates to:
+  /// **'1 in'**
+  String get betsOneInLabel;
+
+  /// A game of more or less, as the slip says it: how many steps were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {steps}'**
+  String betsScore(int right, int steps);
+
+  /// After a game of more or less that ended early on the answer itself: how many steps were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {steps}.'**
+  String betsScoreSentence(int right, int steps);
+
+  /// Explore, bets: the name of the shelf where points are staked on one of three amounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Place your bet'**
+  String get betsStakeTitle;
+
+  /// Under the shelf's name: the points a day starts with, and what a winning stake pays.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} points a day. Win and you double your stake'**
+  String betsStakeLine(int points);
+
+  /// Small capitals before the stakes to choose from (10, 20, 30).
+  ///
+  /// In en, this message translates to:
+  /// **'Stake'**
+  String get betsStakeLabel;
+
+  /// The button that lays a stake of n points.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet {n}'**
+  String betsBetN(int n);
+
+  /// Where the stake button will be, before an amount is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one first'**
+  String get betsPickFirst;
+
+  /// Where the stake button would be, when the stake is more than the points left.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough points'**
+  String get betsNotEnough;
+
+  /// After a stake on the right amount: the points won.
+  ///
+  /// In en, this message translates to:
+  /// **'You win {n}.'**
+  String betsWin(int n);
+
+  /// After a stake on a wrong amount: the points lost.
+  ///
+  /// In en, this message translates to:
+  /// **'You lose {n}.'**
+  String betsLose(int n);
+
+  /// After a bet laid with how sure: how sure the reader said they were.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {pct}% sure.'**
+  String betsYouWereSure(int pct);
+
+  /// Explore, bets: the name of the shelf that sends a card to a friend to guess.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet a friend'**
+  String get betsFriendTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Send them a question, then compare your guesses'**
+  String get betsFriendLine;
+
+  /// Under the card about to be sent: the reader's guess is not sent, and the card is sent with its answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your guess stays on your phone. The card goes with its answer, so ask for theirs first.'**
+  String get betsFriendNote;
+
+  /// Under the card about to be sent, once the reader bet on it: what they said, and that the card goes with its answer.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {said}. The card goes with its answer, so ask for their guess first.'**
+  String betsFriendNoteSaid(String said);
+
+  /// Opens the share sheet for the card.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to a friend'**
+  String get betsFriendSend;
+
+  /// Copies the card's question and its options, without the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the question'**
+  String get betsFriendCopy;
+
+  /// Said once the question is copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Question copied'**
+  String get betsFriendCopied;
+
+  /// Under a question copied to send to a friend: asking for their guess.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you say?'**
+  String get betsFriendAsk;
+
+  /// Explore, bets: the name of the shelf where a number is set on steppers and locked; also what a screen reader calls the number being set.
+  ///
+  /// In en, this message translates to:
+  /// **'Your number'**
+  String get betsNumberTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Set it, lock it, see how far off you were'**
+  String get betsNumberLine;
+
+  /// The button that locks a number set on steppers. Short: it sits beside four steppers.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock'**
+  String get betsLock;
+
+  /// After a number locked exactly on the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Spot on.'**
+  String get betsSpotOn;
+
+  /// After a number off by less than the card allows, so still right: by how much, with its unit ("0.1 tonnes").
+  ///
+  /// In en, this message translates to:
+  /// **'Close enough: off by {by}.'**
+  String betsCloseEnough(String by);
+
+  /// After a number off by more than the card allows: by how much, with its unit ("23 studies").
+  ///
+  /// In en, this message translates to:
+  /// **'Off by {by}.'**
+  String betsOffBy(String by);
+
+  /// Under the scale a locked number is shown on: the ring is you. Lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get betsYou;
+
+  /// Under the scale a locked number is shown on: the bar is the answer. Lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'answer'**
+  String get betsAnswer;
+
+  /// Explore, bets: the name of the shelf of two hidden figures and a tap on the bigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Which is bigger?'**
+  String get betsBiggerTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Two figures you can work out. Tap the bigger one'**
+  String get betsBiggerLine;
+
+  /// Small capitals on a hidden figure, before the pick.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap if bigger'**
+  String get betsTapIfBigger;
+
+  /// Small capitals on the bigger figure, when it was the one picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger · you got it'**
+  String get betsBiggerGotIt;
+
+  /// Small capitals on the bigger figure, when the other was picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger'**
+  String get betsBigger;
+
+  /// Small capitals on the figure picked, when it was the smaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pick'**
+  String get betsYourPick;
+
+  /// In the small disc between two figures to compare. Lowercase, as short as can be.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get betsOr;
+
+  /// Under the pairs of figures, before any pick.
+  ///
+  /// In en, this message translates to:
+  /// **'Each figure is a card\'s answer. Once you pick, tap one to open its card.'**
+  String get betsBiggerFoot;
+
+  /// Under the pairs of figures: how many picks were right.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on {right} of {n}.'**
+  String betsBiggerScore(int right, int n);
+
+  /// Explore, bets: the name of the shelf where a share is closed in on by saying more or less.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer, closer'**
+  String get betsCloserTitle;
+
+  /// Under the shelf's name: how many steps a game takes, 2 to 5, given as text so each can be a word.
+  ///
+  /// In en, this message translates to:
+  /// **'{steps, select, 2{Two steps of more or less to close in on the number} 3{Three steps of more or less to close in on the number} 4{Four steps of more or less to close in on the number} 5{Five steps of more or less to close in on the number} other{{steps} steps of more or less to close in on the number}}'**
+  String betsCloserLine(String steps);
+
+  /// On a game of more or less, before the first step: how many steps it takes, 2 to 5, given as text so each can be a word.
+  ///
+  /// In en, this message translates to:
+  /// **'{steps, select, 2{Two steps to close in on it.} 3{Three steps to close in on it.} 4{Four steps to close in on it.} 5{Five steps to close in on it.} other{{steps} steps to close in on it.}}'**
+  String betsCloserStart(String steps);
+
+  /// The question of a step: is the answer more or less than this share?
+  ///
+  /// In en, this message translates to:
+  /// **'More or less than {v}?'**
+  String betsMoreOrLess(String v);
+
+  /// Small capitals beside the question: which step this is.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {at} of {of}'**
+  String betsStepOf(int at, int of);
+
+  /// The button that says the answer is more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get betsMore;
+
+  /// The button that says the answer is less.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get betsLess;
+
+  /// After a step said right: the answer is more than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: it is more than {v}.'**
+  String betsCloserYesMore(String v);
+
+  /// After a step said right: the answer is less than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: it is less than {v}.'**
+  String betsCloserYesLess(String v);
+
+  /// After a step said wrong: the answer is more than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'No: it is more than {v}.'**
+  String betsCloserNoMore(String v);
+
+  /// After a step said wrong: the answer is less than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'No: it is less than {v}.'**
+  String betsCloserNoLess(String v);
+
+  /// When the answer sits exactly on the share a step asked about, which ends the game.
+  ///
+  /// In en, this message translates to:
+  /// **'It is exactly {said}.'**
+  String betsCloserExact(String said);
+
+  /// At the end of a game of more or less: the answer, and how many steps were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}. You got {right} of {steps}.'**
+  String betsCloserDone(String said, int right, int steps);
+
+  /// Explore, bets: the name of the shelf where a size is picked by its order of magnitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders of magnitude'**
+  String get betsMagnitudeTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten, a thousand or a million? Pick the size'**
+  String get betsMagnitudeLine;
+
+  /// After a size picked at the right order of magnitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Right order of magnitude.'**
+  String get betsMagnitudeRight;
+
+  /// After a size picked at the wrong order of magnitude: by how many powers of ten.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Off by 1 order of magnitude.} other{Off by {n} orders of magnitude.}}'**
+  String betsMagnitudeOff(int n);
+
+  /// Explore, bets: the name of the shelf with the bet of the day on top.
+  ///
+  /// In en, this message translates to:
+  /// **'The bet of the day'**
+  String get betsDayTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock in your guess, then see how far off you were'**
+  String get betsDayLine;
+
+  /// The tag over the bet of the day. Shown in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet of the day'**
+  String get betsDayTag;
+
+  /// The tag over the bet of the day, where the server says every reader is given the same card. Shown in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet of the day · the same for everyone'**
+  String get betsDayTagSame;
+
+  /// The button that locks a guess set on a track.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock in'**
+  String get betsLockIn;
+
+  /// Once a guess is locked: the answer, said as a share.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}.'**
+  String betsItIs(String said);
+
+  /// Once a guess on a share is locked: how far off it was, in percentage points.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Spot on.} =1{You were 1 percentage point off.} other{You were {n} percentage points off.}}'**
+  String betsPointsOff(int n);
 }
 
 class _AppLocalizationsDelegate

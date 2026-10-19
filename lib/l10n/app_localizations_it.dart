@@ -3328,4 +3328,363 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Attiva';
+
+  @override
+  String get betsRangeTitle => 'Punta su un intervallo';
+
+  @override
+  String get betsRangeLine => 'Più stretto è, più paga, se hai ragione';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts pt';
+  }
+
+  @override
+  String get betsBet => 'Punta';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return 'Dentro: +$pts punti. È $said.';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return 'Mancato: è $said.';
+  }
+
+  @override
+  String get betsYourGuess => 'La tua stima';
+
+  @override
+  String get betsAnsweredAlready => 'Già risposta';
+
+  @override
+  String get betsOpenCard => 'Apri la carta';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ti restano $n punti oggi',
+      one: 'Ti resta 1 punto oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => 'La tua schedina';
+
+  @override
+  String betsSlipToday(String points) {
+    return '$points oggi';
+  }
+
+  @override
+  String get betsSlipEmpty =>
+      'Ancora nessuna puntata. Ognuna che fai finisce qui.';
+
+  @override
+  String get betsSlipTipTwice =>
+      'Vai stretto quando sei sicuro: paga il doppio.';
+
+  @override
+  String get betsSlipTipThrice =>
+      'Vai stretto quando sei sicuro: paga il triplo.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: 'Vai stretto quando sei sicuro: paga $times volte tanto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return 'Puntate strette azzeccate: $right su $n.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return 'Giuste $right su $n, sicuro in media al $pct%.';
+  }
+
+  @override
+  String get betsRight => 'Giusta';
+
+  @override
+  String get betsWrong => 'Sbagliata';
+
+  @override
+  String betsOneIn(String n) {
+    return '1 su $n';
+  }
+
+  @override
+  String get betsOneInLabel => '1 su';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$right su $steps';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return 'Ne hai indovinati $right su $steps.';
+  }
+
+  @override
+  String get betsStakeTitle => 'Fai la tua puntata';
+
+  @override
+  String betsStakeLine(int points) {
+    return '$points punti al giorno. Se vinci, raddoppi la puntata';
+  }
+
+  @override
+  String get betsStakeLabel => 'Puntata';
+
+  @override
+  String betsBetN(int n) {
+    return 'Punta $n';
+  }
+
+  @override
+  String get betsPickFirst => 'Prima scegline una';
+
+  @override
+  String get betsNotEnough => 'Punti insufficienti';
+
+  @override
+  String betsWin(int n) {
+    return 'Vinci $n.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return 'Perdi $n.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return 'Eri sicuro al $pct%.';
+  }
+
+  @override
+  String get betsFriendTitle => 'Sfida un amico';
+
+  @override
+  String get betsFriendLine => 'Mandagli una domanda, poi confrontate le stime';
+
+  @override
+  String get betsFriendNote =>
+      'La tua stima resta sul tuo telefono. La carta arriva con la risposta, quindi chiedi prima la sua.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return 'Hai detto $said. La carta arriva con la risposta, quindi chiedi prima la sua stima.';
+  }
+
+  @override
+  String get betsFriendSend => 'Manda a un amico';
+
+  @override
+  String get betsFriendCopy => 'Copia la domanda';
+
+  @override
+  String get betsFriendCopied => 'Domanda copiata';
+
+  @override
+  String get betsFriendAsk => 'Tu cosa dici?';
+
+  @override
+  String get betsNumberTitle => 'Il tuo numero';
+
+  @override
+  String get betsNumberLine =>
+      'Impostalo, bloccalo, guarda di quanto hai sbagliato';
+
+  @override
+  String get betsLock => 'Blocca';
+
+  @override
+  String get betsSpotOn => 'Centrato.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return 'Abbastanza vicino: hai sbagliato di $by.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return 'Hai sbagliato di $by.';
+  }
+
+  @override
+  String get betsYou => 'tu';
+
+  @override
+  String get betsAnswer => 'risposta';
+
+  @override
+  String get betsBiggerTitle => 'Quale è più grande?';
+
+  @override
+  String get betsBiggerLine =>
+      'Due cifre che puoi calcolare. Tocca la più grande';
+
+  @override
+  String get betsTapIfBigger => 'Tocca se è più grande';
+
+  @override
+  String get betsBiggerGotIt => 'Più grande · indovinato';
+
+  @override
+  String get betsBigger => 'Più grande';
+
+  @override
+  String get betsYourPick => 'La tua scelta';
+
+  @override
+  String get betsOr => 'o';
+
+  @override
+  String get betsBiggerFoot =>
+      'Ogni cifra è la risposta di una carta. Dopo la scelta, toccane una per aprire la sua carta.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return 'Giuste $right su $n.';
+  }
+
+  @override
+  String get betsCloserTitle => 'Più vicino';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Due passi di più o meno per avvicinarti al numero',
+      '3': 'Tre passi di più o meno per avvicinarti al numero',
+      '4': 'Quattro passi di più o meno per avvicinarti al numero',
+      '5': 'Cinque passi di più o meno per avvicinarti al numero',
+      'other': '$steps passi di più o meno per avvicinarti al numero',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Due passi per avvicinarti.',
+      '3': 'Tre passi per avvicinarti.',
+      '4': 'Quattro passi per avvicinarti.',
+      '5': 'Cinque passi per avvicinarti.',
+      'other': '$steps passi per avvicinarti.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return 'Più o meno di $v?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return 'Passo $at di $of';
+  }
+
+  @override
+  String get betsMore => 'Di più';
+
+  @override
+  String get betsLess => 'Meno';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return 'Giusto: è più di $v.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return 'Giusto: è meno di $v.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return 'No: è più di $v.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return 'No: è meno di $v.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return 'È esattamente $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return 'È $said. Ne hai indovinati $right su $steps.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => 'Ordini di grandezza';
+
+  @override
+  String get betsMagnitudeLine =>
+      'Dieci, mille o un milione? Scegli la grandezza';
+
+  @override
+  String get betsMagnitudeRight => 'Ordine di grandezza giusto.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Sbagliato di $n ordini di grandezza.',
+      one: 'Sbagliato di 1 ordine di grandezza.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => 'La puntata del giorno';
+
+  @override
+  String get betsDayLine =>
+      'Blocca la tua stima, poi guarda di quanto hai sbagliato';
+
+  @override
+  String get betsDayTag => 'Puntata del giorno';
+
+  @override
+  String get betsDayTagSame => 'Puntata del giorno · uguale per tutti';
+
+  @override
+  String get betsLockIn => 'Blocca';
+
+  @override
+  String betsItIs(String said) {
+    return 'È $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Hai sbagliato di $n punti percentuali.',
+      one: 'Hai sbagliato di 1 punto percentuale.',
+      zero: 'Centrato.',
+    );
+    return '$_temp0';
+  }
 }

@@ -3454,4 +3454,386 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Включить';
+
+  @override
+  String get betsRangeTitle => 'Ставка на диапазон';
+
+  @override
+  String get betsRangeLine => 'Чем уже, тем больше платит, если ты прав';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts оч.';
+  }
+
+  @override
+  String get betsBet => 'Поставить';
+
+  @override
+  String betsInRange(int pts, String said) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'В диапазоне: +$pts очка. Это $said.',
+      many: 'В диапазоне: +$pts очков. Это $said.',
+      few: 'В диапазоне: +$pts очка. Это $said.',
+      one: 'В диапазоне: +$pts очко. Это $said.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return 'Мимо: это $said.';
+  }
+
+  @override
+  String get betsYourGuess => 'Твоя оценка';
+
+  @override
+  String get betsAnsweredAlready => 'Уже отвечено';
+
+  @override
+  String get betsOpenCard => 'Открыть карточку';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сегодня осталось $n очка',
+      many: 'Сегодня осталось $n очков',
+      few: 'Сегодня осталось $n очка',
+      one: 'Сегодня осталось $n очко',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => 'Твой купон';
+
+  @override
+  String betsSlipToday(String points) {
+    return '$points сегодня';
+  }
+
+  @override
+  String get betsSlipEmpty =>
+      'Ставок пока нет. Каждая твоя ставка появится здесь.';
+
+  @override
+  String get betsSlipTipTwice =>
+      'Бери узкий, когда уверен: платит вдвое больше.';
+
+  @override
+  String get betsSlipTipThrice =>
+      'Бери узкий, когда уверен: платит втрое больше.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: 'Бери узкий, когда уверен: платит в $times раза больше.',
+      many: 'Бери узкий, когда уверен: платит в $times раз больше.',
+      few: 'Бери узкий, когда уверен: платит в $times раза больше.',
+      one: 'Бери узкий, когда уверен: платит в $times раз больше.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return 'Узких ставок сыграло: $right из $n.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return 'Верно $right из $n, в среднем ты был уверен на $pct%.';
+  }
+
+  @override
+  String get betsRight => 'Верно';
+
+  @override
+  String get betsWrong => 'Неверно';
+
+  @override
+  String betsOneIn(String n) {
+    return '1 из $n';
+  }
+
+  @override
+  String get betsOneInLabel => '1 из';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$right из $steps';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return 'Верно $right из $steps.';
+  }
+
+  @override
+  String get betsStakeTitle => 'Делай ставку';
+
+  @override
+  String betsStakeLine(int points) {
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points очка в день. Выиграешь — ставка удвоится',
+      many: '$points очков в день. Выиграешь — ставка удвоится',
+      few: '$points очка в день. Выиграешь — ставка удвоится',
+      one: '$points очко в день. Выиграешь — ставка удвоится',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsStakeLabel => 'Ставка';
+
+  @override
+  String betsBetN(int n) {
+    return 'Ставка $n';
+  }
+
+  @override
+  String get betsPickFirst => 'Сначала выбери';
+
+  @override
+  String get betsNotEnough => 'Не хватает очков';
+
+  @override
+  String betsWin(int n) {
+    return 'Ты выигрываешь $n.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return 'Ты теряешь $n.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return 'Ты был уверен на $pct%.';
+  }
+
+  @override
+  String get betsFriendTitle => 'Поспорь с другом';
+
+  @override
+  String get betsFriendLine => 'Отправь вопрос, а потом сравните догадки';
+
+  @override
+  String get betsFriendNote =>
+      'Твоя догадка останется на твоём телефоне. Карточка уходит вместе с ответом, так что сначала спроси, что думает друг.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return 'Ты сказал: $said. Карточка уходит вместе с ответом, так что сначала спроси, что думает друг.';
+  }
+
+  @override
+  String get betsFriendSend => 'Отправить другу';
+
+  @override
+  String get betsFriendCopy => 'Скопировать вопрос';
+
+  @override
+  String get betsFriendCopied => 'Вопрос скопирован';
+
+  @override
+  String get betsFriendAsk => 'А ты как думаешь?';
+
+  @override
+  String get betsNumberTitle => 'Твоё число';
+
+  @override
+  String get betsNumberLine =>
+      'Выставь, зафиксируй и посмотри, насколько ошибся';
+
+  @override
+  String get betsLock => 'Готово';
+
+  @override
+  String get betsSpotOn => 'Точно.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return 'Достаточно близко: ошибка $by.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return 'Ошибка: $by.';
+  }
+
+  @override
+  String get betsYou => 'ты';
+
+  @override
+  String get betsAnswer => 'ответ';
+
+  @override
+  String get betsBiggerTitle => 'Что больше?';
+
+  @override
+  String get betsBiggerLine =>
+      'Два числа, которые можно вычислить. Нажми на большее';
+
+  @override
+  String get betsTapIfBigger => 'Нажми, если больше';
+
+  @override
+  String get betsBiggerGotIt => 'Больше · верно';
+
+  @override
+  String get betsBigger => 'Больше';
+
+  @override
+  String get betsYourPick => 'Твой выбор';
+
+  @override
+  String get betsOr => 'или';
+
+  @override
+  String get betsBiggerFoot =>
+      'Каждое число — ответ на какую-то карточку. После выбора нажми на число, чтобы открыть его карточку.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return 'Верно $right из $n.';
+  }
+
+  @override
+  String get betsCloserTitle => 'Ближе и ближе';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Два шага «больше или меньше», чтобы подобраться к числу',
+      '3': 'Три шага «больше или меньше», чтобы подобраться к числу',
+      '4': 'Четыре шага «больше или меньше», чтобы подобраться к числу',
+      '5': 'Пять шагов «больше или меньше», чтобы подобраться к числу',
+      'other': '$steps шагов «больше или меньше», чтобы подобраться к числу',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Два шага, чтобы подобраться.',
+      '3': 'Три шага, чтобы подобраться.',
+      '4': 'Четыре шага, чтобы подобраться.',
+      '5': 'Пять шагов, чтобы подобраться.',
+      'other': '$steps шагов, чтобы подобраться.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return 'Больше или меньше $v?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return 'Шаг $at из $of';
+  }
+
+  @override
+  String get betsMore => 'Больше';
+
+  @override
+  String get betsLess => 'Меньше';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return 'Верно: больше $v.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return 'Верно: меньше $v.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return 'Нет: больше $v.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return 'Нет: меньше $v.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return 'Ровно $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return 'Это $said. Верно $right из $steps.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => 'Порядки величины';
+
+  @override
+  String get betsMagnitudeLine => 'Десять, тысяча или миллион? Выбери масштаб';
+
+  @override
+  String get betsMagnitudeRight => 'Порядок угадан.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ошибка на $n порядка.',
+      many: 'Ошибка на $n порядков.',
+      few: 'Ошибка на $n порядка.',
+      one: 'Ошибка на $n порядок.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => 'Ставка дня';
+
+  @override
+  String get betsDayLine => 'Зафиксируй догадку и посмотри, насколько ошибся';
+
+  @override
+  String get betsDayTag => 'Ставка дня';
+
+  @override
+  String get betsDayTagSame => 'Ставка дня · одна для всех';
+
+  @override
+  String get betsLockIn => 'Зафиксировать';
+
+  @override
+  String betsItIs(String said) {
+    return 'Это $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ошибка $n процентного пункта.',
+      many: 'Ошибка $n процентных пунктов.',
+      few: 'Ошибка $n процентных пункта.',
+      one: 'Ошибка $n процентный пункт.',
+      zero: 'Точно.',
+    );
+    return '$_temp0';
+  }
 }

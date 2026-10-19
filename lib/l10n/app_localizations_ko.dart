@@ -3195,4 +3195,344 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '켜기';
+
+  @override
+  String get betsRangeTitle => '범위에 걸기';
+
+  @override
+  String get betsRangeLine => '좁게 걸수록, 맞히면 더 많이 받아요';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts점';
+  }
+
+  @override
+  String get betsBet => '걸기';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return '범위 안: +$pts점. 답은 $said.';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return '빗나갔어요: 답은 $said.';
+  }
+
+  @override
+  String get betsYourGuess => '내 추측';
+
+  @override
+  String get betsAnsweredAlready => '이미 답했어요';
+
+  @override
+  String get betsOpenCard => '카드 열기';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n점 남았어요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => '내 베팅 내역';
+
+  @override
+  String betsSlipToday(String points) {
+    return '오늘 $points';
+  }
+
+  @override
+  String get betsSlipEmpty => '아직 베팅이 없어요. 거는 베팅은 모두 여기에 쌓여요.';
+
+  @override
+  String get betsSlipTipTwice => '확신이 들 때는 좁게 거세요. 두 배를 받아요.';
+
+  @override
+  String get betsSlipTipThrice => '확신이 들 때는 좁게 거세요. 세 배를 받아요.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: '확신이 들 때는 좁게 거세요. $times배를 받아요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return '좁은 베팅 적중: $n번 중 $right번.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return '$n번 중 $right번 맞혔고, 평균 확신은 $pct%.';
+  }
+
+  @override
+  String get betsRight => '맞음';
+
+  @override
+  String get betsWrong => '틀림';
+
+  @override
+  String betsOneIn(String n) {
+    return '$n분의 1';
+  }
+
+  @override
+  String get betsOneInLabel => '분모';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$steps번 중 $right번';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return '$steps번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String get betsStakeTitle => '베팅하기';
+
+  @override
+  String betsStakeLine(int points) {
+    return '하루 $points점. 이기면 건 점수가 두 배가 돼요';
+  }
+
+  @override
+  String get betsStakeLabel => '걸 점수';
+
+  @override
+  String betsBetN(int n) {
+    return '$n 걸기';
+  }
+
+  @override
+  String get betsPickFirst => '먼저 하나 고르세요';
+
+  @override
+  String get betsNotEnough => '점수가 부족해요';
+
+  @override
+  String betsWin(int n) {
+    return '$n점을 얻었어요.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return '$n점을 잃었어요.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return '$pct% 확신했어요.';
+  }
+
+  @override
+  String get betsFriendTitle => '친구와 내기';
+
+  @override
+  String get betsFriendLine => '문제를 보내고, 나중에 추측을 비교해 보세요';
+
+  @override
+  String get betsFriendNote =>
+      '내 추측은 이 휴대폰에만 남아요. 카드는 답과 함께 가니, 먼저 친구의 추측을 물어보세요.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return '내 추측은 $said. 카드는 답과 함께 가니, 먼저 친구의 추측을 물어보세요.';
+  }
+
+  @override
+  String get betsFriendSend => '친구에게 보내기';
+
+  @override
+  String get betsFriendCopy => '문제 복사';
+
+  @override
+  String get betsFriendCopied => '문제를 복사했어요';
+
+  @override
+  String get betsFriendAsk => '네 생각은?';
+
+  @override
+  String get betsNumberTitle => '내 숫자';
+
+  @override
+  String get betsNumberLine => '정하고, 고정하고, 얼마나 빗나갔는지 보세요';
+
+  @override
+  String get betsLock => '고정';
+
+  @override
+  String get betsSpotOn => '정확해요.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return '거의 맞았어요: $by 차이.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return '$by 차이.';
+  }
+
+  @override
+  String get betsYou => '나';
+
+  @override
+  String get betsAnswer => '답';
+
+  @override
+  String get betsBiggerTitle => '어느 쪽이 클까?';
+
+  @override
+  String get betsBiggerLine => '계산해 볼 수 있는 두 숫자. 더 큰 쪽을 누르세요';
+
+  @override
+  String get betsTapIfBigger => '더 크면 누르기';
+
+  @override
+  String get betsBiggerGotIt => '더 큼 · 맞혔어요';
+
+  @override
+  String get betsBigger => '더 큼';
+
+  @override
+  String get betsYourPick => '내 선택';
+
+  @override
+  String get betsOr => '또는';
+
+  @override
+  String get betsBiggerFoot => '숫자마다 카드의 답이에요. 고른 뒤 누르면 그 카드가 열려요.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return '$n번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String get betsCloserTitle => '점점 가까이';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': '많다·적다 $steps단계로 숫자에 다가가요',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': '$steps단계로 좁혀 보세요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return '$v보다 많을까, 적을까?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return '$at/$of단계';
+  }
+
+  @override
+  String get betsMore => '많다';
+
+  @override
+  String get betsLess => '적다';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return '맞아요, $v보다 많아요.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return '맞아요, $v보다 적어요.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return '아니요, $v보다 많아요.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return '아니요, $v보다 적어요.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return '답은 정확히 $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return '답은 $said. $steps번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => '자릿수 맞히기';
+
+  @override
+  String get betsMagnitudeLine => '10일까, 1000일까, 100만일까? 크기를 골라요';
+
+  @override
+  String get betsMagnitudeRight => '자릿수가 맞았어요.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '자릿수가 $n단계 빗나갔어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => '오늘의 베팅';
+
+  @override
+  String get betsDayLine => '추측을 고정하고, 얼마나 빗나갔는지 보세요';
+
+  @override
+  String get betsDayTag => '오늘의 베팅';
+
+  @override
+  String get betsDayTagSame => '오늘의 베팅 · 모두에게 같은 문제';
+
+  @override
+  String get betsLockIn => '고정하기';
+
+  @override
+  String betsItIs(String said) {
+    return '답은 $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n퍼센트포인트 빗나갔어요.',
+      zero: '정확해요.',
+    );
+    return '$_temp0';
+  }
 }
