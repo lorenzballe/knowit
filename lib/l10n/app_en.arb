@@ -3253,5 +3253,55 @@
  "whereYouLiveSwitchOn": "Switch it on",
  "@whereYouLiveSwitchOn": {
   "description": "The button on the Where you live shelf that asks the reader where they live."
+ },
+ "gateUpdateTitle": "Update Astute",
+ "@gateUpdateTitle": {
+  "description": "The title of the full screen that asks the reader to update, shown when the server says this build can no longer be used (app.gate: minBuild or blocked). Nothing of the app is behind it."
+ },
+ "gateUpdateLine": "This version can’t carry on. {store, select, apple{The new one is waiting in the App Store} google{The new one is waiting on Google Play} other{The new one is waiting in your app store}}, with your cards and your streak just as you left them.",
+ "@gateUpdateLine": {
+  "description": "Under the update screen's title. {store} is apple on an iPhone, google on Android, other elsewhere: where the new version is. The server can put its own words in its place (app.gate.message.hard).",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "gateUpdateButton": "Update",
+ "@gateUpdateButton": {
+  "description": "The update screen's button, and the update sheet's: opens Astute's page in the store."
+ },
+ "gateSoftTitle": "A new version of Astute is ready",
+ "@gateSoftTitle": {
+  "description": "The title of the sheet that says a newer version is out, once for each build the server suggests (app.gate.suggestBuild)."
+ },
+ "gateSoftLine": "{store, select, apple{It’s waiting in the App Store.} google{It’s waiting on Google Play.} other{It’s waiting in your app store.}} Updating takes a moment, and your cards and your streak stay just as they are.",
+ "@gateSoftLine": {
+  "description": "Under the update sheet's title. {store} is apple on an iPhone, google on Android, other elsewhere. The server can put its own words in its place (app.gate.message.soft).",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "gateSoftLater": "Later",
+ "@gateSoftLater": {
+  "description": "The update sheet's second answer: closes it, and it does not come back for this build."
+ },
+ "gatePauseTitle": "Astute is taking a short break",
+ "@gatePauseTitle": {
+  "description": "The title of the full screen shown while the server pauses the app, for an emergency such as a backend that is down (app.gate.pause)."
+ },
+ "gatePauseLine": "We’re putting something right behind the scenes. Everything you’ve done is safe. Try again in a little while.",
+ "@gatePauseLine": {
+  "description": "Under the pause screen's title. The server can put its own words in its place (app.gate.message.pause)."
+ },
+ "gatePauseTrying": "Trying again…",
+ "@gatePauseTrying": {
+  "description": "The pause screen's button while it asks the server again."
+ },
+ "gatePauseStill": "Still on a break. Try again in a few minutes.",
+ "@gatePauseStill": {
+  "description": "Under the pause screen's button, when asking again found the app still paused."
  }
 }

@@ -793,5 +793,15 @@
   "whereYouLive": "당신이 사는 곳",
   "whereYouLiveLine": "먼저 당신의 도시, 그다음 지역, 그리고 나라",
   "whereYouLiveAsk": "당신의 도시, 지역, 나라에 관한 카드: 하루에 많아야 한 장, 그리고 이 선반. 도시만 저장하고, 당신이 정확히 어디 있는지는 절대 저장하지 않아요.",
-  "whereYouLiveSwitchOn": "켜기"
+  "whereYouLiveSwitchOn": "켜기",
+  "gateUpdateTitle": "Astute 업데이트",
+  "gateUpdateLine": "이 버전은 더 이상 사용할 수 없어요. {store, select, apple{새 버전이 App Store에서 기다리고 있어요} google{새 버전이 Google Play에서 기다리고 있어요} other{새 버전이 스토어에서 기다리고 있어요}}. 카드와 연속 기록은 그대로 이어져요.",
+  "gateUpdateButton": "업데이트",
+  "gateSoftTitle": "Astute 새 버전이 나왔어요",
+  "gateSoftLine": "{store, select, apple{App Store에서 기다리고 있어요.} google{Google Play에서 기다리고 있어요.} other{스토어에서 기다리고 있어요.}} 업데이트는 금방 끝나고, 카드와 연속 기록은 그대로예요.",
+  "gateSoftLater": "나중에",
+  "gatePauseTitle": "Astute가 잠시 쉬고 있어요",
+  "gatePauseLine": "보이지 않는 곳에서 문제를 고치고 있어요. 지금까지 한 것은 모두 안전해요. 잠시 후 다시 시도해 주세요.",
+  "gatePauseTrying": "다시 시도하는 중…",
+  "gatePauseStill": "아직 쉬는 중이에요. 몇 분 뒤에 다시 시도해 주세요."
 }

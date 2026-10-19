@@ -3177,4 +3177,49 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'オンにする';
+
+  @override
+  String get gateUpdateTitle => 'Astute をアップデート';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '新しいバージョンが App Store で待っています',
+      'google': '新しいバージョンが Google Play で待っています',
+      'other': '新しいバージョンがストアで待っています',
+    });
+    return 'このバージョンはこれ以上使えません。$_temp0。カードも連続記録も、そのまま引き継がれます。';
+  }
+
+  @override
+  String get gateUpdateButton => 'アップデート';
+
+  @override
+  String get gateSoftTitle => 'Astute の新しいバージョンができました';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store で待っています。',
+      'google': 'Google Play で待っています。',
+      'other': 'ストアで待っています。',
+    });
+    return '$_temp0アップデートはすぐに終わり、カードも連続記録もそのままです。';
+  }
+
+  @override
+  String get gateSoftLater => 'あとで';
+
+  @override
+  String get gatePauseTitle => 'Astute は少しだけ休憩中です';
+
+  @override
+  String get gatePauseLine =>
+      '裏側で不具合を直しています。これまでの記録はすべて無事です。少し時間をおいてから、もう一度お試しください。';
+
+  @override
+  String get gatePauseTrying => 'もう一度試しています…';
+
+  @override
+  String get gatePauseStill => 'まだ休憩中です。数分後にもう一度お試しください。';
 }

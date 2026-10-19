@@ -3195,4 +3195,49 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '켜기';
+
+  @override
+  String get gateUpdateTitle => 'Astute 업데이트';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '새 버전이 App Store에서 기다리고 있어요',
+      'google': '새 버전이 Google Play에서 기다리고 있어요',
+      'other': '새 버전이 스토어에서 기다리고 있어요',
+    });
+    return '이 버전은 더 이상 사용할 수 없어요. $_temp0. 카드와 연속 기록은 그대로 이어져요.';
+  }
+
+  @override
+  String get gateUpdateButton => '업데이트';
+
+  @override
+  String get gateSoftTitle => 'Astute 새 버전이 나왔어요';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store에서 기다리고 있어요.',
+      'google': 'Google Play에서 기다리고 있어요.',
+      'other': '스토어에서 기다리고 있어요.',
+    });
+    return '$_temp0 업데이트는 금방 끝나고, 카드와 연속 기록은 그대로예요.';
+  }
+
+  @override
+  String get gateSoftLater => '나중에';
+
+  @override
+  String get gatePauseTitle => 'Astute가 잠시 쉬고 있어요';
+
+  @override
+  String get gatePauseLine =>
+      '보이지 않는 곳에서 문제를 고치고 있어요. 지금까지 한 것은 모두 안전해요. 잠시 후 다시 시도해 주세요.';
+
+  @override
+  String get gatePauseTrying => '다시 시도하는 중…';
+
+  @override
+  String get gatePauseStill => '아직 쉬는 중이에요. 몇 분 뒤에 다시 시도해 주세요.';
 }

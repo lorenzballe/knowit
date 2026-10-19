@@ -40,6 +40,7 @@ jobs:
           python3 tool/site/chrome.py --check
           python3 tool/remote/check.py
           python3 tool/remote/bundle.py --check
+          python3 tool/remote/gen_strings.py --check
           python3 -m unittest discover -s tool/remote -p "test_*.py"
 
       - run: flutter test

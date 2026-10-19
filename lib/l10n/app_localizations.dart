@@ -4883,6 +4883,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch it on'**
   String get whereYouLiveSwitchOn;
+
+  /// The title of the full screen that asks the reader to update, shown when the server says this build can no longer be used (app.gate: minBuild or blocked). Nothing of the app is behind it.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Astute'**
+  String get gateUpdateTitle;
+
+  /// Under the update screen's title. {store} is apple on an iPhone, google on Android, other elsewhere: where the new version is. The server can put its own words in its place (app.gate.message.hard).
+  ///
+  /// In en, this message translates to:
+  /// **'This version can’t carry on. {store, select, apple{The new one is waiting in the App Store} google{The new one is waiting on Google Play} other{The new one is waiting in your app store}}, with your cards and your streak just as you left them.'**
+  String gateUpdateLine(String store);
+
+  /// The update screen's button, and the update sheet's: opens Astute's page in the store.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get gateUpdateButton;
+
+  /// The title of the sheet that says a newer version is out, once for each build the server suggests (app.gate.suggestBuild).
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of Astute is ready'**
+  String get gateSoftTitle;
+
+  /// Under the update sheet's title. {store} is apple on an iPhone, google on Android, other elsewhere. The server can put its own words in its place (app.gate.message.soft).
+  ///
+  /// In en, this message translates to:
+  /// **'{store, select, apple{It’s waiting in the App Store.} google{It’s waiting on Google Play.} other{It’s waiting in your app store.}} Updating takes a moment, and your cards and your streak stay just as they are.'**
+  String gateSoftLine(String store);
+
+  /// The update sheet's second answer: closes it, and it does not come back for this build.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get gateSoftLater;
+
+  /// The title of the full screen shown while the server pauses the app, for an emergency such as a backend that is down (app.gate.pause).
+  ///
+  /// In en, this message translates to:
+  /// **'Astute is taking a short break'**
+  String get gatePauseTitle;
+
+  /// Under the pause screen's title. The server can put its own words in its place (app.gate.message.pause).
+  ///
+  /// In en, this message translates to:
+  /// **'We’re putting something right behind the scenes. Everything you’ve done is safe. Try again in a little while.'**
+  String get gatePauseLine;
+
+  /// The pause screen's button while it asks the server again.
+  ///
+  /// In en, this message translates to:
+  /// **'Trying again…'**
+  String get gatePauseTrying;
+
+  /// Under the pause screen's button, when asking again found the app still paused.
+  ///
+  /// In en, this message translates to:
+  /// **'Still on a break. Try again in a few minutes.'**
+  String get gatePauseStill;
 }
 
 class _AppLocalizationsDelegate

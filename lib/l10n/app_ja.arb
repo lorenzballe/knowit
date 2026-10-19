@@ -793,5 +793,15 @@
   "whereYouLive": "あなたの住む場所",
   "whereYouLiveLine": "まずあなたの街、次に地域、それから国",
   "whereYouLiveAsk": "あなたの街、地域、国についてのカード。多くても1日1枚、そしてこの棚。保存するのは街だけで、あなたが正確にどこにいるかは決して保存しません。",
-  "whereYouLiveSwitchOn": "オンにする"
+  "whereYouLiveSwitchOn": "オンにする",
+  "gateUpdateTitle": "Astute をアップデート",
+  "gateUpdateLine": "このバージョンはこれ以上使えません。{store, select, apple{新しいバージョンが App Store で待っています} google{新しいバージョンが Google Play で待っています} other{新しいバージョンがストアで待っています}}。カードも連続記録も、そのまま引き継がれます。",
+  "gateUpdateButton": "アップデート",
+  "gateSoftTitle": "Astute の新しいバージョンができました",
+  "gateSoftLine": "{store, select, apple{App Store で待っています。} google{Google Play で待っています。} other{ストアで待っています。}}アップデートはすぐに終わり、カードも連続記録もそのままです。",
+  "gateSoftLater": "あとで",
+  "gatePauseTitle": "Astute は少しだけ休憩中です",
+  "gatePauseLine": "裏側で不具合を直しています。これまでの記録はすべて無事です。少し時間をおいてから、もう一度お試しください。",
+  "gatePauseTrying": "もう一度試しています…",
+  "gatePauseStill": "まだ休憩中です。数分後にもう一度お試しください。"
 }

@@ -793,5 +793,15 @@
   "whereYouLive": "Yaşadığın yer",
   "whereYouLiveLine": "Önce şehrin, sonra bölgen, sonra ülken",
   "whereYouLiveAsk": "Şehrin, bölgen ve ülken hakkında kartlar: günde en fazla bir tane, bir de bu raf. Yalnızca şehir saklanır, tam olarak nerede olduğun asla.",
-  "whereYouLiveSwitchOn": "Aç"
+  "whereYouLiveSwitchOn": "Aç",
+  "gateUpdateTitle": "Astute’u güncelle",
+  "gateUpdateLine": "Bu sürümle artık devam edilemiyor. {store, select, apple{Yenisi App Store’da seni bekliyor} google{Yenisi Google Play’de seni bekliyor} other{Yenisi uygulama mağazanda seni bekliyor}}; kartların ve serin bıraktığın gibi duruyor.",
+  "gateUpdateButton": "Güncelle",
+  "gateSoftTitle": "Astute’un yeni sürümü hazır",
+  "gateSoftLine": "{store, select, apple{App Store’da seni bekliyor.} google{Google Play’de seni bekliyor.} other{Uygulama mağazanda seni bekliyor.}} Güncelleme bir an sürer; kartların ve serin olduğu gibi kalır.",
+  "gateSoftLater": "Sonra",
+  "gatePauseTitle": "Astute kısa bir mola veriyor",
+  "gatePauseLine": "Perde arkasında bir şeyi düzeltiyoruz. Yaptığın her şey güvende. Biraz sonra yeniden dene.",
+  "gatePauseTrying": "Yeniden deneniyor…",
+  "gatePauseStill": "Mola sürüyor. Birkaç dakika sonra yeniden dene."
 }

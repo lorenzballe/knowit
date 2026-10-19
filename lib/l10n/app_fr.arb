@@ -793,5 +793,15 @@
   "whereYouLive": "Là où tu vis",
   "whereYouLiveLine": "D'abord ta ville, puis ta région, puis ton pays",
   "whereYouLiveAsk": "Des cartes sur ta ville, ta région et ton pays : une par jour au plus, et cette étagère. Seule la ville est gardée, jamais l'endroit exact où tu es.",
-  "whereYouLiveSwitchOn": "Activer"
+  "whereYouLiveSwitchOn": "Activer",
+  "gateUpdateTitle": "Mets Astute à jour",
+  "gateUpdateLine": "Cette version ne peut plus continuer. {store, select, apple{La nouvelle t’attend sur l’App Store} google{La nouvelle t’attend sur Google Play} other{La nouvelle t’attend dans ta boutique d’applis}}, avec tes cartes et ta série telles que tu les as laissées.",
+  "gateUpdateButton": "Mettre à jour",
+  "gateSoftTitle": "Une nouvelle version d’Astute est prête",
+  "gateSoftLine": "{store, select, apple{Elle t’attend sur l’App Store.} google{Elle t’attend sur Google Play.} other{Elle t’attend dans ta boutique d’applis.}} La mise à jour ne prend qu’un instant, et tes cartes et ta série restent telles quelles.",
+  "gateSoftLater": "Plus tard",
+  "gatePauseTitle": "Astute fait une petite pause",
+  "gatePauseLine": "Nous réglons quelque chose en coulisses. Tout ce que tu as fait est en sécurité. Réessaie d’ici peu.",
+  "gatePauseTrying": "Nouvel essai…",
+  "gatePauseStill": "Toujours en pause. Réessaie dans quelques minutes."
 }

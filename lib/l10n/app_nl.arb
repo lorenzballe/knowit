@@ -793,5 +793,15 @@
   "whereYouLive": "Waar je woont",
   "whereYouLiveLine": "Eerst je stad, dan je regio, dan je land",
   "whereYouLiveAsk": "Kaarten over je stad, je regio en je land: hooguit één per dag, en deze plank. Alleen de stad wordt bewaard, nooit waar je precies bent.",
-  "whereYouLiveSwitchOn": "Aanzetten"
+  "whereYouLiveSwitchOn": "Aanzetten",
+  "gateUpdateTitle": "Werk Astute bij",
+  "gateUpdateLine": "Met deze versie kun je niet verder. {store, select, apple{De nieuwe staat klaar in de App Store} google{De nieuwe staat klaar in Google Play} other{De nieuwe staat klaar in je appwinkel}}, met je kaarten en je reeks precies zoals je ze achterliet.",
+  "gateUpdateButton": "Bijwerken",
+  "gateSoftTitle": "Er is een nieuwe versie van Astute",
+  "gateSoftLine": "{store, select, apple{Ze staat klaar in de App Store.} google{Ze staat klaar in Google Play.} other{Ze staat klaar in je appwinkel.}} Bijwerken duurt maar even, en je kaarten en je reeks blijven zoals ze zijn.",
+  "gateSoftLater": "Later",
+  "gatePauseTitle": "Astute neemt even pauze",
+  "gatePauseLine": "We zetten achter de schermen iets recht. Alles wat je hebt gedaan, is veilig. Probeer het zo nog eens.",
+  "gatePauseTrying": "Opnieuw proberen…",
+  "gatePauseStill": "Nog steeds pauze. Probeer het over een paar minuten nog eens."
 }

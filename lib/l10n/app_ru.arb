@@ -793,5 +793,15 @@
   "whereYouLive": "Там, где ты живёшь",
   "whereYouLiveLine": "Сначала твой город, потом регион, потом страна",
   "whereYouLiveAsk": "Карточки о твоём городе, регионе и стране: не больше одной в день, и эта полка. Хранится только город, никогда — где именно ты находишься.",
-  "whereYouLiveSwitchOn": "Включить"
+  "whereYouLiveSwitchOn": "Включить",
+  "gateUpdateTitle": "Обнови Astute",
+  "gateUpdateLine": "Этой версией больше нельзя пользоваться. {store, select, apple{Новая уже ждёт в App Store} google{Новая уже ждёт в Google Play} other{Новая уже ждёт в магазине приложений}}, а карточки и серия останутся как были.",
+  "gateUpdateButton": "Обновить",
+  "gateSoftTitle": "Вышла новая версия Astute",
+  "gateSoftLine": "{store, select, apple{Она уже ждёт в App Store.} google{Она уже ждёт в Google Play.} other{Она уже ждёт в магазине приложений.}} Обновление пройдёт быстро, а карточки и серия останутся как есть.",
+  "gateSoftLater": "Позже",
+  "gatePauseTitle": "Astute ненадолго на перерыве",
+  "gatePauseLine": "Мы кое-что чиним за кулисами. Весь твой прогресс сохранён. Попробуй ещё раз чуть позже.",
+  "gatePauseTrying": "Пробуем снова…",
+  "gatePauseStill": "Перерыв ещё не закончился. Попробуй снова через несколько минут."
 }

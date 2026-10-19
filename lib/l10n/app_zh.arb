@@ -793,5 +793,15 @@
   "whereYouLive": "你住的地方",
   "whereYouLiveLine": "先是你的城市，然后是地区，再是国家",
   "whereYouLiveAsk": "关于你的城市、地区和国家的卡片：每天最多一张，还有这个书架。只保存城市，从不保存你的确切位置。",
-  "whereYouLiveSwitchOn": "开启"
+  "whereYouLiveSwitchOn": "开启",
+  "gateUpdateTitle": "更新 Astute",
+  "gateUpdateLine": "这个版本已经无法继续使用。{store, select, apple{新版本正在 App Store 等你} google{新版本正在 Google Play 等你} other{新版本正在应用商店等你}}，你的卡片和连续记录都会原样保留。",
+  "gateUpdateButton": "更新",
+  "gateSoftTitle": "Astute 新版本已就绪",
+  "gateSoftLine": "{store, select, apple{它正在 App Store 等你。} google{它正在 Google Play 等你。} other{它正在应用商店等你。}}更新只需片刻，你的卡片和连续记录都不会变。",
+  "gateSoftLater": "稍后",
+  "gatePauseTitle": "Astute 正在短暂休息",
+  "gatePauseLine": "我们正在幕后修好一些东西。你做过的一切都安然无恙。请稍后再试。",
+  "gatePauseTrying": "正在重试…",
+  "gatePauseStill": "仍在休息中。请过几分钟再试。"
 }

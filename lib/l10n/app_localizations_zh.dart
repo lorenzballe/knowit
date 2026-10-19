@@ -3185,4 +3185,48 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '开启';
+
+  @override
+  String get gateUpdateTitle => '更新 Astute';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '新版本正在 App Store 等你',
+      'google': '新版本正在 Google Play 等你',
+      'other': '新版本正在应用商店等你',
+    });
+    return '这个版本已经无法继续使用。$_temp0，你的卡片和连续记录都会原样保留。';
+  }
+
+  @override
+  String get gateUpdateButton => '更新';
+
+  @override
+  String get gateSoftTitle => 'Astute 新版本已就绪';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '它正在 App Store 等你。',
+      'google': '它正在 Google Play 等你。',
+      'other': '它正在应用商店等你。',
+    });
+    return '$_temp0更新只需片刻，你的卡片和连续记录都不会变。';
+  }
+
+  @override
+  String get gateSoftLater => '稍后';
+
+  @override
+  String get gatePauseTitle => 'Astute 正在短暂休息';
+
+  @override
+  String get gatePauseLine => '我们正在幕后修好一些东西。你做过的一切都安然无恙。请稍后再试。';
+
+  @override
+  String get gatePauseTrying => '正在重试…';
+
+  @override
+  String get gatePauseStill => '仍在休息中。请过几分钟再试。';
 }

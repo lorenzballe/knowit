@@ -3322,4 +3322,50 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Einschalten';
+
+  @override
+  String get gateUpdateTitle => 'Astute aktualisieren';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Die neue wartet im App Store',
+      'google': 'Die neue wartet bei Google Play',
+      'other': 'Die neue wartet in deinem App-Store',
+    });
+    return 'Mit dieser Version geht es nicht weiter. $_temp0, und deine Karten und deine Serie kommen mit.';
+  }
+
+  @override
+  String get gateUpdateButton => 'Aktualisieren';
+
+  @override
+  String get gateSoftTitle => 'Eine neue Version von Astute ist da';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Sie wartet im App Store.',
+      'google': 'Sie wartet bei Google Play.',
+      'other': 'Sie wartet in deinem App-Store.',
+    });
+    return '$_temp0 Das Update dauert nur einen Moment, und deine Karten und deine Serie bleiben, wie sie sind.';
+  }
+
+  @override
+  String get gateSoftLater => 'Später';
+
+  @override
+  String get gatePauseTitle => 'Astute macht eine kurze Pause';
+
+  @override
+  String get gatePauseLine =>
+      'Wir bringen hinter den Kulissen etwas in Ordnung. Alles, was du gemacht hast, ist sicher. Versuch es gleich noch einmal.';
+
+  @override
+  String get gatePauseTrying => 'Neuer Versuch…';
+
+  @override
+  String get gatePauseStill =>
+      'Immer noch Pause. Versuch es in ein paar Minuten noch einmal.';
 }

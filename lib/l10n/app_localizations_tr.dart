@@ -3271,4 +3271,50 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Aç';
+
+  @override
+  String get gateUpdateTitle => 'Astute’u güncelle';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Yenisi App Store’da seni bekliyor',
+      'google': 'Yenisi Google Play’de seni bekliyor',
+      'other': 'Yenisi uygulama mağazanda seni bekliyor',
+    });
+    return 'Bu sürümle artık devam edilemiyor. $_temp0; kartların ve serin bıraktığın gibi duruyor.';
+  }
+
+  @override
+  String get gateUpdateButton => 'Güncelle';
+
+  @override
+  String get gateSoftTitle => 'Astute’un yeni sürümü hazır';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store’da seni bekliyor.',
+      'google': 'Google Play’de seni bekliyor.',
+      'other': 'Uygulama mağazanda seni bekliyor.',
+    });
+    return '$_temp0 Güncelleme bir an sürer; kartların ve serin olduğu gibi kalır.';
+  }
+
+  @override
+  String get gateSoftLater => 'Sonra';
+
+  @override
+  String get gatePauseTitle => 'Astute kısa bir mola veriyor';
+
+  @override
+  String get gatePauseLine =>
+      'Perde arkasında bir şeyi düzeltiyoruz. Yaptığın her şey güvende. Biraz sonra yeniden dene.';
+
+  @override
+  String get gatePauseTrying => 'Yeniden deneniyor…';
+
+  @override
+  String get gatePauseStill =>
+      'Mola sürüyor. Birkaç dakika sonra yeniden dene.';
 }

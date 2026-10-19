@@ -18,7 +18,7 @@ import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
 import '../data/topics.dart';
-import '../l10n/app_localizations.dart';
+import '../l10n/l10n.dart';
 import '../measure/card_read.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
@@ -2777,11 +2777,16 @@ class AppState extends ChangeNotifier {
       raw == null ? null : DateTime.tryParse(raw)?.toLocal();
 
   /// The strings, in the phone's language, for what is said with no screen
-  /// to say it on.
-  AppLocalizations get _strings => lookupAppLocalizations(
-    basicLocaleListResolution(
-      PlatformDispatcher.instance.locales,
-      AppLocalizations.supportedLocales,
+  /// to say it on — the reminders, the trial's warning, the widgets — with
+  /// the server's words in place of the build's wherever the remote
+  /// document has some, as on every screen. They reach a reminder when it
+  /// is armed again: at every launch and every return to the app.
+  AppLocalizations get _strings => withRemoteWords(
+    lookupAppLocalizations(
+      basicLocaleListResolution(
+        PlatformDispatcher.instance.locales,
+        AppLocalizations.supportedLocales,
+      ),
     ),
   );
 

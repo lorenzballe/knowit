@@ -793,5 +793,15 @@
   "whereYouLive": "Dove vivi",
   "whereYouLiveLine": "Prima la tua città, poi la regione, poi il paese",
   "whereYouLiveAsk": "Carte sulla tua città, la tua regione e il tuo paese: al massimo una al giorno, e questo scaffale. Si tiene solo la città, mai dove sei di preciso.",
-  "whereYouLiveSwitchOn": "Attiva"
+  "whereYouLiveSwitchOn": "Attiva",
+  "gateUpdateTitle": "Aggiorna Astute",
+  "gateUpdateLine": "Questa versione non può più andare avanti. {store, select, apple{La nuova ti aspetta nell’App Store} google{La nuova ti aspetta su Google Play} other{La nuova ti aspetta nel tuo store}}, con le tue carte e la tua serie così come le hai lasciate.",
+  "gateUpdateButton": "Aggiorna",
+  "gateSoftTitle": "È pronta una nuova versione di Astute",
+  "gateSoftLine": "{store, select, apple{Ti aspetta nell’App Store.} google{Ti aspetta su Google Play.} other{Ti aspetta nel tuo store.}} Aggiornare richiede un attimo, e le tue carte e la tua serie restano come sono.",
+  "gateSoftLater": "Più tardi",
+  "gatePauseTitle": "Astute si prende una breve pausa",
+  "gatePauseLine": "Stiamo sistemando una cosa dietro le quinte. Tutto quello che hai fatto è al sicuro. Riprova tra poco.",
+  "gatePauseTrying": "Riprovo…",
+  "gatePauseStill": "Ancora in pausa. Riprova tra qualche minuto."
 }

@@ -3332,4 +3332,50 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Ativar';
+
+  @override
+  String get gateUpdateTitle => 'Atualiza o Astute';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'A nova está à tua espera na App Store',
+      'google': 'A nova está à tua espera no Google Play',
+      'other': 'A nova está à tua espera na tua loja de aplicações',
+    });
+    return 'Esta versão já não pode continuar. $_temp0, com as tuas cartas e a tua sequência tal como as deixaste.';
+  }
+
+  @override
+  String get gateUpdateButton => 'Atualizar';
+
+  @override
+  String get gateSoftTitle => 'Há uma nova versão do Astute';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Está à tua espera na App Store.',
+      'google': 'Está à tua espera no Google Play.',
+      'other': 'Está à tua espera na tua loja de aplicações.',
+    });
+    return '$_temp0 Atualizar demora um instante, e as tuas cartas e a tua sequência ficam como estão.';
+  }
+
+  @override
+  String get gateSoftLater => 'Mais tarde';
+
+  @override
+  String get gatePauseTitle => 'O Astute está a fazer uma pequena pausa';
+
+  @override
+  String get gatePauseLine =>
+      'Estamos a corrigir uma coisa nos bastidores. Tudo o que fizeste está seguro. Tenta outra vez daqui a pouco.';
+
+  @override
+  String get gatePauseTrying => 'A tentar outra vez…';
+
+  @override
+  String get gatePauseStill =>
+      'Ainda em pausa. Tenta outra vez daqui a uns minutos.';
 }

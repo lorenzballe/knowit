@@ -3454,4 +3454,50 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Включить';
+
+  @override
+  String get gateUpdateTitle => 'Обнови Astute';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Новая уже ждёт в App Store',
+      'google': 'Новая уже ждёт в Google Play',
+      'other': 'Новая уже ждёт в магазине приложений',
+    });
+    return 'Этой версией больше нельзя пользоваться. $_temp0, а карточки и серия останутся как были.';
+  }
+
+  @override
+  String get gateUpdateButton => 'Обновить';
+
+  @override
+  String get gateSoftTitle => 'Вышла новая версия Astute';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Она уже ждёт в App Store.',
+      'google': 'Она уже ждёт в Google Play.',
+      'other': 'Она уже ждёт в магазине приложений.',
+    });
+    return '$_temp0 Обновление пройдёт быстро, а карточки и серия останутся как есть.';
+  }
+
+  @override
+  String get gateSoftLater => 'Позже';
+
+  @override
+  String get gatePauseTitle => 'Astute ненадолго на перерыве';
+
+  @override
+  String get gatePauseLine =>
+      'Мы кое-что чиним за кулисами. Весь твой прогресс сохранён. Попробуй ещё раз чуть позже.';
+
+  @override
+  String get gatePauseTrying => 'Пробуем снова…';
+
+  @override
+  String get gatePauseStill =>
+      'Перерыв ещё не закончился. Попробуй снова через несколько минут.';
 }
