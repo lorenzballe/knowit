@@ -3192,192 +3192,179 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get screensExpertTitle => 'Think like an expert';
+  String get screensExpertTitle => '像专家一样思考';
 
   @override
-  String get screensExpertLine =>
-      'The question each of them always asks, and the cards that need it';
+  String get screensExpertLine => '他们每个人总会问的问题，以及需要这个问题的卡片';
 
   @override
-  String get screensExpertStatistician => 'Statistician';
+  String get screensExpertStatistician => '统计学家';
 
   @override
-  String get screensExpertStatisticianAs => 'Think like a statistician';
+  String get screensExpertStatisticianAs => '像统计学家一样思考';
 
   @override
-  String get screensExpertStatisticianAsks =>
-      'Compared to what, and out of how many?';
+  String get screensExpertStatisticianAsks => '和什么比？总数是多少？';
 
   @override
-  String get screensExpertEconomist => 'Economist';
+  String get screensExpertEconomist => '经济学家';
 
   @override
-  String get screensExpertEconomistAs => 'Think like an economist';
+  String get screensExpertEconomistAs => '像经济学家一样思考';
 
   @override
-  String get screensExpertEconomistAsks =>
-      'Who pays, and what do they give up?';
+  String get screensExpertEconomistAsks => '谁来付钱？又放弃了什么？';
 
   @override
-  String get screensExpertHistorian => 'Historian';
+  String get screensExpertHistorian => '历史学家';
 
   @override
-  String get screensExpertHistorianAs => 'Think like a historian';
+  String get screensExpertHistorianAs => '像历史学家一样思考';
 
   @override
-  String get screensExpertHistorianAsks => 'What did people know at the time?';
+  String get screensExpertHistorianAsks => '当时的人知道些什么？';
 
   @override
-  String get screensExpertDoctor => 'Doctor';
+  String get screensExpertDoctor => '医生';
 
   @override
-  String get screensExpertDoctorAs => 'Think like a doctor';
+  String get screensExpertDoctorAs => '像医生一样思考';
 
   @override
-  String get screensExpertDoctorAsks =>
-      'How common is it, and what else could it be?';
+  String get screensExpertDoctorAsks => '这有多常见？还可能是别的什么？';
 
   @override
-  String get screensExpertScientist => 'Scientist';
+  String get screensExpertScientist => '科学家';
 
   @override
-  String get screensExpertScientistAs => 'Think like a scientist';
+  String get screensExpertScientistAs => '像科学家一样思考';
 
   @override
-  String get screensExpertScientistAsks =>
-      'How would we know if it were wrong?';
+  String get screensExpertScientistAsks => '如果它是错的，我们怎么会知道？';
 
   @override
-  String get screensDotsTitle => 'Connect the dots';
+  String get screensDotsTitle => '连点成线';
 
   @override
-  String get screensDotsLine =>
-      'Pick a subject to see where it meets the others';
+  String get screensDotsLine => '选一个主题，看看它在哪里与其他主题交汇';
 
   @override
   String screensDotsMeets(int subjects, int cards) {
     String _temp0 = intl.Intl.pluralLogic(
       subjects,
       locale: localeName,
-      other: 'Meets $subjects subjects',
-      one: 'Meets 1 subject',
+      other: '与 $subjects 个主题',
     );
     String _temp1 = intl.Intl.pluralLogic(
       cards,
       locale: localeName,
-      other: 'in $cards cards',
-      one: 'in 1 card',
+      other: '在 $cards 张卡片中交汇',
     );
-    return '$_temp0 $_temp1';
+    return '$_temp0$_temp1';
   }
 
   @override
-  String get screensDotsWhere => 'Where they meet';
+  String get screensDotsWhere => '交汇之处';
 
   @override
-  String get screensDotsWhereLine => 'One question, two ways of looking at it';
+  String get screensDotsWhereLine => '一个问题，两种视角';
 
   @override
-  String get screensAskTitle => 'What do you want to understand?';
+  String get screensAskTitle => '你想弄懂什么？';
 
   @override
-  String get screensAskHint => 'Ask anything, or type a word';
+  String get screensAskHint => '问任何问题，或输入一个词';
 
   @override
-  String get screensAskTry => 'Try';
+  String get screensAskTry => '试试';
 
   @override
-  String get screensAskClear => 'Clear the question';
+  String get screensAskClear => '清除问题';
 
   @override
   String screensAskFound(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cards answer it',
-      one: '1 card answers it',
+      other: '$n 张卡片能回答',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensAskNone => 'No card on that yet';
+  String get screensAskNone => '还没有关于这个的卡片';
 
   @override
-  String get screensAskNoneLine =>
-      'Keep the question. When a card answers it, it will be here, under the question.';
+  String get screensAskNoneLine => '把问题留着。等有卡片回答它，它会出现在这里，就在问题下方。';
 
   @override
-  String get screensAskKeep => 'Keep the question';
+  String get screensAskKeep => '留下这个问题';
 
   @override
-  String get screensAskKept => 'Kept';
+  String get screensAskKept => '已留下';
 
   @override
-  String get screensAskedTitle => 'Questions you asked';
+  String get screensAskedTitle => '你问过的问题';
 
   @override
-  String get screensAskedLine => 'And the cards that answered them';
+  String get screensAskedLine => '以及回答了它们的卡片';
 
   @override
-  String get screensAskedAnswered => 'Answered';
+  String get screensAskedAnswered => '已回答';
 
   @override
-  String get screensAskedWaiting =>
-      'No card answers it yet. When one does, it will be here.';
+  String get screensAskedWaiting => '还没有卡片回答它。等有了，就会出现在这里。';
 
   @override
-  String get screensAskedForget => 'Forget this question';
+  String get screensAskedForget => '忘掉这个问题';
 
   @override
-  String get screensAskedForgotten => 'Question forgotten';
+  String get screensAskedForgotten => '问题已忘掉';
 
   @override
-  String get screensWhyTitle => 'Keep asking why';
+  String get screensWhyTitle => '一直问为什么';
 
   @override
-  String get screensWhyLine => 'Every answer raises the next question';
+  String get screensWhyLine => '每个答案都引出下一个问题';
 
   @override
-  String get screensWhyAsk => 'Why?';
+  String get screensWhyAsk => '为什么？';
 
   @override
   String screensWhyBottom(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n whys deep.',
-      one: '1 why deep.',
+      other: '已经问了 $n 个为什么。',
     );
-    return '$_temp0 That\'s the bottom of this one.';
+    return '$_temp0这一串到底了。';
   }
 
   @override
-  String get screensWhyAgain => 'Start again';
+  String get screensWhyAgain => '从头开始';
 
   @override
-  String get screensWhyHoles => 'More rabbit holes';
+  String get screensWhyHoles => '更多兔子洞';
 
   @override
-  String get screensWhyHolesLine => 'Each one goes a few whys deep';
+  String get screensWhyHolesLine => '每一个都要问上几个为什么';
 
   @override
   String screensWhyCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n whys',
-      one: '1 why',
+      other: '$n 个为什么',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensWhyDeeper => 'Go deeper';
+  String get screensWhyDeeper => '再深入一点';
 
   @override
   String screensWhySource(String source) {
-    return 'Source: $source';
+    return '来源：$source';
   }
 
   @override
@@ -3385,101 +3372,97 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       at,
       locale: localeName,
-      other: '$at whys',
-      one: '1 why',
+      other: '第 $at 个为什么，共 $of 个',
     );
-    return '$_temp0 of $of';
+    return '$_temp0';
   }
 
   @override
-  String get screensTimeTitle => 'Through time';
+  String get screensTimeTitle => '穿越时间';
 
   @override
-  String get screensTimeLine =>
-      'One age at a time, to this year. Drag to travel';
+  String get screensTimeLine => '一次一个时代，直到今年。拖动来穿越';
 
   @override
-  String get screensTimeCaption =>
-      'Years ago. Each tick is ten times further back.';
+  String get screensTimeCaption => '距今年数。每一格都再往前推十倍。';
 
   @override
-  String get screensTimeNow => 'Now';
+  String get screensTimeNow => '现在';
 
   @override
-  String get screensTimeEarlier => 'Further back';
+  String get screensTimeEarlier => '更早';
 
   @override
-  String get screensTimeLater => 'Closer to now';
+  String get screensTimeLater => '更近';
 
   @override
-  String get screensEraAncient => 'The ancient world';
+  String get screensEraAncient => '古代世界';
 
   @override
-  String get screensEraAncientWhen => 'Before 500';
+  String get screensEraAncientWhen => '公元500年以前';
 
   @override
-  String get screensEraMedieval => 'The Middle Ages';
+  String get screensEraMedieval => '中世纪';
 
   @override
-  String get screensEraMedievalWhen => '500 to 1500';
+  String get screensEraMedievalWhen => '500年至1500年';
 
   @override
-  String get screensEraEarlyModern => 'The early modern age';
+  String get screensEraEarlyModern => '近代早期';
 
   @override
-  String get screensEraEarlyModernWhen => '1500 to 1800';
+  String get screensEraEarlyModernWhen => '1500年至1800年';
 
   @override
-  String get screensEraNineteenth => 'The nineteenth century';
+  String get screensEraNineteenth => '19世纪';
 
   @override
-  String get screensEraNineteenthWhen => '1800 to 1900';
+  String get screensEraNineteenthWhen => '1800年至1900年';
 
   @override
-  String get screensEraTwentieth => 'The last century';
+  String get screensEraTwentieth => '上个世纪';
 
   @override
-  String get screensEraTwentiethWhen => '1900 to 2000';
+  String get screensEraTwentiethWhen => '1900年至2000年';
 
   @override
-  String get screensEraRecent => 'This century';
+  String get screensEraRecent => '本世纪';
 
   @override
-  String get screensEraRecentWhen => 'Since 2000';
+  String get screensEraRecentWhen => '2000年以来';
 
   @override
-  String get screensMindTitle => 'Change your mind';
+  String get screensMindTitle => '改变想法';
 
   @override
-  String get screensMindLine =>
-      'Say where you stand before you read, then again after';
+  String get screensMindLine => '读之前说说你的立场，读完再说一次';
 
   @override
-  String get screensMindClaim => 'Claim';
+  String get screensMindClaim => '观点';
 
   @override
-  String get screensMindBefore => 'Before you read';
+  String get screensMindBefore => '读之前';
 
   @override
-  String get screensMindTap => 'Tap where you stand';
+  String get screensMindTap => '点选你的立场';
 
   @override
-  String get screensMindKnow => 'What we know';
+  String get screensMindKnow => '我们知道的';
 
   @override
-  String get screensMindNow => 'And now?';
+  String get screensMindNow => '现在呢？';
 
   @override
-  String get screensMindAgain => 'Tap again';
+  String get screensMindAgain => '再点一次';
 
   @override
   String screensMindLevel(String level) {
     String _temp0 = intl.Intl.selectLogic(level, {
-      '0': 'Strongly disagree',
-      '1': 'Disagree',
-      '2': 'Not sure',
-      '3': 'Agree',
-      'other': 'Strongly agree',
+      '0': '非常不同意',
+      '1': '不同意',
+      '2': '不确定',
+      '3': '同意',
+      'other': '非常同意',
     });
     return '$_temp0';
   }
@@ -3489,91 +3472,84 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'You moved $n steps toward the evidence.',
-      one: 'You moved 1 step toward the evidence.',
+      other: '你向证据靠近了 $n 步。',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensMindSame => 'Same as before. One card is only one card.';
+  String get screensMindSame => '和之前一样。一张卡片终究只是一张卡片。';
 
   @override
-  String get screensMindAlready =>
-      'You were with the evidence before you read it.';
+  String get screensMindAlready => '读之前，你就和证据站在一起了。';
 
   @override
-  String get screensMindAway =>
-      'You moved away from the evidence. Worth a second read.';
+  String get screensMindAway => '你离证据更远了。值得再读一遍。';
 
   @override
-  String get screensMindFirst =>
-      'Say where you stand first. One tap, before you read.';
+  String get screensMindFirst => '先说说你的立场。读之前，点一下就好。';
 
   @override
   String screensMindChanged(int changed, int total) {
-    return 'You changed your mind on $changed of $total.';
+    return '$total 条中有 $changed 条，你改变了想法。';
   }
 
   @override
-  String get screensMindFoot => 'A changed mind is a card that did its job.';
+  String get screensMindFoot => '改变了想法，就说明这张卡片起了作用。';
 
   @override
-  String get screensSayTitle => 'Say it tonight';
+  String get screensSayTitle => '今晚说出来';
 
   @override
-  String get screensSayLine =>
-      'One line to bring to dinner. Tap once you\'ve said it';
+  String get screensSayLine => '带去晚餐的一句话。说过之后点一下';
 
   @override
-  String get screensSayTonight => 'Tonight\'s line';
+  String get screensSayTonight => '今晚这一句';
 
   @override
-  String get screensSaySaid => 'I said it';
+  String get screensSaySaid => '我说了';
 
   @override
-  String get screensSayDone => 'Said it';
+  String get screensSayDone => '已说过';
 
   @override
   String screensSayWeek(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'You said $n lines this week.',
-      one: 'You said 1 line this week.',
-      zero: 'Nothing said yet this week.',
+      other: '这周你说了 $n 句。',
+      zero: '这周还没说过。',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensSayCounts =>
-      'Every line you say also counts toward Top of the week.';
+  String get screensSayCounts => '你说出的每一句，也会计入本周热门。';
 
   @override
   String get screensFrontName => 'The Astute';
 
   @override
-  String get screensFrontEdition => 'Today\'s edition';
+  String get screensFrontEdition => '今日版';
 
   @override
-  String get screensFrontSame => 'The same for everyone';
+  String get screensFrontSame => '人人相同';
 
   @override
-  String get screensFrontLead => 'The lead';
+  String get screensFrontLead => '头条';
 
   @override
-  String get screensFrontNumbers => 'In numbers';
+  String get screensFrontNumbers => '数字看点';
 
   @override
-  String get screensFrontCorrections => 'Corrections';
+  String get screensFrontCorrections => '更正';
 
   @override
-  String get screensFrontPuzzle => 'Puzzle of the day';
+  String get screensFrontPuzzle => '今日谜题';
 
   @override
-  String get screensFrontEnd => 'That\'s today\'s edition';
+  String get screensFrontEnd => '今天这一期就到这里';
 
   @override
-  String get screensFrontTomorrow => 'Tomorrow\'s is out in the morning';
+  String get screensFrontTomorrow => '明天的一期早上发布';
 }

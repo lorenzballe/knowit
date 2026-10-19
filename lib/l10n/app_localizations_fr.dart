@@ -3340,196 +3340,195 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String screensQuoted(String text) {
-    return '“$text”';
+    return '« $text »';
   }
 
   @override
-  String get screensExpertTitle => 'Think like an expert';
+  String get screensExpertTitle => 'Pense comme un expert';
 
   @override
   String get screensExpertLine =>
-      'The question each of them always asks, and the cards that need it';
+      'La question que chacun d\'eux pose toujours, et les cartes qui en ont besoin';
 
   @override
-  String get screensExpertStatistician => 'Statistician';
+  String get screensExpertStatistician => 'Statisticien';
 
   @override
-  String get screensExpertStatisticianAs => 'Think like a statistician';
+  String get screensExpertStatisticianAs => 'Pense comme un statisticien';
 
   @override
   String get screensExpertStatisticianAsks =>
-      'Compared to what, and out of how many?';
+      'Comparé à quoi, et sur combien ?';
 
   @override
-  String get screensExpertEconomist => 'Economist';
+  String get screensExpertEconomist => 'Économiste';
 
   @override
-  String get screensExpertEconomistAs => 'Think like an economist';
+  String get screensExpertEconomistAs => 'Pense comme un économiste';
 
   @override
-  String get screensExpertEconomistAsks =>
-      'Who pays, and what do they give up?';
+  String get screensExpertEconomistAsks => 'Qui paie, et à quoi renonce-t-on ?';
 
   @override
-  String get screensExpertHistorian => 'Historian';
+  String get screensExpertHistorian => 'Historien';
 
   @override
-  String get screensExpertHistorianAs => 'Think like a historian';
+  String get screensExpertHistorianAs => 'Pense comme un historien';
 
   @override
-  String get screensExpertHistorianAsks => 'What did people know at the time?';
+  String get screensExpertHistorianAsks => 'Que savait-on à l\'époque ?';
 
   @override
-  String get screensExpertDoctor => 'Doctor';
+  String get screensExpertDoctor => 'Médecin';
 
   @override
-  String get screensExpertDoctorAs => 'Think like a doctor';
+  String get screensExpertDoctorAs => 'Pense comme un médecin';
 
   @override
   String get screensExpertDoctorAsks =>
-      'How common is it, and what else could it be?';
+      'Est-ce fréquent, et qu\'est-ce que ça pourrait être d\'autre ?';
 
   @override
-  String get screensExpertScientist => 'Scientist';
+  String get screensExpertScientist => 'Scientifique';
 
   @override
-  String get screensExpertScientistAs => 'Think like a scientist';
+  String get screensExpertScientistAs => 'Pense comme un scientifique';
 
   @override
   String get screensExpertScientistAsks =>
-      'How would we know if it were wrong?';
+      'Comment saurait-on que c\'est faux ?';
 
   @override
-  String get screensDotsTitle => 'Connect the dots';
+  String get screensDotsTitle => 'Relie les points';
 
   @override
   String get screensDotsLine =>
-      'Pick a subject to see where it meets the others';
+      'Choisis un sujet pour voir où il croise les autres';
 
   @override
   String screensDotsMeets(int subjects, int cards) {
     String _temp0 = intl.Intl.pluralLogic(
       subjects,
       locale: localeName,
-      other: 'Meets $subjects subjects',
-      one: 'Meets 1 subject',
+      other: 'Croise $subjects sujets',
+      one: 'Croise 1 sujet',
     );
     String _temp1 = intl.Intl.pluralLogic(
       cards,
       locale: localeName,
-      other: 'in $cards cards',
-      one: 'in 1 card',
+      other: 'dans $cards cartes',
+      one: 'dans 1 carte',
     );
     return '$_temp0 $_temp1';
   }
 
   @override
-  String get screensDotsWhere => 'Where they meet';
+  String get screensDotsWhere => 'Là où ils se croisent';
 
   @override
-  String get screensDotsWhereLine => 'One question, two ways of looking at it';
+  String get screensDotsWhereLine => 'Une question, deux façons de la regarder';
 
   @override
-  String get screensAskTitle => 'What do you want to understand?';
+  String get screensAskTitle => 'Qu\'est-ce que tu veux comprendre ?';
 
   @override
-  String get screensAskHint => 'Ask anything, or type a word';
+  String get screensAskHint => 'Demande ce que tu veux, ou tape un mot';
 
   @override
-  String get screensAskTry => 'Try';
+  String get screensAskTry => 'Essaie';
 
   @override
-  String get screensAskClear => 'Clear the question';
+  String get screensAskClear => 'Effacer la question';
 
   @override
   String screensAskFound(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cards answer it',
-      one: '1 card answers it',
+      other: '$n cartes y répondent',
+      one: '1 carte y répond',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensAskNone => 'No card on that yet';
+  String get screensAskNone => 'Pas encore de carte là-dessus';
 
   @override
   String get screensAskNoneLine =>
-      'Keep the question. When a card answers it, it will be here, under the question.';
+      'Garde la question. Quand une carte y répondra, elle sera ici, sous la question.';
 
   @override
-  String get screensAskKeep => 'Keep the question';
+  String get screensAskKeep => 'Garder la question';
 
   @override
-  String get screensAskKept => 'Kept';
+  String get screensAskKept => 'Gardée';
 
   @override
-  String get screensAskedTitle => 'Questions you asked';
+  String get screensAskedTitle => 'Tes questions';
 
   @override
-  String get screensAskedLine => 'And the cards that answered them';
+  String get screensAskedLine => 'Et les cartes qui y ont répondu';
 
   @override
-  String get screensAskedAnswered => 'Answered';
+  String get screensAskedAnswered => 'La réponse';
 
   @override
   String get screensAskedWaiting =>
-      'No card answers it yet. When one does, it will be here.';
+      'Aucune carte n\'y répond encore. Quand une le fera, elle sera ici.';
 
   @override
-  String get screensAskedForget => 'Forget this question';
+  String get screensAskedForget => 'Oublier cette question';
 
   @override
-  String get screensAskedForgotten => 'Question forgotten';
+  String get screensAskedForgotten => 'Question oubliée';
 
   @override
-  String get screensWhyTitle => 'Keep asking why';
+  String get screensWhyTitle => 'Continue à demander pourquoi';
 
   @override
-  String get screensWhyLine => 'Every answer raises the next question';
+  String get screensWhyLine => 'Chaque réponse soulève la question suivante';
 
   @override
-  String get screensWhyAsk => 'Why?';
+  String get screensWhyAsk => 'Pourquoi ?';
 
   @override
   String screensWhyBottom(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n whys deep.',
-      one: '1 why deep.',
+      other: '$n pourquoi de profondeur.',
+      one: '1 pourquoi de profondeur.',
     );
-    return '$_temp0 That\'s the bottom of this one.';
+    return '$_temp0 Impossible de descendre plus bas.';
   }
 
   @override
-  String get screensWhyAgain => 'Start again';
+  String get screensWhyAgain => 'Recommencer';
 
   @override
-  String get screensWhyHoles => 'More rabbit holes';
+  String get screensWhyHoles => 'D\'autres terriers de lapin';
 
   @override
-  String get screensWhyHolesLine => 'Each one goes a few whys deep';
+  String get screensWhyHolesLine => 'Chacun descend de quelques pourquoi';
 
   @override
   String screensWhyCount(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n whys',
-      one: '1 why',
+      other: '$n pourquoi',
+      one: '1 pourquoi',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensWhyDeeper => 'Go deeper';
+  String get screensWhyDeeper => 'Aller plus loin';
 
   @override
   String screensWhySource(String source) {
-    return 'Source: $source';
+    return 'Source : $source';
   }
 
   @override
@@ -3537,101 +3536,101 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       at,
       locale: localeName,
-      other: '$at whys',
-      one: '1 why',
+      other: '$at pourquoi',
+      one: '1 pourquoi',
     );
-    return '$_temp0 of $of';
+    return '$_temp0 sur $of';
   }
 
   @override
-  String get screensTimeTitle => 'Through time';
+  String get screensTimeTitle => 'À travers le temps';
 
   @override
   String get screensTimeLine =>
-      'One age at a time, to this year. Drag to travel';
+      'Une époque à la fois, jusqu\'à cette année. Fais glisser pour voyager';
 
   @override
   String get screensTimeCaption =>
-      'Years ago. Each tick is ten times further back.';
+      'Années avant aujourd\'hui. Chaque trait remonte dix fois plus loin.';
 
   @override
-  String get screensTimeNow => 'Now';
+  String get screensTimeNow => 'Aujourd\'hui';
 
   @override
-  String get screensTimeEarlier => 'Further back';
+  String get screensTimeEarlier => 'Plus loin en arrière';
 
   @override
-  String get screensTimeLater => 'Closer to now';
+  String get screensTimeLater => 'Plus près d\'aujourd\'hui';
 
   @override
-  String get screensEraAncient => 'The ancient world';
+  String get screensEraAncient => 'Le monde antique';
 
   @override
-  String get screensEraAncientWhen => 'Before 500';
+  String get screensEraAncientWhen => 'Avant 500';
 
   @override
-  String get screensEraMedieval => 'The Middle Ages';
+  String get screensEraMedieval => 'Le Moyen Âge';
 
   @override
-  String get screensEraMedievalWhen => '500 to 1500';
+  String get screensEraMedievalWhen => 'De 500 à 1500';
 
   @override
-  String get screensEraEarlyModern => 'The early modern age';
+  String get screensEraEarlyModern => 'Les Temps modernes';
 
   @override
-  String get screensEraEarlyModernWhen => '1500 to 1800';
+  String get screensEraEarlyModernWhen => 'De 1500 à 1800';
 
   @override
-  String get screensEraNineteenth => 'The nineteenth century';
+  String get screensEraNineteenth => 'Le XIXe siècle';
 
   @override
-  String get screensEraNineteenthWhen => '1800 to 1900';
+  String get screensEraNineteenthWhen => 'De 1800 à 1900';
 
   @override
-  String get screensEraTwentieth => 'The last century';
+  String get screensEraTwentieth => 'Le siècle dernier';
 
   @override
-  String get screensEraTwentiethWhen => '1900 to 2000';
+  String get screensEraTwentiethWhen => 'De 1900 à 2000';
 
   @override
-  String get screensEraRecent => 'This century';
+  String get screensEraRecent => 'Ce siècle';
 
   @override
-  String get screensEraRecentWhen => 'Since 2000';
+  String get screensEraRecentWhen => 'Depuis 2000';
 
   @override
-  String get screensMindTitle => 'Change your mind';
+  String get screensMindTitle => 'Change d\'avis';
 
   @override
   String get screensMindLine =>
-      'Say where you stand before you read, then again after';
+      'Dis où tu te situes avant de lire, puis encore après';
 
   @override
-  String get screensMindClaim => 'Claim';
+  String get screensMindClaim => 'Affirmation';
 
   @override
-  String get screensMindBefore => 'Before you read';
+  String get screensMindBefore => 'Avant de lire';
 
   @override
-  String get screensMindTap => 'Tap where you stand';
+  String get screensMindTap => 'Touche là où tu te situes';
 
   @override
-  String get screensMindKnow => 'What we know';
+  String get screensMindKnow => 'Ce qu\'on sait';
 
   @override
-  String get screensMindNow => 'And now?';
+  String get screensMindNow => 'Et maintenant ?';
 
   @override
-  String get screensMindAgain => 'Tap again';
+  String get screensMindAgain => 'Touche encore';
 
   @override
   String screensMindLevel(String level) {
     String _temp0 = intl.Intl.selectLogic(level, {
-      '0': 'Strongly disagree',
-      '1': 'Disagree',
-      '2': 'Not sure',
-      '3': 'Agree',
-      'other': 'Strongly agree',
+      '0': 'Pas du tout d\'accord',
+      '1': 'Pas d\'accord',
+      '2': 'Je ne sais pas',
+      '3': 'D\'accord',
+      'other': 'Tout à fait d\'accord',
     });
     return '$_temp0';
   }
@@ -3641,91 +3640,92 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'You moved $n steps toward the evidence.',
-      one: 'You moved 1 step toward the evidence.',
+      other: '$n crans de plus vers ce que disent les preuves.',
+      one: '1 cran de plus vers ce que disent les preuves.',
     );
     return '$_temp0';
   }
 
   @override
-  String get screensMindSame => 'Same as before. One card is only one card.';
+  String get screensMindSame => 'Comme avant. Une carte n\'est qu\'une carte.';
 
   @override
   String get screensMindAlready =>
-      'You were with the evidence before you read it.';
+      'Tu étais déjà du côté des preuves avant de les lire.';
 
   @override
   String get screensMindAway =>
-      'You moved away from the evidence. Worth a second read.';
+      'Tu t\'éloignes des preuves. Ça vaut une deuxième lecture.';
 
   @override
   String get screensMindFirst =>
-      'Say where you stand first. One tap, before you read.';
+      'Dis d\'abord où tu te situes. Une touche, avant de lire.';
 
   @override
   String screensMindChanged(int changed, int total) {
-    return 'You changed your mind on $changed of $total.';
+    return 'Tu as changé d\'avis $changed fois sur $total.';
   }
 
   @override
-  String get screensMindFoot => 'A changed mind is a card that did its job.';
+  String get screensMindFoot =>
+      'Un avis qui change, c\'est une carte qui a fait son travail.';
 
   @override
-  String get screensSayTitle => 'Say it tonight';
+  String get screensSayTitle => 'Dis-le ce soir';
 
   @override
   String get screensSayLine =>
-      'One line to bring to dinner. Tap once you\'ve said it';
+      'Une phrase à placer au dîner. Touche une fois que tu l\'as dite';
 
   @override
-  String get screensSayTonight => 'Tonight\'s line';
+  String get screensSayTonight => 'La phrase du soir';
 
   @override
-  String get screensSaySaid => 'I said it';
+  String get screensSaySaid => 'Je l\'ai dite';
 
   @override
-  String get screensSayDone => 'Said it';
+  String get screensSayDone => 'Dite';
 
   @override
   String screensSayWeek(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'You said $n lines this week.',
-      one: 'You said 1 line this week.',
-      zero: 'Nothing said yet this week.',
+      other: 'Tu as dit $n phrases cette semaine.',
+      one: 'Tu as dit 1 phrase cette semaine.',
+      zero: 'Rien dit cette semaine pour l\'instant.',
     );
     return '$_temp0';
   }
 
   @override
   String get screensSayCounts =>
-      'Every line you say also counts toward Top of the week.';
+      'Chaque phrase que tu dis compte aussi pour le Top de la semaine.';
 
   @override
   String get screensFrontName => 'The Astute';
 
   @override
-  String get screensFrontEdition => 'Today\'s edition';
+  String get screensFrontEdition => 'Édition du jour';
 
   @override
-  String get screensFrontSame => 'The same for everyone';
+  String get screensFrontSame => 'La même pour tous';
 
   @override
-  String get screensFrontLead => 'The lead';
+  String get screensFrontLead => 'À la une';
 
   @override
-  String get screensFrontNumbers => 'In numbers';
+  String get screensFrontNumbers => 'En chiffres';
 
   @override
-  String get screensFrontCorrections => 'Corrections';
+  String get screensFrontCorrections => 'Rectificatifs';
 
   @override
-  String get screensFrontPuzzle => 'Puzzle of the day';
+  String get screensFrontPuzzle => 'L\'énigme du jour';
 
   @override
-  String get screensFrontEnd => 'That\'s today\'s edition';
+  String get screensFrontEnd => 'C\'était l\'édition du jour';
 
   @override
-  String get screensFrontTomorrow => 'Tomorrow\'s is out in the morning';
+  String get screensFrontTomorrow => 'Celle de demain sort au matin';
 }

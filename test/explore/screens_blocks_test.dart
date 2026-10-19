@@ -1,8 +1,9 @@
 // The whole-screen blocks as a family: every one is in the catalogue under
 // the name the server uses for it and the checker knows it by; every one
 // draws at every size, on the smallest and the largest phone, at night and
-// on paper, at a large text size, without a pixel spilling; and every one
-// with nothing to show is left out, title and all.
+// on paper, at a large text size and in every language the app speaks,
+// without a pixel spilling; and every one with nothing to show is left out,
+// title and all.
 //
 //   flutter test test/explore/screens_blocks_test.dart
 import 'dart:convert';
@@ -11,10 +12,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/data/explore_mix.dart';
 import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/explore/blocks/screens/memory.dart';
+import 'package:astuto/explore/blocks/screens/say_it_tonight.dart';
 import 'package:astuto/explore/blocks/screens_blocks.dart' as screens;
 import 'package:astuto/explore/catalogue.dart';
 import 'package:astuto/explore/explore_block.dart';
+import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 
 import 'fake_host.dart';
@@ -209,6 +214,95 @@ void main() {
         isTrue,
         reason: block.name,
       );
+    }
+  });
+
+  test('every language counts and chooses in its own grammar', () {
+    for (final Locale locale in AppLocalizations.supportedLocales) {
+      final AppLocalizations l = lookupAppLocalizations(locale);
+      final String language = locale.languageCode;
+      expect(l.screensQuoted('Why?'), contains('Why?'), reason: language);
+      expect(l.screensWhySource('Bohren, 2006'), contains('Bohren, 2006'));
+      // One may be a word ("Einmal", "Un perché"); every other count is a
+      // figure, wherever the language puts it.
+      for (final int n in const [1, 2, 3, 5, 11, 21, 22]) {
+        final List<String> said = [
+          l.screensDotsMeets(n, n + 1),
+          l.screensAskFound(n),
+          l.screensWhyBottom(n),
+          l.screensWhyCount(n),
+          l.screensWhyDepth(n, 30),
+          l.screensMindToward(n),
+          l.screensMindChanged(n, 30),
+          l.screensSayWeek(n),
+        ];
+        for (final String line in said) {
+          expect(line.trim(), isNotEmpty, reason: '$language $n');
+          if (n > 1) expect(line, contains('$n'), reason: '$language: $line');
+        }
+        expect(said[0], contains('${n + 1}'), reason: language);
+        expect(said[4], contains('30'), reason: language);
+      }
+      expect(l.screensSayWeek(0), isNot(l.screensSayWeek(1)));
+      expect(
+        {for (int i = 0; i < 5; i++) l.screensMindLevel('$i')},
+        hasLength(5),
+        reason: language,
+      );
+    }
+  });
+
+  testWidgets('every block fits in every language, at its wordiest', (
+    tester,
+  ) async {
+    // The states with the most words: a chain at its bottom, a claim
+    // answered twice and another once, a line said, questions kept.
+    final List<Pill> claims = bankWhere(isTrueOrFalse, most: 3);
+    final List<Pill> lines = bankWhere(makesALine, most: 4);
+    final String today = screensDayKey(DateTime.now());
+    final app = await screensReader({
+      ..._asked,
+      'knowit.explore.screens.whys': jsonEncode({'x/sky': 7}),
+      'knowit.explore.screens.stances': jsonEncode({
+        claims[0].id: {'b': 0, 'a': 4, 'd': today},
+        claims[1].id: {'b': 2, 'd': today},
+      }),
+      'knowit.explore.screens.said': jsonEncode({lines.first.id: today}),
+      'knowit.saidIds': [lines.first.id],
+    });
+    for (final Locale locale in AppLocalizations.supportedLocales) {
+      final String language = locale.languageCode;
+      for (final ExploreBlock block in screens.blocks) {
+        final host = FakeExploreHost(app, language: language);
+        if (block.name == 'change-your-mind') host.cards['x'] = claims;
+        if (block.name == 'say-it-tonight') host.cards['x'] = lines;
+        final bool drew = await pumpBlock(
+          tester,
+          block,
+          screensSection(block.name, _enough(block.name)),
+          host,
+          width: 375,
+          text: 1.3,
+          language: language,
+        );
+        expect(drew, isTrue, reason: '${block.name} in $language');
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '${block.name} $language',
+        );
+        // The wordy states are the ones drawn, not the first ones.
+        final AppLocalizations l = lookupAppLocalizations(locale);
+        final Finder wordiest = switch (block.name) {
+          'keep-asking' => find.byKey(const ValueKey('why-again-sky')),
+          'change-your-mind' => find.text(l.screensMindChanged(1, 1)),
+          'say-it-tonight' => find.byKey(
+            ValueKey('say-${lines.first.id}-said'),
+          ),
+          _ => find.byType(MaterialApp),
+        };
+        expect(wordiest, findsOneWidget, reason: '${block.name} $language');
+      }
     }
   });
 
