@@ -49,12 +49,12 @@ List<Pill> _cards(ShapeBlock block, Map<String, Object?> json, {int n = 12}) =>
 
 /// The cards [run] showed, in the order it showed them, each once.
 List<String> _shown(Pumped run) =>
-    [for (final (_, id) in run.host.shown) id].toSet().toList();
+    <String>{for (final (_, id) in run.host.shown) id}.toList();
 
 Finder _card(String id) => find.byKey(ValueKey('explore-$id'));
 
 AppLocalizations _l(WidgetTester tester) =>
-    AppLocalizations.of(tester.element(find.byType(Scaffold)))!;
+    AppLocalizations.of(tester.element(find.byType(Scaffold)));
 
 void main() {
   setUpAll(loadShapeFonts);
@@ -106,7 +106,7 @@ void main() {
       expect(run.host.opened, [('x', id)]);
       expect(
         tester.getSemantics(find.byKey(ValueKey('shape-side-$id-0'))),
-        containsSemantics(isSelected: true),
+        isSemantics(isSelected: true),
       );
     });
 
