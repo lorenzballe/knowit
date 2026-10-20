@@ -1,0 +1,329 @@
+/// The pieces every shape is drawn with, beside the ones Explore's own
+/// shelves share (lib/widgets/explore/parts.dart): the head of a tile that
+/// lets its label wrap rather than cut it, the small words a tile says
+/// beside its question, and what a card is said to be about in time.
+library;
+
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import '../../../data/explore_mix.dart';
+import '../../../data/themed_shelves.dart';
+import '../../../l10n/l10n.dart';
+import '../../../models/pill.dart';
+import '../../../theme.dart';
+import '../../../widgets/explore/form_shelves.dart' show OriginRow;
+import '../../../widgets/explore/parts.dart';
+import '../../../widgets/subject_icon.dart';
+
+/// Small capitals on a tile: a subject, TRY TODAY, how long. The canvas's
+/// 9-point label, the one every card head on Explore is set in.
+TextStyle tileLabel(Color color, {double size = 9, double spacing = 1.2}) =>
+    AppText.label(
+      size: size,
+      weight: FontWeight.w700,
+      spacing: spacing,
+      height: 1.15,
+      color: color,
+    );
+
+/// The subject's name as a tile's head says it, in the reader's language.
+String subjectLabel(BuildContext context, Pill p) =>
+    upper(context, context.l10n.subjectOf(p.topic));
+
+/// Small words set whole, never cut short: on as many as [maxLines] lines,
+/// broken only between words, at the reader's text size — and smaller only
+/// as far as it takes when even that will not hold them, a long word in a
+/// narrow band at the largest text sizes, or a language that says TRY
+/// TODAY in three words.
+///
+/// Explore's own labels keep to one line and end in dots. A label is often
+/// the only thing that says what a tile is (a subject, how long something
+/// takes), and a shape's tiles are set at sizes the dots would come to
+/// often, so here the label gives way in size before it gives way in words.
+class FitLabel extends StatelessWidget {
+  const FitLabel(
+    this.text, {
+    super.key,
+    required this.style,
+    this.maxLines = 2,
+    this.textAlign = TextAlign.start,
+  });
+
+  final String text;
+  final TextStyle style;
+  final int maxLines;
+  final TextAlign textAlign;
+
+  /// The text size [text] is set at in [width]: the reader's own [scaler]
+  /// when it fits, and otherwise the largest, in steps of a twentieth, at
+  /// which every word fits a line and the whole fits [maxLines].
+  static TextScaler scalerFor(
+    String text,
+    TextStyle style,
+    double width, {
+    required TextScaler scaler,
+    required TextDirection direction,
+    int maxLines = 2,
+  }) {
+    if (!width.isFinite ||
+        _fits(text, style, width, scaler, direction, maxLines)) {
+      return scaler;
+    }
+    final double size = style.fontSize ?? 14;
+    final double reader = scaler.scale(size) / size;
+    for (double k = 0.95; k > 0.4; k -= 0.05) {
+      final TextScaler smaller = TextScaler.linear(reader * k);
+      if (_fits(text, style, width, smaller, direction, maxLines)) {
+        return smaller;
+      }
+    }
+    return TextScaler.linear(reader * 0.4);
+  }
+
+  /// How tall [text] stands set as a [FitLabel] [width] wide.
+  static double heightFor(
+    String text,
+    TextStyle style,
+    double width, {
+    required TextScaler scaler,
+    required TextDirection direction,
+    int maxLines = 2,
+  }) {
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: direction,
+      textScaler: scalerFor(
+        text,
+        style,
+        width,
+        scaler: scaler,
+        direction: direction,
+        maxLines: maxLines,
+      ),
+      maxLines: maxLines,
+    )..layout(maxWidth: width.isFinite ? math.max(0, width) : double.infinity);
+    final double height = painter.height;
+    painter.dispose();
+    return height;
+  }
+
+  static bool _fits(
+    String text,
+    TextStyle style,
+    double width,
+    TextScaler scaler,
+    TextDirection direction,
+    int maxLines,
+  ) {
+    final TextPainter whole = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: maxLines,
+    )..layout(maxWidth: math.max(0, width));
+    final bool fits = !whole.didExceedMaxLines && whole.width <= width;
+    whole.dispose();
+    if (!fits) return false;
+    for (final String word in text.split(RegExp(r'\s+'))) {
+      final TextPainter one = TextPainter(
+        text: TextSpan(text: word, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final bool whole = one.width <= width;
+      one.dispose();
+      if (!whole) return false;
+    }
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) => Text(
+        text,
+        maxLines: maxLines,
+        textAlign: textAlign,
+        style: style,
+        textScaler: scalerFor(
+          text,
+          style,
+          box.maxWidth,
+          scaler: MediaQuery.textScalerOf(context),
+          direction: Directionality.of(context),
+          maxLines: maxLines,
+        ),
+      ),
+    );
+  }
+}
+
+/// The head of a tile: the subject's mark, and its name where the tile has
+/// room for it, and the tick of a card read.
+///
+/// Explore's own head (CardHead) keeps the name to one line and ends it with
+/// dots; a shape's tiles are set at sizes and text sizes that one line will
+/// not always hold, so here the name may take a second line (a [FitLabel])
+/// and the tile's question, which is fitted to whatever is left, gives way.
+class ShapeHead extends StatelessWidget {
+  const ShapeHead({
+    super.key,
+    required this.pill,
+    this.named = false,
+    this.read = false,
+    this.trailing,
+    this.ink,
+    this.size = 15,
+    this.tickBeside = false,
+  });
+
+  final Pill pill;
+
+  /// Whether the subject's name goes beside its mark.
+  final bool named;
+
+  /// Whether the card has been read: a tick after the name, or at the far
+  /// end where there is no name.
+  final bool read;
+
+  /// Whether the tick goes beside the mark even without a name: on a tile
+  /// whose far corner is taken, by a fold or a stamp's country.
+  final bool tickBeside;
+
+  /// What the head ends with instead of nothing: a country, a figure's mark.
+  final Widget? trailing;
+
+  /// The mark's colour and the name's, where the tile is not the card's own
+  /// colour.
+  final Color? ink;
+
+  /// The mark's size.
+  final double size;
+
+  /// The tick's size.
+  static const double _tick = 14;
+
+  /// The style of the subject's name, on [pill] or in [ink].
+  static TextStyle _label(Pill pill, Color? ink) =>
+      tileLabel(ink == null ? subOn(pill) : ink.withValues(alpha: 0.66));
+
+  /// How tall the head of [pill] stands, [width] wide, set as a head with
+  /// these words would set it — for a shape that makes room for its
+  /// questions before it lays its tiles out.
+  static double heightFor(
+    BuildContext context,
+    Pill pill, {
+    required double width,
+    bool named = false,
+    bool read = false,
+    double size = 15,
+  }) {
+    final double marks = math.max(size, read ? _tick : 0);
+    if (!named) return marks;
+    final double room = width - size - 7 - (read ? 6 + _tick : 0);
+    return math.max(
+      marks,
+      FitLabel.heightFor(
+        subjectLabel(context, pill),
+        _label(pill, null),
+        room,
+        scaler: MediaQuery.textScalerOf(context),
+        direction: Directionality.of(context),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color mark = ink ?? pill.ink;
+    final Widget tick = ReadMark(pill: pill, color: mark);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SubjectIcon(subject: pill.topic, size: size, ink: mark),
+        if (named) ...[
+          const SizedBox(width: 7),
+          Flexible(
+            child: FitLabel(
+              subjectLabel(context, pill),
+              style: _label(pill, ink),
+            ),
+          ),
+          if (read) ...[const SizedBox(width: 6), tick],
+          if (trailing != null) ...[
+            const Spacer(),
+            const SizedBox(width: 8),
+            trailing!,
+          ],
+        ] else if (tickBeside) ...[
+          if (read) ...[const SizedBox(width: 6), tick],
+          const Spacer(),
+          ?trailing,
+        ] else ...[
+          const Spacer(),
+          if (read) ...[tick, if (trailing != null) const SizedBox(width: 8)],
+          ?trailing,
+        ],
+      ],
+    );
+  }
+}
+
+/// A side of a debate as its button says it: "Yes, require the record" is
+/// Yes, the word before the comma when there is one and it is short, and the
+/// whole side otherwise — the rule the Pick a side shelf follows.
+String sideLabel(String side) {
+  final String head = side.split(',').first.trim();
+  return head.length <= 14 ? head : side;
+}
+
+/// The two sides of a debate card, or none for a card that is not one.
+List<String> sidesOf(Pill p) => switch (p.challenge) {
+  TakeASide(:final positions) when positions.length >= 2 => positions,
+  _ => const [],
+};
+
+/// The side the reader took on a debate, from what the card recorded.
+int? sideTaken(Pill p, Answer? given) {
+  if (given == null || sidesOf(p).isEmpty) return null;
+  final int? side = int.tryParse(given.response);
+  return side == null || side < 0 || side > 1 ? null : side;
+}
+
+/// When a card is set, as a timeline says it: the year its question names,
+/// or the age it belongs to (Explore's own "where it came from" shelf says
+/// it the same way).
+String yearLabel(BuildContext context, Pill p) => OriginRow.when(context, p);
+
+/// Whether [p]'s question names the year it is set in, rather than leaving
+/// it to the age its card is tagged with.
+bool namesAYear(Pill p) => questionYear(p) != null;
+
+/// Where a card falls on a line of time, for laying a shelf out in order:
+/// where what it is labelled with begins — the year its question names, the
+/// first year of a decade, or the first of the age it is set in — so a line
+/// reads in order as it is read, "1900s" before "1915". Cards set in no age
+/// go last.
+double timeKey(Pill p) {
+  final String? year = questionYear(p);
+  if (year != null) {
+    final double? y = double.tryParse(year.replaceAll('s', ''));
+    if (y != null) return y;
+  }
+  return switch (p.era) {
+    'ancient' => -800,
+    'medieval' => 500,
+    'early_modern' => 1500,
+    'nineteenth' => 1800,
+    'twentieth' => 1900,
+    'recent' => 2000,
+    _ => 1e9,
+  };
+}
+
+/// The figure a number card is about, set large on its tile; null on a card
+/// with none worth showing (lib/data/themed_shelves.dart).
+String? figureOf(Pill p) => shelfFigure(p);

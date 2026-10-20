@@ -102,6 +102,13 @@ void main() {
               k == 'source_kind' ||
               k == 'quote',
         );
+        // A free card's page lives beside it and travels inside it, word for
+        // word too.
+        final Object? web = raw['web'];
+        if (web is Map<String, Object?>) {
+          web['html'] = File(f.path.replaceFirst(RegExp(r'\.json$'), '.html'))
+              .readAsStringSync();
+        }
         expect(
           cardToJson(PillBank.byId(id)!),
           raw,
@@ -132,12 +139,6 @@ void main() {
 
   group('A bundle', () {
     test('is refused whole when a card cannot be drawn', () {
-      final bad = read('space-x')..['topic'] = 'astrology';
-      expect(
-        () =>
-            BankBundle.parse(bundle(version: 1, cards: [read('space-1'), bad])),
-        throwsFormatException,
-      );
       expect(
         () => BankBundle.parse(
           bundle(version: 1, cards: [read('space-1')..remove('question')]),
@@ -156,6 +157,56 @@ void main() {
       );
       expect(() => BankBundle.parse('not json'), throwsFormatException);
       expect(() => BankBundle.parse('{"cards": []}'), throwsFormatException);
+    });
+
+    test(
+      'passes over a card written for a later build, and keeps the rest',
+      () {
+        final List<Map<String, Object?>> cards = [
+          for (int i = 1; i <= 4; i++) read('space-$i'),
+          read('space-new')..['kind'] = 'hologram',
+        ];
+        final BankBundle b = BankBundle.parse(
+          bundle(
+            version: 1,
+            cards: cards,
+            editions: {'1': 'space-new', '2': 'space-2'},
+          ),
+        );
+        expect(b.cards.map((p) => p.id), [
+          'space-1',
+          'space-2',
+          'space-3',
+          'space-4',
+        ]);
+        // The day that asked the passed-over card asks its own.
+        expect(b.editions, {2: 'space-2'});
+        // A subject this build does not know yet is a later build's too.
+        expect(
+          BankBundle.parse(
+            bundle(
+              version: 1,
+              cards: [
+                ...cards.take(4),
+                read('astrology-1', topic: 'astrology'),
+              ],
+            ),
+          ).cards,
+          hasLength(4),
+        );
+      },
+    );
+
+    test('is refused when more than a quarter of it is for a later build', () {
+      expect(
+        () => BankBundle.parse(
+          bundle(
+            version: 1,
+            cards: [read('space-1'), read('space-x')..['topic'] = 'astrology'],
+          ),
+        ),
+        throwsFormatException,
+      );
     });
 
     test('keeps a retired card out of the deal but findable', () {
@@ -330,13 +381,21 @@ void main() {
     });
 
     test('refuses what the app could not draw', () {
+      // What a later build would know, as a later build's card.
       expect(
         () => cardFromJson(read('space-1')..['kind'] = 'riddle'),
-        throwsFormatException,
+        throwsA(isA<LaterCard>()),
       );
       expect(
         () => cardFromJson(read('space-1')..['principle'] = 'vibes'),
-        throwsFormatException,
+        throwsA(isA<LaterCard>()),
+      );
+      expect(drawableCard(read('space-1')..['topic'] = 'astrology'), isNull);
+      expect(drawableCard(read('space-1'))?.id, 'space-1');
+      // What no build could draw, as a bad card.
+      expect(
+        () => drawableCard(read('space-1')..['question'] = ''),
+        throwsA(isNot(isA<LaterCard>())),
       );
       expect(
         () => cardFromJson(pick('thinking-q')..['correct'] = 5),

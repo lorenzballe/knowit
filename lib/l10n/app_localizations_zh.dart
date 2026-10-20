@@ -3185,4 +3185,1141 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '开启';
+
+  @override
+  String get gateUpdateTitle => '更新 Astute';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '新版本正在 App Store 等你',
+      'google': '新版本正在 Google Play 等你',
+      'other': '新版本正在应用商店等你',
+    });
+    return '这个版本已经无法继续使用。$_temp0，你的卡片和连续记录都会原样保留。';
+  }
+
+  @override
+  String get gateUpdateButton => '更新';
+
+  @override
+  String get gateSoftTitle => 'Astute 新版本已就绪';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '它正在 App Store 等你。',
+      'google': '它正在 Google Play 等你。',
+      'other': '它正在应用商店等你。',
+    });
+    return '$_temp0更新只需片刻，你的卡片和连续记录都不会变。';
+  }
+
+  @override
+  String get gateSoftLater => '稍后';
+
+  @override
+  String get gatePauseTitle => 'Astute 正在短暂休息';
+
+  @override
+  String get gatePauseLine => '我们正在幕后修好一些东西。你做过的一切都安然无恙。请稍后再试。';
+
+  @override
+  String get gatePauseTrying => '正在重试…';
+
+  @override
+  String get gatePauseStill => '仍在休息中。请过几分钟再试。';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '要做的 $toDo 张，要读的 $toRead 张';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '做 $toDo · 读 $toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => '读';
+
+  @override
+  String get purposeFilterToDo => '做';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': '是真是假',
+      'pick': '选一个',
+      'typeNumber': '填个数字',
+      'bet': '押个数字',
+      'side': '选一边',
+      'youFirst': '你先答',
+      'moveIt': '拖动看看',
+      'whatNext': '接下来会怎样？',
+      'spotTrick': '找出花招',
+      'drawIt': '画出来',
+      'sortThem': '分一分',
+      'putInOrder': '排好顺序',
+      'holdIt': '长按',
+      'growSample': '扩大样本',
+      'askWhy': '追问为什么',
+      'sayPlainly': '说得简单些',
+      'pairUp': '配对',
+      'followClues': '顺着线索',
+      'look': '只管看',
+      'listen': '听一听',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return '阅读 · $n 分钟';
+  }
+
+  @override
+  String get purposeCommitNote => '先在这里作答，再打开卡片看看对不对。自己认定的答案，记得更久。';
+
+  @override
+  String get purposeCommitTitle => '先作答';
+
+  @override
+  String get purposeCommitLine => '先说出你的想法，再打开卡片';
+
+  @override
+  String get purposeInYourHeadLine => '在脑子里算出的数字';
+
+  @override
+  String get purposeInYourHead => '心算';
+
+  @override
+  String get purposeMoveKicker => '一招';
+
+  @override
+  String purposeMoveNew(int points) {
+    return '新招 · 掌握后 +$points';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '基础比率',
+      'survivorship': '幸存者偏差',
+      'regression': '均值回归',
+      'confirmation': '证实偏差',
+      'anchoring': '锚定',
+      'sampling': '抽样',
+      'confounding': '混杂因素',
+      'counterfactual': '跟什么比',
+      'multipleComparisons': '多次尝试',
+      'availability': '可得性',
+      'sunkCost': '沉没成本',
+      'conjunction': '合取',
+      'conditional': '条件概率',
+      'independence': '独立性',
+      'coincidence': '巧合',
+      'exponential': '指数增长',
+      'reflection': '快速答案',
+      'simpson': '汇总陷阱',
+      'estimation': '估算',
+      'computation': '算出来',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '检测准不准，不等于你有多大可能中招',
+      'survivorship': '你手上的数据，是活下来的数据',
+      'regression': '极端值会自己回到平均',
+      'confirmation': '只找“是”，算不上检验',
+      'anchoring': '第一个说出口的数字，会带动后面所有数字',
+      'sampling': '谁进了样本，决定了它能说明什么',
+      'confounding': '也许是别的东西同时导致了两者',
+      'counterfactual': '没有对照组，变化说明不了什么',
+      'multipleComparisons': '试得够多，总有一个会过',
+      'availability': '容易想到，不等于常见',
+      'sunkCost': '花掉的就花掉了，能决定的只有剩下的',
+      'conjunction': '细节让故事更可信，却更不可能',
+      'conditional': '你得知的信息会改变概率',
+      'independence': '运气没有记忆',
+      'coincidence': '尝试够多，罕见的事就会常见',
+      'exponential': '没人对翻倍有直觉',
+      'reflection': '最先冒出来的答案，正是该检查的答案',
+      'simpson': '整体可以偏向任何部分都不偏的方向',
+      'estimation': '把答不上的问题拆成能估的小块',
+      'computation': '一个你真能算完的问题',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '它本来有多常见？',
+      'survivorship': '什么从没进过数据？',
+      'regression': '会不会只是极端值回落？',
+      'confirmation': '什么能证明我错了？',
+      'anchoring': '最先出现的是哪个数字？',
+      'sampling': '谁被算进去了？',
+      'confounding': '还有什么能同时导致两者？',
+      'counterfactual': '跟什么比？',
+      'multipleComparisons': '一共试了多少样？',
+      'availability': '是真常见，还是只是容易想到？',
+      'sunkCost': '从这里起，还有什么可以决定？',
+      'conjunction': '每多一个细节，可能性是不是更低？',
+      'conditional': '知道这一点会改变什么？',
+      'independence': '上一次结果会影响下一次吗？',
+      'coincidence': '一共有多少次机会？',
+      'exponential': '再翻一倍会怎样？',
+      'reflection': '第一个答案是对的吗？',
+      'simpson': '每个部分都朝同一个方向偏吗？',
+      'estimation': '一路上我能估出什么？',
+      'computation': '能一步一步算出来吗？',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => '再难一级';
+
+  @override
+  String get purposeStepAboveLine => '比你平时读的难一点';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return '你读得最少：$subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$subject只读了 $percent%，是你读得最少的';
+  }
+
+  @override
+  String get purposeOtherSide => '另一边';
+
+  @override
+  String get purposeOtherSideLine => '你选了一边。这是反方最有力的理由';
+
+  @override
+  String purposeYouSaid(String side) {
+    return '你说$side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return '“$side”一方的理由';
+  }
+
+  @override
+  String get purposeMechanism => '机制';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return '$date更新';
+  }
+
+  @override
+  String get purposeMovingYears => '几年内可能会变';
+
+  @override
+  String get purposeMovingMonths => '今年就可能变';
+
+  @override
+  String get purposeWhy => '啊，原来如此';
+
+  @override
+  String get purposeWhyLine => '一个机制，讲到你恍然大悟';
+
+  @override
+  String purposeWhyBand(int n) {
+    return '为什么 · $n 分钟';
+  }
+
+  @override
+  String get purposeMe => '说的就是我';
+
+  @override
+  String get purposeMeLine => '你不知不觉在做的事';
+
+  @override
+  String get purposeMeFooter => '给说中你的卡片做个记号。';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已标记“说的就是我”的卡片：$n 张。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => '原来如此，还和我有关';
+
+  @override
+  String get purposeAboutYouLine => '你的身体、你的健康、你的概率';
+
+  @override
+  String get purposeHeadline => '在标题里';
+
+  @override
+  String get purposeHeadlineLine => '听起来比实际更好的研究和说法';
+
+  @override
+  String get purposeTheClaim => '说法';
+
+  @override
+  String get purposeNumber => '在数字里';
+
+  @override
+  String get purposeNumberLine => '值得再看一眼的概率和百分比';
+
+  @override
+  String get purposeOutOfWhat => '基数是多少？';
+
+  @override
+  String get purposeOffer => '在优惠里';
+
+  @override
+  String get purposeOfferLine => '价格、交易，以及到底谁在买单';
+
+  @override
+  String get purposeArgument => '在争论里';
+
+  @override
+  String get purposeArgumentLine => '推理失足的地方';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': '一个能识破大多数花招的问题',
+      '2': '两个能识破大多数花招的问题',
+      '3': '三个能识破大多数花招的问题',
+      '4': '四个能识破大多数花招的问题',
+      '5': '五个能识破大多数花招的问题',
+      'other': '$n 个能识破大多数花招的问题',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '金钱',
+      'work': '工作与时间',
+      'clock': '时间',
+      'body': '你的身体',
+      'relationships': '人际关系',
+      'belief': '你相信的事',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '我是在为真正用到的东西付钱吗？',
+      'work': '怎样让明天更容易开始？',
+      'clock': '我的时间到底去了哪里？',
+      'body': '我对自己身体的了解还对吗？',
+      'relationships': '身边的人真正需要什么？',
+      'belief': '我有多确定？为什么？',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '金钱',
+      'work': '工作',
+      'clock': '时间',
+      'body': '身体',
+      'relationships': '人际关系',
+      'belief': '我相信的事',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => '你想在哪方面问出更好的问题？';
+
+  @override
+  String get purposeLifeFooter => '随便选几个，相关的卡片就会出现在这里。';
+
+  @override
+  String get purposeSpotTrick => '找出花招';
+
+  @override
+  String get purposeSpotTrickLine => '哪个问题能识破它？';
+
+  @override
+  String get purposePlayed => '今天玩过的';
+
+  @override
+  String get purposePlayedOff => '平均偏差（点）';
+
+  @override
+  String get purposePlayedTricks => '识破的花招';
+
+  @override
+  String get purposePlayedAnswered => '在书架上作答';
+
+  @override
+  String get purposePlayedFooter => '在书架上作答，也会像“今天”里的回答一样计入“你的旅程”。';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n/$of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '已读 $n/$of';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return '$n 张全部读完。这个书架再轮到时，会加入新卡。';
+  }
+
+  @override
+  String get purposeComplete => '已集齐';
+
+  @override
+  String get purposeStampsFooter => '每读一张卡，就盖上一枚邮票。';
+
+  @override
+  String get purposeSets => '你的合集';
+
+  @override
+  String get purposeSetsLine => '读了就算数。不用作答也能集满。';
+
+  @override
+  String get purposeTomorrow => '明天的书架';
+
+  @override
+  String get purposeTomorrowLine => '书架每天都在换。接下来是这些';
+
+  @override
+  String get purposeEnd => '“探索”到底了';
+
+  @override
+  String get purposeEndLine => '明天见';
+
+  @override
+  String get betsRangeTitle => '押一个区间';
+
+  @override
+  String get betsRangeLine => '区间越窄，猜中赢得越多';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts 分';
+  }
+
+  @override
+  String get betsBet => '下注';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return '命中：+$pts 分。答案是 $said。';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return '没中：答案是 $said。';
+  }
+
+  @override
+  String get betsYourGuess => '你的猜测';
+
+  @override
+  String get betsAnsweredAlready => '已作答';
+
+  @override
+  String get betsOpenCard => '打开卡片';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天还剩 $n 分',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => '你的投注单';
+
+  @override
+  String betsSlipToday(String points) {
+    return '今天 $points';
+  }
+
+  @override
+  String get betsSlipEmpty => '还没有下注。每一注都会出现在这里。';
+
+  @override
+  String get betsSlipTipTwice => '有把握就押窄：赢得是两倍。';
+
+  @override
+  String get betsSlipTipThrice => '有把握就押窄：赢得是三倍。';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: '有把握就押窄：赢得是 $times 倍。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return '窄区间命中：$n 次中 $right 次。';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return '$n 次答对 $right 次，平均把握 $pct%。';
+  }
+
+  @override
+  String get betsRight => '答对';
+
+  @override
+  String get betsWrong => '答错';
+
+  @override
+  String betsOneIn(String n) {
+    return '$n 分之 1';
+  }
+
+  @override
+  String get betsOneInLabel => '几分之一';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$steps 步中 $right 步';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return '$steps 步答对 $right 步。';
+  }
+
+  @override
+  String get betsStakeTitle => '下注吧';
+
+  @override
+  String betsStakeLine(int points) {
+    return '每天 $points 分。赢了，赌注翻倍';
+  }
+
+  @override
+  String get betsStakeLabel => '押注';
+
+  @override
+  String betsBetN(int n) {
+    return '下注 $n';
+  }
+
+  @override
+  String get betsPickFirst => '先选一个';
+
+  @override
+  String get betsNotEnough => '积分不足';
+
+  @override
+  String betsWin(int n) {
+    return '赢得 $n。';
+  }
+
+  @override
+  String betsLose(int n) {
+    return '输掉 $n。';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return '你当时有 $pct% 的把握。';
+  }
+
+  @override
+  String get betsFriendTitle => '和朋友打个赌';
+
+  @override
+  String get betsFriendLine => '发一道题过去，然后比比谁猜得更准';
+
+  @override
+  String get betsFriendNote => '你的猜测只留在你的手机上。卡片会连同答案一起发出，所以先问问对方怎么猜。';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return '你猜的是 $said。卡片会连同答案一起发出，所以先问问对方怎么猜。';
+  }
+
+  @override
+  String get betsFriendSend => '发给朋友';
+
+  @override
+  String get betsFriendCopy => '复制题目';
+
+  @override
+  String get betsFriendCopied => '题目已复制';
+
+  @override
+  String get betsFriendAsk => '你怎么看？';
+
+  @override
+  String get betsNumberTitle => '你的数字';
+
+  @override
+  String get betsNumberLine => '调好、锁定，看看差了多少';
+
+  @override
+  String get betsLock => '锁定';
+
+  @override
+  String get betsSpotOn => '分毫不差。';
+
+  @override
+  String betsCloseEnough(String by) {
+    return '足够接近：差了 $by。';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return '差了 $by。';
+  }
+
+  @override
+  String get betsYou => '你';
+
+  @override
+  String get betsAnswer => '答案';
+
+  @override
+  String get betsBiggerTitle => '哪个更大？';
+
+  @override
+  String get betsBiggerLine => '两个可以算出来的数字。点更大的那个';
+
+  @override
+  String get betsTapIfBigger => '更大就点';
+
+  @override
+  String get betsBiggerGotIt => '更大 · 答对了';
+
+  @override
+  String get betsBigger => '更大';
+
+  @override
+  String get betsYourPick => '你的选择';
+
+  @override
+  String get betsOr => '还是';
+
+  @override
+  String get betsBiggerFoot => '每个数字都是一张卡片的答案。选完后点一下就能打开那张卡片。';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return '$n 次答对 $right 次。';
+  }
+
+  @override
+  String get betsCloserTitle => '越来越近';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': '用 $steps 次“多还是少”逼近这个数字',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {'other': '$steps 步逼近答案。'});
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return '比 $v 多还是少？';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return '第 $at/$of 步';
+  }
+
+  @override
+  String get betsMore => '更多';
+
+  @override
+  String get betsLess => '更少';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return '对：比 $v 多。';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return '对：比 $v 少。';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return '不对：比 $v 多。';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return '不对：比 $v 少。';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return '正好是 $said。';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return '答案是 $said。$steps 步答对 $right 步。';
+  }
+
+  @override
+  String get betsMagnitudeTitle => '数量级';
+
+  @override
+  String get betsMagnitudeLine => '十、一千还是一百万？选一个量级';
+
+  @override
+  String get betsMagnitudeRight => '数量级猜对了。';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 个数量级。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => '今日一赌';
+
+  @override
+  String get betsDayLine => '锁定你的猜测，再看看差了多少';
+
+  @override
+  String get betsDayTag => '今日一赌';
+
+  @override
+  String get betsDayTagSame => '今日一赌 · 人人同题';
+
+  @override
+  String get betsLockIn => '锁定';
+
+  @override
+  String betsItIs(String said) {
+    return '答案是 $said。';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 个百分点。',
+      zero: '分毫不差。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screensQuoted(String text) {
+    return '“$text”';
+  }
+
+  @override
+  String get screensExpertTitle => '像专家一样思考';
+
+  @override
+  String get screensExpertLine => '他们每个人总会问的问题，以及需要这个问题的卡片';
+
+  @override
+  String get screensExpertStatistician => '统计学家';
+
+  @override
+  String get screensExpertStatisticianAs => '像统计学家一样思考';
+
+  @override
+  String get screensExpertStatisticianAsks => '和什么比？总数是多少？';
+
+  @override
+  String get screensExpertEconomist => '经济学家';
+
+  @override
+  String get screensExpertEconomistAs => '像经济学家一样思考';
+
+  @override
+  String get screensExpertEconomistAsks => '谁来付钱？又放弃了什么？';
+
+  @override
+  String get screensExpertHistorian => '历史学家';
+
+  @override
+  String get screensExpertHistorianAs => '像历史学家一样思考';
+
+  @override
+  String get screensExpertHistorianAsks => '当时的人知道些什么？';
+
+  @override
+  String get screensExpertDoctor => '医生';
+
+  @override
+  String get screensExpertDoctorAs => '像医生一样思考';
+
+  @override
+  String get screensExpertDoctorAsks => '这有多常见？还可能是别的什么？';
+
+  @override
+  String get screensExpertScientist => '科学家';
+
+  @override
+  String get screensExpertScientistAs => '像科学家一样思考';
+
+  @override
+  String get screensExpertScientistAsks => '如果它是错的，我们怎么会知道？';
+
+  @override
+  String get screensDotsTitle => '连点成线';
+
+  @override
+  String get screensDotsLine => '选一个主题，看看它在哪里与其他主题交汇';
+
+  @override
+  String screensDotsMeets(int subjects, int cards) {
+    String _temp0 = intl.Intl.pluralLogic(
+      subjects,
+      locale: localeName,
+      other: '与 $subjects 个主题',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '在 $cards 张卡片中交汇',
+    );
+    return '$_temp0$_temp1';
+  }
+
+  @override
+  String get screensDotsWhere => '交汇之处';
+
+  @override
+  String get screensDotsWhereLine => '一个问题，两种视角';
+
+  @override
+  String get screensAskTitle => '你想弄懂什么？';
+
+  @override
+  String get screensAskHint => '问任何问题，或输入一个词';
+
+  @override
+  String get screensAskTry => '试试';
+
+  @override
+  String get screensAskClear => '清除问题';
+
+  @override
+  String screensAskFound(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 张卡片能回答',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensAskNone => '还没有关于这个的卡片';
+
+  @override
+  String get screensAskNoneLine => '把问题留着。等有卡片回答它，它会出现在这里，就在问题下方。';
+
+  @override
+  String get screensAskKeep => '留下这个问题';
+
+  @override
+  String get screensAskKept => '已留下';
+
+  @override
+  String get screensAskedTitle => '你问过的问题';
+
+  @override
+  String get screensAskedLine => '以及回答了它们的卡片';
+
+  @override
+  String get screensAskedAnswered => '已回答';
+
+  @override
+  String get screensAskedWaiting => '还没有卡片回答它。等有了，就会出现在这里。';
+
+  @override
+  String get screensAskedForget => '忘掉这个问题';
+
+  @override
+  String get screensAskedForgotten => '问题已忘掉';
+
+  @override
+  String get screensWhyTitle => '一直问为什么';
+
+  @override
+  String get screensWhyLine => '每个答案都引出下一个问题';
+
+  @override
+  String get screensWhyAsk => '为什么？';
+
+  @override
+  String screensWhyBottom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已经问了 $n 个为什么。',
+    );
+    return '$_temp0这一串到底了。';
+  }
+
+  @override
+  String get screensWhyAgain => '从头开始';
+
+  @override
+  String get screensWhyHoles => '更多兔子洞';
+
+  @override
+  String get screensWhyHolesLine => '每一个都要问上几个为什么';
+
+  @override
+  String screensWhyCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 个为什么',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensWhyDeeper => '再深入一点';
+
+  @override
+  String screensWhySource(String source) {
+    return '来源：$source';
+  }
+
+  @override
+  String screensWhyDepth(int at, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      at,
+      locale: localeName,
+      other: '第 $at 个为什么，共 $of 个',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensTimeTitle => '穿越时间';
+
+  @override
+  String get screensTimeLine => '一次一个时代，直到今年。拖动来穿越';
+
+  @override
+  String get screensTimeCaption => '距今年数。每一格都再往前推十倍。';
+
+  @override
+  String get screensTimeNow => '现在';
+
+  @override
+  String get screensTimeEarlier => '更早';
+
+  @override
+  String get screensTimeLater => '更近';
+
+  @override
+  String get screensEraAncient => '古代世界';
+
+  @override
+  String get screensEraAncientWhen => '公元500年以前';
+
+  @override
+  String get screensEraMedieval => '中世纪';
+
+  @override
+  String get screensEraMedievalWhen => '500年至1500年';
+
+  @override
+  String get screensEraEarlyModern => '近代早期';
+
+  @override
+  String get screensEraEarlyModernWhen => '1500年至1800年';
+
+  @override
+  String get screensEraNineteenth => '19世纪';
+
+  @override
+  String get screensEraNineteenthWhen => '1800年至1900年';
+
+  @override
+  String get screensEraTwentieth => '上个世纪';
+
+  @override
+  String get screensEraTwentiethWhen => '1900年至2000年';
+
+  @override
+  String get screensEraRecent => '本世纪';
+
+  @override
+  String get screensEraRecentWhen => '2000年以来';
+
+  @override
+  String get screensMindTitle => '改变想法';
+
+  @override
+  String get screensMindLine => '读之前说说你的立场，读完再说一次';
+
+  @override
+  String get screensMindClaim => '观点';
+
+  @override
+  String get screensMindBefore => '读之前';
+
+  @override
+  String get screensMindTap => '点选你的立场';
+
+  @override
+  String get screensMindKnow => '我们知道的';
+
+  @override
+  String get screensMindNow => '现在呢？';
+
+  @override
+  String get screensMindAgain => '再点一次';
+
+  @override
+  String screensMindLevel(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '0': '非常不同意',
+      '1': '不同意',
+      '2': '不确定',
+      '3': '同意',
+      'other': '非常同意',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String screensMindToward(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你向证据靠近了 $n 步。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensMindSame => '和之前一样。一张卡片终究只是一张卡片。';
+
+  @override
+  String get screensMindAlready => '读之前，你就和证据站在一起了。';
+
+  @override
+  String get screensMindAway => '你离证据更远了。值得再读一遍。';
+
+  @override
+  String get screensMindFirst => '先说说你的立场。读之前，点一下就好。';
+
+  @override
+  String screensMindChanged(int changed, int total) {
+    return '$total 条中有 $changed 条，你改变了想法。';
+  }
+
+  @override
+  String get screensMindFoot => '改变了想法，就说明这张卡片起了作用。';
+
+  @override
+  String get screensSayTitle => '今晚说出来';
+
+  @override
+  String get screensSayLine => '带去晚餐的一句话。说过之后点一下';
+
+  @override
+  String get screensSayTonight => '今晚这一句';
+
+  @override
+  String get screensSaySaid => '我说了';
+
+  @override
+  String get screensSayDone => '已说过';
+
+  @override
+  String screensSayWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '这周你说了 $n 句。',
+      zero: '这周还没说过。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensSayCounts => '你说出的每一句，也会计入本周热门。';
+
+  @override
+  String get screensFrontName => 'The Astute';
+
+  @override
+  String get screensFrontEdition => '今日版';
+
+  @override
+  String get screensFrontSame => '人人相同';
+
+  @override
+  String get screensFrontLead => '头条';
+
+  @override
+  String get screensFrontNumbers => '数字看点';
+
+  @override
+  String get screensFrontCorrections => '更正';
+
+  @override
+  String get screensFrontPuzzle => '今日谜题';
+
+  @override
+  String get screensFrontEnd => '今天这一期就到这里';
+
+  @override
+  String get screensFrontTomorrow => '明天的一期早上发布';
 }

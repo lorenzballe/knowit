@@ -3195,4 +3195,1146 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => '켜기';
+
+  @override
+  String get gateUpdateTitle => 'Astute 업데이트';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': '새 버전이 App Store에서 기다리고 있어요',
+      'google': '새 버전이 Google Play에서 기다리고 있어요',
+      'other': '새 버전이 스토어에서 기다리고 있어요',
+    });
+    return '이 버전은 더 이상 사용할 수 없어요. $_temp0. 카드와 연속 기록은 그대로 이어져요.';
+  }
+
+  @override
+  String get gateUpdateButton => '업데이트';
+
+  @override
+  String get gateSoftTitle => 'Astute 새 버전이 나왔어요';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'App Store에서 기다리고 있어요.',
+      'google': 'Google Play에서 기다리고 있어요.',
+      'other': '스토어에서 기다리고 있어요.',
+    });
+    return '$_temp0 업데이트는 금방 끝나고, 카드와 연속 기록은 그대로예요.';
+  }
+
+  @override
+  String get gateSoftLater => '나중에';
+
+  @override
+  String get gatePauseTitle => 'Astute가 잠시 쉬고 있어요';
+
+  @override
+  String get gatePauseLine =>
+      '보이지 않는 곳에서 문제를 고치고 있어요. 지금까지 한 것은 모두 안전해요. 잠시 후 다시 시도해 주세요.';
+
+  @override
+  String get gatePauseTrying => '다시 시도하는 중…';
+
+  @override
+  String get gatePauseStill => '아직 쉬는 중이에요. 몇 분 뒤에 다시 시도해 주세요.';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '할 카드 $toDo장, 읽을 카드 $toRead장';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '할 것 $toDo · 읽을 것 $toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => '읽기';
+
+  @override
+  String get purposeFilterToDo => '하기';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': '참일까 거짓일까',
+      'pick': '하나 고르기',
+      'typeNumber': '숫자 입력',
+      'bet': '숫자에 걸기',
+      'side': '편 고르기',
+      'youFirst': '먼저 답하기',
+      'moveIt': '움직여 보기',
+      'whatNext': '다음엔 무슨 일이?',
+      'spotTrick': '속임수 찾기',
+      'drawIt': '그려 보기',
+      'sortThem': '분류하기',
+      'putInOrder': '순서대로 놓기',
+      'holdIt': '길게 누르기',
+      'growSample': '표본 늘리기',
+      'askWhy': '왜냐고 묻기',
+      'sayPlainly': '쉽게 말하기',
+      'pairUp': '짝 맞추기',
+      'followClues': '단서 따라가기',
+      'look': '그냥 보기',
+      'listen': '듣기',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return '읽기 · $n분';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      '여기서 먼저 답하고, 카드를 열어 맞았는지 확인해 보세요. 스스로 정한 답은 더 오래 기억에 남아요.';
+
+  @override
+  String get purposeCommitTitle => '먼저 답하기';
+
+  @override
+  String get purposeCommitLine => '생각을 정한 다음 카드를 열어 보세요';
+
+  @override
+  String get purposeInYourHeadLine => '머릿속으로 구해 보는 숫자';
+
+  @override
+  String get purposeInYourHead => '머릿속으로';
+
+  @override
+  String get purposeMoveKicker => '한 수';
+
+  @override
+  String purposeMoveNew(int points) {
+    return '처음 · 익히면 +$points';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '기저율',
+      'survivorship': '생존 편향',
+      'regression': '평균 회귀',
+      'confirmation': '확증 편향',
+      'anchoring': '기준점 효과',
+      'sampling': '표본',
+      'confounding': '교란 변수',
+      'counterfactual': '무엇과 비교해서',
+      'multipleComparisons': '여러 번 시도',
+      'availability': '가용성',
+      'sunkCost': '매몰 비용',
+      'conjunction': '결합 오류',
+      'conditional': '조건부 확률',
+      'independence': '독립성',
+      'coincidence': '우연의 일치',
+      'exponential': '기하급수적 증가',
+      'reflection': '빠른 답',
+      'simpson': '합계의 함정',
+      'estimation': '어림하기',
+      'computation': '계산하기',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '검사가 정확하다고 내가 해당될 확률이 높은 건 아니다',
+      'survivorship': '손에 쥔 데이터는 살아남은 데이터다',
+      'regression': '극단은 저절로 평균으로 돌아온다',
+      'confirmation': '\'예\'를 찾는 건 검증이 아니다',
+      'anchoring': '처음 들은 숫자가 그다음 숫자를 모두 움직인다',
+      'sampling': '누가 표본에 들어갔는지가 말할 수 있는 것을 정한다',
+      'confounding': '다른 무언가가 둘 다를 일으키는 것일 수 있다',
+      'counterfactual': '비교할 대상이 없으면 변화는 아무 의미가 없다',
+      'multipleComparisons': '많이 시험하면 하나는 통과한다',
+      'availability': '떠올리기 쉽다고 흔한 건 아니다',
+      'sunkCost': '쓴 건 쓴 것, 정할 수 있는 건 남은 것뿐',
+      'conjunction': '세부가 많을수록 그럴듯하지만 확률은 낮아진다',
+      'conditional': '들은 정보가 확률을 바꾼다',
+      'independence': '우연에는 기억이 없다',
+      'coincidence': '시도가 많으면 드문 일도 흔해진다',
+      'exponential': '두 배씩 느는 것에는 누구도 감이 없다',
+      'reflection': '가장 먼저 떠오른 답이 확인해야 할 답이다',
+      'simpson': '전체는 어느 부분도 기울지 않은 쪽으로 기울 수 있다',
+      'estimation': '답할 수 없는 질문을 어림할 수 있는 조각으로 나눈다',
+      'computation': '끝까지 풀 수 있는 문제',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '처음부터 얼마나 흔했나?',
+      'survivorship': '데이터에 끝내 들어오지 못한 건?',
+      'regression': '극단이 제자리로 돌아온 것뿐일까?',
+      'confirmation': '무엇이 내가 틀렸다는 걸 보여 줄까?',
+      'anchoring': '어떤 숫자가 먼저 나왔나?',
+      'sampling': '누가 세어졌나?',
+      'confounding': '둘 다를 일으킬 다른 원인은?',
+      'counterfactual': '무엇과 비교해서?',
+      'multipleComparisons': '몇 가지나 시험해 봤나?',
+      'availability': '흔한 걸까, 떠올리기 쉬운 것뿐일까?',
+      'sunkCost': '지금부터 정할 수 있는 건 무엇인가?',
+      'conjunction': '세부가 늘수록 확률은 줄지 않나?',
+      'conditional': '그걸 알면 무엇이 달라지나?',
+      'independence': '지난 결과가 다음을 바꾸나?',
+      'coincidence': '기회는 몇 번이었나?',
+      'exponential': '한 번 더 두 배가 되면?',
+      'reflection': '처음 떠오른 답이 맞을까?',
+      'simpson': '모든 부분이 같은 쪽으로 기울었나?',
+      'estimation': '가는 길에 무엇을 어림할 수 있나?',
+      'computation': '한 단계씩 계산할 수 있나?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => '한 단계 위';
+
+  @override
+  String get purposeStepAboveLine => '평소 읽는 것보다 조금 더 어려운';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return '덜 읽은 분야: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$subject는 $percent%만 읽었어요. 가장 적어요';
+  }
+
+  @override
+  String get purposeOtherSide => '반대편';
+
+  @override
+  String get purposeOtherSideLine => '한쪽을 골랐죠. 그 반대 주장 중 가장 강한 것';
+
+  @override
+  String purposeYouSaid(String side) {
+    return '내 답: $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return '‘$side’ 쪽의 주장';
+  }
+
+  @override
+  String get purposeMechanism => '작동 원리';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return '$date 업데이트';
+  }
+
+  @override
+  String get purposeMovingYears => '몇 년 안에 바뀔 수 있어요';
+
+  @override
+  String get purposeMovingMonths => '올해 안에 바뀔 수 있어요';
+
+  @override
+  String get purposeWhy => '아, 그래서 그렇구나';
+
+  @override
+  String get purposeWhyLine => '하나의 원리를, 이해될 때까지';
+
+  @override
+  String purposeWhyBand(int n) {
+    return '이유 · $n분';
+  }
+
+  @override
+  String get purposeMe => '이건 나야';
+
+  @override
+  String get purposeMeLine => '모르는 새 하고 있는 일';
+
+  @override
+  String get purposeMeFooter => '내 얘기 같은 카드에 표시해 보세요.';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '‘이건 나야’로 표시한 카드 $n장.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => '몰랐는데, 내 얘기네';
+
+  @override
+  String get purposeAboutYouLine => '내 몸, 내 건강, 내 확률';
+
+  @override
+  String get purposeHeadline => '헤드라인 속에';
+
+  @override
+  String get purposeHeadlineLine => '실제보다 그럴듯하게 들리는 연구와 주장';
+
+  @override
+  String get purposeTheClaim => '주장';
+
+  @override
+  String get purposeNumber => '숫자 속에';
+
+  @override
+  String get purposeNumberLine => '다시 봐야 할 확률과 퍼센트';
+
+  @override
+  String get purposeOutOfWhat => '무엇 중에서?';
+
+  @override
+  String get purposeOffer => '할인 속에';
+
+  @override
+  String get purposeOfferLine => '가격, 거래, 그리고 진짜로 내는 사람';
+
+  @override
+  String get purposeArgument => '논쟁 속에';
+
+  @override
+  String get purposeArgumentLine => '추론이 미끄러지는 곳';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': '이런 속임수 대부분을 잡아내는 질문 한 가지',
+      '2': '이런 속임수 대부분을 잡아내는 질문 두 가지',
+      '3': '이런 속임수 대부분을 잡아내는 질문 세 가지',
+      '4': '이런 속임수 대부분을 잡아내는 질문 네 가지',
+      '5': '이런 속임수 대부분을 잡아내는 질문 다섯 가지',
+      'other': '이런 속임수 대부분을 잡아내는 질문 $n가지',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '돈',
+      'work': '일과 시간',
+      'clock': '시간',
+      'body': '내 몸',
+      'relationships': '관계',
+      'belief': '내가 믿는 것',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '정말 쓰는 것에 돈을 내고 있나?',
+      'work': '내일을 쉽게 시작하려면 무엇이 필요할까?',
+      'clock': '내 시간은 실제로 어디로 가나?',
+      'body': '내 몸에 대해 아는 게 아직도 맞을까?',
+      'relationships': '가까운 사람들이 정말 필요로 하는 건?',
+      'belief': '나는 얼마나 확신하고, 왜 그럴까?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '돈',
+      'work': '일',
+      'clock': '시간',
+      'body': '몸',
+      'relationships': '관계',
+      'belief': '내가 믿는 것',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => '무엇에 대해 더 좋은 질문을 원하나요?';
+
+  @override
+  String get purposeLifeFooter => '원하는 만큼 고르면 그에 관한 카드가 여기 나와요.';
+
+  @override
+  String get purposeSpotTrick => '속임수 찾기';
+
+  @override
+  String get purposeSpotTrickLine => '어떤 질문이면 잡아낼까?';
+
+  @override
+  String get purposePlayed => '오늘 해 본 것';
+
+  @override
+  String get purposePlayedOff => '평균 오차(포인트)';
+
+  @override
+  String get purposePlayedTricks => '찾아낸 속임수';
+
+  @override
+  String get purposePlayedAnswered => '선반에서 답함';
+
+  @override
+  String get purposePlayedFooter => '선반에서 한 답도 ‘오늘’에서처럼 ‘나의 여정’에 기록돼요.';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$of개 중 $n';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$of장 중 $n장 읽음';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return '$n장 모두 읽었어요. 선반이 다시 돌아오면 새 카드가 더해져요.';
+  }
+
+  @override
+  String get purposeComplete => '완성';
+
+  @override
+  String get purposeStampsFooter => '카드를 읽을 때마다 우표가 하나씩 붙어요.';
+
+  @override
+  String get purposeSets => '내 세트';
+
+  @override
+  String get purposeSetsLine => '읽기만 해도 돼요. 답하지 않아도 세트가 채워져요.';
+
+  @override
+  String get purposeTomorrow => '내일의 선반';
+
+  @override
+  String get purposeTomorrowLine => '선반은 매일 바뀌어요. 다음은 이것들';
+
+  @override
+  String get purposeEnd => '탐색의 끝이에요';
+
+  @override
+  String get purposeEndLine => '내일 만나요';
+
+  @override
+  String get betsRangeTitle => '범위에 걸기';
+
+  @override
+  String get betsRangeLine => '좁게 걸수록, 맞히면 더 많이 받아요';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts점';
+  }
+
+  @override
+  String get betsBet => '걸기';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return '범위 안: +$pts점. 답은 $said.';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return '빗나갔어요: 답은 $said.';
+  }
+
+  @override
+  String get betsYourGuess => '내 추측';
+
+  @override
+  String get betsAnsweredAlready => '이미 답했어요';
+
+  @override
+  String get betsOpenCard => '카드 열기';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n점 남았어요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => '내 베팅 내역';
+
+  @override
+  String betsSlipToday(String points) {
+    return '오늘 $points';
+  }
+
+  @override
+  String get betsSlipEmpty => '아직 베팅이 없어요. 거는 베팅은 모두 여기에 쌓여요.';
+
+  @override
+  String get betsSlipTipTwice => '확신이 들 때는 좁게 거세요. 두 배를 받아요.';
+
+  @override
+  String get betsSlipTipThrice => '확신이 들 때는 좁게 거세요. 세 배를 받아요.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: '확신이 들 때는 좁게 거세요. $times배를 받아요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return '좁은 베팅 적중: $n번 중 $right번.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return '$n번 중 $right번 맞혔고, 평균 확신은 $pct%.';
+  }
+
+  @override
+  String get betsRight => '맞음';
+
+  @override
+  String get betsWrong => '틀림';
+
+  @override
+  String betsOneIn(String n) {
+    return '$n분의 1';
+  }
+
+  @override
+  String get betsOneInLabel => '분모';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$steps번 중 $right번';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return '$steps번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String get betsStakeTitle => '베팅하기';
+
+  @override
+  String betsStakeLine(int points) {
+    return '하루 $points점. 이기면 건 점수가 두 배가 돼요';
+  }
+
+  @override
+  String get betsStakeLabel => '걸 점수';
+
+  @override
+  String betsBetN(int n) {
+    return '$n 걸기';
+  }
+
+  @override
+  String get betsPickFirst => '먼저 하나 고르세요';
+
+  @override
+  String get betsNotEnough => '점수가 부족해요';
+
+  @override
+  String betsWin(int n) {
+    return '$n점을 얻었어요.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return '$n점을 잃었어요.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return '$pct% 확신했어요.';
+  }
+
+  @override
+  String get betsFriendTitle => '친구와 내기';
+
+  @override
+  String get betsFriendLine => '문제를 보내고, 나중에 추측을 비교해 보세요';
+
+  @override
+  String get betsFriendNote =>
+      '내 추측은 이 휴대폰에만 남아요. 카드는 답과 함께 가니, 먼저 친구의 추측을 물어보세요.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return '내 추측은 $said. 카드는 답과 함께 가니, 먼저 친구의 추측을 물어보세요.';
+  }
+
+  @override
+  String get betsFriendSend => '친구에게 보내기';
+
+  @override
+  String get betsFriendCopy => '문제 복사';
+
+  @override
+  String get betsFriendCopied => '문제를 복사했어요';
+
+  @override
+  String get betsFriendAsk => '네 생각은?';
+
+  @override
+  String get betsNumberTitle => '내 숫자';
+
+  @override
+  String get betsNumberLine => '정하고, 고정하고, 얼마나 빗나갔는지 보세요';
+
+  @override
+  String get betsLock => '고정';
+
+  @override
+  String get betsSpotOn => '정확해요.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return '거의 맞았어요: $by 차이.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return '$by 차이.';
+  }
+
+  @override
+  String get betsYou => '나';
+
+  @override
+  String get betsAnswer => '답';
+
+  @override
+  String get betsBiggerTitle => '어느 쪽이 클까?';
+
+  @override
+  String get betsBiggerLine => '계산해 볼 수 있는 두 숫자. 더 큰 쪽을 누르세요';
+
+  @override
+  String get betsTapIfBigger => '더 크면 누르기';
+
+  @override
+  String get betsBiggerGotIt => '더 큼 · 맞혔어요';
+
+  @override
+  String get betsBigger => '더 큼';
+
+  @override
+  String get betsYourPick => '내 선택';
+
+  @override
+  String get betsOr => '또는';
+
+  @override
+  String get betsBiggerFoot => '숫자마다 카드의 답이에요. 고른 뒤 누르면 그 카드가 열려요.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return '$n번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String get betsCloserTitle => '점점 가까이';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': '많다·적다 $steps단계로 숫자에 다가가요',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': '$steps단계로 좁혀 보세요.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return '$v보다 많을까, 적을까?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return '$at/$of단계';
+  }
+
+  @override
+  String get betsMore => '많다';
+
+  @override
+  String get betsLess => '적다';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return '맞아요, $v보다 많아요.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return '맞아요, $v보다 적어요.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return '아니요, $v보다 많아요.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return '아니요, $v보다 적어요.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return '답은 정확히 $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return '답은 $said. $steps번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => '자릿수 맞히기';
+
+  @override
+  String get betsMagnitudeLine => '10일까, 1000일까, 100만일까? 크기를 골라요';
+
+  @override
+  String get betsMagnitudeRight => '자릿수가 맞았어요.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '자릿수가 $n단계 빗나갔어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => '오늘의 베팅';
+
+  @override
+  String get betsDayLine => '추측을 고정하고, 얼마나 빗나갔는지 보세요';
+
+  @override
+  String get betsDayTag => '오늘의 베팅';
+
+  @override
+  String get betsDayTagSame => '오늘의 베팅 · 모두에게 같은 문제';
+
+  @override
+  String get betsLockIn => '고정하기';
+
+  @override
+  String betsItIs(String said) {
+    return '답은 $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n퍼센트포인트 빗나갔어요.',
+      zero: '정확해요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screensQuoted(String text) {
+    return '“$text”';
+  }
+
+  @override
+  String get screensExpertTitle => '전문가처럼 생각하기';
+
+  @override
+  String get screensExpertLine => '각자 늘 던지는 질문, 그리고 그 질문이 필요한 카드';
+
+  @override
+  String get screensExpertStatistician => '통계학자';
+
+  @override
+  String get screensExpertStatisticianAs => '통계학자처럼 생각하기';
+
+  @override
+  String get screensExpertStatisticianAsks => '무엇과 비교해서, 전체 중 몇인가요?';
+
+  @override
+  String get screensExpertEconomist => '경제학자';
+
+  @override
+  String get screensExpertEconomistAs => '경제학자처럼 생각하기';
+
+  @override
+  String get screensExpertEconomistAsks => '누가 돈을 내고, 무엇을 포기하나요?';
+
+  @override
+  String get screensExpertHistorian => '역사학자';
+
+  @override
+  String get screensExpertHistorianAs => '역사학자처럼 생각하기';
+
+  @override
+  String get screensExpertHistorianAsks => '그때 사람들은 무엇을 알았을까요?';
+
+  @override
+  String get screensExpertDoctor => '의사';
+
+  @override
+  String get screensExpertDoctorAs => '의사처럼 생각하기';
+
+  @override
+  String get screensExpertDoctorAsks => '얼마나 흔하고, 다른 무엇일 수 있을까요?';
+
+  @override
+  String get screensExpertScientist => '과학자';
+
+  @override
+  String get screensExpertScientistAs => '과학자처럼 생각하기';
+
+  @override
+  String get screensExpertScientistAsks => '틀렸다면 어떻게 알 수 있을까요?';
+
+  @override
+  String get screensDotsTitle => '점과 점 잇기';
+
+  @override
+  String get screensDotsLine => '주제를 고르면 다른 주제와 만나는 곳이 보여요';
+
+  @override
+  String screensDotsMeets(int subjects, int cards) {
+    String _temp0 = intl.Intl.pluralLogic(
+      subjects,
+      locale: localeName,
+      other: '주제 $subjects개와',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '카드 $cards장에서 만나요',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String get screensDotsWhere => '만나는 곳';
+
+  @override
+  String get screensDotsWhereLine => '질문 하나, 보는 방법 둘';
+
+  @override
+  String get screensAskTitle => '무엇을 이해하고 싶나요?';
+
+  @override
+  String get screensAskHint => '무엇이든 물어보거나, 단어를 입력하세요';
+
+  @override
+  String get screensAskTry => '예를 들어';
+
+  @override
+  String get screensAskClear => '질문 지우기';
+
+  @override
+  String screensAskFound(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '카드 $n장이 답해요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensAskNone => '아직 그에 관한 카드가 없어요';
+
+  @override
+  String get screensAskNoneLine => '질문을 남겨 두세요. 답하는 카드가 생기면 여기, 질문 아래에 나와요.';
+
+  @override
+  String get screensAskKeep => '질문 남겨 두기';
+
+  @override
+  String get screensAskKept => '남겨 둠';
+
+  @override
+  String get screensAskedTitle => '내가 한 질문';
+
+  @override
+  String get screensAskedLine => '그리고 답해 준 카드';
+
+  @override
+  String get screensAskedAnswered => '답변';
+
+  @override
+  String get screensAskedWaiting => '아직 답하는 카드가 없어요. 생기면 여기에 나와요.';
+
+  @override
+  String get screensAskedForget => '이 질문 잊기';
+
+  @override
+  String get screensAskedForgotten => '질문을 지웠어요';
+
+  @override
+  String get screensWhyTitle => '계속 왜냐고 묻기';
+
+  @override
+  String get screensWhyLine => '답 하나가 다음 질문을 불러요';
+
+  @override
+  String get screensWhyAsk => '왜?';
+
+  @override
+  String screensWhyBottom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '왜를 $n번 물었어요.',
+    );
+    return '$_temp0 이 질문은 여기가 끝이에요.';
+  }
+
+  @override
+  String get screensWhyAgain => '처음부터';
+
+  @override
+  String get screensWhyHoles => '토끼굴 더 보기';
+
+  @override
+  String get screensWhyHolesLine => '저마다 왜를 몇 번씩 파고들어요';
+
+  @override
+  String screensWhyCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '왜 $n번',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensWhyDeeper => '더 깊이';
+
+  @override
+  String screensWhySource(String source) {
+    return '출처: $source';
+  }
+
+  @override
+  String screensWhyDepth(int at, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      at,
+      locale: localeName,
+      other: '왜 $of번 중 $at번',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensTimeTitle => '시간 여행';
+
+  @override
+  String get screensTimeLine => '한 번에 한 시대씩, 올해까지. 끌어서 여행하세요';
+
+  @override
+  String get screensTimeCaption => '몇 년 전. 눈금 하나마다 열 배 더 거슬러 올라가요.';
+
+  @override
+  String get screensTimeNow => '지금';
+
+  @override
+  String get screensTimeEarlier => '더 옛날로';
+
+  @override
+  String get screensTimeLater => '지금 쪽으로';
+
+  @override
+  String get screensEraAncient => '고대 세계';
+
+  @override
+  String get screensEraAncientWhen => '500년 이전';
+
+  @override
+  String get screensEraMedieval => '중세';
+
+  @override
+  String get screensEraMedievalWhen => '500년~1500년';
+
+  @override
+  String get screensEraEarlyModern => '근세';
+
+  @override
+  String get screensEraEarlyModernWhen => '1500년~1800년';
+
+  @override
+  String get screensEraNineteenth => '19세기';
+
+  @override
+  String get screensEraNineteenthWhen => '1800년~1900년';
+
+  @override
+  String get screensEraTwentieth => '지난 세기';
+
+  @override
+  String get screensEraTwentiethWhen => '1900년~2000년';
+
+  @override
+  String get screensEraRecent => '이번 세기';
+
+  @override
+  String get screensEraRecentWhen => '2000년 이후';
+
+  @override
+  String get screensMindTitle => '생각 바꾸기';
+
+  @override
+  String get screensMindLine => '읽기 전에 내 생각을 말하고, 읽은 뒤에 다시';
+
+  @override
+  String get screensMindClaim => '주장';
+
+  @override
+  String get screensMindBefore => '읽기 전';
+
+  @override
+  String get screensMindTap => '내 생각을 탭하세요';
+
+  @override
+  String get screensMindKnow => '우리가 아는 것';
+
+  @override
+  String get screensMindNow => '이제는?';
+
+  @override
+  String get screensMindAgain => '다시 탭하세요';
+
+  @override
+  String screensMindLevel(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '0': '전혀 동의 안 함',
+      '1': '동의 안 함',
+      '2': '잘 모르겠음',
+      '3': '동의함',
+      'other': '매우 동의함',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String screensMindToward(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '근거 쪽으로 $n칸 다가갔어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensMindSame => '그대로예요. 카드 한 장은 한 장일 뿐이에요.';
+
+  @override
+  String get screensMindAlready => '읽기 전부터 근거와 같은 생각이었어요.';
+
+  @override
+  String get screensMindAway => '근거에서 멀어졌어요. 다시 읽어 볼 만해요.';
+
+  @override
+  String get screensMindFirst => '먼저 내 생각부터. 읽기 전에 한 번만 탭하세요.';
+
+  @override
+  String screensMindChanged(int changed, int total) {
+    return '$total개 중 $changed개에서 생각이 바뀌었어요.';
+  }
+
+  @override
+  String get screensMindFoot => '생각이 바뀌었다면, 카드가 제 몫을 한 거예요.';
+
+  @override
+  String get screensSayTitle => '오늘 밤 말해 보기';
+
+  @override
+  String get screensSayLine => '저녁 자리에 가져갈 한마디. 말했다면 탭하세요';
+
+  @override
+  String get screensSayTonight => '오늘 밤의 한마디';
+
+  @override
+  String get screensSaySaid => '말했어요';
+
+  @override
+  String get screensSayDone => '이미 말했어요';
+
+  @override
+  String screensSayWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '이번 주에 $n번 말했어요.',
+      zero: '이번 주에는 아직 말한 게 없어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensSayCounts => '말한 한마디는 이번 주 인기 카드에도 반영돼요.';
+
+  @override
+  String get screensFrontName => 'The Astute';
+
+  @override
+  String get screensFrontEdition => '오늘 판';
+
+  @override
+  String get screensFrontSame => '모두에게 같아요';
+
+  @override
+  String get screensFrontLead => '머리기사';
+
+  @override
+  String get screensFrontNumbers => '숫자로 보기';
+
+  @override
+  String get screensFrontCorrections => '바로잡습니다';
+
+  @override
+  String get screensFrontPuzzle => '오늘의 퍼즐';
+
+  @override
+  String get screensFrontEnd => '오늘 판은 여기까지';
+
+  @override
+  String get screensFrontTomorrow => '내일 판은 아침에 나와요';
 }

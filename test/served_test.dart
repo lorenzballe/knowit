@@ -34,7 +34,8 @@ void main() {
 
   final String today = dateKey(DateTime.now());
 
-  test('a served day survives JSON, and a card the app cannot draw refuses the whole day', () {
+  test('a served day survives JSON, a card the app cannot draw refuses the '
+      'whole day, and a later build\'s card is passed over', () {
     final ServedDay day = _aDay(today);
     final ServedDay? back = ServedDay.parse(day.toJson());
     expect(back, isNotNull);
@@ -47,10 +48,32 @@ void main() {
     final Map<String, Object?> broken = day.toJson();
     (broken['cards'] as List)[0] = {
       ...cardToJson(day.cards.first),
-      'kind': 'hologram',
+      'question': '',
     };
     expect(ServedDay.parse(broken), isNull);
     expect(ServedDay.parse({'date': today, 'cards': []}), isNull);
+
+    // A kind of card this build does not know yet: the rest of the day is
+    // still the server's.
+    final Map<String, Object?> later = day.toJson();
+    (later['cards'] as List)[0] = {
+      ...cardToJson(day.cards.first),
+      'kind': 'hologram',
+    };
+    expect(
+      ServedDay.parse(later)!.cards.map((p) => p.id),
+      day.cards.skip(1).map((p) => p.id),
+    );
+    // A day of nothing but: the phone deals its own.
+    expect(
+      ServedDay.parse({
+        'date': today,
+        'cards': [
+          {...cardToJson(day.cards.first), 'kind': 'hologram'},
+        ],
+      }),
+      isNull,
+    );
   });
 
   test(

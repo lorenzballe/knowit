@@ -71,7 +71,9 @@ class CardHead extends StatelessWidget {
         const SizedBox(width: 7),
         Flexible(
           child: Text(
-            upper(context, label ?? pill.topic),
+            // The subject in the reader's language: the card files it under
+            // its English name, which every other language printed as it was.
+            upper(context, label ?? context.l10n.subjectOf(pill.topic)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppText.label(

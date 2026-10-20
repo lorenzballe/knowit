@@ -1,18 +1,26 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/subject_icons.dart';
+import '../data/topics.dart';
+import '../l10n/l10n.dart';
 import '../measure/card_read.dart';
 import '../measure/screens.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
+import '../state/music_sound.dart';
 import '../sync/trace.dart';
 import '../theme.dart';
 import 'card_edge.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
+import 'place_line.dart';
+import 'web/page_messages.dart';
+import 'web/web_card_page.dart';
 
 /// How much room the deck leaves at each side of the screen.
 ///
@@ -170,7 +178,17 @@ class _PillCardStackState extends State<PillCardStack>
       duration: const Duration(milliseconds: 300),
     );
     _upAt = DateTime.now();
+    MusicSound.on.addListener(_queuePages);
   }
+
+  /// The free cards' pages this deck keeps alive: the card on top, and the
+  /// one under it, drawn while the reader is still on the card above so it
+  /// is itself the moment it comes up. A deck out of sight keeps its top.
+  final WebCardPool _pages = WebCardPool();
+
+  /// The size every card is drawn at, as the last layout made it.
+  Size _cardSize = Size.zero;
+  bool _pagesQueued = false;
 
   /// When the card in front came up, so a turn can say how long the front
   /// held the reader before they wanted the back.
@@ -195,11 +213,19 @@ class _PillCardStackState extends State<PillCardStack>
     super.didChangeDependencies();
     final ScreenPresence? presence = ScreenPresence.maybeOf(context);
     if (!identical(presence, _presence)) {
-      _presence?.removeListener(_stand);
+      _presence?.removeListener(_seen);
       _presence = presence;
-      presence?.addListener(_stand);
+      presence?.addListener(_seen);
     }
     _stand();
+    // The theme, the language or motion may have changed: the pages hear.
+    _queuePages();
+  }
+
+  /// The screen came into sight or went out of it.
+  void _seen() {
+    _stand();
+    _queuePages();
   }
 
   @override
@@ -213,16 +239,159 @@ class _PillCardStackState extends State<PillCardStack>
       _hintTimer?.cancel();
     }
     _stand();
+    _queuePages();
   }
 
   @override
   void dispose() {
     _hintTimer?.cancel();
-    _presence?.removeListener(_stand);
+    _presence?.removeListener(_seen);
+    MusicSound.on.removeListener(_queuePages);
     final CardRead? read = _read;
     if (read != null) _close(read, 'gone');
+    _pages.dispose();
     _controller.dispose();
     super.dispose();
+  }
+
+  // ── Free cards ────────────────────────────────────────────────────────
+
+  /// Brings the pages in line with the deck after the frame: which cards
+  /// have one, and what each is told about where it is shown. After the
+  /// frame, because that is when the size every card is drawn at is known.
+  void _queuePages() {
+    if (_pagesQueued) return;
+    _pagesQueued = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pagesQueued = false;
+      if (mounted) _syncPages();
+    });
+  }
+
+  void _syncPages() {
+    final bool inSight = _presence?.showing ?? true;
+    final Pill? top = _top;
+    final int next = widget.index + 1;
+    final List<String> had = [
+      for (final Pill p in widget.deck)
+        if (_pages[p.id] != null) p.id,
+    ];
+    _pages.keep([
+      ?top,
+      if (inSight && next < widget.deck.length) widget.deck[next],
+    ], _envFor);
+    _pages.update(_envFor);
+    // The card standing on top is in front of the reader: its page's clock
+    // runs. One just made learns it here, being made after it stood.
+    if (_read case final CardRead read) _pages[read.pill.id]?.show();
+    final List<String> has = [
+      for (final Pill p in widget.deck)
+        if (_pages[p.id] != null) p.id,
+    ];
+    if (!listEquals(had, has)) setState(() {});
+  }
+
+  /// Where a free card's page is shown, as it is told: the reader's theme,
+  /// language, motion and sound, the size of the card, the room the save
+  /// and share take, the subject in the reader's language, and the line and
+  /// chip a native card would carry on its front today.
+  PageEnv _envFor(Pill pill) => PageEnv(
+    dark: context.p.isDark,
+    language: Localizations.localeOf(context).languageCode,
+    calm: MediaQuery.disableAnimationsOf(context),
+    sound: MusicSound.on.value,
+    touch: pill.web?.touch ?? WebTouch.taps,
+    platform: kIsWeb
+        ? 'web'
+        : defaultTargetPlatform == TargetPlatform.android
+        ? 'android'
+        : 'ios',
+    size: _cardSize,
+    corner: kCardCorner,
+    subject: PageSubject(
+      key: topicKeyForName(pill.topic) ?? '',
+      name: context.l10n.subjectOf(pill.topic),
+      colour: pill.color,
+      ink: pill.ink,
+      icon: kSubjectIcons[pill.topic] ?? '',
+    ),
+    note:
+        placeLineOf(context, pill.place, widget.home) ?? widget.notes[pill.id],
+    chip: widget.reviewIds.contains(pill.id)
+        ? context.l10n.againChip
+        : widget.ownIds.contains(pill.id)
+        ? context.l10n.forYouChip
+        : null,
+  );
+
+  /// Whether a free card has lost its page — a later kit, no WebView, a
+  /// page that failed — and so is read like a card that only tells.
+  bool _pageLost(Pill pill) =>
+      pill.web != null && (_pages[pill.id]?.failed ?? !pill.hasPage);
+
+  /// What the page on top asks of the deck.
+  void _fromPage(Pill pill, PageMessage message) {
+    if (!mounted || _top?.id != pill.id) return;
+    switch (message) {
+      case final PageAnswer answer:
+        _answerFromPage(pill, answer);
+      case PageFlip() || PageTap():
+        _turnOver();
+      case PageDone():
+        _sendOn();
+      case PagePan(:final phase, :final delta, :final velocity):
+        // On the web build the page hands out the drags it does not keep,
+        // and the card is thrown with them as with a finger on it.
+        switch (phase) {
+          case 'start':
+            _read?.touched();
+            _onPanStart(DragStartDetails());
+          case 'update':
+            _onPanUpdate(
+              DragUpdateDetails(globalPosition: Offset.zero, delta: delta),
+            );
+          default:
+            _onPanEnd(
+              DragEndDetails(velocity: Velocity(pixelsPerSecond: velocity)),
+            );
+        }
+      default:
+        break;
+    }
+  }
+
+  /// An answer given on a page, recorded exactly as a native card records
+  /// one — the same response in the challenge's own form, the same how
+  /// sure, the same feel under the finger — except that the card does not
+  /// turn: the page shows its own why, and the reader turns it, or throws
+  /// it, when they have read it.
+  void _answerFromPage(Pill pill, PageAnswer answer) {
+    if (!widget.answering) return;
+    final String? response = pageResponse(pill.challenge, answer);
+    if (response == null) return;
+    if (pill.isGraded && !pill.challenge.accepts(response)) {
+      HapticFeedback.lightImpact();
+    } else {
+      HapticFeedback.mediumImpact();
+    }
+    widget.onAnswer(
+      pill.id,
+      response,
+      answer.sure == null ? null : nearestConfidence(answer.sure!),
+      null,
+    );
+    setState(() => _answeredHere = true);
+    _hintIn(_hintAfterBack);
+  }
+
+  /// A free card's page is finished with it: it goes on as a throw sends
+  /// it, off to the side the deck is read towards.
+  Future<void> _sendOn() async {
+    if (_dragging || _throwing || widget.index >= widget.deck.length) return;
+    _hintTimer?.cancel();
+    _controller.stop();
+    HapticFeedback.lightImpact();
+    await _throwOff(const Offset(-1, -0.08), exit: 'done');
   }
 
   Pill? get _top =>
@@ -248,6 +417,7 @@ class _PillCardStackState extends State<PillCardStack>
       back: _flipped,
     );
     _stood.add(top.id);
+    _pages[top.id]?.show();
     widget.onStand?.call(top);
   }
 
@@ -261,6 +431,8 @@ class _PillCardStackState extends State<PillCardStack>
 
   void _close(CardRead read, String exit) {
     if (identical(_read, read)) _read = null;
+    // Out of the reader's sight, a page holds still.
+    _pages[read.pill.id]?.hide();
     if (read.ended) return;
     widget.onRead?.call(read.end(exit));
   }
@@ -318,66 +490,15 @@ class _PillCardStackState extends State<PillCardStack>
       } else {
         HapticFeedback.lightImpact();
       }
-      // The card's read ends as it is let go, not when it has flown: the
-      // flight is the deck's, not the reader's. Flung, carried off past the
-      // line, or thrown down, which says less like this. No card stands
-      // again until the throw is over.
-      _throwing = true;
-      final CardRead? read = _read;
-      if (read != null && leaving != null) {
-        _close(
-          read,
-          down
-              ? 'thrown down'
-              : thrown.distance > 620
-              ? 'thrown'
-              : 'swiped',
-        );
-      }
-      final double length = heading.distance;
-      await _animateTo(
-        length == 0 ? const Offset(480, 0) : heading * (1100 / length),
+      await _throwOff(
+        heading,
+        exit: down
+            ? 'thrown down'
+            : thrown.distance > 620
+            ? 'thrown'
+            : 'swiped',
+        dislike: down ? leaving : null,
       );
-      if (!mounted) return;
-      if (down) widget.onDislike!(leaving);
-
-      // The card is gone, and it stays gone until the next one is here.
-      //
-      // This used to put the drag back first and move the deck on after,
-      // which is what the throw stuttered on. The index arrives on the far
-      // side of three writes to disk — `AppState.advance` records the new
-      // position, the cards read and the ids seen before it tells anyone —
-      // so for every frame in between, the deck drew the card that had just
-      // left back in the middle of the screen at full size, and the card
-      // behind it dropped from where it had risen to back down to where it
-      // started. Two cards moving backwards, which is the whole of it.
-      //
-      // Waiting means the new index and the cleared drag land in the same
-      // frame: didUpdateWidget clears it the moment a new card is on top, so
-      // nothing is ever drawn in between.
-      await widget.onAdvance();
-      if (!mounted) return;
-
-      // Unless nothing arrived. A deck of one wraps to the same index, and a
-      // state that declines to advance would otherwise leave the reader
-      // looking at the empty square where their card used to be. By here the
-      // clear above has already happened when there was one to do, so this
-      // is a no-op in every case but that.
-      if (_drag != Offset.zero || _flipped) {
-        setState(() {
-          _drag = Offset.zero;
-          _flipped = false;
-        });
-      }
-      // The card now on top stands, face up, once the deck is built with it
-      // — the new index lands with the next frame, not with the await — and
-      // even where the deck wrapped round to the one that was just thrown.
-      _throwing = false;
-      WidgetsBinding.instance
-        ..addPostFrameCallback((_) {
-          if (mounted) _stand();
-        })
-        ..ensureVisualUpdate();
     } else if (_dragTotalMove < 7) {
       // Barely moved: put it back where it was and turn it over, with
       // nothing to settle first — the card never went anywhere.
@@ -387,6 +508,67 @@ class _PillCardStackState extends State<PillCardStack>
       await _animateTo(Offset.zero);
       if (_flipped) _hintIn(_hintAfterBack);
     }
+  }
+
+  /// Sends the card on top off the table along [heading] and moves the deck
+  /// on: the end of every throw, and of a free card whose page is done with
+  /// it. [exit] is how its read ended; [dislike] is the card thrown down.
+  Future<void> _throwOff(
+    Offset heading, {
+    required String exit,
+    Pill? dislike,
+  }) async {
+    // The card's read ends as it is let go, not when it has flown: the
+    // flight is the deck's, not the reader's. Flung, carried off past the
+    // line, or thrown down, which says less like this. No card stands
+    // again until the throw is over.
+    _throwing = true;
+    final CardRead? read = _read;
+    if (read != null && widget.index < widget.deck.length) _close(read, exit);
+    final double length = heading.distance;
+    await _animateTo(
+      length == 0 ? const Offset(480, 0) : heading * (1100 / length),
+    );
+    if (!mounted) return;
+    if (dislike != null) widget.onDislike!(dislike);
+
+    // The card is gone, and it stays gone until the next one is here.
+    //
+    // This used to put the drag back first and move the deck on after,
+    // which is what the throw stuttered on. The index arrives on the far
+    // side of three writes to disk — `AppState.advance` records the new
+    // position, the cards read and the ids seen before it tells anyone —
+    // so for every frame in between, the deck drew the card that had just
+    // left back in the middle of the screen at full size, and the card
+    // behind it dropped from where it had risen to back down to where it
+    // started. Two cards moving backwards, which is the whole of it.
+    //
+    // Waiting means the new index and the cleared drag land in the same
+    // frame: didUpdateWidget clears it the moment a new card is on top, so
+    // nothing is ever drawn in between.
+    await widget.onAdvance();
+    if (!mounted) return;
+
+    // Unless nothing arrived. A deck of one wraps to the same index, and a
+    // state that declines to advance would otherwise leave the reader
+    // looking at the empty square where their card used to be. By here the
+    // clear above has already happened when there was one to do, so this
+    // is a no-op in every case but that.
+    if (_drag != Offset.zero || _flipped) {
+      setState(() {
+        _drag = Offset.zero;
+        _flipped = false;
+      });
+    }
+    // The card now on top stands, face up, once the deck is built with it
+    // — the new index lands with the next frame, not with the await — and
+    // even where the deck wrapped round to the one that was just thrown.
+    _throwing = false;
+    WidgetsBinding.instance
+      ..addPostFrameCallback((_) {
+        if (mounted) _stand();
+      })
+      ..ensureVisualUpdate();
   }
 
   /// How long the back is read before the card shows how it is sent on,
@@ -491,7 +673,10 @@ class _PillCardStackState extends State<PillCardStack>
     final top = widget.deck[widget.index];
     final mustAnswer =
         widget.answerFor(top.id) == null || widget.reviewIds.contains(top.id);
-    if (widget.answering && top.asksSomething && mustAnswer && !_answeredHere) {
+    // A free card that has lost its page cannot be answered on it, and is
+    // read instead, as a card that only tells.
+    final bool asks = top.asksSomething && !_pageLost(top);
+    if (widget.answering && asks && mustAnswer && !_answeredHere) {
       return;
     }
     HapticFeedback.selectionClick();
@@ -591,6 +776,12 @@ class _PillCardStackState extends State<PillCardStack>
                 math.max(0, box.maxHeight - _air * 2),
                 box.maxWidth * _cardAspect,
               );
+              // The size a free card's page is drawn at, which it is told.
+              final Size card = Size(box.maxWidth, height);
+              if (card != _cardSize) {
+                _cardSize = card;
+                _queuePages();
+              }
               return SizedBox(
                 width: box.maxWidth,
                 height: height,
@@ -646,6 +837,10 @@ class _PillCardStackState extends State<PillCardStack>
                     ? null
                     : () => widget.onLike!(pill),
                 onShare: controls ? () => widget.onShare(pill) : null,
+                page: _pages[pill.id],
+                onPageMessage: controls
+                    ? (message) => _fromPage(pill, message)
+                    : null,
                 onAnswer: !controls || !widget.answering
                     ? null
                     : (response, confidence, reason) {

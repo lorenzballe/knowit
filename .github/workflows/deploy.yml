@@ -38,6 +38,10 @@ jobs:
           python3 -m unittest discover -s tool/places -p "test_*.py"
           python3 -m unittest discover -s tool/quality -p "test_*.py"
           python3 tool/site/chrome.py --check
+          python3 tool/remote/check.py
+          python3 tool/remote/bundle.py --check
+          python3 tool/remote/gen_strings.py --check
+          python3 -m unittest discover -s tool/remote -p "test_*.py"
 
       - run: flutter test
 
@@ -88,6 +92,7 @@ jobs:
           cp -r build/web/. _site/app/
           cp -r site/. _site/
           cp -r web/cards _site/cards
+          cp -r web/remote _site/remote
           ls -la _site
 
       # The site's own stylesheets and script are asked for at the same URL

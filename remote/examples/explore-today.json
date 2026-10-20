@@ -1,0 +1,33 @@
+{
+  "_": "Today's Explore as a document: the build's own list (lib/explore/blocks/core/own_explore.dart), section for section. Copied to remote/explore.json it draws exactly what null draws; it is where to start changing Explore from the server.",
+  "sections": [
+    {"id": "nothing", "block": "nothing-here"},
+    {"id": "offline", "block": "offline"},
+    {"id": "today", "block": "today", "gap": 0},
+    {"id": "top", "block": "top"},
+    {"id": "loved", "block": "loved"},
+    {"id": "asking", "block": "asking"},
+    {"id": "mine", "block": "mine"},
+    {"id": "where-you-live", "block": "where-you-live"},
+    {"id": "month", "block": "month"},
+    {"id": "signature-numbers", "block": "numbers"},
+    {"id": "signature-debates", "block": "debates"},
+    {"id": "theme-sharpest-0", "block": "sharpest"},
+    {"id": "theme-origins-0", "block": "origins"},
+    {"id": "theme-stories-0", "block": "stories"},
+    {"id": "theme-trueOrFalse-0", "block": "true-false"},
+    {"id": "came-back", "block": "came-back"},
+    {"id": "move-sampling", "block": "move-sampling"},
+    {"id": "move-counterfactual", "block": "move-compared"},
+    {"id": "work", "block": "work"},
+    {"id": "unmask", "block": "unmask"},
+    {"id": "how-sure", "block": "how-sure", "gap": 28},
+    {"id": "what-if", "block": "what-if"},
+    {"id": "series", "block": "series"},
+    {"id": "sixty", "block": "sixty"},
+    {"id": "mood", "block": "mood", "gap": 28},
+    {"id": "did-you-know", "block": "did-you-know"},
+    {"id": "surprise", "block": "surprise"},
+    {"id": "theme-practical-0", "block": "practical"}
+  ]
+}

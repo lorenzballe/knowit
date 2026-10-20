@@ -3297,4 +3297,1195 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Switch it on';
+
+  @override
+  String get gateUpdateTitle => 'Update Astute';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'The new one is waiting in the App Store',
+      'google': 'The new one is waiting on Google Play',
+      'other': 'The new one is waiting in your app store',
+    });
+    return 'This version can’t carry on. $_temp0, with your cards and your streak just as you left them.';
+  }
+
+  @override
+  String get gateUpdateButton => 'Update';
+
+  @override
+  String get gateSoftTitle => 'A new version of Astute is ready';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'It’s waiting in the App Store.',
+      'google': 'It’s waiting on Google Play.',
+      'other': 'It’s waiting in your app store.',
+    });
+    return '$_temp0 Updating takes a moment, and your cards and your streak stay just as they are.';
+  }
+
+  @override
+  String get gateSoftLater => 'Later';
+
+  @override
+  String get gatePauseTitle => 'Astute is taking a short break';
+
+  @override
+  String get gatePauseLine =>
+      'We’re putting something right behind the scenes. Everything you’ve done is safe. Try again in a little while.';
+
+  @override
+  String get gatePauseTrying => 'Trying again…';
+
+  @override
+  String get gatePauseStill => 'Still on a break. Try again in a few minutes.';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '$toDo to do, $toRead to read';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '$toDo to do · $toRead to read';
+  }
+
+  @override
+  String get purposeFilterToRead => 'To read';
+
+  @override
+  String get purposeFilterToDo => 'To do';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': 'True or false',
+      'pick': 'Pick one',
+      'typeNumber': 'Type a number',
+      'bet': 'Bet the number',
+      'side': 'Pick a side',
+      'youFirst': 'You first',
+      'moveIt': 'Move it and watch',
+      'whatNext': 'What happens next?',
+      'spotTrick': 'Spot the trick',
+      'drawIt': 'Draw it',
+      'sortThem': 'Sort them',
+      'putInOrder': 'Put them in order',
+      'holdIt': 'Hold it',
+      'growSample': 'Grow a sample',
+      'askWhy': 'Ask why',
+      'sayPlainly': 'Say it plainly',
+      'pairUp': 'Pair them up',
+      'followClues': 'Follow the clues',
+      'look': 'Just look',
+      'listen': 'Listen',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return 'Read · $n min';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'Answer here, then open the card to see if you were right. A guess you commit to stays with you longer.';
+
+  @override
+  String get purposeCommitTitle => 'Answer first';
+
+  @override
+  String get purposeCommitLine => 'Say what you think, then open the card';
+
+  @override
+  String get purposeInYourHeadLine => 'A number to reach in your head';
+
+  @override
+  String get purposeInYourHead => 'In your head';
+
+  @override
+  String get purposeMoveKicker => 'A move';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'New · +$points when you have it down';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Base rates',
+      'survivorship': 'Survivorship',
+      'regression': 'Regression to the mean',
+      'confirmation': 'Confirmation',
+      'anchoring': 'Anchoring',
+      'sampling': 'Sampling',
+      'confounding': 'Confounding',
+      'counterfactual': 'Compared to what',
+      'multipleComparisons': 'Multiple looks',
+      'availability': 'Availability',
+      'sunkCost': 'Sunk cost',
+      'conjunction': 'Conjunction',
+      'conditional': 'Conditional odds',
+      'independence': 'Independence',
+      'coincidence': 'Coincidence',
+      'exponential': 'Exponential growth',
+      'reflection': 'The quick answer',
+      'simpson': 'Aggregates',
+      'estimation': 'Estimation',
+      'computation': 'Working it out',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'How accurate a test is, is not how likely you are',
+      'survivorship': 'The data you have is the data that survived',
+      'regression': 'Extremes drift back on their own',
+      'confirmation': 'Looking for a yes is not a test',
+      'anchoring': 'The first number said moves every number after',
+      'sampling': 'Who ended up in the sample decides what it can say',
+      'confounding': 'Something else may be causing both',
+      'counterfactual': 'A change means nothing without a control',
+      'multipleComparisons': 'Test enough things and one will pass',
+      'availability': 'Easy to picture is not the same as common',
+      'sunkCost': 'Spent is spent; only what is left can be decided',
+      'conjunction': 'Detail makes a story likelier and less probable',
+      'conditional': 'What you were told changes the odds',
+      'independence': 'Chance has no memory',
+      'coincidence': 'Rare things are common when there are many tries',
+      'exponential': 'Nobody has intuition for doubling',
+      'reflection': 'The answer that arrives first is the one to check',
+      'simpson': 'A whole can lean the way no part of it does',
+      'estimation': 'Break the unanswerable into things you can guess',
+      'computation': 'A problem you can actually finish',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'How common was it to begin with?',
+      'survivorship': 'What never made it into the data?',
+      'regression': 'Is it just an extreme drifting back?',
+      'confirmation': 'What would prove me wrong?',
+      'anchoring': 'Which number came first?',
+      'sampling': 'Who got counted?',
+      'confounding': 'What else could cause both?',
+      'counterfactual': 'Compared to what?',
+      'multipleComparisons': 'How many things were tried?',
+      'availability': 'Is it common, or just easy to picture?',
+      'sunkCost': 'What is left to decide from here?',
+      'conjunction': 'Does each detail make it less likely?',
+      'conditional': 'What does knowing that change?',
+      'independence': 'Does the last result change the next?',
+      'coincidence': 'How many chances were there?',
+      'exponential': 'What happens when it doubles again?',
+      'reflection': 'Is the first answer the right one?',
+      'simpson': 'Does every part lean the same way?',
+      'estimation': 'What can I guess on the way there?',
+      'computation': 'Can I work it out step by step?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => 'A step above';
+
+  @override
+  String get purposeStepAboveLine => 'Harder than what you usually read';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'Thin for you: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$percent% of the $subject shelf read, your least';
+  }
+
+  @override
+  String get purposeOtherSide => 'The other side';
+
+  @override
+  String get purposeOtherSideLine =>
+      'You took a side. Here is the best case against it';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'You said $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return 'The case for “$side”';
+  }
+
+  @override
+  String get purposeMechanism => 'The mechanism';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return 'Updated $date';
+  }
+
+  @override
+  String get purposeMovingYears => 'Could change in a few years';
+
+  @override
+  String get purposeMovingMonths => 'Could change this year';
+
+  @override
+  String get purposeWhy => 'Ah, so that\'s why';
+
+  @override
+  String get purposeWhyLine => 'One mechanism, explained until it clicks';
+
+  @override
+  String purposeWhyBand(int n) {
+    return 'The why · $n min';
+  }
+
+  @override
+  String get purposeMe => 'That\'s me';
+
+  @override
+  String get purposeMeLine => 'Things you do without noticing';
+
+  @override
+  String get purposeMeFooter => 'Mark the cards that sound like you.';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards marked “That\'s me”.',
+      one: 'One card marked “That\'s me”.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => 'News to me, and about me';
+
+  @override
+  String get purposeAboutYouLine => 'Your body, your health, your odds';
+
+  @override
+  String get purposeHeadline => 'In a headline';
+
+  @override
+  String get purposeHeadlineLine =>
+      'Studies and claims that sound better than they are';
+
+  @override
+  String get purposeTheClaim => 'The claim';
+
+  @override
+  String get purposeNumber => 'In a number';
+
+  @override
+  String get purposeNumberLine =>
+      'Odds and percentages that need a second look';
+
+  @override
+  String get purposeOutOfWhat => 'Out of what?';
+
+  @override
+  String get purposeOffer => 'In an offer';
+
+  @override
+  String get purposeOfferLine => 'Prices, deals and who really pays';
+
+  @override
+  String get purposeArgument => 'In an argument';
+
+  @override
+  String get purposeArgumentLine => 'Where the reasoning slips';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'One question that catches most of these',
+      '2': 'Two questions that catch most of these',
+      '3': 'Three questions that catch most of these',
+      '4': 'Four questions that catch most of these',
+      '5': 'Five questions that catch most of these',
+      'other': '$n questions that catch most of these',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Money',
+      'work': 'Work and time',
+      'clock': 'Time',
+      'body': 'Your body',
+      'relationships': 'Relationships',
+      'belief': 'What you believe',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Am I paying for what I actually use?',
+      'work': 'What would make tomorrow easier to start?',
+      'clock': 'Where does my time actually go?',
+      'body': 'Is what I know about my body still true?',
+      'relationships': 'What do the people close to me actually need?',
+      'belief': 'How sure am I, and why?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Money',
+      'work': 'Work',
+      'clock': 'Time',
+      'body': 'Body',
+      'relationships': 'Relationships',
+      'belief': 'What I believe',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => 'What do you want better questions about?';
+
+  @override
+  String get purposeLifeFooter =>
+      'Pick any, and the cards that ask about it come up here.';
+
+  @override
+  String get purposeSpotTrick => 'Spot the trick';
+
+  @override
+  String get purposeSpotTrickLine => 'Which question would catch it?';
+
+  @override
+  String get purposePlayed => 'What you played today';
+
+  @override
+  String get purposePlayedOff => 'points off, on average';
+
+  @override
+  String get purposePlayedTricks => 'tricks spotted';
+
+  @override
+  String get purposePlayedAnswered => 'answered on a shelf';
+
+  @override
+  String get purposePlayedFooter =>
+      'Answers given on a shelf count in Your journey, like the ones from Today.';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n of $of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$n of $of read';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return 'All $n read. New ones join the set when the shelf comes round again.';
+  }
+
+  @override
+  String get purposeComplete => 'Complete';
+
+  @override
+  String get purposeStampsFooter => 'Each card you read adds its stamp.';
+
+  @override
+  String get purposeSets => 'Your sets';
+
+  @override
+  String get purposeSetsLine =>
+      'Reading counts. You don\'t have to answer to fill a set.';
+
+  @override
+  String get purposeTomorrow => 'Tomorrow on the shelves';
+
+  @override
+  String get purposeTomorrowLine =>
+      'The shelves change every day. These come next';
+
+  @override
+  String get purposeEnd => 'That\'s the bottom of Explore';
+
+  @override
+  String get purposeEndLine => 'See you tomorrow';
+
+  @override
+  String get betsRangeTitle => 'Bet a range';
+
+  @override
+  String get betsRangeLine =>
+      'The narrower you go, the more it pays, if you\'re right';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts pts';
+  }
+
+  @override
+  String get betsBet => 'Bet';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return 'In range: +$pts points. It is $said.';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return 'Missed: it is $said.';
+  }
+
+  @override
+  String get betsYourGuess => 'Your guess';
+
+  @override
+  String get betsAnsweredAlready => 'Answered already';
+
+  @override
+  String get betsOpenCard => 'Open the card';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n points left today',
+      one: '1 point left today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => 'Your bet slip';
+
+  @override
+  String betsSlipToday(String points) {
+    return '$points today';
+  }
+
+  @override
+  String get betsSlipEmpty => 'No bets yet. Each one you place lands here.';
+
+  @override
+  String get betsSlipTipTwice =>
+      'Go narrow when you\'re sure: it pays twice as much.';
+
+  @override
+  String get betsSlipTipThrice =>
+      'Go narrow when you\'re sure: it pays three times as much.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: 'Go narrow when you\'re sure: it pays $times times as much.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return 'Narrow bets right: $right of $n.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return 'Right on $right of $n, at $pct% sure on average.';
+  }
+
+  @override
+  String get betsRight => 'Right';
+
+  @override
+  String get betsWrong => 'Wrong';
+
+  @override
+  String betsOneIn(String n) {
+    return '1 in $n';
+  }
+
+  @override
+  String get betsOneInLabel => '1 in';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$right of $steps';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return 'You got $right of $steps.';
+  }
+
+  @override
+  String get betsStakeTitle => 'Place your bet';
+
+  @override
+  String betsStakeLine(int points) {
+    return '$points points a day. Win and you double your stake';
+  }
+
+  @override
+  String get betsStakeLabel => 'Stake';
+
+  @override
+  String betsBetN(int n) {
+    return 'Bet $n';
+  }
+
+  @override
+  String get betsPickFirst => 'Pick one first';
+
+  @override
+  String get betsNotEnough => 'Not enough points';
+
+  @override
+  String betsWin(int n) {
+    return 'You win $n.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return 'You lose $n.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return 'You were $pct% sure.';
+  }
+
+  @override
+  String get betsFriendTitle => 'Bet a friend';
+
+  @override
+  String get betsFriendLine =>
+      'Send them a question, then compare your guesses';
+
+  @override
+  String get betsFriendNote =>
+      'Your guess stays on your phone. The card goes with its answer, so ask for theirs first.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return 'You said $said. The card goes with its answer, so ask for their guess first.';
+  }
+
+  @override
+  String get betsFriendSend => 'Send to a friend';
+
+  @override
+  String get betsFriendCopy => 'Copy the question';
+
+  @override
+  String get betsFriendCopied => 'Question copied';
+
+  @override
+  String get betsFriendAsk => 'What do you say?';
+
+  @override
+  String get betsNumberTitle => 'Your number';
+
+  @override
+  String get betsNumberLine => 'Set it, lock it, see how far off you were';
+
+  @override
+  String get betsLock => 'Lock';
+
+  @override
+  String get betsSpotOn => 'Spot on.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return 'Close enough: off by $by.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return 'Off by $by.';
+  }
+
+  @override
+  String get betsYou => 'you';
+
+  @override
+  String get betsAnswer => 'answer';
+
+  @override
+  String get betsBiggerTitle => 'Which is bigger?';
+
+  @override
+  String get betsBiggerLine =>
+      'Two figures you can work out. Tap the bigger one';
+
+  @override
+  String get betsTapIfBigger => 'Tap if bigger';
+
+  @override
+  String get betsBiggerGotIt => 'Bigger · you got it';
+
+  @override
+  String get betsBigger => 'Bigger';
+
+  @override
+  String get betsYourPick => 'Your pick';
+
+  @override
+  String get betsOr => 'or';
+
+  @override
+  String get betsBiggerFoot =>
+      'Each figure is a card\'s answer. Once you pick, tap one to open its card.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return 'Right on $right of $n.';
+  }
+
+  @override
+  String get betsCloserTitle => 'Closer, closer';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Two steps of more or less to close in on the number',
+      '3': 'Three steps of more or less to close in on the number',
+      '4': 'Four steps of more or less to close in on the number',
+      '5': 'Five steps of more or less to close in on the number',
+      'other': '$steps steps of more or less to close in on the number',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Two steps to close in on it.',
+      '3': 'Three steps to close in on it.',
+      '4': 'Four steps to close in on it.',
+      '5': 'Five steps to close in on it.',
+      'other': '$steps steps to close in on it.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return 'More or less than $v?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return 'Step $at of $of';
+  }
+
+  @override
+  String get betsMore => 'More';
+
+  @override
+  String get betsLess => 'Less';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return 'Right: it is more than $v.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return 'Right: it is less than $v.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return 'No: it is more than $v.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return 'No: it is less than $v.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return 'It is exactly $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return 'It is $said. You got $right of $steps.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => 'Orders of magnitude';
+
+  @override
+  String get betsMagnitudeLine => 'Ten, a thousand or a million? Pick the size';
+
+  @override
+  String get betsMagnitudeRight => 'Right order of magnitude.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Off by $n orders of magnitude.',
+      one: 'Off by 1 order of magnitude.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => 'The bet of the day';
+
+  @override
+  String get betsDayLine => 'Lock in your guess, then see how far off you were';
+
+  @override
+  String get betsDayTag => 'Bet of the day';
+
+  @override
+  String get betsDayTagSame => 'Bet of the day · the same for everyone';
+
+  @override
+  String get betsLockIn => 'Lock in';
+
+  @override
+  String betsItIs(String said) {
+    return 'It is $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'You were $n percentage points off.',
+      one: 'You were 1 percentage point off.',
+      zero: 'Spot on.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screensQuoted(String text) {
+    return '“$text”';
+  }
+
+  @override
+  String get screensExpertTitle => 'Think like an expert';
+
+  @override
+  String get screensExpertLine =>
+      'The question each of them always asks, and the cards that need it';
+
+  @override
+  String get screensExpertStatistician => 'Statistician';
+
+  @override
+  String get screensExpertStatisticianAs => 'Think like a statistician';
+
+  @override
+  String get screensExpertStatisticianAsks =>
+      'Compared to what, and out of how many?';
+
+  @override
+  String get screensExpertEconomist => 'Economist';
+
+  @override
+  String get screensExpertEconomistAs => 'Think like an economist';
+
+  @override
+  String get screensExpertEconomistAsks =>
+      'Who pays, and what do they give up?';
+
+  @override
+  String get screensExpertHistorian => 'Historian';
+
+  @override
+  String get screensExpertHistorianAs => 'Think like a historian';
+
+  @override
+  String get screensExpertHistorianAsks => 'What did people know at the time?';
+
+  @override
+  String get screensExpertDoctor => 'Doctor';
+
+  @override
+  String get screensExpertDoctorAs => 'Think like a doctor';
+
+  @override
+  String get screensExpertDoctorAsks =>
+      'How common is it, and what else could it be?';
+
+  @override
+  String get screensExpertScientist => 'Scientist';
+
+  @override
+  String get screensExpertScientistAs => 'Think like a scientist';
+
+  @override
+  String get screensExpertScientistAsks =>
+      'How would we know if it were wrong?';
+
+  @override
+  String get screensDotsTitle => 'Connect the dots';
+
+  @override
+  String get screensDotsLine =>
+      'Pick a subject to see where it meets the others';
+
+  @override
+  String screensDotsMeets(int subjects, int cards) {
+    String _temp0 = intl.Intl.pluralLogic(
+      subjects,
+      locale: localeName,
+      other: 'Meets $subjects subjects',
+      one: 'Meets 1 subject',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: 'in $cards cards',
+      one: 'in 1 card',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String get screensDotsWhere => 'Where they meet';
+
+  @override
+  String get screensDotsWhereLine => 'One question, two ways of looking at it';
+
+  @override
+  String get screensAskTitle => 'What do you want to understand?';
+
+  @override
+  String get screensAskHint => 'Ask anything, or type a word';
+
+  @override
+  String get screensAskTry => 'Try';
+
+  @override
+  String get screensAskClear => 'Clear the question';
+
+  @override
+  String screensAskFound(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cards answer it',
+      one: '1 card answers it',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensAskNone => 'No card on that yet';
+
+  @override
+  String get screensAskNoneLine =>
+      'Keep the question. When a card answers it, it will be here, under the question.';
+
+  @override
+  String get screensAskKeep => 'Keep the question';
+
+  @override
+  String get screensAskKept => 'Kept';
+
+  @override
+  String get screensAskedTitle => 'Questions you asked';
+
+  @override
+  String get screensAskedLine => 'And the cards that answered them';
+
+  @override
+  String get screensAskedAnswered => 'Answered';
+
+  @override
+  String get screensAskedWaiting =>
+      'No card answers it yet. When one does, it will be here.';
+
+  @override
+  String get screensAskedForget => 'Forget this question';
+
+  @override
+  String get screensAskedForgotten => 'Question forgotten';
+
+  @override
+  String get screensWhyTitle => 'Keep asking why';
+
+  @override
+  String get screensWhyLine => 'Every answer raises the next question';
+
+  @override
+  String get screensWhyAsk => 'Why?';
+
+  @override
+  String screensWhyBottom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n whys deep.',
+      one: '1 why deep.',
+    );
+    return '$_temp0 That\'s the bottom of this one.';
+  }
+
+  @override
+  String get screensWhyAgain => 'Start again';
+
+  @override
+  String get screensWhyHoles => 'More rabbit holes';
+
+  @override
+  String get screensWhyHolesLine => 'Each one goes a few whys deep';
+
+  @override
+  String screensWhyCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n whys',
+      one: '1 why',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensWhyDeeper => 'Go deeper';
+
+  @override
+  String screensWhySource(String source) {
+    return 'Source: $source';
+  }
+
+  @override
+  String screensWhyDepth(int at, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      at,
+      locale: localeName,
+      other: '$at whys',
+      one: '1 why',
+    );
+    return '$_temp0 of $of';
+  }
+
+  @override
+  String get screensTimeTitle => 'Through time';
+
+  @override
+  String get screensTimeLine =>
+      'One age at a time, to this year. Drag to travel';
+
+  @override
+  String get screensTimeCaption =>
+      'Years ago. Each tick is ten times further back.';
+
+  @override
+  String get screensTimeNow => 'Now';
+
+  @override
+  String get screensTimeEarlier => 'Further back';
+
+  @override
+  String get screensTimeLater => 'Closer to now';
+
+  @override
+  String get screensEraAncient => 'The ancient world';
+
+  @override
+  String get screensEraAncientWhen => 'Before 500';
+
+  @override
+  String get screensEraMedieval => 'The Middle Ages';
+
+  @override
+  String get screensEraMedievalWhen => '500 to 1500';
+
+  @override
+  String get screensEraEarlyModern => 'The early modern age';
+
+  @override
+  String get screensEraEarlyModernWhen => '1500 to 1800';
+
+  @override
+  String get screensEraNineteenth => 'The nineteenth century';
+
+  @override
+  String get screensEraNineteenthWhen => '1800 to 1900';
+
+  @override
+  String get screensEraTwentieth => 'The last century';
+
+  @override
+  String get screensEraTwentiethWhen => '1900 to 2000';
+
+  @override
+  String get screensEraRecent => 'This century';
+
+  @override
+  String get screensEraRecentWhen => 'Since 2000';
+
+  @override
+  String get screensMindTitle => 'Change your mind';
+
+  @override
+  String get screensMindLine =>
+      'Say where you stand before you read, then again after';
+
+  @override
+  String get screensMindClaim => 'Claim';
+
+  @override
+  String get screensMindBefore => 'Before you read';
+
+  @override
+  String get screensMindTap => 'Tap where you stand';
+
+  @override
+  String get screensMindKnow => 'What we know';
+
+  @override
+  String get screensMindNow => 'And now?';
+
+  @override
+  String get screensMindAgain => 'Tap again';
+
+  @override
+  String screensMindLevel(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '0': 'Strongly disagree',
+      '1': 'Disagree',
+      '2': 'Not sure',
+      '3': 'Agree',
+      'other': 'Strongly agree',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String screensMindToward(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'You moved $n steps toward the evidence.',
+      one: 'You moved 1 step toward the evidence.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensMindSame => 'Same as before. One card is only one card.';
+
+  @override
+  String get screensMindAlready =>
+      'You were with the evidence before you read it.';
+
+  @override
+  String get screensMindAway =>
+      'You moved away from the evidence. Worth a second read.';
+
+  @override
+  String get screensMindFirst =>
+      'Say where you stand first. One tap, before you read.';
+
+  @override
+  String screensMindChanged(int changed, int total) {
+    return 'You changed your mind on $changed of $total.';
+  }
+
+  @override
+  String get screensMindFoot => 'A changed mind is a card that did its job.';
+
+  @override
+  String get screensSayTitle => 'Say it tonight';
+
+  @override
+  String get screensSayLine =>
+      'One line to bring to dinner. Tap once you\'ve said it';
+
+  @override
+  String get screensSayTonight => 'Tonight\'s line';
+
+  @override
+  String get screensSaySaid => 'I said it';
+
+  @override
+  String get screensSayDone => 'Said it';
+
+  @override
+  String screensSayWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'You said $n lines this week.',
+      one: 'You said 1 line this week.',
+      zero: 'Nothing said yet this week.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensSayCounts =>
+      'Every line you say also counts toward Top of the week.';
+
+  @override
+  String get screensFrontName => 'The Astute';
+
+  @override
+  String get screensFrontEdition => 'Today\'s edition';
+
+  @override
+  String get screensFrontSame => 'The same for everyone';
+
+  @override
+  String get screensFrontLead => 'The lead';
+
+  @override
+  String get screensFrontNumbers => 'In numbers';
+
+  @override
+  String get screensFrontCorrections => 'Corrections';
+
+  @override
+  String get screensFrontPuzzle => 'Puzzle of the day';
+
+  @override
+  String get screensFrontEnd => 'That\'s today\'s edition';
+
+  @override
+  String get screensFrontTomorrow => 'Tomorrow\'s is out in the morning';
 }

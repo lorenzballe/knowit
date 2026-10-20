@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/explore_mix.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/main.dart';
+import 'package:astuto/screens/explore_screen.dart';
 import 'package:astuto/state/explore_play.dart';
 
 /// Explore under the shelves that were always there, played: an answer
@@ -19,9 +20,14 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
+/// The shelves' own list: the first scroll that runs down inside Explore,
+/// and not one on the Today page built beside it.
 Finder _down() => find
-    .byWidgetPredicate(
-      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    .descendant(
+      of: find.byType(ExploreScreen),
+      matching: find.byWidgetPredicate(
+        (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+      ),
     )
     .first;
 
@@ -29,17 +35,25 @@ Finder _keyed(bool Function(String) test) => find.byWidgetPredicate(
   (w) => w.key is ValueKey<String> && test((w.key! as ValueKey<String>).value),
 );
 
-/// Scrolls the shelves until [target] is built, then brings it up.
+/// Scrolls the shelves until [target] is built, then brings it up. Moved by
+/// the list's own position rather than by a finger: a finger put down in
+/// the middle of the list lands on whatever card the day dealt there, and
+/// in the test's font, every letter a full square, some questions do not
+/// fit their tiles even at their smallest and scroll inside them. On a day
+/// one of those was under the finger, the tile took the drag, the list
+/// stopped a third of the way down and the shelves below it were never
+/// built (19 October 2026: the month's, a third of the way down).
 Future<void> _reach(WidgetTester tester, Finder target) async {
+  final ScrollPosition list = tester.state<ScrollableState>(_down()).position;
   for (var i = 0; i < 80 && target.evaluate().isEmpty; i++) {
-    await tester.drag(_down(), const Offset(0, -500));
+    list.jumpTo(math.min(list.pixels + 500, list.maxScrollExtent));
     await tester.pump();
   }
   expect(target, findsWidgets);
   await tester.ensureVisible(target.first);
   await _settle(tester);
   final double top = tester.getTopLeft(target.first).dy;
-  await tester.drag(_down(), Offset(0, -(top - 260)));
+  list.jumpTo((list.pixels + top - 260).clamp(0, list.maxScrollExtent));
   await _settle(tester);
 }
 

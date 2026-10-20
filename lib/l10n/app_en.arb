@@ -3253,5 +3253,1450 @@
  "whereYouLiveSwitchOn": "Switch it on",
  "@whereYouLiveSwitchOn": {
   "description": "The button on the Where you live shelf that asks the reader where they live."
+ },
+ "gateUpdateTitle": "Update Astute",
+ "@gateUpdateTitle": {
+  "description": "The title of the full screen that asks the reader to update, shown when the server says this build can no longer be used (app.gate: minBuild or blocked). Nothing of the app is behind it."
+ },
+ "gateUpdateLine": "This version can’t carry on. {store, select, apple{The new one is waiting in the App Store} google{The new one is waiting on Google Play} other{The new one is waiting in your app store}}, with your cards and your streak just as you left them.",
+ "@gateUpdateLine": {
+  "description": "Under the update screen's title. {store} is apple on an iPhone, google on Android, other elsewhere: where the new version is. The server can put its own words in its place (app.gate.message.hard).",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "gateUpdateButton": "Update",
+ "@gateUpdateButton": {
+  "description": "The update screen's button, and the update sheet's: opens Astute's page in the store."
+ },
+ "gateSoftTitle": "A new version of Astute is ready",
+ "@gateSoftTitle": {
+  "description": "The title of the sheet that says a newer version is out, once for each build the server suggests (app.gate.suggestBuild)."
+ },
+ "gateSoftLine": "{store, select, apple{It’s waiting in the App Store.} google{It’s waiting on Google Play.} other{It’s waiting in your app store.}} Updating takes a moment, and your cards and your streak stay just as they are.",
+ "@gateSoftLine": {
+  "description": "Under the update sheet's title. {store} is apple on an iPhone, google on Android, other elsewhere. The server can put its own words in its place (app.gate.message.soft).",
+  "placeholders": {
+   "store": {
+    "type": "String"
+   }
+  }
+ },
+ "gateSoftLater": "Later",
+ "@gateSoftLater": {
+  "description": "The update sheet's second answer: closes it, and it does not come back for this build."
+ },
+ "gatePauseTitle": "Astute is taking a short break",
+ "@gatePauseTitle": {
+  "description": "The title of the full screen shown while the server pauses the app, for an emergency such as a backend that is down (app.gate.pause)."
+ },
+ "gatePauseLine": "We’re putting something right behind the scenes. Everything you’ve done is safe. Try again in a little while.",
+ "@gatePauseLine": {
+  "description": "Under the pause screen's title. The server can put its own words in its place (app.gate.message.pause)."
+ },
+ "gatePauseTrying": "Trying again…",
+ "@gatePauseTrying": {
+  "description": "The pause screen's button while it asks the server again."
+ },
+ "gatePauseStill": "Still on a break. Try again in a few minutes.",
+ "@gatePauseStill": {
+  "description": "Under the pause screen's button, when asking again found the app still paused."
+ },
+ "purposeReadOrDoCount": "{toDo} to do, {toRead} to read",
+ "@purposeReadOrDoCount": {
+  "description": "Over the read-or-do shelves: how many of their cards ask the reader to do something, and how many are to read.",
+  "placeholders": {
+   "toDo": {
+    "type": "int"
+   },
+   "toRead": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeShelfCount": "{toDo} to do · {toRead} to read",
+ "@purposeShelfCount": {
+  "description": "Beside one read-or-do shelf: how many of its cards are to do and to read.",
+  "placeholders": {
+   "toDo": {
+    "type": "int"
+   },
+   "toRead": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeFilterToRead": "To read",
+ "@purposeFilterToRead": {
+  "description": "The read-or-do filter: only the cards to read. Short, it shares a small bar with two others."
+ },
+ "purposeFilterToDo": "To do",
+ "@purposeFilterToDo": {
+  "description": "The read-or-do filter: only the cards that ask something of the reader. Short."
+ },
+ "purposeVerb": "{verb, select, trueFalse{True or false} pick{Pick one} typeNumber{Type a number} bet{Bet the number} side{Pick a side} youFirst{You first} moveIt{Move it and watch} whatNext{What happens next?} spotTrick{Spot the trick} drawIt{Draw it} sortThem{Sort them} putInOrder{Put them in order} holdIt{Hold it} growSample{Grow a sample} askWhy{Ask why} sayPlainly{Say it plainly} pairUp{Pair them up} followClues{Follow the clues} look{Just look} listen{Listen} other{{verb}}}",
+ "@purposeVerb": {
+  "description": "What a card has the reader do, on a chip at its foot: answer true or false, pick an option, type a number, bet on a number, take a side, answer for yourself first, move a slider, guess what happens next, and the other ways a card can be played. Short: it sits on one line in a chip half a card wide.",
+  "placeholders": {
+   "verb": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeVerbRead": "Read · {n} min",
+ "@purposeVerbRead": {
+  "description": "On a card with nothing to answer: read it, and about how long it takes.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeCommitNote": "Answer here, then open the card to see if you were right. A guess you commit to stays with you longer.",
+ "@purposeCommitNote": {
+  "description": "Over the shelves where the reader answers before the card opens, beside a lock."
+ },
+ "purposeCommitTitle": "Answer first",
+ "@purposeCommitTitle": {
+  "description": "A shelf of cards answered on the shelf, before they open: true or false, a side, an amount."
+ },
+ "purposeCommitLine": "Say what you think, then open the card",
+ "@purposeCommitLine": {
+  "description": "Under Answer first."
+ },
+ "purposeInYourHeadLine": "A number to reach in your head",
+ "@purposeInYourHeadLine": {
+  "description": "Under Work it out, on a shelf of numbers worked out before the card opens."
+ },
+ "purposeInYourHead": "In your head",
+ "@purposeInYourHead": {
+  "description": "In the answer box on a card: work the number out in your head and type it. Small capitals."
+ },
+ "purposeMoveKicker": "A move",
+ "@purposeMoveKicker": {
+  "description": "Over a thinking move's name, set large in a box: what the box holds. Small capitals."
+ },
+ "purposeMoveNew": "New · +{points} when you have it down",
+ "@purposeMoveNew": {
+  "description": "On a thinking move the reader has not met yet: what it adds to their score once they have it down.",
+  "placeholders": {
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeMoveName": "{move, select, baseRate{Base rates} survivorship{Survivorship} regression{Regression to the mean} confirmation{Confirmation} anchoring{Anchoring} sampling{Sampling} confounding{Confounding} counterfactual{Compared to what} multipleComparisons{Multiple looks} availability{Availability} sunkCost{Sunk cost} conjunction{Conjunction} conditional{Conditional odds} independence{Independence} coincidence{Coincidence} exponential{Exponential growth} reflection{The quick answer} simpson{Aggregates} estimation{Estimation} computation{Working it out} other{{move}}}",
+ "@purposeMoveName": {
+  "description": "A thinking move's name: the trap or the skill a card trains, by its key. Short: set large on a box and on a button.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeMoveLine": "{move, select, baseRate{How accurate a test is, is not how likely you are} survivorship{The data you have is the data that survived} regression{Extremes drift back on their own} confirmation{Looking for a yes is not a test} anchoring{The first number said moves every number after} sampling{Who ended up in the sample decides what it can say} confounding{Something else may be causing both} counterfactual{A change means nothing without a control} multipleComparisons{Test enough things and one will pass} availability{Easy to picture is not the same as common} sunkCost{Spent is spent; only what is left can be decided} conjunction{Detail makes a story likelier and less probable} conditional{What you were told changes the odds} independence{Chance has no memory} coincidence{Rare things are common when there are many tries} exponential{Nobody has intuition for doubling} reflection{The answer that arrives first is the one to check} simpson{A whole can lean the way no part of it does} estimation{Break the unanswerable into things you can guess} computation{A problem you can actually finish} other{{move}}}",
+ "@purposeMoveLine": {
+  "description": "A thinking move in one line, under its name.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeMoveAsk": "{move, select, baseRate{How common was it to begin with?} survivorship{What never made it into the data?} regression{Is it just an extreme drifting back?} confirmation{What would prove me wrong?} anchoring{Which number came first?} sampling{Who got counted?} confounding{What else could cause both?} counterfactual{Compared to what?} multipleComparisons{How many things were tried?} availability{Is it common, or just easy to picture?} sunkCost{What is left to decide from here?} conjunction{Does each detail make it less likely?} conditional{What does knowing that change?} independence{Does the last result change the next?} coincidence{How many chances were there?} exponential{What happens when it doubles again?} reflection{Is the first answer the right one?} simpson{Does every part lean the same way?} estimation{What can I guess on the way there?} computation{Can I work it out step by step?} other{{move}}}",
+ "@purposeMoveAsk": {
+  "description": "The question each thinking move asks: what to ask of a claim to catch the trap. One short question.",
+  "placeholders": {
+   "move": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeStepAbove": "A step above",
+ "@purposeStepAbove": {
+  "description": "A shelf of cards a step harder than the reader's level in their subject."
+ },
+ "purposeStepAboveLine": "Harder than what you usually read",
+ "@purposeStepAboveLine": {
+  "description": "Under A step above."
+ },
+ "purposeThinTitle": "Thin for you: {subject}",
+ "@purposeThinTitle": {
+  "description": "A shelf of the subject the reader has read least of. {subject} is the subject's name.",
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeThinLine": "{percent}% of the {subject} shelf read, your least",
+ "@purposeThinLine": {
+  "description": "Under the thinnest subject's name: how much of its cards the reader has read, in per cent.",
+  "placeholders": {
+   "percent": {
+    "type": "int"
+   },
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeOtherSide": "The other side",
+ "@purposeOtherSide": {
+  "description": "A shelf of the debates the reader took a side on, each opening on the case against it."
+ },
+ "purposeOtherSideLine": "You took a side. Here is the best case against it",
+ "@purposeOtherSideLine": {
+  "description": "Under The other side."
+ },
+ "purposeYouSaid": "You said {side}",
+ "@purposeYouSaid": {
+  "description": "On a debate the reader answered: the side they took, in a small badge. {side} is the side's word, from the card (Yes, No).",
+  "placeholders": {
+   "side": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeCaseFor": "The case for “{side}”",
+ "@purposeCaseFor": {
+  "description": "On a debate the reader answered: the button that opens the card on the other side's case. {side} is that side's word, from the card.",
+  "placeholders": {
+   "side": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeMechanism": "The mechanism",
+ "@purposeMechanism": {
+  "description": "At the foot of a card on How it really works: what the card explains. Small capitals."
+ },
+ "purposeMovingUpdated": "Updated {date}",
+ "@purposeMovingUpdated": {
+  "description": "Across the top of a card about something still changing: when it was last brought up to date. {date} is a short date, 4 Oct.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeMovingYears": "Could change in a few years",
+ "@purposeMovingYears": {
+  "description": "Across the top of a card whose answer could go stale within a few years."
+ },
+ "purposeMovingMonths": "Could change this year",
+ "@purposeMovingMonths": {
+  "description": "Across the top of a card whose answer could go stale within the year."
+ },
+ "purposeWhy": "Ah, so that's why",
+ "@purposeWhy": {
+  "description": "A shelf of cards that each explain one mechanism: the feeling of finally understanding why."
+ },
+ "purposeWhyLine": "One mechanism, explained until it clicks",
+ "@purposeWhyLine": {
+  "description": "Under Ah, so that's why."
+ },
+ "purposeWhyBand": "The why · {n} min",
+ "@purposeWhyBand": {
+  "description": "At the foot of a card on Ah, so that's why: the why it explains, and how long it takes. Small capitals.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeMe": "That's me",
+ "@purposeMe": {
+  "description": "A shelf of cards about habits the reader may recognise in themselves, and the button on each to say so."
+ },
+ "purposeMeLine": "Things you do without noticing",
+ "@purposeMeLine": {
+  "description": "Under That's me."
+ },
+ "purposeMeFooter": "Mark the cards that sound like you.",
+ "@purposeMeFooter": {
+  "description": "Beside the count of cards the reader marked That's me."
+ },
+ "purposeMeMarked": "{n, plural, =1{One card marked “That's me”.} other{{n} cards marked “That's me”.}}",
+ "@purposeMeMarked": {
+  "description": "Beside the count, once the reader has marked cards That's me today.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeAboutYou": "News to me, and about me",
+ "@purposeAboutYou": {
+  "description": "A shelf of discoveries about the reader's own body and health."
+ },
+ "purposeAboutYouLine": "Your body, your health, your odds",
+ "@purposeAboutYouLine": {
+  "description": "Under News to me, and about me."
+ },
+ "purposeHeadline": "In a headline",
+ "@purposeHeadline": {
+  "description": "A shelf of claims and studies set like newspaper headlines."
+ },
+ "purposeHeadlineLine": "Studies and claims that sound better than they are",
+ "@purposeHeadlineLine": {
+  "description": "Under In a headline."
+ },
+ "purposeTheClaim": "The claim",
+ "@purposeTheClaim": {
+  "description": "Over a headline on a card: what it is. Small capitals."
+ },
+ "purposeNumber": "In a number",
+ "@purposeNumber": {
+  "description": "A shelf of figures that need a second look: odds, percentages."
+ },
+ "purposeNumberLine": "Odds and percentages that need a second look",
+ "@purposeNumberLine": {
+  "description": "Under In a number."
+ },
+ "purposeOutOfWhat": "Out of what?",
+ "@purposeOutOfWhat": {
+  "description": "Under a figure set large on a card: the question to ask of it. Small capitals."
+ },
+ "purposeOffer": "In an offer",
+ "@purposeOffer": {
+  "description": "A shelf of cards drawn as price tags: prices, deals and who pays."
+ },
+ "purposeOfferLine": "Prices, deals and who really pays",
+ "@purposeOfferLine": {
+  "description": "Under In an offer."
+ },
+ "purposeArgument": "In an argument",
+ "@purposeArgument": {
+  "description": "A shelf of cards drawn as speech bubbles: arguments and where they go wrong."
+ },
+ "purposeArgumentLine": "Where the reasoning slips",
+ "@purposeArgumentLine": {
+  "description": "Under In an argument."
+ },
+ "purposeKeepHeading": "{n, select, 1{One question that catches most of these} 2{Two questions that catch most of these} 3{Three questions that catch most of these} 4{Four questions that catch most of these} 5{Five questions that catch most of these} other{{n} questions that catch most of these}}",
+ "@purposeKeepHeading": {
+  "description": "Over a short list of questions, each one a thinking move, that catch most of the tricks on the shelves above. {n} is how many, 1 to 5.",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeLifeAbout": "{topic, select, money{Money} work{Work and time} clock{Time} body{Your body} relationships{Relationships} belief{What you believe} other{{topic}}}",
+ "@purposeLifeAbout": {
+  "description": "What a question for the reader's own life is about, in small capitals over it: money, work and time, time, the body, relationships, beliefs.",
+  "placeholders": {
+   "topic": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeLifeQuestion": "{topic, select, money{Am I paying for what I actually use?} work{What would make tomorrow easier to start?} clock{Where does my time actually go?} body{Is what I know about my body still true?} relationships{What do the people close to me actually need?} belief{How sure am I, and why?} other{{topic}}}",
+ "@purposeLifeQuestion": {
+  "description": "A question for the reader to ask of their own life, set large over the cards that ask it, by what it is about.",
+  "placeholders": {
+   "topic": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeLifeChip": "{topic, select, money{Money} work{Work} clock{Time} body{Body} relationships{Relationships} belief{What I believe} other{{topic}}}",
+ "@purposeLifeChip": {
+  "description": "A chip the reader picks to say what they want better questions about. Short.",
+  "placeholders": {
+   "topic": {
+    "type": "String"
+   }
+  }
+ },
+ "purposeLifeAsk": "What do you want better questions about?",
+ "@purposeLifeAsk": {
+  "description": "Over the chips that pick what the reader wants better questions about."
+ },
+ "purposeLifeFooter": "Pick any, and the cards that ask about it come up here.",
+ "@purposeLifeFooter": {
+  "description": "Under those chips: picking one shows its cards just below."
+ },
+ "purposeSpotTrick": "Spot the trick",
+ "@purposeSpotTrick": {
+  "description": "A shelf of cards where the reader picks the thinking move that would catch the trick in each."
+ },
+ "purposeSpotTrickLine": "Which question would catch it?",
+ "@purposeSpotTrickLine": {
+  "description": "Under Spot the trick."
+ },
+ "purposePlayed": "What you played today",
+ "@purposePlayed": {
+  "description": "Over what the reader played on Explore's shelves today."
+ },
+ "purposePlayedOff": "points off, on average",
+ "@purposePlayedOff": {
+  "description": "Under a number: how far off the reader's guesses on a slider were, on average, in points."
+ },
+ "purposePlayedTricks": "tricks spotted",
+ "@purposePlayedTricks": {
+  "description": "Under a count like 2 of 3: the tricks the reader spotted on the shelf."
+ },
+ "purposePlayedAnswered": "answered on a shelf",
+ "@purposePlayedAnswered": {
+  "description": "Under a number: cards the reader answered on a shelf rather than on the card."
+ },
+ "purposePlayedFooter": "Answers given on a shelf count in Your journey, like the ones from Today.",
+ "@purposePlayedFooter": {
+  "description": "Under what was played: answers given on a shelf count in the reader's journey. Your journey and Today are the names of two screens."
+ },
+ "purposeOf": "{n} of {of}",
+ "@purposeOf": {
+  "description": "A count out of a total, short: 2 of 3, 7 of 12.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeSetRead": "{n} of {of} read",
+ "@purposeSetRead": {
+  "description": "Beside a set of cards to finish: how many of them the reader has read.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeSetDone": "All {n} read. New ones join the set when the shelf comes round again.",
+ "@purposeSetDone": {
+  "description": "A set the reader has read every card of. {n} is how many cards.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "purposeComplete": "Complete",
+ "@purposeComplete": {
+  "description": "A set the reader has finished, on its ring."
+ },
+ "purposeStampsFooter": "Each card you read adds its stamp.",
+ "@purposeStampsFooter": {
+  "description": "Under a set drawn as stamps, one for each card."
+ },
+ "purposeSets": "Your sets",
+ "@purposeSets": {
+  "description": "A grid of every set of cards and how far along the reader is with each."
+ },
+ "purposeSetsLine": "Reading counts. You don't have to answer to fill a set.",
+ "@purposeSetsLine": {
+  "description": "Under Your sets."
+ },
+ "purposeTomorrow": "Tomorrow on the shelves",
+ "@purposeTomorrow": {
+  "description": "Near the bottom of Explore: the shelves that come tomorrow."
+ },
+ "purposeTomorrowLine": "The shelves change every day. These come next",
+ "@purposeTomorrowLine": {
+  "description": "Under Tomorrow on the shelves."
+ },
+ "purposeEnd": "That's the bottom of Explore",
+ "@purposeEnd": {
+  "description": "The last line of Explore, at the very bottom. Explore is the name of the tab."
+ },
+ "purposeEndLine": "See you tomorrow",
+ "@purposeEndLine": {
+  "description": "Under the last line of Explore."
+ },
+ "betsRangeTitle": "Bet a range",
+ "@betsRangeTitle": {
+  "description": "Explore, bets: the name of the shelf where a share is bet on with a range, narrow or wide."
+ },
+ "betsRangeLine": "The narrower you go, the more it pays, if you're right",
+ "@betsRangeLine": {
+  "description": "Under the shelf's name: a narrow range pays more, but only when the answer is in it."
+ },
+ "betsRangeWidth": "±{w} · {pts} pts",
+ "@betsRangeWidth": {
+  "description": "One of the range widths: plus or minus w percentage points either side of the guess, and the points it pays when the answer is in it. Short: it sits in a chip.",
+  "placeholders": {
+   "w": {
+    "type": "int"
+   },
+   "pts": {
+    "type": "int"
+   }
+  }
+ },
+ "betsBet": "Bet",
+ "@betsBet": {
+  "description": "The button that lays a range bet."
+ },
+ "betsInRange": "In range: +{pts} points. It is {said}.",
+ "@betsInRange": {
+  "description": "After a range bet whose range held the answer: the points won, and the answer, said as a share (\"21%\").",
+  "placeholders": {
+   "pts": {
+    "type": "int"
+   },
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsMissedRange": "Missed: it is {said}.",
+ "@betsMissedRange": {
+  "description": "After a range bet whose range missed the answer: the answer, said as a share.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsYourGuess": "Your guess",
+ "@betsYourGuess": {
+  "description": "What a screen reader calls the track a share is set on."
+ },
+ "betsAnsweredAlready": "Answered already",
+ "@betsAnsweredAlready": {
+  "description": "On a bet whose card the reader already answered somewhere else: nothing left to bet on."
+ },
+ "betsOpenCard": "Open the card",
+ "@betsOpenCard": {
+  "description": "What a screen reader says a settled bet's tile does when tapped."
+ },
+ "betsWalletSays": "{n, plural, =1{1 point left today} other{{n} points left today}}",
+ "@betsWalletSays": {
+  "description": "What a screen reader says for the points pill beside a shelf of bets: the points left of the day's hundred.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsSlipTitle": "Your bet slip",
+ "@betsSlipTitle": {
+  "description": "The panel listing every bet laid today."
+ },
+ "betsSlipToday": "{points} today",
+ "@betsSlipToday": {
+  "description": "Beside the slip's name: the points won or lost today, already signed (\"+30\", \"−10\").",
+  "placeholders": {
+   "points": {
+    "type": "String"
+   }
+  }
+ },
+ "betsSlipEmpty": "No bets yet. Each one you place lands here.",
+ "@betsSlipEmpty": {
+  "description": "The slip before any bet is laid."
+ },
+ "betsSlipTipTwice": "Go narrow when you're sure: it pays twice as much.",
+ "@betsSlipTipTwice": {
+  "description": "At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays twice what the widest does."
+ },
+ "betsSlipTipThrice": "Go narrow when you're sure: it pays three times as much.",
+ "@betsSlipTipThrice": {
+  "description": "At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays three times what the widest does."
+ },
+ "betsSlipTipTimes": "{times, plural, other{Go narrow when you're sure: it pays {times} times as much.}}",
+ "@betsSlipTipTimes": {
+  "description": "At the foot of the slip under the range bets, before any narrow bet: how many times more the narrowest range pays than the widest, four or more.",
+  "placeholders": {
+   "times": {
+    "type": "int"
+   }
+  }
+ },
+ "betsSlipNarrow": "Narrow bets right: {right} of {n}.",
+ "@betsSlipNarrow": {
+  "description": "At the foot of the slip: how many of the narrowest range bets held the answer.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsSlipSure": "Right on {right} of {n}, at {pct}% sure on average.",
+ "@betsSlipSure": {
+  "description": "At the foot of the slip: of the bets laid with how sure, how many were right, and how sure the reader said they were on average.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "betsRight": "Right",
+ "@betsRight": {
+  "description": "What a screen reader says for the tick beside a bet on the slip that was right."
+ },
+ "betsWrong": "Wrong",
+ "@betsWrong": {
+  "description": "What a screen reader says for the cross beside a bet on the slip that was wrong."
+ },
+ "betsOneIn": "1 in {n}",
+ "@betsOneIn": {
+  "description": "Odds, as a bet on them is said again on the slip and to a screen reader: \"1 in 1K\".",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "betsOneInLabel": "1 in",
+ "@betsOneInLabel": {
+  "description": "Small capitals over a row of odds to pick from, whose notches say only the n of \"1 in n\": 10, 100, 1K."
+ },
+ "betsScore": "{right} of {steps}",
+ "@betsScore": {
+  "description": "A game of more or less, as the slip says it: how many steps were said right.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "betsScoreSentence": "You got {right} of {steps}.",
+ "@betsScoreSentence": {
+  "description": "After a game of more or less that ended early on the answer itself: how many steps were said right.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "betsStakeTitle": "Place your bet",
+ "@betsStakeTitle": {
+  "description": "Explore, bets: the name of the shelf where points are staked on one of three amounts."
+ },
+ "betsStakeLine": "{points} points a day. Win and you double your stake",
+ "@betsStakeLine": {
+  "description": "Under the shelf's name: the points a day starts with, and what a winning stake pays.",
+  "placeholders": {
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "betsStakeLabel": "Stake",
+ "@betsStakeLabel": {
+  "description": "Small capitals before the stakes to choose from (10, 20, 30)."
+ },
+ "betsBetN": "Bet {n}",
+ "@betsBetN": {
+  "description": "The button that lays a stake of n points.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsPickFirst": "Pick one first",
+ "@betsPickFirst": {
+  "description": "Where the stake button will be, before an amount is picked."
+ },
+ "betsNotEnough": "Not enough points",
+ "@betsNotEnough": {
+  "description": "Where the stake button would be, when the stake is more than the points left."
+ },
+ "betsWin": "You win {n}.",
+ "@betsWin": {
+  "description": "After a stake on the right amount: the points won.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsLose": "You lose {n}.",
+ "@betsLose": {
+  "description": "After a stake on a wrong amount: the points lost.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsYouWereSure": "You were {pct}% sure.",
+ "@betsYouWereSure": {
+  "description": "After a bet laid with how sure: how sure the reader said they were.",
+  "placeholders": {
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "betsFriendTitle": "Bet a friend",
+ "@betsFriendTitle": {
+  "description": "Explore, bets: the name of the shelf that sends a card to a friend to guess."
+ },
+ "betsFriendLine": "Send them a question, then compare your guesses",
+ "@betsFriendLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsFriendNote": "Your guess stays on your phone. The card goes with its answer, so ask for theirs first.",
+ "@betsFriendNote": {
+  "description": "Under the card about to be sent: the reader's guess is not sent, and the card is sent with its answer."
+ },
+ "betsFriendNoteSaid": "You said {said}. The card goes with its answer, so ask for their guess first.",
+ "@betsFriendNoteSaid": {
+  "description": "Under the card about to be sent, once the reader bet on it: what they said, and that the card goes with its answer.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsFriendSend": "Send to a friend",
+ "@betsFriendSend": {
+  "description": "Opens the share sheet for the card."
+ },
+ "betsFriendCopy": "Copy the question",
+ "@betsFriendCopy": {
+  "description": "Copies the card's question and its options, without the answer."
+ },
+ "betsFriendCopied": "Question copied",
+ "@betsFriendCopied": {
+  "description": "Said once the question is copied."
+ },
+ "betsFriendAsk": "What do you say?",
+ "@betsFriendAsk": {
+  "description": "Under a question copied to send to a friend: asking for their guess."
+ },
+ "betsNumberTitle": "Your number",
+ "@betsNumberTitle": {
+  "description": "Explore, bets: the name of the shelf where a number is set on steppers and locked; also what a screen reader calls the number being set."
+ },
+ "betsNumberLine": "Set it, lock it, see how far off you were",
+ "@betsNumberLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsLock": "Lock",
+ "@betsLock": {
+  "description": "The button that locks a number set on steppers. Short: it sits beside four steppers."
+ },
+ "betsSpotOn": "Spot on.",
+ "@betsSpotOn": {
+  "description": "After a number locked exactly on the answer."
+ },
+ "betsCloseEnough": "Close enough: off by {by}.",
+ "@betsCloseEnough": {
+  "description": "After a number off by less than the card allows, so still right: by how much, with its unit (\"0.1 tonnes\").",
+  "placeholders": {
+   "by": {
+    "type": "String"
+   }
+  }
+ },
+ "betsOffBy": "Off by {by}.",
+ "@betsOffBy": {
+  "description": "After a number off by more than the card allows: by how much, with its unit (\"23 studies\").",
+  "placeholders": {
+   "by": {
+    "type": "String"
+   }
+  }
+ },
+ "betsYou": "you",
+ "@betsYou": {
+  "description": "Under the scale a locked number is shown on: the ring is you. Lowercase."
+ },
+ "betsAnswer": "answer",
+ "@betsAnswer": {
+  "description": "Under the scale a locked number is shown on: the bar is the answer. Lowercase."
+ },
+ "betsBiggerTitle": "Which is bigger?",
+ "@betsBiggerTitle": {
+  "description": "Explore, bets: the name of the shelf of two hidden figures and a tap on the bigger."
+ },
+ "betsBiggerLine": "Two figures you can work out. Tap the bigger one",
+ "@betsBiggerLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsTapIfBigger": "Tap if bigger",
+ "@betsTapIfBigger": {
+  "description": "Small capitals on a hidden figure, before the pick."
+ },
+ "betsBiggerGotIt": "Bigger · you got it",
+ "@betsBiggerGotIt": {
+  "description": "Small capitals on the bigger figure, when it was the one picked."
+ },
+ "betsBigger": "Bigger",
+ "@betsBigger": {
+  "description": "Small capitals on the bigger figure, when the other was picked."
+ },
+ "betsYourPick": "Your pick",
+ "@betsYourPick": {
+  "description": "Small capitals on the figure picked, when it was the smaller."
+ },
+ "betsOr": "or",
+ "@betsOr": {
+  "description": "In the small disc between two figures to compare. Lowercase, as short as can be."
+ },
+ "betsBiggerFoot": "Each figure is a card's answer. Once you pick, tap one to open its card.",
+ "@betsBiggerFoot": {
+  "description": "Under the pairs of figures, before any pick."
+ },
+ "betsBiggerScore": "Right on {right} of {n}.",
+ "@betsBiggerScore": {
+  "description": "Under the pairs of figures: how many picks were right.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsCloserTitle": "Closer, closer",
+ "@betsCloserTitle": {
+  "description": "Explore, bets: the name of the shelf where a share is closed in on by saying more or less."
+ },
+ "betsCloserLine": "{steps, select, 2{Two steps of more or less to close in on the number} 3{Three steps of more or less to close in on the number} 4{Four steps of more or less to close in on the number} 5{Five steps of more or less to close in on the number} other{{steps} steps of more or less to close in on the number}}",
+ "@betsCloserLine": {
+  "description": "Under the shelf's name: how many steps a game takes, 2 to 5, given as text so each can be a word.",
+  "placeholders": {
+   "steps": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserStart": "{steps, select, 2{Two steps to close in on it.} 3{Three steps to close in on it.} 4{Four steps to close in on it.} 5{Five steps to close in on it.} other{{steps} steps to close in on it.}}",
+ "@betsCloserStart": {
+  "description": "On a game of more or less, before the first step: how many steps it takes, 2 to 5, given as text so each can be a word.",
+  "placeholders": {
+   "steps": {
+    "type": "String"
+   }
+  }
+ },
+ "betsMoreOrLess": "More or less than {v}?",
+ "@betsMoreOrLess": {
+  "description": "The question of a step: is the answer more or less than this share?",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsStepOf": "Step {at} of {of}",
+ "@betsStepOf": {
+  "description": "Small capitals beside the question: which step this is.",
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "betsMore": "More",
+ "@betsMore": {
+  "description": "The button that says the answer is more."
+ },
+ "betsLess": "Less",
+ "@betsLess": {
+  "description": "The button that says the answer is less."
+ },
+ "betsCloserYesMore": "Right: it is more than {v}.",
+ "@betsCloserYesMore": {
+  "description": "After a step said right: the answer is more than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserYesLess": "Right: it is less than {v}.",
+ "@betsCloserYesLess": {
+  "description": "After a step said right: the answer is less than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserNoMore": "No: it is more than {v}.",
+ "@betsCloserNoMore": {
+  "description": "After a step said wrong: the answer is more than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserNoLess": "No: it is less than {v}.",
+ "@betsCloserNoLess": {
+  "description": "After a step said wrong: the answer is less than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserExact": "It is exactly {said}.",
+ "@betsCloserExact": {
+  "description": "When the answer sits exactly on the share a step asked about, which ends the game.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserDone": "It is {said}. You got {right} of {steps}.",
+ "@betsCloserDone": {
+  "description": "At the end of a game of more or less: the answer, and how many steps were said right.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   },
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "betsMagnitudeTitle": "Orders of magnitude",
+ "@betsMagnitudeTitle": {
+  "description": "Explore, bets: the name of the shelf where a size is picked by its order of magnitude."
+ },
+ "betsMagnitudeLine": "Ten, a thousand or a million? Pick the size",
+ "@betsMagnitudeLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsMagnitudeRight": "Right order of magnitude.",
+ "@betsMagnitudeRight": {
+  "description": "After a size picked at the right order of magnitude."
+ },
+ "betsMagnitudeOff": "{n, plural, =1{Off by 1 order of magnitude.} other{Off by {n} orders of magnitude.}}",
+ "@betsMagnitudeOff": {
+  "description": "After a size picked at the wrong order of magnitude: by how many powers of ten.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsDayTitle": "The bet of the day",
+ "@betsDayTitle": {
+  "description": "Explore, bets: the name of the shelf with the bet of the day on top."
+ },
+ "betsDayLine": "Lock in your guess, then see how far off you were",
+ "@betsDayLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsDayTag": "Bet of the day",
+ "@betsDayTag": {
+  "description": "The tag over the bet of the day. Shown in small capitals."
+ },
+ "betsDayTagSame": "Bet of the day · the same for everyone",
+ "@betsDayTagSame": {
+  "description": "The tag over the bet of the day, where the server says every reader is given the same card. Shown in small capitals."
+ },
+ "betsLockIn": "Lock in",
+ "@betsLockIn": {
+  "description": "The button that locks a guess set on a track."
+ },
+ "betsItIs": "It is {said}.",
+ "@betsItIs": {
+  "description": "Once a guess is locked: the answer, said as a share.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsPointsOff": "{n, plural, =0{Spot on.} =1{You were 1 percentage point off.} other{You were {n} percentage points off.}}",
+ "@betsPointsOff": {
+  "description": "Once a guess on a share is locked: how far off it was, in percentage points.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensQuoted": "“{text}”",
+ "@screensQuoted": {
+  "description": "Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.",
+  "placeholders": {
+   "text": {
+    "type": "String"
+   }
+  }
+ },
+ "screensExpertTitle": "Think like an expert",
+ "@screensExpertTitle": {
+  "description": "Explore: the title of the shelf where the reader picks an expert and sees the question that expert always asks."
+ },
+ "screensExpertLine": "The question each of them always asks, and the cards that need it",
+ "@screensExpertLine": {
+  "description": "Explore: the line under 'Think like an expert'."
+ },
+ "screensExpertStatistician": "Statistician",
+ "@screensExpertStatistician": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip. Keep it to one or two words."
+ },
+ "screensExpertStatisticianAs": "Think like a statistician",
+ "@screensExpertStatisticianAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the statistician's question."
+ },
+ "screensExpertStatisticianAsks": "Compared to what, and out of how many?",
+ "@screensExpertStatisticianAsks": {
+  "description": "Explore, 'Think like an expert': the question a statistician always asks of a figure. Shown large, in quotation marks."
+ },
+ "screensExpertEconomist": "Economist",
+ "@screensExpertEconomist": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip."
+ },
+ "screensExpertEconomistAs": "Think like an economist",
+ "@screensExpertEconomistAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the economist's question."
+ },
+ "screensExpertEconomistAsks": "Who pays, and what do they give up?",
+ "@screensExpertEconomistAsks": {
+  "description": "Explore, 'Think like an expert': the question an economist always asks."
+ },
+ "screensExpertHistorian": "Historian",
+ "@screensExpertHistorian": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip."
+ },
+ "screensExpertHistorianAs": "Think like a historian",
+ "@screensExpertHistorianAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the historian's question."
+ },
+ "screensExpertHistorianAsks": "What did people know at the time?",
+ "@screensExpertHistorianAsks": {
+  "description": "Explore, 'Think like an expert': the question a historian always asks."
+ },
+ "screensExpertDoctor": "Doctor",
+ "@screensExpertDoctor": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip: a physician."
+ },
+ "screensExpertDoctorAs": "Think like a doctor",
+ "@screensExpertDoctorAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the doctor's question."
+ },
+ "screensExpertDoctorAsks": "How common is it, and what else could it be?",
+ "@screensExpertDoctorAsks": {
+  "description": "Explore, 'Think like an expert': the question a doctor always asks of a symptom."
+ },
+ "screensExpertScientist": "Scientist",
+ "@screensExpertScientist": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip."
+ },
+ "screensExpertScientistAs": "Think like a scientist",
+ "@screensExpertScientistAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the scientist's question."
+ },
+ "screensExpertScientistAsks": "How would we know if it were wrong?",
+ "@screensExpertScientistAsks": {
+  "description": "Explore, 'Think like an expert': the question a scientist always asks of a claim."
+ },
+ "screensDotsTitle": "Connect the dots",
+ "@screensDotsTitle": {
+  "description": "Explore: the title of the shelf where every card sits where two subjects meet."
+ },
+ "screensDotsLine": "Pick a subject to see where it meets the others",
+ "@screensDotsLine": {
+  "description": "Explore: the line under 'Connect the dots'."
+ },
+ "screensDotsMeets": "{subjects, plural, =1{Meets 1 subject} other{Meets {subjects} subjects}} {cards, plural, =1{in 1 card} other{in {cards} cards}}",
+ "@screensDotsMeets": {
+  "description": "Explore, 'Connect the dots': under the subject's name, how many other subjects it meets and in how many cards.",
+  "placeholders": {
+   "subjects": {
+    "type": "int"
+   },
+   "cards": {
+    "type": "int"
+   }
+  }
+ },
+ "screensDotsWhere": "Where they meet",
+ "@screensDotsWhere": {
+  "description": "Explore, 'Connect the dots': the title over the cards that sit between two subjects."
+ },
+ "screensDotsWhereLine": "One question, two ways of looking at it",
+ "@screensDotsWhereLine": {
+  "description": "Explore, 'Connect the dots': the line under 'Where they meet'."
+ },
+ "screensAskTitle": "What do you want to understand?",
+ "@screensAskTitle": {
+  "description": "Explore, 'Ask first': the large question over the field where the reader types a question."
+ },
+ "screensAskHint": "Ask anything, or type a word",
+ "@screensAskHint": {
+  "description": "Explore, 'Ask first': the hint inside the empty question field."
+ },
+ "screensAskTry": "Try",
+ "@screensAskTry": {
+  "description": "Explore, 'Ask first': small capitals before a few words the reader can tap to search for."
+ },
+ "screensAskClear": "Clear the question",
+ "@screensAskClear": {
+  "description": "Explore, 'Ask first': what a screen reader says for the button that empties the question field."
+ },
+ "screensAskFound": "{n, plural, =1{1 card answers it} other{{n} cards answer it}}",
+ "@screensAskFound": {
+  "description": "Explore, 'Ask first': over the cards that answer what the reader typed.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensAskNone": "No card on that yet",
+ "@screensAskNone": {
+  "description": "Explore, 'Ask first': when no card answers what the reader typed."
+ },
+ "screensAskNoneLine": "Keep the question. When a card answers it, it will be here, under the question.",
+ "@screensAskNoneLine": {
+  "description": "Explore, 'Ask first': under 'No card on that yet'. The question is kept on the phone and shown again with the first card that answers it."
+ },
+ "screensAskKeep": "Keep the question",
+ "@screensAskKeep": {
+  "description": "Explore, 'Ask first': the button that keeps a question no card answers yet."
+ },
+ "screensAskKept": "Kept",
+ "@screensAskKept": {
+  "description": "Explore, 'Ask first': the same button once the question is kept."
+ },
+ "screensAskedTitle": "Questions you asked",
+ "@screensAskedTitle": {
+  "description": "Explore: the title of the shelf that shows the questions the reader typed."
+ },
+ "screensAskedLine": "And the cards that answered them",
+ "@screensAskedLine": {
+  "description": "Explore: the line under 'Questions you asked'."
+ },
+ "screensAskedAnswered": "Answered",
+ "@screensAskedAnswered": {
+  "description": "Explore, 'Questions you asked': after the subject's name, in small capitals, on the card that answered a question."
+ },
+ "screensAskedWaiting": "No card answers it yet. When one does, it will be here.",
+ "@screensAskedWaiting": {
+  "description": "Explore, 'Questions you asked': under a kept question that no card answers yet."
+ },
+ "screensAskedForget": "Forget this question",
+ "@screensAskedForget": {
+  "description": "Explore, 'Questions you asked': the action, held down or from a screen reader, that removes a question the reader typed."
+ },
+ "screensAskedForgotten": "Question forgotten",
+ "@screensAskedForgotten": {
+  "description": "Explore, 'Questions you asked': the note shown once a question is removed, beside Undo."
+ },
+ "screensWhyTitle": "Keep asking why",
+ "@screensWhyTitle": {
+  "description": "Explore: the title of the shelf where every answer opens the next question."
+ },
+ "screensWhyLine": "Every answer raises the next question",
+ "@screensWhyLine": {
+  "description": "Explore: the line under 'Keep asking why'."
+ },
+ "screensWhyAsk": "Why?",
+ "@screensWhyAsk": {
+  "description": "Explore, 'Keep asking why': the button that opens the next question, and the small label between two answers."
+ },
+ "screensWhyBottom": "{n, plural, =1{1 why deep.} other{{n} whys deep.}} That's the bottom of this one.",
+ "@screensWhyBottom": {
+  "description": "Explore, 'Keep asking why': when the last answer of a chain is open.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensWhyAgain": "Start again",
+ "@screensWhyAgain": {
+  "description": "Explore, 'Keep asking why': the button that closes the chain back to its first question."
+ },
+ "screensWhyHoles": "More rabbit holes",
+ "@screensWhyHoles": {
+  "description": "Explore, 'Keep asking why': the title over the other chains of questions to start."
+ },
+ "screensWhyHolesLine": "Each one goes a few whys deep",
+ "@screensWhyHolesLine": {
+  "description": "Explore, 'Keep asking why': the line under 'More rabbit holes'."
+ },
+ "screensWhyCount": "{n, plural, =1{1 why} other{{n} whys}}",
+ "@screensWhyCount": {
+  "description": "Explore, 'Keep asking why': how many questions deep a chain goes, beside its first question.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensWhyDeeper": "Go deeper",
+ "@screensWhyDeeper": {
+  "description": "Explore, 'Keep asking why': small capitals over the cards that go further than the chain."
+ },
+ "screensWhySource": "Source: {source}",
+ "@screensWhySource": {
+  "description": "Explore, 'Keep asking why': where the answers of a chain come from, under its last answer.",
+  "placeholders": {
+   "source": {
+    "type": "String"
+   }
+  }
+ },
+ "screensWhyDepth": "{at, plural, =1{1 why} other{{at} whys}} of {of}",
+ "@screensWhyDepth": {
+  "description": "Explore, 'Keep asking why': what a screen reader says for the little meter of how deep the chain is open.",
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "screensTimeTitle": "Through time",
+ "@screensTimeTitle": {
+  "description": "Explore: the title of the shelf with a ruler of years to travel along."
+ },
+ "screensTimeLine": "One age at a time, to this year. Drag to travel",
+ "@screensTimeLine": {
+  "description": "Explore: the line under 'Through time'."
+ },
+ "screensTimeCaption": "Years ago. Each tick is ten times further back.",
+ "@screensTimeCaption": {
+  "description": "Explore, 'Through time': the caption under the ruler, which is drawn in powers of ten."
+ },
+ "screensTimeNow": "Now",
+ "@screensTimeNow": {
+  "description": "Explore, 'Through time': the label at the right end of the ruler of years."
+ },
+ "screensTimeEarlier": "Further back",
+ "@screensTimeEarlier": {
+  "description": "Explore, 'Through time': what a screen reader says for the button that goes to the age before."
+ },
+ "screensTimeLater": "Closer to now",
+ "@screensTimeLater": {
+  "description": "Explore, 'Through time': what a screen reader says for the button that goes to the age after."
+ },
+ "screensEraAncient": "The ancient world",
+ "@screensEraAncient": {
+  "description": "Explore, 'Through time': an age on the ruler, in small capitals."
+ },
+ "screensEraAncientWhen": "Before 500",
+ "@screensEraAncientWhen": {
+  "description": "Explore, 'Through time': when the ancient world was, shown large: the years before AD 500."
+ },
+ "screensEraMedieval": "The Middle Ages",
+ "@screensEraMedieval": {
+  "description": "Explore, 'Through time': an age on the ruler."
+ },
+ "screensEraMedievalWhen": "500 to 1500",
+ "@screensEraMedievalWhen": {
+  "description": "Explore, 'Through time': when the Middle Ages were, shown large."
+ },
+ "screensEraEarlyModern": "The early modern age",
+ "@screensEraEarlyModern": {
+  "description": "Explore, 'Through time': an age on the ruler: about 1500 to 1800."
+ },
+ "screensEraEarlyModernWhen": "1500 to 1800",
+ "@screensEraEarlyModernWhen": {
+  "description": "Explore, 'Through time': when the early modern age was, shown large."
+ },
+ "screensEraNineteenth": "The nineteenth century",
+ "@screensEraNineteenth": {
+  "description": "Explore, 'Through time': an age on the ruler."
+ },
+ "screensEraNineteenthWhen": "1800 to 1900",
+ "@screensEraNineteenthWhen": {
+  "description": "Explore, 'Through time': when the nineteenth century was, shown large."
+ },
+ "screensEraTwentieth": "The last century",
+ "@screensEraTwentieth": {
+  "description": "Explore, 'Through time': an age on the ruler: the twentieth century."
+ },
+ "screensEraTwentiethWhen": "1900 to 2000",
+ "@screensEraTwentiethWhen": {
+  "description": "Explore, 'Through time': when the last century was, shown large."
+ },
+ "screensEraRecent": "This century",
+ "@screensEraRecent": {
+  "description": "Explore, 'Through time': an age on the ruler: from 2000 to today."
+ },
+ "screensEraRecentWhen": "Since 2000",
+ "@screensEraRecentWhen": {
+  "description": "Explore, 'Through time': when this century began, shown large."
+ },
+ "screensMindTitle": "Change your mind",
+ "@screensMindTitle": {
+  "description": "Explore: the title of the shelf where the reader says where they stand on a claim before reading, and again after."
+ },
+ "screensMindLine": "Say where you stand before you read, then again after",
+ "@screensMindLine": {
+  "description": "Explore: the line under 'Change your mind'."
+ },
+ "screensMindClaim": "Claim",
+ "@screensMindClaim": {
+  "description": "Explore, 'Change your mind': after the subject's name, in small capitals: the sentence on the card is a claim to agree or disagree with."
+ },
+ "screensMindBefore": "Before you read",
+ "@screensMindBefore": {
+  "description": "Explore, 'Change your mind': small capitals over the first scale, from disagree to agree."
+ },
+ "screensMindTap": "Tap where you stand",
+ "@screensMindTap": {
+  "description": "Explore, 'Change your mind': beside the scale before the reader has tapped it."
+ },
+ "screensMindKnow": "What we know",
+ "@screensMindKnow": {
+  "description": "Explore, 'Change your mind': small capitals over the evidence, shown once the reader has said where they stand."
+ },
+ "screensMindNow": "And now?",
+ "@screensMindNow": {
+  "description": "Explore, 'Change your mind': small capitals over the second scale, after the evidence."
+ },
+ "screensMindAgain": "Tap again",
+ "@screensMindAgain": {
+  "description": "Explore, 'Change your mind': beside the second scale before it is tapped."
+ },
+ "screensMindLevel": "{level, select, 0{Strongly disagree} 1{Disagree} 2{Not sure} 3{Agree} other{Strongly agree}}",
+ "@screensMindLevel": {
+  "description": "Explore, 'Change your mind': the five places on the scale, from 0 (strongly disagree) to 4 (strongly agree). 1 and 3 also label the two ends of the scale.",
+  "placeholders": {
+   "level": {
+    "type": "String"
+   }
+  }
+ },
+ "screensMindToward": "{n, plural, =1{You moved 1 step toward the evidence.} other{You moved {n} steps toward the evidence.}}",
+ "@screensMindToward": {
+  "description": "Explore, 'Change your mind': when the second answer is nearer to what the evidence says than the first.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensMindSame": "Same as before. One card is only one card.",
+ "@screensMindSame": {
+  "description": "Explore, 'Change your mind': when the second answer is the same as the first and the first was not where the evidence is."
+ },
+ "screensMindAlready": "You were with the evidence before you read it.",
+ "@screensMindAlready": {
+  "description": "Explore, 'Change your mind': when both answers are where the evidence is."
+ },
+ "screensMindAway": "You moved away from the evidence. Worth a second read.",
+ "@screensMindAway": {
+  "description": "Explore, 'Change your mind': when the second answer is further from what the evidence says than the first."
+ },
+ "screensMindFirst": "Say where you stand first. One tap, before you read.",
+ "@screensMindFirst": {
+  "description": "Explore, 'Change your mind': the panel under the claims before any second answer is given."
+ },
+ "screensMindChanged": "You changed your mind on {changed} of {total}.",
+ "@screensMindChanged": {
+  "description": "Explore, 'Change your mind': the panel under the claims: on how many of the claims answered twice the second answer differed from the first.",
+  "placeholders": {
+   "changed": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "screensMindFoot": "A changed mind is a card that did its job.",
+ "@screensMindFoot": {
+  "description": "Explore, 'Change your mind': the small line in the panel under the claims."
+ },
+ "screensSayTitle": "Say it tonight",
+ "@screensSayTitle": {
+  "description": "Explore: the title of the shelf of lines to say to somebody at dinner."
+ },
+ "screensSayLine": "One line to bring to dinner. Tap once you've said it",
+ "@screensSayLine": {
+  "description": "Explore: the line under 'Say it tonight'."
+ },
+ "screensSayTonight": "Tonight's line",
+ "@screensSayTonight": {
+  "description": "Explore, 'Say it tonight': small capitals on the first and largest line, before the subject's name."
+ },
+ "screensSaySaid": "I said it",
+ "@screensSaySaid": {
+  "description": "Explore, 'Say it tonight': the button the reader taps once they have said the line to somebody."
+ },
+ "screensSayDone": "Said it",
+ "@screensSayDone": {
+  "description": "Explore, 'Say it tonight': the same button once tapped. It cannot be taken back."
+ },
+ "screensSayWeek": "{n, plural, =0{Nothing said yet this week.} =1{You said 1 line this week.} other{You said {n} lines this week.}}",
+ "@screensSayWeek": {
+  "description": "Explore, 'Say it tonight': how many lines the reader has said since Monday.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensSayCounts": "Every line you say also counts toward Top of the week.",
+ "@screensSayCounts": {
+  "description": "Explore, 'Say it tonight': under the count. 'Top of the week' is the name of Explore's ranked shelf."
+ },
+ "screensFrontName": "The Astute",
+ "@screensFrontName": {
+  "description": "Explore's front page: the name at the top, set like a newspaper's. A name, kept in English."
+ },
+ "screensFrontEdition": "Today's edition",
+ "@screensFrontEdition": {
+  "description": "Explore's front page: small capitals under the name, on the left."
+ },
+ "screensFrontSame": "The same for everyone",
+ "@screensFrontSame": {
+  "description": "Explore's front page: small capitals under the name, on the right."
+ },
+ "screensFrontLead": "The lead",
+ "@screensFrontLead": {
+  "description": "Explore's front page: after the subject's name on the first and largest story: a newspaper's lead story."
+ },
+ "screensFrontNumbers": "In numbers",
+ "@screensFrontNumbers": {
+  "description": "Explore's front page: small capitals over three figures."
+ },
+ "screensFrontCorrections": "Corrections",
+ "@screensFrontCorrections": {
+  "description": "Explore's front page: small capitals over a common belief that is wrong, like a newspaper's corrections column."
+ },
+ "screensFrontPuzzle": "Puzzle of the day",
+ "@screensFrontPuzzle": {
+  "description": "Explore's front page: small capitals over a question to work out."
+ },
+ "screensFrontEnd": "That's today's edition",
+ "@screensFrontEnd": {
+  "description": "Explore's front page: at the very end of the page."
+ },
+ "screensFrontTomorrow": "Tomorrow's is out in the morning",
+ "@screensFrontTomorrow": {
+  "description": "Explore's front page: under 'That's today's edition'."
  }
 }

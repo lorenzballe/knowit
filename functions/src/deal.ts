@@ -12,7 +12,7 @@
 // everybody's: the calendar's question and cards are kept, the same on both
 // sides, but no day deals them.
 
-import { Bank, Card, asks, graded, isDebate, isSunday, editionOf, expiredOn, genreOf, strandsOf, traitsOf } from './bank.js';
+import { Bank, Card, GRADED, asks, graded, isDebate, isSunday, editionOf, expiredOn, genreOf, strandsOf, traitsOf } from './bank.js';
 import { Place, PlaceFit, cardPlaceFromJson, fitRank, placeFit } from './place.js';
 import { Profile, dayNumberOf, reviewsDue, streakOn, weightsOn, readOnboarding } from './profile.js';
 import { rng, seedOf, shuffle } from './rng.js';
@@ -47,7 +47,8 @@ export function questionOfEdition(bank: Bank, edition: number): Card | null {
   const frozen = bank.editions.get(edition);
   const card = frozen ? bank.byId.get(frozen) : undefined;
   if (card && graded(card) && !card.disabled) return card;
-  const pool = bank.live.filter((c) => c.topic === 'thinking' && graded(c));
+  // A free card's page asks in its own way: never the question of the day, as the calendar has it.
+  const pool = bank.live.filter((c) => c.topic === 'thinking' && GRADED.has(c.kind));
   if (pool.length === 0) return null;
   // Past the calendar: a Thinking question clear of the ones the calendar
   // ended on, seeded by the edition so every server agrees with itself.

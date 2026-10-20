@@ -1,0 +1,352 @@
+{
+ "about": "Cases the app (test/explore/bets_answers_test.dart) and the remote checker (tool/remote/test_explore_bets.py) are both held to, so the checker's copy of how a card's answer is read as a bet cannot drift from the app's.",
+ "amounts": [
+  [
+   "About 28",
+   28.0,
+   false
+  ],
+  [
+   "About $1.2 million",
+   1200000.0,
+   false
+  ],
+  [
+   "40 cm",
+   40.0,
+   false
+  ],
+  [
+   "Nearly 10%",
+   10.0,
+   true
+  ],
+  [
+   "About 5% of the time",
+   5.0,
+   true
+  ],
+  [
+   "1,000",
+   1000.0,
+   false
+  ],
+  [
+   "−3",
+   -3.0,
+   false
+  ],
+  [
+   "About 4.5 per cent",
+   4.5,
+   true
+  ],
+  [
+   "3 bn",
+   3000000000.0,
+   false
+  ],
+  [
+   "2k",
+   2000.0,
+   false
+  ],
+  [
+   "1990s",
+   1990.0,
+   false
+  ],
+  [
+   "Between 10 and 20",
+   null,
+   false
+  ],
+  [
+   "10–20%",
+   null,
+   false
+  ],
+  [
+   "About 1,234.5 thousand",
+   1234500.0,
+   false
+  ],
+  [
+   "Roughly 3 trillion",
+   3000000000000.0,
+   false
+  ],
+  [
+   "12 percent of adults",
+   12.0,
+   true
+  ],
+  [
+   "about 50 %",
+   50.0,
+   true
+  ],
+  [
+   "Over 100 years",
+   100.0,
+   false
+  ],
+  [
+   "£45,000",
+   45000.0,
+   false
+  ],
+  [
+   "€2.49",
+   2.49,
+   false
+  ],
+  [
+   "¥100",
+   100.0,
+   false
+  ],
+  [
+   "About 300%",
+   300.0,
+   true
+  ],
+  [
+   "1.5x",
+   1.5,
+   false
+  ],
+  [
+   "0.01",
+   0.01,
+   false
+  ],
+  [
+   "Several",
+   null,
+   false
+  ],
+  [
+   "1 in 10",
+   null,
+   false
+  ],
+  [
+   "  About 7 days  ",
+   7.0,
+   false
+  ],
+  [
+   "just under 2 quadrillion",
+   2000000000000000.0,
+   false
+  ],
+  [
+   "5 kilos",
+   5.0,
+   false
+  ],
+  [
+   "10 km/h",
+   10.0,
+   false
+  ],
+  [
+   "About 1,000,000",
+   1000000.0,
+   false
+  ],
+  [
+   "1,00",
+   null,
+   false
+  ],
+  [
+   "12.5 %",
+   12.5,
+   true
+  ],
+  [
+   "3 per cent",
+   3.0,
+   true
+  ]
+ ],
+ "odds": [
+  [
+   "1 in 10",
+   10.0
+  ],
+  [
+   "About 1 in 1,000",
+   1000.0
+  ],
+  [
+   "1 in 2 million",
+   2000000.0
+  ],
+  [
+   "1 in 0.5",
+   null
+  ],
+  [
+   "Roughly 1 in 3",
+   3.0
+  ],
+  [
+   "2 in 10",
+   null
+  ],
+  [
+   "1 in a million",
+   null
+  ],
+  [
+   "nearly 1 in 4 thousand",
+   4000.0
+  ],
+  [
+   "1 in 10 people",
+   null
+  ]
+ ],
+ "cards": {
+  "language-spin-2": [
+   "bets-friend",
+   "bets-magnitude",
+   "bets-slip",
+   "bets-stake"
+  ],
+  "art-who-gets-in-museums-1": [
+   "bets-bigger",
+   "bets-closer",
+   "bets-friend",
+   "bets-slip",
+   "bets-stake"
+  ],
+  "art-motives-2": [
+   "bets-friend",
+   "bets-slip",
+   "bets-stake"
+  ],
+  "psychology-why-we-dream-9": [
+   "bets-bigger",
+   "bets-closer",
+   "bets-day",
+   "bets-friend",
+   "bets-magnitude",
+   "bets-range",
+   "bets-slip"
+  ],
+  "art-marble-3": [
+   "bets-friend",
+   "bets-magnitude",
+   "bets-slip"
+  ],
+  "history-hygiene-2": [
+   "bets-friend",
+   "bets-slip"
+  ],
+  "art-abstraction-10": [],
+  "art-abstraction-1": [],
+  "art-abstraction-4": [],
+  "art-detection-9": [
+   "bets-bigger",
+   "bets-closer",
+   "bets-day",
+   "bets-friend",
+   "bets-range",
+   "bets-slip"
+  ],
+  "art-art-and-money-3": [
+   "bets-friend",
+   "bets-number",
+   "bets-slip"
+  ],
+  "cinema-sequels-3": [
+   "bets-friend",
+   "bets-slip"
+  ],
+  "maths-area-and-volume-4": [
+   "bets-friend",
+   "bets-number",
+   "bets-slip"
+  ],
+  "philosophy-certainty-8": [
+   "bets-friend",
+   "bets-slip"
+  ],
+  "space-tides-9": [
+   "bets-friend",
+   "bets-slip"
+  ]
+ },
+ "plain": [
+  [
+   50.0,
+   "50"
+  ],
+  [
+   0.1,
+   "0.1"
+  ],
+  [
+   1000000000000000.0,
+   "1000000000000000"
+  ],
+  [
+   2.5,
+   "2.5"
+  ],
+  [
+   -3.0,
+   "-3"
+  ],
+  [
+   1234567.125,
+   "1234567.125"
+  ],
+  [
+   1e-06,
+   "0.000001"
+  ],
+  [
+   0.3333333333333333,
+   "0.333333"
+  ],
+  [
+   1e-07,
+   "0"
+  ],
+  [
+   100.0,
+   "100"
+  ]
+ ],
+ "units": [
+  [
+   "",
+   0.6689221884589642
+  ],
+  [
+   "a",
+   0.10352621669881046
+  ],
+  [
+   "notch:art-marble-3",
+   0.13010168401524425
+  ],
+  [
+   "big:art-art-and-money-3",
+   0.16995830717496574
+  ],
+  [
+   "start:x",
+   0.15181264374405146
+  ],
+  [
+   "é",
+   0.7303403860423714
+  ]
+ ]
+}

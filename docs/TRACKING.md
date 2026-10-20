@@ -43,6 +43,14 @@ will find in six months.
   profilo, nessuna traccia, e un test lo controlla. Gli eventi sono cinque
   (`place asked`, `place answered`, `location permission answered`, `place
   set`, `place removed`) e pesano pochi eventi per lettore, in tutto.
+- **Dal server.** A ogni apertura l'app chiede al server cosa è cambiato
+  (`remote refreshed`). Quando un esperimento dà una variante a un lettore
+  lo dice una volta per sessione (`experiment exposed`), e la variante resta
+  sul profilo e su ogni evento successivo (`experiment_<nome>`). Il blocco
+  degli aggiornamenti dice quando si mostra (`update gate shown`) e quando
+  si riprova (`pause retried`); il foglio della nuova versione quando la
+  propone e cosa si risponde (`update suggested`, `update suggestion
+  answered`); `update store opened` quando si apre lo store. Sezione 6.13.
 - **Cambiato:** `card flipped` non va più a PostHog (resta nella traccia):
   le girate ora sono dentro `card advanced` e `card closed`. Il profilo
   PostHog si scrive in un colpo solo, e solo dove è cambiato.
@@ -129,9 +137,12 @@ without a join.
 | `widgets_placed`, `widget_on_home` | int, bool | launch and every return |
 | `text_scale_bucket` | `smaller`, `default`, `large` (≤1.3×), `larger` (≤1.6×), `largest` | first frame and every return |
 | `reduce_motion` | bool | first frame and every return |
+| `experiment_<name>` | the variant of each experiment the reader was given, e.g. `experiment_push_first_ask`: `cameBack`, `firstDay` | the exposure (§6.13) |
 
-There is no A/B slot: the app has no experiments. The day one is added, its
-variant belongs here, registered before the first event.
+An experiment's variant is stamped from the moment the reader is exposed to
+it (`Experiments.variant`, `lib/remote/knobs.dart`), which is the moment its
+variants part ways: an event before it is one the variant could not have
+changed. It is on the profile too (§4).
 
 ## 4. On the reader: person properties
 
@@ -166,6 +177,7 @@ reader in the first weeks — with about three.
 | `last_active_local_hour` | `$set`, on leaving the screen | 0–23, the phone's own clock |
 | `location_permission` | `$set` | the reader's word on their location: `not_asked`, `granted`, `denied` (the system's prompt said no, or the permission was taken back in the phone's settings), `off` (the place removed in Profile) |
 | `place_country`, `place_region`, `place_city` | `$set`; `$unset` on `place removed` | where the reader lives, once they allowed it: the ISO country (`IT`), the region's ISO 3166-2 code where the app knows the country's regions (`IT-45`) or else its English name as the phone gave it, and the city in English (`Modena`). Never a coordinate (see §6.12) |
+| `experiment_<name>` | `$set`, as the app leaves the screen | the variant of each experiment the reader was given (§6.13), as on every event (§3) |
 | `install_date` | `$set_once` | the first day the app was opened on this phone |
 | `first_day_completed` | `$set_once` | the earliest finished day the phone remembers |
 | `anonymous`, `sign_in_method` | `$identify` | whether the account is anonymous, and Apple or Google |
@@ -262,7 +274,8 @@ subjects`, `onboarding genres`, `comeback` (first run and come-back; the
 first run has had no paywall since October 2026, so `onboarding offer` is
 gone); `deck viewer`, `pill detail`, `archive`, `saved`, `liked`,
 `journey`, `path`, `week`, `topics`, `how`, `paywall`, `purchase success`,
-`story` (a true story played from Explore).
+`story` (a true story played from Explore); `update gate`, `pause` (the
+update gate's full screens, over everything, §6.13).
 
 ### 6.3 The day on Today
 
@@ -321,11 +334,12 @@ is in its card facts.
 | `card shown` | a shelf builds a card while Explore is in sight (fixed: it used to count Explore built off screen beside Today) | `pill_id`, `shelf` | what was offered and passed over | T:`seen` only |
 | `explore scrolled` | Explore goes a tenth further down | `depth` | | T:`xd` only |
 | `card read elsewhere` | a card is read for the first time outside the day | card facts | it is never dealt again | P, T:`read` |
-| `explore filtered` | a subject chip | `subject` | | P, T:`xf` |
+| `explore filtered` | a subject chip, or a subject in a strip of them on the page | `subject` | | P, T:`xf` |
+| `explore noted` **new** | something a reader did in a section of Explore that nothing else records — a reaction, a bet, a stance — said by the section's block (`ExploreHost.note`) | `shelf` (the section's id), `block`, `noted` (what the block calls it), and the block's own facts: `pill_id` and the rest. What the families call it: purpose `thats me`, `life topics`, `trick spotted`, `read or do`; bets `bet laid`, `bet revealed`; shapes `turned`, `paged`, `raised`, `expanded`, `collapsed`; screens `expert picked`, `subject picked`, `asked`, `asked forgotten`, `why`, `why again`, `chain picked`, `era picked`, `stance`, `said` — none carries words the reader typed | what the server-placed sections are used for, one event for every block | P, T:`xn` |
 | `explore search opened`, `explore search closed` | the search field | `had_query` | | P |
 | `explore searched` | a search returns | `query_length`, `words`, `results` — never the text | | P, T:`xs` |
 | `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
-| `explore answered`, `explore leaned` | a card answered on a shelf | `pill_id`, `right`, `side`, `confidence` | | P |
+| `explore answered`, `explore leaned` | a card answered on a shelf; a side taken on a debate is always `explore leaned`, on whatever shelf, and `right` is only sent for a card that can be right | `pill_id`, `right`, `side`, `confidence` | | P |
 | `explore did you know`, `explore surprise`, `explore spot`, `explore chart unmasked`, `explore slide checked`, `explore range bet`, `explore stake bet`, `explore bigger picked` | the shelf games | `pill_id`, `right`, `new`, `trick`, `off`, `width`, `hit`, `stake`, `won` | | P |
 | `explore mood`, `explore minutes`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `right`, `answered`, `seconds` | `explore era` and `explore year` went with the Through time shelf, taken out of Explore | P |
 | `explore story opened` **new** | a true story starts playing, from its tile on Explore | card facts, `beats` (how many it has), `authored` (true for a story written to be played, its scenes and its question), `rank` (its place on the shelf, from 1) | which stories are opened, and from where on the shelf | P |
@@ -426,6 +440,23 @@ the backup's `place`, rounded to a tenth of a degree, and
 `test/place_capture_test.dart` fails if one reaches the sink or the trace.
 Like every event, all five stop with *Profile → Usage data*.
 
+### 6.13 The server's word: the document, the gate, experiments
+
+What the server says about the app (docs/REMOTE.md): the document it took
+up, the update gate it closed, the experiments it put the reader in.
+
+| Event | When | Properties | Why | Goes to |
+| --- | --- | --- | --- | --- |
+| `remote refreshed` | the app asks for a newer document: at launch and at every return, at most twice a minute | `outcome` (`up to date`, `newer`, `no answer`, `failed`), `ms`, `hash_in_use`, `hash_fetched` | whether what the server says reaches the phones, and how fast | P |
+| `update gate shown` | the gate closes over the app, once per verdict: at launch, or when a newer document closes it | `kind` (`update`, `pause`), `reason` (`min build`, `blocked`, `pause`), `build`, `platform`, `at_launch` (closed before the app was ever built), `own_words` (the server sent its own line for it), `remote_hash` | how many readers each gate stops, on which builds | P |
+| `update store opened` | the gate's Update, or the sheet's | `from` (`gate`, `sheet`), `opened` (the phone opened the store), `build` | whether the way to the store works | P |
+| `pause retried` | Try again on the pause screen | `still_paused`, `took_newer` (a newer document arrived with it) | how hard readers knock on a pause | P |
+| `update suggested` | the sheet that says a newer build is out rises, once for each build suggested | `build`, `suggested_build` | | P |
+| `update suggestion answered` | the sheet is answered or swiped away | `choice` (`update`, `later`), `suggested_build` | | P |
+| `experiment exposed` | an experiment gives the reader a variant, at the moment its variants part ways; once a sitting for each experiment and variant | `experiment` (its name, `push.firstAsk`), `variant`, `remote_hash` | the denominator of every experiment; the variant is also stamped on every later event and on the profile as `experiment_<name>` (§3, §4) | P |
+
+Nothing here reaches the trace: the dealer has no use for it.
+
 ## 7. The trace: codes and fields
 
 The trace keeps numbers, booleans and strings of up to 64 characters (enums,
@@ -450,6 +481,7 @@ New fields:
 | `tiles_seen`, `tiles_opened` | `ts`, `tk` | `shelf` |
 | `scrolled_sideways` | `sw` | `shelf` |
 | `ms_visible` | `ms` | `shelf` |
+| `noted`, `block` | `nd`, `bk` | `xn` (`explore noted`), with `sh` for the section and `c` for its card |
 
 Codes for where the reader lives: `place` (`place set`) and `unplace`
 (`place removed`). `place` keeps three fields of its own and nothing else —

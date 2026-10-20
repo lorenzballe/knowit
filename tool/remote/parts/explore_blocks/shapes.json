@@ -1,0 +1,866 @@
+{
+ "about": "What every block of the shapes family reads from its section, as the app draws it (lib/explore/blocks/shapes/). shapes.py checks sections against it; test/explore/shapes_words_test.dart fails when the app and this file say different things. Every block also reads id, block, source, audience, title and subtitle, and every shape kind, variant, subject, size, signature, limit, min and style.",
+ "kinds": [
+  "myths",
+  "past",
+  "numbers",
+  "debates",
+  "place",
+  "practical",
+  "paradoxes",
+  "stories",
+  "seen",
+  "workItOut",
+  "origins",
+  "sharpest",
+  "trueOrFalse",
+  "reasoning",
+  "ideas",
+  "curious",
+  "moving",
+  "howItWorks",
+  "puzzles",
+  "month",
+  "any"
+ ],
+ "subjects": [
+  "pop_culture",
+  "space",
+  "food",
+  "history",
+  "music",
+  "nature",
+  "psychology",
+  "sport",
+  "art",
+  "science",
+  "economics",
+  "cinema",
+  "human_body",
+  "language",
+  "technology",
+  "philosophy",
+  "weird_facts",
+  "medicine",
+  "life",
+  "maths"
+ ],
+ "languages": [
+  "de",
+  "en",
+  "es",
+  "fr",
+  "it",
+  "ja",
+  "ko",
+  "nl",
+  "pl",
+  "pt",
+  "ru",
+  "tr",
+  "zh"
+ ],
+ "blocks": {
+  "shape-fold": {
+   "canvas": [
+    "131b",
+    "131f"
+   ],
+   "kind": "myths",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-torn": {
+   "canvas": [
+    "131d"
+   ],
+   "kind": "myths",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-tab": {
+   "canvas": [
+    "131d"
+   ],
+   "kind": "month",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-arch": {
+   "canvas": [
+    "131d"
+   ],
+   "kind": "past",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-capsule": {
+   "canvas": [
+    "131d",
+    "131f"
+   ],
+   "kind": "numbers",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-diagonal": {
+   "canvas": [
+    "131d"
+   ],
+   "kind": "debates",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "diagonal"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-leaf": {
+   "canvas": [
+    "131d"
+   ],
+   "kind": "paradoxes",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-hero": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "myths",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-spines": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "past",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-squares": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "numbers",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-wide": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "debates",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-medium": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "paradoxes",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-mark": {
+   "canvas": [
+    "132a"
+   ],
+   "kind": "month",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "mark"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-quote": {
+   "canvas": [
+    "132a"
+   ],
+   "kind": "myths",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "quote"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-circles": {
+   "canvas": [
+    "132a"
+   ],
+   "kind": "paradoxes",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "circles"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-stamp": {
+   "canvas": [
+    "131d",
+    "131f",
+    "132a",
+    "132b"
+   ],
+   "kind": "place",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "postmark",
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [
+    "codes"
+   ],
+   "style": {
+    "tilt": {
+     "flag": true
+    }
+   }
+  },
+  "shape-postcard": {
+   "canvas": [
+    "131b"
+   ],
+   "kind": "place",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [
+    "codes"
+   ],
+   "style": {}
+  },
+  "shape-ticket": {
+   "canvas": [
+    "131d"
+   ],
+   "kind": "practical",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-try": {
+   "canvas": [
+    "131b"
+   ],
+   "kind": "practical",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-twins": {
+   "canvas": [
+    "131b",
+    "131f"
+   ],
+   "kind": "paradoxes",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-sides": {
+   "canvas": [
+    "131b",
+    "131f"
+   ],
+   "kind": "debates",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "halves"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-years": {
+   "canvas": [
+    "131b"
+   ],
+   "kind": "past",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [
+    "order"
+   ],
+   "style": {}
+  },
+  "shape-ruler": {
+   "canvas": [
+    "132a"
+   ],
+   "kind": "past",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [
+    "order"
+   ],
+   "style": {}
+  },
+  "shape-grid": {
+   "canvas": [
+    "131c",
+    "132b"
+   ],
+   "kind": "month",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none",
+    "figure"
+   ],
+   "signatureKinds": {
+    "figure": "numbers"
+   },
+   "limit": [
+    4,
+    8
+   ],
+   "min": 2,
+   "fields": [],
+   "style": {}
+  },
+  "shape-bento": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "place",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    3,
+    3
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-two-rows": {
+   "canvas": [
+    "131e"
+   ],
+   "kind": "place",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 4,
+   "fields": [],
+   "style": {}
+  },
+  "shape-masonry": {
+   "canvas": [
+    "131e",
+    "132b"
+   ],
+   "kind": "month",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none",
+    "mark"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    4,
+    8
+   ],
+   "min": 4,
+   "fields": [],
+   "style": {}
+  },
+  "shape-rows": {
+   "canvas": [
+    "131c"
+   ],
+   "kind": "practical",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    3,
+    8
+   ],
+   "min": 2,
+   "fields": [],
+   "style": {}
+  },
+  "shape-checklist": {
+   "canvas": [
+    "131e",
+    "131f",
+    "132b"
+   ],
+   "kind": "practical",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "sunset",
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {
+    "rings": {
+     "oneOf": [
+      "read",
+      "all",
+      "none"
+     ]
+    },
+    "shown": {
+     "count": [
+      1,
+      8
+     ]
+    }
+   }
+  },
+  "shape-figures": {
+   "canvas": [
+    "131e"
+   ],
+   "kind": "numbers",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    4,
+    8
+   ],
+   "min": 3,
+   "fields": [],
+   "style": {}
+  },
+  "shape-timeline": {
+   "canvas": [
+    "131e",
+    "131f",
+    "132b"
+   ],
+   "kind": "past",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    4,
+    8
+   ],
+   "min": 3,
+   "fields": [
+    "order"
+   ],
+   "style": {}
+  },
+  "shape-deck": {
+   "canvas": [
+    "131e",
+    "132b"
+   ],
+   "kind": "myths",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none",
+    "quote"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 2,
+   "fields": [],
+   "style": {}
+  },
+  "shape-pager": {
+   "canvas": [
+    "131e",
+    "132b"
+   ],
+   "kind": "debates",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none",
+    "halves"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    8,
+    12
+   ],
+   "min": 1,
+   "fields": [],
+   "style": {}
+  },
+  "shape-hand": {
+   "canvas": [
+    "131e",
+    "132b"
+   ],
+   "kind": "paradoxes",
+   "sizes": [
+    "s",
+    "m",
+    "l"
+   ],
+   "signatures": [
+    "none",
+    "circles"
+   ],
+   "signatureKinds": {},
+   "limit": [
+    4,
+    5
+   ],
+   "min": 2,
+   "fields": [],
+   "style": {}
+  }
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "schema": 1,
+ "hash": "05713ab37b26864e",
+ "app": {
+  "gate": null,
+  "flags": {},
+  "tunables": {},
+  "experiments": {}
+ },
+ "strings": {},
+ "explore": null,
+ "looks": null
+}

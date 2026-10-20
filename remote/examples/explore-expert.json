@@ -1,0 +1,65 @@
+{
+  "sections": [
+    {
+      "id": "expert",
+      "block": "expert",
+      "experts": [
+        {
+          "id": "statistician",
+          "source": {
+            "ids": [
+              "medicine-false-positives-1",
+              "pop_culture-celebrity-4",
+              "human_body-studies-on-mice-2",
+              "thinking-h13"
+            ]
+          }
+        },
+        {
+          "id": "economist",
+          "source": {
+            "ids": [
+              "economics-who-pays-3",
+              "economics-subscriptions-10",
+              "economics-education-3",
+              "economics-charm-prices-7"
+            ]
+          }
+        },
+        {
+          "id": "historian",
+          "source": {
+            "ids": [
+              "cinema-women-directors-2",
+              "history-ottoman-8",
+              "history-the-fall-9",
+              "history-plague-5"
+            ]
+          }
+        },
+        {
+          "id": "doctor",
+          "source": {
+            "ids": [
+              "medicine-symptoms-7",
+              "medicine-shared-decisions-4",
+              "science-cold-myths-1",
+              "medicine-resistance-7"
+            ]
+          }
+        },
+        {
+          "id": "scientist",
+          "source": {
+            "ids": [
+              "technology-training-9",
+              "space-expansion-8",
+              "nature-deep-sea-8",
+              "science-experiments-3"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

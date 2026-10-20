@@ -3454,4 +3454,1233 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whereYouLiveSwitchOn => 'Включить';
+
+  @override
+  String get gateUpdateTitle => 'Обнови Astute';
+
+  @override
+  String gateUpdateLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Новая уже ждёт в App Store',
+      'google': 'Новая уже ждёт в Google Play',
+      'other': 'Новая уже ждёт в магазине приложений',
+    });
+    return 'Этой версией больше нельзя пользоваться. $_temp0, а карточки и серия останутся как были.';
+  }
+
+  @override
+  String get gateUpdateButton => 'Обновить';
+
+  @override
+  String get gateSoftTitle => 'Вышла новая версия Astute';
+
+  @override
+  String gateSoftLine(String store) {
+    String _temp0 = intl.Intl.selectLogic(store, {
+      'apple': 'Она уже ждёт в App Store.',
+      'google': 'Она уже ждёт в Google Play.',
+      'other': 'Она уже ждёт в магазине приложений.',
+    });
+    return '$_temp0 Обновление пройдёт быстро, а карточки и серия останутся как есть.';
+  }
+
+  @override
+  String get gateSoftLater => 'Позже';
+
+  @override
+  String get gatePauseTitle => 'Astute ненадолго на перерыве';
+
+  @override
+  String get gatePauseLine =>
+      'Мы кое-что чиним за кулисами. Весь твой прогресс сохранён. Попробуй ещё раз чуть позже.';
+
+  @override
+  String get gatePauseTrying => 'Пробуем снова…';
+
+  @override
+  String get gatePauseStill =>
+      'Перерыв ещё не закончился. Попробуй снова через несколько минут.';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return 'Сделать: $toDo, прочитать: $toRead';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return 'сделать: $toDo · прочитать: $toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => 'Читать';
+
+  @override
+  String get purposeFilterToDo => 'Делать';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': 'Правда или ложь',
+      'pick': 'Выбери ответ',
+      'typeNumber': 'Введи число',
+      'bet': 'Угадай число',
+      'side': 'Выбери сторону',
+      'youFirst': 'Сначала ты',
+      'moveIt': 'Двигай и смотри',
+      'whatNext': 'Что будет дальше?',
+      'spotTrick': 'Найди подвох',
+      'drawIt': 'Нарисуй',
+      'sortThem': 'Разложи по группам',
+      'putInOrder': 'Расставь по порядку',
+      'holdIt': 'Удерживай',
+      'growSample': 'Увеличь выборку',
+      'askWhy': 'Спроси почему',
+      'sayPlainly': 'Скажи проще',
+      'pairUp': 'Подбери пары',
+      'followClues': 'Иди по подсказкам',
+      'look': 'Просто смотри',
+      'listen': 'Слушай',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return 'Читать · $n мин';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'Ответь здесь, а потом открой карточку и проверь себя. Ответ, который выбираешь сам, запоминается дольше.';
+
+  @override
+  String get purposeCommitTitle => 'Сначала ответь';
+
+  @override
+  String get purposeCommitLine => 'Скажи, что думаешь, потом открой карточку';
+
+  @override
+  String get purposeInYourHeadLine => 'Число, до которого надо дойти в уме';
+
+  @override
+  String get purposeInYourHead => 'В уме';
+
+  @override
+  String get purposeMoveKicker => 'Приём';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'Новое · +$points, когда освоишь';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Базовая частота',
+      'survivorship': 'Ошибка выжившего',
+      'regression': 'Регрессия к среднему',
+      'confirmation': 'Подтверждение',
+      'anchoring': 'Якорение',
+      'sampling': 'Выборка',
+      'confounding': 'Скрытый фактор',
+      'counterfactual': 'По сравнению с чем',
+      'multipleComparisons': 'Много попыток',
+      'availability': 'Доступность',
+      'sunkCost': 'Невозвратные затраты',
+      'conjunction': 'Конъюнкция',
+      'conditional': 'Условная вероятность',
+      'independence': 'Независимость',
+      'coincidence': 'Совпадение',
+      'exponential': 'Экспоненциальный рост',
+      'reflection': 'Быстрый ответ',
+      'simpson': 'Итоги и части',
+      'estimation': 'Оценка',
+      'computation': 'Расчёт',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Точность теста — это не вероятность, что это про тебя',
+      'survivorship': 'Данные, что у тебя есть, — это те, что выжили',
+      'regression': 'Крайности сами возвращаются к среднему',
+      'confirmation': 'Искать «да» — это не проверка',
+      'anchoring': 'Первое названное число сдвигает все следующие',
+      'sampling': 'Кто попал в выборку, решает, о чём она может сказать',
+      'confounding': 'Возможно, и то и другое вызывает что-то третье',
+      'counterfactual': 'Без контрольной группы перемена ничего не значит',
+      'multipleComparisons': 'Проверь достаточно всего — что-то пройдёт',
+      'availability': 'Легко представить — не значит часто',
+      'sunkCost': 'Потраченное потрачено; решать можно только об остатке',
+      'conjunction':
+          'Подробности делают историю убедительнее и менее вероятной',
+      'conditional': 'То, что тебе сказали, меняет шансы',
+      'independence': 'У случая нет памяти',
+      'coincidence': 'Редкое становится частым, когда попыток много',
+      'exponential': 'Удвоение никто не чувствует интуитивно',
+      'reflection': 'Ответ, пришедший первым, и нужно проверить',
+      'simpson':
+          'Целое может склоняться туда, куда не склоняется ни одна часть',
+      'estimation': 'Разбей вопрос без ответа на то, что можно прикинуть',
+      'computation': 'Задача, которую реально довести до конца',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Насколько это вообще было распространено?',
+      'survivorship': 'Что так и не попало в данные?',
+      'regression': 'Может, это просто крайность возвращается?',
+      'confirmation': 'Что опровергло бы мою версию?',
+      'anchoring': 'Какое число прозвучало первым?',
+      'sampling': 'Кого посчитали?',
+      'confounding': 'Что ещё могло вызвать и то и другое?',
+      'counterfactual': 'По сравнению с чем?',
+      'multipleComparisons': 'Сколько всего проверяли?',
+      'availability': 'Это часто бывает или просто легко представить?',
+      'sunkCost': 'Что ещё можно решить отсюда?',
+      'conjunction': 'Каждая подробность делает это менее вероятным?',
+      'conditional': 'Что меняет это знание?',
+      'independence': 'Влияет ли прошлый результат на следующий?',
+      'coincidence': 'Сколько было шансов?',
+      'exponential': 'Что будет, если оно удвоится ещё раз?',
+      'reflection': 'Первый ответ — правильный?',
+      'simpson': 'Все ли части склоняются в одну сторону?',
+      'estimation': 'Что можно прикинуть по дороге?',
+      'computation': 'Можно ли посчитать это шаг за шагом?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => 'Ступенькой выше';
+
+  @override
+  String get purposeStepAboveLine => 'Сложнее, чем ты обычно читаешь';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'Меньше всего прочитано: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return 'Прочитано $percent% раздела «$subject» — меньше всего';
+  }
+
+  @override
+  String get purposeOtherSide => 'Другая сторона';
+
+  @override
+  String get purposeOtherSideLine =>
+      'Сторона выбрана. Вот самый сильный довод против';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'Твой ответ: $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return 'Доводы за «$side»';
+  }
+
+  @override
+  String get purposeMechanism => 'Механизм';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return 'Обновлено $date';
+  }
+
+  @override
+  String get purposeMovingYears => 'Может измениться через несколько лет';
+
+  @override
+  String get purposeMovingMonths => 'Может измениться в этом году';
+
+  @override
+  String get purposeWhy => 'А, вот почему';
+
+  @override
+  String get purposeWhyLine => 'Один механизм — объяснён, пока не щёлкнет';
+
+  @override
+  String purposeWhyBand(int n) {
+    return 'Почему · $n мин';
+  }
+
+  @override
+  String get purposeMe => 'Это про меня';
+
+  @override
+  String get purposeMeLine => 'Что ты делаешь, не замечая';
+
+  @override
+  String get purposeMeFooter => 'Отметь карточки, в которых узнаёшь себя.';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки с отметкой «Это про меня».',
+      many: '$n карточек с отметкой «Это про меня».',
+      few: '$n карточки с отметкой «Это про меня».',
+      one: '$n карточка с отметкой «Это про меня».',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => 'Новое для меня — и обо мне';
+
+  @override
+  String get purposeAboutYouLine => 'Твоё тело, твоё здоровье, твои шансы';
+
+  @override
+  String get purposeHeadline => 'В заголовке';
+
+  @override
+  String get purposeHeadlineLine =>
+      'Исследования и заявления, которые звучат лучше, чем есть';
+
+  @override
+  String get purposeTheClaim => 'Заявление';
+
+  @override
+  String get purposeNumber => 'В цифре';
+
+  @override
+  String get purposeNumberLine =>
+      'Шансы и проценты, на которые стоит взглянуть дважды';
+
+  @override
+  String get purposeOutOfWhat => 'Из скольких?';
+
+  @override
+  String get purposeOffer => 'В предложении';
+
+  @override
+  String get purposeOfferLine => 'Цены, сделки и кто на самом деле платит';
+
+  @override
+  String get purposeArgument => 'В споре';
+
+  @override
+  String get purposeArgumentLine => 'Где рассуждение поскальзывается';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'Один вопрос, который ловит почти всё это',
+      '2': 'Два вопроса, которые ловят почти всё это',
+      '3': 'Три вопроса, которые ловят почти всё это',
+      '4': 'Четыре вопроса, которые ловят почти всё это',
+      '5': 'Пять вопросов, которые ловят почти всё это',
+      'other': 'Вопросы, которые ловят почти всё это ($n)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Деньги',
+      'work': 'Работа и время',
+      'clock': 'Время',
+      'body': 'Твоё тело',
+      'relationships': 'Отношения',
+      'belief': 'Во что ты веришь',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Плачу ли я за то, чем правда пользуюсь?',
+      'work': 'Что помогло бы легче начать завтра?',
+      'clock': 'Куда на самом деле уходит моё время?',
+      'body': 'Верно ли ещё то, что я знаю о своём теле?',
+      'relationships': 'Что на самом деле нужно моим близким?',
+      'belief': 'Насколько я уверен — и почему?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Деньги',
+      'work': 'Работа',
+      'clock': 'Время',
+      'body': 'Тело',
+      'relationships': 'Отношения',
+      'belief': 'Во что я верю',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => 'О чём тебе нужны вопросы получше?';
+
+  @override
+  String get purposeLifeFooter =>
+      'Выбери любые — и карточки об этом появятся здесь.';
+
+  @override
+  String get purposeSpotTrick => 'Найди подвох';
+
+  @override
+  String get purposeSpotTrickLine => 'Какой вопрос его поймает?';
+
+  @override
+  String get purposePlayed => 'Сегодняшние игры';
+
+  @override
+  String get purposePlayedOff => 'пунктов мимо в среднем';
+
+  @override
+  String get purposePlayedTricks => 'подвохов найдено';
+
+  @override
+  String get purposePlayedAnswered => 'ответов на полках';
+
+  @override
+  String get purposePlayedFooter =>
+      'Ответы на полках идут в «Ваш путь», как и ответы в «Сегодня».';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n из $of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return 'Прочитано $n из $of';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return 'Прочитаны все $n. Когда полка вернётся, добавятся новые.';
+  }
+
+  @override
+  String get purposeComplete => 'Собрано';
+
+  @override
+  String get purposeStampsFooter =>
+      'Каждая прочитанная карточка добавляет свою марку.';
+
+  @override
+  String get purposeSets => 'Твои наборы';
+
+  @override
+  String get purposeSetsLine =>
+      'Чтение считается. Чтобы собрать набор, отвечать не нужно.';
+
+  @override
+  String get purposeTomorrow => 'Завтра на полках';
+
+  @override
+  String get purposeTomorrowLine =>
+      'Полки меняются каждый день. Вот что дальше';
+
+  @override
+  String get purposeEnd => 'Это конец «Обзора»';
+
+  @override
+  String get purposeEndLine => 'До завтра';
+
+  @override
+  String get betsRangeTitle => 'Ставка на диапазон';
+
+  @override
+  String get betsRangeLine => 'Чем уже, тем больше платит, если ты прав';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts оч.';
+  }
+
+  @override
+  String get betsBet => 'Поставить';
+
+  @override
+  String betsInRange(int pts, String said) {
+    String _temp0 = intl.Intl.pluralLogic(
+      pts,
+      locale: localeName,
+      other: 'В диапазоне: +$pts очка. Это $said.',
+      many: 'В диапазоне: +$pts очков. Это $said.',
+      few: 'В диапазоне: +$pts очка. Это $said.',
+      one: 'В диапазоне: +$pts очко. Это $said.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return 'Мимо: это $said.';
+  }
+
+  @override
+  String get betsYourGuess => 'Твоя оценка';
+
+  @override
+  String get betsAnsweredAlready => 'Уже отвечено';
+
+  @override
+  String get betsOpenCard => 'Открыть карточку';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Сегодня осталось $n очка',
+      many: 'Сегодня осталось $n очков',
+      few: 'Сегодня осталось $n очка',
+      one: 'Сегодня осталось $n очко',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => 'Твой купон';
+
+  @override
+  String betsSlipToday(String points) {
+    return '$points сегодня';
+  }
+
+  @override
+  String get betsSlipEmpty =>
+      'Ставок пока нет. Каждая твоя ставка появится здесь.';
+
+  @override
+  String get betsSlipTipTwice =>
+      'Бери узкий, когда уверен: платит вдвое больше.';
+
+  @override
+  String get betsSlipTipThrice =>
+      'Бери узкий, когда уверен: платит втрое больше.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: 'Бери узкий, когда уверен: платит в $times раза больше.',
+      many: 'Бери узкий, когда уверен: платит в $times раз больше.',
+      few: 'Бери узкий, когда уверен: платит в $times раза больше.',
+      one: 'Бери узкий, когда уверен: платит в $times раз больше.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return 'Узких ставок сыграло: $right из $n.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return 'Верно $right из $n, в среднем ты был уверен на $pct%.';
+  }
+
+  @override
+  String get betsRight => 'Верно';
+
+  @override
+  String get betsWrong => 'Неверно';
+
+  @override
+  String betsOneIn(String n) {
+    return '1 из $n';
+  }
+
+  @override
+  String get betsOneInLabel => '1 из';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$right из $steps';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return 'Верно $right из $steps.';
+  }
+
+  @override
+  String get betsStakeTitle => 'Делай ставку';
+
+  @override
+  String betsStakeLine(int points) {
+    String _temp0 = intl.Intl.pluralLogic(
+      points,
+      locale: localeName,
+      other: '$points очка в день. Выиграешь — ставка удвоится',
+      many: '$points очков в день. Выиграешь — ставка удвоится',
+      few: '$points очка в день. Выиграешь — ставка удвоится',
+      one: '$points очко в день. Выиграешь — ставка удвоится',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsStakeLabel => 'Ставка';
+
+  @override
+  String betsBetN(int n) {
+    return 'Ставка $n';
+  }
+
+  @override
+  String get betsPickFirst => 'Сначала выбери';
+
+  @override
+  String get betsNotEnough => 'Не хватает очков';
+
+  @override
+  String betsWin(int n) {
+    return 'Ты выигрываешь $n.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return 'Ты теряешь $n.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return 'Ты был уверен на $pct%.';
+  }
+
+  @override
+  String get betsFriendTitle => 'Поспорь с другом';
+
+  @override
+  String get betsFriendLine => 'Отправь вопрос, а потом сравните догадки';
+
+  @override
+  String get betsFriendNote =>
+      'Твоя догадка останется на твоём телефоне. Карточка уходит вместе с ответом, так что сначала спроси, что думает друг.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return 'Ты сказал: $said. Карточка уходит вместе с ответом, так что сначала спроси, что думает друг.';
+  }
+
+  @override
+  String get betsFriendSend => 'Отправить другу';
+
+  @override
+  String get betsFriendCopy => 'Скопировать вопрос';
+
+  @override
+  String get betsFriendCopied => 'Вопрос скопирован';
+
+  @override
+  String get betsFriendAsk => 'А ты как думаешь?';
+
+  @override
+  String get betsNumberTitle => 'Твоё число';
+
+  @override
+  String get betsNumberLine =>
+      'Выставь, зафиксируй и посмотри, насколько ошибся';
+
+  @override
+  String get betsLock => 'Готово';
+
+  @override
+  String get betsSpotOn => 'Точно.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return 'Достаточно близко: ошибка $by.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return 'Ошибка: $by.';
+  }
+
+  @override
+  String get betsYou => 'ты';
+
+  @override
+  String get betsAnswer => 'ответ';
+
+  @override
+  String get betsBiggerTitle => 'Что больше?';
+
+  @override
+  String get betsBiggerLine =>
+      'Два числа, которые можно вычислить. Нажми на большее';
+
+  @override
+  String get betsTapIfBigger => 'Нажми, если больше';
+
+  @override
+  String get betsBiggerGotIt => 'Больше · верно';
+
+  @override
+  String get betsBigger => 'Больше';
+
+  @override
+  String get betsYourPick => 'Твой выбор';
+
+  @override
+  String get betsOr => 'или';
+
+  @override
+  String get betsBiggerFoot =>
+      'Каждое число — ответ на какую-то карточку. После выбора нажми на число, чтобы открыть его карточку.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return 'Верно $right из $n.';
+  }
+
+  @override
+  String get betsCloserTitle => 'Ближе и ближе';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Два шага «больше или меньше», чтобы подобраться к числу',
+      '3': 'Три шага «больше или меньше», чтобы подобраться к числу',
+      '4': 'Четыре шага «больше или меньше», чтобы подобраться к числу',
+      '5': 'Пять шагов «больше или меньше», чтобы подобраться к числу',
+      'other': '$steps шагов «больше или меньше», чтобы подобраться к числу',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Два шага, чтобы подобраться.',
+      '3': 'Три шага, чтобы подобраться.',
+      '4': 'Четыре шага, чтобы подобраться.',
+      '5': 'Пять шагов, чтобы подобраться.',
+      'other': '$steps шагов, чтобы подобраться.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return 'Больше или меньше $v?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return 'Шаг $at из $of';
+  }
+
+  @override
+  String get betsMore => 'Больше';
+
+  @override
+  String get betsLess => 'Меньше';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return 'Верно: больше $v.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return 'Верно: меньше $v.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return 'Нет: больше $v.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return 'Нет: меньше $v.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return 'Ровно $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return 'Это $said. Верно $right из $steps.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => 'Порядки величины';
+
+  @override
+  String get betsMagnitudeLine => 'Десять, тысяча или миллион? Выбери масштаб';
+
+  @override
+  String get betsMagnitudeRight => 'Порядок угадан.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ошибка на $n порядка.',
+      many: 'Ошибка на $n порядков.',
+      few: 'Ошибка на $n порядка.',
+      one: 'Ошибка на $n порядок.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => 'Ставка дня';
+
+  @override
+  String get betsDayLine => 'Зафиксируй догадку и посмотри, насколько ошибся';
+
+  @override
+  String get betsDayTag => 'Ставка дня';
+
+  @override
+  String get betsDayTagSame => 'Ставка дня · одна для всех';
+
+  @override
+  String get betsLockIn => 'Зафиксировать';
+
+  @override
+  String betsItIs(String said) {
+    return 'Это $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ошибка $n процентного пункта.',
+      many: 'Ошибка $n процентных пунктов.',
+      few: 'Ошибка $n процентных пункта.',
+      one: 'Ошибка $n процентный пункт.',
+      zero: 'Точно.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String screensQuoted(String text) {
+    return '«$text»';
+  }
+
+  @override
+  String get screensExpertTitle => 'Думай как эксперт';
+
+  @override
+  String get screensExpertLine =>
+      'Вопрос, который каждый из них всегда задаёт, и карточки, где он нужен';
+
+  @override
+  String get screensExpertStatistician => 'Статистик';
+
+  @override
+  String get screensExpertStatisticianAs => 'Думай как статистик';
+
+  @override
+  String get screensExpertStatisticianAsks =>
+      'По сравнению с чем и из скольких?';
+
+  @override
+  String get screensExpertEconomist => 'Экономист';
+
+  @override
+  String get screensExpertEconomistAs => 'Думай как экономист';
+
+  @override
+  String get screensExpertEconomistAsks => 'Кто платит и чем жертвует?';
+
+  @override
+  String get screensExpertHistorian => 'Историк';
+
+  @override
+  String get screensExpertHistorianAs => 'Думай как историк';
+
+  @override
+  String get screensExpertHistorianAsks => 'Что знали люди в то время?';
+
+  @override
+  String get screensExpertDoctor => 'Врач';
+
+  @override
+  String get screensExpertDoctorAs => 'Думай как врач';
+
+  @override
+  String get screensExpertDoctorAsks =>
+      'Насколько это часто и чем ещё это может быть?';
+
+  @override
+  String get screensExpertScientist => 'Учёный';
+
+  @override
+  String get screensExpertScientistAs => 'Думай как учёный';
+
+  @override
+  String get screensExpertScientistAsks => 'Как бы мы узнали, что это неверно?';
+
+  @override
+  String get screensDotsTitle => 'Соедини точки';
+
+  @override
+  String get screensDotsLine =>
+      'Выбери тему и посмотри, где она пересекается с другими';
+
+  @override
+  String screensDotsMeets(int subjects, int cards) {
+    String _temp0 = intl.Intl.pluralLogic(
+      subjects,
+      locale: localeName,
+      other: 'Пересекается с $subjects темы',
+      many: 'Пересекается с $subjects темами',
+      few: 'Пересекается с $subjects темами',
+      one: 'Пересекается с $subjects темой',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: 'в $cards карточки',
+      many: 'в $cards карточках',
+      few: 'в $cards карточках',
+      one: 'в $cards карточке',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String get screensDotsWhere => 'Где они пересекаются';
+
+  @override
+  String get screensDotsWhereLine => 'Один вопрос, два взгляда';
+
+  @override
+  String get screensAskTitle => 'Что ты хочешь понять?';
+
+  @override
+  String get screensAskHint => 'Спроси что угодно или введи слово';
+
+  @override
+  String get screensAskTry => 'Например';
+
+  @override
+  String get screensAskClear => 'Очистить вопрос';
+
+  @override
+  String screensAskFound(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На него отвечают $n карточки',
+      many: 'На него отвечают $n карточек',
+      few: 'На него отвечают $n карточки',
+      one: 'На него отвечает $n карточка',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensAskNone => 'Об этом пока нет карточки';
+
+  @override
+  String get screensAskNoneLine =>
+      'Сохрани вопрос. Когда на него ответит карточка, она появится здесь, под вопросом.';
+
+  @override
+  String get screensAskKeep => 'Сохранить вопрос';
+
+  @override
+  String get screensAskKept => 'Сохранён';
+
+  @override
+  String get screensAskedTitle => 'Твои вопросы';
+
+  @override
+  String get screensAskedLine => 'И карточки, которые на них ответили';
+
+  @override
+  String get screensAskedAnswered => 'Ответ';
+
+  @override
+  String get screensAskedWaiting =>
+      'Пока ни одна карточка на него не отвечает. Когда появится, она будет здесь.';
+
+  @override
+  String get screensAskedForget => 'Забыть этот вопрос';
+
+  @override
+  String get screensAskedForgotten => 'Вопрос забыт';
+
+  @override
+  String get screensWhyTitle => 'Продолжай спрашивать «почему»';
+
+  @override
+  String get screensWhyLine => 'Каждый ответ рождает следующий вопрос';
+
+  @override
+  String get screensWhyAsk => 'Почему?';
+
+  @override
+  String screensWhyBottom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n «почему» в глубину.',
+    );
+    return '$_temp0 Глубже уже некуда.';
+  }
+
+  @override
+  String get screensWhyAgain => 'Начать заново';
+
+  @override
+  String get screensWhyHoles => 'Ещё кроличьи норы';
+
+  @override
+  String get screensWhyHolesLine =>
+      'Каждая уходит на несколько «почему» вглубь';
+
+  @override
+  String screensWhyCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n «почему»',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensWhyDeeper => 'Копнуть глубже';
+
+  @override
+  String screensWhySource(String source) {
+    return 'Источник: $source';
+  }
+
+  @override
+  String screensWhyDepth(int at, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      at,
+      locale: localeName,
+      other: '$at «почему» из $of',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensTimeTitle => 'Сквозь время';
+
+  @override
+  String get screensTimeLine =>
+      'По одной эпохе, вплоть до этого года. Потяни, чтобы путешествовать';
+
+  @override
+  String get screensTimeCaption =>
+      'Лет назад. Каждое деление уходит в прошлое в десять раз дальше.';
+
+  @override
+  String get screensTimeNow => 'Сейчас';
+
+  @override
+  String get screensTimeEarlier => 'Дальше в прошлое';
+
+  @override
+  String get screensTimeLater => 'Ближе к нашим дням';
+
+  @override
+  String get screensEraAncient => 'Древний мир';
+
+  @override
+  String get screensEraAncientWhen => 'До 500 года';
+
+  @override
+  String get screensEraMedieval => 'Средние века';
+
+  @override
+  String get screensEraMedievalWhen => '500–1500 годы';
+
+  @override
+  String get screensEraEarlyModern => 'Раннее Новое время';
+
+  @override
+  String get screensEraEarlyModernWhen => '1500–1800 годы';
+
+  @override
+  String get screensEraNineteenth => 'XIX век';
+
+  @override
+  String get screensEraNineteenthWhen => '1800–1900 годы';
+
+  @override
+  String get screensEraTwentieth => 'Прошлый век';
+
+  @override
+  String get screensEraTwentiethWhen => '1900–2000 годы';
+
+  @override
+  String get screensEraRecent => 'Этот век';
+
+  @override
+  String get screensEraRecentWhen => 'С 2000 года';
+
+  @override
+  String get screensMindTitle => 'Измени мнение';
+
+  @override
+  String get screensMindLine =>
+      'Скажи, что думаешь, до чтения, а потом ещё раз после';
+
+  @override
+  String get screensMindClaim => 'Утверждение';
+
+  @override
+  String get screensMindBefore => 'До чтения';
+
+  @override
+  String get screensMindTap => 'Отметь свою позицию';
+
+  @override
+  String get screensMindKnow => 'Что мы знаем';
+
+  @override
+  String get screensMindNow => 'А теперь?';
+
+  @override
+  String get screensMindAgain => 'Отметь ещё раз';
+
+  @override
+  String screensMindLevel(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '0': 'Точно нет',
+      '1': 'Скорее нет',
+      '2': 'Не знаю',
+      '3': 'Скорее да',
+      'other': 'Точно да',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String screensMindToward(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На $n шага ближе к фактам.',
+      many: 'На $n шагов ближе к фактам.',
+      few: 'На $n шага ближе к фактам.',
+      one: 'На $n шаг ближе к фактам.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensMindSame =>
+      'Как и раньше. Одна карточка — это всего одна карточка.';
+
+  @override
+  String get screensMindAlready =>
+      'Твоё мнение совпадало с фактами ещё до чтения.';
+
+  @override
+  String get screensMindAway =>
+      'Твоё мнение отдалилось от фактов. Стоит перечитать.';
+
+  @override
+  String get screensMindFirst =>
+      'Сначала скажи, что думаешь. Одно касание, до чтения.';
+
+  @override
+  String screensMindChanged(int changed, int total) {
+    return 'Мнение изменилось в $changed из $total.';
+  }
+
+  @override
+  String get screensMindFoot =>
+      'Изменённое мнение — значит, карточка сделала своё дело.';
+
+  @override
+  String get screensSayTitle => 'Скажи это сегодня вечером';
+
+  @override
+  String get screensSayLine => 'Одна фраза к ужину. Нажми, когда скажешь её';
+
+  @override
+  String get screensSayTonight => 'Фраза на вечер';
+
+  @override
+  String get screensSaySaid => 'Сказано';
+
+  @override
+  String get screensSayDone => 'Уже сказано';
+
+  @override
+  String screensSayWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На этой неделе сказано $n фразы.',
+      many: 'На этой неделе сказано $n фраз.',
+      few: 'На этой неделе сказаны $n фразы.',
+      one: 'На этой неделе сказана $n фраза.',
+      zero: 'На этой неделе пока ничего не сказано.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensSayCounts =>
+      'Каждая сказанная фраза засчитывается и в «Топ недели».';
+
+  @override
+  String get screensFrontName => 'The Astute';
+
+  @override
+  String get screensFrontEdition => 'Сегодняшний выпуск';
+
+  @override
+  String get screensFrontSame => 'Один на всех';
+
+  @override
+  String get screensFrontLead => 'Главное';
+
+  @override
+  String get screensFrontNumbers => 'В цифрах';
+
+  @override
+  String get screensFrontCorrections => 'Поправки';
+
+  @override
+  String get screensFrontPuzzle => 'Задача дня';
+
+  @override
+  String get screensFrontEnd => 'Это сегодняшний выпуск';
+
+  @override
+  String get screensFrontTomorrow => 'Завтрашний выйдет утром';
 }

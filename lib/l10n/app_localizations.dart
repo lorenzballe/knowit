@@ -4883,6 +4883,1578 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch it on'**
   String get whereYouLiveSwitchOn;
+
+  /// The title of the full screen that asks the reader to update, shown when the server says this build can no longer be used (app.gate: minBuild or blocked). Nothing of the app is behind it.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Astute'**
+  String get gateUpdateTitle;
+
+  /// Under the update screen's title. {store} is apple on an iPhone, google on Android, other elsewhere: where the new version is. The server can put its own words in its place (app.gate.message.hard).
+  ///
+  /// In en, this message translates to:
+  /// **'This version can’t carry on. {store, select, apple{The new one is waiting in the App Store} google{The new one is waiting on Google Play} other{The new one is waiting in your app store}}, with your cards and your streak just as you left them.'**
+  String gateUpdateLine(String store);
+
+  /// The update screen's button, and the update sheet's: opens Astute's page in the store.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get gateUpdateButton;
+
+  /// The title of the sheet that says a newer version is out, once for each build the server suggests (app.gate.suggestBuild).
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of Astute is ready'**
+  String get gateSoftTitle;
+
+  /// Under the update sheet's title. {store} is apple on an iPhone, google on Android, other elsewhere. The server can put its own words in its place (app.gate.message.soft).
+  ///
+  /// In en, this message translates to:
+  /// **'{store, select, apple{It’s waiting in the App Store.} google{It’s waiting on Google Play.} other{It’s waiting in your app store.}} Updating takes a moment, and your cards and your streak stay just as they are.'**
+  String gateSoftLine(String store);
+
+  /// The update sheet's second answer: closes it, and it does not come back for this build.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get gateSoftLater;
+
+  /// The title of the full screen shown while the server pauses the app, for an emergency such as a backend that is down (app.gate.pause).
+  ///
+  /// In en, this message translates to:
+  /// **'Astute is taking a short break'**
+  String get gatePauseTitle;
+
+  /// Under the pause screen's title. The server can put its own words in its place (app.gate.message.pause).
+  ///
+  /// In en, this message translates to:
+  /// **'We’re putting something right behind the scenes. Everything you’ve done is safe. Try again in a little while.'**
+  String get gatePauseLine;
+
+  /// The pause screen's button while it asks the server again.
+  ///
+  /// In en, this message translates to:
+  /// **'Trying again…'**
+  String get gatePauseTrying;
+
+  /// Under the pause screen's button, when asking again found the app still paused.
+  ///
+  /// In en, this message translates to:
+  /// **'Still on a break. Try again in a few minutes.'**
+  String get gatePauseStill;
+
+  /// Over the read-or-do shelves: how many of their cards ask the reader to do something, and how many are to read.
+  ///
+  /// In en, this message translates to:
+  /// **'{toDo} to do, {toRead} to read'**
+  String purposeReadOrDoCount(int toDo, int toRead);
+
+  /// Beside one read-or-do shelf: how many of its cards are to do and to read.
+  ///
+  /// In en, this message translates to:
+  /// **'{toDo} to do · {toRead} to read'**
+  String purposeShelfCount(int toDo, int toRead);
+
+  /// The read-or-do filter: only the cards to read. Short, it shares a small bar with two others.
+  ///
+  /// In en, this message translates to:
+  /// **'To read'**
+  String get purposeFilterToRead;
+
+  /// The read-or-do filter: only the cards that ask something of the reader. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get purposeFilterToDo;
+
+  /// What a card has the reader do, on a chip at its foot: answer true or false, pick an option, type a number, bet on a number, take a side, answer for yourself first, move a slider, guess what happens next, and the other ways a card can be played. Short: it sits on one line in a chip half a card wide.
+  ///
+  /// In en, this message translates to:
+  /// **'{verb, select, trueFalse{True or false} pick{Pick one} typeNumber{Type a number} bet{Bet the number} side{Pick a side} youFirst{You first} moveIt{Move it and watch} whatNext{What happens next?} spotTrick{Spot the trick} drawIt{Draw it} sortThem{Sort them} putInOrder{Put them in order} holdIt{Hold it} growSample{Grow a sample} askWhy{Ask why} sayPlainly{Say it plainly} pairUp{Pair them up} followClues{Follow the clues} look{Just look} listen{Listen} other{{verb}}}'**
+  String purposeVerb(String verb);
+
+  /// On a card with nothing to answer: read it, and about how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Read · {n} min'**
+  String purposeVerbRead(int n);
+
+  /// Over the shelves where the reader answers before the card opens, beside a lock.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer here, then open the card to see if you were right. A guess you commit to stays with you longer.'**
+  String get purposeCommitNote;
+
+  /// A shelf of cards answered on the shelf, before they open: true or false, a side, an amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer first'**
+  String get purposeCommitTitle;
+
+  /// Under Answer first.
+  ///
+  /// In en, this message translates to:
+  /// **'Say what you think, then open the card'**
+  String get purposeCommitLine;
+
+  /// Under Work it out, on a shelf of numbers worked out before the card opens.
+  ///
+  /// In en, this message translates to:
+  /// **'A number to reach in your head'**
+  String get purposeInYourHeadLine;
+
+  /// In the answer box on a card: work the number out in your head and type it. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'In your head'**
+  String get purposeInYourHead;
+
+  /// Over a thinking move's name, set large in a box: what the box holds. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'A move'**
+  String get purposeMoveKicker;
+
+  /// On a thinking move the reader has not met yet: what it adds to their score once they have it down.
+  ///
+  /// In en, this message translates to:
+  /// **'New · +{points} when you have it down'**
+  String purposeMoveNew(int points);
+
+  /// A thinking move's name: the trap or the skill a card trains, by its key. Short: set large on a box and on a button.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{Base rates} survivorship{Survivorship} regression{Regression to the mean} confirmation{Confirmation} anchoring{Anchoring} sampling{Sampling} confounding{Confounding} counterfactual{Compared to what} multipleComparisons{Multiple looks} availability{Availability} sunkCost{Sunk cost} conjunction{Conjunction} conditional{Conditional odds} independence{Independence} coincidence{Coincidence} exponential{Exponential growth} reflection{The quick answer} simpson{Aggregates} estimation{Estimation} computation{Working it out} other{{move}}}'**
+  String purposeMoveName(String move);
+
+  /// A thinking move in one line, under its name.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{How accurate a test is, is not how likely you are} survivorship{The data you have is the data that survived} regression{Extremes drift back on their own} confirmation{Looking for a yes is not a test} anchoring{The first number said moves every number after} sampling{Who ended up in the sample decides what it can say} confounding{Something else may be causing both} counterfactual{A change means nothing without a control} multipleComparisons{Test enough things and one will pass} availability{Easy to picture is not the same as common} sunkCost{Spent is spent; only what is left can be decided} conjunction{Detail makes a story likelier and less probable} conditional{What you were told changes the odds} independence{Chance has no memory} coincidence{Rare things are common when there are many tries} exponential{Nobody has intuition for doubling} reflection{The answer that arrives first is the one to check} simpson{A whole can lean the way no part of it does} estimation{Break the unanswerable into things you can guess} computation{A problem you can actually finish} other{{move}}}'**
+  String purposeMoveLine(String move);
+
+  /// The question each thinking move asks: what to ask of a claim to catch the trap. One short question.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{How common was it to begin with?} survivorship{What never made it into the data?} regression{Is it just an extreme drifting back?} confirmation{What would prove me wrong?} anchoring{Which number came first?} sampling{Who got counted?} confounding{What else could cause both?} counterfactual{Compared to what?} multipleComparisons{How many things were tried?} availability{Is it common, or just easy to picture?} sunkCost{What is left to decide from here?} conjunction{Does each detail make it less likely?} conditional{What does knowing that change?} independence{Does the last result change the next?} coincidence{How many chances were there?} exponential{What happens when it doubles again?} reflection{Is the first answer the right one?} simpson{Does every part lean the same way?} estimation{What can I guess on the way there?} computation{Can I work it out step by step?} other{{move}}}'**
+  String purposeMoveAsk(String move);
+
+  /// A shelf of cards a step harder than the reader's level in their subject.
+  ///
+  /// In en, this message translates to:
+  /// **'A step above'**
+  String get purposeStepAbove;
+
+  /// Under A step above.
+  ///
+  /// In en, this message translates to:
+  /// **'Harder than what you usually read'**
+  String get purposeStepAboveLine;
+
+  /// A shelf of the subject the reader has read least of. {subject} is the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Thin for you: {subject}'**
+  String purposeThinTitle(String subject);
+
+  /// Under the thinnest subject's name: how much of its cards the reader has read, in per cent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of the {subject} shelf read, your least'**
+  String purposeThinLine(int percent, String subject);
+
+  /// A shelf of the debates the reader took a side on, each opening on the case against it.
+  ///
+  /// In en, this message translates to:
+  /// **'The other side'**
+  String get purposeOtherSide;
+
+  /// Under The other side.
+  ///
+  /// In en, this message translates to:
+  /// **'You took a side. Here is the best case against it'**
+  String get purposeOtherSideLine;
+
+  /// On a debate the reader answered: the side they took, in a small badge. {side} is the side's word, from the card (Yes, No).
+  ///
+  /// In en, this message translates to:
+  /// **'You said {side}'**
+  String purposeYouSaid(String side);
+
+  /// On a debate the reader answered: the button that opens the card on the other side's case. {side} is that side's word, from the card.
+  ///
+  /// In en, this message translates to:
+  /// **'The case for “{side}”'**
+  String purposeCaseFor(String side);
+
+  /// At the foot of a card on How it really works: what the card explains. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The mechanism'**
+  String get purposeMechanism;
+
+  /// Across the top of a card about something still changing: when it was last brought up to date. {date} is a short date, 4 Oct.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {date}'**
+  String purposeMovingUpdated(String date);
+
+  /// Across the top of a card whose answer could go stale within a few years.
+  ///
+  /// In en, this message translates to:
+  /// **'Could change in a few years'**
+  String get purposeMovingYears;
+
+  /// Across the top of a card whose answer could go stale within the year.
+  ///
+  /// In en, this message translates to:
+  /// **'Could change this year'**
+  String get purposeMovingMonths;
+
+  /// A shelf of cards that each explain one mechanism: the feeling of finally understanding why.
+  ///
+  /// In en, this message translates to:
+  /// **'Ah, so that\'s why'**
+  String get purposeWhy;
+
+  /// Under Ah, so that's why.
+  ///
+  /// In en, this message translates to:
+  /// **'One mechanism, explained until it clicks'**
+  String get purposeWhyLine;
+
+  /// At the foot of a card on Ah, so that's why: the why it explains, and how long it takes. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The why · {n} min'**
+  String purposeWhyBand(int n);
+
+  /// A shelf of cards about habits the reader may recognise in themselves, and the button on each to say so.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s me'**
+  String get purposeMe;
+
+  /// Under That's me.
+  ///
+  /// In en, this message translates to:
+  /// **'Things you do without noticing'**
+  String get purposeMeLine;
+
+  /// Beside the count of cards the reader marked That's me.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark the cards that sound like you.'**
+  String get purposeMeFooter;
+
+  /// Beside the count, once the reader has marked cards That's me today.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card marked “That\'s me”.} other{{n} cards marked “That\'s me”.}}'**
+  String purposeMeMarked(int n);
+
+  /// A shelf of discoveries about the reader's own body and health.
+  ///
+  /// In en, this message translates to:
+  /// **'News to me, and about me'**
+  String get purposeAboutYou;
+
+  /// Under News to me, and about me.
+  ///
+  /// In en, this message translates to:
+  /// **'Your body, your health, your odds'**
+  String get purposeAboutYouLine;
+
+  /// A shelf of claims and studies set like newspaper headlines.
+  ///
+  /// In en, this message translates to:
+  /// **'In a headline'**
+  String get purposeHeadline;
+
+  /// Under In a headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Studies and claims that sound better than they are'**
+  String get purposeHeadlineLine;
+
+  /// Over a headline on a card: what it is. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The claim'**
+  String get purposeTheClaim;
+
+  /// A shelf of figures that need a second look: odds, percentages.
+  ///
+  /// In en, this message translates to:
+  /// **'In a number'**
+  String get purposeNumber;
+
+  /// Under In a number.
+  ///
+  /// In en, this message translates to:
+  /// **'Odds and percentages that need a second look'**
+  String get purposeNumberLine;
+
+  /// Under a figure set large on a card: the question to ask of it. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of what?'**
+  String get purposeOutOfWhat;
+
+  /// A shelf of cards drawn as price tags: prices, deals and who pays.
+  ///
+  /// In en, this message translates to:
+  /// **'In an offer'**
+  String get purposeOffer;
+
+  /// Under In an offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices, deals and who really pays'**
+  String get purposeOfferLine;
+
+  /// A shelf of cards drawn as speech bubbles: arguments and where they go wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'In an argument'**
+  String get purposeArgument;
+
+  /// Under In an argument.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the reasoning slips'**
+  String get purposeArgumentLine;
+
+  /// Over a short list of questions, each one a thinking move, that catch most of the tricks on the shelves above. {n} is how many, 1 to 5.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, select, 1{One question that catches most of these} 2{Two questions that catch most of these} 3{Three questions that catch most of these} 4{Four questions that catch most of these} 5{Five questions that catch most of these} other{{n} questions that catch most of these}}'**
+  String purposeKeepHeading(String n);
+
+  /// What a question for the reader's own life is about, in small capitals over it: money, work and time, time, the body, relationships, beliefs.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, money{Money} work{Work and time} clock{Time} body{Your body} relationships{Relationships} belief{What you believe} other{{topic}}}'**
+  String purposeLifeAbout(String topic);
+
+  /// A question for the reader to ask of their own life, set large over the cards that ask it, by what it is about.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, money{Am I paying for what I actually use?} work{What would make tomorrow easier to start?} clock{Where does my time actually go?} body{Is what I know about my body still true?} relationships{What do the people close to me actually need?} belief{How sure am I, and why?} other{{topic}}}'**
+  String purposeLifeQuestion(String topic);
+
+  /// A chip the reader picks to say what they want better questions about. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, money{Money} work{Work} clock{Time} body{Body} relationships{Relationships} belief{What I believe} other{{topic}}}'**
+  String purposeLifeChip(String topic);
+
+  /// Over the chips that pick what the reader wants better questions about.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want better questions about?'**
+  String get purposeLifeAsk;
+
+  /// Under those chips: picking one shows its cards just below.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick any, and the cards that ask about it come up here.'**
+  String get purposeLifeFooter;
+
+  /// A shelf of cards where the reader picks the thinking move that would catch the trick in each.
+  ///
+  /// In en, this message translates to:
+  /// **'Spot the trick'**
+  String get purposeSpotTrick;
+
+  /// Under Spot the trick.
+  ///
+  /// In en, this message translates to:
+  /// **'Which question would catch it?'**
+  String get purposeSpotTrickLine;
+
+  /// Over what the reader played on Explore's shelves today.
+  ///
+  /// In en, this message translates to:
+  /// **'What you played today'**
+  String get purposePlayed;
+
+  /// Under a number: how far off the reader's guesses on a slider were, on average, in points.
+  ///
+  /// In en, this message translates to:
+  /// **'points off, on average'**
+  String get purposePlayedOff;
+
+  /// Under a count like 2 of 3: the tricks the reader spotted on the shelf.
+  ///
+  /// In en, this message translates to:
+  /// **'tricks spotted'**
+  String get purposePlayedTricks;
+
+  /// Under a number: cards the reader answered on a shelf rather than on the card.
+  ///
+  /// In en, this message translates to:
+  /// **'answered on a shelf'**
+  String get purposePlayedAnswered;
+
+  /// Under what was played: answers given on a shelf count in the reader's journey. Your journey and Today are the names of two screens.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers given on a shelf count in Your journey, like the ones from Today.'**
+  String get purposePlayedFooter;
+
+  /// A count out of a total, short: 2 of 3, 7 of 12.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of}'**
+  String purposeOf(int n, int of);
+
+  /// Beside a set of cards to finish: how many of them the reader has read.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} read'**
+  String purposeSetRead(int n, int of);
+
+  /// A set the reader has read every card of. {n} is how many cards.
+  ///
+  /// In en, this message translates to:
+  /// **'All {n} read. New ones join the set when the shelf comes round again.'**
+  String purposeSetDone(int n);
+
+  /// A set the reader has finished, on its ring.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get purposeComplete;
+
+  /// Under a set drawn as stamps, one for each card.
+  ///
+  /// In en, this message translates to:
+  /// **'Each card you read adds its stamp.'**
+  String get purposeStampsFooter;
+
+  /// A grid of every set of cards and how far along the reader is with each.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sets'**
+  String get purposeSets;
+
+  /// Under Your sets.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading counts. You don\'t have to answer to fill a set.'**
+  String get purposeSetsLine;
+
+  /// Near the bottom of Explore: the shelves that come tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow on the shelves'**
+  String get purposeTomorrow;
+
+  /// Under Tomorrow on the shelves.
+  ///
+  /// In en, this message translates to:
+  /// **'The shelves change every day. These come next'**
+  String get purposeTomorrowLine;
+
+  /// The last line of Explore, at the very bottom. Explore is the name of the tab.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s the bottom of Explore'**
+  String get purposeEnd;
+
+  /// Under the last line of Explore.
+  ///
+  /// In en, this message translates to:
+  /// **'See you tomorrow'**
+  String get purposeEndLine;
+
+  /// Explore, bets: the name of the shelf where a share is bet on with a range, narrow or wide.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet a range'**
+  String get betsRangeTitle;
+
+  /// Under the shelf's name: a narrow range pays more, but only when the answer is in it.
+  ///
+  /// In en, this message translates to:
+  /// **'The narrower you go, the more it pays, if you\'re right'**
+  String get betsRangeLine;
+
+  /// One of the range widths: plus or minus w percentage points either side of the guess, and the points it pays when the answer is in it. Short: it sits in a chip.
+  ///
+  /// In en, this message translates to:
+  /// **'±{w} · {pts} pts'**
+  String betsRangeWidth(int w, int pts);
+
+  /// The button that lays a range bet.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet'**
+  String get betsBet;
+
+  /// After a range bet whose range held the answer: the points won, and the answer, said as a share ("21%").
+  ///
+  /// In en, this message translates to:
+  /// **'In range: +{pts} points. It is {said}.'**
+  String betsInRange(int pts, String said);
+
+  /// After a range bet whose range missed the answer: the answer, said as a share.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed: it is {said}.'**
+  String betsMissedRange(String said);
+
+  /// What a screen reader calls the track a share is set on.
+  ///
+  /// In en, this message translates to:
+  /// **'Your guess'**
+  String get betsYourGuess;
+
+  /// On a bet whose card the reader already answered somewhere else: nothing left to bet on.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered already'**
+  String get betsAnsweredAlready;
+
+  /// What a screen reader says a settled bet's tile does when tapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the card'**
+  String get betsOpenCard;
+
+  /// What a screen reader says for the points pill beside a shelf of bets: the points left of the day's hundred.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point left today} other{{n} points left today}}'**
+  String betsWalletSays(int n);
+
+  /// The panel listing every bet laid today.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bet slip'**
+  String get betsSlipTitle;
+
+  /// Beside the slip's name: the points won or lost today, already signed ("+30", "−10").
+  ///
+  /// In en, this message translates to:
+  /// **'{points} today'**
+  String betsSlipToday(String points);
+
+  /// The slip before any bet is laid.
+  ///
+  /// In en, this message translates to:
+  /// **'No bets yet. Each one you place lands here.'**
+  String get betsSlipEmpty;
+
+  /// At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays twice what the widest does.
+  ///
+  /// In en, this message translates to:
+  /// **'Go narrow when you\'re sure: it pays twice as much.'**
+  String get betsSlipTipTwice;
+
+  /// At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays three times what the widest does.
+  ///
+  /// In en, this message translates to:
+  /// **'Go narrow when you\'re sure: it pays three times as much.'**
+  String get betsSlipTipThrice;
+
+  /// At the foot of the slip under the range bets, before any narrow bet: how many times more the narrowest range pays than the widest, four or more.
+  ///
+  /// In en, this message translates to:
+  /// **'{times, plural, other{Go narrow when you\'re sure: it pays {times} times as much.}}'**
+  String betsSlipTipTimes(int times);
+
+  /// At the foot of the slip: how many of the narrowest range bets held the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow bets right: {right} of {n}.'**
+  String betsSlipNarrow(int right, int n);
+
+  /// At the foot of the slip: of the bets laid with how sure, how many were right, and how sure the reader said they were on average.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on {right} of {n}, at {pct}% sure on average.'**
+  String betsSlipSure(int right, int n, int pct);
+
+  /// What a screen reader says for the tick beside a bet on the slip that was right.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get betsRight;
+
+  /// What a screen reader says for the cross beside a bet on the slip that was wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong'**
+  String get betsWrong;
+
+  /// Odds, as a bet on them is said again on the slip and to a screen reader: "1 in 1K".
+  ///
+  /// In en, this message translates to:
+  /// **'1 in {n}'**
+  String betsOneIn(String n);
+
+  /// Small capitals over a row of odds to pick from, whose notches say only the n of "1 in n": 10, 100, 1K.
+  ///
+  /// In en, this message translates to:
+  /// **'1 in'**
+  String get betsOneInLabel;
+
+  /// A game of more or less, as the slip says it: how many steps were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {steps}'**
+  String betsScore(int right, int steps);
+
+  /// After a game of more or less that ended early on the answer itself: how many steps were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'You got {right} of {steps}.'**
+  String betsScoreSentence(int right, int steps);
+
+  /// Explore, bets: the name of the shelf where points are staked on one of three amounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Place your bet'**
+  String get betsStakeTitle;
+
+  /// Under the shelf's name: the points a day starts with, and what a winning stake pays.
+  ///
+  /// In en, this message translates to:
+  /// **'{points} points a day. Win and you double your stake'**
+  String betsStakeLine(int points);
+
+  /// Small capitals before the stakes to choose from (10, 20, 30).
+  ///
+  /// In en, this message translates to:
+  /// **'Stake'**
+  String get betsStakeLabel;
+
+  /// The button that lays a stake of n points.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet {n}'**
+  String betsBetN(int n);
+
+  /// Where the stake button will be, before an amount is picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one first'**
+  String get betsPickFirst;
+
+  /// Where the stake button would be, when the stake is more than the points left.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough points'**
+  String get betsNotEnough;
+
+  /// After a stake on the right amount: the points won.
+  ///
+  /// In en, this message translates to:
+  /// **'You win {n}.'**
+  String betsWin(int n);
+
+  /// After a stake on a wrong amount: the points lost.
+  ///
+  /// In en, this message translates to:
+  /// **'You lose {n}.'**
+  String betsLose(int n);
+
+  /// After a bet laid with how sure: how sure the reader said they were.
+  ///
+  /// In en, this message translates to:
+  /// **'You were {pct}% sure.'**
+  String betsYouWereSure(int pct);
+
+  /// Explore, bets: the name of the shelf that sends a card to a friend to guess.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet a friend'**
+  String get betsFriendTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Send them a question, then compare your guesses'**
+  String get betsFriendLine;
+
+  /// Under the card about to be sent: the reader's guess is not sent, and the card is sent with its answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your guess stays on your phone. The card goes with its answer, so ask for theirs first.'**
+  String get betsFriendNote;
+
+  /// Under the card about to be sent, once the reader bet on it: what they said, and that the card goes with its answer.
+  ///
+  /// In en, this message translates to:
+  /// **'You said {said}. The card goes with its answer, so ask for their guess first.'**
+  String betsFriendNoteSaid(String said);
+
+  /// Opens the share sheet for the card.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to a friend'**
+  String get betsFriendSend;
+
+  /// Copies the card's question and its options, without the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the question'**
+  String get betsFriendCopy;
+
+  /// Said once the question is copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Question copied'**
+  String get betsFriendCopied;
+
+  /// Under a question copied to send to a friend: asking for their guess.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you say?'**
+  String get betsFriendAsk;
+
+  /// Explore, bets: the name of the shelf where a number is set on steppers and locked; also what a screen reader calls the number being set.
+  ///
+  /// In en, this message translates to:
+  /// **'Your number'**
+  String get betsNumberTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Set it, lock it, see how far off you were'**
+  String get betsNumberLine;
+
+  /// The button that locks a number set on steppers. Short: it sits beside four steppers.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock'**
+  String get betsLock;
+
+  /// After a number locked exactly on the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Spot on.'**
+  String get betsSpotOn;
+
+  /// After a number off by less than the card allows, so still right: by how much, with its unit ("0.1 tonnes").
+  ///
+  /// In en, this message translates to:
+  /// **'Close enough: off by {by}.'**
+  String betsCloseEnough(String by);
+
+  /// After a number off by more than the card allows: by how much, with its unit ("23 studies").
+  ///
+  /// In en, this message translates to:
+  /// **'Off by {by}.'**
+  String betsOffBy(String by);
+
+  /// Under the scale a locked number is shown on: the ring is you. Lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get betsYou;
+
+  /// Under the scale a locked number is shown on: the bar is the answer. Lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'answer'**
+  String get betsAnswer;
+
+  /// Explore, bets: the name of the shelf of two hidden figures and a tap on the bigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Which is bigger?'**
+  String get betsBiggerTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Two figures you can work out. Tap the bigger one'**
+  String get betsBiggerLine;
+
+  /// Small capitals on a hidden figure, before the pick.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap if bigger'**
+  String get betsTapIfBigger;
+
+  /// Small capitals on the bigger figure, when it was the one picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger · you got it'**
+  String get betsBiggerGotIt;
+
+  /// Small capitals on the bigger figure, when the other was picked.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger'**
+  String get betsBigger;
+
+  /// Small capitals on the figure picked, when it was the smaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pick'**
+  String get betsYourPick;
+
+  /// In the small disc between two figures to compare. Lowercase, as short as can be.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get betsOr;
+
+  /// Under the pairs of figures, before any pick.
+  ///
+  /// In en, this message translates to:
+  /// **'Each figure is a card\'s answer. Once you pick, tap one to open its card.'**
+  String get betsBiggerFoot;
+
+  /// Under the pairs of figures: how many picks were right.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on {right} of {n}.'**
+  String betsBiggerScore(int right, int n);
+
+  /// Explore, bets: the name of the shelf where a share is closed in on by saying more or less.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer, closer'**
+  String get betsCloserTitle;
+
+  /// Under the shelf's name: how many steps a game takes, 2 to 5, given as text so each can be a word.
+  ///
+  /// In en, this message translates to:
+  /// **'{steps, select, 2{Two steps of more or less to close in on the number} 3{Three steps of more or less to close in on the number} 4{Four steps of more or less to close in on the number} 5{Five steps of more or less to close in on the number} other{{steps} steps of more or less to close in on the number}}'**
+  String betsCloserLine(String steps);
+
+  /// On a game of more or less, before the first step: how many steps it takes, 2 to 5, given as text so each can be a word.
+  ///
+  /// In en, this message translates to:
+  /// **'{steps, select, 2{Two steps to close in on it.} 3{Three steps to close in on it.} 4{Four steps to close in on it.} 5{Five steps to close in on it.} other{{steps} steps to close in on it.}}'**
+  String betsCloserStart(String steps);
+
+  /// The question of a step: is the answer more or less than this share?
+  ///
+  /// In en, this message translates to:
+  /// **'More or less than {v}?'**
+  String betsMoreOrLess(String v);
+
+  /// Small capitals beside the question: which step this is.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {at} of {of}'**
+  String betsStepOf(int at, int of);
+
+  /// The button that says the answer is more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get betsMore;
+
+  /// The button that says the answer is less.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get betsLess;
+
+  /// After a step said right: the answer is more than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: it is more than {v}.'**
+  String betsCloserYesMore(String v);
+
+  /// After a step said right: the answer is less than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: it is less than {v}.'**
+  String betsCloserYesLess(String v);
+
+  /// After a step said wrong: the answer is more than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'No: it is more than {v}.'**
+  String betsCloserNoMore(String v);
+
+  /// After a step said wrong: the answer is less than this share.
+  ///
+  /// In en, this message translates to:
+  /// **'No: it is less than {v}.'**
+  String betsCloserNoLess(String v);
+
+  /// When the answer sits exactly on the share a step asked about, which ends the game.
+  ///
+  /// In en, this message translates to:
+  /// **'It is exactly {said}.'**
+  String betsCloserExact(String said);
+
+  /// At the end of a game of more or less: the answer, and how many steps were said right.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}. You got {right} of {steps}.'**
+  String betsCloserDone(String said, int right, int steps);
+
+  /// Explore, bets: the name of the shelf where a size is picked by its order of magnitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders of magnitude'**
+  String get betsMagnitudeTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten, a thousand or a million? Pick the size'**
+  String get betsMagnitudeLine;
+
+  /// After a size picked at the right order of magnitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Right order of magnitude.'**
+  String get betsMagnitudeRight;
+
+  /// After a size picked at the wrong order of magnitude: by how many powers of ten.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Off by 1 order of magnitude.} other{Off by {n} orders of magnitude.}}'**
+  String betsMagnitudeOff(int n);
+
+  /// Explore, bets: the name of the shelf with the bet of the day on top.
+  ///
+  /// In en, this message translates to:
+  /// **'The bet of the day'**
+  String get betsDayTitle;
+
+  /// Under the shelf's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock in your guess, then see how far off you were'**
+  String get betsDayLine;
+
+  /// The tag over the bet of the day. Shown in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet of the day'**
+  String get betsDayTag;
+
+  /// The tag over the bet of the day, where the server says every reader is given the same card. Shown in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet of the day · the same for everyone'**
+  String get betsDayTagSame;
+
+  /// The button that locks a guess set on a track.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock in'**
+  String get betsLockIn;
+
+  /// Once a guess is locked: the answer, said as a share.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}.'**
+  String betsItIs(String said);
+
+  /// Once a guess on a share is locked: how far off it was, in percentage points.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Spot on.} =1{You were 1 percentage point off.} other{You were {n} percentage points off.}}'**
+  String betsPointsOff(int n);
+
+  /// Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.
+  ///
+  /// In en, this message translates to:
+  /// **'“{text}”'**
+  String screensQuoted(String text);
+
+  /// Explore: the title of the shelf where the reader picks an expert and sees the question that expert always asks.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like an expert'**
+  String get screensExpertTitle;
+
+  /// Explore: the line under 'Think like an expert'.
+  ///
+  /// In en, this message translates to:
+  /// **'The question each of them always asks, and the cards that need it'**
+  String get screensExpertLine;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip. Keep it to one or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistician'**
+  String get screensExpertStatistician;
+
+  /// Explore, 'Think like an expert': the small capitals over the statistician's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a statistician'**
+  String get screensExpertStatisticianAs;
+
+  /// Explore, 'Think like an expert': the question a statistician always asks of a figure. Shown large, in quotation marks.
+  ///
+  /// In en, this message translates to:
+  /// **'Compared to what, and out of how many?'**
+  String get screensExpertStatisticianAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Economist'**
+  String get screensExpertEconomist;
+
+  /// Explore, 'Think like an expert': the small capitals over the economist's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like an economist'**
+  String get screensExpertEconomistAs;
+
+  /// Explore, 'Think like an expert': the question an economist always asks.
+  ///
+  /// In en, this message translates to:
+  /// **'Who pays, and what do they give up?'**
+  String get screensExpertEconomistAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Historian'**
+  String get screensExpertHistorian;
+
+  /// Explore, 'Think like an expert': the small capitals over the historian's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a historian'**
+  String get screensExpertHistorianAs;
+
+  /// Explore, 'Think like an expert': the question a historian always asks.
+  ///
+  /// In en, this message translates to:
+  /// **'What did people know at the time?'**
+  String get screensExpertHistorianAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip: a physician.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor'**
+  String get screensExpertDoctor;
+
+  /// Explore, 'Think like an expert': the small capitals over the doctor's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a doctor'**
+  String get screensExpertDoctorAs;
+
+  /// Explore, 'Think like an expert': the question a doctor always asks of a symptom.
+  ///
+  /// In en, this message translates to:
+  /// **'How common is it, and what else could it be?'**
+  String get screensExpertDoctorAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientist'**
+  String get screensExpertScientist;
+
+  /// Explore, 'Think like an expert': the small capitals over the scientist's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a scientist'**
+  String get screensExpertScientistAs;
+
+  /// Explore, 'Think like an expert': the question a scientist always asks of a claim.
+  ///
+  /// In en, this message translates to:
+  /// **'How would we know if it were wrong?'**
+  String get screensExpertScientistAsks;
+
+  /// Explore: the title of the shelf where every card sits where two subjects meet.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect the dots'**
+  String get screensDotsTitle;
+
+  /// Explore: the line under 'Connect the dots'.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a subject to see where it meets the others'**
+  String get screensDotsLine;
+
+  /// Explore, 'Connect the dots': under the subject's name, how many other subjects it meets and in how many cards.
+  ///
+  /// In en, this message translates to:
+  /// **'{subjects, plural, =1{Meets 1 subject} other{Meets {subjects} subjects}} {cards, plural, =1{in 1 card} other{in {cards} cards}}'**
+  String screensDotsMeets(int subjects, int cards);
+
+  /// Explore, 'Connect the dots': the title over the cards that sit between two subjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Where they meet'**
+  String get screensDotsWhere;
+
+  /// Explore, 'Connect the dots': the line under 'Where they meet'.
+  ///
+  /// In en, this message translates to:
+  /// **'One question, two ways of looking at it'**
+  String get screensDotsWhereLine;
+
+  /// Explore, 'Ask first': the large question over the field where the reader types a question.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to understand?'**
+  String get screensAskTitle;
+
+  /// Explore, 'Ask first': the hint inside the empty question field.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask anything, or type a word'**
+  String get screensAskHint;
+
+  /// Explore, 'Ask first': small capitals before a few words the reader can tap to search for.
+  ///
+  /// In en, this message translates to:
+  /// **'Try'**
+  String get screensAskTry;
+
+  /// Explore, 'Ask first': what a screen reader says for the button that empties the question field.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the question'**
+  String get screensAskClear;
+
+  /// Explore, 'Ask first': over the cards that answer what the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card answers it} other{{n} cards answer it}}'**
+  String screensAskFound(int n);
+
+  /// Explore, 'Ask first': when no card answers what the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'No card on that yet'**
+  String get screensAskNone;
+
+  /// Explore, 'Ask first': under 'No card on that yet'. The question is kept on the phone and shown again with the first card that answers it.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the question. When a card answers it, it will be here, under the question.'**
+  String get screensAskNoneLine;
+
+  /// Explore, 'Ask first': the button that keeps a question no card answers yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the question'**
+  String get screensAskKeep;
+
+  /// Explore, 'Ask first': the same button once the question is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept'**
+  String get screensAskKept;
+
+  /// Explore: the title of the shelf that shows the questions the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions you asked'**
+  String get screensAskedTitle;
+
+  /// Explore: the line under 'Questions you asked'.
+  ///
+  /// In en, this message translates to:
+  /// **'And the cards that answered them'**
+  String get screensAskedLine;
+
+  /// Explore, 'Questions you asked': after the subject's name, in small capitals, on the card that answered a question.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered'**
+  String get screensAskedAnswered;
+
+  /// Explore, 'Questions you asked': under a kept question that no card answers yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No card answers it yet. When one does, it will be here.'**
+  String get screensAskedWaiting;
+
+  /// Explore, 'Questions you asked': the action, held down or from a screen reader, that removes a question the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget this question'**
+  String get screensAskedForget;
+
+  /// Explore, 'Questions you asked': the note shown once a question is removed, beside Undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Question forgotten'**
+  String get screensAskedForgotten;
+
+  /// Explore: the title of the shelf where every answer opens the next question.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep asking why'**
+  String get screensWhyTitle;
+
+  /// Explore: the line under 'Keep asking why'.
+  ///
+  /// In en, this message translates to:
+  /// **'Every answer raises the next question'**
+  String get screensWhyLine;
+
+  /// Explore, 'Keep asking why': the button that opens the next question, and the small label between two answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Why?'**
+  String get screensWhyAsk;
+
+  /// Explore, 'Keep asking why': when the last answer of a chain is open.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 why deep.} other{{n} whys deep.}} That\'s the bottom of this one.'**
+  String screensWhyBottom(int n);
+
+  /// Explore, 'Keep asking why': the button that closes the chain back to its first question.
+  ///
+  /// In en, this message translates to:
+  /// **'Start again'**
+  String get screensWhyAgain;
+
+  /// Explore, 'Keep asking why': the title over the other chains of questions to start.
+  ///
+  /// In en, this message translates to:
+  /// **'More rabbit holes'**
+  String get screensWhyHoles;
+
+  /// Explore, 'Keep asking why': the line under 'More rabbit holes'.
+  ///
+  /// In en, this message translates to:
+  /// **'Each one goes a few whys deep'**
+  String get screensWhyHolesLine;
+
+  /// Explore, 'Keep asking why': how many questions deep a chain goes, beside its first question.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 why} other{{n} whys}}'**
+  String screensWhyCount(int n);
+
+  /// Explore, 'Keep asking why': small capitals over the cards that go further than the chain.
+  ///
+  /// In en, this message translates to:
+  /// **'Go deeper'**
+  String get screensWhyDeeper;
+
+  /// Explore, 'Keep asking why': where the answers of a chain come from, under its last answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}'**
+  String screensWhySource(String source);
+
+  /// Explore, 'Keep asking why': what a screen reader says for the little meter of how deep the chain is open.
+  ///
+  /// In en, this message translates to:
+  /// **'{at, plural, =1{1 why} other{{at} whys}} of {of}'**
+  String screensWhyDepth(int at, int of);
+
+  /// Explore: the title of the shelf with a ruler of years to travel along.
+  ///
+  /// In en, this message translates to:
+  /// **'Through time'**
+  String get screensTimeTitle;
+
+  /// Explore: the line under 'Through time'.
+  ///
+  /// In en, this message translates to:
+  /// **'One age at a time, to this year. Drag to travel'**
+  String get screensTimeLine;
+
+  /// Explore, 'Through time': the caption under the ruler, which is drawn in powers of ten.
+  ///
+  /// In en, this message translates to:
+  /// **'Years ago. Each tick is ten times further back.'**
+  String get screensTimeCaption;
+
+  /// Explore, 'Through time': the label at the right end of the ruler of years.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get screensTimeNow;
+
+  /// Explore, 'Through time': what a screen reader says for the button that goes to the age before.
+  ///
+  /// In en, this message translates to:
+  /// **'Further back'**
+  String get screensTimeEarlier;
+
+  /// Explore, 'Through time': what a screen reader says for the button that goes to the age after.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer to now'**
+  String get screensTimeLater;
+
+  /// Explore, 'Through time': an age on the ruler, in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The ancient world'**
+  String get screensEraAncient;
+
+  /// Explore, 'Through time': when the ancient world was, shown large: the years before AD 500.
+  ///
+  /// In en, this message translates to:
+  /// **'Before 500'**
+  String get screensEraAncientWhen;
+
+  /// Explore, 'Through time': an age on the ruler.
+  ///
+  /// In en, this message translates to:
+  /// **'The Middle Ages'**
+  String get screensEraMedieval;
+
+  /// Explore, 'Through time': when the Middle Ages were, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'500 to 1500'**
+  String get screensEraMedievalWhen;
+
+  /// Explore, 'Through time': an age on the ruler: about 1500 to 1800.
+  ///
+  /// In en, this message translates to:
+  /// **'The early modern age'**
+  String get screensEraEarlyModern;
+
+  /// Explore, 'Through time': when the early modern age was, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'1500 to 1800'**
+  String get screensEraEarlyModernWhen;
+
+  /// Explore, 'Through time': an age on the ruler.
+  ///
+  /// In en, this message translates to:
+  /// **'The nineteenth century'**
+  String get screensEraNineteenth;
+
+  /// Explore, 'Through time': when the nineteenth century was, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'1800 to 1900'**
+  String get screensEraNineteenthWhen;
+
+  /// Explore, 'Through time': an age on the ruler: the twentieth century.
+  ///
+  /// In en, this message translates to:
+  /// **'The last century'**
+  String get screensEraTwentieth;
+
+  /// Explore, 'Through time': when the last century was, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'1900 to 2000'**
+  String get screensEraTwentiethWhen;
+
+  /// Explore, 'Through time': an age on the ruler: from 2000 to today.
+  ///
+  /// In en, this message translates to:
+  /// **'This century'**
+  String get screensEraRecent;
+
+  /// Explore, 'Through time': when this century began, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'Since 2000'**
+  String get screensEraRecentWhen;
+
+  /// Explore: the title of the shelf where the reader says where they stand on a claim before reading, and again after.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your mind'**
+  String get screensMindTitle;
+
+  /// Explore: the line under 'Change your mind'.
+  ///
+  /// In en, this message translates to:
+  /// **'Say where you stand before you read, then again after'**
+  String get screensMindLine;
+
+  /// Explore, 'Change your mind': after the subject's name, in small capitals: the sentence on the card is a claim to agree or disagree with.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim'**
+  String get screensMindClaim;
+
+  /// Explore, 'Change your mind': small capitals over the first scale, from disagree to agree.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you read'**
+  String get screensMindBefore;
+
+  /// Explore, 'Change your mind': beside the scale before the reader has tapped it.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap where you stand'**
+  String get screensMindTap;
+
+  /// Explore, 'Change your mind': small capitals over the evidence, shown once the reader has said where they stand.
+  ///
+  /// In en, this message translates to:
+  /// **'What we know'**
+  String get screensMindKnow;
+
+  /// Explore, 'Change your mind': small capitals over the second scale, after the evidence.
+  ///
+  /// In en, this message translates to:
+  /// **'And now?'**
+  String get screensMindNow;
+
+  /// Explore, 'Change your mind': beside the second scale before it is tapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap again'**
+  String get screensMindAgain;
+
+  /// Explore, 'Change your mind': the five places on the scale, from 0 (strongly disagree) to 4 (strongly agree). 1 and 3 also label the two ends of the scale.
+  ///
+  /// In en, this message translates to:
+  /// **'{level, select, 0{Strongly disagree} 1{Disagree} 2{Not sure} 3{Agree} other{Strongly agree}}'**
+  String screensMindLevel(String level);
+
+  /// Explore, 'Change your mind': when the second answer is nearer to what the evidence says than the first.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{You moved 1 step toward the evidence.} other{You moved {n} steps toward the evidence.}}'**
+  String screensMindToward(int n);
+
+  /// Explore, 'Change your mind': when the second answer is the same as the first and the first was not where the evidence is.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as before. One card is only one card.'**
+  String get screensMindSame;
+
+  /// Explore, 'Change your mind': when both answers are where the evidence is.
+  ///
+  /// In en, this message translates to:
+  /// **'You were with the evidence before you read it.'**
+  String get screensMindAlready;
+
+  /// Explore, 'Change your mind': when the second answer is further from what the evidence says than the first.
+  ///
+  /// In en, this message translates to:
+  /// **'You moved away from the evidence. Worth a second read.'**
+  String get screensMindAway;
+
+  /// Explore, 'Change your mind': the panel under the claims before any second answer is given.
+  ///
+  /// In en, this message translates to:
+  /// **'Say where you stand first. One tap, before you read.'**
+  String get screensMindFirst;
+
+  /// Explore, 'Change your mind': the panel under the claims: on how many of the claims answered twice the second answer differed from the first.
+  ///
+  /// In en, this message translates to:
+  /// **'You changed your mind on {changed} of {total}.'**
+  String screensMindChanged(int changed, int total);
+
+  /// Explore, 'Change your mind': the small line in the panel under the claims.
+  ///
+  /// In en, this message translates to:
+  /// **'A changed mind is a card that did its job.'**
+  String get screensMindFoot;
+
+  /// Explore: the title of the shelf of lines to say to somebody at dinner.
+  ///
+  /// In en, this message translates to:
+  /// **'Say it tonight'**
+  String get screensSayTitle;
+
+  /// Explore: the line under 'Say it tonight'.
+  ///
+  /// In en, this message translates to:
+  /// **'One line to bring to dinner. Tap once you\'ve said it'**
+  String get screensSayLine;
+
+  /// Explore, 'Say it tonight': small capitals on the first and largest line, before the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight\'s line'**
+  String get screensSayTonight;
+
+  /// Explore, 'Say it tonight': the button the reader taps once they have said the line to somebody.
+  ///
+  /// In en, this message translates to:
+  /// **'I said it'**
+  String get screensSaySaid;
+
+  /// Explore, 'Say it tonight': the same button once tapped. It cannot be taken back.
+  ///
+  /// In en, this message translates to:
+  /// **'Said it'**
+  String get screensSayDone;
+
+  /// Explore, 'Say it tonight': how many lines the reader has said since Monday.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Nothing said yet this week.} =1{You said 1 line this week.} other{You said {n} lines this week.}}'**
+  String screensSayWeek(int n);
+
+  /// Explore, 'Say it tonight': under the count. 'Top of the week' is the name of Explore's ranked shelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Every line you say also counts toward Top of the week.'**
+  String get screensSayCounts;
+
+  /// Explore's front page: the name at the top, set like a newspaper's. A name, kept in English.
+  ///
+  /// In en, this message translates to:
+  /// **'The Astute'**
+  String get screensFrontName;
+
+  /// Explore's front page: small capitals under the name, on the left.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s edition'**
+  String get screensFrontEdition;
+
+  /// Explore's front page: small capitals under the name, on the right.
+  ///
+  /// In en, this message translates to:
+  /// **'The same for everyone'**
+  String get screensFrontSame;
+
+  /// Explore's front page: after the subject's name on the first and largest story: a newspaper's lead story.
+  ///
+  /// In en, this message translates to:
+  /// **'The lead'**
+  String get screensFrontLead;
+
+  /// Explore's front page: small capitals over three figures.
+  ///
+  /// In en, this message translates to:
+  /// **'In numbers'**
+  String get screensFrontNumbers;
+
+  /// Explore's front page: small capitals over a common belief that is wrong, like a newspaper's corrections column.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections'**
+  String get screensFrontCorrections;
+
+  /// Explore's front page: small capitals over a question to work out.
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle of the day'**
+  String get screensFrontPuzzle;
+
+  /// Explore's front page: at the very end of the page.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s today\'s edition'**
+  String get screensFrontEnd;
+
+  /// Explore's front page: under 'That's today's edition'.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow\'s is out in the morning'**
+  String get screensFrontTomorrow;
 }
 
 class _AppLocalizationsDelegate

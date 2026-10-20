@@ -18,13 +18,15 @@ import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/reader_profile.dart';
 import '../data/topics.dart';
-import '../l10n/app_localizations.dart';
+import '../l10n/l10n.dart';
 import '../measure/card_read.dart';
 import '../measure/session.dart';
 import '../models/pill.dart';
 import '../models/place.dart';
 import '../models/reminder.dart';
 import '../models/trial.dart';
+import '../remote/knobs.dart';
+import '../remote/remote.dart';
 import '../sync/place_finder.dart';
 import '../sync/reader_snapshot.dart';
 import '../sync/served.dart';
@@ -355,6 +357,9 @@ class AppState extends ChangeNotifier {
     // The newest bank the last run downloaded, before a card is dealt from
     // the one built in. Adopting later, mid-day, would re-deal the table.
     PillBank.restore(_prefs);
+    // And the remote document: what the server last said about the app,
+    // before anything reads a part of it.
+    Remote.restore(_prefs);
     today = _clock();
 
     // Stored state is read defensively. A value written by an older build,
@@ -384,7 +389,24 @@ class AppState extends ChangeNotifier {
     unawaited(refreshPlaceIfDue());
     // Nor on the bank: whatever it downloads is for tomorrow's start.
     unawaited(PillBank.refresh(_prefs));
+    // Nor on the server's word about the app, taken up when it arrives.
+    unawaited(Remote.refresh(_prefs));
   }
+
+  /// Asks the server for a newer remote document (lib/remote/remote.dart):
+  /// at every return to the app, never more than twice a minute.
+  Future<bool> refreshRemote() => Remote.refresh(_prefs);
+
+  /// Who is looking, for the audience of whatever the remote document
+  /// aims at somebody: a shelf, a look, a switch.
+  RemoteContext remoteContext(String language) => RemoteContext(
+    platform: Remote.platform,
+    build: Remote.build,
+    language: language,
+    plus: isPlus,
+    daysSinceInstall: daysSinceInstall,
+    now: _clock(),
+  );
 
   /// The day turned while the app stayed in memory: it is dealt as a launch
   /// would deal it — a freeze spent on a day missed, a lapsed streak said,
@@ -1001,6 +1023,7 @@ class AppState extends ChangeNotifier {
     TypeNumber() => 'type_number',
     Estimate() => 'estimate',
     TakeASide() => 'take_a_side',
+    PageJudged() => 'on_page',
   };
 
   /// When the card in front of the reader came up, for how long they
@@ -2756,13 +2779,23 @@ class AppState extends ChangeNotifier {
       raw == null ? null : DateTime.tryParse(raw)?.toLocal();
 
   /// The strings, in the phone's language, for what is said with no screen
-  /// to say it on.
-  AppLocalizations get _strings => lookupAppLocalizations(
-    basicLocaleListResolution(
-      PlatformDispatcher.instance.locales,
-      AppLocalizations.supportedLocales,
+  /// to say it on — the reminders, the trial's warning, the widgets — with
+  /// the server's words in place of the build's wherever the remote
+  /// document has some, as on every screen. They reach a reminder when it
+  /// is armed again: at every launch and every return to the app.
+  AppLocalizations get _strings => withRemoteWords(
+    lookupAppLocalizations(
+      basicLocaleListResolution(
+        PlatformDispatcher.instance.locales,
+        AppLocalizations.supportedLocales,
+      ),
     ),
   );
+
+  /// Who is looking, for the switches and experiments this state reads:
+  /// in the app's own language, as [remoteContext] measures everything
+  /// else.
+  RemoteContext get _here => remoteContext(_strings.localeName);
 
   Future<void> setName(String value) async {
     name = value.trim().isEmpty ? 'You' : value.trim();
@@ -2986,6 +3019,41 @@ class AppState extends ChangeNotifier {
   /// The days a "Not now" holds the reminder sheet back for.
   static const int kPushAskGapDays = 3;
 
+  /// The two, as the server may tune them (`app.tunables`, docs/REMOTE.md):
+  /// the build's own above whenever it says nothing, or something out of
+  /// range.
+  static const RemoteNumber kPushDeferralsKnob = RemoteNumber(
+    'push.deferralsAllowed',
+    fallback: kPushDeferralsAllowed,
+    min: 1,
+    max: 10,
+  );
+  static const RemoteNumber kPushAskGapKnob = RemoteNumber(
+    'push.askGapDays',
+    fallback: kPushAskGapDays,
+    min: 1,
+    max: 30,
+  );
+
+  /// The reminder sheet, and the system's prompt behind it, held back from
+  /// the server (`push.ask`) — for a week whose notifications would not
+  /// arrive, say: nothing is spent, and the sheet comes when it is back on.
+  /// On as built.
+  static const RemoteFlag kPushAskFlag = RemoteFlag('push.ask', fallback: true);
+
+  /// When the reminder sheet first comes: to a reader who came back, as
+  /// built (`cameBack`), or at the end of the very first finished day
+  /// (`firstDay`) — the one question about the sheet worth an experiment
+  /// (`push.firstAsk`). Asked on the first evening it reaches everybody who
+  /// finishes a day; asked later, only those who returned, and those say
+  /// yes more often. Read on that first evening and at no other time, as
+  /// that is the only one where the two part ways.
+  static const RemoteExperiment kPushFirstAskExperiment = RemoteExperiment(
+    'push.firstAsk',
+    variants: ['cameBack', 'firstDay'],
+    fallback: 'cameBack',
+  );
+
   /// Whether the reader has come back: finished a day later than the first
   /// one they read on. The first day is the app's, to show what it is; a
   /// question at the end of it, about reminders or an account, lands on
@@ -3009,16 +3077,27 @@ class AppState extends ChangeNotifier {
   /// The question is the app's own sheet first (see main.dart), and "Not
   /// now" there spends nothing: it comes back on a day finished
   /// [kPushAskGapDays] later, and after the [kPushDeferralsAllowed]th it
-  /// stops coming.
+  /// stops coming — both as the server may tune them, which may also hold
+  /// the question back ([kPushAskFlag]) or put it on the first evening
+  /// ([kPushFirstAskExperiment]).
   bool get shouldAskForPush {
-    if (pushAsked || !notificationsOn || !cameBack) return false;
-    if (pushDeferrals >= kPushDeferralsAllowed) return false;
+    if (pushAsked || !notificationsOn) return false;
+    if (!kPushAskFlag.on(_here)) return false;
+    if (pushDeferrals >= kPushDeferralsKnob.value) return false;
+    if (!cameBack && !_asksOnFirstDay) return false;
     if (pushDeferrals == 0) return true;
     final DateTime? last = _dateOf(lastCompletionDate);
     final DateTime? said = _dateOf(pushDeferredOn);
     return last != null &&
-        (said == null || daysBetween(said, last) >= kPushAskGapDays);
+        (said == null || daysBetween(said, last) >= kPushAskGapKnob.value);
   }
+
+  /// Whether this is the end of the reader's first finished day, and the
+  /// experiment on the sheet's moment has them asked on it.
+  bool get _asksOnFirstDay =>
+      dayClosed &&
+      completedDates.length == 1 &&
+      kPushFirstAskExperiment.variant(_here) == 'firstDay';
 
   /// The reader answered the reminder sheet "Not now". Nothing of the
   /// system's is spent; the sheet waits [kPushAskGapDays] days.
@@ -3036,13 +3115,40 @@ class AppState extends ChangeNotifier {
   /// again, and never asked before. Answered is the system's prompt, a "Not
   /// now" on the app's own sheet, or the nudge switched off. A reader who
   /// kept seven days has decided the app is theirs; the stars that come in
-  /// the first week otherwise come mostly from those who left.
+  /// the first week otherwise come mostly from those who left. The server
+  /// can ask for a longer run or a shorter one ([kReviewStreakKnob]), or
+  /// hold the prompt back ([kReviewAskFlag]); a question about
+  /// notifications it holds back is not waited for.
   bool get shouldAskForReview =>
       !reviewAsked &&
-      (pushAsked || pushDeferrals > 0 || !notificationsOn) &&
+      (pushAsked ||
+          pushDeferrals > 0 ||
+          !notificationsOn ||
+          !kPushAskFlag.on(_here)) &&
       !shouldAskForPush &&
       dayClosed &&
-      liveStreak >= 7;
+      liveStreak >= kReviewStreakKnob.value &&
+      kReviewAskFlag.on(_here);
+
+  /// The days in a row that end in the rating prompt: a week, as built.
+  static const int kReviewStreakDays = 7;
+
+  /// The same, as the server may tune it (`review.streakDays`).
+  static const RemoteNumber kReviewStreakKnob = RemoteNumber(
+    'review.streakDays',
+    fallback: kReviewStreakDays,
+    min: 3,
+    max: 60,
+  );
+
+  /// The store's rating prompt, held back from the server (`review.ask`) —
+  /// for the week a release has a fault that would earn it the stars it
+  /// deserves. Nothing is spent: it is asked once it is back on. On as
+  /// built.
+  static const RemoteFlag kReviewAskFlag = RemoteFlag(
+    'review.ask',
+    fallback: true,
+  );
 
   /// Noted before the prompt is shown, so a failure to show it is not a
   /// reason to ask again.
@@ -3056,8 +3162,17 @@ class AppState extends ChangeNotifier {
   /// days a new phone would lose, and the offer has not been made before.
   /// The intro no longer leads with a sign-in, so this is where most readers
   /// first hear an account exists. main.dart chooses the moment, after the
-  /// reminder sheet, and only where a sign-in can run.
-  bool get shouldOfferAccount => !accountOffered && cameBack;
+  /// reminder sheet, and only where a sign-in can run. The server can hold
+  /// the offer back ([kAccountOfferFlag]); Profile's row is always there.
+  bool get shouldOfferAccount =>
+      !accountOffered && cameBack && kAccountOfferFlag.on(_here);
+
+  /// The account's sheet, held back from the server (`account.offer`) —
+  /// for a day the sign-in itself is down, say. On as built.
+  static const RemoteFlag kAccountOfferFlag = RemoteFlag(
+    'account.offer',
+    fallback: true,
+  );
 
   /// Noted before the sheet rises, so a sheet that fails to show is not a
   /// reason to put it again.
@@ -3125,18 +3240,45 @@ class AppState extends ChangeNotifier {
   static const int kPlaceLastAskDay = 7;
   static const int kPlaceAsksAllowed = 2;
 
+  /// The two days, as the server may move them (`app.tunables`): no later
+  /// than the thirtieth, the last of the finished days a phone keeps, and
+  /// the second after the first (tool/remote/parts/app.py refuses them the
+  /// other way round).
+  static const RemoteNumber kPlaceFirstAskKnob = RemoteNumber(
+    'place.firstAskDay',
+    fallback: kPlaceFirstAskDay,
+    min: 1,
+    max: 20,
+  );
+  static const RemoteNumber kPlaceLastAskKnob = RemoteNumber(
+    'place.lastAskDay',
+    fallback: kPlaceLastAskDay,
+    min: 2,
+    max: 30,
+  );
+
+  /// The place's sheet, held back from the server (`place.ask`) — for the
+  /// days the phone's geocoder is not answering, say. Explore's shelf and
+  /// Profile still ask when the reader asks them to. On as built.
+  static const RemoteFlag kPlaceAskFlag = RemoteFlag(
+    'place.ask',
+    fallback: true,
+  );
+
   /// True when the app's sheet about the place is waiting to be put: the
   /// reader has no place, has never been asked by the system, and has
   /// finished their second day — or said "Not now" once, has finished a
-  /// seventh, and a day since. main.dart chooses the moment.
+  /// seventh, and a day since — the two days as the server may move them.
+  /// main.dart chooses the moment.
   bool get shouldAskForPlace {
     if (place != null || locationPermission != kLocationNotAsked) return false;
+    if (!kPlaceAskFlag.on(_here)) return false;
     final int days = completedDates.length;
-    if (placeAsks == 0) return days >= kPlaceFirstAskDay;
+    if (placeAsks == 0) return days >= kPlaceFirstAskKnob.value;
     if (placeAsks >= kPlaceAsksAllowed) return false;
     final String? last = lastCompletionDate;
     final String? after = placeDeferredAfter;
-    return days >= kPlaceLastAskDay &&
+    return days >= kPlaceLastAskKnob.value &&
         last != null &&
         (after == null || last.compareTo(after) > 0);
   }
