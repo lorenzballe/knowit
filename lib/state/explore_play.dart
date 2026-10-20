@@ -13,14 +13,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// keeping for good is kept where it always was: a commitment made on a shelf
 /// is an answer, recorded by [AppState] like any other.
 class ExplorePlay extends ChangeNotifier {
-  ExplorePlay._();
+  ExplorePlay._({DateTime Function()? clock}) : _clock = clock ?? DateTime.now;
 
   static ExplorePlay _instance = ExplorePlay._();
   static ExplorePlay get instance => _instance;
 
-  /// A fresh, empty store for a test.
+  /// A fresh, empty store for a test, on [clock]'s calendar.
   @visibleForTesting
-  static void resetForTest() => _instance = ExplorePlay._();
+  static void resetForTest({DateTime Function()? clock}) =>
+      _instance = ExplorePlay._(clock: clock);
+
+  final DateTime Function() _clock;
 
   static const String _key = 'knowit.explorePlay';
 
@@ -31,8 +34,8 @@ class ExplorePlay extends ChangeNotifier {
   Map<String, Object?> _values = {};
   bool _loaded = false;
 
-  static String _today() {
-    final DateTime d = DateTime.now();
+  String _today() {
+    final DateTime d = _clock();
     return '${d.year}-${d.month.toString().padLeft(2, '0')}-'
         '${d.day.toString().padLeft(2, '0')}';
   }
@@ -92,8 +95,11 @@ class ExplorePlay extends ChangeNotifier {
     }
   }
 
-  /// The points left to stake today.
+  /// The points left to stake today: one purse for every shelf that
+  /// stakes them, Work it out's and the bets' alike.
   int get points => (this['points'] as num?)?.toInt() ?? dailyPoints;
 
-  void addPoints(int delta) => put('points', points + delta);
+  /// Spends or wins [delta] points, never below none.
+  void addPoints(int delta) =>
+      put('points', (points + delta).clamp(0, 1 << 30).toInt());
 }

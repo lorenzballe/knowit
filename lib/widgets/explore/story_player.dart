@@ -719,7 +719,7 @@ class _StoryPlayerState extends State<StoryPlayer>
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              upper(context, p.topic),
+              upper(context, context.l10n.subjectOf(p.topic)),
               style: AppText.label(
                 size: 11,
                 spacing: 1.4,

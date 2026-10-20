@@ -117,7 +117,9 @@ class _ChartCardState extends State<_ChartCard>
               children: [
                 CardHead(
                   pill: p,
-                  label: s.outlet.isEmpty ? null : '${p.topic} · ${s.outlet}',
+                  label: s.outlet.isEmpty
+                      ? null
+                      : '${context.l10n.subjectOf(p.topic)} · ${s.outlet}',
                 ),
                 const SizedBox(height: 12),
                 SizedBox(

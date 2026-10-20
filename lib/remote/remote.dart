@@ -198,7 +198,8 @@ class Remote {
   static void reset() {
     _current = embedded;
     _lastAsked = null;
-    fetch = _fetchOverHttp;
+    // A test that wants an answer says what it is; nothing asks the network.
+    fetch = (url) async => null;
   }
 
   /// For the tests: the seed a rollout splits by.

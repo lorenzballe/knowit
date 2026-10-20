@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/explore/blocks/bets/bets_day.dart';
+import 'package:astuto/state/explore_play.dart';
 
 Bet stake(String pill, {required bool right, int stake = 20}) => Bet(
   kind: 'stake',
@@ -90,7 +91,6 @@ void main() {
       prefs.getKeys().where((k) => k.startsWith(BetsDay.prefix)),
       unorderedEquals([
         'knowit.explore.bets.day',
-        'knowit.explore.bets.points',
         'knowit.explore.bets.slip',
         'knowit.explore.bets.play',
         'knowit.explore.bets.deals',
@@ -138,7 +138,6 @@ void main() {
   test('a bet laid before the day is read is not lost to it', () async {
     SharedPreferences.setMockInitialValues({
       'knowit.explore.bets.day': '2026-10-18',
-      'knowit.explore.bets.points': 80,
       'knowit.explore.bets.slip': '[{"k":"stake","s":"stakes","p":"a","w":"1","r":false,"n":-20,"t":0}]',
     });
     BetsDay.resetForTest(clock: clock);
@@ -146,8 +145,19 @@ void main() {
     day.place(stake('b', right: true, stake: 10));
     await day.load();
     expect([for (final b in day.slip) b.pill], ['a', 'b']);
-    // The points are the day's bets on a hundred: -20 and +10.
-    expect(day.points, 90);
+  });
+
+  test('one purse with Work it out: what either spends, both see', () async {
+    final BetsDay day = BetsDay.instance;
+    await day.load();
+    day.place(stake('a', right: false, stake: 30));
+    expect(ExplorePlay.instance.points, 70);
+    // A stake on Work it out, from the same hundred.
+    ExplorePlay.instance.addPoints(-20);
+    expect(day.points, 50);
+    // Never below none.
+    ExplorePlay.instance.addPoints(-500);
+    expect(day.points, 0);
   });
 
   test('a store that cannot be read starts the day clean', () async {

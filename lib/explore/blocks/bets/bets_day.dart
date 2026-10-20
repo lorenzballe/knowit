@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/pills_repository.dart' show dateKey;
+import '../../../state/explore_play.dart';
 
 /// One bet laid, and what it came to.
 ///
@@ -110,20 +111,39 @@ class Bet {
 class BetsDay extends ChangeNotifier {
   BetsDay._({DateTime Function()? clock}) : _clock = clock ?? DateTime.now;
 
+  /// The day's points are not the bets' own: Work it out stakes from the
+  /// same hundred (lib/state/explore_play.dart), and two purses on one
+  /// screen, each saying a different number, would be one too many. So the
+  /// points live there, and what changes them is heard here too.
+  ExplorePlay get _purse {
+    final ExplorePlay now = ExplorePlay.instance;
+    if (!identical(now, _heard)) {
+      _heard?.removeListener(notifyListeners);
+      _heard = now..addListener(notifyListeners);
+    }
+    return now;
+  }
+
+  ExplorePlay? _heard;
+
   static BetsDay _instance = BetsDay._();
 
   /// The one store: a day has one wallet, whichever shelf a bet is laid on.
   static BetsDay get instance => _instance;
 
-  /// A fresh, empty store for a test, on [clock]'s calendar.
+  /// A fresh, empty store for a test, on [clock]'s calendar, with a fresh
+  /// purse on the same calendar.
   @visibleForTesting
-  static void resetForTest({DateTime Function()? clock}) =>
-      _instance = BetsDay._(clock: clock);
+  static void resetForTest({DateTime Function()? clock}) {
+    // A test's own reset, calling the purse's: both are for tests only.
+    // ignore: invalid_use_of_visible_for_testing_member
+    ExplorePlay.resetForTest(clock: clock);
+    _instance = BetsDay._(clock: clock);
+  }
 
   /// Where the day is kept: every key the family writes starts with this.
   static const String prefix = 'knowit.explore.bets.';
   static const String _kDay = '${prefix}day';
-  static const String _kPoints = '${prefix}points';
   static const String _kSlip = '${prefix}slip';
   static const String _kPlay = '${prefix}play';
   static const String _kDeals = '${prefix}deals';
@@ -134,7 +154,6 @@ class BetsDay extends ChangeNotifier {
   final DateTime Function() _clock;
 
   String _day = '';
-  int _points = dailyPoints;
   List<Bet> _slip = [];
   Map<String, Object?> _play = {};
   Map<String, List<String>> _deals = {};
@@ -147,9 +166,10 @@ class BetsDay extends ChangeNotifier {
   /// Whether what was kept has been read.
   bool get loaded => _loaded;
 
-  /// Reads what was bet earlier today. Safe to call more than once; the
-  /// calls share one read.
-  Future<void> load() => _loading ??= _load();
+  /// Reads what was bet earlier today, and the day's purse. Safe to call
+  /// more than once; the calls share one read.
+  Future<void> load() =>
+      _loading ??= Future.wait([_load(), _purse.load()]).then((_) {});
 
   Future<void> _load() async {
     try {
@@ -158,7 +178,6 @@ class BetsDay extends ChangeNotifier {
       if (day == today) {
         // What was bet before the read finished wins over what was read:
         // a bet laid in the first second must not be lost to it.
-        final bool fresh = _slip.isEmpty && _play.isEmpty && _deals.isEmpty;
         final List<Bet> kept = [
           for (final Object? b in _list(prefs.getString(_kSlip)))
             ?Bet.fromJson(b),
@@ -171,12 +190,6 @@ class BetsDay extends ChangeNotifier {
             if (!placed.contains('${b.kind}:${b.pill}')) b,
           ..._slip,
         ];
-        final int? points = prefs.getInt(_kPoints);
-        if (fresh && points != null) {
-          _points = points.clamp(0, 1 << 30);
-        } else {
-          _points = dailyPoints + _slip.fold(0, (n, b) => n + b.points);
-        }
         _play = {..._map(prefs.getString(_kPlay)), ..._play};
         _deals = {
           for (final MapEntry<String, Object?> e in _map(
@@ -229,7 +242,6 @@ class BetsDay extends ChangeNotifier {
     if (_day == now) return;
     final bool started = _day.isNotEmpty;
     _day = now;
-    _points = dailyPoints;
     _slip = [];
     _play = {};
     _deals = {};
@@ -239,7 +251,7 @@ class BetsDay extends ChangeNotifier {
   /// The points left to stake today.
   int get points {
     _roll();
-    return _points;
+    return _purse.points;
   }
 
   /// Today's bets, in the order they were laid.
@@ -264,7 +276,7 @@ class BetsDay extends ChangeNotifier {
     _roll();
     if (betOn(bet.kind, bet.pill) != null) return;
     _slip = [..._slip, bet];
-    _points = (_points + bet.points).clamp(0, 1 << 30);
+    _purse.addPoints(bet.points);
     _play.remove(draftKey(bet.kind, bet.pill));
     notifyListeners();
     _save();
@@ -322,7 +334,6 @@ class BetsDay extends ChangeNotifier {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(_kDay, _day);
-      await prefs.setInt(_kPoints, _points);
       await prefs.setString(
         _kSlip,
         jsonEncode([for (final Bet b in _slip) b.toJson()]),

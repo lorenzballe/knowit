@@ -639,7 +639,7 @@ class _ResultRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '${pill.topic} · ${pill.source}',
+                    '${context.l10n.subjectOf(pill.topic)} · ${pill.source}',
                     style: AppText.body(size: 11.5, color: context.p.inkFaint),
                   ),
                 ],

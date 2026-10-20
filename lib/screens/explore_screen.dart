@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import '../data/local_cards.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart' show inkOn;
+import '../explore/blocks/bets/bet_host.dart';
 import '../explore/blocks/core/shelves.dart';
 import '../explore/explore_block.dart';
 import '../models/pill.dart';
@@ -66,7 +67,7 @@ class ExploreScreen extends StatefulWidget {
 
 /// The Explore screen, and the host every section on it is drawn for.
 class ExploreScreenState extends State<ExploreScreen>
-    implements ExploreShelfHost {
+    implements ExploreShelfHost, BetHost {
   final TextEditingController _field = TextEditingController();
   final FocusNode _focus = FocusNode();
   final ScrollController _list = ScrollController();
@@ -271,6 +272,20 @@ class ExploreScreenState extends State<ExploreScreen>
   @override
   Future<void> commit(Pill pill, String response) => _commit(pill, response);
 
+  /// A bet laid on a shelf, with how sure the reader said they were: the
+  /// card's answer, recorded as the card records one with its step of how
+  /// sure, so a bet counts towards how sure against how right.
+  @override
+  Future<void> commitSure(Pill pill, String response, int confidence) =>
+      _commit(pill, response, confidence: confidence);
+
+  /// A card's answer shown on a shelf without being given — two figures
+  /// compared, a number closed in on — is read: the day must never deal it
+  /// with its answer already known.
+  @override
+  void revealed(ExploreSection section, Pill pill) =>
+      widget.app.markReadElsewhere(pill.id);
+
   @override
   Future<void> lean(Pill pill, int side, int confidence) =>
       _lean(pill, side, confidence);
@@ -460,12 +475,13 @@ class ExploreScreenState extends State<ExploreScreen>
   /// A commitment made on a shelf: the card's answer, recorded the way the
   /// card itself takes one, and the card counted as read, since its answer
   /// is a tap away and the day should never deal it again.
-  Future<void> _commit(Pill pill, String response) async {
+  Future<void> _commit(Pill pill, String response, {int? confidence}) async {
     Analytics.capture('explore answered', {
       'pill_id': pill.id,
       'right': pill.challenge.accepts(response),
+      'confidence': ?confidence,
     });
-    await widget.app.recordAnswer(pill.id, response);
+    await widget.app.recordAnswer(pill.id, response, confidence: confidence);
     await widget.app.markReadElsewhere(pill.id);
   }
 

@@ -295,7 +295,7 @@ class _SpotTheFalseBlockState extends State<SpotTheFalseBlock> {
                       )
                     else
                       Text(
-                        upper(context, p.topic),
+                        upper(context, context.l10n.subjectOf(p.topic)),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.label(
