@@ -150,8 +150,10 @@ Pill? _frozen(int edition) {
 }
 
 Pill _ask(int edition) {
+  // A free card's page asks in its own way, so it is never the question of
+  // the day, as the bundler's calendar has it (tool/cards/check.py GRADED).
   final graded = PillBank.cards
-      .where((p) => p.asksSomething && p.isGraded)
+      .where((p) => p.asksSomething && p.isGraded && p.challenge is! PageJudged)
       .toList();
   if (graded.isEmpty) return PillBank.cards.first;
   // Thinking's, as the calendar the bundler writes is: Thinking is the one
