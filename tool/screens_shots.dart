@@ -58,7 +58,7 @@ const Map<String, double> _phones = {'375': 375, '402': 402, '430': 430};
 /// the pictures are the same from one run to the next and every subject is
 /// on them.
 class _CameraHost extends FakeExploreHost {
-  _CameraHost(super.app);
+  _CameraHost(super.app, {super.language});
 
   @override
   List<Pill> cardsFor(ExploreSection section, {int? limit}) {
@@ -542,5 +542,35 @@ void main() {
       );
       await _shoot(tester, 'large/$screen-375');
     });
+  }
+
+  // The longest of the languages set in the faces the camera has: the
+  // words of the app in the reader's language, the section's own in it
+  // where it gives them and in English where it does not.
+  for (final String screen in const [
+    'expert',
+    'connect-dots',
+    'ask-first',
+    'keep-asking',
+    'through-time',
+    'change-your-mind',
+    'say-it-tonight',
+    'front-page',
+  ]) {
+    for (final String language in const ['de', 'fr', 'it']) {
+      testWidgets('screen $screen in $language on 375', (tester) async {
+        await fresh({});
+        await _pumpScreen(
+          tester,
+          sections: _example(screen),
+          host: _CameraHost(app, language: language),
+          width: 375,
+          paper: false,
+          head: screen != 'front-page',
+          language: language,
+        );
+        await _shoot(tester, 'language/$screen-$language');
+      });
+    }
   }
 }

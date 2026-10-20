@@ -391,11 +391,13 @@ class FrontLeadBlock extends ExploreBlock {
     return 20;
   }
 
+  // The lines of the shelves of each kind, where the line is true of any
+  // card of it. "How it works" and "Origins" speak of things seen and used
+  // every day, which a lead on Augustine or a film's models is not: those
+  // lead on the line that is true of every card.
   static String _kindLine(AppLocalizations l, Pill p) => switch (p.hook) {
     'story' => l.themeStoriesLine,
     'paradox' => l.themeParadoxesLine,
-    'mechanism' => l.themeHowItWorksLine,
-    'origin' => l.themeOriginsLine,
     'misconception' => l.themeMythsLine,
     'number' => l.themeNumbersLine,
     'puzzle' => l.themePuzzlesLine,

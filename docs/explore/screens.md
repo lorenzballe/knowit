@@ -135,8 +135,10 @@ the core family's Did you know shelf.
   mean something (stop words of every language the bank is written in left
   out, plurals and endings folded, six letters kept so that "accurate" meets
   "accuracy") and ranks the cards on the phone by how many of its rarest
-  words each holds, in the question first. A host with a better search can
-  answer instead by implementing `ScreensSearchHost`.
+  words each holds, in the question first. The cards are written in
+  English, so it answers a question asked in English best; in another
+  language, names and figures still find their cards. A host with a better
+  search can answer instead by implementing `ScreensSearchHost`.
 - **Typed questions.** The app kept none. They are kept now on the phone,
   thirty at most, and never sent: a note says how many words and answers a
   question had, never its words.
