@@ -39,10 +39,11 @@ bigger box.
 
 So a layout whose boxes are too small for most questions would come out
 nearly empty, and the checker refuses it: on a 375-point phone, the narrowest
-the app is drawn for, every box must be able to hold a quarter of the bank's
-questions. Two columns hold every question in every shape; three columns
-square or portrait; four columns portrait only (a fifth of the bank at 375
-points wide, most of it at 430). Three columns of landscape tiles, and four of
+the app is drawn for, every box must be able to hold the shortest quarter of
+the bank's questions, reckoned from its area. Two columns hold every question
+in every shape; three columns square or portrait; four columns portrait only,
+and only just (set in the app's own fonts, the shortest fifth of the bank at
+375 points wide, most of it at 430). Three columns of landscape tiles, and four of
 square or landscape, are refused; so is a 1×1 item of a four-column mosaic
 unless its rows are taller (`ratio`).
 
