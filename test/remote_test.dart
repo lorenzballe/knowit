@@ -27,6 +27,11 @@ RemoteContext _at({
 );
 
 void main() {
+  // These tests are of the document the build embeds, and start from it.
+  final RemoteConfig? baseline = Remote.baseline;
+  setUpAll(() => Remote.baseline = null);
+  tearDownAll(() => Remote.baseline = baseline);
+
   setUp(() {
     Remote.reset();
     Remote.seedForTest = 'seed-a';
