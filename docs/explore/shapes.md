@@ -400,6 +400,16 @@ and the sunset are the core family's, between these):
   (`shelfFigure`), a year is the one its question names or its age, a country
   is printed only when true, and how long something takes is the card's own
   estimate.
+- **A line of time reads as years.** Most cards of an age carry only the
+  age, so the years row, the ruler and the timeline show first the cards
+  whose question names a year, as the canvas's lines do, and fall back to an
+  age only when they must.
+- **A figure on the grid is a signature, so it is a darker tone.** The canvas
+  set 132b's figures in the card's ink; the app's own numbers shelf (132a's
+  figure) sets its figure in the card's colour taken well down, as round 132
+  asks of every signature, and the grid of figures does the same. The
+  capsule (131d) and the list of figures (131e) set theirs as their own
+  designs do: in the card's ink, and in the subject's colour.
 - **Core pieces are not drawn twice.** The month's bento, the figure, the two
   halves with their lean, the sunset and the 131e checklist are the app's
   shelves today; the server places them through the core family.
