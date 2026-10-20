@@ -476,11 +476,23 @@ class ExploreScreenState extends State<ExploreScreen>
   /// card itself takes one, and the card counted as read, since its answer
   /// is a tap away and the day should never deal it again.
   Future<void> _commit(Pill pill, String response, {int? confidence}) async {
-    Analytics.capture('explore answered', {
-      'pill_id': pill.id,
-      'right': pill.challenge.accepts(response),
-      'confidence': ?confidence,
-    });
+    // A side taken on a debate is a lean on whichever shelf it was taken,
+    // two buttons or a slider: nothing about it is right or wrong.
+    if (pill.challenge is TakeASide) {
+      Analytics.capture('explore leaned', {
+        'pill_id': pill.id,
+        'side': int.tryParse(response) ?? response,
+        'confidence': ?confidence,
+      });
+    } else {
+      Analytics.capture('explore answered', {
+        'pill_id': pill.id,
+        'right': ?(pill.challenge.isGraded
+            ? pill.challenge.accepts(response)
+            : null),
+        'confidence': ?confidence,
+      });
+    }
     await widget.app.recordAnswer(pill.id, response, confidence: confidence);
     await widget.app.markReadElsewhere(pill.id);
   }

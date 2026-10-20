@@ -339,7 +339,7 @@ is in its card facts.
 | `explore search opened`, `explore search closed` | the search field | `had_query` | | P |
 | `explore searched` | a search returns | `query_length`, `words`, `results` — never the text | | P, T:`xs` |
 | `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
-| `explore answered`, `explore leaned` | a card answered on a shelf | `pill_id`, `right`, `side`, `confidence` | | P |
+| `explore answered`, `explore leaned` | a card answered on a shelf; a side taken on a debate is always `explore leaned`, on whatever shelf, and `right` is only sent for a card that can be right | `pill_id`, `right`, `side`, `confidence` | | P |
 | `explore did you know`, `explore surprise`, `explore spot`, `explore chart unmasked`, `explore slide checked`, `explore range bet`, `explore stake bet`, `explore bigger picked` | the shelf games | `pill_id`, `right`, `new`, `trick`, `off`, `width`, `hit`, `stake`, `won` | | P |
 | `explore mood`, `explore minutes`, `explore sixty started`, `explore sixty finished` | the shelf pickers and the sixty-second round | `tone`, `minutes`, `right`, `answered`, `seconds` | `explore era` and `explore year` went with the Through time shelf, taken out of Explore | P |
 | `explore story opened` **new** | a true story starts playing, from its tile on Explore | card facts, `beats` (how many it has), `authored` (true for a story written to be played, its scenes and its question), `rank` (its place on the shelf, from 1) | which stories are opened, and from where on the shelf | P |
