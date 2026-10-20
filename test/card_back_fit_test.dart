@@ -56,6 +56,10 @@ Answer? _answerFor(Pill pill) => switch (pill.challenge) {
   ),
   TypeNumber(:final answer) => Answer('${answer * 2 + 1}', confidence: 70),
   Estimate(:final answer) => Answer('${answer * 10}', confidence: 70),
+  PageJudged(:final graded) => Answer(
+    PageJudged.encode('mid-July', graded ? false : null),
+    confidence: graded ? 70 : null,
+  ),
 };
 
 /// The Today deck's card on each phone we design for, with 24-point system

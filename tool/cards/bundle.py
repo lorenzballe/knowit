@@ -123,12 +123,22 @@ def extend_commons(commons: dict[str, list[str]], cards: list[dict], until: int)
     return out
 
 
+def bundled(card: dict) -> dict:
+    """A card as the app reads it: a free card with its page inside its face,
+    from the file kept beside it, so the phone gets the card and its page in
+    the one document."""
+    out = check.public(card)
+    if isinstance(out.get("web"), dict) and card.get("_html") is not None:
+        out["web"] = {**out["web"], "html": card["_html"]}
+    return out
+
+
 def build(cards: list[dict], editions: dict[str, str], commons: dict[str, list[str]], *, version: int, built: str) -> dict:
     return {
         "format": 1,
         "version": version,
         "built": built,
-        "cards": [check.public(c) for c in cards],
+        "cards": [bundled(c) for c in cards],
         "editions": editions,
         "commons": commons,
     }

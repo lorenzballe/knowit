@@ -432,3 +432,17 @@ test('a news card is dealt up to its expiry day and never after', () => {
   assert.ok(stale.liveOn(DAY).every((c) => c.topic !== 'space'));
   assert.equal(stale.liveOn(shiftDate(DAY, -1)).length, stale.live.length);
 });
+
+test('a free card is dealt like any card, its page marks it, and it is never the question of the day', () => {
+  const page = bank.byId.get('space-nearest-day');
+  assert.ok(page && page.kind === 'page' && page.web?.html, 'the page travels inside the card');
+  assert.ok(graded(page) && bank.live.includes(page), 'marked by its page, and dealt');
+  assert.equal(graded({ ...page, web: { ...page.web, graded: false } }), false, 'a page that marks nothing');
+  // A native kind with a web face keeps its own way of being marked.
+  const face = bank.byId.get('history-challenger-missing-flights');
+  assert.ok(face && face.kind === 'pickOne' && face.web?.html && graded(face));
+  // Past the calendar, a Thinking page is passed over for the question of the day.
+  const thinking = { ...page, id: 'thinking-page-x', topic: 'thinking' };
+  const shelf = new Bank({ version: 1, cards: [thinking, ...bank.cards.filter((c) => c.topic === 'thinking')], editions: {}, commons: {} });
+  for (let e = 1; e <= 60; e++) assert.notEqual(questionOfEdition(shelf, e)?.kind, 'page', `edition ${e}`);
+});

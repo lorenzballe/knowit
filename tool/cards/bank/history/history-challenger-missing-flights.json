@@ -1,0 +1,45 @@
+{
+  "id": "history-challenger-missing-flights",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Before Challenger, a chart showed only the damaged flights. Where did the 16 undamaged ones fall?",
+  "options": [
+    "Spread out",
+    "Warm days",
+    "Cold days"
+  ],
+  "correct": 1,
+  "answer": "Warm days: every one at 66°F or above. So all four flights launched below 65°F came back with damaged seals, against 3 of the 19 warmer ones. Charted with the failures alone, the cold looked harmless. Challenger flew the next morning, colder than any launch before it.",
+  "move": "Before you decide something doesn't matter, look at the times nothing went wrong.",
+  "trap": "Spread out, since flights without damage seem to say nothing.",
+  "keywords": [
+    "challenger",
+    "o-rings",
+    "missing data",
+    "launch temperature",
+    "rogers commission"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A chart of seal damage on seven shuttle flights by launch temperature, with the 31°F forecast far to the cold side. You say where the sixteen undamaged flights fall, then they drop into place."
+  },
+  "source": "Rogers Commission report, 1986",
+  "source_kind": "primary_document",
+  "reference": "Report of the Presidential Commission on the Space Shuttle Challenger Accident, vol. 1, figures 6 and 7 (1986); Dalal, Fowlkes and Hoadley, Risk analysis of the space shuttle, JASA 84(408):945-957, 1989, table 1",
+  "written": "2026-10-19"
+}

@@ -11,7 +11,8 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
-export type Kind = 'read' | 'pickOne' | 'number' | 'estimate' | 'debate';
+/** How a card asks. `page` is a free card: its face is a web page made with the card kit, which asks and marks the answer itself. */
+export type Kind = 'read' | 'pickOne' | 'number' | 'estimate' | 'debate' | 'page';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 /** A card, as it is written in the bank. Only what the dealer reads is typed. */
@@ -41,6 +42,12 @@ export interface Card {
   checked?: string;
   /** Where the card belongs, for a card about a place: dealt only to readers who live there (place.ts). */
   place?: unknown;
+  /**
+   * A free card's face: a web page made with the card kit, shown by the phone inside the native
+   * card frame (docs/REMOTE.md, Free cards). The dealer deals the card like any other; what it
+   * needs of the face is whether its page marks an answer.
+   */
+  web?: { kit?: number; touch?: string; graded?: boolean; label?: string; html?: string };
   [key: string]: unknown;
 }
 
@@ -71,7 +78,8 @@ export function genreOf(strandId: string): string {
 export const GRADED: ReadonlySet<Kind> = new Set(['pickOne', 'number', 'estimate']);
 
 export const asks = (c: Card): boolean => c.kind !== 'read';
-export const graded = (c: Card): boolean => GRADED.has(c.kind);
+/** Whether a card can be marked: one of the graded kinds, or a page that says right or wrong (the phone's PageJudged). */
+export const graded = (c: Card): boolean => GRADED.has(c.kind) || (c.kind === 'page' && c.web?.graded !== false);
 export const isDebate = (c: Card): boolean => c.kind === 'debate';
 
 /**

@@ -74,6 +74,11 @@ CardVerb verbOf(Pill p) {
     TypeNumber() => CardVerb.typeNumber,
     Estimate() => CardVerb.bet,
     TakeASide() => CardVerb.side,
+    // A free card asks on its page: one that holds the finger is moved and
+    // watched, one that marks a tap is a pick, and a guess with nothing
+    // right about it is the reader's own, said first.
+    PageJudged() when p.web?.touch == WebTouch.drags => CardVerb.moveIt,
+    PageJudged(:final graded) => graded ? CardVerb.pick : CardVerb.youFirst,
     NoChallenge() => CardVerb.read,
   };
 }

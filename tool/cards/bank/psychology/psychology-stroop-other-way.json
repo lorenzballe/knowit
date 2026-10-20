@@ -1,0 +1,45 @@
+{
+  "id": "psychology-stroop-other-way",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A word slows you down naming its ink. Does the ink slow you down reading the word?",
+  "options": [
+    "As much",
+    "Much less",
+    "Even more"
+  ],
+  "correct": 1,
+  "answer": "Much less. Stroop's students took 74% longer to name the inks of 100 clashing colour words than of 100 colour patches (110 seconds against 63), but only 6% longer to read the words in clashing inks than in black (43 against 41). Reading is so practised it runs by itself: the word pushes in on the ink, hardly the reverse.",
+  "move": "The habit you've practised most is the one that barges in.",
+  "trap": "As much, since the clash looks the same from both sides.",
+  "keywords": [
+    "stroop effect",
+    "automaticity",
+    "reading",
+    "interference",
+    "attention"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Twelve colour words printed in clashing inks, to name the inks aloud and then read the words aloud. After your answer, bars of Stroop's 1935 timings for both tasks."
+  },
+  "source": "J. R. Stroop, Journal of Experimental Psychology, 1935",
+  "source_kind": "paper",
+  "reference": "J. Ridley Stroop, Studies of interference in serial verbal reactions, Journal of Experimental Psychology 18(6):643-662, 1935, experiments 1 and 2",
+  "written": "2026-10-19"
+}

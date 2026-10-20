@@ -152,9 +152,13 @@ class CardStint {
   final String exit;
   final Map<String, Object?> facts;
 
-  /// Whether it ended by being thrown on, which moves the deck on.
+  /// Whether it ended by being thrown on, which moves the deck on: by the
+  /// reader, or by a free card's page when it is done ('done').
   bool get thrown =>
-      exit == 'thrown' || exit == 'swiped' || exit == 'thrown down';
+      exit == 'thrown' ||
+      exit == 'swiped' ||
+      exit == 'thrown down' ||
+      exit == 'done';
 }
 
 /// Hands the card's read to what is drawn on the card — the hint, the ruler,
@@ -172,11 +176,13 @@ class CardReadScope extends InheritedWidget {
   bool updateShouldNotify(CardReadScope old) => false;
 }
 
-/// What a card asks the reader to do with it, as a word: the scene played
-/// on it (`slider`, `count`, `draw`…), or else the way it is answered
-/// (`estimate`, `pick_one`, `take_a_side`, `type_number`), or `read` for a
-/// card that only tells.
+/// What a card asks the reader to do with it, as a word: `web` for a free
+/// card, whose page can ask anything; the scene played on it (`slider`,
+/// `count`, `draw`…); or else the way it is answered (`estimate`,
+/// `pick_one`, `take_a_side`, `type_number`), or `read` for a card that only
+/// tells.
 String interactionOf(Pill pill) {
+  if (pill.hasPage) return 'web';
   final Object? scene = pill.scene?.raw['type'];
   if (scene is String && scene.isNotEmpty) return scene;
   return switch (pill.challenge) {
@@ -185,5 +191,6 @@ String interactionOf(Pill pill) {
     TypeNumber() => 'type_number',
     Estimate() => 'estimate',
     TakeASide() => 'take_a_side',
+    PageJudged() => 'on_page',
   };
 }

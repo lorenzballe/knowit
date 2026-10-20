@@ -29,6 +29,7 @@ except ImportError:  # pragma: no cover - the workflow installs it
     jsonschema = None
 
 import genres
+import pages
 import sources
 from diagrams import check_diagram
 from scenes import check_scene
@@ -71,7 +72,7 @@ KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
-    *TAG_KEYS, "place", "builds_on", "figure", "diagram", "scene",
+    *TAG_KEYS, "place", "builds_on", "figure", "diagram", "scene", "web",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
 
@@ -181,11 +182,15 @@ def load_schema(path: Path = SCHEMA) -> dict:
 
 
 def load_bank(root: Path = BANK) -> list[dict]:
-    """Every card in the bank, in a stable order: by topic, then by id."""
+    """Every card in the bank, in a stable order: by topic, then by id. A free
+    card's page, kept beside it as <id>.html, comes with it as `_html`."""
     cards = []
     for path in sorted(root.glob("*/*.json")):
         card = json.loads(path.read_text(encoding="utf-8"))
         card["_path"] = str(path.relative_to(root.parent))
+        page = path.with_suffix(".html")
+        if page.exists():
+            card["_html"] = page.read_text(encoding="utf-8")
         cards.append(card)
     cards.sort(key=lambda c: (c.get("topic", ""), natural(c.get("id", ""))))
     return cards
@@ -207,6 +212,7 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
                banned: list[str] | None = None) -> list[str]:
     """Everything wrong with one card, as short sentences. Empty means fine."""
     problems: list[str] = []
+    page = card.get("_html")
     card = public(card)
 
     if schema is not None and jsonschema is not None:
@@ -288,6 +294,23 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
         for key in ("options", "correct", "sides"):
             if key in card:
                 problems.append(f"a {kind} card has no {key}")
+    elif kind == "page":
+        # Asked and marked on the card's own page (pages.py); everything a
+        # native card says in its fields, the page says on its face.
+        if "web" not in card:
+            problems.append("a page card has a web face: its page asks, and marks the answer")
+        graded = not isinstance(card.get("web"), dict) or card["web"].get("graded", True) is not False
+        if graded and principle == "none":
+            problems.append("a graded card carries a principle")
+        if graded and difficulty == "easy":
+            problems.append("a card that asks is at least medium")
+        if not graded and principle != "none":
+            problems.append("a page that marks nothing carries no principle")
+        for key in ("options", "correct", "value", "unit", "sides", "steps", "counterpoint"):
+            if key in card:
+                problems.append(f"a page card has no {key}: the page asks")
+        if not (q.endswith("?") or q.endswith(".")):
+            problems.append("a question ends with ? or a full stop")
     elif kind == "debate":
         if "sides" not in card:
             problems.append("a debate has two sides")
@@ -339,6 +362,12 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
     # Something to play with, which the app refuses whole if it is malformed.
     if "scene" in card:
         problems.extend(check_scene(card["scene"], card.get("written")))
+
+    # A face that is a web page, which the app shows offline or not at all.
+    if "web" in card:
+        problems.extend(pages.check_page(card, page))
+    elif page is not None:
+        problems.append("a page sits beside a card that has no web face")
 
     if strict:
         problems.extend(check_strict(card))
@@ -599,6 +628,12 @@ def check_sources(cards: list[dict], against: list[dict] | None = None) -> list[
     return problems
 
 
+def check_orphan_pages(root: Path = BANK) -> list[str]:
+    """A page in the bank with no card beside it is a page nobody can be dealt."""
+    return [f"{path.relative_to(root.parent)} has no card beside it" for path in sorted(root.glob("*/*.html"))
+            if not path.with_suffix(".json").exists()]
+
+
 def check_editions(editions: dict, cards: list[dict]) -> list[str]:
     problems = []
     by_id = {c["id"]: c for c in cards}
@@ -670,7 +705,7 @@ def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool 
         seen.add(c["id"])
         if problems:
             out[c["id"]] = problems
-    whole = check_twins(cards) + check_links(cards)
+    whole = check_twins(cards) + check_links(cards) + check_orphan_pages()
     if editions is not None:
         whole += check_editions(editions, cards)
     if commons is not None:

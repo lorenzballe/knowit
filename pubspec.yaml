@@ -95,6 +95,14 @@ dependencies:
   # the server can ask an old build to update, or aim a switch at a new one
   # (lib/remote/build_number.dart, docs/REMOTE.md).
   package_info_plus: ^9.0.1
+  # Free cards: a card whose face is a web page made with the card kit,
+  # shown inside the native card frame (lib/widgets/web/, docs/REMOTE.md).
+  # The platforms' own packages for the few settings only they have: the
+  # system's text size kept out of a card's layout on Android, video that
+  # plays inside the card on iOS.
+  webview_flutter: ^4.14.1
+  webview_flutter_android: ^4.14.1
+  webview_flutter_wkwebview: ^3.27.0
 
 dev_dependencies:
   flutter_test:
@@ -140,6 +148,18 @@ flutter:
   # The app mark ships in both themes; BrandMark picks between them.
   assets:
     - assets/brand/
+    # The card kit, for free cards: the frame, the helpers, the bridge, the
+    # fonts and every library a card may use, so a card's page is put
+    # together on the phone and needs nothing from the network
+    # (lib/widgets/web/card_kit.dart). The same files the cards are built
+    # and checked with, not copies of them.
+    - docs/cards/kit/astute-card.css
+    - docs/cards/kit/astute-card.js
+    - docs/cards/kit/astute-bridge.js
+    - docs/cards/kit/fonts.css
+    - docs/cards/kit/fonts/
+    - docs/cards/kit/vendor/
+    - docs/cards/kit/vendor/gsap-plugins/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

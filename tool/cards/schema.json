@@ -16,8 +16,8 @@
       "enum": ["thinking", "space", "technology", "language", "nature", "economics", "pop_culture", "science", "history", "psychology", "weird_facts", "human_body", "philosophy", "sport", "cinema", "music", "art", "medicine", "food", "life", "maths"]
     },
     "kind": {
-      "enum": ["read", "pickOne", "number", "estimate", "debate"],
-      "description": "read: turn it over. pickOne: commit to an option. number: work out an exact number. estimate: a Fermi estimate, judged within a factor. debate: take a side, then meet the other one; never graded."
+      "enum": ["read", "pickOne", "number", "estimate", "debate", "page"],
+      "description": "read: turn it over. pickOne: commit to an option. number: work out an exact number. estimate: a Fermi estimate, judged within a factor. debate: take a side, then meet the other one; never graded. page: a free card whose page asks and marks the answer itself (web.graded); it has a web face."
     },
     "difficulty": { "enum": ["easy", "medium", "hard"] },
     "principle": {
@@ -132,6 +132,20 @@
       "type": "object",
       "required": ["type"],
       "description": "Something the reader plays with before the answer, as data the app draws: today `slider` (move one quantity, watch another follow measured points, with a line that changes at the moments that matter). tool/cards/scenes.py holds the rules."
+    },
+    "web": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kit", "label"],
+      "properties": {
+        "kit": {"type": "integer", "minimum": 1, "description": "The version of the card kit (docs/cards/kit) the page is made with. A build that carries an older kit never deals the card."},
+        "touch": {"enum": ["taps", "drags"], "description": "taps (the default): the page takes taps, a drag throws the card. drags: the page also takes every touch that starts on what it marks as its own (data-drag, or touch-action: none), for a slider, a canvas, a game."},
+        "graded": {"type": "boolean", "description": "On a page card: whether the page says right or wrong (the default) or asks for something nothing is right about."},
+        "label": {"type": "string", "minLength": 20, "maxLength": 400, "description": "What the face shows and asks, in words, for a reader who cannot see it."},
+        "ground": {"type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "The colour the page is drawn on, when it is not the subject's: a night card."},
+        "html": {"type": "string", "description": "Only in the bundle: tool/cards/bundle.py puts the page here from <id>.html, kept beside the card."}
+      },
+      "description": "A free card's face: a web page made with the card kit, kept beside the card as <id>.html, shown in the app inside the native card frame. The card keeps every other field, which search, widgets, notifications, sharing, the journey and screen readers read, and a phone that cannot show the page shows instead. check.py holds the page to what the app can show offline (docs/REMOTE.md, Free cards)."
     },
     "also": {
       "type": "array",

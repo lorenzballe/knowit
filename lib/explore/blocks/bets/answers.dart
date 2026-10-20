@@ -117,7 +117,8 @@ class BetAnswer {
           share: shares,
           amounts: values,
         );
-      case NoChallenge() || TakeASide():
+      // A free card's answer is its page's, not a number the shelf can read.
+      case NoChallenge() || TakeASide() || PageJudged():
         return null;
     }
   }

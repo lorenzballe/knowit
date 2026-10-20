@@ -20,6 +20,9 @@ import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
 import 'subject_icon.dart';
+import 'web/page_messages.dart';
+import 'web/web_card_face.dart';
+import 'web/web_card_page.dart';
 
 /// Full-bleed, one-colour-per-topic card — the "card is the screen" look,
 /// carrying the line to keep and a source once flipped.
@@ -71,7 +74,17 @@ class PillCard extends StatelessWidget {
     this.liked = false,
     this.onLike,
     this.onShare,
+    this.page,
+    this.onPageMessage,
   });
+
+  /// A free card's live page, when the deck keeps one for it (see
+  /// [WebCardPool]); without one its poster is drawn in the page's place.
+  final WebCardPage? page;
+
+  /// What a free card's page asks of the deck — an answer, a turn, the next
+  /// card — heard on the card on top only.
+  final ValueChanged<PageMessage>? onPageMessage;
 
   /// Keeping and sharing act on this card, not on the screen, so they live on
   /// it. They used to sit in a row of their own under the deck, which put two
@@ -134,6 +147,28 @@ class PillCard extends StatelessWidget {
   }
 
   Widget _face(BuildContext context) {
+    // A free card's front is its page, edge to edge inside the same frame:
+    // the same corners, edge and shadow as every card, the page drawing
+    // everything else — its head, its question, whatever it asks.
+    if (!flipped && pill.web != null) {
+      return Container(
+        decoration: cardFace(context, groundOf(pill), radius: 34, lift: 1),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(34),
+          child: WebCardFace(
+            pill: pill,
+            page: page,
+            onMessage: onPageMessage,
+            chip: isReview
+                ? context.l10n.againChip
+                : isOwn
+                ? context.l10n.forYouChip
+                : null,
+            note: placeLineOf(context, pill.place, home) ?? note,
+          ),
+        ),
+      );
+    }
     // Cut from the page with a hairline where its colour is the page's
     // own, and lifted by a shadow that stays under the card (card_edge.dart).
     return Container(
@@ -259,6 +294,9 @@ class PillCard extends StatelessWidget {
                         onAnswer: commit,
                       ),
                     ),
+                    // Only a card with its page asks on its page; one that
+                    // reached the native face without it is read.
+                    PageJudged() => _FrontFace(pill: pill),
                     // A feel for size is placed on a ruler, not typed.
                     final Estimate estimate => _AskFace(
                       pill: pill,
@@ -673,8 +711,9 @@ class _Verdict extends StatelessWidget {
         correctOption,
       ),
       // Never marked, so never given a verdict: the back says the reader's
-      // own line instead.
-      NoChallenge() || TakeASide() => null,
+      // own line instead. A page marks its own and has said what was right
+      // already; the answer under the verdict says why.
+      NoChallenge() || TakeASide() || PageJudged() => null,
     };
   }
 
@@ -865,7 +904,7 @@ class _AskFaceState extends State<_AskFace> {
       ),
       TypeNumber() => 54,
       Estimate() => PlaceItInput.heightFor(scaler),
-      NoChallenge() => 0,
+      NoChallenge() || PageJudged() => 0,
     };
     final double step = pill.isGraded
         ? _ConfidenceStep.heightFor(context, width, scaler)
@@ -1684,6 +1723,11 @@ class _YourLine extends StatelessWidget {
     );
   }
 }
+
+/// The room the save and share take in a card's bottom corner, inside the
+/// face's padding: what a free card's page keeps clear (the kit's foot
+/// leaves it empty; see `--kit-corner-w` in docs/cards/kit/astute-card.css).
+const Size kCardCorner = Size(_CardControl.room, _AskFaceState._cornerClear);
 
 /// A control drawn on the card, in the card's own ink.
 class _CardControl extends StatelessWidget {
