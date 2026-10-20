@@ -308,12 +308,18 @@ void main() {
 
   testWidgets('the cards a block opens are the ones it showed', (tester) async {
     final app = await screensReader();
+    // Named by the section, a card leads whatever its kind: the page's
+    // editor chose it.
     final Pill card = bankWhere((p) => true).first;
-    final host = FakeExploreHost(app)..cards['x'] = [card];
+    final host = FakeExploreHost(app);
     await pumpBlock(
       tester,
       kExploreBlocks['front-lead']!,
-      screensSection('front-lead'),
+      screensSection('front-lead', {
+        'source': {
+          'ids': [card.id],
+        },
+      }),
       host,
     );
     await tester.tap(find.byKey(ValueKey('explore-${card.id}')));
