@@ -7,9 +7,11 @@
 //
 // A camera, not a check, so it lives outside test/ like the other shots.
 // The pictures land in tool/shots/gallery/shapes/ (gitignored), one folder
-// per block: <size>-<phone>-<night|paper>.png. The cards are the bank's,
-// the canvas's own where the bank has them, so the two can be compared
-// card for card.
+// per block: <size>-<phone>-<night|paper>.png, and for each of the block's
+// other looks (its other signatures, the canvas's other designs of it)
+// <size>-<phone>-<night|paper>-<look>.png. The cards are the bank's, the
+// canvas's own where the bank has them, so the two can be compared card
+// for card.
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -84,27 +86,67 @@ const Map<String, List<String>> _canvas = {
 /// The cards a shelf of [block]'s kind is shown with: the canvas's, then
 /// the bank's, every one of the kind.
 List<Pill> _cardsFor(ShapeBlock block, ExploreSection section) {
-  final ShapeAim aim = ShapeAim.of(section, block.words.kind, DateTime.now());
+  final ShapeAim aim = ShapeAim.of(
+    section,
+    block.kindFor(section),
+    DateTime.now(),
+  );
+  final bool Function(Pill)? keep = block.keep(section);
   final List<Pill> out = [
     for (final String id in _canvas[aim.kind] ?? const [])
-      if (PillBank.byId(id) case final Pill p when aim.fits(p)) p,
+      if (PillBank.byId(id) case final Pill p
+          when aim.fits(p) && (keep == null || keep(p)))
+        p,
   ];
   for (final Pill p in PillBank.cards) {
     if (out.length >= 24) break;
-    if (aim.fits(p) && !out.contains(p)) out.add(p);
+    if (aim.fits(p) && (keep == null || keep(p)) && !out.contains(p)) {
+      out.add(p);
+    }
   }
   return out;
 }
 
-/// The section a block is shown in: its own kind, at [size], aimed as the
-/// canvas aimed it — the last century, Europe, the month of Pop culture.
-ExploreSection _section(ShapeBlock block, String size) {
+/// The looks [block] is photographed in, by name: its own (unnamed), each
+/// of its other signatures, and the canvas's other designs of it.
+Map<String, Map<String, Object?>> _looks(ShapeBlock block) {
+  final Map<String, Map<String, Object?>> looks = {'': {}};
+  for (final String s in block.words.signatures.skip(1)) {
+    looks[s] = {'signature': s};
+  }
+  // 132b's stamps, stuck on by hand; 131e's checklist, a ring on every row.
+  if (block.name == 'shape-stamp') {
+    looks['tilt'] = {
+      'style': {'tilt': true},
+    };
+  }
+  if (block.name == 'shape-checklist') {
+    looks['none'] = {
+      'signature': 'none',
+      'style': {'rings': 'all'},
+    };
+  }
+  return looks;
+}
+
+/// The section a block is shown in: its own kind, at [size], in [look],
+/// aimed as the canvas aimed it — the last century, Europe, the month of
+/// Pop culture.
+ExploreSection _section(
+  ShapeBlock block,
+  String size,
+  Map<String, Object?> look,
+) {
+  final String kind = block.words.kindWith(
+    look['signature'] as String? ?? block.words.signatures.first,
+  );
   final Map<String, Object?> json = {
     'id': block.name,
     'block': block.name,
     'size': size,
-    if (block.words.kind == 'past' || block.words.kind == 'place') 'variant': 2,
-    if (block.words.kind == 'month') 'subject': 'pop_culture',
+    if (kind == 'past' || kind == 'place') 'variant': 2,
+    if (kind == 'month') 'subject': 'pop_culture',
+    ...look,
   };
   return ExploreSection.fromJson(json);
 }
@@ -122,53 +164,57 @@ void main() {
     final ShapeBlock block = b as ShapeBlock;
     if (wanted.isNotEmpty && !wanted.contains(block.name)) continue;
     testWidgets(block.name, (tester) async {
-      for (final String size in kShapeSizes) {
-        for (final MapEntry<String, (Size, EdgeInsets)> phone
-            in _phones.entries) {
-          for (final Brightness light in Brightness.values) {
-            final (Size screen, EdgeInsets insets) = phone.value;
-            // A golden is taken at one pixel a point. The phone is laid out
-            // at its own size and painted twice as large, so the picture
-            // has the detail of a real screen to judge an edge by.
-            tester.view.physicalSize = screen * 2;
-            tester.view.devicePixelRatio = 1;
-            addTearDown(tester.view.reset);
+      for (final MapEntry<String, Map<String, Object?>> look in _looks(
+        block,
+      ).entries) {
+        for (final String size in kShapeSizes) {
+          for (final MapEntry<String, (Size, EdgeInsets)> phone
+              in _phones.entries) {
+            for (final Brightness light in Brightness.values) {
+              final (Size screen, EdgeInsets insets) = phone.value;
+              // A golden is taken at one pixel a point. The phone is laid out
+              // at its own size and painted twice as large, so the picture
+              // has the detail of a real screen to judge an edge by.
+              tester.view.physicalSize = screen * 2;
+              tester.view.devicePixelRatio = 1;
+              addTearDown(tester.view.reset);
 
-            final ExploreSection section = _section(block, size);
-            final AppState app = AppState();
-            final FakeExploreHost host = FakeExploreHost(app);
-            host.cards[section.id] = _cardsFor(block, section);
-            // One card read, to show its tick where the shape puts it.
-            app.seenIds = {host.cards[section.id]![1].id};
+              final ExploreSection section = _section(block, size, look.value);
+              final AppState app = AppState();
+              final FakeExploreHost host = FakeExploreHost(app);
+              host.cards[section.id] = _cardsFor(block, section);
+              // One card read, to show its tick where the shape puts it.
+              app.seenIds = {host.cards[section.id]![1].id};
 
-            await tester.pumpWidget(
-              RepaintBoundary(
-                key: _shot,
-                child: Transform.scale(
-                  scale: 2,
-                  alignment: Alignment.topLeft,
-                  child: OverflowBox(
+              await tester.pumpWidget(
+                RepaintBoundary(
+                  key: _shot,
+                  child: Transform.scale(
+                    scale: 2,
                     alignment: Alignment.topLeft,
-                    minWidth: screen.width,
-                    maxWidth: screen.width,
-                    minHeight: screen.height,
-                    maxHeight: screen.height,
-                    child: MaterialApp(
-                      debugShowCheckedModeBanner: false,
-                      localizationsDelegates:
-                          AppLocalizations.localizationsDelegates,
-                      supportedLocales: AppLocalizations.supportedLocales,
-                      theme: buildAstutoTheme(light),
-                      home: MediaQuery(
-                        data: MediaQueryData(size: screen, padding: insets),
-                        child: Scaffold(
-                          body: Builder(
-                            builder: (context) => ListView(
-                              padding: EdgeInsets.only(top: insets.top + 14),
-                              children: [
-                                block.build(context, host, section) ??
-                                    const SizedBox.shrink(),
-                              ],
+                    child: OverflowBox(
+                      alignment: Alignment.topLeft,
+                      minWidth: screen.width,
+                      maxWidth: screen.width,
+                      minHeight: screen.height,
+                      maxHeight: screen.height,
+                      child: MaterialApp(
+                        debugShowCheckedModeBanner: false,
+                        localizationsDelegates:
+                            AppLocalizations.localizationsDelegates,
+                        supportedLocales: AppLocalizations.supportedLocales,
+                        theme: buildAstutoTheme(light),
+                        home: MediaQuery(
+                          data: MediaQueryData(size: screen, padding: insets),
+                          child: Scaffold(
+                            body: Builder(
+                              builder: (context) => ListView(
+                                padding: EdgeInsets.only(top: insets.top + 14),
+                                children: [
+                                  block.build(context, host, section) ??
+                                      const SizedBox.shrink(),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -176,18 +222,20 @@ void main() {
                     ),
                   ),
                 ),
-              ),
-            );
-            for (int f = 0; f < 6; f++) {
-              await tester.pump(const Duration(milliseconds: 100));
+              );
+              for (int f = 0; f < 6; f++) {
+                await tester.pump(const Duration(milliseconds: 100));
+              }
+              final String theme = light == Brightness.dark ? 'night' : 'paper';
+              await expectLater(
+                find.byKey(_shot),
+                matchesGoldenFile(
+                  'shots/gallery/shapes/${block.name}/'
+                  '$size-${phone.key}-$theme'
+                  '${look.key.isEmpty ? '' : '-${look.key}'}.png',
+                ),
+              );
             }
-            final String theme = light == Brightness.dark ? 'night' : 'paper';
-            await expectLater(
-              find.byKey(_shot),
-              matchesGoldenFile(
-                'shots/gallery/shapes/${block.name}/$size-${phone.key}-$theme.png',
-              ),
-            );
           }
         }
       }
