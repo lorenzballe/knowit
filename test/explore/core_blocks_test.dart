@@ -24,6 +24,8 @@ import 'package:astuto/sync/served.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/explore/card_tiles.dart';
 import 'package:astuto/widgets/scaled_text.dart';
+import 'package:astuto/widgets/web/fake_web_surface.dart';
+import 'package:astuto/widgets/web/web_surface.dart';
 
 import 'core_harness.dart';
 
@@ -477,8 +479,8 @@ void main() {
       expect(find.text('Look twice.'), findsOneWidget);
     });
 
-    testWidgets('room, a rule, and a page through the web surface once it '
-        'is in the build', (tester) async {
+    testWidgets('room, a rule, and a page through the web surface where '
+        'the phone can show one', (tester) async {
       final CoreHost host = CoreHost(await readyApp());
       final List<ExploreSection> sections = [
         ExploreSection.fromJson({
@@ -498,16 +500,22 @@ void main() {
           'height': 180,
         }),
       ];
+      // No WebView under test: the page is passed over, not left blank.
       await pumpSections(tester, host, sections);
       expect(find.text('AND'), findsOneWidget);
       expect(find.byKey(const ValueKey('web-page')), findsNothing);
 
       final List<(String, double)> drawn = [];
+      final drawnBefore = WebBlock.webSection;
       WebBlock.webSection = (context, {required html, required height}) {
         drawn.add((html, height));
         return const ColoredBox(color: Colors.blue);
       };
-      addTearDown(() => WebBlock.webSection = null);
+      WebSurfaces.debugUse(FakeWebSurface.new);
+      addTearDown(() {
+        WebBlock.webSection = drawnBefore;
+        WebSurfaces.debugUse(null);
+      });
       await pumpSections(tester, host, sections);
       expect(find.byKey(const ValueKey('web-page')), findsOneWidget);
       expect(

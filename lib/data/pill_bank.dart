@@ -70,6 +70,12 @@ class BankBundle {
   /// Reads a bundle. Throws [FormatException] on a document the app could
   /// not deal from, so a truncated download or a bad build is refused whole
   /// and the bank in use stays exactly as it was.
+  ///
+  /// A card written for a later build ([LaterCard]) is passed over, and the
+  /// calendar's day that names it with it: the bank grows new kinds and
+  /// subjects without an app update, and a phone a version behind keeps
+  /// every card it can draw. Not when they are more than a quarter of the
+  /// bundle, though: that is no bundle for this build, and is refused.
   factory BankBundle.parse(String text) {
     final Object? doc = jsonDecode(text);
     if (doc is! Map<String, Object?>) {
@@ -82,11 +88,18 @@ class BankBundle {
     final cards = <Pill>[];
     final retired = <String>{};
     final seen = <String>{};
+    final later = <String>{};
     for (final raw in rawCards) {
       if (raw is! Map<String, Object?>) {
         throw const FormatException('a card is an object');
       }
-      final card = cardFromJson(raw);
+      final Pill card;
+      try {
+        card = cardFromJson(raw);
+      } on LaterCard {
+        later.add('${raw['id']}');
+        continue;
+      }
       if (!seen.add(card.id)) {
         throw FormatException('twice in the bundle', card.id);
       }
@@ -94,6 +107,9 @@ class BankBundle {
       if (raw['disabled'] == true) retired.add(card.id);
     }
     if (cards.isEmpty) throw const FormatException('a bundle holds cards');
+    if (later.length * 4 > rawCards.length) {
+      throw FormatException('${later.length} cards for a later build');
+    }
     final editions = <int, String>{};
     final rawEditions = doc['editions'];
     if (rawEditions is Map) {
@@ -103,6 +119,8 @@ class BankBundle {
         if (n == null || id is! String) {
           throw FormatException('edition ${e.key} is not a card');
         }
+        // A day whose question this build passed over asks its own.
+        if (later.contains(id)) continue;
         if (!seen.contains(id)) {
           throw FormatException('edition $n names $id, which is not here');
         }

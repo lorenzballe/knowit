@@ -16,9 +16,11 @@ import 'web_surface.dart';
 
 /// The platform's surface, or one that shows nothing where there is no
 /// WebView (a desktop, a test that did not put a fake in).
-WebSurface makePlatformSurface() => WebViewPlatform.instance == null
-    ? UnavailableWebSurface()
-    : NativeWebSurface();
+WebSurface makePlatformSurface() =>
+    platformShowsPages() ? NativeWebSurface() : UnavailableWebSurface();
+
+/// Whether this platform has a WebView to show a page in.
+bool platformShowsPages() => WebViewPlatform.instance != null;
 
 /// One WebView, set up for a card: JavaScript on, the bridge's channel
 /// open, no zoom, no scrolling, nothing that navigates, the system's text

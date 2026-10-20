@@ -444,11 +444,22 @@ its throw. A page that has taken the finger lets the reader move on with
 `Kit.done()`, or with the native affordance outside its zones; after the
 answer a page usually gives its zones back (`data-drag="off"`).
 
-**Before launch, and after.** A build older than free cards refuses a
-bundle that holds a `page` card as a whole (a bundle is refused whole when a
-card cannot be drawn), and keeps the bank it had. Once there are readers on
-such builds, publish free cards as native kinds with a web face, or teach
-the bank to skip a card it cannot read.
+**Cards for a later build.** From this build on, a card written for a
+later one — a kind, a subject, a principle, a difficulty or a place the
+build does not know (`LaterCard`, `lib/data/card_json.dart`) — is passed
+over wherever it comes: in the bundle (with the day of the calendar that
+names it, which then asks its own question), in a served day, on a served
+shelf, in search. The rest is kept. More than a quarter of a bundle for a
+later build is no bundle for this one, and is refused whole. Anything else
+wrong with a card is a bad build and still refuses the whole of what it
+came in.
+
+A build from before free cards refuses a bundle that holds a `page` card as
+a whole, and keeps the bank it had; a served day with one is refused too,
+and the phone deals its own. Nothing breaks, but those phones stop taking
+bank updates. While readers are on such builds, prefer a native kind with a
+web face (`pickOne` with `web`, as two of the first three are), which every
+build reads and the ones with the kit show as pages.
 
 ## Changing something
 

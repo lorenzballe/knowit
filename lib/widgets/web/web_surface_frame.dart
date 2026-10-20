@@ -23,6 +23,9 @@ import 'web_surface.dart';
 /// The web build's surface: an iframe.
 WebSurface makePlatformSurface() => FrameWebSurface();
 
+/// Whether this platform can show a page: a browser always can.
+bool platformShowsPages() => true;
+
 /// One iframe, registered as a platform view of its own.
 class FrameWebSurface implements WebSurface {
   FrameWebSurface() {

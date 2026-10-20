@@ -222,18 +222,20 @@ class ServedDay {
 
   /// Reads the document at readers/{uid}/days/{date}. Null when it is not a
   /// day the app can deal: a card it cannot draw refuses the whole day, and
-  /// the phone deals its own instead.
+  /// the phone deals its own instead. A card written for a later build is
+  /// only passed over, and the rest of the day kept.
   static ServedDay? parse(Object? raw, {bool fromCache = false}) {
     if (raw is! Map) return null;
     final String? date = raw['date'] is String ? raw['date'] as String : null;
     final Object? rawCards = raw['cards'];
     if (date == null || rawCards is! List || rawCards.isEmpty) return null;
     try {
+      if (rawCards.any((c) => c is! Map)) return null;
       final cards = <Pill>[
         for (final c in rawCards)
-          if (c is Map) cardFromJson(Map<String, Object?>.from(c)),
+          ?drawableCard(Map<String, Object?>.from(c as Map)),
       ];
-      if (cards.length != rawCards.length) return null;
+      if (cards.isEmpty) return null;
       List<String> strings(Object? v) =>
           v is List ? v.whereType<String>().toList() : const [];
       return ServedDay(
@@ -326,7 +328,7 @@ class ServedExplore {
     try {
       List<Pill> cards(Object? v) => [
         for (final c in (v is List ? v : const []))
-          if (c is Map) cardFromJson(Map<String, Object?>.from(c)),
+          if (c is Map) ?drawableCard(Map<String, Object?>.from(c)),
       ];
       List<Pill> pills(Object? v) => [
         for (final Pill p in cards(v))
@@ -335,10 +337,9 @@ class ServedExplore {
       List<ServedRank> ranked(Object? v) => [
         for (final r in (v is List ? v : const []))
           if (r is Map && r['card'] is Map && r['readers'] is num)
-            ServedRank(
-              cardFromJson(Map<String, Object?>.from(r['card'] as Map)),
-              (r['readers'] as num).round(),
-            ),
+            if (drawableCard(Map<String, Object?>.from(r['card'] as Map))
+                case final Pill pill)
+              ServedRank(pill, (r['readers'] as num).round()),
       ].where((r) => !r.pill.isAboutAPlace).toList();
       List<(String, int)> ids(Object? v) => [
         for (final r in (v is List ? v : const []))
@@ -475,7 +476,7 @@ class FirestoreServedStore implements ServedStore {
     final Object? cards = data is Map ? data['cards'] : null;
     return [
       for (final c in (cards is List ? cards : const []))
-        if (c is Map) cardFromJson(Map<String, Object?>.from(c)),
+        if (c is Map) ?drawableCard(Map<String, Object?>.from(c)),
     ];
   }
 }

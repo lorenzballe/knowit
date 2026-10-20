@@ -16,6 +16,8 @@ import '../../../widgets/explore/card_tiles.dart';
 import '../../../widgets/explore/parts.dart' show FlatButton, Kicker, upper;
 import '../../../widgets/fit_text.dart';
 import '../../../widgets/subject_icon.dart';
+import '../../../widgets/web/web_surface.dart' show WebSurfaces;
+import '../../../widgets/web/web_surface_view.dart' show webSurface;
 import '../../explore_block.dart';
 import 'layout.dart';
 
@@ -620,20 +622,28 @@ class DividerBlock extends ExploreBlock with SectionLayout {
 /// in one language or per language, shown `height` points tall (40 to
 /// 1200) between the page's margins, in a card's corner.
 ///
-/// It is drawn by the web surface, through [webSection]; until the surface
-/// is in the build the hook is null and the section is passed over, as a
-/// block the build does not know would be.
+/// It is drawn by the web surface, through [webSection]: the one a free
+/// card's page is drawn on (lib/widgets/web/), with the kit, the reader's
+/// theme and language inside it. Where the phone has no WebView to draw it
+/// in, the section is passed over, as a block the build does not know
+/// would be.
 class WebBlock extends ExploreBlock with SectionLayout {
   const WebBlock();
 
-  /// Draws a section's page, [height] points tall: set by the web surface
-  /// when it is in the build, null until then.
+  /// Draws a section's page, [height] points tall; null passes every web
+  /// section over.
   static Widget Function(
     BuildContext context, {
     required String html,
     required double height,
   })?
-  webSection;
+  webSection = _drawn;
+
+  static Widget _drawn(
+    BuildContext context, {
+    required String html,
+    required double height,
+  }) => webSurface(context, html: html, height: height);
 
   @override
   String get name => 'web';
@@ -645,7 +655,7 @@ class WebBlock extends ExploreBlock with SectionLayout {
     ExploreSection section,
   ) {
     final draw = webSection;
-    if (draw == null) return null;
+    if (draw == null || !WebSurfaces.available) return null;
     final String? html = _said(section, host, 'html');
     final Object? rawHeight = section.json['height'];
     if (html == null ||

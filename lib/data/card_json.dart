@@ -18,6 +18,27 @@ import '../models/pill.dart';
 import '../models/place.dart';
 import 'topics.dart';
 
+/// A card written for a later build than this one: a subject, a kind, a
+/// principle, a difficulty or a place this build does not know. The bank
+/// can grow any of them without an app update, so a card like this is
+/// passed over, and the rest of what came with it kept: the bundle, a
+/// served day, a shelf. Anything else wrong with a card is a bad build,
+/// and still refuses the whole of what it came in.
+class LaterCard extends FormatException {
+  const LaterCard(super.message, [super.source]);
+}
+
+/// The card in [raw], or null when it was written for a later build (see
+/// [LaterCard]). Throws [FormatException] on anything else, as
+/// [cardFromJson] does.
+Pill? drawableCard(Map<String, Object?> raw) {
+  try {
+    return cardFromJson(raw);
+  } on LaterCard {
+    return null;
+  }
+}
+
 /// The kinds a card can be, as the bank names them. `page` is a free card
 /// that asks on its page and is marked there (see [PageJudged]).
 const kCardKinds = ['read', 'pickOne', 'number', 'estimate', 'debate', 'page'];
@@ -161,9 +182,10 @@ WebFace? webFromJson(Object? raw, {Object? id}) {
   );
 }
 
-/// A card from its JSON object. Throws [FormatException] on anything the
-/// app could not draw — an unknown topic, kind, principle or difficulty, a
-/// missing question — so a bad bundle is refused whole rather than dealt.
+/// A card from its JSON object. Throws [LaterCard] on a card written for a
+/// later build — an unknown topic, kind, principle or difficulty — and
+/// [FormatException] on anything else the app could not draw, a missing
+/// question, so a bad bundle is refused whole rather than dealt.
 Pill cardFromJson(Map<String, Object?> raw) {
   String text(String key, {String fallback = ''}) {
     final v = raw[key];
@@ -189,7 +211,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
   if (id.isEmpty) throw const FormatException('a card has no id');
   final topicKey = text('topic');
   final style = kTopics[topicKey];
-  if (style == null) throw FormatException('unknown topic "$topicKey"', id);
+  if (style == null) throw LaterCard('unknown topic "$topicKey"', id);
   final question = text('question');
   if (question.isEmpty) throw FormatException('no question', id);
 
@@ -214,7 +236,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     'page' => PageJudged(
       graded: raw['web'] is! Map || (raw['web'] as Map)['graded'] != false,
     ),
-    _ => throw FormatException('unknown kind "$kind"', id),
+    _ => throw LaterCard('unknown kind "$kind"', id),
   };
   if (challenge is PickOne &&
       (challenge.options.length < 2 ||
@@ -231,14 +253,14 @@ Pill cardFromJson(Map<String, Object?> raw) {
       .where((d) => d.name == difficultyName)
       .firstOrNull;
   if (difficulty == null) {
-    throw FormatException('unknown difficulty "$difficultyName"', id);
+    throw LaterCard('unknown difficulty "$difficultyName"', id);
   }
   final principleName = text('principle', fallback: 'none');
   final principle = Principle.values
       .where((p) => p.name == principleName)
       .firstOrNull;
   if (principle == null) {
-    throw FormatException('unknown principle "$principleName"', id);
+    throw LaterCard('unknown principle "$principleName"', id);
   }
 
   // A card marked on its page has to bring the page.
@@ -247,14 +269,15 @@ Pill cardFromJson(Map<String, Object?> raw) {
     throw FormatException('a page card has no page', id);
   }
 
-  // A place the app cannot read refuses the card, and the bundle with it:
-  // read as no place, a card about Modena would be dealt to everybody.
+  // A place the app cannot read refuses the card: read as no place, a card
+  // about Modena would be dealt to everybody. Passed over, it is dealt to
+  // nobody here, as a later build's card is.
   final Object? rawPlace = raw['place'];
   final CardPlace? place = rawPlace == null
       ? null
       : CardPlace.fromJson(rawPlace);
   if (rawPlace != null && place == null) {
-    throw FormatException('a place the app cannot read', id);
+    throw LaterCard('a place the app cannot read', id);
   }
 
   return Pill(

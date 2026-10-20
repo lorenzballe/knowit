@@ -43,6 +43,11 @@ abstract class WebSurface {
 /// How surfaces are made: the platform's own, or whatever a test puts in.
 abstract final class WebSurfaces {
   static WebSurface Function() _make = makePlatformSurface;
+  static bool _fake = false;
+
+  /// Whether a page can be shown here at all, asked without making a
+  /// surface to find out: what a block asks before it gives a page room.
+  static bool get available => _fake || platformShowsPages();
 
   /// How many surfaces are alive now, for the tests that hold the deck to
   /// its two.
@@ -54,8 +59,10 @@ abstract final class WebSurfaces {
   /// Makes every surface with [make] from now on; null puts the
   /// platform's back.
   @visibleForTesting
-  static void debugUse(WebSurface Function()? make) =>
-      _make = make ?? makePlatformSurface;
+  static void debugUse(WebSurface Function()? make) {
+    _make = make ?? makePlatformSurface;
+    _fake = make != null;
+  }
 }
 
 /// The surface of a platform that has no WebView: it shows nothing, says
