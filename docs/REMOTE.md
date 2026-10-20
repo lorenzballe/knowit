@@ -289,10 +289,14 @@ list of sections is the build's own Explore.
 
 A card block takes its cards from `source`, narrowed to the subject chip in
 view; an unknown source, or one with nothing in it, gives no cards and no
-section:
+section. A section with no `source` at all draws from the whole bank, in an
+order that turns with the day and is the same on every phone: the families'
+blocks pick what they need from it (numbers for a bet, debates for two
+halves, a theme for a set).
 
 | `source` | The cards |
 |---|---|
+| none | the whole bank, in the day's order |
 | `{"shelf": "today"}` | a shelf of the server's Explore as Explore deals it — `today`, `asking`, `topWeek`, `topMonth`, `loved`, `mine`, `forYou`, `local` — and the phone's own before the server has answered (`forYou` only from the server) |
 | `{"ids": ["space-moon-dust-3"]}` | those cards, in that order |
 | `{"query": {…}}` | the bank, worked out on the phone: `subjects` (keys), `formats` (`read`, `pickOne`, `number`, `estimate`, `debate`, `trueOrFalse`, `diagram`, or a scene's kind: `slider`, `story`…), `difficulty`, `unread`, `perSubject` (2), `limit` (12), `seed` — `day` (the default), `week` or `fixed`: the same pick on every phone for the same seed and section, apart from what each reader has read |

@@ -496,6 +496,18 @@ class ExploreShelves {
   };
 
   List<Pill> _sourced(ExploreSection section, Object? source, int? most) {
+    if (source == null) {
+      // A section that names no source draws from the whole bank, the
+      // same for every reader and turning with the day. The families'
+      // blocks pick from it what they need — numbers for a bet, debates
+      // for two halves, a theme for a set — and a section that wants
+      // other cards says which.
+      final String key =
+          '${section.id}|*|${_subject ?? ''}|$_dealtOn|${PillBank.version}';
+      if (_queries.length > 200) _queries.clear();
+      final List<Pill> pool = _queries[key] ??= _pool(section);
+      return pool.take(most ?? pool.length).toList();
+    }
     if (source is! Map) return const [];
     final List<Pill> found;
     final int natural;
@@ -576,6 +588,18 @@ class ExploreShelves {
       _live = {for (final Pill p in PillBank.live) p.id};
     }
     return _live!;
+  }
+
+  /// Every card the dealer may hand anybody, narrowed to the subject in
+  /// view, in an order that turns with the day and is the same on every
+  /// phone that day.
+  List<Pill> _pool(ExploreSection section) {
+    final String salt = 'pool:${section.id}:${themeDay(_clock())}';
+    final List<Pill> cards = only(PillBank.cards).toList();
+    final Map<String, int> rank = {
+      for (final Pill p in cards) p.id: shelfHash('$salt:${p.id}'),
+    };
+    return cards..sort((a, b) => rank[a.id]!.compareTo(rank[b.id]!));
   }
 
   List<Pill> _query(ExploreSection section, Map query) {

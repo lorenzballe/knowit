@@ -287,9 +287,27 @@ void main() {
     });
   });
 
-  test('no source, an unknown one, or two at once give no cards', () async {
+  test('no source is the whole bank, turning with the day and the same for '
+      'everyone', () async {
     final ExploreShelves shelves = shelvesFor(await readyApp());
-    expect(shelves.cardsFor(_section(null)), isEmpty);
+    final List<Pill> pool = shelves.cardsFor(_section(null));
+    expect(pool, hasLength(PillBank.cards.length));
+    expect(pool.toSet(), PillBank.cards.toSet());
+    expect(
+      pool.take(12).map((p) => p.id),
+      isNot(PillBank.cards.take(12).map((p) => p.id)),
+      reason: 'dealt in the day\'s order, not the bank\'s',
+    );
+    final ExploreShelves again = shelvesFor(await readyApp());
+    expect(
+      again.cardsFor(_section(null)).map((p) => p.id),
+      pool.map((p) => p.id),
+    );
+    expect(shelves.cardsFor(_section(null), limit: 5), hasLength(5));
+  });
+
+  test('an unknown source, or two at once, give no cards', () async {
+    final ExploreShelves shelves = shelvesFor(await readyApp());
     expect(shelves.cardsFor(_section('today')), isEmpty);
     expect(shelves.cardsFor(_section({'feed': 'everything'})), isEmpty);
     expect(
