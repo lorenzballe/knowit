@@ -110,6 +110,9 @@ class Trace extends ChangeNotifier {
     'explore searched': 'xs',
     'explore top opened': 'xo',
     'explore loved opened': 'xo',
+    // What a reader did in a section of Explore that nothing else records —
+    // a reaction, a bet, a stance — named by the block that saw it.
+    'explore noted': 'xn',
     'onboarding completed': 'onb',
     'mix set': 'mix',
     'genres set': 'genres',
@@ -189,6 +192,8 @@ class Trace extends ChangeNotifier {
     'found': 'found',
     'report_reason': 'rr',
     'with_note': 'nt',
+    'noted': 'nd',
+    'block': 'bk',
   };
 
   /// Events that keep fields of their own and nothing else, because a name

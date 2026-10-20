@@ -334,7 +334,8 @@ is in its card facts.
 | `card shown` | a shelf builds a card while Explore is in sight (fixed: it used to count Explore built off screen beside Today) | `pill_id`, `shelf` | what was offered and passed over | T:`seen` only |
 | `explore scrolled` | Explore goes a tenth further down | `depth` | | T:`xd` only |
 | `card read elsewhere` | a card is read for the first time outside the day | card facts | it is never dealt again | P, T:`read` |
-| `explore filtered` | a subject chip | `subject` | | P, T:`xf` |
+| `explore filtered` | a subject chip, or a subject in a strip of them on the page | `subject` | | P, T:`xf` |
+| `explore noted` **new** | something a reader did in a section of Explore that nothing else records — a reaction, a bet, a stance — said by the section's block (`ExploreHost.note`) | `shelf` (the section's id), `block`, `noted` (what the block calls it), and the block's own facts: `pill_id` and the rest | what the server-placed sections are used for, one event for every block | P, T:`xn` |
 | `explore search opened`, `explore search closed` | the search field | `had_query` | | P |
 | `explore searched` | a search returns | `query_length`, `words`, `results` — never the text | | P, T:`xs` |
 | `explore top window`, `explore top opened`, `explore loved opened` | the readers' top list | `window`, `month`, `subject`, `rank`, `readers` | | P, T:`xo` (opens) |
@@ -480,6 +481,7 @@ New fields:
 | `tiles_seen`, `tiles_opened` | `ts`, `tk` | `shelf` |
 | `scrolled_sideways` | `sw` | `shelf` |
 | `ms_visible` | `ms` | `shelf` |
+| `noted`, `block` | `nd`, `bk` | `xn` (`explore noted`), with `sh` for the section and `c` for its card |
 
 Codes for where the reader lives: `place` (`place set`) and `unplace`
 (`place removed`). `place` keeps three fields of its own and nothing else —

@@ -1,0 +1,378 @@
+{
+  "_": "Every block of the core family that is not one of the shelves Explore always had, at every size it has: what a document can do with Explore. Checked like remote/explore.json, never bundled. tool/explore_shots.dart photographs it.",
+  "sections": [
+    {
+      "id": "gallery-intro",
+      "block": "text",
+      "kind": "headline",
+      "text": {"en": "Every block, every size", "it": "Ogni blocco, ogni misura"},
+      "gap": 4
+    },
+    {
+      "id": "gallery-intro-line",
+      "block": "text",
+      "text": {
+        "en": "Explore as the server writes it: each section a block, at the size it names, for the readers it is aimed at.",
+        "it": "Esplora come lo scrive il server: ogni sezione un blocco, della misura che dice, per chi è pensata."
+      },
+      "gap": 10
+    },
+    {
+      "id": "gallery-weekend",
+      "block": "text",
+      "kind": "quote",
+      "text": {
+        "en": "The first principle is that you must not fool yourself, and you are the easiest person to fool.",
+        "it": "Il primo principio è che non devi ingannare te stesso, e tu sei la persona più facile da ingannare."
+      },
+      "by": {"en": "Richard Feynman, 1974", "it": "Richard Feynman, 1974"},
+      "subject": "science",
+      "audience": {"weekdays": [6, 7]}
+    },
+    {
+      "id": "gallery-weekday",
+      "block": "text",
+      "kind": "quote",
+      "text": {
+        "en": "The first principle is that you must not fool yourself, and you are the easiest person to fool.",
+        "it": "Il primo principio è che non devi ingannare te stesso, e tu sei la persona più facile da ingannare."
+      },
+      "by": {"en": "Richard Feynman, 1974", "it": "Richard Feynman, 1974"},
+      "subject": "psychology",
+      "style": {"align": "center"},
+      "audience": {"weekdays": [1, 2, 3, 4, 5]}
+    },
+    {
+      "id": "gallery-carousel-xs",
+      "block": "carousel",
+      "size": "xs",
+      "title": {"en": "A row, extra small", "it": "Una fila, piccolissima"},
+      "subtitle": "carousel · xs",
+      "source": {"query": {"formats": ["trueOrFalse"]}}
+    },
+    {
+      "id": "gallery-carousel-s",
+      "block": "carousel",
+      "size": "s",
+      "title": {"en": "A row, small", "it": "Una fila, piccola"},
+      "subtitle": "carousel · s",
+      "source": {"query": {"subjects": ["space"]}}
+    },
+    {
+      "id": "gallery-carousel-m",
+      "block": "carousel",
+      "size": "m",
+      "title": {"en": "Today's shelf, the small way", "it": "Lo scaffale di oggi, in piccolo"},
+      "subtitle": "carousel · m · shelf today",
+      "source": {"shelf": "today"}
+    },
+    {
+      "id": "gallery-carousel-l",
+      "block": "carousel",
+      "size": "l",
+      "title": {"en": "A row, large", "it": "Una fila, grande"},
+      "subtitle": "carousel · l",
+      "source": {"query": {"subjects": ["history", "art"], "seed": "week"}}
+    },
+    {
+      "id": "gallery-carousel-xl",
+      "block": "carousel",
+      "size": "xl",
+      "title": {"en": "Pick a side, extra large", "it": "Scegli da che parte stare, grandissimo"},
+      "subtitle": "carousel · xl",
+      "source": {"query": {"formats": ["debate"]}}
+    },
+    {
+      "id": "gallery-grid-2-portrait",
+      "block": "grid",
+      "columns": 2,
+      "shape": "portrait",
+      "title": {"en": "Two columns, portrait", "it": "Due colonne, verticali"},
+      "subtitle": "grid · 2 · portrait",
+      "source": {"query": {"subjects": ["psychology"]}}
+    },
+    {
+      "id": "gallery-grid-2-square",
+      "block": "grid",
+      "columns": 2,
+      "shape": "square",
+      "title": {"en": "Two columns, square", "it": "Due colonne, quadrate"},
+      "subtitle": "grid · 2 · square",
+      "source": {"query": {"subjects": ["food", "nature"]}}
+    },
+    {
+      "id": "gallery-grid-2-landscape",
+      "block": "grid",
+      "columns": 2,
+      "shape": "landscape",
+      "title": {"en": "Two columns, landscape", "it": "Due colonne, orizzontali"},
+      "subtitle": "grid · 2 · landscape",
+      "source": {"query": {"formats": ["number", "estimate"]}}
+    },
+    {
+      "id": "gallery-grid-3-portrait",
+      "block": "grid",
+      "columns": 3,
+      "shape": "portrait",
+      "title": {"en": "Three columns, portrait", "it": "Tre colonne, verticali"},
+      "subtitle": "grid · 3 · portrait",
+      "source": {"query": {"subjects": ["music", "cinema", "art"]}}
+    },
+    {
+      "id": "gallery-grid-3-square",
+      "block": "grid",
+      "columns": 3,
+      "shape": "square",
+      "limit": 3,
+      "title": {"en": "Three columns, square", "it": "Tre colonne, quadrate"},
+      "subtitle": "grid · 3 · square",
+      "source": {"query": {"seed": "week"}}
+    },
+    {
+      "id": "gallery-grid-4-portrait",
+      "block": "grid",
+      "columns": 4,
+      "shape": "portrait",
+      "title": {"en": "Four columns, portrait", "it": "Quattro colonne, verticali"},
+      "subtitle": "grid · 4 · portrait",
+      "source": {"query": {"seed": "fixed"}}
+    },
+    {
+      "id": "gallery-bento-2",
+      "block": "bento",
+      "columns": 2,
+      "title": {"en": "A mosaic of two", "it": "Un mosaico a due"},
+      "subtitle": "bento · 2 · 2x1 1x2 1x1 1x1",
+      "source": {"query": {"subjects": ["science"]}}
+    },
+    {
+      "id": "gallery-bento-3",
+      "block": "bento",
+      "columns": 3,
+      "title": {"en": "A mosaic of three", "it": "Un mosaico a tre"},
+      "subtitle": "bento · 3 · 2x2 1x1 1x1 1x1 2x1",
+      "source": {"query": {"subjects": ["history"]}}
+    },
+    {
+      "id": "gallery-bento-3-tall",
+      "block": "bento",
+      "columns": 3,
+      "ratio": 1.25,
+      "items": ["3x1", "1x2", "2x1", "1x1", "1x1"],
+      "title": {"en": "Three, taller", "it": "A tre, più alto"},
+      "subtitle": "bento · 3 · ratio 1.25 · 3x1 1x2 2x1 1x1 1x1",
+      "source": {"query": {"subjects": ["psychology", "philosophy"]}}
+    },
+    {
+      "id": "gallery-bento-4",
+      "block": "bento",
+      "columns": 4,
+      "items": ["2x2", "2x1", "2x1", "4x1", "1x2", "3x2"],
+      "title": {"en": "A mosaic of four", "it": "Un mosaico a quattro"},
+      "subtitle": "bento · 4 · 2x2 2x1 2x1 4x1 1x2 3x2",
+      "source": {"query": {"formats": ["pickOne"]}}
+    },
+    {
+      "id": "gallery-hero-m",
+      "block": "hero",
+      "size": "m",
+      "title": {"en": "One card, across the page", "it": "Una carta, a tutta pagina"},
+      "subtitle": "hero · m · by id",
+      "source": {"ids": ["space-moon-dust-3"]}
+    },
+    {
+      "id": "gallery-hero-l",
+      "block": "hero",
+      "size": "l",
+      "subtitle": "hero · l",
+      "source": {"query": {"subjects": ["weird_facts"]}}
+    },
+    {
+      "id": "gallery-hero-xl",
+      "block": "hero",
+      "size": "xl",
+      "subtitle": "hero · xl · a card with a slider",
+      "source": {"query": {"formats": ["slider"]}},
+      "audience": {"rollout": 100, "salt": "gallery-hero"}
+    },
+    {
+      "id": "gallery-banner-s",
+      "block": "banner",
+      "size": "s",
+      "title": {"en": "A strip", "it": "Una striscia"},
+      "subtitle": "banner · s",
+      "source": {"query": {"subjects": ["technology"]}}
+    },
+    {
+      "id": "gallery-banner-m",
+      "block": "banner",
+      "size": "m",
+      "limit": 2,
+      "subtitle": "banner · m · two of them",
+      "source": {"query": {"subjects": ["economics"]}}
+    },
+    {
+      "id": "gallery-banner-l",
+      "block": "banner",
+      "size": "l",
+      "subtitle": "banner · l",
+      "source": {"query": {"subjects": ["medicine"]}}
+    },
+    {
+      "id": "gallery-pair-s",
+      "block": "pair",
+      "size": "s",
+      "title": {"en": "Two side by side", "it": "Due affiancate"},
+      "subtitle": "pair · s",
+      "source": {"query": {"subjects": ["language"]}}
+    },
+    {
+      "id": "gallery-pair-m",
+      "block": "pair",
+      "size": "m",
+      "subtitle": "pair · m",
+      "source": {"query": {"subjects": ["philosophy"]}}
+    },
+    {
+      "id": "gallery-pair-l",
+      "block": "pair",
+      "size": "l",
+      "subtitle": "pair · l",
+      "source": {"query": {"subjects": ["sport"]}}
+    },
+    {
+      "id": "gallery-list-s",
+      "block": "list",
+      "size": "s",
+      "limit": 3,
+      "title": {"en": "A list", "it": "Un elenco"},
+      "subtitle": "list · s · shelf asking",
+      "source": {"shelf": "asking"}
+    },
+    {
+      "id": "gallery-list-m",
+      "block": "list",
+      "size": "m",
+      "limit": 3,
+      "subtitle": "list · m",
+      "source": {"query": {"formats": ["read"]}}
+    },
+    {
+      "id": "gallery-list-l",
+      "block": "list",
+      "size": "l",
+      "limit": 3,
+      "subtitle": "list · l",
+      "source": {"query": {"subjects": ["life"]}}
+    },
+    {
+      "id": "gallery-stack-s",
+      "block": "stack",
+      "size": "s",
+      "title": {"en": "A small deck to swipe", "it": "Un piccolo mazzo da sfogliare"},
+      "subtitle": "stack · s",
+      "source": {"query": {"subjects": ["maths"]}}
+    },
+    {
+      "id": "gallery-stack-m",
+      "block": "stack",
+      "size": "m",
+      "subtitle": "stack · m",
+      "source": {"query": {"subjects": ["human_body"]}}
+    },
+    {
+      "id": "gallery-stack-l",
+      "block": "stack",
+      "size": "l",
+      "subtitle": "stack · l",
+      "source": {"query": {"subjects": ["pop_culture"]}}
+    },
+    {
+      "id": "gallery-ticker-xs",
+      "block": "ticker",
+      "size": "xs",
+      "title": {"en": "A slow procession", "it": "Una lenta processione"},
+      "subtitle": "ticker · xs",
+      "source": {"query": {"seed": "day"}}
+    },
+    {
+      "id": "gallery-ticker-s",
+      "block": "ticker",
+      "size": "s",
+      "subtitle": "ticker · s",
+      "source": {"query": {"formats": ["trueOrFalse"], "seed": "week"}}
+    },
+    {
+      "id": "gallery-ticker-m",
+      "block": "ticker",
+      "size": "m",
+      "subtitle": "ticker · m",
+      "source": {"query": {"subjects": ["nature"]}}
+    },
+    {
+      "id": "gallery-single",
+      "block": "single",
+      "title": {"en": "One card, at the deck's own size", "it": "Una carta, grande come nel mazzo"},
+      "subtitle": "single",
+      "source": {"ids": ["psychology-streaks-1"]}
+    },
+    {
+      "id": "gallery-countdown",
+      "block": "countdown",
+      "to": "2027-08-02",
+      "label": {"en": "to the total eclipse over southern Spain", "it": "all'eclissi totale sul sud della Spagna"},
+      "today": {"en": "The total eclipse over southern Spain is today", "it": "Oggi l'eclissi totale sul sud della Spagna"},
+      "subject": "space",
+      "size": "s",
+      "title": {"en": "Counting down", "it": "Il conto alla rovescia"},
+      "subtitle": "countdown · with its cards",
+      "source": {"ids": ["science-relativity-2", "space-moon-dust-3", "space-myths-about-them-2", "space-landing-sites-1"]}
+    },
+    {
+      "id": "gallery-subjects-s",
+      "block": "subjects",
+      "size": "s",
+      "title": {"en": "Subjects, as chips", "it": "Materie, come etichette"},
+      "subtitle": "subjects · s"
+    },
+    {
+      "id": "gallery-subjects-m",
+      "block": "subjects",
+      "size": "m",
+      "subjects": ["space", "history", "art", "music", "food", "nature"],
+      "subtitle": "subjects · m"
+    },
+    {
+      "id": "gallery-subjects-l",
+      "block": "subjects",
+      "size": "l",
+      "subjects": ["psychology", "philosophy", "maths", "science"],
+      "subtitle": "subjects · l"
+    },
+    {
+      "id": "gallery-promo",
+      "block": "promo",
+      "from": "explore gallery"
+    },
+    {
+      "id": "gallery-italian",
+      "block": "text",
+      "text": "Questa sezione la vede solo chi legge in italiano.",
+      "audience": {"languages": ["it"]}
+    },
+    {"id": "gallery-space", "block": "spacer", "height": 8},
+    {
+      "id": "gallery-divider",
+      "block": "divider",
+      "label": {"en": "and a page of its own", "it": "e una pagina tutta sua"}
+    },
+    {
+      "id": "gallery-web",
+      "block": "web",
+      "height": 180,
+      "title": {"en": "A page made with the card kit", "it": "Una pagina fatta con il kit delle carte"},
+      "subtitle": "web · shown once the web surface is in the build",
+      "html": "<!doctype html><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><body style=\"margin:0;background:#2B5CFF;color:#fff;font:600 22px Fraunces,serif;display:grid;place-items:center;height:100vh\"><p style=\"margin:24px\">A section whose inside is a page.</p></body>"
+    }
+  ]
+}
