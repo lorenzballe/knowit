@@ -155,6 +155,14 @@ const Kit = (() => {
     label.querySelector('.kit-chip')?.remove(); card.querySelector('.kit-note')?.remove();
     if (e.chip && name) { const c = document.createElement('span'); c.className = 'kit-chip'; c.textContent = e.chip; name.after(c); }
     if (e.note) { const n = document.createElement('p'); n.className = 'kit-note'; n.textContent = e.note; label.after(n); }
+    fitLabel();
+  }
+  // The page's own tag gives way when the subject's name and the app's chip leave it no room.
+  function fitLabel() {
+    const label = card && card.querySelector('.label'), tag = label && label.querySelector('.tag');
+    if (!tag) return;
+    tag.style.display = '';
+    if (label.scrollWidth > label.clientWidth + 1) tag.style.display = 'none';
   }
   function apply() {
     const e = env(), root = document.documentElement;
@@ -181,9 +189,9 @@ const Kit = (() => {
       if (env().platform === 'web') forwardPans();
     }
     new MutationObserver(zonesSoon).observe(card, {subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'style', 'data-drag']});
-    addEventListener('resize', () => { onShow[card.id]?.(); zonesSoon(); });
+    addEventListener('resize', () => { fitLabel(); onShow[card.id]?.(); zonesSoon(); });
     const first = () => {
-      onShow[card.id]?.();
+      fitLabel(); onShow[card.id]?.();
       nativeFrame(() => nativeFrame(() => {
         isReady = true; zones();
         if (app) { bridge().ready(); if (!bridge().env.shown) hold(); else enter(); } else enter();

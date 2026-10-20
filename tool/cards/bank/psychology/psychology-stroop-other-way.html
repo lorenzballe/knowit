@@ -21,8 +21,8 @@
 .row{display:grid;grid-template-columns:clamp(86px,29cqw,124px) 1fr 3.1em;align-items:center;gap:8px;font:600 clamp(11px,5cqh,15px)/1.15 var(--body);margin-top:clamp(4px,2.6cqh,10px)}
 .row .v{font-weight:800;text-align:right}
 .tr{height:clamp(7px,4cqh,16px);border-radius:99px;background:#10100c12;overflow:hidden}
-.tr i{display:block;height:100%;width:calc(var(--v) / 110.3 * 100%);border-radius:99px;background:#10100c;transform-origin:0 50%}
-.tr i.clash{background:var(--edge)}
+.fill{display:block;height:100%;width:calc(var(--v) / 110.3 * 100%);border-radius:99px;background:#10100c;transform-origin:0 50%}
+.fill.clash{background:var(--edge)}
 #pick{display:flex;gap:1.8cqw}
 .pb{flex:1;font:800 max(1.8cqh,13.5px)/1.15 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .25cqh var(--k);border-radius:99px;padding:max(1.4cqh,11px) 1cqw;cursor:pointer;white-space:nowrap;transition:transform .14s cubic-bezier(.23,1,.32,1),background-color .16s ease}
 .pb:active{transform:scale(.97)}
@@ -40,13 +40,13 @@
       <div class="bars gone" id="bars" role="img" aria-label="Stroop's timings for 100 items. Naming inks: colour patches 63 seconds, clashing words 110 seconds, 74% longer. Reading words: in black 41 seconds, in clashing inks 43 seconds, 6% longer.">
         <div class="grp">
           <div class="gh"><span>Naming the ink</span><span class="d big" id="d1">+74%</span></div>
-          <div class="row"><span>colour patches</span><span class="tr"><i style="--v:63.3"></i></span><span class="v">63 s</span></div>
-          <div class="row"><span>clashing words</span><span class="tr"><i class="clash" style="--v:110.3"></i></span><span class="v">110 s</span></div>
+          <div class="row"><span>colour patches</span><span class="tr"><span class="fill" style="--v:63.3"></span></span><span class="v">63 s</span></div>
+          <div class="row"><span>clashing words</span><span class="tr"><span class="fill clash" style="--v:110.3"></span></span><span class="v">110 s</span></div>
         </div>
         <div class="grp">
           <div class="gh"><span>Reading the word</span><span class="d" id="d2">+6%</span></div>
-          <div class="row"><span>black ink</span><span class="tr"><i style="--v:41"></i></span><span class="v">41 s</span></div>
-          <div class="row"><span>clashing inks</span><span class="tr"><i class="clash" style="--v:43.3"></i></span><span class="v">43 s</span></div>
+          <div class="row"><span>black ink</span><span class="tr"><span class="fill" style="--v:41"></span></span><span class="v">41 s</span></div>
+          <div class="row"><span>clashing inks</span><span class="tr"><span class="fill clash" style="--v:43.3"></span></span><span class="v">43 s</span></div>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
     grid.classList.add('gone');
     Kit.$('bars').classList.remove('gone');
     if (calm) { explain(); return; }
-    const bars = [...Kit.$('bars').querySelectorAll('.tr i')];
+    const bars = [...Kit.$('bars').querySelectorAll('.fill')];
     gsap.from(bars, {scaleX: 0, duration: .7, stagger: .32, ease: 'power3.out'});
     gsap.from('#d1', {opacity: 0, scale: .6, duration: .45, delay: .75, ease: 'back.out(2.4)'});
     gsap.from('#d2', {opacity: 0, scale: .6, duration: .45, delay: 1.4, ease: 'back.out(2.4)'});

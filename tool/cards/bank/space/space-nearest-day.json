@@ -1,0 +1,40 @@
+{
+  "id": "space-nearest-day",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.distances",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "When in the year does the Earth pass closest to the Sun?",
+  "answer": "In early January, about 147 million km away, against 152 million in early July: 3% nearer, about 7% more sunlight. Yet January is winter in the north and summer in the south. If nearness made summer, both halves of the world would have it at once. The tilt of the Earth's axis makes the seasons.",
+  "move": "Test a cause by what else it would have to explain.",
+  "trap": "In July, because the north's summer feels like it must come from being nearer the Sun.",
+  "keywords": [
+    "perihelion",
+    "aphelion",
+    "seasons",
+    "earth's orbit",
+    "axial tilt"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "The Earth's orbit drawn to scale on a night sky, with the months around it. You drag the Earth to where you think it passes nearest the Sun; then it runs on to early January and the two distances appear.",
+    "ground": "#0b1026"
+  },
+  "source": "NASA Earth fact sheet; U.S. Naval Observatory",
+  "source_kind": "institution",
+  "reference": "NASA Goddard Space Flight Center, Earth Fact Sheet (perihelion 147.10, aphelion 152.10 million km, eccentricity 0.0167); U.S. Naval Observatory, Earth's Seasons and Apsides (perihelion 2 to 5 January, aphelion 3 to 6 July)",
+  "written": "2026-10-19"
+}

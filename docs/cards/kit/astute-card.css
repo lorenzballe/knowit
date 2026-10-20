@@ -81,6 +81,9 @@ canvas.full,svg.full{position:absolute;inset:0;width:100%;height:100%;user-selec
 /* What a native card says under its head, and the chip beside its subject, when the app has one to say. */
 .kit-note{margin:-1cqh 0 0;font:500 12.5px/1.25 var(--body);opacity:.66}
 .kit-chip{font:600 9.5px/1 var(--body);letter-spacing:1px;padding:3px 8px;border-radius:99px;background:color-mix(in srgb,var(--k) 9%,transparent);opacity:.7}
+/* The head stays one line: the subject's name, the app's chip, the page's tag. A tag that finds no room
+   gives way (Kit hides it), never wraps inside its pill. */
+.label .t,.label .tag,.kit-chip{white-space:nowrap;flex:none}
 .kit-app body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 .kit-app[data-platform=web],.kit-app[data-platform=web] body{touch-action:none}
 .kit-calm *{transition:none!important;animation:none!important}
