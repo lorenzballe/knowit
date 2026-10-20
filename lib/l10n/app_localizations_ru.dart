@@ -3500,4 +3500,407 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get gatePauseStill =>
       'Перерыв ещё не закончился. Попробуй снова через несколько минут.';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return 'Сделать: $toDo, прочитать: $toRead';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return 'сделать: $toDo · прочитать: $toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => 'Читать';
+
+  @override
+  String get purposeFilterToDo => 'Делать';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': 'Правда или ложь',
+      'pick': 'Выбери ответ',
+      'typeNumber': 'Введи число',
+      'bet': 'Угадай число',
+      'side': 'Выбери сторону',
+      'youFirst': 'Сначала ты',
+      'moveIt': 'Двигай и смотри',
+      'whatNext': 'Что будет дальше?',
+      'spotTrick': 'Найди подвох',
+      'drawIt': 'Нарисуй',
+      'sortThem': 'Разложи по группам',
+      'putInOrder': 'Расставь по порядку',
+      'holdIt': 'Удерживай',
+      'growSample': 'Увеличь выборку',
+      'askWhy': 'Спроси почему',
+      'sayPlainly': 'Скажи проще',
+      'pairUp': 'Подбери пары',
+      'followClues': 'Иди по подсказкам',
+      'look': 'Просто смотри',
+      'listen': 'Слушай',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return 'Читать · $n мин';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'Ответь здесь, а потом открой карточку и проверь себя. Ответ, который выбираешь сам, запоминается дольше.';
+
+  @override
+  String get purposeCommitTitle => 'Сначала ответь';
+
+  @override
+  String get purposeCommitLine => 'Скажи, что думаешь, потом открой карточку';
+
+  @override
+  String get purposeInYourHeadLine => 'Число, до которого надо дойти в уме';
+
+  @override
+  String get purposeInYourHead => 'В уме';
+
+  @override
+  String get purposeMoveKicker => 'Приём';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'Новое · +$points, когда освоишь';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Базовая частота',
+      'survivorship': 'Ошибка выжившего',
+      'regression': 'Регрессия к среднему',
+      'confirmation': 'Подтверждение',
+      'anchoring': 'Якорение',
+      'sampling': 'Выборка',
+      'confounding': 'Скрытый фактор',
+      'counterfactual': 'По сравнению с чем',
+      'multipleComparisons': 'Много попыток',
+      'availability': 'Доступность',
+      'sunkCost': 'Невозвратные затраты',
+      'conjunction': 'Конъюнкция',
+      'conditional': 'Условная вероятность',
+      'independence': 'Независимость',
+      'coincidence': 'Совпадение',
+      'exponential': 'Экспоненциальный рост',
+      'reflection': 'Быстрый ответ',
+      'simpson': 'Итоги и части',
+      'estimation': 'Оценка',
+      'computation': 'Расчёт',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Точность теста — это не вероятность, что это про тебя',
+      'survivorship': 'Данные, что у тебя есть, — это те, что выжили',
+      'regression': 'Крайности сами возвращаются к среднему',
+      'confirmation': 'Искать «да» — это не проверка',
+      'anchoring': 'Первое названное число сдвигает все следующие',
+      'sampling': 'Кто попал в выборку, решает, о чём она может сказать',
+      'confounding': 'Возможно, и то и другое вызывает что-то третье',
+      'counterfactual': 'Без контрольной группы перемена ничего не значит',
+      'multipleComparisons': 'Проверь достаточно всего — что-то пройдёт',
+      'availability': 'Легко представить — не значит часто',
+      'sunkCost': 'Потраченное потрачено; решать можно только об остатке',
+      'conjunction':
+          'Подробности делают историю убедительнее и менее вероятной',
+      'conditional': 'То, что тебе сказали, меняет шансы',
+      'independence': 'У случая нет памяти',
+      'coincidence': 'Редкое становится частым, когда попыток много',
+      'exponential': 'Удвоение никто не чувствует интуитивно',
+      'reflection': 'Ответ, пришедший первым, и нужно проверить',
+      'simpson':
+          'Целое может склоняться туда, куда не склоняется ни одна часть',
+      'estimation': 'Разбей вопрос без ответа на то, что можно прикинуть',
+      'computation': 'Задача, которую реально довести до конца',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Насколько это вообще было распространено?',
+      'survivorship': 'Что так и не попало в данные?',
+      'regression': 'Может, это просто крайность возвращается?',
+      'confirmation': 'Что опровергло бы мою версию?',
+      'anchoring': 'Какое число прозвучало первым?',
+      'sampling': 'Кого посчитали?',
+      'confounding': 'Что ещё могло вызвать и то и другое?',
+      'counterfactual': 'По сравнению с чем?',
+      'multipleComparisons': 'Сколько всего проверяли?',
+      'availability': 'Это часто бывает или просто легко представить?',
+      'sunkCost': 'Что ещё можно решить отсюда?',
+      'conjunction': 'Каждая подробность делает это менее вероятным?',
+      'conditional': 'Что меняет это знание?',
+      'independence': 'Влияет ли прошлый результат на следующий?',
+      'coincidence': 'Сколько было шансов?',
+      'exponential': 'Что будет, если оно удвоится ещё раз?',
+      'reflection': 'Первый ответ — правильный?',
+      'simpson': 'Все ли части склоняются в одну сторону?',
+      'estimation': 'Что можно прикинуть по дороге?',
+      'computation': 'Можно ли посчитать это шаг за шагом?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => 'Ступенькой выше';
+
+  @override
+  String get purposeStepAboveLine => 'Сложнее, чем ты обычно читаешь';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'Меньше всего прочитано: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return 'Прочитано $percent% раздела «$subject» — меньше всего';
+  }
+
+  @override
+  String get purposeOtherSide => 'Другая сторона';
+
+  @override
+  String get purposeOtherSideLine =>
+      'Сторона выбрана. Вот самый сильный довод против';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'Твой ответ: $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return 'Доводы за «$side»';
+  }
+
+  @override
+  String get purposeMechanism => 'Механизм';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return 'Обновлено $date';
+  }
+
+  @override
+  String get purposeMovingYears => 'Может измениться через несколько лет';
+
+  @override
+  String get purposeMovingMonths => 'Может измениться в этом году';
+
+  @override
+  String get purposeWhy => 'А, вот почему';
+
+  @override
+  String get purposeWhyLine => 'Один механизм — объяснён, пока не щёлкнет';
+
+  @override
+  String purposeWhyBand(int n) {
+    return 'Почему · $n мин';
+  }
+
+  @override
+  String get purposeMe => 'Это про меня';
+
+  @override
+  String get purposeMeLine => 'Что ты делаешь, не замечая';
+
+  @override
+  String get purposeMeFooter => 'Отметь карточки, в которых узнаёшь себя.';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки с отметкой «Это про меня».',
+      many: '$n карточек с отметкой «Это про меня».',
+      few: '$n карточки с отметкой «Это про меня».',
+      one: '$n карточка с отметкой «Это про меня».',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => 'Новое для меня — и обо мне';
+
+  @override
+  String get purposeAboutYouLine => 'Твоё тело, твоё здоровье, твои шансы';
+
+  @override
+  String get purposeHeadline => 'В заголовке';
+
+  @override
+  String get purposeHeadlineLine =>
+      'Исследования и заявления, которые звучат лучше, чем есть';
+
+  @override
+  String get purposeTheClaim => 'Заявление';
+
+  @override
+  String get purposeNumber => 'В цифре';
+
+  @override
+  String get purposeNumberLine =>
+      'Шансы и проценты, на которые стоит взглянуть дважды';
+
+  @override
+  String get purposeOutOfWhat => 'Из скольких?';
+
+  @override
+  String get purposeOffer => 'В предложении';
+
+  @override
+  String get purposeOfferLine => 'Цены, сделки и кто на самом деле платит';
+
+  @override
+  String get purposeArgument => 'В споре';
+
+  @override
+  String get purposeArgumentLine => 'Где рассуждение поскальзывается';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'Один вопрос, который ловит почти всё это',
+      '2': 'Два вопроса, которые ловят почти всё это',
+      '3': 'Три вопроса, которые ловят почти всё это',
+      '4': 'Четыре вопроса, которые ловят почти всё это',
+      '5': 'Пять вопросов, которые ловят почти всё это',
+      'other': 'Вопросы, которые ловят почти всё это ($n)',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Деньги',
+      'work': 'Работа и время',
+      'clock': 'Время',
+      'body': 'Твоё тело',
+      'relationships': 'Отношения',
+      'belief': 'Во что ты веришь',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Плачу ли я за то, чем правда пользуюсь?',
+      'work': 'Что помогло бы легче начать завтра?',
+      'clock': 'Куда на самом деле уходит моё время?',
+      'body': 'Верно ли ещё то, что я знаю о своём теле?',
+      'relationships': 'Что на самом деле нужно моим близким?',
+      'belief': 'Насколько я уверен — и почему?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Деньги',
+      'work': 'Работа',
+      'clock': 'Время',
+      'body': 'Тело',
+      'relationships': 'Отношения',
+      'belief': 'Во что я верю',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => 'О чём тебе нужны вопросы получше?';
+
+  @override
+  String get purposeLifeFooter =>
+      'Выбери любые — и карточки об этом появятся здесь.';
+
+  @override
+  String get purposeSpotTrick => 'Найди подвох';
+
+  @override
+  String get purposeSpotTrickLine => 'Какой вопрос его поймает?';
+
+  @override
+  String get purposePlayed => 'Сегодняшние игры';
+
+  @override
+  String get purposePlayedOff => 'пунктов мимо в среднем';
+
+  @override
+  String get purposePlayedTricks => 'подвохов найдено';
+
+  @override
+  String get purposePlayedAnswered => 'ответов на полках';
+
+  @override
+  String get purposePlayedFooter =>
+      'Ответы на полках идут в «Ваш путь», как и ответы в «Сегодня».';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n из $of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return 'Прочитано $n из $of';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return 'Прочитаны все $n. Когда полка вернётся, добавятся новые.';
+  }
+
+  @override
+  String get purposeComplete => 'Собрано';
+
+  @override
+  String get purposeStampsFooter =>
+      'Каждая прочитанная карточка добавляет свою марку.';
+
+  @override
+  String get purposeSets => 'Твои наборы';
+
+  @override
+  String get purposeSetsLine =>
+      'Чтение считается. Чтобы собрать набор, отвечать не нужно.';
+
+  @override
+  String get purposeTomorrow => 'Завтра на полках';
+
+  @override
+  String get purposeTomorrowLine =>
+      'Полки меняются каждый день. Вот что дальше';
+
+  @override
+  String get purposeEnd => 'Это конец «Обзора»';
+
+  @override
+  String get purposeEndLine => 'До завтра';
 }

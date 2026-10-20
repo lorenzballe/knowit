@@ -3240,4 +3240,394 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get gatePauseStill => '아직 쉬는 중이에요. 몇 분 뒤에 다시 시도해 주세요.';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '할 카드 $toDo장, 읽을 카드 $toRead장';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '할 것 $toDo · 읽을 것 $toRead';
+  }
+
+  @override
+  String get purposeFilterToRead => '읽기';
+
+  @override
+  String get purposeFilterToDo => '하기';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': '참일까 거짓일까',
+      'pick': '하나 고르기',
+      'typeNumber': '숫자 입력',
+      'bet': '숫자에 걸기',
+      'side': '편 고르기',
+      'youFirst': '먼저 답하기',
+      'moveIt': '움직여 보기',
+      'whatNext': '다음엔 무슨 일이?',
+      'spotTrick': '속임수 찾기',
+      'drawIt': '그려 보기',
+      'sortThem': '분류하기',
+      'putInOrder': '순서대로 놓기',
+      'holdIt': '길게 누르기',
+      'growSample': '표본 늘리기',
+      'askWhy': '왜냐고 묻기',
+      'sayPlainly': '쉽게 말하기',
+      'pairUp': '짝 맞추기',
+      'followClues': '단서 따라가기',
+      'look': '그냥 보기',
+      'listen': '듣기',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return '읽기 · $n분';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      '여기서 먼저 답하고, 카드를 열어 맞았는지 확인해 보세요. 스스로 정한 답은 더 오래 기억에 남아요.';
+
+  @override
+  String get purposeCommitTitle => '먼저 답하기';
+
+  @override
+  String get purposeCommitLine => '생각을 정한 다음 카드를 열어 보세요';
+
+  @override
+  String get purposeInYourHeadLine => '머릿속으로 구해 보는 숫자';
+
+  @override
+  String get purposeInYourHead => '머릿속으로';
+
+  @override
+  String get purposeMoveKicker => '한 수';
+
+  @override
+  String purposeMoveNew(int points) {
+    return '처음 · 익히면 +$points';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '기저율',
+      'survivorship': '생존 편향',
+      'regression': '평균 회귀',
+      'confirmation': '확증 편향',
+      'anchoring': '기준점 효과',
+      'sampling': '표본',
+      'confounding': '교란 변수',
+      'counterfactual': '무엇과 비교해서',
+      'multipleComparisons': '여러 번 시도',
+      'availability': '가용성',
+      'sunkCost': '매몰 비용',
+      'conjunction': '결합 오류',
+      'conditional': '조건부 확률',
+      'independence': '독립성',
+      'coincidence': '우연의 일치',
+      'exponential': '기하급수적 증가',
+      'reflection': '빠른 답',
+      'simpson': '합계의 함정',
+      'estimation': '어림하기',
+      'computation': '계산하기',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '검사가 정확하다고 내가 해당될 확률이 높은 건 아니다',
+      'survivorship': '손에 쥔 데이터는 살아남은 데이터다',
+      'regression': '극단은 저절로 평균으로 돌아온다',
+      'confirmation': '\'예\'를 찾는 건 검증이 아니다',
+      'anchoring': '처음 들은 숫자가 그다음 숫자를 모두 움직인다',
+      'sampling': '누가 표본에 들어갔는지가 말할 수 있는 것을 정한다',
+      'confounding': '다른 무언가가 둘 다를 일으키는 것일 수 있다',
+      'counterfactual': '비교할 대상이 없으면 변화는 아무 의미가 없다',
+      'multipleComparisons': '많이 시험하면 하나는 통과한다',
+      'availability': '떠올리기 쉽다고 흔한 건 아니다',
+      'sunkCost': '쓴 건 쓴 것, 정할 수 있는 건 남은 것뿐',
+      'conjunction': '세부가 많을수록 그럴듯하지만 확률은 낮아진다',
+      'conditional': '들은 정보가 확률을 바꾼다',
+      'independence': '우연에는 기억이 없다',
+      'coincidence': '시도가 많으면 드문 일도 흔해진다',
+      'exponential': '두 배씩 느는 것에는 누구도 감이 없다',
+      'reflection': '가장 먼저 떠오른 답이 확인해야 할 답이다',
+      'simpson': '전체는 어느 부분도 기울지 않은 쪽으로 기울 수 있다',
+      'estimation': '답할 수 없는 질문을 어림할 수 있는 조각으로 나눈다',
+      'computation': '끝까지 풀 수 있는 문제',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': '처음부터 얼마나 흔했나?',
+      'survivorship': '데이터에 끝내 들어오지 못한 건?',
+      'regression': '극단이 제자리로 돌아온 것뿐일까?',
+      'confirmation': '무엇이 내가 틀렸다는 걸 보여 줄까?',
+      'anchoring': '어떤 숫자가 먼저 나왔나?',
+      'sampling': '누가 세어졌나?',
+      'confounding': '둘 다를 일으킬 다른 원인은?',
+      'counterfactual': '무엇과 비교해서?',
+      'multipleComparisons': '몇 가지나 시험해 봤나?',
+      'availability': '흔한 걸까, 떠올리기 쉬운 것뿐일까?',
+      'sunkCost': '지금부터 정할 수 있는 건 무엇인가?',
+      'conjunction': '세부가 늘수록 확률은 줄지 않나?',
+      'conditional': '그걸 알면 무엇이 달라지나?',
+      'independence': '지난 결과가 다음을 바꾸나?',
+      'coincidence': '기회는 몇 번이었나?',
+      'exponential': '한 번 더 두 배가 되면?',
+      'reflection': '처음 떠오른 답이 맞을까?',
+      'simpson': '모든 부분이 같은 쪽으로 기울었나?',
+      'estimation': '가는 길에 무엇을 어림할 수 있나?',
+      'computation': '한 단계씩 계산할 수 있나?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => '한 단계 위';
+
+  @override
+  String get purposeStepAboveLine => '평소 읽는 것보다 조금 더 어려운';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return '덜 읽은 분야: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$subject는 $percent%만 읽었어요. 가장 적어요';
+  }
+
+  @override
+  String get purposeOtherSide => '반대편';
+
+  @override
+  String get purposeOtherSideLine => '한쪽을 골랐죠. 그 반대 주장 중 가장 강한 것';
+
+  @override
+  String purposeYouSaid(String side) {
+    return '내 답: $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return '‘$side’ 쪽의 주장';
+  }
+
+  @override
+  String get purposeMechanism => '작동 원리';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return '$date 업데이트';
+  }
+
+  @override
+  String get purposeMovingYears => '몇 년 안에 바뀔 수 있어요';
+
+  @override
+  String get purposeMovingMonths => '올해 안에 바뀔 수 있어요';
+
+  @override
+  String get purposeWhy => '아, 그래서 그렇구나';
+
+  @override
+  String get purposeWhyLine => '하나의 원리를, 이해될 때까지';
+
+  @override
+  String purposeWhyBand(int n) {
+    return '이유 · $n분';
+  }
+
+  @override
+  String get purposeMe => '이건 나야';
+
+  @override
+  String get purposeMeLine => '모르는 새 하고 있는 일';
+
+  @override
+  String get purposeMeFooter => '내 얘기 같은 카드에 표시해 보세요.';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '‘이건 나야’로 표시한 카드 $n장.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => '몰랐는데, 내 얘기네';
+
+  @override
+  String get purposeAboutYouLine => '내 몸, 내 건강, 내 확률';
+
+  @override
+  String get purposeHeadline => '헤드라인 속에';
+
+  @override
+  String get purposeHeadlineLine => '실제보다 그럴듯하게 들리는 연구와 주장';
+
+  @override
+  String get purposeTheClaim => '주장';
+
+  @override
+  String get purposeNumber => '숫자 속에';
+
+  @override
+  String get purposeNumberLine => '다시 봐야 할 확률과 퍼센트';
+
+  @override
+  String get purposeOutOfWhat => '무엇 중에서?';
+
+  @override
+  String get purposeOffer => '할인 속에';
+
+  @override
+  String get purposeOfferLine => '가격, 거래, 그리고 진짜로 내는 사람';
+
+  @override
+  String get purposeArgument => '논쟁 속에';
+
+  @override
+  String get purposeArgumentLine => '추론이 미끄러지는 곳';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': '이런 속임수 대부분을 잡아내는 질문 한 가지',
+      '2': '이런 속임수 대부분을 잡아내는 질문 두 가지',
+      '3': '이런 속임수 대부분을 잡아내는 질문 세 가지',
+      '4': '이런 속임수 대부분을 잡아내는 질문 네 가지',
+      '5': '이런 속임수 대부분을 잡아내는 질문 다섯 가지',
+      'other': '이런 속임수 대부분을 잡아내는 질문 $n가지',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '돈',
+      'work': '일과 시간',
+      'clock': '시간',
+      'body': '내 몸',
+      'relationships': '관계',
+      'belief': '내가 믿는 것',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '정말 쓰는 것에 돈을 내고 있나?',
+      'work': '내일을 쉽게 시작하려면 무엇이 필요할까?',
+      'clock': '내 시간은 실제로 어디로 가나?',
+      'body': '내 몸에 대해 아는 게 아직도 맞을까?',
+      'relationships': '가까운 사람들이 정말 필요로 하는 건?',
+      'belief': '나는 얼마나 확신하고, 왜 그럴까?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': '돈',
+      'work': '일',
+      'clock': '시간',
+      'body': '몸',
+      'relationships': '관계',
+      'belief': '내가 믿는 것',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => '무엇에 대해 더 좋은 질문을 원하나요?';
+
+  @override
+  String get purposeLifeFooter => '원하는 만큼 고르면 그에 관한 카드가 여기 나와요.';
+
+  @override
+  String get purposeSpotTrick => '속임수 찾기';
+
+  @override
+  String get purposeSpotTrickLine => '어떤 질문이면 잡아낼까?';
+
+  @override
+  String get purposePlayed => '오늘 해 본 것';
+
+  @override
+  String get purposePlayedOff => '평균 오차(포인트)';
+
+  @override
+  String get purposePlayedTricks => '찾아낸 속임수';
+
+  @override
+  String get purposePlayedAnswered => '선반에서 답함';
+
+  @override
+  String get purposePlayedFooter => '선반에서 한 답도 ‘오늘’에서처럼 ‘나의 여정’에 기록돼요.';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$of개 중 $n';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$of장 중 $n장 읽음';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return '$n장 모두 읽었어요. 선반이 다시 돌아오면 새 카드가 더해져요.';
+  }
+
+  @override
+  String get purposeComplete => '완성';
+
+  @override
+  String get purposeStampsFooter => '카드를 읽을 때마다 우표가 하나씩 붙어요.';
+
+  @override
+  String get purposeSets => '내 세트';
+
+  @override
+  String get purposeSetsLine => '읽기만 해도 돼요. 답하지 않아도 세트가 채워져요.';
+
+  @override
+  String get purposeTomorrow => '내일의 선반';
+
+  @override
+  String get purposeTomorrowLine => '선반은 매일 바뀌어요. 다음은 이것들';
+
+  @override
+  String get purposeEnd => '탐색의 끝이에요';
+
+  @override
+  String get purposeEndLine => '내일 만나요';
 }

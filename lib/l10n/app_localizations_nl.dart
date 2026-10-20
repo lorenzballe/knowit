@@ -3369,4 +3369,409 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get gatePauseStill =>
       'Nog steeds pauze. Probeer het over een paar minuten nog eens.';
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) {
+    return '$toDo om te doen, $toRead om te lezen';
+  }
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) {
+    return '$toDo om te doen · $toRead om te lezen';
+  }
+
+  @override
+  String get purposeFilterToRead => 'Lezen';
+
+  @override
+  String get purposeFilterToDo => 'Doen';
+
+  @override
+  String purposeVerb(String verb) {
+    String _temp0 = intl.Intl.selectLogic(verb, {
+      'trueFalse': 'Waar of niet waar',
+      'pick': 'Kies er een',
+      'typeNumber': 'Typ een getal',
+      'bet': 'Gok het getal',
+      'side': 'Kies een kant',
+      'youFirst': 'Jij eerst',
+      'moveIt': 'Schuif en kijk',
+      'whatNext': 'Wat gebeurt er dan?',
+      'spotTrick': 'Vind de truc',
+      'drawIt': 'Teken het',
+      'sortThem': 'Sorteer ze',
+      'putInOrder': 'Zet ze op volgorde',
+      'holdIt': 'Houd vast',
+      'growSample': 'Laat de steekproef groeien',
+      'askWhy': 'Vraag waarom',
+      'sayPlainly': 'Zeg het simpel',
+      'pairUp': 'Koppel ze',
+      'followClues': 'Volg de aanwijzingen',
+      'look': 'Kijk gewoon',
+      'listen': 'Luister',
+      'other': '$verb',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeVerbRead(int n) {
+    return 'Lezen · $n min';
+  }
+
+  @override
+  String get purposeCommitNote =>
+      'Antwoord hier en open dan de kaart om te zien of je gelijk had. Een gok waar je je aan vastlegt, blijft langer hangen.';
+
+  @override
+  String get purposeCommitTitle => 'Eerst antwoorden';
+
+  @override
+  String get purposeCommitLine => 'Zeg wat je denkt en open dan de kaart';
+
+  @override
+  String get purposeInYourHeadLine =>
+      'Een getal om uit je hoofd uit te rekenen';
+
+  @override
+  String get purposeInYourHead => 'Uit je hoofd';
+
+  @override
+  String get purposeMoveKicker => 'Een zet';
+
+  @override
+  String purposeMoveNew(int points) {
+    return 'Nieuw · +$points als je hem beheerst';
+  }
+
+  @override
+  String purposeMoveName(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Basisfrequenties',
+      'survivorship': 'Overlevingsbias',
+      'regression': 'Terug naar het gemiddelde',
+      'confirmation': 'Bevestiging',
+      'anchoring': 'Ankeren',
+      'sampling': 'Steekproef',
+      'confounding': 'Verstorende factor',
+      'counterfactual': 'Vergeleken met wat',
+      'multipleComparisons': 'Veel pogingen',
+      'availability': 'Beschikbaarheid',
+      'sunkCost': 'Verzonken kosten',
+      'conjunction': 'Conjunctie',
+      'conditional': 'Voorwaardelijke kans',
+      'independence': 'Onafhankelijkheid',
+      'coincidence': 'Toeval',
+      'exponential': 'Exponentiële groei',
+      'reflection': 'Het snelle antwoord',
+      'simpson': 'Totalen',
+      'estimation': 'Schatten',
+      'computation': 'Uitrekenen',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveLine(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Hoe nauwkeurig een test is, zegt niet hoe waarschijnlijk het bij jou is',
+      'survivorship': 'De data die je hebt, zijn de data die het overleefden',
+      'regression': 'Uitschieters keren vanzelf terug naar het gemiddelde',
+      'confirmation': 'Een ja zoeken is geen test',
+      'anchoring': 'Het eerste getal dat valt, verschuift elk getal daarna',
+      'sampling': 'Wie in de steekproef belandde, bepaalt wat die kan zeggen',
+      'confounding': 'Misschien veroorzaakt iets anders allebei',
+      'counterfactual': 'Een verandering zegt niets zonder controlegroep',
+      'multipleComparisons': 'Test genoeg dingen en er slaagt er een',
+      'availability': 'Makkelijk voor te stellen is niet hetzelfde als vaak',
+      'sunkCost':
+          'Uitgegeven is uitgegeven; alleen over de rest valt te beslissen',
+      'conjunction':
+          'Details maken een verhaal geloofwaardiger en minder waarschijnlijk',
+      'conditional': 'Wat je verteld is, verandert de kansen',
+      'independence': 'Toeval heeft geen geheugen',
+      'coincidence': 'Zeldzaam wordt gewoon als er veel pogingen zijn',
+      'exponential': 'Niemand heeft gevoel voor verdubbelen',
+      'reflection':
+          'Het antwoord dat het eerst komt, is het antwoord om te controleren',
+      'simpson': 'Een geheel kan overhellen waar geen enkel deel overhelt',
+      'estimation':
+          'Hak het onbeantwoordbare op in dingen die je kunt schatten',
+      'computation': 'Een probleem dat je echt kunt afmaken',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeMoveAsk(String move) {
+    String _temp0 = intl.Intl.selectLogic(move, {
+      'baseRate': 'Hoe vaak kwam het eigenlijk voor?',
+      'survivorship': 'Wat haalde de data nooit?',
+      'regression': 'Is het gewoon een uitschieter die terugkeert?',
+      'confirmation': 'Wat zou me ongelijk geven?',
+      'anchoring': 'Welk getal kwam eerst?',
+      'sampling': 'Wie werd er geteld?',
+      'confounding': 'Wat kan allebei veroorzaken?',
+      'counterfactual': 'Vergeleken met wat?',
+      'multipleComparisons': 'Hoeveel dingen zijn er geprobeerd?',
+      'availability':
+          'Komt het vaak voor, of is het alleen makkelijk voor te stellen?',
+      'sunkCost': 'Wat valt er vanaf hier nog te beslissen?',
+      'conjunction': 'Maakt elk detail het minder waarschijnlijk?',
+      'conditional': 'Wat verandert het dat ik dat weet?',
+      'independence': 'Verandert de vorige uitkomst de volgende?',
+      'coincidence': 'Hoeveel kansen waren er?',
+      'exponential': 'Wat gebeurt er als het nog eens verdubbelt?',
+      'reflection': 'Is het eerste antwoord het goede?',
+      'simpson': 'Helt elk deel dezelfde kant op?',
+      'estimation': 'Wat kan ik onderweg schatten?',
+      'computation': 'Kan ik het stap voor stap uitrekenen?',
+      'other': '$move',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeStepAbove => 'Een trede hoger';
+
+  @override
+  String get purposeStepAboveLine => 'Moeilijker dan wat je meestal leest';
+
+  @override
+  String purposeThinTitle(String subject) {
+    return 'Het minst gelezen: $subject';
+  }
+
+  @override
+  String purposeThinLine(int percent, String subject) {
+    return '$percent% van $subject gelezen, je laagste';
+  }
+
+  @override
+  String get purposeOtherSide => 'De andere kant';
+
+  @override
+  String get purposeOtherSideLine =>
+      'Je koos een kant. Dit is het sterkste argument ertegen';
+
+  @override
+  String purposeYouSaid(String side) {
+    return 'Jij zei $side';
+  }
+
+  @override
+  String purposeCaseFor(String side) {
+    return 'Wat er voor ‘$side’ pleit';
+  }
+
+  @override
+  String get purposeMechanism => 'Het mechanisme';
+
+  @override
+  String purposeMovingUpdated(String date) {
+    return 'Bijgewerkt op $date';
+  }
+
+  @override
+  String get purposeMovingYears => 'Kan over een paar jaar veranderen';
+
+  @override
+  String get purposeMovingMonths => 'Kan dit jaar nog veranderen';
+
+  @override
+  String get purposeWhy => 'Ah, dáárom';
+
+  @override
+  String get purposeWhyLine => 'Eén mechanisme, uitgelegd tot het klikt';
+
+  @override
+  String purposeWhyBand(int n) {
+    return 'Het waarom · $n min';
+  }
+
+  @override
+  String get purposeMe => 'Dat ben ik';
+
+  @override
+  String get purposeMeLine => 'Dingen die je doet zonder het te merken';
+
+  @override
+  String get purposeMeFooter => 'Markeer de kaarten waarin je jezelf herkent.';
+
+  @override
+  String purposeMeMarked(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten gemarkeerd met ‘Dat ben ik’.',
+      one: 'Eén kaart gemarkeerd met ‘Dat ben ik’.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeAboutYou => 'Nieuw voor mij, en over mij';
+
+  @override
+  String get purposeAboutYouLine => 'Je lichaam, je gezondheid, je kansen';
+
+  @override
+  String get purposeHeadline => 'In een kop';
+
+  @override
+  String get purposeHeadlineLine =>
+      'Onderzoeken en beweringen die beter klinken dan ze zijn';
+
+  @override
+  String get purposeTheClaim => 'De bewering';
+
+  @override
+  String get purposeNumber => 'In een getal';
+
+  @override
+  String get purposeNumberLine =>
+      'Kansen en percentages die een tweede blik verdienen';
+
+  @override
+  String get purposeOutOfWhat => 'Op hoeveel?';
+
+  @override
+  String get purposeOffer => 'In een aanbieding';
+
+  @override
+  String get purposeOfferLine => 'Prijzen, deals en wie er echt betaalt';
+
+  @override
+  String get purposeArgument => 'In een discussie';
+
+  @override
+  String get purposeArgumentLine => 'Waar de redenering uitglijdt';
+
+  @override
+  String purposeKeepHeading(String n) {
+    String _temp0 = intl.Intl.selectLogic(n, {
+      '1': 'Eén vraag die de meeste hiervan doorziet',
+      '2': 'Twee vragen die de meeste hiervan doorzien',
+      '3': 'Drie vragen die de meeste hiervan doorzien',
+      '4': 'Vier vragen die de meeste hiervan doorzien',
+      '5': 'Vijf vragen die de meeste hiervan doorzien',
+      'other': '$n vragen die de meeste hiervan doorzien',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeAbout(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Geld',
+      'work': 'Werk en tijd',
+      'clock': 'Tijd',
+      'body': 'Je lichaam',
+      'relationships': 'Relaties',
+      'belief': 'Wat je gelooft',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeQuestion(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Betaal ik voor wat ik echt gebruik?',
+      'work': 'Wat zou morgen makkelijker laten beginnen?',
+      'clock': 'Waar gaat mijn tijd echt naartoe?',
+      'body': 'Klopt wat ik over mijn lichaam weet nog?',
+      'relationships': 'Wat hebben de mensen om me heen echt nodig?',
+      'belief': 'Hoe zeker ben ik, en waarom?',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String purposeLifeChip(String topic) {
+    String _temp0 = intl.Intl.selectLogic(topic, {
+      'money': 'Geld',
+      'work': 'Werk',
+      'clock': 'Tijd',
+      'body': 'Lichaam',
+      'relationships': 'Relaties',
+      'belief': 'Wat ik geloof',
+      'other': '$topic',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get purposeLifeAsk => 'Waarover wil je betere vragen?';
+
+  @override
+  String get purposeLifeFooter =>
+      'Kies wat je wilt, en de kaarten erover verschijnen hier.';
+
+  @override
+  String get purposeSpotTrick => 'Vind de truc';
+
+  @override
+  String get purposeSpotTrickLine => 'Welke vraag zou hem doorzien?';
+
+  @override
+  String get purposePlayed => 'Wat je vandaag speelde';
+
+  @override
+  String get purposePlayedOff => 'punten ernaast, gemiddeld';
+
+  @override
+  String get purposePlayedTricks => 'trucs doorzien';
+
+  @override
+  String get purposePlayedAnswered => 'beantwoord op een plank';
+
+  @override
+  String get purposePlayedFooter =>
+      'Antwoorden op een plank tellen mee in ‘Je reis’, net als die van Vandaag.';
+
+  @override
+  String purposeOf(int n, int of) {
+    return '$n van $of';
+  }
+
+  @override
+  String purposeSetRead(int n, int of) {
+    return '$n van $of gelezen';
+  }
+
+  @override
+  String purposeSetDone(int n) {
+    return 'Alle $n gelezen. Als de plank terugkomt, komen er nieuwe bij.';
+  }
+
+  @override
+  String get purposeComplete => 'Compleet';
+
+  @override
+  String get purposeStampsFooter =>
+      'Elke kaart die je leest, voegt zijn zegel toe.';
+
+  @override
+  String get purposeSets => 'Je sets';
+
+  @override
+  String get purposeSetsLine =>
+      'Lezen telt. Je hoeft niet te antwoorden om een set te vullen.';
+
+  @override
+  String get purposeTomorrow => 'Morgen op de planken';
+
+  @override
+  String get purposeTomorrowLine =>
+      'De planken wisselen elke dag. Deze komen hierna';
+
+  @override
+  String get purposeEnd => 'Dit is het einde van Ontdek';
+
+  @override
+  String get purposeEndLine => 'Tot morgen';
 }

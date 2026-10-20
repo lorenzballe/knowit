@@ -3296,4 +3296,314 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get gatePauseStill =>
       _words.text('gatePauseStill') ?? _base.gatePauseStill;
+
+  @override
+  String purposeReadOrDoCount(int toDo, int toRead) =>
+      _words.format('purposeReadOrDoCount', localeName, {
+        'toDo': toDo,
+        'toRead': toRead,
+      }) ??
+      _base.purposeReadOrDoCount(toDo, toRead);
+
+  @override
+  String purposeShelfCount(int toDo, int toRead) =>
+      _words.format('purposeShelfCount', localeName, {
+        'toDo': toDo,
+        'toRead': toRead,
+      }) ??
+      _base.purposeShelfCount(toDo, toRead);
+
+  @override
+  String get purposeFilterToRead =>
+      _words.text('purposeFilterToRead') ?? _base.purposeFilterToRead;
+
+  @override
+  String get purposeFilterToDo =>
+      _words.text('purposeFilterToDo') ?? _base.purposeFilterToDo;
+
+  @override
+  String purposeVerb(String verb) =>
+      _words.format('purposeVerb', localeName, {'verb': verb}) ??
+      _base.purposeVerb(verb);
+
+  @override
+  String purposeVerbRead(int n) =>
+      _words.format('purposeVerbRead', localeName, {'n': n}) ??
+      _base.purposeVerbRead(n);
+
+  @override
+  String get purposeCommitNote =>
+      _words.text('purposeCommitNote') ?? _base.purposeCommitNote;
+
+  @override
+  String get purposeCommitTitle =>
+      _words.text('purposeCommitTitle') ?? _base.purposeCommitTitle;
+
+  @override
+  String get purposeCommitLine =>
+      _words.text('purposeCommitLine') ?? _base.purposeCommitLine;
+
+  @override
+  String get purposeInYourHeadLine =>
+      _words.text('purposeInYourHeadLine') ?? _base.purposeInYourHeadLine;
+
+  @override
+  String get purposeInYourHead =>
+      _words.text('purposeInYourHead') ?? _base.purposeInYourHead;
+
+  @override
+  String get purposeMoveKicker =>
+      _words.text('purposeMoveKicker') ?? _base.purposeMoveKicker;
+
+  @override
+  String purposeMoveNew(int points) =>
+      _words.format('purposeMoveNew', localeName, {'points': points}) ??
+      _base.purposeMoveNew(points);
+
+  @override
+  String purposeMoveName(String move) =>
+      _words.format('purposeMoveName', localeName, {'move': move}) ??
+      _base.purposeMoveName(move);
+
+  @override
+  String purposeMoveLine(String move) =>
+      _words.format('purposeMoveLine', localeName, {'move': move}) ??
+      _base.purposeMoveLine(move);
+
+  @override
+  String purposeMoveAsk(String move) =>
+      _words.format('purposeMoveAsk', localeName, {'move': move}) ??
+      _base.purposeMoveAsk(move);
+
+  @override
+  String get purposeStepAbove =>
+      _words.text('purposeStepAbove') ?? _base.purposeStepAbove;
+
+  @override
+  String get purposeStepAboveLine =>
+      _words.text('purposeStepAboveLine') ?? _base.purposeStepAboveLine;
+
+  @override
+  String purposeThinTitle(String subject) =>
+      _words.format('purposeThinTitle', localeName, {'subject': subject}) ??
+      _base.purposeThinTitle(subject);
+
+  @override
+  String purposeThinLine(int percent, String subject) =>
+      _words.format('purposeThinLine', localeName, {
+        'percent': percent,
+        'subject': subject,
+      }) ??
+      _base.purposeThinLine(percent, subject);
+
+  @override
+  String get purposeOtherSide =>
+      _words.text('purposeOtherSide') ?? _base.purposeOtherSide;
+
+  @override
+  String get purposeOtherSideLine =>
+      _words.text('purposeOtherSideLine') ?? _base.purposeOtherSideLine;
+
+  @override
+  String purposeYouSaid(String side) =>
+      _words.format('purposeYouSaid', localeName, {'side': side}) ??
+      _base.purposeYouSaid(side);
+
+  @override
+  String purposeCaseFor(String side) =>
+      _words.format('purposeCaseFor', localeName, {'side': side}) ??
+      _base.purposeCaseFor(side);
+
+  @override
+  String get purposeMechanism =>
+      _words.text('purposeMechanism') ?? _base.purposeMechanism;
+
+  @override
+  String purposeMovingUpdated(String date) =>
+      _words.format('purposeMovingUpdated', localeName, {'date': date}) ??
+      _base.purposeMovingUpdated(date);
+
+  @override
+  String get purposeMovingYears =>
+      _words.text('purposeMovingYears') ?? _base.purposeMovingYears;
+
+  @override
+  String get purposeMovingMonths =>
+      _words.text('purposeMovingMonths') ?? _base.purposeMovingMonths;
+
+  @override
+  String get purposeWhy => _words.text('purposeWhy') ?? _base.purposeWhy;
+
+  @override
+  String get purposeWhyLine =>
+      _words.text('purposeWhyLine') ?? _base.purposeWhyLine;
+
+  @override
+  String purposeWhyBand(int n) =>
+      _words.format('purposeWhyBand', localeName, {'n': n}) ??
+      _base.purposeWhyBand(n);
+
+  @override
+  String get purposeMe => _words.text('purposeMe') ?? _base.purposeMe;
+
+  @override
+  String get purposeMeLine =>
+      _words.text('purposeMeLine') ?? _base.purposeMeLine;
+
+  @override
+  String get purposeMeFooter =>
+      _words.text('purposeMeFooter') ?? _base.purposeMeFooter;
+
+  @override
+  String purposeMeMarked(int n) =>
+      _words.format('purposeMeMarked', localeName, {'n': n}) ??
+      _base.purposeMeMarked(n);
+
+  @override
+  String get purposeAboutYou =>
+      _words.text('purposeAboutYou') ?? _base.purposeAboutYou;
+
+  @override
+  String get purposeAboutYouLine =>
+      _words.text('purposeAboutYouLine') ?? _base.purposeAboutYouLine;
+
+  @override
+  String get purposeHeadline =>
+      _words.text('purposeHeadline') ?? _base.purposeHeadline;
+
+  @override
+  String get purposeHeadlineLine =>
+      _words.text('purposeHeadlineLine') ?? _base.purposeHeadlineLine;
+
+  @override
+  String get purposeTheClaim =>
+      _words.text('purposeTheClaim') ?? _base.purposeTheClaim;
+
+  @override
+  String get purposeNumber =>
+      _words.text('purposeNumber') ?? _base.purposeNumber;
+
+  @override
+  String get purposeNumberLine =>
+      _words.text('purposeNumberLine') ?? _base.purposeNumberLine;
+
+  @override
+  String get purposeOutOfWhat =>
+      _words.text('purposeOutOfWhat') ?? _base.purposeOutOfWhat;
+
+  @override
+  String get purposeOffer => _words.text('purposeOffer') ?? _base.purposeOffer;
+
+  @override
+  String get purposeOfferLine =>
+      _words.text('purposeOfferLine') ?? _base.purposeOfferLine;
+
+  @override
+  String get purposeArgument =>
+      _words.text('purposeArgument') ?? _base.purposeArgument;
+
+  @override
+  String get purposeArgumentLine =>
+      _words.text('purposeArgumentLine') ?? _base.purposeArgumentLine;
+
+  @override
+  String purposeKeepHeading(String n) =>
+      _words.format('purposeKeepHeading', localeName, {'n': n}) ??
+      _base.purposeKeepHeading(n);
+
+  @override
+  String purposeLifeAbout(String topic) =>
+      _words.format('purposeLifeAbout', localeName, {'topic': topic}) ??
+      _base.purposeLifeAbout(topic);
+
+  @override
+  String purposeLifeQuestion(String topic) =>
+      _words.format('purposeLifeQuestion', localeName, {'topic': topic}) ??
+      _base.purposeLifeQuestion(topic);
+
+  @override
+  String purposeLifeChip(String topic) =>
+      _words.format('purposeLifeChip', localeName, {'topic': topic}) ??
+      _base.purposeLifeChip(topic);
+
+  @override
+  String get purposeLifeAsk =>
+      _words.text('purposeLifeAsk') ?? _base.purposeLifeAsk;
+
+  @override
+  String get purposeLifeFooter =>
+      _words.text('purposeLifeFooter') ?? _base.purposeLifeFooter;
+
+  @override
+  String get purposeSpotTrick =>
+      _words.text('purposeSpotTrick') ?? _base.purposeSpotTrick;
+
+  @override
+  String get purposeSpotTrickLine =>
+      _words.text('purposeSpotTrickLine') ?? _base.purposeSpotTrickLine;
+
+  @override
+  String get purposePlayed =>
+      _words.text('purposePlayed') ?? _base.purposePlayed;
+
+  @override
+  String get purposePlayedOff =>
+      _words.text('purposePlayedOff') ?? _base.purposePlayedOff;
+
+  @override
+  String get purposePlayedTricks =>
+      _words.text('purposePlayedTricks') ?? _base.purposePlayedTricks;
+
+  @override
+  String get purposePlayedAnswered =>
+      _words.text('purposePlayedAnswered') ?? _base.purposePlayedAnswered;
+
+  @override
+  String get purposePlayedFooter =>
+      _words.text('purposePlayedFooter') ?? _base.purposePlayedFooter;
+
+  @override
+  String purposeOf(int n, int of) =>
+      _words.format('purposeOf', localeName, {'n': n, 'of': of}) ??
+      _base.purposeOf(n, of);
+
+  @override
+  String purposeSetRead(int n, int of) =>
+      _words.format('purposeSetRead', localeName, {'n': n, 'of': of}) ??
+      _base.purposeSetRead(n, of);
+
+  @override
+  String purposeSetDone(int n) =>
+      _words.format('purposeSetDone', localeName, {'n': n}) ??
+      _base.purposeSetDone(n);
+
+  @override
+  String get purposeComplete =>
+      _words.text('purposeComplete') ?? _base.purposeComplete;
+
+  @override
+  String get purposeStampsFooter =>
+      _words.text('purposeStampsFooter') ?? _base.purposeStampsFooter;
+
+  @override
+  String get purposeSets => _words.text('purposeSets') ?? _base.purposeSets;
+
+  @override
+  String get purposeSetsLine =>
+      _words.text('purposeSetsLine') ?? _base.purposeSetsLine;
+
+  @override
+  String get purposeTomorrow =>
+      _words.text('purposeTomorrow') ?? _base.purposeTomorrow;
+
+  @override
+  String get purposeTomorrowLine =>
+      _words.text('purposeTomorrowLine') ?? _base.purposeTomorrowLine;
+
+  @override
+  String get purposeEnd => _words.text('purposeEnd') ?? _base.purposeEnd;
+
+  @override
+  String get purposeEndLine =>
+      _words.text('purposeEndLine') ?? _base.purposeEndLine;
 }

@@ -4943,6 +4943,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Still on a break. Try again in a few minutes.'**
   String get gatePauseStill;
+
+  /// Over the read-or-do shelves: how many of their cards ask the reader to do something, and how many are to read.
+  ///
+  /// In en, this message translates to:
+  /// **'{toDo} to do, {toRead} to read'**
+  String purposeReadOrDoCount(int toDo, int toRead);
+
+  /// Beside one read-or-do shelf: how many of its cards are to do and to read.
+  ///
+  /// In en, this message translates to:
+  /// **'{toDo} to do · {toRead} to read'**
+  String purposeShelfCount(int toDo, int toRead);
+
+  /// The read-or-do filter: only the cards to read. Short, it shares a small bar with two others.
+  ///
+  /// In en, this message translates to:
+  /// **'To read'**
+  String get purposeFilterToRead;
+
+  /// The read-or-do filter: only the cards that ask something of the reader. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get purposeFilterToDo;
+
+  /// What a card has the reader do, on a chip at its foot: answer true or false, pick an option, type a number, bet on a number, take a side, answer for yourself first, move a slider, guess what happens next, and the other ways a card can be played. Short: it sits on one line in a chip half a card wide.
+  ///
+  /// In en, this message translates to:
+  /// **'{verb, select, trueFalse{True or false} pick{Pick one} typeNumber{Type a number} bet{Bet the number} side{Pick a side} youFirst{You first} moveIt{Move it and watch} whatNext{What happens next?} spotTrick{Spot the trick} drawIt{Draw it} sortThem{Sort them} putInOrder{Put them in order} holdIt{Hold it} growSample{Grow a sample} askWhy{Ask why} sayPlainly{Say it plainly} pairUp{Pair them up} followClues{Follow the clues} look{Just look} listen{Listen} other{{verb}}}'**
+  String purposeVerb(String verb);
+
+  /// On a card with nothing to answer: read it, and about how long it takes.
+  ///
+  /// In en, this message translates to:
+  /// **'Read · {n} min'**
+  String purposeVerbRead(int n);
+
+  /// Over the shelves where the reader answers before the card opens, beside a lock.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer here, then open the card to see if you were right. A guess you commit to stays with you longer.'**
+  String get purposeCommitNote;
+
+  /// A shelf of cards answered on the shelf, before they open: true or false, a side, an amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer first'**
+  String get purposeCommitTitle;
+
+  /// Under Answer first.
+  ///
+  /// In en, this message translates to:
+  /// **'Say what you think, then open the card'**
+  String get purposeCommitLine;
+
+  /// Under Work it out, on a shelf of numbers worked out before the card opens.
+  ///
+  /// In en, this message translates to:
+  /// **'A number to reach in your head'**
+  String get purposeInYourHeadLine;
+
+  /// In the answer box on a card: work the number out in your head and type it. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'In your head'**
+  String get purposeInYourHead;
+
+  /// Over a thinking move's name, set large in a box: what the box holds. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'A move'**
+  String get purposeMoveKicker;
+
+  /// On a thinking move the reader has not met yet: what it adds to their score once they have it down.
+  ///
+  /// In en, this message translates to:
+  /// **'New · +{points} when you have it down'**
+  String purposeMoveNew(int points);
+
+  /// A thinking move's name: the trap or the skill a card trains, by its key. Short: set large on a box and on a button.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{Base rates} survivorship{Survivorship} regression{Regression to the mean} confirmation{Confirmation} anchoring{Anchoring} sampling{Sampling} confounding{Confounding} counterfactual{Compared to what} multipleComparisons{Multiple looks} availability{Availability} sunkCost{Sunk cost} conjunction{Conjunction} conditional{Conditional odds} independence{Independence} coincidence{Coincidence} exponential{Exponential growth} reflection{The quick answer} simpson{Aggregates} estimation{Estimation} computation{Working it out} other{{move}}}'**
+  String purposeMoveName(String move);
+
+  /// A thinking move in one line, under its name.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{How accurate a test is, is not how likely you are} survivorship{The data you have is the data that survived} regression{Extremes drift back on their own} confirmation{Looking for a yes is not a test} anchoring{The first number said moves every number after} sampling{Who ended up in the sample decides what it can say} confounding{Something else may be causing both} counterfactual{A change means nothing without a control} multipleComparisons{Test enough things and one will pass} availability{Easy to picture is not the same as common} sunkCost{Spent is spent; only what is left can be decided} conjunction{Detail makes a story likelier and less probable} conditional{What you were told changes the odds} independence{Chance has no memory} coincidence{Rare things are common when there are many tries} exponential{Nobody has intuition for doubling} reflection{The answer that arrives first is the one to check} simpson{A whole can lean the way no part of it does} estimation{Break the unanswerable into things you can guess} computation{A problem you can actually finish} other{{move}}}'**
+  String purposeMoveLine(String move);
+
+  /// The question each thinking move asks: what to ask of a claim to catch the trap. One short question.
+  ///
+  /// In en, this message translates to:
+  /// **'{move, select, baseRate{How common was it to begin with?} survivorship{What never made it into the data?} regression{Is it just an extreme drifting back?} confirmation{What would prove me wrong?} anchoring{Which number came first?} sampling{Who got counted?} confounding{What else could cause both?} counterfactual{Compared to what?} multipleComparisons{How many things were tried?} availability{Is it common, or just easy to picture?} sunkCost{What is left to decide from here?} conjunction{Does each detail make it less likely?} conditional{What does knowing that change?} independence{Does the last result change the next?} coincidence{How many chances were there?} exponential{What happens when it doubles again?} reflection{Is the first answer the right one?} simpson{Does every part lean the same way?} estimation{What can I guess on the way there?} computation{Can I work it out step by step?} other{{move}}}'**
+  String purposeMoveAsk(String move);
+
+  /// A shelf of cards a step harder than the reader's level in their subject.
+  ///
+  /// In en, this message translates to:
+  /// **'A step above'**
+  String get purposeStepAbove;
+
+  /// Under A step above.
+  ///
+  /// In en, this message translates to:
+  /// **'Harder than what you usually read'**
+  String get purposeStepAboveLine;
+
+  /// A shelf of the subject the reader has read least of. {subject} is the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Thin for you: {subject}'**
+  String purposeThinTitle(String subject);
+
+  /// Under the thinnest subject's name: how much of its cards the reader has read, in per cent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of the {subject} shelf read, your least'**
+  String purposeThinLine(int percent, String subject);
+
+  /// A shelf of the debates the reader took a side on, each opening on the case against it.
+  ///
+  /// In en, this message translates to:
+  /// **'The other side'**
+  String get purposeOtherSide;
+
+  /// Under The other side.
+  ///
+  /// In en, this message translates to:
+  /// **'You took a side. Here is the best case against it'**
+  String get purposeOtherSideLine;
+
+  /// On a debate the reader answered: the side they took, in a small badge. {side} is the side's word, from the card (Yes, No).
+  ///
+  /// In en, this message translates to:
+  /// **'You said {side}'**
+  String purposeYouSaid(String side);
+
+  /// On a debate the reader answered: the button that opens the card on the other side's case. {side} is that side's word, from the card.
+  ///
+  /// In en, this message translates to:
+  /// **'The case for “{side}”'**
+  String purposeCaseFor(String side);
+
+  /// At the foot of a card on How it really works: what the card explains. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The mechanism'**
+  String get purposeMechanism;
+
+  /// Across the top of a card about something still changing: when it was last brought up to date. {date} is a short date, 4 Oct.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {date}'**
+  String purposeMovingUpdated(String date);
+
+  /// Across the top of a card whose answer could go stale within a few years.
+  ///
+  /// In en, this message translates to:
+  /// **'Could change in a few years'**
+  String get purposeMovingYears;
+
+  /// Across the top of a card whose answer could go stale within the year.
+  ///
+  /// In en, this message translates to:
+  /// **'Could change this year'**
+  String get purposeMovingMonths;
+
+  /// A shelf of cards that each explain one mechanism: the feeling of finally understanding why.
+  ///
+  /// In en, this message translates to:
+  /// **'Ah, so that\'s why'**
+  String get purposeWhy;
+
+  /// Under Ah, so that's why.
+  ///
+  /// In en, this message translates to:
+  /// **'One mechanism, explained until it clicks'**
+  String get purposeWhyLine;
+
+  /// At the foot of a card on Ah, so that's why: the why it explains, and how long it takes. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The why · {n} min'**
+  String purposeWhyBand(int n);
+
+  /// A shelf of cards about habits the reader may recognise in themselves, and the button on each to say so.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s me'**
+  String get purposeMe;
+
+  /// Under That's me.
+  ///
+  /// In en, this message translates to:
+  /// **'Things you do without noticing'**
+  String get purposeMeLine;
+
+  /// Beside the count of cards the reader marked That's me.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark the cards that sound like you.'**
+  String get purposeMeFooter;
+
+  /// Beside the count, once the reader has marked cards That's me today.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One card marked “That\'s me”.} other{{n} cards marked “That\'s me”.}}'**
+  String purposeMeMarked(int n);
+
+  /// A shelf of discoveries about the reader's own body and health.
+  ///
+  /// In en, this message translates to:
+  /// **'News to me, and about me'**
+  String get purposeAboutYou;
+
+  /// Under News to me, and about me.
+  ///
+  /// In en, this message translates to:
+  /// **'Your body, your health, your odds'**
+  String get purposeAboutYouLine;
+
+  /// A shelf of claims and studies set like newspaper headlines.
+  ///
+  /// In en, this message translates to:
+  /// **'In a headline'**
+  String get purposeHeadline;
+
+  /// Under In a headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Studies and claims that sound better than they are'**
+  String get purposeHeadlineLine;
+
+  /// Over a headline on a card: what it is. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The claim'**
+  String get purposeTheClaim;
+
+  /// A shelf of figures that need a second look: odds, percentages.
+  ///
+  /// In en, this message translates to:
+  /// **'In a number'**
+  String get purposeNumber;
+
+  /// Under In a number.
+  ///
+  /// In en, this message translates to:
+  /// **'Odds and percentages that need a second look'**
+  String get purposeNumberLine;
+
+  /// Under a figure set large on a card: the question to ask of it. Small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of what?'**
+  String get purposeOutOfWhat;
+
+  /// A shelf of cards drawn as price tags: prices, deals and who pays.
+  ///
+  /// In en, this message translates to:
+  /// **'In an offer'**
+  String get purposeOffer;
+
+  /// Under In an offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices, deals and who really pays'**
+  String get purposeOfferLine;
+
+  /// A shelf of cards drawn as speech bubbles: arguments and where they go wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'In an argument'**
+  String get purposeArgument;
+
+  /// Under In an argument.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the reasoning slips'**
+  String get purposeArgumentLine;
+
+  /// Over a short list of questions, each one a thinking move, that catch most of the tricks on the shelves above. {n} is how many, 1 to 5.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, select, 1{One question that catches most of these} 2{Two questions that catch most of these} 3{Three questions that catch most of these} 4{Four questions that catch most of these} 5{Five questions that catch most of these} other{{n} questions that catch most of these}}'**
+  String purposeKeepHeading(String n);
+
+  /// What a question for the reader's own life is about, in small capitals over it: money, work and time, time, the body, relationships, beliefs.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, money{Money} work{Work and time} clock{Time} body{Your body} relationships{Relationships} belief{What you believe} other{{topic}}}'**
+  String purposeLifeAbout(String topic);
+
+  /// A question for the reader to ask of their own life, set large over the cards that ask it, by what it is about.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, money{Am I paying for what I actually use?} work{What would make tomorrow easier to start?} clock{Where does my time actually go?} body{Is what I know about my body still true?} relationships{What do the people close to me actually need?} belief{How sure am I, and why?} other{{topic}}}'**
+  String purposeLifeQuestion(String topic);
+
+  /// A chip the reader picks to say what they want better questions about. Short.
+  ///
+  /// In en, this message translates to:
+  /// **'{topic, select, money{Money} work{Work} clock{Time} body{Body} relationships{Relationships} belief{What I believe} other{{topic}}}'**
+  String purposeLifeChip(String topic);
+
+  /// Over the chips that pick what the reader wants better questions about.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want better questions about?'**
+  String get purposeLifeAsk;
+
+  /// Under those chips: picking one shows its cards just below.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick any, and the cards that ask about it come up here.'**
+  String get purposeLifeFooter;
+
+  /// A shelf of cards where the reader picks the thinking move that would catch the trick in each.
+  ///
+  /// In en, this message translates to:
+  /// **'Spot the trick'**
+  String get purposeSpotTrick;
+
+  /// Under Spot the trick.
+  ///
+  /// In en, this message translates to:
+  /// **'Which question would catch it?'**
+  String get purposeSpotTrickLine;
+
+  /// Over what the reader played on Explore's shelves today.
+  ///
+  /// In en, this message translates to:
+  /// **'What you played today'**
+  String get purposePlayed;
+
+  /// Under a number: how far off the reader's guesses on a slider were, on average, in points.
+  ///
+  /// In en, this message translates to:
+  /// **'points off, on average'**
+  String get purposePlayedOff;
+
+  /// Under a count like 2 of 3: the tricks the reader spotted on the shelf.
+  ///
+  /// In en, this message translates to:
+  /// **'tricks spotted'**
+  String get purposePlayedTricks;
+
+  /// Under a number: cards the reader answered on a shelf rather than on the card.
+  ///
+  /// In en, this message translates to:
+  /// **'answered on a shelf'**
+  String get purposePlayedAnswered;
+
+  /// Under what was played: answers given on a shelf count in the reader's journey. Your journey and Today are the names of two screens.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers given on a shelf count in Your journey, like the ones from Today.'**
+  String get purposePlayedFooter;
+
+  /// A count out of a total, short: 2 of 3, 7 of 12.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of}'**
+  String purposeOf(int n, int of);
+
+  /// Beside a set of cards to finish: how many of them the reader has read.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} read'**
+  String purposeSetRead(int n, int of);
+
+  /// A set the reader has read every card of. {n} is how many cards.
+  ///
+  /// In en, this message translates to:
+  /// **'All {n} read. New ones join the set when the shelf comes round again.'**
+  String purposeSetDone(int n);
+
+  /// A set the reader has finished, on its ring.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get purposeComplete;
+
+  /// Under a set drawn as stamps, one for each card.
+  ///
+  /// In en, this message translates to:
+  /// **'Each card you read adds its stamp.'**
+  String get purposeStampsFooter;
+
+  /// A grid of every set of cards and how far along the reader is with each.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sets'**
+  String get purposeSets;
+
+  /// Under Your sets.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading counts. You don\'t have to answer to fill a set.'**
+  String get purposeSetsLine;
+
+  /// Near the bottom of Explore: the shelves that come tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow on the shelves'**
+  String get purposeTomorrow;
+
+  /// Under Tomorrow on the shelves.
+  ///
+  /// In en, this message translates to:
+  /// **'The shelves change every day. These come next'**
+  String get purposeTomorrowLine;
+
+  /// The last line of Explore, at the very bottom. Explore is the name of the tab.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s the bottom of Explore'**
+  String get purposeEnd;
+
+  /// Under the last line of Explore.
+  ///
+  /// In en, this message translates to:
+  /// **'See you tomorrow'**
+  String get purposeEndLine;
 }
 
 class _AppLocalizationsDelegate
