@@ -1,0 +1,49 @@
+{
+  "sections": [
+    {
+      "id": "time",
+      "block": "through-time",
+      "subtitle": {
+        "en": "From the first light to this year. Drag to travel",
+        "it": "Dalla prima luce a quest'anno. Trascina per viaggiare"
+      },
+      "stop": "asteroid",
+      "stops": [
+        {
+          "id": "first-light",
+          "ago": 13800000000,
+          "label": {"en": "The first light", "it": "La prima luce"},
+          "when": {"en": "13.8 billion years ago", "it": "13,8 miliardi di anni fa"},
+          "source": {"ids": ["space-cosmic-background-5", "space-big-bang-2"]}
+        },
+        {
+          "id": "oxygen",
+          "ago": 2400000000,
+          "label": {"en": "Air to breathe", "it": "Aria da respirare"},
+          "when": {"en": "2.4 billion years ago", "it": "2,4 miliardi di anni fa"},
+          "source": {"ids": ["space-deep-time-1"]}
+        },
+        {
+          "id": "asteroid",
+          "ago": 66000000,
+          "label": {"en": "The asteroid", "it": "L'asteroide"},
+          "when": {"en": "66 million years ago", "it": "66 milioni di anni fa"},
+          "source": {"ids": ["nature-dinosaurs-2", "nature-dinosaurs-1"]}
+        },
+        {
+          "id": "our-species",
+          "ago": 300000,
+          "label": {"en": "Our species", "it": "La nostra specie"},
+          "when": {"en": "300,000 years ago", "it": "300.000 anni fa"},
+          "source": {"ids": ["human_body-blood-types-2", "space-deep-time-2"]}
+        },
+        {"id": "ancient", "era": "ancient", "ago": 2000},
+        {"id": "medieval", "era": "medieval", "ago": 1000},
+        {"id": "early-modern", "era": "early_modern", "ago": 375},
+        {"id": "nineteenth", "era": "nineteenth", "ago": 175},
+        {"id": "twentieth", "era": "twentieth", "ago": 75},
+        {"id": "recent", "era": "recent", "ago": 14}
+      ]
+    }
+  ]
+}

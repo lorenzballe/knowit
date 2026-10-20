@@ -4238,5 +4238,465 @@
     "type": "int"
    }
   }
+ },
+ "screensQuoted": "“{text}”",
+ "@screensQuoted": {
+  "description": "Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.",
+  "placeholders": {
+   "text": {
+    "type": "String"
+   }
+  }
+ },
+ "screensExpertTitle": "Think like an expert",
+ "@screensExpertTitle": {
+  "description": "Explore: the title of the shelf where the reader picks an expert and sees the question that expert always asks."
+ },
+ "screensExpertLine": "The question each of them always asks, and the cards that need it",
+ "@screensExpertLine": {
+  "description": "Explore: the line under 'Think like an expert'."
+ },
+ "screensExpertStatistician": "Statistician",
+ "@screensExpertStatistician": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip. Keep it to one or two words."
+ },
+ "screensExpertStatisticianAs": "Think like a statistician",
+ "@screensExpertStatisticianAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the statistician's question."
+ },
+ "screensExpertStatisticianAsks": "Compared to what, and out of how many?",
+ "@screensExpertStatisticianAsks": {
+  "description": "Explore, 'Think like an expert': the question a statistician always asks of a figure. Shown large, in quotation marks."
+ },
+ "screensExpertEconomist": "Economist",
+ "@screensExpertEconomist": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip."
+ },
+ "screensExpertEconomistAs": "Think like an economist",
+ "@screensExpertEconomistAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the economist's question."
+ },
+ "screensExpertEconomistAsks": "Who pays, and what do they give up?",
+ "@screensExpertEconomistAsks": {
+  "description": "Explore, 'Think like an expert': the question an economist always asks."
+ },
+ "screensExpertHistorian": "Historian",
+ "@screensExpertHistorian": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip."
+ },
+ "screensExpertHistorianAs": "Think like a historian",
+ "@screensExpertHistorianAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the historian's question."
+ },
+ "screensExpertHistorianAsks": "What did people know at the time?",
+ "@screensExpertHistorianAsks": {
+  "description": "Explore, 'Think like an expert': the question a historian always asks."
+ },
+ "screensExpertDoctor": "Doctor",
+ "@screensExpertDoctor": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip: a physician."
+ },
+ "screensExpertDoctorAs": "Think like a doctor",
+ "@screensExpertDoctorAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the doctor's question."
+ },
+ "screensExpertDoctorAsks": "How common is it, and what else could it be?",
+ "@screensExpertDoctorAsks": {
+  "description": "Explore, 'Think like an expert': the question a doctor always asks of a symptom."
+ },
+ "screensExpertScientist": "Scientist",
+ "@screensExpertScientist": {
+  "description": "Explore, 'Think like an expert': an expert's name on its chip."
+ },
+ "screensExpertScientistAs": "Think like a scientist",
+ "@screensExpertScientistAs": {
+  "description": "Explore, 'Think like an expert': the small capitals over the scientist's question."
+ },
+ "screensExpertScientistAsks": "How would we know if it were wrong?",
+ "@screensExpertScientistAsks": {
+  "description": "Explore, 'Think like an expert': the question a scientist always asks of a claim."
+ },
+ "screensDotsTitle": "Connect the dots",
+ "@screensDotsTitle": {
+  "description": "Explore: the title of the shelf where every card sits where two subjects meet."
+ },
+ "screensDotsLine": "Pick a subject to see where it meets the others",
+ "@screensDotsLine": {
+  "description": "Explore: the line under 'Connect the dots'."
+ },
+ "screensDotsMeets": "{subjects, plural, =1{Meets 1 subject} other{Meets {subjects} subjects}} {cards, plural, =1{in 1 card} other{in {cards} cards}}",
+ "@screensDotsMeets": {
+  "description": "Explore, 'Connect the dots': under the subject's name, how many other subjects it meets and in how many cards.",
+  "placeholders": {
+   "subjects": {
+    "type": "int"
+   },
+   "cards": {
+    "type": "int"
+   }
+  }
+ },
+ "screensDotsWhere": "Where they meet",
+ "@screensDotsWhere": {
+  "description": "Explore, 'Connect the dots': the title over the cards that sit between two subjects."
+ },
+ "screensDotsWhereLine": "One question, two ways of looking at it",
+ "@screensDotsWhereLine": {
+  "description": "Explore, 'Connect the dots': the line under 'Where they meet'."
+ },
+ "screensAskTitle": "What do you want to understand?",
+ "@screensAskTitle": {
+  "description": "Explore, 'Ask first': the large question over the field where the reader types a question."
+ },
+ "screensAskHint": "Ask anything, or type a word",
+ "@screensAskHint": {
+  "description": "Explore, 'Ask first': the hint inside the empty question field."
+ },
+ "screensAskTry": "Try",
+ "@screensAskTry": {
+  "description": "Explore, 'Ask first': small capitals before a few words the reader can tap to search for."
+ },
+ "screensAskClear": "Clear the question",
+ "@screensAskClear": {
+  "description": "Explore, 'Ask first': what a screen reader says for the button that empties the question field."
+ },
+ "screensAskFound": "{n, plural, =1{1 card answers it} other{{n} cards answer it}}",
+ "@screensAskFound": {
+  "description": "Explore, 'Ask first': over the cards that answer what the reader typed.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensAskNone": "No card on that yet",
+ "@screensAskNone": {
+  "description": "Explore, 'Ask first': when no card answers what the reader typed."
+ },
+ "screensAskNoneLine": "Keep the question. When a card answers it, it will be here, under the question.",
+ "@screensAskNoneLine": {
+  "description": "Explore, 'Ask first': under 'No card on that yet'. The question is kept on the phone and shown again with the first card that answers it."
+ },
+ "screensAskKeep": "Keep the question",
+ "@screensAskKeep": {
+  "description": "Explore, 'Ask first': the button that keeps a question no card answers yet."
+ },
+ "screensAskKept": "Kept",
+ "@screensAskKept": {
+  "description": "Explore, 'Ask first': the same button once the question is kept."
+ },
+ "screensAskedTitle": "Questions you asked",
+ "@screensAskedTitle": {
+  "description": "Explore: the title of the shelf that shows the questions the reader typed."
+ },
+ "screensAskedLine": "And the cards that answered them",
+ "@screensAskedLine": {
+  "description": "Explore: the line under 'Questions you asked'."
+ },
+ "screensAskedAnswered": "Answered",
+ "@screensAskedAnswered": {
+  "description": "Explore, 'Questions you asked': after the subject's name, in small capitals, on the card that answered a question."
+ },
+ "screensAskedWaiting": "No card answers it yet. When one does, it will be here.",
+ "@screensAskedWaiting": {
+  "description": "Explore, 'Questions you asked': under a kept question that no card answers yet."
+ },
+ "screensAskedForget": "Forget this question",
+ "@screensAskedForget": {
+  "description": "Explore, 'Questions you asked': the action, held down or from a screen reader, that removes a question the reader typed."
+ },
+ "screensAskedForgotten": "Question forgotten",
+ "@screensAskedForgotten": {
+  "description": "Explore, 'Questions you asked': the note shown once a question is removed, beside Undo."
+ },
+ "screensWhyTitle": "Keep asking why",
+ "@screensWhyTitle": {
+  "description": "Explore: the title of the shelf where every answer opens the next question."
+ },
+ "screensWhyLine": "Every answer raises the next question",
+ "@screensWhyLine": {
+  "description": "Explore: the line under 'Keep asking why'."
+ },
+ "screensWhyAsk": "Why?",
+ "@screensWhyAsk": {
+  "description": "Explore, 'Keep asking why': the button that opens the next question, and the small label between two answers."
+ },
+ "screensWhyBottom": "{n, plural, =1{1 why deep.} other{{n} whys deep.}} That's the bottom of this one.",
+ "@screensWhyBottom": {
+  "description": "Explore, 'Keep asking why': when the last answer of a chain is open.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensWhyAgain": "Start again",
+ "@screensWhyAgain": {
+  "description": "Explore, 'Keep asking why': the button that closes the chain back to its first question."
+ },
+ "screensWhyHoles": "More rabbit holes",
+ "@screensWhyHoles": {
+  "description": "Explore, 'Keep asking why': the title over the other chains of questions to start."
+ },
+ "screensWhyHolesLine": "Each one goes a few whys deep",
+ "@screensWhyHolesLine": {
+  "description": "Explore, 'Keep asking why': the line under 'More rabbit holes'."
+ },
+ "screensWhyCount": "{n, plural, =1{1 why} other{{n} whys}}",
+ "@screensWhyCount": {
+  "description": "Explore, 'Keep asking why': how many questions deep a chain goes, beside its first question.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensWhyDeeper": "Go deeper",
+ "@screensWhyDeeper": {
+  "description": "Explore, 'Keep asking why': small capitals over the cards that go further than the chain."
+ },
+ "screensWhySource": "Source: {source}",
+ "@screensWhySource": {
+  "description": "Explore, 'Keep asking why': where the answers of a chain come from, under its last answer.",
+  "placeholders": {
+   "source": {
+    "type": "String"
+   }
+  }
+ },
+ "screensWhyDepth": "{at, plural, =1{1 why} other{{at} whys}} of {of}",
+ "@screensWhyDepth": {
+  "description": "Explore, 'Keep asking why': what a screen reader says for the little meter of how deep the chain is open.",
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "screensTimeTitle": "Through time",
+ "@screensTimeTitle": {
+  "description": "Explore: the title of the shelf with a ruler of years to travel along."
+ },
+ "screensTimeLine": "One age at a time, to this year. Drag to travel",
+ "@screensTimeLine": {
+  "description": "Explore: the line under 'Through time'."
+ },
+ "screensTimeCaption": "Years ago. Each tick is ten times further back.",
+ "@screensTimeCaption": {
+  "description": "Explore, 'Through time': the caption under the ruler, which is drawn in powers of ten."
+ },
+ "screensTimeNow": "Now",
+ "@screensTimeNow": {
+  "description": "Explore, 'Through time': the label at the right end of the ruler of years."
+ },
+ "screensTimeEarlier": "Further back",
+ "@screensTimeEarlier": {
+  "description": "Explore, 'Through time': what a screen reader says for the button that goes to the age before."
+ },
+ "screensTimeLater": "Closer to now",
+ "@screensTimeLater": {
+  "description": "Explore, 'Through time': what a screen reader says for the button that goes to the age after."
+ },
+ "screensEraAncient": "The ancient world",
+ "@screensEraAncient": {
+  "description": "Explore, 'Through time': an age on the ruler, in small capitals."
+ },
+ "screensEraAncientWhen": "Before 500",
+ "@screensEraAncientWhen": {
+  "description": "Explore, 'Through time': when the ancient world was, shown large: the years before AD 500."
+ },
+ "screensEraMedieval": "The Middle Ages",
+ "@screensEraMedieval": {
+  "description": "Explore, 'Through time': an age on the ruler."
+ },
+ "screensEraMedievalWhen": "500 to 1500",
+ "@screensEraMedievalWhen": {
+  "description": "Explore, 'Through time': when the Middle Ages were, shown large."
+ },
+ "screensEraEarlyModern": "The early modern age",
+ "@screensEraEarlyModern": {
+  "description": "Explore, 'Through time': an age on the ruler: about 1500 to 1800."
+ },
+ "screensEraEarlyModernWhen": "1500 to 1800",
+ "@screensEraEarlyModernWhen": {
+  "description": "Explore, 'Through time': when the early modern age was, shown large."
+ },
+ "screensEraNineteenth": "The nineteenth century",
+ "@screensEraNineteenth": {
+  "description": "Explore, 'Through time': an age on the ruler."
+ },
+ "screensEraNineteenthWhen": "1800 to 1900",
+ "@screensEraNineteenthWhen": {
+  "description": "Explore, 'Through time': when the nineteenth century was, shown large."
+ },
+ "screensEraTwentieth": "The last century",
+ "@screensEraTwentieth": {
+  "description": "Explore, 'Through time': an age on the ruler: the twentieth century."
+ },
+ "screensEraTwentiethWhen": "1900 to 2000",
+ "@screensEraTwentiethWhen": {
+  "description": "Explore, 'Through time': when the last century was, shown large."
+ },
+ "screensEraRecent": "This century",
+ "@screensEraRecent": {
+  "description": "Explore, 'Through time': an age on the ruler: from 2000 to today."
+ },
+ "screensEraRecentWhen": "Since 2000",
+ "@screensEraRecentWhen": {
+  "description": "Explore, 'Through time': when this century began, shown large."
+ },
+ "screensMindTitle": "Change your mind",
+ "@screensMindTitle": {
+  "description": "Explore: the title of the shelf where the reader says where they stand on a claim before reading, and again after."
+ },
+ "screensMindLine": "Say where you stand before you read, then again after",
+ "@screensMindLine": {
+  "description": "Explore: the line under 'Change your mind'."
+ },
+ "screensMindClaim": "Claim",
+ "@screensMindClaim": {
+  "description": "Explore, 'Change your mind': after the subject's name, in small capitals: the sentence on the card is a claim to agree or disagree with."
+ },
+ "screensMindBefore": "Before you read",
+ "@screensMindBefore": {
+  "description": "Explore, 'Change your mind': small capitals over the first scale, from disagree to agree."
+ },
+ "screensMindTap": "Tap where you stand",
+ "@screensMindTap": {
+  "description": "Explore, 'Change your mind': beside the scale before the reader has tapped it."
+ },
+ "screensMindKnow": "What we know",
+ "@screensMindKnow": {
+  "description": "Explore, 'Change your mind': small capitals over the evidence, shown once the reader has said where they stand."
+ },
+ "screensMindNow": "And now?",
+ "@screensMindNow": {
+  "description": "Explore, 'Change your mind': small capitals over the second scale, after the evidence."
+ },
+ "screensMindAgain": "Tap again",
+ "@screensMindAgain": {
+  "description": "Explore, 'Change your mind': beside the second scale before it is tapped."
+ },
+ "screensMindLevel": "{level, select, 0{Strongly disagree} 1{Disagree} 2{Not sure} 3{Agree} other{Strongly agree}}",
+ "@screensMindLevel": {
+  "description": "Explore, 'Change your mind': the five places on the scale, from 0 (strongly disagree) to 4 (strongly agree). 1 and 3 also label the two ends of the scale.",
+  "placeholders": {
+   "level": {
+    "type": "String"
+   }
+  }
+ },
+ "screensMindToward": "{n, plural, =1{You moved 1 step toward the evidence.} other{You moved {n} steps toward the evidence.}}",
+ "@screensMindToward": {
+  "description": "Explore, 'Change your mind': when the second answer is nearer to what the evidence says than the first.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensMindSame": "Same as before. One card is only one card.",
+ "@screensMindSame": {
+  "description": "Explore, 'Change your mind': when the second answer is the same as the first and the first was not where the evidence is."
+ },
+ "screensMindAlready": "You were with the evidence before you read it.",
+ "@screensMindAlready": {
+  "description": "Explore, 'Change your mind': when both answers are where the evidence is."
+ },
+ "screensMindAway": "You moved away from the evidence. Worth a second read.",
+ "@screensMindAway": {
+  "description": "Explore, 'Change your mind': when the second answer is further from what the evidence says than the first."
+ },
+ "screensMindFirst": "Say where you stand first. One tap, before you read.",
+ "@screensMindFirst": {
+  "description": "Explore, 'Change your mind': the panel under the claims before any second answer is given."
+ },
+ "screensMindChanged": "You changed your mind on {changed} of {total}.",
+ "@screensMindChanged": {
+  "description": "Explore, 'Change your mind': the panel under the claims: on how many of the claims answered twice the second answer differed from the first.",
+  "placeholders": {
+   "changed": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "screensMindFoot": "A changed mind is a card that did its job.",
+ "@screensMindFoot": {
+  "description": "Explore, 'Change your mind': the small line in the panel under the claims."
+ },
+ "screensSayTitle": "Say it tonight",
+ "@screensSayTitle": {
+  "description": "Explore: the title of the shelf of lines to say to somebody at dinner."
+ },
+ "screensSayLine": "One line to bring to dinner. Tap once you've said it",
+ "@screensSayLine": {
+  "description": "Explore: the line under 'Say it tonight'."
+ },
+ "screensSayTonight": "Tonight's line",
+ "@screensSayTonight": {
+  "description": "Explore, 'Say it tonight': small capitals on the first and largest line, before the subject's name."
+ },
+ "screensSaySaid": "I said it",
+ "@screensSaySaid": {
+  "description": "Explore, 'Say it tonight': the button the reader taps once they have said the line to somebody."
+ },
+ "screensSayDone": "Said it",
+ "@screensSayDone": {
+  "description": "Explore, 'Say it tonight': the same button once tapped. It cannot be taken back."
+ },
+ "screensSayWeek": "{n, plural, =0{Nothing said yet this week.} =1{You said 1 line this week.} other{You said {n} lines this week.}}",
+ "@screensSayWeek": {
+  "description": "Explore, 'Say it tonight': how many lines the reader has said since Monday.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "screensSayCounts": "Every line you say also counts toward Top of the week.",
+ "@screensSayCounts": {
+  "description": "Explore, 'Say it tonight': under the count. 'Top of the week' is the name of Explore's ranked shelf."
+ },
+ "screensFrontName": "The Astute",
+ "@screensFrontName": {
+  "description": "Explore's front page: the name at the top, set like a newspaper's. A name, kept in English."
+ },
+ "screensFrontEdition": "Today's edition",
+ "@screensFrontEdition": {
+  "description": "Explore's front page: small capitals under the name, on the left."
+ },
+ "screensFrontSame": "The same for everyone",
+ "@screensFrontSame": {
+  "description": "Explore's front page: small capitals under the name, on the right."
+ },
+ "screensFrontLead": "The lead",
+ "@screensFrontLead": {
+  "description": "Explore's front page: after the subject's name on the first and largest story: a newspaper's lead story."
+ },
+ "screensFrontNumbers": "In numbers",
+ "@screensFrontNumbers": {
+  "description": "Explore's front page: small capitals over three figures."
+ },
+ "screensFrontCorrections": "Corrections",
+ "@screensFrontCorrections": {
+  "description": "Explore's front page: small capitals over a common belief that is wrong, like a newspaper's corrections column."
+ },
+ "screensFrontPuzzle": "Puzzle of the day",
+ "@screensFrontPuzzle": {
+  "description": "Explore's front page: small capitals over a question to work out."
+ },
+ "screensFrontEnd": "That's today's edition",
+ "@screensFrontEnd": {
+  "description": "Explore's front page: at the very end of the page."
+ },
+ "screensFrontTomorrow": "Tomorrow's is out in the morning",
+ "@screensFrontTomorrow": {
+  "description": "Explore's front page: under 'That's today's edition'."
  }
 }

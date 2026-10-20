@@ -5861,6 +5861,600 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =0{Spot on.} =1{You were 1 percentage point off.} other{You were {n} percentage points off.}}'**
   String betsPointsOff(int n);
+
+  /// Words set in this language's own quotation marks: an expert's question on Explore's 'Think like an expert'.
+  ///
+  /// In en, this message translates to:
+  /// **'“{text}”'**
+  String screensQuoted(String text);
+
+  /// Explore: the title of the shelf where the reader picks an expert and sees the question that expert always asks.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like an expert'**
+  String get screensExpertTitle;
+
+  /// Explore: the line under 'Think like an expert'.
+  ///
+  /// In en, this message translates to:
+  /// **'The question each of them always asks, and the cards that need it'**
+  String get screensExpertLine;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip. Keep it to one or two words.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistician'**
+  String get screensExpertStatistician;
+
+  /// Explore, 'Think like an expert': the small capitals over the statistician's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a statistician'**
+  String get screensExpertStatisticianAs;
+
+  /// Explore, 'Think like an expert': the question a statistician always asks of a figure. Shown large, in quotation marks.
+  ///
+  /// In en, this message translates to:
+  /// **'Compared to what, and out of how many?'**
+  String get screensExpertStatisticianAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Economist'**
+  String get screensExpertEconomist;
+
+  /// Explore, 'Think like an expert': the small capitals over the economist's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like an economist'**
+  String get screensExpertEconomistAs;
+
+  /// Explore, 'Think like an expert': the question an economist always asks.
+  ///
+  /// In en, this message translates to:
+  /// **'Who pays, and what do they give up?'**
+  String get screensExpertEconomistAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Historian'**
+  String get screensExpertHistorian;
+
+  /// Explore, 'Think like an expert': the small capitals over the historian's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a historian'**
+  String get screensExpertHistorianAs;
+
+  /// Explore, 'Think like an expert': the question a historian always asks.
+  ///
+  /// In en, this message translates to:
+  /// **'What did people know at the time?'**
+  String get screensExpertHistorianAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip: a physician.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor'**
+  String get screensExpertDoctor;
+
+  /// Explore, 'Think like an expert': the small capitals over the doctor's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a doctor'**
+  String get screensExpertDoctorAs;
+
+  /// Explore, 'Think like an expert': the question a doctor always asks of a symptom.
+  ///
+  /// In en, this message translates to:
+  /// **'How common is it, and what else could it be?'**
+  String get screensExpertDoctorAsks;
+
+  /// Explore, 'Think like an expert': an expert's name on its chip.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientist'**
+  String get screensExpertScientist;
+
+  /// Explore, 'Think like an expert': the small capitals over the scientist's question.
+  ///
+  /// In en, this message translates to:
+  /// **'Think like a scientist'**
+  String get screensExpertScientistAs;
+
+  /// Explore, 'Think like an expert': the question a scientist always asks of a claim.
+  ///
+  /// In en, this message translates to:
+  /// **'How would we know if it were wrong?'**
+  String get screensExpertScientistAsks;
+
+  /// Explore: the title of the shelf where every card sits where two subjects meet.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect the dots'**
+  String get screensDotsTitle;
+
+  /// Explore: the line under 'Connect the dots'.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a subject to see where it meets the others'**
+  String get screensDotsLine;
+
+  /// Explore, 'Connect the dots': under the subject's name, how many other subjects it meets and in how many cards.
+  ///
+  /// In en, this message translates to:
+  /// **'{subjects, plural, =1{Meets 1 subject} other{Meets {subjects} subjects}} {cards, plural, =1{in 1 card} other{in {cards} cards}}'**
+  String screensDotsMeets(int subjects, int cards);
+
+  /// Explore, 'Connect the dots': the title over the cards that sit between two subjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Where they meet'**
+  String get screensDotsWhere;
+
+  /// Explore, 'Connect the dots': the line under 'Where they meet'.
+  ///
+  /// In en, this message translates to:
+  /// **'One question, two ways of looking at it'**
+  String get screensDotsWhereLine;
+
+  /// Explore, 'Ask first': the large question over the field where the reader types a question.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to understand?'**
+  String get screensAskTitle;
+
+  /// Explore, 'Ask first': the hint inside the empty question field.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask anything, or type a word'**
+  String get screensAskHint;
+
+  /// Explore, 'Ask first': small capitals before a few words the reader can tap to search for.
+  ///
+  /// In en, this message translates to:
+  /// **'Try'**
+  String get screensAskTry;
+
+  /// Explore, 'Ask first': what a screen reader says for the button that empties the question field.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the question'**
+  String get screensAskClear;
+
+  /// Explore, 'Ask first': over the cards that answer what the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card answers it} other{{n} cards answer it}}'**
+  String screensAskFound(int n);
+
+  /// Explore, 'Ask first': when no card answers what the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'No card on that yet'**
+  String get screensAskNone;
+
+  /// Explore, 'Ask first': under 'No card on that yet'. The question is kept on the phone and shown again with the first card that answers it.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the question. When a card answers it, it will be here, under the question.'**
+  String get screensAskNoneLine;
+
+  /// Explore, 'Ask first': the button that keeps a question no card answers yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the question'**
+  String get screensAskKeep;
+
+  /// Explore, 'Ask first': the same button once the question is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept'**
+  String get screensAskKept;
+
+  /// Explore: the title of the shelf that shows the questions the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions you asked'**
+  String get screensAskedTitle;
+
+  /// Explore: the line under 'Questions you asked'.
+  ///
+  /// In en, this message translates to:
+  /// **'And the cards that answered them'**
+  String get screensAskedLine;
+
+  /// Explore, 'Questions you asked': after the subject's name, in small capitals, on the card that answered a question.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered'**
+  String get screensAskedAnswered;
+
+  /// Explore, 'Questions you asked': under a kept question that no card answers yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No card answers it yet. When one does, it will be here.'**
+  String get screensAskedWaiting;
+
+  /// Explore, 'Questions you asked': the action, held down or from a screen reader, that removes a question the reader typed.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget this question'**
+  String get screensAskedForget;
+
+  /// Explore, 'Questions you asked': the note shown once a question is removed, beside Undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Question forgotten'**
+  String get screensAskedForgotten;
+
+  /// Explore: the title of the shelf where every answer opens the next question.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep asking why'**
+  String get screensWhyTitle;
+
+  /// Explore: the line under 'Keep asking why'.
+  ///
+  /// In en, this message translates to:
+  /// **'Every answer raises the next question'**
+  String get screensWhyLine;
+
+  /// Explore, 'Keep asking why': the button that opens the next question, and the small label between two answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Why?'**
+  String get screensWhyAsk;
+
+  /// Explore, 'Keep asking why': when the last answer of a chain is open.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 why deep.} other{{n} whys deep.}} That\'s the bottom of this one.'**
+  String screensWhyBottom(int n);
+
+  /// Explore, 'Keep asking why': the button that closes the chain back to its first question.
+  ///
+  /// In en, this message translates to:
+  /// **'Start again'**
+  String get screensWhyAgain;
+
+  /// Explore, 'Keep asking why': the title over the other chains of questions to start.
+  ///
+  /// In en, this message translates to:
+  /// **'More rabbit holes'**
+  String get screensWhyHoles;
+
+  /// Explore, 'Keep asking why': the line under 'More rabbit holes'.
+  ///
+  /// In en, this message translates to:
+  /// **'Each one goes a few whys deep'**
+  String get screensWhyHolesLine;
+
+  /// Explore, 'Keep asking why': how many questions deep a chain goes, beside its first question.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 why} other{{n} whys}}'**
+  String screensWhyCount(int n);
+
+  /// Explore, 'Keep asking why': small capitals over the cards that go further than the chain.
+  ///
+  /// In en, this message translates to:
+  /// **'Go deeper'**
+  String get screensWhyDeeper;
+
+  /// Explore, 'Keep asking why': where the answers of a chain come from, under its last answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}'**
+  String screensWhySource(String source);
+
+  /// Explore, 'Keep asking why': what a screen reader says for the little meter of how deep the chain is open.
+  ///
+  /// In en, this message translates to:
+  /// **'{at, plural, =1{1 why} other{{at} whys}} of {of}'**
+  String screensWhyDepth(int at, int of);
+
+  /// Explore: the title of the shelf with a ruler of years to travel along.
+  ///
+  /// In en, this message translates to:
+  /// **'Through time'**
+  String get screensTimeTitle;
+
+  /// Explore: the line under 'Through time'.
+  ///
+  /// In en, this message translates to:
+  /// **'One age at a time, to this year. Drag to travel'**
+  String get screensTimeLine;
+
+  /// Explore, 'Through time': the caption under the ruler, which is drawn in powers of ten.
+  ///
+  /// In en, this message translates to:
+  /// **'Years ago. Each tick is ten times further back.'**
+  String get screensTimeCaption;
+
+  /// Explore, 'Through time': the label at the right end of the ruler of years.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get screensTimeNow;
+
+  /// Explore, 'Through time': what a screen reader says for the button that goes to the age before.
+  ///
+  /// In en, this message translates to:
+  /// **'Further back'**
+  String get screensTimeEarlier;
+
+  /// Explore, 'Through time': what a screen reader says for the button that goes to the age after.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer to now'**
+  String get screensTimeLater;
+
+  /// Explore, 'Through time': an age on the ruler, in small capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'The ancient world'**
+  String get screensEraAncient;
+
+  /// Explore, 'Through time': when the ancient world was, shown large: the years before AD 500.
+  ///
+  /// In en, this message translates to:
+  /// **'Before 500'**
+  String get screensEraAncientWhen;
+
+  /// Explore, 'Through time': an age on the ruler.
+  ///
+  /// In en, this message translates to:
+  /// **'The Middle Ages'**
+  String get screensEraMedieval;
+
+  /// Explore, 'Through time': when the Middle Ages were, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'500 to 1500'**
+  String get screensEraMedievalWhen;
+
+  /// Explore, 'Through time': an age on the ruler: about 1500 to 1800.
+  ///
+  /// In en, this message translates to:
+  /// **'The early modern age'**
+  String get screensEraEarlyModern;
+
+  /// Explore, 'Through time': when the early modern age was, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'1500 to 1800'**
+  String get screensEraEarlyModernWhen;
+
+  /// Explore, 'Through time': an age on the ruler.
+  ///
+  /// In en, this message translates to:
+  /// **'The nineteenth century'**
+  String get screensEraNineteenth;
+
+  /// Explore, 'Through time': when the nineteenth century was, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'1800 to 1900'**
+  String get screensEraNineteenthWhen;
+
+  /// Explore, 'Through time': an age on the ruler: the twentieth century.
+  ///
+  /// In en, this message translates to:
+  /// **'The last century'**
+  String get screensEraTwentieth;
+
+  /// Explore, 'Through time': when the last century was, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'1900 to 2000'**
+  String get screensEraTwentiethWhen;
+
+  /// Explore, 'Through time': an age on the ruler: from 2000 to today.
+  ///
+  /// In en, this message translates to:
+  /// **'This century'**
+  String get screensEraRecent;
+
+  /// Explore, 'Through time': when this century began, shown large.
+  ///
+  /// In en, this message translates to:
+  /// **'Since 2000'**
+  String get screensEraRecentWhen;
+
+  /// Explore: the title of the shelf where the reader says where they stand on a claim before reading, and again after.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your mind'**
+  String get screensMindTitle;
+
+  /// Explore: the line under 'Change your mind'.
+  ///
+  /// In en, this message translates to:
+  /// **'Say where you stand before you read, then again after'**
+  String get screensMindLine;
+
+  /// Explore, 'Change your mind': after the subject's name, in small capitals: the sentence on the card is a claim to agree or disagree with.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim'**
+  String get screensMindClaim;
+
+  /// Explore, 'Change your mind': small capitals over the first scale, from disagree to agree.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you read'**
+  String get screensMindBefore;
+
+  /// Explore, 'Change your mind': beside the scale before the reader has tapped it.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap where you stand'**
+  String get screensMindTap;
+
+  /// Explore, 'Change your mind': small capitals over the evidence, shown once the reader has said where they stand.
+  ///
+  /// In en, this message translates to:
+  /// **'What we know'**
+  String get screensMindKnow;
+
+  /// Explore, 'Change your mind': small capitals over the second scale, after the evidence.
+  ///
+  /// In en, this message translates to:
+  /// **'And now?'**
+  String get screensMindNow;
+
+  /// Explore, 'Change your mind': beside the second scale before it is tapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap again'**
+  String get screensMindAgain;
+
+  /// Explore, 'Change your mind': the five places on the scale, from 0 (strongly disagree) to 4 (strongly agree). 1 and 3 also label the two ends of the scale.
+  ///
+  /// In en, this message translates to:
+  /// **'{level, select, 0{Strongly disagree} 1{Disagree} 2{Not sure} 3{Agree} other{Strongly agree}}'**
+  String screensMindLevel(String level);
+
+  /// Explore, 'Change your mind': when the second answer is nearer to what the evidence says than the first.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{You moved 1 step toward the evidence.} other{You moved {n} steps toward the evidence.}}'**
+  String screensMindToward(int n);
+
+  /// Explore, 'Change your mind': when the second answer is the same as the first and the first was not where the evidence is.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as before. One card is only one card.'**
+  String get screensMindSame;
+
+  /// Explore, 'Change your mind': when both answers are where the evidence is.
+  ///
+  /// In en, this message translates to:
+  /// **'You were with the evidence before you read it.'**
+  String get screensMindAlready;
+
+  /// Explore, 'Change your mind': when the second answer is further from what the evidence says than the first.
+  ///
+  /// In en, this message translates to:
+  /// **'You moved away from the evidence. Worth a second read.'**
+  String get screensMindAway;
+
+  /// Explore, 'Change your mind': the panel under the claims before any second answer is given.
+  ///
+  /// In en, this message translates to:
+  /// **'Say where you stand first. One tap, before you read.'**
+  String get screensMindFirst;
+
+  /// Explore, 'Change your mind': the panel under the claims: on how many of the claims answered twice the second answer differed from the first.
+  ///
+  /// In en, this message translates to:
+  /// **'You changed your mind on {changed} of {total}.'**
+  String screensMindChanged(int changed, int total);
+
+  /// Explore, 'Change your mind': the small line in the panel under the claims.
+  ///
+  /// In en, this message translates to:
+  /// **'A changed mind is a card that did its job.'**
+  String get screensMindFoot;
+
+  /// Explore: the title of the shelf of lines to say to somebody at dinner.
+  ///
+  /// In en, this message translates to:
+  /// **'Say it tonight'**
+  String get screensSayTitle;
+
+  /// Explore: the line under 'Say it tonight'.
+  ///
+  /// In en, this message translates to:
+  /// **'One line to bring to dinner. Tap once you\'ve said it'**
+  String get screensSayLine;
+
+  /// Explore, 'Say it tonight': small capitals on the first and largest line, before the subject's name.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight\'s line'**
+  String get screensSayTonight;
+
+  /// Explore, 'Say it tonight': the button the reader taps once they have said the line to somebody.
+  ///
+  /// In en, this message translates to:
+  /// **'I said it'**
+  String get screensSaySaid;
+
+  /// Explore, 'Say it tonight': the same button once tapped. It cannot be taken back.
+  ///
+  /// In en, this message translates to:
+  /// **'Said it'**
+  String get screensSayDone;
+
+  /// Explore, 'Say it tonight': how many lines the reader has said since Monday.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Nothing said yet this week.} =1{You said 1 line this week.} other{You said {n} lines this week.}}'**
+  String screensSayWeek(int n);
+
+  /// Explore, 'Say it tonight': under the count. 'Top of the week' is the name of Explore's ranked shelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Every line you say also counts toward Top of the week.'**
+  String get screensSayCounts;
+
+  /// Explore's front page: the name at the top, set like a newspaper's. A name, kept in English.
+  ///
+  /// In en, this message translates to:
+  /// **'The Astute'**
+  String get screensFrontName;
+
+  /// Explore's front page: small capitals under the name, on the left.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s edition'**
+  String get screensFrontEdition;
+
+  /// Explore's front page: small capitals under the name, on the right.
+  ///
+  /// In en, this message translates to:
+  /// **'The same for everyone'**
+  String get screensFrontSame;
+
+  /// Explore's front page: after the subject's name on the first and largest story: a newspaper's lead story.
+  ///
+  /// In en, this message translates to:
+  /// **'The lead'**
+  String get screensFrontLead;
+
+  /// Explore's front page: small capitals over three figures.
+  ///
+  /// In en, this message translates to:
+  /// **'In numbers'**
+  String get screensFrontNumbers;
+
+  /// Explore's front page: small capitals over a common belief that is wrong, like a newspaper's corrections column.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections'**
+  String get screensFrontCorrections;
+
+  /// Explore's front page: small capitals over a question to work out.
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle of the day'**
+  String get screensFrontPuzzle;
+
+  /// Explore's front page: at the very end of the page.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s today\'s edition'**
+  String get screensFrontEnd;
+
+  /// Explore's front page: under 'That's today's edition'.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow\'s is out in the morning'**
+  String get screensFrontTomorrow;
 }
 
 class _AppLocalizationsDelegate

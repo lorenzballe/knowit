@@ -3959,4 +3959,424 @@ class RemoteLocalizations extends AppLocalizations {
   String betsPointsOff(int n) =>
       _words.format('betsPointsOff', localeName, {'n': n}) ??
       _base.betsPointsOff(n);
+
+  @override
+  String screensQuoted(String text) =>
+      _words.format('screensQuoted', localeName, {'text': text}) ??
+      _base.screensQuoted(text);
+
+  @override
+  String get screensExpertTitle =>
+      _words.text('screensExpertTitle') ?? _base.screensExpertTitle;
+
+  @override
+  String get screensExpertLine =>
+      _words.text('screensExpertLine') ?? _base.screensExpertLine;
+
+  @override
+  String get screensExpertStatistician =>
+      _words.text('screensExpertStatistician') ??
+      _base.screensExpertStatistician;
+
+  @override
+  String get screensExpertStatisticianAs =>
+      _words.text('screensExpertStatisticianAs') ??
+      _base.screensExpertStatisticianAs;
+
+  @override
+  String get screensExpertStatisticianAsks =>
+      _words.text('screensExpertStatisticianAsks') ??
+      _base.screensExpertStatisticianAsks;
+
+  @override
+  String get screensExpertEconomist =>
+      _words.text('screensExpertEconomist') ?? _base.screensExpertEconomist;
+
+  @override
+  String get screensExpertEconomistAs =>
+      _words.text('screensExpertEconomistAs') ?? _base.screensExpertEconomistAs;
+
+  @override
+  String get screensExpertEconomistAsks =>
+      _words.text('screensExpertEconomistAsks') ??
+      _base.screensExpertEconomistAsks;
+
+  @override
+  String get screensExpertHistorian =>
+      _words.text('screensExpertHistorian') ?? _base.screensExpertHistorian;
+
+  @override
+  String get screensExpertHistorianAs =>
+      _words.text('screensExpertHistorianAs') ?? _base.screensExpertHistorianAs;
+
+  @override
+  String get screensExpertHistorianAsks =>
+      _words.text('screensExpertHistorianAsks') ??
+      _base.screensExpertHistorianAsks;
+
+  @override
+  String get screensExpertDoctor =>
+      _words.text('screensExpertDoctor') ?? _base.screensExpertDoctor;
+
+  @override
+  String get screensExpertDoctorAs =>
+      _words.text('screensExpertDoctorAs') ?? _base.screensExpertDoctorAs;
+
+  @override
+  String get screensExpertDoctorAsks =>
+      _words.text('screensExpertDoctorAsks') ?? _base.screensExpertDoctorAsks;
+
+  @override
+  String get screensExpertScientist =>
+      _words.text('screensExpertScientist') ?? _base.screensExpertScientist;
+
+  @override
+  String get screensExpertScientistAs =>
+      _words.text('screensExpertScientistAs') ?? _base.screensExpertScientistAs;
+
+  @override
+  String get screensExpertScientistAsks =>
+      _words.text('screensExpertScientistAsks') ??
+      _base.screensExpertScientistAsks;
+
+  @override
+  String get screensDotsTitle =>
+      _words.text('screensDotsTitle') ?? _base.screensDotsTitle;
+
+  @override
+  String get screensDotsLine =>
+      _words.text('screensDotsLine') ?? _base.screensDotsLine;
+
+  @override
+  String screensDotsMeets(int subjects, int cards) =>
+      _words.format('screensDotsMeets', localeName, {
+        'subjects': subjects,
+        'cards': cards,
+      }) ??
+      _base.screensDotsMeets(subjects, cards);
+
+  @override
+  String get screensDotsWhere =>
+      _words.text('screensDotsWhere') ?? _base.screensDotsWhere;
+
+  @override
+  String get screensDotsWhereLine =>
+      _words.text('screensDotsWhereLine') ?? _base.screensDotsWhereLine;
+
+  @override
+  String get screensAskTitle =>
+      _words.text('screensAskTitle') ?? _base.screensAskTitle;
+
+  @override
+  String get screensAskHint =>
+      _words.text('screensAskHint') ?? _base.screensAskHint;
+
+  @override
+  String get screensAskTry =>
+      _words.text('screensAskTry') ?? _base.screensAskTry;
+
+  @override
+  String get screensAskClear =>
+      _words.text('screensAskClear') ?? _base.screensAskClear;
+
+  @override
+  String screensAskFound(int n) =>
+      _words.format('screensAskFound', localeName, {'n': n}) ??
+      _base.screensAskFound(n);
+
+  @override
+  String get screensAskNone =>
+      _words.text('screensAskNone') ?? _base.screensAskNone;
+
+  @override
+  String get screensAskNoneLine =>
+      _words.text('screensAskNoneLine') ?? _base.screensAskNoneLine;
+
+  @override
+  String get screensAskKeep =>
+      _words.text('screensAskKeep') ?? _base.screensAskKeep;
+
+  @override
+  String get screensAskKept =>
+      _words.text('screensAskKept') ?? _base.screensAskKept;
+
+  @override
+  String get screensAskedTitle =>
+      _words.text('screensAskedTitle') ?? _base.screensAskedTitle;
+
+  @override
+  String get screensAskedLine =>
+      _words.text('screensAskedLine') ?? _base.screensAskedLine;
+
+  @override
+  String get screensAskedAnswered =>
+      _words.text('screensAskedAnswered') ?? _base.screensAskedAnswered;
+
+  @override
+  String get screensAskedWaiting =>
+      _words.text('screensAskedWaiting') ?? _base.screensAskedWaiting;
+
+  @override
+  String get screensAskedForget =>
+      _words.text('screensAskedForget') ?? _base.screensAskedForget;
+
+  @override
+  String get screensAskedForgotten =>
+      _words.text('screensAskedForgotten') ?? _base.screensAskedForgotten;
+
+  @override
+  String get screensWhyTitle =>
+      _words.text('screensWhyTitle') ?? _base.screensWhyTitle;
+
+  @override
+  String get screensWhyLine =>
+      _words.text('screensWhyLine') ?? _base.screensWhyLine;
+
+  @override
+  String get screensWhyAsk =>
+      _words.text('screensWhyAsk') ?? _base.screensWhyAsk;
+
+  @override
+  String screensWhyBottom(int n) =>
+      _words.format('screensWhyBottom', localeName, {'n': n}) ??
+      _base.screensWhyBottom(n);
+
+  @override
+  String get screensWhyAgain =>
+      _words.text('screensWhyAgain') ?? _base.screensWhyAgain;
+
+  @override
+  String get screensWhyHoles =>
+      _words.text('screensWhyHoles') ?? _base.screensWhyHoles;
+
+  @override
+  String get screensWhyHolesLine =>
+      _words.text('screensWhyHolesLine') ?? _base.screensWhyHolesLine;
+
+  @override
+  String screensWhyCount(int n) =>
+      _words.format('screensWhyCount', localeName, {'n': n}) ??
+      _base.screensWhyCount(n);
+
+  @override
+  String get screensWhyDeeper =>
+      _words.text('screensWhyDeeper') ?? _base.screensWhyDeeper;
+
+  @override
+  String screensWhySource(String source) =>
+      _words.format('screensWhySource', localeName, {'source': source}) ??
+      _base.screensWhySource(source);
+
+  @override
+  String screensWhyDepth(int at, int of) =>
+      _words.format('screensWhyDepth', localeName, {'at': at, 'of': of}) ??
+      _base.screensWhyDepth(at, of);
+
+  @override
+  String get screensTimeTitle =>
+      _words.text('screensTimeTitle') ?? _base.screensTimeTitle;
+
+  @override
+  String get screensTimeLine =>
+      _words.text('screensTimeLine') ?? _base.screensTimeLine;
+
+  @override
+  String get screensTimeCaption =>
+      _words.text('screensTimeCaption') ?? _base.screensTimeCaption;
+
+  @override
+  String get screensTimeNow =>
+      _words.text('screensTimeNow') ?? _base.screensTimeNow;
+
+  @override
+  String get screensTimeEarlier =>
+      _words.text('screensTimeEarlier') ?? _base.screensTimeEarlier;
+
+  @override
+  String get screensTimeLater =>
+      _words.text('screensTimeLater') ?? _base.screensTimeLater;
+
+  @override
+  String get screensEraAncient =>
+      _words.text('screensEraAncient') ?? _base.screensEraAncient;
+
+  @override
+  String get screensEraAncientWhen =>
+      _words.text('screensEraAncientWhen') ?? _base.screensEraAncientWhen;
+
+  @override
+  String get screensEraMedieval =>
+      _words.text('screensEraMedieval') ?? _base.screensEraMedieval;
+
+  @override
+  String get screensEraMedievalWhen =>
+      _words.text('screensEraMedievalWhen') ?? _base.screensEraMedievalWhen;
+
+  @override
+  String get screensEraEarlyModern =>
+      _words.text('screensEraEarlyModern') ?? _base.screensEraEarlyModern;
+
+  @override
+  String get screensEraEarlyModernWhen =>
+      _words.text('screensEraEarlyModernWhen') ??
+      _base.screensEraEarlyModernWhen;
+
+  @override
+  String get screensEraNineteenth =>
+      _words.text('screensEraNineteenth') ?? _base.screensEraNineteenth;
+
+  @override
+  String get screensEraNineteenthWhen =>
+      _words.text('screensEraNineteenthWhen') ?? _base.screensEraNineteenthWhen;
+
+  @override
+  String get screensEraTwentieth =>
+      _words.text('screensEraTwentieth') ?? _base.screensEraTwentieth;
+
+  @override
+  String get screensEraTwentiethWhen =>
+      _words.text('screensEraTwentiethWhen') ?? _base.screensEraTwentiethWhen;
+
+  @override
+  String get screensEraRecent =>
+      _words.text('screensEraRecent') ?? _base.screensEraRecent;
+
+  @override
+  String get screensEraRecentWhen =>
+      _words.text('screensEraRecentWhen') ?? _base.screensEraRecentWhen;
+
+  @override
+  String get screensMindTitle =>
+      _words.text('screensMindTitle') ?? _base.screensMindTitle;
+
+  @override
+  String get screensMindLine =>
+      _words.text('screensMindLine') ?? _base.screensMindLine;
+
+  @override
+  String get screensMindClaim =>
+      _words.text('screensMindClaim') ?? _base.screensMindClaim;
+
+  @override
+  String get screensMindBefore =>
+      _words.text('screensMindBefore') ?? _base.screensMindBefore;
+
+  @override
+  String get screensMindTap =>
+      _words.text('screensMindTap') ?? _base.screensMindTap;
+
+  @override
+  String get screensMindKnow =>
+      _words.text('screensMindKnow') ?? _base.screensMindKnow;
+
+  @override
+  String get screensMindNow =>
+      _words.text('screensMindNow') ?? _base.screensMindNow;
+
+  @override
+  String get screensMindAgain =>
+      _words.text('screensMindAgain') ?? _base.screensMindAgain;
+
+  @override
+  String screensMindLevel(String level) =>
+      _words.format('screensMindLevel', localeName, {'level': level}) ??
+      _base.screensMindLevel(level);
+
+  @override
+  String screensMindToward(int n) =>
+      _words.format('screensMindToward', localeName, {'n': n}) ??
+      _base.screensMindToward(n);
+
+  @override
+  String get screensMindSame =>
+      _words.text('screensMindSame') ?? _base.screensMindSame;
+
+  @override
+  String get screensMindAlready =>
+      _words.text('screensMindAlready') ?? _base.screensMindAlready;
+
+  @override
+  String get screensMindAway =>
+      _words.text('screensMindAway') ?? _base.screensMindAway;
+
+  @override
+  String get screensMindFirst =>
+      _words.text('screensMindFirst') ?? _base.screensMindFirst;
+
+  @override
+  String screensMindChanged(int changed, int total) =>
+      _words.format('screensMindChanged', localeName, {
+        'changed': changed,
+        'total': total,
+      }) ??
+      _base.screensMindChanged(changed, total);
+
+  @override
+  String get screensMindFoot =>
+      _words.text('screensMindFoot') ?? _base.screensMindFoot;
+
+  @override
+  String get screensSayTitle =>
+      _words.text('screensSayTitle') ?? _base.screensSayTitle;
+
+  @override
+  String get screensSayLine =>
+      _words.text('screensSayLine') ?? _base.screensSayLine;
+
+  @override
+  String get screensSayTonight =>
+      _words.text('screensSayTonight') ?? _base.screensSayTonight;
+
+  @override
+  String get screensSaySaid =>
+      _words.text('screensSaySaid') ?? _base.screensSaySaid;
+
+  @override
+  String get screensSayDone =>
+      _words.text('screensSayDone') ?? _base.screensSayDone;
+
+  @override
+  String screensSayWeek(int n) =>
+      _words.format('screensSayWeek', localeName, {'n': n}) ??
+      _base.screensSayWeek(n);
+
+  @override
+  String get screensSayCounts =>
+      _words.text('screensSayCounts') ?? _base.screensSayCounts;
+
+  @override
+  String get screensFrontName =>
+      _words.text('screensFrontName') ?? _base.screensFrontName;
+
+  @override
+  String get screensFrontEdition =>
+      _words.text('screensFrontEdition') ?? _base.screensFrontEdition;
+
+  @override
+  String get screensFrontSame =>
+      _words.text('screensFrontSame') ?? _base.screensFrontSame;
+
+  @override
+  String get screensFrontLead =>
+      _words.text('screensFrontLead') ?? _base.screensFrontLead;
+
+  @override
+  String get screensFrontNumbers =>
+      _words.text('screensFrontNumbers') ?? _base.screensFrontNumbers;
+
+  @override
+  String get screensFrontCorrections =>
+      _words.text('screensFrontCorrections') ?? _base.screensFrontCorrections;
+
+  @override
+  String get screensFrontPuzzle =>
+      _words.text('screensFrontPuzzle') ?? _base.screensFrontPuzzle;
+
+  @override
+  String get screensFrontEnd =>
+      _words.text('screensFrontEnd') ?? _base.screensFrontEnd;
+
+  @override
+  String get screensFrontTomorrow =>
+      _words.text('screensFrontTomorrow') ?? _base.screensFrontTomorrow;
 }

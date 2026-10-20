@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {"id": "front-masthead", "block": "masthead"},
+    {
+      "id": "front-lead",
+      "block": "front-lead",
+      "source": {"ids": ["space-expansion-8"]}
+    },
+    {
+      "id": "front-columns",
+      "block": "front-columns",
+      "source": {"ids": ["pop_culture-celebrity-4", "philosophy-responsibility-9"]}
+    },
+    {
+      "id": "front-numbers",
+      "block": "front-numbers",
+      "source": {
+        "ids": [
+          "human_body-studies-on-mice-2",
+          "economics-hyperinflation-5",
+          "cinema-shots-and-angles-2"
+        ]
+      }
+    },
+    {
+      "id": "front-correction",
+      "block": "front-correction",
+      "source": {"ids": ["psychology-expectations-3"]}
+    },
+    {
+      "id": "front-puzzle",
+      "block": "front-puzzle",
+      "source": {"ids": ["economics-education-3"]}
+    },
+    {"id": "front-end", "block": "edition-end"}
+  ]
+}

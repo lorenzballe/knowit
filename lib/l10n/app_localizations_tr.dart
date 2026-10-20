@@ -4065,4 +4065,386 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String screensQuoted(String text) {
+    return '«$text»';
+  }
+
+  @override
+  String get screensExpertTitle => 'Bir uzman gibi düşün';
+
+  @override
+  String get screensExpertLine =>
+      'Her birinin hep sorduğu soru ve o soruya ihtiyaç duyan kartlar';
+
+  @override
+  String get screensExpertStatistician => 'İstatistikçi';
+
+  @override
+  String get screensExpertStatisticianAs => 'Bir istatistikçi gibi düşün';
+
+  @override
+  String get screensExpertStatisticianAsks =>
+      'Neye kıyasla ve kaç kişi içinden?';
+
+  @override
+  String get screensExpertEconomist => 'Ekonomist';
+
+  @override
+  String get screensExpertEconomistAs => 'Bir ekonomist gibi düşün';
+
+  @override
+  String get screensExpertEconomistAsks =>
+      'Kim ödüyor ve karşılığında neyden vazgeçiyor?';
+
+  @override
+  String get screensExpertHistorian => 'Tarihçi';
+
+  @override
+  String get screensExpertHistorianAs => 'Bir tarihçi gibi düşün';
+
+  @override
+  String get screensExpertHistorianAsks => 'O zamanlar insanlar ne biliyordu?';
+
+  @override
+  String get screensExpertDoctor => 'Doktor';
+
+  @override
+  String get screensExpertDoctorAs => 'Bir doktor gibi düşün';
+
+  @override
+  String get screensExpertDoctorAsks => 'Ne kadar yaygın ve başka ne olabilir?';
+
+  @override
+  String get screensExpertScientist => 'Bilim insanı';
+
+  @override
+  String get screensExpertScientistAs => 'Bir bilim insanı gibi düşün';
+
+  @override
+  String get screensExpertScientistAsks =>
+      'Yanlış olsaydı bunu nasıl anlardık?';
+
+  @override
+  String get screensDotsTitle => 'Noktaları birleştir';
+
+  @override
+  String get screensDotsLine =>
+      'Diğerleriyle nerede buluştuğunu görmek için bir konu seç';
+
+  @override
+  String screensDotsMeets(int subjects, int cards) {
+    String _temp0 = intl.Intl.pluralLogic(
+      subjects,
+      locale: localeName,
+      other: '$subjects konuyla',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '$cards kartta buluşuyor',
+    );
+    return '$_temp0 $_temp1';
+  }
+
+  @override
+  String get screensDotsWhere => 'Buluştukları yer';
+
+  @override
+  String get screensDotsWhereLine => 'Tek soru, iki bakış';
+
+  @override
+  String get screensAskTitle => 'Neyi anlamak istiyorsun?';
+
+  @override
+  String get screensAskHint => 'Ne istersen sor ya da bir kelime yaz';
+
+  @override
+  String get screensAskTry => 'Dene';
+
+  @override
+  String get screensAskClear => 'Soruyu temizle';
+
+  @override
+  String screensAskFound(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart yanıtlıyor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensAskNone => 'Bu konuda henüz kart yok';
+
+  @override
+  String get screensAskNoneLine =>
+      'Soruyu sakla. Bir kart yanıtladığında burada, sorunun altında olacak.';
+
+  @override
+  String get screensAskKeep => 'Soruyu sakla';
+
+  @override
+  String get screensAskKept => 'Saklandı';
+
+  @override
+  String get screensAskedTitle => 'Sorduğun sorular';
+
+  @override
+  String get screensAskedLine => 'Ve onları yanıtlayan kartlar';
+
+  @override
+  String get screensAskedAnswered => 'Yanıt';
+
+  @override
+  String get screensAskedWaiting =>
+      'Henüz yanıtlayan kart yok. Olduğunda burada olacak.';
+
+  @override
+  String get screensAskedForget => 'Bu soruyu unut';
+
+  @override
+  String get screensAskedForgotten => 'Soru unutuldu';
+
+  @override
+  String get screensWhyTitle => 'Neden diye sormaya devam et';
+
+  @override
+  String get screensWhyLine => 'Her yanıt bir sonraki soruyu doğurur';
+
+  @override
+  String get screensWhyAsk => 'Neden?';
+
+  @override
+  String screensWhyBottom(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kat derine indin.',
+    );
+    return '$_temp0 Bu zincirin dibi burası.';
+  }
+
+  @override
+  String get screensWhyAgain => 'Baştan başla';
+
+  @override
+  String get screensWhyHoles => 'Daha fazla tavşan deliği';
+
+  @override
+  String get screensWhyHolesLine => 'Her biri birkaç kat derine iner';
+
+  @override
+  String screensWhyCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kat',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensWhyDeeper => 'Daha derine in';
+
+  @override
+  String screensWhySource(String source) {
+    return 'Kaynak: $source';
+  }
+
+  @override
+  String screensWhyDepth(int at, int of) {
+    String _temp0 = intl.Intl.pluralLogic(
+      at,
+      locale: localeName,
+      other: '$at. kat, toplam $of',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensTimeTitle => 'Zamanda yolculuk';
+
+  @override
+  String get screensTimeLine =>
+      'Her seferinde bir çağ, bu yıla kadar. Yolculuk için sürükle';
+
+  @override
+  String get screensTimeCaption =>
+      'Yıl önce. Her çentik on kat daha geriye gider.';
+
+  @override
+  String get screensTimeNow => 'Şimdi';
+
+  @override
+  String get screensTimeEarlier => 'Daha geriye';
+
+  @override
+  String get screensTimeLater => 'Bugüne daha yakın';
+
+  @override
+  String get screensEraAncient => 'Antik dünya';
+
+  @override
+  String get screensEraAncientWhen => '500\'den önce';
+
+  @override
+  String get screensEraMedieval => 'Orta Çağ';
+
+  @override
+  String get screensEraMedievalWhen => '500\'den 1500\'e';
+
+  @override
+  String get screensEraEarlyModern => 'Erken modern çağ';
+
+  @override
+  String get screensEraEarlyModernWhen => '1500\'den 1800\'e';
+
+  @override
+  String get screensEraNineteenth => '19. yüzyıl';
+
+  @override
+  String get screensEraNineteenthWhen => '1800\'den 1900\'e';
+
+  @override
+  String get screensEraTwentieth => 'Geçen yüzyıl';
+
+  @override
+  String get screensEraTwentiethWhen => '1900\'den 2000\'e';
+
+  @override
+  String get screensEraRecent => 'Bu yüzyıl';
+
+  @override
+  String get screensEraRecentWhen => '2000\'den beri';
+
+  @override
+  String get screensMindTitle => 'Fikrini değiştir';
+
+  @override
+  String get screensMindLine =>
+      'Okumadan önce nerede durduğunu söyle, okuduktan sonra yine';
+
+  @override
+  String get screensMindClaim => 'İddia';
+
+  @override
+  String get screensMindBefore => 'Okumadan önce';
+
+  @override
+  String get screensMindTap => 'Nerede durduğuna dokun';
+
+  @override
+  String get screensMindKnow => 'Bildiklerimiz';
+
+  @override
+  String get screensMindNow => 'Ya şimdi?';
+
+  @override
+  String get screensMindAgain => 'Yine dokun';
+
+  @override
+  String screensMindLevel(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '0': 'Kesinlikle katılmıyorum',
+      '1': 'Katılmıyorum',
+      '2': 'Emin değilim',
+      '3': 'Katılıyorum',
+      'other': 'Kesinlikle katılıyorum',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String screensMindToward(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Kanıtlara $n adım yaklaştın.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensMindSame => 'Öncekiyle aynı. Bir kart sadece bir karttır.';
+
+  @override
+  String get screensMindAlready =>
+      'Okumadan önce de kanıtlarla aynı yerdeydin.';
+
+  @override
+  String get screensMindAway =>
+      'Kanıtlardan uzaklaştın. Bir kez daha okumaya değer.';
+
+  @override
+  String get screensMindFirst =>
+      'Önce nerede durduğunu söyle. Okumadan önce tek dokunuş.';
+
+  @override
+  String screensMindChanged(int changed, int total) {
+    return '$total iddianın $changed tanesinde fikrini değiştirdin.';
+  }
+
+  @override
+  String get screensMindFoot => 'Değişen bir fikir, işini yapmış bir karttır.';
+
+  @override
+  String get screensSayTitle => 'Bu akşam söyle';
+
+  @override
+  String get screensSayLine =>
+      'Akşam yemeğine götüreceğin tek cümle. Söyleyince dokun';
+
+  @override
+  String get screensSayTonight => 'Bu akşamın cümlesi';
+
+  @override
+  String get screensSaySaid => 'Söyledim';
+
+  @override
+  String get screensSayDone => 'Söylendi';
+
+  @override
+  String screensSayWeek(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bu hafta $n cümle söyledin.',
+      zero: 'Bu hafta henüz bir şey söylemedin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get screensSayCounts =>
+      'Söylediğin her cümle, Haftanın en iyileri listesine de sayılır.';
+
+  @override
+  String get screensFrontName => 'The Astute';
+
+  @override
+  String get screensFrontEdition => 'Bugünün baskısı';
+
+  @override
+  String get screensFrontSame => 'Herkes için aynı';
+
+  @override
+  String get screensFrontLead => 'Manşet';
+
+  @override
+  String get screensFrontNumbers => 'Rakamlarla';
+
+  @override
+  String get screensFrontCorrections => 'Düzeltmeler';
+
+  @override
+  String get screensFrontPuzzle => 'Günün bulmacası';
+
+  @override
+  String get screensFrontEnd => 'Bugünün baskısı bu kadar';
+
+  @override
+  String get screensFrontTomorrow => 'Yarınki sabah çıkıyor';
 }
