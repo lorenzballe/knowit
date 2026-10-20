@@ -686,7 +686,13 @@ List<Pill> themeSet(
 }
 
 /// Today, as the themes count days.
-int today() => themeDay(DateTime.now());
+int today() => themeDay(purposeClock());
+
+/// The clock the purpose blocks read the day from: the phone's, unless a
+/// test pins it, so a shelf that turns with the day is tested on a day
+/// whose turn is known rather than on whatever day the test runs.
+@visibleForTesting
+DateTime Function() purposeClock = DateTime.now;
 
 /// The theme a set stands for this week, when a section names none: the
 /// themes in the order the app turns them, one a week, among [among] and

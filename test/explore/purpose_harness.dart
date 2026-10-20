@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pill_bank.dart';
+import 'package:astuto/explore/blocks/purpose/kit.dart' show purposeClock;
 import 'package:astuto/explore/blocks/purpose_blocks.dart' as purpose;
 import 'package:astuto/explore/explore_block.dart';
 import 'package:astuto/l10n/app_localizations.dart';
@@ -87,6 +88,9 @@ Future<AppState> purposeReader() async {
     }),
   });
   ExplorePlay.resetForTest();
+  // The shelves turn with the day: the tests read them on one day, the
+  // 19th of October 2026, whose turn holds cards to read and cards to do.
+  purposeClock = () => DateTime(2026, 10, 19, 12);
   final AppState app = AppState();
   await app.init();
   return app;
