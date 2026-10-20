@@ -102,6 +102,13 @@ void main() {
               k == 'source_kind' ||
               k == 'quote',
         );
+        // A free card's page lives beside it and travels inside it, word for
+        // word too.
+        final Object? web = raw['web'];
+        if (web is Map<String, Object?>) {
+          web['html'] = File(f.path.replaceFirst(RegExp(r'\.json$'), '.html'))
+              .readAsStringSync();
+        }
         expect(
           cardToJson(PillBank.byId(id)!),
           raw,
