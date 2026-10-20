@@ -542,6 +542,9 @@ class TimelineBlock extends ShapeBlock {
     fields: ['order'],
   );
 
+  @override
+  bool Function(Pill)? first(ExploreSection section) => yearsFirst(section);
+
   /// At each size: the years' column at its narrowest, the year's type,
   /// the question's, how far down the year starts and where its dot is.
   static const Map<String, (double, double, double, double, double)> _sizes = {

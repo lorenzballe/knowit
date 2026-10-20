@@ -298,6 +298,10 @@ int? sideTaken(Pill p, Answer? given) {
 /// it the same way).
 String yearLabel(BuildContext context, Pill p) => OriginRow.when(context, p);
 
+/// Whether [p]'s question names the year it is set in, rather than leaving
+/// it to the age its card is tagged with.
+bool namesAYear(Pill p) => questionYear(p) != null;
+
 /// Where a card falls on a line of time, for laying a shelf out in order:
 /// where what it is labelled with begins — the year its question names, the
 /// first year of a decade, or the first of the age it is set in — so a line

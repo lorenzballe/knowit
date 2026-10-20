@@ -35,6 +35,13 @@ List<Pill> inOrderOfTime(ShapeDeal deal) {
   return [for (final (_, Pill p) in keyed) p];
 }
 
+/// The cards a line of time shows first when it has more than it needs:
+/// those whose question names a year, so the line reads as years (1915,
+/// 1953) rather than as one age over and over, which is all most cards of
+/// an age carry. A section that gives its own order keeps it whole.
+bool Function(Pill)? yearsFirst(ExploreSection section) =>
+    section.get<String>('order') == 'given' ? null : namesAYear;
+
 /// One size of a line of years.
 @immutable
 class YearsSize {
@@ -82,6 +89,9 @@ class YearsBlock extends ShapeBlock {
 
   /// Whether the line is a ruler, ticked every few points.
   final bool ruler;
+
+  @override
+  bool Function(Pill)? first(ExploreSection section) => yearsFirst(section);
 
   @override
   Widget lay(BuildContext context, ExploreHost host, ShapeDeal deal) {

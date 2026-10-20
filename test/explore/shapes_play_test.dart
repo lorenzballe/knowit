@@ -494,6 +494,41 @@ void main() {
         expect(shown.length, greaterThanOrEqualTo(3));
         expect(shown, [for (final Pill p in given) p.id].take(shown.length));
       });
+
+      testWidgets('$name shows first the cards that name a year', (
+        tester,
+      ) async {
+        // As many cards of only an age as it shows, given before as many
+        // that name a year: the years are the ones it keeps.
+        final int n = block.words.limit;
+        final List<Pill> kind = _cards(block, _aimed(block), n: 1000);
+        final List<Pill> ages = kind
+            .where((p) => !namesAYear(p))
+            .take(n)
+            .toList();
+        final List<Pill> years = kind.where(namesAYear).take(n).toList();
+        expect(ages, hasLength(n));
+        expect(years, hasLength(n));
+        final Pumped run = await pumpShape(
+          tester,
+          block,
+          json: _aimed(block),
+          cards: [...ages, ...years],
+        );
+        expect(_shown(run), isNotEmpty);
+        for (final String id in _shown(run)) {
+          expect(namesAYear(PillBank.byId(id)!), isTrue, reason: id);
+        }
+
+        // Told to keep the order it is given, it shows what it is given.
+        final Pumped given = await pumpShape(
+          tester,
+          block,
+          json: _aimed(block, {'order': 'given'}),
+          cards: [...ages, ...years],
+        );
+        expect(_shown(given).first, ages.first.id);
+      });
     }
   });
 
