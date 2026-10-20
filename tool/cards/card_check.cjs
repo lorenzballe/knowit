@@ -16,6 +16,9 @@
 // through (with motion on and with motion reduced), nothing may sit under the save and share in the
 // corner, no text may be set too small to read, the page may not scroll, and nothing may be asked of
 // the network: the kit and its fonts are served from docs/cards/kit, and any other request fails.
+//
+// Its photographs carry the app's corners and the save and share, to be looked at as a reader would.
+// With BARE=1 they are the page alone, as the app's own camera wants them to set inside its frame.
 const path = require('path'), fs = require('fs');
 let pw; try { pw = require('playwright'); } catch { pw = require('/opt/node22/lib/node_modules/playwright'); }
 const file = path.resolve(process.argv[2]); const out = path.resolve(process.argv[3] || path.join(path.dirname(file), 'check'));
@@ -169,7 +172,7 @@ async function single() {
         }, [CORNER, CONTROLS]);
         // The photograph is the card as the app draws it: its corners rounded and the save and share
         // in theirs, so it can be looked at as a reader would see it.
-        await p.evaluate(controls => {
+        if (!process.env.BARE) await p.evaluate(controls => {
           if (document.getElementById('__frame')) return;
           const f = document.createElement('div'); f.id = '__frame';
           f.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2147483647;border-radius:34px;box-shadow:0 0 0 40px #000';
