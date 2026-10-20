@@ -3606,4 +3606,357 @@ class RemoteLocalizations extends AppLocalizations {
   @override
   String get purposeEndLine =>
       _words.text('purposeEndLine') ?? _base.purposeEndLine;
+
+  @override
+  String get betsRangeTitle =>
+      _words.text('betsRangeTitle') ?? _base.betsRangeTitle;
+
+  @override
+  String get betsRangeLine =>
+      _words.text('betsRangeLine') ?? _base.betsRangeLine;
+
+  @override
+  String betsRangeWidth(int w, int pts) =>
+      _words.format('betsRangeWidth', localeName, {'w': w, 'pts': pts}) ??
+      _base.betsRangeWidth(w, pts);
+
+  @override
+  String get betsBet => _words.text('betsBet') ?? _base.betsBet;
+
+  @override
+  String betsInRange(int pts, String said) =>
+      _words.format('betsInRange', localeName, {'pts': pts, 'said': said}) ??
+      _base.betsInRange(pts, said);
+
+  @override
+  String betsMissedRange(String said) =>
+      _words.format('betsMissedRange', localeName, {'said': said}) ??
+      _base.betsMissedRange(said);
+
+  @override
+  String get betsYourGuess =>
+      _words.text('betsYourGuess') ?? _base.betsYourGuess;
+
+  @override
+  String get betsAnsweredAlready =>
+      _words.text('betsAnsweredAlready') ?? _base.betsAnsweredAlready;
+
+  @override
+  String get betsOpenCard => _words.text('betsOpenCard') ?? _base.betsOpenCard;
+
+  @override
+  String betsWalletSays(int n) =>
+      _words.format('betsWalletSays', localeName, {'n': n}) ??
+      _base.betsWalletSays(n);
+
+  @override
+  String get betsSlipTitle =>
+      _words.text('betsSlipTitle') ?? _base.betsSlipTitle;
+
+  @override
+  String betsSlipToday(String points) =>
+      _words.format('betsSlipToday', localeName, {'points': points}) ??
+      _base.betsSlipToday(points);
+
+  @override
+  String get betsSlipEmpty =>
+      _words.text('betsSlipEmpty') ?? _base.betsSlipEmpty;
+
+  @override
+  String get betsSlipTipTwice =>
+      _words.text('betsSlipTipTwice') ?? _base.betsSlipTipTwice;
+
+  @override
+  String get betsSlipTipThrice =>
+      _words.text('betsSlipTipThrice') ?? _base.betsSlipTipThrice;
+
+  @override
+  String betsSlipTipTimes(int times) =>
+      _words.format('betsSlipTipTimes', localeName, {'times': times}) ??
+      _base.betsSlipTipTimes(times);
+
+  @override
+  String betsSlipNarrow(int right, int n) =>
+      _words.format('betsSlipNarrow', localeName, {'right': right, 'n': n}) ??
+      _base.betsSlipNarrow(right, n);
+
+  @override
+  String betsSlipSure(int right, int n, int pct) =>
+      _words.format('betsSlipSure', localeName, {
+        'right': right,
+        'n': n,
+        'pct': pct,
+      }) ??
+      _base.betsSlipSure(right, n, pct);
+
+  @override
+  String get betsRight => _words.text('betsRight') ?? _base.betsRight;
+
+  @override
+  String get betsWrong => _words.text('betsWrong') ?? _base.betsWrong;
+
+  @override
+  String betsOneIn(String n) =>
+      _words.format('betsOneIn', localeName, {'n': n}) ?? _base.betsOneIn(n);
+
+  @override
+  String get betsOneInLabel =>
+      _words.text('betsOneInLabel') ?? _base.betsOneInLabel;
+
+  @override
+  String betsScore(int right, int steps) =>
+      _words.format('betsScore', localeName, {
+        'right': right,
+        'steps': steps,
+      }) ??
+      _base.betsScore(right, steps);
+
+  @override
+  String betsScoreSentence(int right, int steps) =>
+      _words.format('betsScoreSentence', localeName, {
+        'right': right,
+        'steps': steps,
+      }) ??
+      _base.betsScoreSentence(right, steps);
+
+  @override
+  String get betsStakeTitle =>
+      _words.text('betsStakeTitle') ?? _base.betsStakeTitle;
+
+  @override
+  String betsStakeLine(int points) =>
+      _words.format('betsStakeLine', localeName, {'points': points}) ??
+      _base.betsStakeLine(points);
+
+  @override
+  String get betsStakeLabel =>
+      _words.text('betsStakeLabel') ?? _base.betsStakeLabel;
+
+  @override
+  String betsBetN(int n) =>
+      _words.format('betsBetN', localeName, {'n': n}) ?? _base.betsBetN(n);
+
+  @override
+  String get betsPickFirst =>
+      _words.text('betsPickFirst') ?? _base.betsPickFirst;
+
+  @override
+  String get betsNotEnough =>
+      _words.text('betsNotEnough') ?? _base.betsNotEnough;
+
+  @override
+  String betsWin(int n) =>
+      _words.format('betsWin', localeName, {'n': n}) ?? _base.betsWin(n);
+
+  @override
+  String betsLose(int n) =>
+      _words.format('betsLose', localeName, {'n': n}) ?? _base.betsLose(n);
+
+  @override
+  String betsYouWereSure(int pct) =>
+      _words.format('betsYouWereSure', localeName, {'pct': pct}) ??
+      _base.betsYouWereSure(pct);
+
+  @override
+  String get betsFriendTitle =>
+      _words.text('betsFriendTitle') ?? _base.betsFriendTitle;
+
+  @override
+  String get betsFriendLine =>
+      _words.text('betsFriendLine') ?? _base.betsFriendLine;
+
+  @override
+  String get betsFriendNote =>
+      _words.text('betsFriendNote') ?? _base.betsFriendNote;
+
+  @override
+  String betsFriendNoteSaid(String said) =>
+      _words.format('betsFriendNoteSaid', localeName, {'said': said}) ??
+      _base.betsFriendNoteSaid(said);
+
+  @override
+  String get betsFriendSend =>
+      _words.text('betsFriendSend') ?? _base.betsFriendSend;
+
+  @override
+  String get betsFriendCopy =>
+      _words.text('betsFriendCopy') ?? _base.betsFriendCopy;
+
+  @override
+  String get betsFriendCopied =>
+      _words.text('betsFriendCopied') ?? _base.betsFriendCopied;
+
+  @override
+  String get betsFriendAsk =>
+      _words.text('betsFriendAsk') ?? _base.betsFriendAsk;
+
+  @override
+  String get betsNumberTitle =>
+      _words.text('betsNumberTitle') ?? _base.betsNumberTitle;
+
+  @override
+  String get betsNumberLine =>
+      _words.text('betsNumberLine') ?? _base.betsNumberLine;
+
+  @override
+  String get betsLock => _words.text('betsLock') ?? _base.betsLock;
+
+  @override
+  String get betsSpotOn => _words.text('betsSpotOn') ?? _base.betsSpotOn;
+
+  @override
+  String betsCloseEnough(String by) =>
+      _words.format('betsCloseEnough', localeName, {'by': by}) ??
+      _base.betsCloseEnough(by);
+
+  @override
+  String betsOffBy(String by) =>
+      _words.format('betsOffBy', localeName, {'by': by}) ?? _base.betsOffBy(by);
+
+  @override
+  String get betsYou => _words.text('betsYou') ?? _base.betsYou;
+
+  @override
+  String get betsAnswer => _words.text('betsAnswer') ?? _base.betsAnswer;
+
+  @override
+  String get betsBiggerTitle =>
+      _words.text('betsBiggerTitle') ?? _base.betsBiggerTitle;
+
+  @override
+  String get betsBiggerLine =>
+      _words.text('betsBiggerLine') ?? _base.betsBiggerLine;
+
+  @override
+  String get betsTapIfBigger =>
+      _words.text('betsTapIfBigger') ?? _base.betsTapIfBigger;
+
+  @override
+  String get betsBiggerGotIt =>
+      _words.text('betsBiggerGotIt') ?? _base.betsBiggerGotIt;
+
+  @override
+  String get betsBigger => _words.text('betsBigger') ?? _base.betsBigger;
+
+  @override
+  String get betsYourPick => _words.text('betsYourPick') ?? _base.betsYourPick;
+
+  @override
+  String get betsOr => _words.text('betsOr') ?? _base.betsOr;
+
+  @override
+  String get betsBiggerFoot =>
+      _words.text('betsBiggerFoot') ?? _base.betsBiggerFoot;
+
+  @override
+  String betsBiggerScore(int right, int n) =>
+      _words.format('betsBiggerScore', localeName, {'right': right, 'n': n}) ??
+      _base.betsBiggerScore(right, n);
+
+  @override
+  String get betsCloserTitle =>
+      _words.text('betsCloserTitle') ?? _base.betsCloserTitle;
+
+  @override
+  String betsCloserLine(String steps) =>
+      _words.format('betsCloserLine', localeName, {'steps': steps}) ??
+      _base.betsCloserLine(steps);
+
+  @override
+  String betsCloserStart(String steps) =>
+      _words.format('betsCloserStart', localeName, {'steps': steps}) ??
+      _base.betsCloserStart(steps);
+
+  @override
+  String betsMoreOrLess(String v) =>
+      _words.format('betsMoreOrLess', localeName, {'v': v}) ??
+      _base.betsMoreOrLess(v);
+
+  @override
+  String betsStepOf(int at, int of) =>
+      _words.format('betsStepOf', localeName, {'at': at, 'of': of}) ??
+      _base.betsStepOf(at, of);
+
+  @override
+  String get betsMore => _words.text('betsMore') ?? _base.betsMore;
+
+  @override
+  String get betsLess => _words.text('betsLess') ?? _base.betsLess;
+
+  @override
+  String betsCloserYesMore(String v) =>
+      _words.format('betsCloserYesMore', localeName, {'v': v}) ??
+      _base.betsCloserYesMore(v);
+
+  @override
+  String betsCloserYesLess(String v) =>
+      _words.format('betsCloserYesLess', localeName, {'v': v}) ??
+      _base.betsCloserYesLess(v);
+
+  @override
+  String betsCloserNoMore(String v) =>
+      _words.format('betsCloserNoMore', localeName, {'v': v}) ??
+      _base.betsCloserNoMore(v);
+
+  @override
+  String betsCloserNoLess(String v) =>
+      _words.format('betsCloserNoLess', localeName, {'v': v}) ??
+      _base.betsCloserNoLess(v);
+
+  @override
+  String betsCloserExact(String said) =>
+      _words.format('betsCloserExact', localeName, {'said': said}) ??
+      _base.betsCloserExact(said);
+
+  @override
+  String betsCloserDone(String said, int right, int steps) =>
+      _words.format('betsCloserDone', localeName, {
+        'said': said,
+        'right': right,
+        'steps': steps,
+      }) ??
+      _base.betsCloserDone(said, right, steps);
+
+  @override
+  String get betsMagnitudeTitle =>
+      _words.text('betsMagnitudeTitle') ?? _base.betsMagnitudeTitle;
+
+  @override
+  String get betsMagnitudeLine =>
+      _words.text('betsMagnitudeLine') ?? _base.betsMagnitudeLine;
+
+  @override
+  String get betsMagnitudeRight =>
+      _words.text('betsMagnitudeRight') ?? _base.betsMagnitudeRight;
+
+  @override
+  String betsMagnitudeOff(int n) =>
+      _words.format('betsMagnitudeOff', localeName, {'n': n}) ??
+      _base.betsMagnitudeOff(n);
+
+  @override
+  String get betsDayTitle => _words.text('betsDayTitle') ?? _base.betsDayTitle;
+
+  @override
+  String get betsDayLine => _words.text('betsDayLine') ?? _base.betsDayLine;
+
+  @override
+  String get betsDayTag => _words.text('betsDayTag') ?? _base.betsDayTag;
+
+  @override
+  String get betsDayTagSame =>
+      _words.text('betsDayTagSame') ?? _base.betsDayTagSame;
+
+  @override
+  String get betsLockIn => _words.text('betsLockIn') ?? _base.betsLockIn;
+
+  @override
+  String betsItIs(String said) =>
+      _words.format('betsItIs', localeName, {'said': said}) ??
+      _base.betsItIs(said);
+
+  @override
+  String betsPointsOff(int n) =>
+      _words.format('betsPointsOff', localeName, {'n': n}) ??
+      _base.betsPointsOff(n);
 }

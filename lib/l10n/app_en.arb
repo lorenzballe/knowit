@@ -3712,5 +3712,531 @@
  "purposeEndLine": "See you tomorrow",
  "@purposeEndLine": {
   "description": "Under the last line of Explore."
+ },
+ "betsRangeTitle": "Bet a range",
+ "@betsRangeTitle": {
+  "description": "Explore, bets: the name of the shelf where a share is bet on with a range, narrow or wide."
+ },
+ "betsRangeLine": "The narrower you go, the more it pays, if you're right",
+ "@betsRangeLine": {
+  "description": "Under the shelf's name: a narrow range pays more, but only when the answer is in it."
+ },
+ "betsRangeWidth": "±{w} · {pts} pts",
+ "@betsRangeWidth": {
+  "description": "One of the range widths: plus or minus w percentage points either side of the guess, and the points it pays when the answer is in it. Short: it sits in a chip.",
+  "placeholders": {
+   "w": {
+    "type": "int"
+   },
+   "pts": {
+    "type": "int"
+   }
+  }
+ },
+ "betsBet": "Bet",
+ "@betsBet": {
+  "description": "The button that lays a range bet."
+ },
+ "betsInRange": "In range: +{pts} points. It is {said}.",
+ "@betsInRange": {
+  "description": "After a range bet whose range held the answer: the points won, and the answer, said as a share (\"21%\").",
+  "placeholders": {
+   "pts": {
+    "type": "int"
+   },
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsMissedRange": "Missed: it is {said}.",
+ "@betsMissedRange": {
+  "description": "After a range bet whose range missed the answer: the answer, said as a share.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsYourGuess": "Your guess",
+ "@betsYourGuess": {
+  "description": "What a screen reader calls the track a share is set on."
+ },
+ "betsAnsweredAlready": "Answered already",
+ "@betsAnsweredAlready": {
+  "description": "On a bet whose card the reader already answered somewhere else: nothing left to bet on."
+ },
+ "betsOpenCard": "Open the card",
+ "@betsOpenCard": {
+  "description": "What a screen reader says a settled bet's tile does when tapped."
+ },
+ "betsWalletSays": "{n, plural, =1{1 point left today} other{{n} points left today}}",
+ "@betsWalletSays": {
+  "description": "What a screen reader says for the points pill beside a shelf of bets: the points left of the day's hundred.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsSlipTitle": "Your bet slip",
+ "@betsSlipTitle": {
+  "description": "The panel listing every bet laid today."
+ },
+ "betsSlipToday": "{points} today",
+ "@betsSlipToday": {
+  "description": "Beside the slip's name: the points won or lost today, already signed (\"+30\", \"−10\").",
+  "placeholders": {
+   "points": {
+    "type": "String"
+   }
+  }
+ },
+ "betsSlipEmpty": "No bets yet. Each one you place lands here.",
+ "@betsSlipEmpty": {
+  "description": "The slip before any bet is laid."
+ },
+ "betsSlipTipTwice": "Go narrow when you're sure: it pays twice as much.",
+ "@betsSlipTipTwice": {
+  "description": "At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays twice what the widest does."
+ },
+ "betsSlipTipThrice": "Go narrow when you're sure: it pays three times as much.",
+ "@betsSlipTipThrice": {
+  "description": "At the foot of the slip under the range bets, before any narrow bet: the narrowest range pays three times what the widest does."
+ },
+ "betsSlipTipTimes": "{times, plural, other{Go narrow when you're sure: it pays {times} times as much.}}",
+ "@betsSlipTipTimes": {
+  "description": "At the foot of the slip under the range bets, before any narrow bet: how many times more the narrowest range pays than the widest, four or more.",
+  "placeholders": {
+   "times": {
+    "type": "int"
+   }
+  }
+ },
+ "betsSlipNarrow": "Narrow bets right: {right} of {n}.",
+ "@betsSlipNarrow": {
+  "description": "At the foot of the slip: how many of the narrowest range bets held the answer.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsSlipSure": "Right on {right} of {n}, at {pct}% sure on average.",
+ "@betsSlipSure": {
+  "description": "At the foot of the slip: of the bets laid with how sure, how many were right, and how sure the reader said they were on average.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "betsRight": "Right",
+ "@betsRight": {
+  "description": "What a screen reader says for the tick beside a bet on the slip that was right."
+ },
+ "betsWrong": "Wrong",
+ "@betsWrong": {
+  "description": "What a screen reader says for the cross beside a bet on the slip that was wrong."
+ },
+ "betsOneIn": "1 in {n}",
+ "@betsOneIn": {
+  "description": "Odds, as a bet on them is said again on the slip and to a screen reader: \"1 in 1K\".",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "betsOneInLabel": "1 in",
+ "@betsOneInLabel": {
+  "description": "Small capitals over a row of odds to pick from, whose notches say only the n of \"1 in n\": 10, 100, 1K."
+ },
+ "betsScore": "{right} of {steps}",
+ "@betsScore": {
+  "description": "A game of more or less, as the slip says it: how many steps were said right.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "betsScoreSentence": "You got {right} of {steps}.",
+ "@betsScoreSentence": {
+  "description": "After a game of more or less that ended early on the answer itself: how many steps were said right.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "betsStakeTitle": "Place your bet",
+ "@betsStakeTitle": {
+  "description": "Explore, bets: the name of the shelf where points are staked on one of three amounts."
+ },
+ "betsStakeLine": "{points} points a day. Win and you double your stake",
+ "@betsStakeLine": {
+  "description": "Under the shelf's name: the points a day starts with, and what a winning stake pays.",
+  "placeholders": {
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "betsStakeLabel": "Stake",
+ "@betsStakeLabel": {
+  "description": "Small capitals before the stakes to choose from (10, 20, 30)."
+ },
+ "betsBetN": "Bet {n}",
+ "@betsBetN": {
+  "description": "The button that lays a stake of n points.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsPickFirst": "Pick one first",
+ "@betsPickFirst": {
+  "description": "Where the stake button will be, before an amount is picked."
+ },
+ "betsNotEnough": "Not enough points",
+ "@betsNotEnough": {
+  "description": "Where the stake button would be, when the stake is more than the points left."
+ },
+ "betsWin": "You win {n}.",
+ "@betsWin": {
+  "description": "After a stake on the right amount: the points won.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsLose": "You lose {n}.",
+ "@betsLose": {
+  "description": "After a stake on a wrong amount: the points lost.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsYouWereSure": "You were {pct}% sure.",
+ "@betsYouWereSure": {
+  "description": "After a bet laid with how sure: how sure the reader said they were.",
+  "placeholders": {
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "betsFriendTitle": "Bet a friend",
+ "@betsFriendTitle": {
+  "description": "Explore, bets: the name of the shelf that sends a card to a friend to guess."
+ },
+ "betsFriendLine": "Send them a question, then compare your guesses",
+ "@betsFriendLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsFriendNote": "Your guess stays on your phone. The card goes with its answer, so ask for theirs first.",
+ "@betsFriendNote": {
+  "description": "Under the card about to be sent: the reader's guess is not sent, and the card is sent with its answer."
+ },
+ "betsFriendNoteSaid": "You said {said}. The card goes with its answer, so ask for their guess first.",
+ "@betsFriendNoteSaid": {
+  "description": "Under the card about to be sent, once the reader bet on it: what they said, and that the card goes with its answer.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsFriendSend": "Send to a friend",
+ "@betsFriendSend": {
+  "description": "Opens the share sheet for the card."
+ },
+ "betsFriendCopy": "Copy the question",
+ "@betsFriendCopy": {
+  "description": "Copies the card's question and its options, without the answer."
+ },
+ "betsFriendCopied": "Question copied",
+ "@betsFriendCopied": {
+  "description": "Said once the question is copied."
+ },
+ "betsFriendAsk": "What do you say?",
+ "@betsFriendAsk": {
+  "description": "Under a question copied to send to a friend: asking for their guess."
+ },
+ "betsNumberTitle": "Your number",
+ "@betsNumberTitle": {
+  "description": "Explore, bets: the name of the shelf where a number is set on steppers and locked; also what a screen reader calls the number being set."
+ },
+ "betsNumberLine": "Set it, lock it, see how far off you were",
+ "@betsNumberLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsLock": "Lock",
+ "@betsLock": {
+  "description": "The button that locks a number set on steppers. Short: it sits beside four steppers."
+ },
+ "betsSpotOn": "Spot on.",
+ "@betsSpotOn": {
+  "description": "After a number locked exactly on the answer."
+ },
+ "betsCloseEnough": "Close enough: off by {by}.",
+ "@betsCloseEnough": {
+  "description": "After a number off by less than the card allows, so still right: by how much, with its unit (\"0.1 tonnes\").",
+  "placeholders": {
+   "by": {
+    "type": "String"
+   }
+  }
+ },
+ "betsOffBy": "Off by {by}.",
+ "@betsOffBy": {
+  "description": "After a number off by more than the card allows: by how much, with its unit (\"23 studies\").",
+  "placeholders": {
+   "by": {
+    "type": "String"
+   }
+  }
+ },
+ "betsYou": "you",
+ "@betsYou": {
+  "description": "Under the scale a locked number is shown on: the ring is you. Lowercase."
+ },
+ "betsAnswer": "answer",
+ "@betsAnswer": {
+  "description": "Under the scale a locked number is shown on: the bar is the answer. Lowercase."
+ },
+ "betsBiggerTitle": "Which is bigger?",
+ "@betsBiggerTitle": {
+  "description": "Explore, bets: the name of the shelf of two hidden figures and a tap on the bigger."
+ },
+ "betsBiggerLine": "Two figures you can work out. Tap the bigger one",
+ "@betsBiggerLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsTapIfBigger": "Tap if bigger",
+ "@betsTapIfBigger": {
+  "description": "Small capitals on a hidden figure, before the pick."
+ },
+ "betsBiggerGotIt": "Bigger · you got it",
+ "@betsBiggerGotIt": {
+  "description": "Small capitals on the bigger figure, when it was the one picked."
+ },
+ "betsBigger": "Bigger",
+ "@betsBigger": {
+  "description": "Small capitals on the bigger figure, when the other was picked."
+ },
+ "betsYourPick": "Your pick",
+ "@betsYourPick": {
+  "description": "Small capitals on the figure picked, when it was the smaller."
+ },
+ "betsOr": "or",
+ "@betsOr": {
+  "description": "In the small disc between two figures to compare. Lowercase, as short as can be."
+ },
+ "betsBiggerFoot": "Each figure is a card's answer. Once you pick, tap one to open its card.",
+ "@betsBiggerFoot": {
+  "description": "Under the pairs of figures, before any pick."
+ },
+ "betsBiggerScore": "Right on {right} of {n}.",
+ "@betsBiggerScore": {
+  "description": "Under the pairs of figures: how many picks were right.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsCloserTitle": "Closer, closer",
+ "@betsCloserTitle": {
+  "description": "Explore, bets: the name of the shelf where a share is closed in on by saying more or less."
+ },
+ "betsCloserLine": "{steps, select, 2{Two steps of more or less to close in on the number} 3{Three steps of more or less to close in on the number} 4{Four steps of more or less to close in on the number} 5{Five steps of more or less to close in on the number} other{{steps} steps of more or less to close in on the number}}",
+ "@betsCloserLine": {
+  "description": "Under the shelf's name: how many steps a game takes, 2 to 5, given as text so each can be a word.",
+  "placeholders": {
+   "steps": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserStart": "{steps, select, 2{Two steps to close in on it.} 3{Three steps to close in on it.} 4{Four steps to close in on it.} 5{Five steps to close in on it.} other{{steps} steps to close in on it.}}",
+ "@betsCloserStart": {
+  "description": "On a game of more or less, before the first step: how many steps it takes, 2 to 5, given as text so each can be a word.",
+  "placeholders": {
+   "steps": {
+    "type": "String"
+   }
+  }
+ },
+ "betsMoreOrLess": "More or less than {v}?",
+ "@betsMoreOrLess": {
+  "description": "The question of a step: is the answer more or less than this share?",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsStepOf": "Step {at} of {of}",
+ "@betsStepOf": {
+  "description": "Small capitals beside the question: which step this is.",
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "betsMore": "More",
+ "@betsMore": {
+  "description": "The button that says the answer is more."
+ },
+ "betsLess": "Less",
+ "@betsLess": {
+  "description": "The button that says the answer is less."
+ },
+ "betsCloserYesMore": "Right: it is more than {v}.",
+ "@betsCloserYesMore": {
+  "description": "After a step said right: the answer is more than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserYesLess": "Right: it is less than {v}.",
+ "@betsCloserYesLess": {
+  "description": "After a step said right: the answer is less than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserNoMore": "No: it is more than {v}.",
+ "@betsCloserNoMore": {
+  "description": "After a step said wrong: the answer is more than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserNoLess": "No: it is less than {v}.",
+ "@betsCloserNoLess": {
+  "description": "After a step said wrong: the answer is less than this share.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserExact": "It is exactly {said}.",
+ "@betsCloserExact": {
+  "description": "When the answer sits exactly on the share a step asked about, which ends the game.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsCloserDone": "It is {said}. You got {right} of {steps}.",
+ "@betsCloserDone": {
+  "description": "At the end of a game of more or less: the answer, and how many steps were said right.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   },
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "betsMagnitudeTitle": "Orders of magnitude",
+ "@betsMagnitudeTitle": {
+  "description": "Explore, bets: the name of the shelf where a size is picked by its order of magnitude."
+ },
+ "betsMagnitudeLine": "Ten, a thousand or a million? Pick the size",
+ "@betsMagnitudeLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsMagnitudeRight": "Right order of magnitude.",
+ "@betsMagnitudeRight": {
+  "description": "After a size picked at the right order of magnitude."
+ },
+ "betsMagnitudeOff": "{n, plural, =1{Off by 1 order of magnitude.} other{Off by {n} orders of magnitude.}}",
+ "@betsMagnitudeOff": {
+  "description": "After a size picked at the wrong order of magnitude: by how many powers of ten.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betsDayTitle": "The bet of the day",
+ "@betsDayTitle": {
+  "description": "Explore, bets: the name of the shelf with the bet of the day on top."
+ },
+ "betsDayLine": "Lock in your guess, then see how far off you were",
+ "@betsDayLine": {
+  "description": "Under the shelf's name."
+ },
+ "betsDayTag": "Bet of the day",
+ "@betsDayTag": {
+  "description": "The tag over the bet of the day. Shown in small capitals."
+ },
+ "betsDayTagSame": "Bet of the day · the same for everyone",
+ "@betsDayTagSame": {
+  "description": "The tag over the bet of the day, where the server says every reader is given the same card. Shown in small capitals."
+ },
+ "betsLockIn": "Lock in",
+ "@betsLockIn": {
+  "description": "The button that locks a guess set on a track."
+ },
+ "betsItIs": "It is {said}.",
+ "@betsItIs": {
+  "description": "Once a guess is locked: the answer, said as a share.",
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "betsPointsOff": "{n, plural, =0{Spot on.} =1{You were 1 percentage point off.} other{You were {n} percentage points off.}}",
+ "@betsPointsOff": {
+  "description": "Once a guess on a share is locked: how far off it was, in percentage points.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
  }
 }

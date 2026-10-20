@@ -3717,4 +3717,352 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get purposeEndLine => 'Yarın görüşürüz';
+
+  @override
+  String get betsRangeTitle => 'Aralığa oyna';
+
+  @override
+  String get betsRangeLine =>
+      'Ne kadar dar olursa, bilirsen o kadar çok kazandırır';
+
+  @override
+  String betsRangeWidth(int w, int pts) {
+    return '±$w · $pts p';
+  }
+
+  @override
+  String get betsBet => 'Oyna';
+
+  @override
+  String betsInRange(int pts, String said) {
+    return 'Aralıkta: +$pts puan. Cevap $said.';
+  }
+
+  @override
+  String betsMissedRange(String said) {
+    return 'Kaçtı: cevap $said.';
+  }
+
+  @override
+  String get betsYourGuess => 'Tahminin';
+
+  @override
+  String get betsAnsweredAlready => 'Zaten cevaplandı';
+
+  @override
+  String get betsOpenCard => 'Kartı aç';
+
+  @override
+  String betsWalletSays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bugün $n puanın kaldı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsSlipTitle => 'Kuponun';
+
+  @override
+  String betsSlipToday(String points) {
+    return 'Bugün $points';
+  }
+
+  @override
+  String get betsSlipEmpty =>
+      'Henüz bahis yok. Yaptığın her bahis burada görünür.';
+
+  @override
+  String get betsSlipTipTwice => 'Eminsen dar seç: iki kat kazandırır.';
+
+  @override
+  String get betsSlipTipThrice => 'Eminsen dar seç: üç kat kazandırır.';
+
+  @override
+  String betsSlipTipTimes(int times) {
+    String _temp0 = intl.Intl.pluralLogic(
+      times,
+      locale: localeName,
+      other: 'Eminsen dar seç: $times kat kazandırır.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String betsSlipNarrow(int right, int n) {
+    return 'Dar bahislerde isabet: $n bahiste $right.';
+  }
+
+  @override
+  String betsSlipSure(int right, int n, int pct) {
+    return '$n bahiste $right doğru, ortalama %$pct eminken.';
+  }
+
+  @override
+  String get betsRight => 'Doğru';
+
+  @override
+  String get betsWrong => 'Yanlış';
+
+  @override
+  String betsOneIn(String n) {
+    return '1/$n';
+  }
+
+  @override
+  String get betsOneInLabel => '1/…';
+
+  @override
+  String betsScore(int right, int steps) {
+    return '$steps adımda $right';
+  }
+
+  @override
+  String betsScoreSentence(int right, int steps) {
+    return '$steps adımda $right doğru.';
+  }
+
+  @override
+  String get betsStakeTitle => 'Bahsini koy';
+
+  @override
+  String betsStakeLine(int points) {
+    return 'Günde $points puan. Kazanırsan bahsin ikiye katlanır';
+  }
+
+  @override
+  String get betsStakeLabel => 'Bahis';
+
+  @override
+  String betsBetN(int n) {
+    return '$n oyna';
+  }
+
+  @override
+  String get betsPickFirst => 'Önce birini seç';
+
+  @override
+  String get betsNotEnough => 'Yeterli puan yok';
+
+  @override
+  String betsWin(int n) {
+    return '$n kazandın.';
+  }
+
+  @override
+  String betsLose(int n) {
+    return '$n kaybettin.';
+  }
+
+  @override
+  String betsYouWereSure(int pct) {
+    return '%$pct emindin.';
+  }
+
+  @override
+  String get betsFriendTitle => 'Bir arkadaşınla iddiaya gir';
+
+  @override
+  String get betsFriendLine =>
+      'Bir soru gönder, sonra tahminlerinizi karşılaştırın';
+
+  @override
+  String get betsFriendNote =>
+      'Tahminin telefonunda kalır. Kart cevabıyla birlikte gider, o yüzden önce onun tahminini sor.';
+
+  @override
+  String betsFriendNoteSaid(String said) {
+    return 'Tahminin: $said. Kart cevabıyla birlikte gider, o yüzden önce onun tahminini sor.';
+  }
+
+  @override
+  String get betsFriendSend => 'Bir arkadaşa gönder';
+
+  @override
+  String get betsFriendCopy => 'Soruyu kopyala';
+
+  @override
+  String get betsFriendCopied => 'Soru kopyalandı';
+
+  @override
+  String get betsFriendAsk => 'Sen ne dersin?';
+
+  @override
+  String get betsNumberTitle => 'Senin sayın';
+
+  @override
+  String get betsNumberLine => 'Ayarla, sabitle, ne kadar saptığını gör';
+
+  @override
+  String get betsLock => 'Sabitle';
+
+  @override
+  String get betsSpotOn => 'Tam isabet.';
+
+  @override
+  String betsCloseEnough(String by) {
+    return 'Yeterince yakın: $by saptın.';
+  }
+
+  @override
+  String betsOffBy(String by) {
+    return '$by saptın.';
+  }
+
+  @override
+  String get betsYou => 'sen';
+
+  @override
+  String get betsAnswer => 'cevap';
+
+  @override
+  String get betsBiggerTitle => 'Hangisi büyük?';
+
+  @override
+  String get betsBiggerLine => 'Hesaplanabilen iki sayı. Büyük olana dokun';
+
+  @override
+  String get betsTapIfBigger => 'Büyükse dokun';
+
+  @override
+  String get betsBiggerGotIt => 'Daha büyük · bildin';
+
+  @override
+  String get betsBigger => 'Daha büyük';
+
+  @override
+  String get betsYourPick => 'Senin seçimin';
+
+  @override
+  String get betsOr => 'ya da';
+
+  @override
+  String get betsBiggerFoot =>
+      'Her sayı bir kartın cevabı. Seçtikten sonra birine dokunarak kartını açabilirsin.';
+
+  @override
+  String betsBiggerScore(int right, int n) {
+    return '$n denemede $right doğru.';
+  }
+
+  @override
+  String get betsCloserTitle => 'Yaklaş';
+
+  @override
+  String betsCloserLine(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      'other': 'Sayıya yaklaşmak için $steps adım: daha fazla mı, daha az mı',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsCloserStart(String steps) {
+    String _temp0 = intl.Intl.selectLogic(steps, {
+      '2': 'Yaklaşmak için iki adım.',
+      '3': 'Yaklaşmak için üç adım.',
+      '4': 'Yaklaşmak için dört adım.',
+      '5': 'Yaklaşmak için beş adım.',
+      'other': 'Yaklaşmak için $steps adım.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String betsMoreOrLess(String v) {
+    return '$v değerinden fazla mı, az mı?';
+  }
+
+  @override
+  String betsStepOf(int at, int of) {
+    return 'Adım $at/$of';
+  }
+
+  @override
+  String get betsMore => 'Daha fazla';
+
+  @override
+  String get betsLess => 'Daha az';
+
+  @override
+  String betsCloserYesMore(String v) {
+    return 'Doğru: $v değerinden fazla.';
+  }
+
+  @override
+  String betsCloserYesLess(String v) {
+    return 'Doğru: $v değerinden az.';
+  }
+
+  @override
+  String betsCloserNoMore(String v) {
+    return 'Hayır: $v değerinden fazla.';
+  }
+
+  @override
+  String betsCloserNoLess(String v) {
+    return 'Hayır: $v değerinden az.';
+  }
+
+  @override
+  String betsCloserExact(String said) {
+    return 'Cevap tam olarak $said.';
+  }
+
+  @override
+  String betsCloserDone(String said, int right, int steps) {
+    return 'Cevap $said. $steps adımda $right doğru.';
+  }
+
+  @override
+  String get betsMagnitudeTitle => 'Büyüklük mertebesi';
+
+  @override
+  String get betsMagnitudeLine => 'On mu, bin mi, bir milyon mu? Büyüklüğü seç';
+
+  @override
+  String get betsMagnitudeRight => 'Mertebe doğru.';
+
+  @override
+  String betsMagnitudeOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n mertebe saptın.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get betsDayTitle => 'Günün bahsi';
+
+  @override
+  String get betsDayLine => 'Tahminini sabitle, sonra ne kadar saptığını gör';
+
+  @override
+  String get betsDayTag => 'Günün bahsi';
+
+  @override
+  String get betsDayTagSame => 'Günün bahsi · herkes için aynı';
+
+  @override
+  String get betsLockIn => 'Sabitle';
+
+  @override
+  String betsItIs(String said) {
+    return 'Cevap $said.';
+  }
+
+  @override
+  String betsPointsOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n yüzde puan saptın.',
+      zero: 'Tam isabet.',
+    );
+    return '$_temp0';
+  }
 }
