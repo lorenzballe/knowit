@@ -289,11 +289,12 @@ Fields: `label` (words).
 ### `web`
 
 A free section: a page made with the card kit (`docs/cards/kit/`), shown
-`height` points tall between the margins, in a card's corner. It is drawn by
-the web surface through one hook,
-`WebBlock.webSection(context, html:, height:)`; until the web surface is in the
-build the hook is null and the section is passed over, as a block the build
-does not know would be.
+`height` points tall between the margins, in a card's corner. It is drawn on
+the same surface as a free card's face (`lib/widgets/web/`), with the kit, the
+reader's theme and language inside it: a page that keeps a drag for itself
+marks it (`data-drag`), and every other drag scrolls Explore. Where the phone
+has no WebView, the section is passed over, as a block the build does not know
+would be.
 
 Fields: `html` (required, one page or one per language, at most 200 KB each),
 `height` (required, 40–1200).

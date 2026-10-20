@@ -1,0 +1,223 @@
+{
+ "_note": "A proposal: today's Explore, with a bet near the top, a special of the day that changes with the weekday, stamps, a set to finish, a hand of paradoxes and an end.",
+ "sections": [
+  {
+   "id": "nothing",
+   "block": "nothing-here"
+  },
+  {
+   "id": "offline",
+   "block": "offline"
+  },
+  {
+   "id": "today",
+   "block": "today",
+   "gap": 0
+  },
+  {
+   "id": "top",
+   "block": "top"
+  },
+  {
+   "id": "loved",
+   "block": "loved"
+  },
+  {
+   "id": "bets-range",
+   "block": "bets-range",
+   "size": "m",
+   "limit": 4
+  },
+  {
+   "id": "asking",
+   "block": "asking"
+  },
+  {
+   "id": "special-mon",
+   "block": "expert",
+   "experts": [
+    "statistician",
+    "historian",
+    "doctor"
+   ],
+   "audience": {
+    "weekdays": [
+     1
+    ]
+   }
+  },
+  {
+   "id": "special-tue",
+   "block": "connect-dots",
+   "subject": "economics",
+   "audience": {
+    "weekdays": [
+     2
+    ]
+   }
+  },
+  {
+   "id": "special-wed",
+   "block": "bets-day",
+   "size": "l",
+   "same": true,
+   "audience": {
+    "weekdays": [
+     3
+    ]
+   }
+  },
+  {
+   "id": "special-thu",
+   "block": "change-your-mind",
+   "audience": {
+    "weekdays": [
+     4
+    ]
+   }
+  },
+  {
+   "id": "special-fri",
+   "block": "say-it-tonight",
+   "limit": 4,
+   "audience": {
+    "weekdays": [
+     5
+    ]
+   }
+  },
+  {
+   "id": "special-sat",
+   "block": "purpose.life-question",
+   "topic": "money",
+   "audience": {
+    "weekdays": [
+     6
+    ]
+   }
+  },
+  {
+   "id": "special-sun",
+   "block": "shape-deck",
+   "signature": "quote",
+   "audience": {
+    "weekdays": [
+     7
+    ]
+   }
+  },
+  {
+   "id": "mine",
+   "block": "mine"
+  },
+  {
+   "id": "where-you-live",
+   "block": "where-you-live"
+  },
+  {
+   "id": "month",
+   "block": "month"
+  },
+  {
+   "id": "europe",
+   "block": "shape-stamp",
+   "variant": 2,
+   "style": {
+    "tilt": true
+   }
+  },
+  {
+   "id": "signature-numbers",
+   "block": "numbers"
+  },
+  {
+   "id": "signature-debates",
+   "block": "debates"
+  },
+  {
+   "id": "theme-sharpest-0",
+   "block": "sharpest"
+  },
+  {
+   "id": "theme-origins-0",
+   "block": "origins"
+  },
+  {
+   "id": "theme-stories-0",
+   "block": "stories"
+  },
+  {
+   "id": "theme-trueOrFalse-0",
+   "block": "true-false"
+  },
+  {
+   "id": "set-myths",
+   "block": "purpose.set",
+   "theme": "myths"
+  },
+  {
+   "id": "came-back",
+   "block": "came-back"
+  },
+  {
+   "id": "move-sampling",
+   "block": "move-sampling"
+  },
+  {
+   "id": "move-counterfactual",
+   "block": "move-compared"
+  },
+  {
+   "id": "work",
+   "block": "work"
+  },
+  {
+   "id": "unmask",
+   "block": "unmask"
+  },
+  {
+   "id": "how-sure",
+   "block": "how-sure",
+   "gap": 28
+  },
+  {
+   "id": "what-if",
+   "block": "what-if"
+  },
+  {
+   "id": "series",
+   "block": "series"
+  },
+  {
+   "id": "sixty",
+   "block": "sixty"
+  },
+  {
+   "id": "mood",
+   "block": "mood",
+   "gap": 28
+  },
+  {
+   "id": "did-you-know",
+   "block": "did-you-know"
+  },
+  {
+   "id": "surprise",
+   "block": "surprise"
+  },
+  {
+   "id": "paradoxes",
+   "block": "shape-hand",
+   "signature": "circles",
+   "limit": 5
+  },
+  {
+   "id": "theme-practical-0",
+   "block": "practical"
+  },
+  {
+   "id": "the-end",
+   "block": "purpose.end"
+  }
+ ]
+}
