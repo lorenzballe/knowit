@@ -168,11 +168,54 @@ Most of that is the searches, which cost a cent each on any model. So a
 cheaper model saves less than it seems: `--model claude-sonnet-5` takes the
 same request as Opus at two and a half times less per token and brings a
 card to roughly two thirds of the price, which is the way to run a trial
-night; Haiku would save cents more, needs other tool versions, and writes
-worse cards, so the generator does not offer it. A run with `--fake` costs
+night. `--model claude-haiku-5-5` costs a fiftieth of Opus per token, so on
+it the searches are most of a card's price; it gets the older search and
+fetch tools and has no fallback, and it is meant for the cards from videos
+below, which search three times rather than ten. A run with `--fake` costs
 nothing at all and needs no key: it exercises everything but the writing,
 and the nightly workflow takes it as an input, opening a pull request that
 says in its title it is not to be merged.
+
+## Cards from videos
+
+A video that does well is often one surprising, checkable claim, and a
+claim is a place to start. A chain outside this repository watches the
+videos and hands over **leads**: a JSON list, one object each — `id`,
+`video` (its address), `title`, `channel`, `idea` (the claim in one
+paragraph, as the video states it), `figures`, `links` (the addresses in
+its description) and `language`.
+
+```
+python3 tool/cards/generate.py --leads leads.json --dry-run    # the placer's brief, a lead's scout brief
+python3 tool/cards/generate.py --leads leads.json --fake       # the plumbing, no model, no key
+python3 tool/cards/generate.py --leads leads.json --batch --model claude-haiku-5-5
+```
+
+1. The **placer** (low effort, no tools) reads each lead against the
+   strands, the kinds, the principles and the sections of `RULES.md` that
+   say what is not worth a card, and keeps it or turns it down with a line
+   of why. What it keeps it places: subject, strand, kind, principle,
+   difficulty. A program then holds the place to the tree and the rules —
+   a strand under its subject, no principle on a read or a debate, a read
+   easy — and a lead turned down or placed where no card can go is in the
+   report, never in the bank.
+2. A placed lead is a request like any other and goes through the stages
+   above, with two differences. Its **scout** starts from the claim, tries
+   the description's links first and looks for the page that states the
+   claim with its figures; when the claim does not hold, it brings what is
+   true nearby or nothing. It searches three times and may open four
+   pages: the fetch tool opens only an address already in the
+   conversation, which is why the brief lists the links. Its **critic**
+   searches once. The video is never the source; the card cites the page.
+3. Every card written is then offered a **scene** (`scenes.py`,
+   `scene_kinds/`, an example of each kind from `samples/`), or none. A
+   scene that fails its check gets one round of repair, and the card is
+   filed again with it only if the whole card still passes the gate; the
+   pull request says how many got one. `--no-scenes` skips this.
+
+On Haiku a card from a lead comes to a few cents, most of it the four
+searches. The outcomes (`--outcomes`) carry each lead's `id`, so the chain
+can tell which of its leads became cards.
 
 ## The calendar
 

@@ -51,6 +51,7 @@ on:
         options:
           - claude-opus-5
           - claude-sonnet-5
+          - claude-haiku-5-5
         default: claude-opus-5
       fake:
         description: A canned model instead of the API — no key, no cost, nothing to merge
