@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-graphene-space-elevator -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+.hold{font:800 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;width:100%;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent;transition:transform .12s}
+.hold.down{transform:scale(.97);opacity:.88}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPACE ELEVATOR</span></div>
+    <h2 class="q">What is a potential application of graphene in space?</h2>
+    <div class="stagebox" id="stage"><svg id="sky" aria-label="A graphene cable from Earth to a satellite in orbit"></svg></div>
+    <div id="ctl">
+      <p class="say" id="say">Hold the button to send a platform up the graphene cable. Watch the fuel.</p>
+      <button class="hold" id="hold">Hold to lift ▲</button>
+    </div>
+    <div id="why" class="gone">
+      <p class="big">A space elevator</p>
+      <p class="body">A super-strong graphene cable from the ground to a satellite in orbit works like a space pulley. Platforms and instruments ride it up into space without a gram of fuel. Futuristic, but graphene's strength may make it feasible.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A graphene cable to an orbiting satellite could lift loads to space with zero fuel.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {p: 0, holding: false, done: false};
+let G = null, E = {};
+const STARS = Array.from({length: 46}, () => [Kit.rnd(), Kit.rnd() * 0.8, 0.4 + Kit.rnd() * 1.1]);
+const NS = 'http://www.w3.org/2000/svg';
+
+function draw() {
+  const svg = Kit.$('sky');
+  svg.innerHTML = `<defs>
+    <linearGradient id="gsp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070f"/><stop offset=".7" stop-color="#0d1838"/><stop offset="1" stop-color="#1b3a6e"/></linearGradient>
+    <radialGradient id="gea" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4fa8ff"/><stop offset=".5" stop-color="#1f5fbf"/><stop offset="1" stop-color="#0b2a66"/></radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.85, 12);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#gsp)'});
+  STARS.forEach(([x, y, r], i) => { const rr = r * Math.max(1, W / 360); mk('circle', {class: 'star', cx: rr + x * (W - 2 * rr), cy: rr + y * H, r: rr, fill: '#fff', opacity: .35 + (i % 4) * .15}); });
+
+  const cx = W / 2;
+  const topY = H * 0.84;
+  const R = Math.max(W, H) * 1.2;
+  const ecy = topY + R;
+  const satH = Math.max(W * 0.05, 14);
+  const satY = fs * 2.4 + satH * 0.6;            // satellite centre
+  const gea = svg.querySelector('#gea');
+  gea.setAttribute('cx', cx); gea.setAttribute('cy', ecy - R * 0.9); gea.setAttribute('r', R * 1.2);
+  const cap = (r) => { const y0 = ecy - Math.sqrt(r * r - cx * cx); return `M0 ${y0.toFixed(1)} A${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${W} ${y0.toFixed(1)} L${W} ${H} L0 ${H}Z`; };
+  // orbit
+  const ro = ecy - satY, oy = ecy - Math.sqrt(ro * ro - cx * cx);
+  mk('path', {d: `M0 ${oy.toFixed(1)} A${ro.toFixed(1)} ${ro.toFixed(1)} 0 0 1 ${W} ${oy.toFixed(1)}`, fill: 'none', stroke: '#8fb8ff', 'stroke-opacity': .45, 'stroke-width': 1.5, 'stroke-dasharray': '4 7'});
+  // Earth
+  mk('path', {d: cap(R + 6), fill: '#4fa8ff', opacity: .25, filter: 'url(#glow)'});
+  mk('path', {d: cap(R), fill: 'url(#gea)'});
+  mk('ellipse', {cx: cx - W * .25, cy: topY + H * .07, rx: W * .16, ry: H * .025, fill: '#3fae6a', opacity: .8});
+  mk('ellipse', {cx: cx + W * .3, cy: topY + H * .1, rx: W * .12, ry: H * .02, fill: '#3fae6a', opacity: .7});
+  const et = mk('text', {x: cx, y: H - fs * 0.6, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}); et.textContent = 'Earth';
+
+  // cable: a chain of graphene hexagons
+  const cg = mk('g', {id: 'cable'});
+  const cw = Math.max(3, W * 0.011);
+  mk('line', {x1: cx, y1: topY, x2: cx, y2: satY, stroke: '#7fe9ff', 'stroke-width': cw, filter: 'url(#glow)', 'stroke-linecap': 'round'}, cg);
+  const hs = Math.max(W * 0.014, 5); let d = '';
+  for (let y = topY - hs; y > satY + satH * 0.6; y -= hs * 1.75) {
+    for (let k = 0; k < 6; k++) {
+      const a = Math.PI / 3 * k + Math.PI / 6;
+      d += (k ? 'L' : 'M') + (cx + hs * Math.cos(a)).toFixed(1) + ' ' + (y + hs * Math.sin(a)).toFixed(1);
+    }
+    d += 'Z';
+  }
+  mk('path', {d, fill: 'none', stroke: '#d9fbff', 'stroke-width': 1.2, opacity: .9}, cg);
+
+  // satellite
+  const sg = mk('g', {id: 'sat'});
+  const pw = satH * 1.6;
+  mk('circle', {id: 'satglow', cx, cy: satY, r: satH * 1.4, fill: '#ffe27a', opacity: S.done ? .45 : 0, filter: 'url(#glow)'}, sg);
+  mk('rect', {x: cx - satH * .6 - pw, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#3b6fd8', stroke: '#bcd3ff', 'stroke-width': 1}, sg);
+  mk('rect', {x: cx + satH * .6, y: satY - satH * .35, width: pw, height: satH * .7, fill: '#3b6fd8', stroke: '#bcd3ff', 'stroke-width': 1}, sg);
+  mk('rect', {x: cx - satH * .6, y: satY - satH * .6, width: satH * 1.2, height: satH * 1.2, rx: 3, fill: '#e8edf5'}, sg);
+  const st = mk('text', {x: cx, y: satY - satH * .6 - fs * 0.7, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}); st.textContent = 'Satellite in orbit';
+
+  // fuel readout (left)
+  const fx = Math.max(f * 0.7, 10), fy = H * 0.46;
+  const f1 = mk('text', {x: fx, y: fy, fill: '#bcd3ff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(fs * .8, 12)}); f1.textContent = 'FUEL BURNED';
+  const f2 = mk('text', {id: 'fuel', x: fx, y: fy + fs * 3, fill: '#7dffb0', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2.1}); f2.textContent = '0 g';
+
+  // platform
+  const plw = Math.max(W * 0.13, 40), plh = Math.max(W * 0.05, 16);
+  const pg = mk('g', {id: 'plat'});
+  mk('rect', {x: cx - plw / 2, y: -plh, width: plw, height: plh, rx: 4, fill: '#ffc93d', stroke: '#fff3c4', 'stroke-width': 1.5}, pg);
+  mk('rect', {x: cx - plw * .22, y: -plh * 1.7, width: plw * .44, height: plh * .7, rx: 2, fill: '#ff8a3d'}, pg);
+  const pl = mk('text', {id: 'plabel', x: cx + plw / 2 + fs * .5, y: -plh * .25, fill: '#ffe08a', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, pg); pl.textContent = 'Platform';
+
+  G = {topY, satY, satH, plh, cx};
+  E = {plat: pg, plabel: pl, fuel: f2, glow: svg.querySelector('#satglow'), cable: cg};
+  place();
+}
+
+function place() {
+  if (!G) return;
+  const bottom = G.topY, top = G.satY + G.satH * .6 + G.plh;
+  const y = bottom - (bottom - top) * S.p;
+  E.plat.setAttribute('transform', `translate(0 ${y.toFixed(1)})`);
+  E.plabel.setAttribute('opacity', S.p > .72 ? 0 : 1);
+}
+
+function finish() {
+  S.done = true; S.holding = false;
+  gsap.ticker.remove(tick);
+  Kit.haptic('success');
+  Kit.$('hold').classList.remove('down');
+  Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
+  if (E.glow) { if (Kit.calm) E.glow.setAttribute('opacity', .45); else gsap.fromTo(E.glow, {attr: {opacity: 0}}, {attr: {opacity: .45}, duration: .6, yoyo: true, repeat: 1, onComplete: () => E.glow.setAttribute('opacity', .45)}); }
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+let last = 0;
+function tick() {
+  const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!S.holding || S.done) return;
+  S.p = Math.min(1, S.p + dt / 3.2);
+  place();
+  if (S.p >= 1) finish();
+}
+
+const btn = Kit.$('hold');
+function down(e) {
+  if (S.done) return; e.preventDefault();
+  S.holding = true; btn.classList.add('down'); btn.textContent = 'Lifting… keep holding';
+  Kit.haptic('light'); last = performance.now(); gsap.ticker.add(tick);
+  if (E.fuel && !Kit.calm) gsap.fromTo(E.fuel, {opacity: .5}, {opacity: 1, duration: .5, repeat: 1});
+}
+function up() {
+  if (!S.holding || S.done) return;
+  S.holding = false; btn.classList.remove('down'); gsap.ticker.remove(tick);
+  btn.textContent = 'Hold to lift ▲';
+  Kit.$('say').textContent = 'It climbs only while you hold. Fuel burned so far: still 0 g.';
+}
+btn.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(t => btn.addEventListener(t, up));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => draw();
+if (window.ResizeObserver) new ResizeObserver(() => { if (G) draw(); }).observe(Kit.$('stage'));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !E.cable) return;
+  gsap.from(E.cable, {scaleY: 0, transformOrigin: '50% 100%', duration: 1.1, ease: 'power2.out'});
+  gsap.from('#sat', {opacity: 0, y: -10, duration: .6, delay: .7});
+  gsap.to('.star', {opacity: .2, duration: 1.4, stagger: {each: .05, repeat: -1, yoyo: true}});
+};
+
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 3800));
+  if (!S.done) { S.p = 1; place(); finish(); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

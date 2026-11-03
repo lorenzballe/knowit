@@ -1,0 +1,37 @@
+{
+  "id": "science-shade-balls",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.mixing_cleaners",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Los Angeles pour 96 million black balls onto its drinking water?",
+  "answer": "News reports in 2015 said the balls were there to stop evaporation during the drought. The black balls actually shade the water so a carcinogen, bromate, can't form. Saving water came second.",
+  "move": "The balls shade the water so a carcinogen can’t form. Saving water came second.",
+  "keywords": [
+    "los angeles",
+    "bromate",
+    "shade balls",
+    "ladwp",
+    "drought"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A water reservoir covered in black balls. A counter reads 0 balls, and red specks sit under the surface. A Sweep to pour control adds balls so the reader can watch the specks. The question asked is why the balls are black."
+  },
+  "source": "Veritasium, “Why Are 96,000,000 Black Balls on This Reservoir?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=uxPdPpi5W4o",
+  "written": "2026-11-03"
+}

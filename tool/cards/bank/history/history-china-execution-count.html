@@ -1,0 +1,105 @@
+<!doctype html>
+<!-- slug: history-china-execution-count -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#mapbox{flex:1;min-height:0;position:relative}
+#map{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEATH PENALTY</span></div>
+    <h2 class="q">Why is China's exact number of executions unknown?</h2>
+    <div class="stagebox" id="stage">
+      <div id="mapbox"><svg id="map"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">There are too many to count</button>
+        <button class="opt" data-i="1">The government publishes no official figures</button>
+        <button class="opt" data-i="2">Each province counts in a different way</button>
+      </div>
+      <div id="why" class="gone"><p class="big">No official figures</p><p class="body">The government does not publish its statistics. Groups like Amnesty International and ECPM can only estimate: thousands of people executed in 2025, but the precise number is unknown.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the reason. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>China tops the list, yet its real total stays a secret: only estimates exist.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false;
+const P = [[0,40],[10,25],[20,22],[28,10],[38,12],[45,20],[55,22],[62,14],[70,5],[80,2],[88,8],[85,18],[95,20],[92,30],[84,32],[80,40],[86,48],[82,58],[76,66],[68,72],[58,74],[50,70],[42,72],[35,66],[28,60],[20,55],[12,50],[4,46]];
+let G = {};
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  done = true;
+  draw(); reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function draw(){
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const s = Math.max(0.5, Math.min(W*0.9/100, (H - fs*4.4)/84));
+  const ox = (W - 100*s)/2, oy = Math.max(2, (H - (84*s + fs*4.2))/2);
+  const X = p => ox + p[0]*s, Y = p => oy + p[1]*s;
+  const d = 'M' + P.map(p => X(p).toFixed(1)+','+Y(p).toFixed(1)).join('L') + 'Z';
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id:'cn'}, defs);
+  Kit.mk('path', {d}, cp);
+  Kit.mk('path', {d, style:'fill:var(--k);stroke:var(--k);stroke-width:'+(s*1.2)+';stroke-linejoin:round'}, svg);
+  Kit.mk('circle', {cx:ox+62*s, cy:oy+80*s, r:s*2.4, style:'fill:var(--k)'}, svg);
+  const dots = Kit.mk('g', {'clip-path':'url(#cn)'}, svg);
+  G.dots = [];
+  if (done) {
+    for (let i = 0; i < 220; i++) {
+      const c = Kit.mk('circle', {cx:ox+Kit.rnd()*100*s, cy:oy+Kit.rnd()*76*s, r:s*0.9, style:'fill:var(--c);opacity:.55'}, dots);
+      G.dots.push(c);
+    }
+  }
+  const q = Kit.mk('text', {x:ox+48*s, y:oy+38*s, 'text-anchor':'middle', 'dominant-baseline':'central', style:`font:800 ${Math.max(46*s,24)}px var(--display);fill:var(--c)`}, svg);
+  q.textContent = '?';
+  G.q = q;
+  const ty = oy + 84*s + fs*1.3;
+  const lab = Kit.mk('text', {x:W/2, y:ty, 'text-anchor':'middle', style:`font:700 ${fs*0.9}px var(--body);fill:var(--k);opacity:.7`}, svg);
+  lab.textContent = done ? 'Estimate: thousands · exact count:' : 'Executions in China, 2025';
+  const val = Kit.mk('text', {x:W/2, y:ty + fs*2.2, 'text-anchor':'middle', style:`font:800 ${fs*1.7}px var(--mono);fill:var(--k)`}, svg);
+  val.textContent = '?,???';
+  G.val = val;
+  if (!Kit.calm && !done) gsap.to(q, {scale:1.08, transformOrigin:'50% 50%', duration:1, yoyo:true, repeat:-1, ease:'sine.inOut'});
+}
+
+function reveal(){
+  if (Kit.calm) return;
+  gsap.from(G.dots, {opacity:0, duration:.3, stagger:{each:.006, from:'random'}});
+  const o = {t:0};
+  gsap.to(o, {t:1, duration:1.6, ease:'none',
+    onUpdate(){ G.val.textContent = String(1000 + Math.floor(Math.random()*9000)).replace(/(\d)(\d{3})/, '$1,$2'); },
+    onComplete(){ G.val.textContent = '?,???'; Kit.haptic('light'); gsap.from(G.val, {opacity:0, duration:.4}); }});
+}
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
+Kit.single();
+</script>
+</html>

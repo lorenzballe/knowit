@@ -1,0 +1,37 @@
+{
+  "id": "technology-rainy-summer-hydro",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of Italy's August power could one very rainy summer supply?",
+  "answer": "An unexpectedly rainy summer filled Italy's rivers and reservoirs. Dams turned the extra water into power, so in August hydro nearly covered 90% of demand and other sources were briefly barely needed.",
+  "move": "Hydro output follows the rain: one wet summer nearly powered Italy alone.",
+  "keywords": [
+    "italy",
+    "hydropower",
+    "dams",
+    "reservoirs",
+    "rainfall"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Hydro Power asks how much of Italy's August power one very rainy summer could supply. A tappable sky is shown, and the reveal reads almost 90 percent of demand covered by hydro."
+  },
+  "source": "Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=VTtMdKzQn48&t=69s",
+  "written": "2026-11-03"
+}

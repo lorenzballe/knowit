@@ -1,0 +1,130 @@
+<!doctype html>
+<!-- slug: technology-tunnel-water-table -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:1.8cqh;overflow:hidden}
+#sw{display:flex;gap:2cqw;background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:2cqh;padding:.6cqh}
+.sw{flex:1;font:700 max(2cqh,13px)/1.15 var(--body);color:var(--k);background:transparent;border:0;border-radius:1.5cqh;padding:1.3cqh 2cqw;cursor:pointer}
+.sw.on{background:var(--k);color:var(--c)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0}
+.foot{padding-right:110px}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TUNNELS</span></div>
+    <h2 class="q">If you just dug this tunnel, how high would the water rise?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw">
+        <button class="sw on" data-v="0">Rock as it is</button>
+        <button class="sw" data-v="1">Just dig</button>
+      </div>
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="why" class="gone"><p class="body">The volcanic rock here is soaked with water. Open a hole and the water pours in: it would reach 14.33 m above sea level, so the tunnel would be flooded.</p></div>
+    </div>
+    <p class="say" id="say">Flip the switch to “Just dig” and watch the tunnel.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Dig below the water table and the hole fills up to it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Alta Velocità Napoli-Bari: siamo andati a vedere come la stanno scavando attraverso gli Appennini” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const BLUE = '#1f78d1';
+let dug = false, G = {};
+function lcg(s){return()=>(s=(s*16807)%2147483647)/2147483647;}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f*0.85);
+  const s = H*0.12, yw = H*0.33;
+  const r = Math.min(W*0.2, H*0.19), cx = W*0.62, cy = H*0.68, bot = cy + r*0.55, top = cy - r;
+  const tp = `M${cx-r},${bot} L${cx-r},${cy} A${r} ${r} 0 0 1 ${cx+r},${cy} L${cx+r},${bot} Z`;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id:'tclip'}, defs); Kit.mk('path', {d:tp}, cp);
+  // sky and ground
+  Kit.mk('rect', {x:0,y:0,width:W,height:H,style:'fill:color-mix(in srgb,var(--k) 4%,var(--c))'}, svg);
+  Kit.mk('rect', {x:0,y:s,width:W,height:H-s,style:'fill:color-mix(in srgb,var(--k) 16%,var(--c))'}, svg);
+  Kit.mk('rect', {x:0,y:yw,width:W,height:H-yw,fill:BLUE,opacity:.16}, svg);
+  Kit.mk('line', {x1:0,y1:s,x2:W,y2:s,'stroke-width':3,style:'stroke:var(--k)'}, svg);
+  // pores
+  const R = lcg(7), n = Math.round(W*H/520);
+  for (let i=0;i<n;i++){
+    const x = R()*W, y = s + 6 + R()*(H-s-10), rr = 1.2 + R()*2.2;
+    const inT = Math.abs(x-cx) < r+4 && y > top-4 && y < bot+4;
+    if (inT) continue;
+    Kit.mk('circle', {cx:x,cy:y,r:rr, fill: y>yw ? BLUE : 'none', opacity: y>yw ? .75 : .45,
+      style: y>yw ? '' : 'stroke:var(--k)', 'stroke-width':1}, svg);
+  }
+  // water table line
+  Kit.mk('line', {x1:0,y1:yw,x2:W,y2:yw,stroke:BLUE,'stroke-width':3,'stroke-dasharray':'9 6'}, svg);
+  // tunnel
+  const plug = Kit.mk('path', {d:tp, style:'fill:color-mix(in srgb,var(--k) 16%,var(--c))'}, svg);
+  const air = Kit.mk('path', {d:tp, style:'fill:var(--c)', opacity: dug?1:0}, svg);
+  const wg = Kit.mk('g', {'clip-path':'url(#tclip)'}, svg);
+  const full = bot - top;
+  const water = Kit.mk('rect', {x:cx-r-2,width:2*r+4, y: dug?top:bot, height: dug?full:0, fill:BLUE}, wg);
+  const outline = Kit.mk('path', {d:tp, fill:'none','stroke-width':3,
+    'stroke-dasharray': dug?'none':'8 6', style:'stroke:var(--k)'}, svg);
+  const tLab = Kit.mk('text', {x:cx,y:cy+fs*0.2,'text-anchor':'middle','font-size':fs,'font-weight':700,
+    style:`font-family:var(--body);fill:${dug?'#fff':'var(--k)'}`}, svg);
+  tLab.textContent = dug ? 'flooded' : 'tunnel to dig';
+  // arrow from crown up to the line
+  const ag = Kit.mk('g', {opacity: dug?1:0}, svg);
+  const ax = cx + r + Math.min(18, W*0.05);
+  Kit.mk('line', {x1:ax,y1:top+r*0.4,x2:ax,y2:yw+10,stroke:BLUE,'stroke-width':3}, ag);
+  Kit.mk('path', {d:`M${ax-7},${yw+14} L${ax},${yw+2} L${ax+7},${yw+14} Z`, fill:BLUE}, ag);
+  // labels
+  const L = (x,y,t,st,w=700,a='start') => { const e = Kit.mk('text',{x,y,'font-size':fs,'font-weight':w,'text-anchor':a,style:'font-family:var(--body);'+st},svg); e.textContent=t; return e; };
+  L(12, s - fs*0.5, 'Ground surface', 'fill:var(--k)', 600);
+  L(12, yw - fs*0.55, 'Water would reach', `fill:${BLUE}`, 700);
+  const big = Kit.mk('text',{x:12,y:yw+fs*1.7,'font-size':fs*1.5,'font-weight':800,style:`font-family:var(--display);fill:${BLUE}`},svg);
+  big.textContent = '14.33 m';
+  L(12, yw+fs*3.7, 'above sea level', `fill:${BLUE}`, 700);
+  L(12, H - fs*0.8, 'Volcanic rock, soaked', 'fill:var(--k)', 600);
+  G = {plug, air, water, top, full, bot, outline, tLab, ag, big};
+}
+
+function setCase(v, anim){
+  if (dug === v) return;
+  dug = v;
+  document.querySelectorAll('.sw').forEach(b => b.classList.toggle('on', +b.dataset.v === +v));
+  const {air, water, top, full, bot, outline, tLab, ag} = G;
+  gsap.killTweensOf([air, water, ag]);
+  const quick = !anim || Kit.calm;
+  if (v){
+    outline.setAttribute('stroke-dasharray','none');
+    tLab.textContent = 'dug: dry?'; tLab.style.fill = 'var(--k)';
+    if (quick){ gsap.set(air,{opacity:1}); gsap.set(water,{attr:{y:top,height:full}}); gsap.set(ag,{opacity:1}); tLab.textContent='flooded'; tLab.style.fill='#fff'; }
+    else {
+      const tl = gsap.timeline();
+      tl.to(air,{opacity:1,duration:.4})
+        .to(water,{attr:{y:top,height:full},duration:1.4,ease:'power1.in'},'+=.25')
+        .add(()=>{ tLab.textContent='flooded'; tLab.style.fill='#fff'; Kit.haptic('success'); }, '-=.5')
+        .to(ag,{opacity:1,duration:.4});
+    }
+    Kit.show('why'); Kit.show('keep'); Kit.hide('say');
+  } else {
+    outline.setAttribute('stroke-dasharray','8 6');
+    tLab.textContent = 'tunnel to dig'; tLab.style.fill = 'var(--k)';
+    if (quick){ gsap.set(air,{opacity:0}); gsap.set(water,{attr:{y:bot,height:0}}); gsap.set(ag,{opacity:0}); }
+    else { gsap.to(ag,{opacity:0,duration:.2}); gsap.to(water,{attr:{y:bot,height:0},duration:.5}); gsap.to(air,{opacity:0,duration:.4,delay:.3}); }
+  }
+}
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('.sw'); if (!b) return;
+  Kit.haptic('selection'); setCase(b.dataset.v === '1', true);
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity:0, y:10, duration:.5, ease:'power3.out'}); };
+Kit.play.card = async () => { Kit.$('sw').children[1].click(); await new Promise(r => setTimeout(r, 2600)); };
+Kit.single();
+</script>
+</html>

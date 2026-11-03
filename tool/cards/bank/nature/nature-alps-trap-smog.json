@@ -1,0 +1,37 @@
+{
+  "id": "nature-alps-trap-smog",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Milan's spot beside the Alps make its air so dirty?",
+  "answer": "The Alps block the strong winds that would otherwise carry Milan's smog away. The Po Valley is a basin between the Alps and the Apennines, so its air is rarely replaced. Sending the north wind toward Milan shows the smog staying in place.",
+  "move": "No wind to sweep it away, so Milan's smog stays at home.",
+  "keywords": [
+    "milan",
+    "alps",
+    "po-valley",
+    "smog",
+    "north-wind"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking why Milan's air is so dirty. Wind arrows hit the Alps and are blocked, leaving the Po Valley stagnant. The reader can send a north wind toward Milan and watch the smog."
+  },
+  "source": "Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=x75-xpsPT9c&t=208s",
+  "written": "2026-11-03"
+}

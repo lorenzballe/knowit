@@ -1,0 +1,161 @@
+<!doctype html>
+<!-- slug: psychology-psychogenic-polydipsia -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;justify-content:center}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{overflow-wrap:anywhere}
+.go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer}
+.go:active{transform:scale(.97)}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENDLESS THIRST</span></div>
+    <h2 class="q">What psychiatric condition makes a person feel constantly thirsty?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl"><button class="go" id="go">Give both a glass</button></div>
+      <div id="why" class="gone"><p class="big">Psychogenic polydipsia</p><p class="body">A psychiatric disorder keeps the feeling of thirst switched on, so water never quenches it. The person drinks far more than the body needs, which risks overhydration. It is very rare.</p></div>
+    </div>
+    <p class="say" id="say">Tap to hand both people a glass. Watch their thought bubbles.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When thirst comes from the mind, drinking doesn't make it stop.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const END = 6, BLUE = '#2f7dff', RED = '#e63946';
+let n = 0, R = {};
+const svg = Kit.$('pic');
+const lvl = side => side === 'L' ? 0.35 + Math.min(n, 2) * 0.1 : Math.min(0.35 + n * 0.1, 0.95);
+const gScale = side => side === 'L' ? Math.max(0, 1 - n / 2) : 1;
+function el(tag, a, p, style){ const e = Kit.mk(tag, a, p); if (style) e.setAttribute('style', style); return e; }
+
+function personCompact(side, cx, W, H, fs){
+  const lh = fs * 1.3;
+  if (H < 2.5 * lh) return;
+  const g = el('g', {}, svg);
+  const glass = el('g', {}, g, 'display:none');
+  const ok = el('text', {}, g, 'display:none');
+  const top = 4, h = H - 1.5 * lh - top, w = Math.min(W * 0.19, Math.max(h, 20) * 0.8);
+  let water, torso;
+  if (h >= 16) {
+    const id = 'clip' + side;
+    const cp = el('clipPath', {id}, g);
+    el('rect', {x: cx - w / 2, y: top, width: w, height: h, rx: w * 0.3}, cp);
+    water = el('rect', {x: cx - w / 2, y: top + h * (1 - lvl(side)), width: w, height: h, 'clip-path': `url(#${id})`}, g, `fill:${BLUE}`);
+    torso = el('rect', {x: cx - w / 2, y: top, width: w, height: h, rx: w * 0.3}, g, 'fill:none;stroke:var(--k);stroke-width:3');
+    if (side === 'R') {
+      const ly = top + h * 0.2;
+      el('line', {x1: cx - w / 2 - 6, x2: cx + w / 2 + 6, y1: ly, y2: ly}, g, `stroke:${RED};stroke-width:2.5;stroke-dasharray:6 4`);
+    }
+  } else {
+    water = el('rect', {}, g, 'display:none');
+    torso = el('rect', {}, g, 'display:none');
+  }
+  const cnt = el('text', {x: cx, y: H - 0.3 * lh, 'text-anchor': 'middle'}, g, `font:400 ${fs}px var(--mono);fill:var(--muted)`);
+  R[side] = {glass, ok, water, torso, cnt, top, h: Math.max(h, 1), cx, mouth: top};
+  paint(side, false);
+}
+
+function person(side, cx, W, H, fs){
+  const lh = fs * 1.3;
+  if (H < 12 * lh) return personCompact(side, cx, W, H, fs);
+  const g = el('g', {}, svg);
+  const head = Math.min(H * 0.055, W * 0.06), hy = H * 0.42;
+  const top = hy + head * 1.35, bottom = Math.min(H * 0.79, H - 3.5 * lh);
+  const h = Math.max(bottom - top, 20), w = Math.min(W * 0.19, H * 0.2);
+  // thought bubble
+  const bcy = H * 0.17, brx = Math.min(W * 0.2, H * 0.16), bry = H * 0.12;
+  const bub = el('g', {}, g);
+  el('ellipse', {cx, cy: bcy, rx: brx, ry: bry}, bub, 'fill:color-mix(in srgb,var(--k) 7%,var(--c));stroke:var(--k);stroke-width:2');
+  el('circle', {cx: cx - head * 0.6, cy: bcy + bry + head * 0.45, r: head * 0.28}, bub, 'fill:none;stroke:var(--k);stroke-width:2');
+  el('circle', {cx: cx - head * 0.35, cy: hy - head * 1.35, r: head * 0.16}, bub, 'fill:none;stroke:var(--k);stroke-width:2');
+  const gh = bry * 1.4, tw = gh * 0.72, bw = gh * 0.52, gy = bcy - gh / 2;
+  const glass = el('g', {}, bub);
+  const wy = gy + gh * 0.3, k = (wy - gy) / gh, ww = tw - (tw - bw) * k;
+  el('path', {d: `M${cx - ww / 2},${wy} L${cx + ww / 2},${wy} L${cx + bw / 2},${gy + gh} L${cx - bw / 2},${gy + gh} Z`}, glass, `fill:${BLUE};opacity:.85`);
+  el('path', {d: `M${cx - tw / 2},${gy} L${cx + tw / 2},${gy} L${cx + bw / 2},${gy + gh} L${cx - bw / 2},${gy + gh} Z`}, glass, 'fill:none;stroke:var(--k);stroke-width:2.5;stroke-linejoin:round');
+  const ok = el('text', {x: cx, y: bcy + fs * 0.35, 'text-anchor': 'middle'}, bub, `font:700 ${fs}px var(--body);fill:var(--k);opacity:0`);
+  ok.textContent = 'quenched ✓';
+  // head + torso
+  el('circle', {cx, cy: hy, r: head}, g, 'fill:var(--k)');
+  const id = 'clip' + side;
+  const cp = el('clipPath', {id}, g);
+  el('rect', {x: cx - w / 2, y: top, width: w, height: h, rx: w * 0.3}, cp);
+  const water = el('rect', {x: cx - w / 2, y: top + h * (1 - lvl(side)), width: w, height: h, 'clip-path': `url(#${id})`}, g, `fill:${BLUE}`);
+  const torso = el('rect', {x: cx - w / 2, y: top, width: w, height: h, rx: w * 0.3}, g, 'fill:none;stroke:var(--k);stroke-width:3');
+  if (side === 'R') {
+    const ly = top + h * 0.2;
+    el('line', {x1: cx - w / 2 - 6, x2: cx + w / 2 + 6, y1: ly, y2: ly}, g, `stroke:${RED};stroke-width:2.5;stroke-dasharray:6 4`);
+    const t = el('text', {x: cx, y: ly - fs * 0.45, 'text-anchor': 'middle'}, g, `font:700 ${Math.max(12, fs * 0.85)}px var(--body);fill:${RED}`);
+    t.textContent = 'too much';
+  }
+  const names = side === 'L' ? ['Ordinary', 'thirst'] : ['Psychogenic', 'polydipsia'];
+  names.forEach((s, i) => { const t = el('text', {x: cx, y: H - 2.4 * lh + i * lh, 'text-anchor': 'middle'}, g, `font:700 ${fs}px var(--body);fill:var(--k)`); t.textContent = s; });
+  const cnt = el('text', {x: cx, y: H - 0.3 * lh, 'text-anchor': 'middle'}, g, `font:400 ${fs}px var(--mono);fill:var(--muted)`);
+  R[side] = {glass, ok, water, torso, cnt, top, h, cx, mouth: hy + head * 0.4};
+  paint(side, false);
+}
+
+function paint(side, anim){
+  const r = R[side]; if (!r) return;
+  const y = r.top + r.h * (1 - lvl(side)), d = anim ? .6 : 0;
+  gsap.to(r.water, {attr: {y}, duration: d, ease: 'power2.out'});
+  gsap.to(r.glass, {scale: Math.max(gScale(side), 0.001), opacity: gScale(side) ? 1 : 0, svgOrigin: `${r.cx} ${r.top}`, transformOrigin: '50% 50%', duration: d, ease: 'back.out(1.6)'});
+  if (side === 'L') gsap.to(r.ok, {opacity: n >= 2 ? 1 : 0, duration: d});
+  if (side === 'R') r.torso.style.stroke = lvl('R') > 0.8 ? RED : 'var(--k)';
+  const drunk = side === 'L' ? Math.min(n, 2) : n;
+  r.cnt.textContent = `${drunk} glass${drunk === 1 ? '' : 'es'}`;
+}
+
+function drop(side){
+  const r = R[side]; if (!r) return;
+  const c = el('circle', {cx: r.cx, cy: r.mouth, r: 5}, svg, `fill:${BLUE}`);
+  gsap.fromTo(c, {opacity: 1}, {attr: {cy: r.top + r.h * 0.5}, opacity: 0, duration: .5, ease: 'power1.in', onComplete: () => c.remove()});
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (n >= END) return;
+  const leftDrinks = n < 2;
+  n++; Kit.haptic('light');
+  if (leftDrinks) drop('L');
+  drop('R');
+  paint('L', true); paint('R', true);
+  if (n === 2) Kit.$('say').textContent = 'Left feels done. Right still sees the glass. Keep going.';
+  if (n === 4) Kit.$('say').textContent = 'Right drinks on, past what the body needs.';
+  if (n >= END) {
+    Kit.haptic('success');
+    setTimeout(() => {
+      Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.onShow.card();
+      if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+    }, 500);
+  }
+});
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = ''; R = {};
+  const fs = Math.max(12, Math.min(f, W / 13, H / 16));
+  person('L', W * 0.27, W, H, fs);
+  person('R', W * 0.73, W, H, fs);
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic > g', {opacity: 0, y: 12, stagger: .12, duration: .5, ease: 'power3.out'});
+  gsap.from('.go', {opacity: 0, scale: .9, delay: .3, duration: .4, ease: 'back.out(2)'});
+};
+Kit.play.card = async () => {
+  for (let i = 0; i < END; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

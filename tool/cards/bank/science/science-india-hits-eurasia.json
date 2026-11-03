@@ -1,0 +1,37 @@
+{
+  "id": "science-india-hits-eurasia",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What collision built the Himalaya, and why is it the tallest chain?",
+  "answer": "India moved north at a remarkable speed and crashed head-on into Eurasia. The crust at the impact had nowhere to go but up, so it crumpled and piled into the Himalaya, the tallest chain on Earth.",
+  "move": "The Himalaya is the scar of India smashing violently into Eurasia.",
+  "keywords": [
+    "himalaya",
+    "india",
+    "eurasia",
+    "tectonics",
+    "collision"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Animated cross-section of the crust: drag India north into Eurasia and watch the rock crumple and rise into the Himalaya. Asks what collision built the Himalaya and why it is the tallest chain."
+  },
+  "source": "Geopop, “Vi mostro cosa è sepolto sotto lo Stretto di Messina - la geologia tra Calabria e Sicilia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=zDIbAY7Br5k&t=308s",
+  "written": "2026-11-03"
+}

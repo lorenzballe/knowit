@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-oyster-water-filter -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{width:100%;height:100%;display:block;flex:1;min-height:0}
+#hold{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:2cqh;padding:1.8cqh 5cqw;cursor:pointer;width:100%;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#hold.down{transform:scale(.97);opacity:.9}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display)}
+.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OYSTER REEFS</span></div>
+    <h2 class="q">How much water can a single oyster filter in one day?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <button id="hold">Hold to let the oyster feed</button>
+    <p class="say" id="say">Hold the button: each square is one litre of murky sea.</p>
+    <div id="why" class="gone">
+      <p class="big">110 to 190 litres a day</p>
+      <p class="body">To feed, an oyster pulls sea water in and keeps the particles and algae, letting cleaner water out. Day after day that adds up, so oyster reefs work as natural biofilters for the whole ecosystem.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One small oyster cleans 110–190 litres of water every day.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LO = 110, HI = 190, COLS = 10, ROWS = 19;
+const MURK = '#6f7a3c', CLEAR = '#2f9fe0', LIGHT = '#8fd0f5';
+let t = 0, holding = false, done = false, fast = false;
+let G = null;
+
+function build() {
+  const svg = Kit.$('pic');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const labW = fs * 3.4;
+  const cell = Math.min((H * .94) / ROWS, (W - labW) * .52 / COLS);
+  const gap = Math.max(1, cell * .12);
+  const tw = cell * COLS, th = cell * ROWS;
+  const tx = labW, ty = (H - th) / 2;
+  const g = {W, H, f: fs, cell, tx, ty, tw, th, cells: [], parts: []};
+
+  // tank frame
+  Kit.mk('rect', {x: tx - gap * 2, y: ty - gap * 2, width: tw + gap * 3, height: th + gap * 3, rx: cell * .3, fill: 'none', style: 'stroke:var(--k);stroke-width:' + Math.max(2, cell * .1)}, svg);
+  for (let i = 0; i < LO + (HI - LO); i++) {
+    const r = Math.floor(i / COLS), c = i % COLS;
+    const x = tx + c * cell, y = ty + th - (r + 1) * cell;
+    g.cells.push(Kit.mk('rect', {x, y, width: cell - gap, height: cell - gap, rx: cell * .18, fill: MURK}, svg));
+  }
+  // labels left of the tank
+  const yLo = ty + th - (LO / COLS) * cell - gap / 2;
+  const lab = (y, txt) => {
+    Kit.mk('line', {x1: tx - labW * .25, x2: tx + tw, y1: y, y2: y, style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:4 3'}, svg);
+    const e = Kit.mk('text', {x: tx - labW * .32, y: y + fs * .35, 'text-anchor': 'end', style: `font:800 ${fs}px var(--mono);fill:var(--k)`}, svg);
+    e.textContent = txt;
+  };
+  lab(ty - gap, '190 L');
+  lab(yLo, '110 L');
+  const z = Kit.mk('text', {x: tx - labW * .32, y: ty + th + fs * .3, 'text-anchor': 'end', style: `font:700 ${fs}px var(--mono);fill:var(--k);opacity:.6`}, svg);
+  z.textContent = '0 L';
+
+  // right column
+  const cx0 = tx + tw + gap * 2, cw = W - cx0;
+  const ccx = cx0 + cw / 2;
+  g.hour = Kit.mk('text', {x: ccx, y: ty + fs, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  g.lit = Kit.mk('text', {x: ccx, y: ty + fs * 3.1, 'text-anchor': 'middle', style: `font:800 ${fs * 1.75}px var(--display);fill:var(--k)`}, svg);
+  g.sub = Kit.mk('text', {x: ccx, y: ty + fs * 4.6, 'text-anchor': 'middle', style: `font:600 ${fs}px var(--body);fill:var(--k);opacity:.75`}, svg);
+  g.sub.textContent = 'filtered';
+
+  // oyster
+  const s = Math.min(cw * .4, H * .14);
+  const ox = ccx, oy = ty + th - s * .9;
+  g.ox = ox; g.oy = oy; g.s = s; g.cx0 = cx0;
+  const o = Kit.mk('g', {transform: `translate(${ox},${oy})`}, svg);
+  Kit.mk('ellipse', {cx: s * .05, cy: s * .02, rx: s * .82, ry: s * .16, fill: '#2b211f'}, o);
+  Kit.mk('path', {d: `M${-s},0 C${-s},${.55 * s} ${.6 * s},${.6 * s} ${s},${.08 * s} C${.85 * s},${-.04 * s} ${-.85 * s},${-.04 * s} ${-s},0Z`, fill: '#857868', stroke: '#3a302a', 'stroke-width': Math.max(1.5, s * .04)}, o);
+  const top = Kit.mk('g', {}, o);
+  Kit.mk('path', {d: `M${-s},0 C${-.9 * s},${-.62 * s} ${.7 * s},${-.62 * s} ${s},${.08 * s} C${.6 * s},${.04 * s} ${-.6 * s},${.04 * s} ${-s},0Z`, fill: '#cfc4b1', stroke: '#3a302a', 'stroke-width': Math.max(1.5, s * .04)}, top);
+  for (let k = 1; k <= 3; k++) {
+    const q = k / 4;
+    Kit.mk('path', {d: `M${-s * .9},${-s * .02} C${-.8 * s},${-.5 * s * q} ${.55 * s},${-.5 * s * q} ${.9 * s},${.06 * s}`, fill: 'none', stroke: '#9c8f7a', 'stroke-width': Math.max(1, s * .03)}, top);
+  }
+  g.top = top;
+  const ol = Kit.mk('text', {x: ox, y: oy + s * .55 + fs * 1.2, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  ol.textContent = 'one oyster';
+
+  g.layer = Kit.mk('g', {}, svg);
+  G = g;
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const lo = Math.floor(LO * t), hi = Math.floor(HI * t);
+  G.cells.forEach((c, i) => c.setAttribute('fill', i < lo ? CLEAR : i < hi ? LIGHT : MURK));
+  G.hour.textContent = `Hour ${Math.min(24, Math.floor(t * 24))} of 24`;
+  G.lit.textContent = t <= 0 ? '0 L' : `${lo}–${hi} L`;
+}
+
+function spawn() {
+  const g = G, s = g.s;
+  if (Kit.rnd() < .5) { // algae coming in
+    const el = Kit.mk('circle', {r: Math.max(2, s * .06), fill: '#5c8a2a'}, g.layer);
+    g.parts.push({el, x: g.W - 4, y: g.oy - s * (.2 + Kit.rnd() * 1.2), tx: g.ox + s * .5, ty: g.oy, life: 0, dur: .9});
+  } else { // clean water leaving to the tank
+    const el = Kit.mk('circle', {r: Math.max(2, s * .07), fill: CLEAR}, g.layer);
+    const hy = g.ty + g.th - Math.max(1, Math.floor(HI * t / COLS)) * g.cell * Kit.rnd();
+    g.parts.push({el, x: g.ox - s * .6, y: g.oy - s * .1, tx: g.cx0, ty: hy, life: 0, dur: .8});
+  }
+}
+
+gsap.ticker.add((time, dt) => {
+  const sec = dt / 1000;
+  if (holding && !done) {
+    t = Math.min(1, t + sec / (fast ? .8 : 7));
+    render();
+    if (!Kit.calm && G && Kit.rnd() < .5) spawn();
+    if (t >= 1) finish();
+  }
+  if (G) G.parts = G.parts.filter(p => {
+    p.life += sec / p.dur;
+    if (p.life >= 1) { p.el.remove(); return false; }
+    const e = 1 - Math.pow(1 - p.life, 2);
+    p.el.setAttribute('cx', p.x + (p.tx - p.x) * e);
+    p.el.setAttribute('cy', p.y + (p.ty - p.y) * e);
+    p.el.setAttribute('opacity', 1 - p.life * .6);
+    return true;
+  });
+});
+
+function setHold(on) {
+  if (done) on = false;
+  if (on === holding) return;
+  holding = on;
+  Kit.$('hold').classList.toggle('down', on);
+  if (on) Kit.haptic('light');
+  if (G && !Kit.calm) gsap.to(G.top, {rotation: on ? -9 : 0, svgOrigin: `${-G.s} 0`, duration: .35, ease: 'power2.out'});
+}
+
+function finish() {
+  done = true; setHold(false); holding = false;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+const btn = Kit.$('hold');
+btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (_) {} setHold(true); });
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => btn.addEventListener(n, () => setHold(false)));
+btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setHold(true); } });
+btn.addEventListener('keyup', () => setHold(false));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.cells, {opacity: 0, duration: .3, stagger: .003, ease: 'power1.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+  await new Promise(r => setTimeout(r, 1300));
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true, pointerId: 1}));
+  if (!done) { t = 1; render(); finish(); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

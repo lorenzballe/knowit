@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- slug: history-titanic-open-bulkheads -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#top{display:flex;align-items:baseline;justify-content:space-between;gap:3cqw;flex-wrap:wrap}
+#count{font:800 max(3.4cqh,20px)/1 var(--display);color:var(--k)}
+#count span{font:700 max(1.8cqh,13px)/1.2 var(--body);color:var(--k);opacity:.75;margin-left:1.5cqw}
+#legend{display:flex;align-items:center;gap:1.5cqw;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--k);opacity:.8}
+#legend i{display:inline-block;width:7cqw;min-width:24px;height:0;border-top:max(.35cqh,2px) dashed #ff5a4e}
+#wrap{position:relative;flex:1;min-height:0;border-radius:1.6cqh;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,18px)/1.15 var(--display)}
+#why .body{font:600 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TITANIC</span></div>
+    <h2 class="q">Titanic had 16 watertight compartments. Why didn't they keep it afloat?</h2>
+    <div class="stagebox" id="stage">
+      <div id="top">
+        <div id="count"><b id="n">1</b><span>/ 16 compartments flooded</span></div>
+        <div id="legend"><i></i>sea level</div>
+      </div>
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="why" class="gone">
+        <p class="big">The walls had no lids.</p>
+        <p class="body">Each bulkhead was only a vertical wall, open at the top. As the bow tipped down, the water rose over one wall and spilled into the next compartment, then the next.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the ship to tip its bow lower. Watch the red sea line.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A wall open on top only holds water while the ship stays level.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Titanic, la ricostruzione del naufragio della nave "inaffondabile" il cui relitto giace nell'Oceano” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NC = 16, TARGET = [1, 2, 3, 4, 6, 8, 11, 16], STEPS = TARGET.length - 1, DMAX = 0.02;
+const S = {th: 0, d: 0, step: 0, busy: false, done: false, p: new Array(NC).fill(0), started: new Array(NC).fill(false)};
+S.p[0] = 1; S.started[0] = true;
+let fast = false, lastEnd = 0, shown = 1;
+let ctx = null, W = 0, H = 0, L = 0, c = 0, Hh = 0, WL = 0, Hb = 0, ry = 0, x0 = 0, seaY = 0;
+const cv = Kit.$('cv');
+const dur = x => fast ? x * 0.2 : x;
+const INK = '#16181d', PAPER = '#f6f0e4', WATER = '#3d8fe3', SEA = '#143a68', LINE = '#ff5a4e';
+
+function setup() {
+  const r = Kit.fitCanvas(cv); ctx = r.x; W = r.W; H = r.H;
+  if (!W || !H) return;
+  L = Math.min(W * 0.92, H * 1.15); c = L / NC;
+  Hh = 0.17 * L; WL = 0.42 * Hh; Hb = 0.62 * Hh; ry = Hb - WL;
+  x0 = (W - L) / 2; seaY = Math.max(H * 0.3, 0.25 * L);
+  draw();
+}
+function wyOf(sx, sy) { return (sx - L) * Math.sin(S.th) + (sy - WL) * Math.cos(S.th); }
+function scr(sx, sy) {
+  const cs = Math.cos(S.th), sn = Math.sin(S.th), rx = sx - L, r2 = sy - WL;
+  return [x0 + L + rx * cs - r2 * sn, seaY + S.d * L - (rx * sn + r2 * cs)];
+}
+function T() { ctx.translate(x0 + L, seaY + S.d * L); ctx.rotate(-S.th); }
+function hullPath() {
+  const P = (sx, sy) => [sx - L, WL - sy];
+  ctx.beginPath();
+  ctx.moveTo(...P(0, Hh)); ctx.lineTo(...P(0.045 * L, 0)); ctx.lineTo(...P(0.975 * L, 0));
+  ctx.lineTo(...P(L, 0.35 * Hh)); ctx.lineTo(...P(L, Hh)); ctx.closePath();
+}
+function levelOf(k) {
+  const b = Math.max(scr(k * c, 0)[1], scr((k + 1) * c, 0)[1]);
+  return b + (seaY - b) * S.p[k];
+}
+function update() {
+  if (!L) return;
+  let n = 1; while (n < NC && wyOf(n * c, Hb) < S.d * L) n++;
+  const now = performance.now() / 1000;
+  for (let k = 1; k < n; k++) if (!S.started[k]) {
+    S.started[k] = true;
+    const delay = Math.max(0, lastEnd - now), dd = dur(0.5);
+    lastEnd = now + delay + dd * 0.6;
+    gsap.to(S.p, {[k]: 1, duration: dd, delay, ease: 'power1.in', onUpdate: draw});
+  }
+}
+function draw() {
+  if (!ctx || !W) return;
+  ctx.clearRect(0, 0, W, H);
+  // sea
+  ctx.fillStyle = SEA; ctx.fillRect(0, seaY, W, H - seaY);
+  // hull interior
+  ctx.save(); T(); hullPath(); ctx.fillStyle = PAPER; ctx.fill(); ctx.restore();
+  // water in each compartment, its surface level with the sea
+  for (let k = 0; k < NC; k++) if (S.p[k] > 0) {
+    const lvl = levelOf(k);
+    ctx.save(); T(); hullPath(); ctx.clip();
+    ctx.beginPath(); ctx.rect(k * c - L, WL - Hh - 2, c, Hh + 4); ctx.clip();
+    ctx.rotate(S.th); ctx.translate(-(x0 + L), -(seaY + S.d * L));
+    ctx.fillStyle = WATER; ctx.fillRect(0, lvl, W, H - lvl + 2);
+    ctx.restore();
+  }
+  // water pouring over the top of a wall
+  for (let k = 1; k < NC; k++) if (S.p[k] > 0 && S.p[k] < 1) {
+    const [X, Y] = scr(k * c, Hb), lvl = levelOf(k);
+    ctx.save(); ctx.strokeStyle = WATER; ctx.lineCap = 'round'; ctx.lineWidth = Math.max(3, c * 0.22);
+    ctx.beginPath(); ctx.moveTo(X - c * 0.15, Y - 2);
+    ctx.quadraticCurveTo(X + c * 0.35, Y - c * 0.1, X + c * 0.4, Math.max(Y + 2, lvl));
+    ctx.stroke(); ctx.restore();
+  }
+  // bulkheads, hull, funnels
+  ctx.save(); T();
+  const P = (sx, sy) => [sx - L, WL - sy];
+  ctx.strokeStyle = INK; ctx.lineCap = 'round'; ctx.lineWidth = Math.max(2, c * 0.1);
+  ctx.beginPath();
+  for (let k = 1; k < NC; k++) { ctx.moveTo(...P(k * c, 0)); ctx.lineTo(...P(k * c, Hb)); }
+  ctx.stroke();
+  ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(2.5, c * 0.13); hullPath(); ctx.stroke();
+  [0.34, 0.45, 0.56, 0.67].forEach(fx => {
+    const fw = 0.04 * L, fh = 0.55 * Hh, [a, b] = P(fx * L, Hh);
+    ctx.fillStyle = '#e3a33b'; ctx.fillRect(a, b - fh, fw, fh);
+    ctx.fillStyle = INK; ctx.fillRect(a, b - fh, fw, fh * 0.22);
+    ctx.lineWidth = Math.max(1.5, c * 0.06); ctx.strokeRect(a, b - fh, fw, fh);
+  });
+  ctx.restore();
+  // sea level
+  ctx.save(); ctx.strokeStyle = LINE; ctx.lineWidth = Math.max(2, H * 0.006);
+  ctx.setLineDash([7, 6]); ctx.beginPath(); ctx.moveTo(0, seaY); ctx.lineTo(W, seaY); ctx.stroke(); ctx.restore();
+  // counter
+  const n = S.p.filter(v => v > 0.4).length;
+  if (n !== shown) {
+    shown = n; Kit.$('n').textContent = n;
+    if (!Kit.calm) gsap.fromTo('#n', {scale: 1.35}, {scale: 1, duration: .35, ease: 'back.out(3)', transformOrigin: '50% 60%'});
+  }
+}
+function tick() { update(); draw(); }
+function finish() {
+  S.done = true;
+  gsap.to(S, {th: S.th + 0.1, d: S.d + 0.04, duration: dur(1.4), delay: dur(0.5), ease: 'power2.in', onUpdate: tick, onComplete: () => {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  }});
+}
+function tap() {
+  if (S.busy || S.done || !L) return;
+  S.step++;
+  const n = TARGET[S.step], dn = S.step / STEPS * DMAX, dpx = dn * L;
+  const A = L - (n - 1) * c, R = Math.hypot(A, ry);
+  const th = Math.atan2(ry, A) + Math.asin(-dpx / R) + 0.006;
+  S.busy = true; Kit.haptic('light');
+  gsap.to(S, {th: Math.max(S.th, th), d: dn, duration: dur(0.9), ease: 'power2.inOut', onUpdate: tick, onComplete: () => {
+    S.busy = false; if (S.step === STEPS) finish();
+  }});
+}
+Kit.$('stage').addEventListener('click', tap);
+new ResizeObserver(() => setup()).observe(Kit.$('wrap'));
+Kit.onShow.card = () => setup();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#wrap', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < STEPS; i++) { Kit.$('stage').click(); await wait(320); }
+  await wait(1600);
+};
+Kit.single();
+</script>
+</html>

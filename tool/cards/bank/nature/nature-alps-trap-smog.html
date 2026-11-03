@@ -1,0 +1,163 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-alps-trap-smog -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#sv{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;justify-content:center}
+.go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 6cqw;cursor:pointer;transition:opacity .3s}
+.go:disabled{opacity:.4;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Try it · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIR &amp; MOUNTAINS</span></div>
+    <h2 class="q">Why does Milan's spot beside the Alps make its air so dirty?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv"></svg>
+      <div id="ctl"><button class="go" id="btn">Let the wind blow</button></div>
+      <div id="why" class="gone">
+        <p class="big">The Alps stop the wind.</p>
+        <p class="body">Strong winds would carry the smog away, but the Alps block them. The Po Valley is a basin between Alps and Apennines, so its air is rarely changed.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Send the north wind toward Milan and watch the smog.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No wind to sweep it away, so Milan's smog stays at home.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Roma è 7 volte Milano, ma meno inquinata: l'analisi del territorio e i numeri a confronto” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {alps: 1, wind: 0};
+let mode = 'idle', step = 0, done = false;
+let W = 300, H = 200, f = 14, gy = 150, E = {};
+const wind = [], smog = [];
+for (let i = 0; i < 28; i++) wind.push({x: Kit.rnd() * 1.1 - .05, lane: i % 4, y: null});
+for (let i = 0; i < 70; i++) smog.push({x: .32 + Kit.rnd() * .46, y: Kit.rnd(), r: .5 + Kit.rnd(), a: 1});
+
+const AX = [0, .04, .09, .13, .18, .24, .3], AH = [.6, .82, .62, 1, .72, .38, 0];
+const PX = [.8, .86, .9, .95, 1], PH = [0, .6, 1, .8, .9];
+function interp(xs, hs, x) {
+  if (x <= xs[0]) return hs[0];
+  for (let i = 1; i < xs.length; i++) if (x <= xs[i]) { const t = (x - xs[i-1]) / (xs[i] - xs[i-1]); return hs[i-1] + t * (hs[i] - hs[i-1]); }
+  return hs[hs.length - 1];
+}
+const alpsH = x => x > .3 ? 0 : interp(AX, AH, x) * H * .52 * S.alps;
+const apH = x => x < .8 ? 0 : interp(PX, PH, x) * H * .16;
+
+function alpsPath() {
+  let d = `M0,${gy}`;
+  for (let i = 0; i < AX.length; i++) d += ` L${AX[i]*W},${gy - AH[i]*H*.52*S.alps}`;
+  return d + ` L${.3*W},${gy} Z`;
+}
+
+const windL = () => Math.max(14, W * .055);
+const windExt = () => Math.max(2, f * .16) * 2.5;
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sv');
+  svg.innerHTML = '';
+  const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = Math.max(12, Math.min(r.f, H * .075));
+  gy = H - Math.max(f * 3.4, H * .2);
+  const ink = 'fill:var(--k)';
+  const defs = Kit.mk('defs', {}, svg);
+  const m = Kit.mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 4, markerHeight: 4, orient: 'auto'}, defs);
+  Kit.mk('path', {d: 'M0,0 L10,5 L0,10 Z', style: ink}, m);
+  // ground
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: 'fill:color-mix(in srgb,var(--k) 16%,transparent)'}, svg);
+  // Milan
+  const mx = .45 * W, bw = Math.max(5, W * .018);
+  [.5, .9, .65, 1.2, .7].forEach((h, i) => Kit.mk('rect', {x: mx + (i - 2.5) * bw * 1.15, y: gy - h * H * .07, width: bw, height: h * H * .07, style: 'fill:color-mix(in srgb,var(--k) 70%,transparent)'}, svg));
+  // smog
+  E.smog = Kit.mk('g', {}, svg);
+  smog.forEach(p => p.el = Kit.mk('circle', {style: 'fill:#6b5845'}, E.smog));
+  // mountains
+  E.alps = Kit.mk('path', {style: ink}, svg);
+  let d = `M${.8*W},${gy}`; PX.forEach((x, i) => d += ` L${x*W},${gy - PH[i]*H*.16}`); d += ` L${W},${gy} Z`;
+  Kit.mk('path', {d, style: 'fill:color-mix(in srgb,var(--k) 75%,transparent)'}, svg);
+  // wind
+  E.wind = Kit.mk('g', {opacity: S.wind}, svg);
+  wind.forEach(p => { p.y = null; p.el = Kit.mk('line', {style: 'stroke:var(--k)', 'stroke-width': Math.max(2, f * .16), 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, E.wind); });
+  // labels
+  const T = (x, y, s, a, extra = '') => { const t = Kit.mk('text', {x, y, 'text-anchor': a, style: `fill:var(--k);font:700 ${f}px var(--body);${extra}`}, svg); t.textContent = s; return t; };
+  E.alpsT = T(.13 * W, 0, 'ALPS', 'middle', `font:800 ${f}px var(--display);letter-spacing:.08em`);
+  T(W - 4, gy - H * .16 - f * .5, 'Apennines', 'end');
+  T(6, gy + f * 1.35, 'NORTH', 'start', 'opacity:.7');
+  T(W - 4, gy + f * 1.35, 'SOUTH', 'end', 'opacity:.7');
+  T(mx, gy + f * 1.35, 'Milan', 'middle');
+  T(.58 * W, gy + f * 2.75, 'Po Valley', 'middle', 'font-style:italic;opacity:.75');
+  render();
+};
+
+function render() {
+  if (!E.alps) return;
+  E.alps.setAttribute('d', alpsPath());
+  E.alpsT.setAttribute('y', gy - H * .52 * S.alps - f * .45);
+  E.alpsT.setAttribute('opacity', Math.max(0, (S.alps - .2) / .8));
+  E.wind.setAttribute('opacity', S.wind);
+  const L = windL(), ext = windExt();
+  wind.forEach(p => { if (p.y == null) return; const x2 = Math.min(W - ext, Math.max(L + ext, p.x * W)); p.el.setAttribute('x1', x2 - L); p.el.setAttribute('x2', x2); p.el.setAttribute('y1', p.y); p.el.setAttribute('y2', p.y); });
+  smog.forEach(p => {
+    const rr = p.r * f * .55;
+    p.el.setAttribute('cx', Math.min(W - rr, p.x * W)); p.el.setAttribute('cy', gy - 3 - p.y * H * .22);
+    p.el.setAttribute('r', rr); p.el.setAttribute('opacity', .5 * Math.max(0, p.a));
+  });
+}
+
+gsap.ticker.add(() => {
+  const r = gsap.ticker.deltaRatio(60), gap = H * .045;
+  const xmin = (windL() + windExt()) / W, xmax = (W - windExt()) / W;
+  if (mode !== 'idle') wind.forEach(p => {
+    p.x += .0045 * r;
+    if (p.x > xmax) { p.x = xmin; p.y = null; }
+    const target = gy - H * .1 - p.lane * gap;
+    if (p.y == null) p.y = target;
+    const top = gy - alpsH(p.x) - H * .03 - p.lane * gap * .7;
+    p.y = Math.min(p.y + (target - p.y) * .006 * r, top);
+  });
+  const push = mode === 'open' ? Math.max(0, 1 - S.alps) * .006 * r : 0;
+  smog.forEach(p => {
+    if (push > 0) { p.x += push * (.6 + p.r * .3); p.y += (Kit.rnd() - .4) * .02 * r; if (p.x > .82) p.a -= .04 * r; p.x = Math.min(p.x, 1); }
+    else { p.x += (Kit.rnd() - .5) * .002 * r; p.y += (Kit.rnd() - .5) * .012 * r; p.x = Math.min(.79, Math.max(.31, p.x)); }
+    p.y = Math.min(1, Math.max(0, p.y));
+  });
+  render();
+});
+
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('btn').addEventListener('click', () => {
+  const b = Kit.$('btn'), say = Kit.$('say');
+  if (step === 0) {
+    step = 1; mode = 'blow'; b.disabled = true; Kit.haptic('selection');
+    gsap.to(S, {wind: 1, duration: .6});
+    say.textContent = 'The wind rides over the peaks and never reaches the plain. The smog stays.';
+    setTimeout(() => { b.textContent = 'Now flatten the Alps'; b.disabled = false; }, 2300);
+  } else if (step === 1) {
+    step = 2; mode = 'open'; b.disabled = true; Kit.haptic('light');
+    gsap.to(S, {alps: .05, duration: 1.4, ease: 'power2.inOut'});
+    say.textContent = 'No barrier: the wind sweeps the plain and carries the smog away.';
+    setTimeout(finish, 3200);
+  }
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#btn', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('btn').click(); await w(2500);
+  Kit.$('btn').click(); await w(3700);
+};
+Kit.single();
+</script>
+</html>

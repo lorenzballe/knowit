@@ -1,0 +1,37 @@
+{
+  "id": "nature-limestone-water-network",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the Apennines act as natural water collectors?",
+  "answer": "The Apennines are mostly limestone, a carbonate rock that is heavily fractured. Water dissolves it, widening cracks into caves, tunnels and conduits. This process, called karst, creates a dense underground network under the mountains that gathers water.",
+  "move": "Limestone dissolves in water, so the mountain hollows itself into a water network.",
+  "keywords": [
+    "apennines",
+    "limestone",
+    "karst",
+    "groundwater",
+    "caves"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A mountain range seen from the side, with a rain cloud the reader drags along the slopes. Rain falls on the cracks in the rock. The page asks why the Apennines act as natural water collectors."
+  },
+  "source": "Geopop, “▶️IL VIAGGIO DELL' ACQUA: DALLE MONTAGNE AI RUBINETTI |GeoPOP🌍” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=TJFssfJVAi0&t=59s",
+  "written": "2026-11-03"
+}

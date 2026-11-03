@@ -1,0 +1,37 @@
+{
+  "id": "science-ice-hexagon-holes",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is ice less dense than liquid water?",
+  "answer": "When water freezes, its molecules lock into hexagons with an oxygen atom at each of the six corners. Inside each hexagon there is empty space where no other molecule fits. Same molecules, more room: so ice is less dense.",
+  "move": "Ice is light for its size because its hexagons are full of empty space.",
+  "keywords": [
+    "ice",
+    "liquid water",
+    "hexagon",
+    "oxygen",
+    "density"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Animated water molecules locking into a hexagonal ice lattice, with an empty gap inside each hexagon. The heading asks: why is ice less dense than liquid water? A tap on the water freezes it."
+  },
+  "source": "Geopop, “QUAL É LA DIFFERENZA TRA EVAPORAZIONE ED EBOLLIZIONE?” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=hONNm8Bzc-Y&t=69s",
+  "written": "2026-11-03"
+}

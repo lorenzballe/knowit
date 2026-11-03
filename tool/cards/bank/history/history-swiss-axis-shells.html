@@ -1,0 +1,205 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-swiss-axis-shells -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#pic .dest{cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WWII TRADE</span></div>
+    <h2 class="q">Neutral Switzerland's WWII factories made shells. Who mostly bought them?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A Swiss factory and three possible buyers"></svg>
+      <div id="why" class="gone">
+        <p class="big">Mostly Germany and Italy.</p>
+        <p class="body">Swiss industry exported munitions and arms above all to the Axis, and the central bank bought Reich gold without asking where it came from, though part was taken from occupied countries and Holocaust victims. A useful neutral was worth more to Hitler than an invaded one.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap where the shells went.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Neutral didn't mean uninvolved: Swiss shells and banks served the Axis.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+const NAMES = [['Kept at','home'], ['The','Allies'], ['Germany','& Italy']];
+const SAID = ['Kept at home', 'The Allies', 'Germany & Italy'];
+const RED = '#d52b1e', GOLD = '#e8b931', BRASS = '#c8963e';
+let pick = -1, revealed = false, tweens = [], G = null;
+
+function killT(){ tweens.forEach(t => t.kill()); tweens = []; }
+function mk(tag, a, p, txt){ const e = Kit.mk(tag, a, p); if (txt != null) e.textContent = txt; return e; }
+
+function shellShape(parent, x, y, s){
+  const g = mk('g', {transform:`translate(${x},${y})`}, parent);
+  mk('path', {d:`M${-s*.35},${s*.6} L${-s*.35},${-s*.15} Q0,${-s*.95} ${s*.35},${-s*.15} L${s*.35},${s*.6} Z`, style:`fill:${BRASS};stroke:#5a3b10;stroke-width:${Math.max(1,s*.08)}`}, g);
+  mk('rect', {x:-s*.38, y:s*.4, width:s*.76, height:s*.22, style:'fill:#8a5a1c'}, g);
+  return g;
+}
+function goldBar(parent, x, y, s){
+  const g = mk('g', {transform:`translate(${x},${y})`}, parent);
+  mk('path', {d:`M${-s*.6},${s*.25} L${-s*.42},${-s*.25} L${s*.42},${-s*.25} L${s*.6},${s*.25} Z`, style:`fill:${GOLD};stroke:#8a6a00;stroke-width:${Math.max(1,s*.07)}`}, g);
+  return g;
+}
+
+function draw(){
+  killT();
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(13, Math.min(f, H * .07, W * .05));
+  const gap = W * .03, bw = (W - gap * 4) / 3, bh = Math.max(fs * 3.4, H * .2), by = H * .03;
+  // factory
+  const fx = W * .05, fw = W * .52, fb = H * .96, fh = Math.max(H * .3, fs * 4), fy = fb - fh, roof = fh * .25;
+  const fcx = fx + fw / 2;
+  // bank
+  const bx = W * .66, bW = W * .29, bb = fb, bH = fh * .78, bt = bb - bH;
+  const boxes = [];
+  const routes = [];
+  for (let i = 0; i < 3; i++){
+    const x = gap + i * (bw + gap), cx = x + bw / 2;
+    const d = `M${fcx},${fy - roof} Q${(fcx + cx) / 2},${(fy + by + bh) / 2 - H * .02} ${cx},${by + bh}`;
+    const r = mk('path', {d, style:`fill:none;stroke:var(--k);stroke-width:${Math.max(1.5,fs*.12)};stroke-dasharray:${fs*.4} ${fs*.35};opacity:.28`}, svg);
+    routes.push(r);
+  }
+  for (let i = 0; i < 3; i++){
+    const x = gap + i * (bw + gap), cx = x + bw / 2;
+    const g = mk('g', {class:'dest', 'data-i':i, role:'button'}, svg);
+    const on = pick === i, right = revealed && i === RIGHT, wrong = revealed && on && i !== RIGHT;
+    const fill = right ? RED : on ? 'var(--k)' : 'color-mix(in srgb,var(--k) 8%,transparent)';
+    const ink = right ? '#fff' : on ? 'var(--c)' : 'var(--k)';
+    const rect = mk('rect', {x, y:by, width:bw, height:bh, rx:fs * .7, style:`fill:${fill};stroke:var(--k);stroke-opacity:${on||right?0:.35};stroke-width:${Math.max(1.5,fs*.13)};opacity:${wrong?.55:1}`}, g);
+    const t = mk('text', {x:cx, 'text-anchor':'middle', style:`font:800 ${fs}px var(--body);fill:${ink};pointer-events:none`}, g);
+    NAMES[i].forEach((w, k) => mk('tspan', {x:cx, y:by + bh / 2 + (k - .5) * fs * 1.3 + fs * .35}, t, w));
+    if (wrong) mk('line', {x1:x + bw * .15, y1:by + bh * .85, x2:x + bw * .85, y2:by + bh * .15, style:`stroke:${RED};stroke-width:${fs*.18};stroke-linecap:round`}, g);
+    g.addEventListener('click', () => choose(i));
+    boxes.push({x, cx, rect, g});
+  }
+  // factory body
+  const teeth = 3, tw = fw / teeth;
+  let rp = `M${fx},${fb} L${fx},${fy}`;
+  for (let k = 0; k < teeth; k++) rp += ` L${fx + k * tw},${fy - roof} L${fx + (k + 1) * tw},${fy}`;
+  rp += ` L${fx + fw},${fb} Z`;
+  // chimney + smoke
+  const chx = fx + fw * .82, chw = fw * .08;
+  mk('rect', {x:chx, y:fy - roof * 1.9, width:chw, height:roof * 1.9, style:'fill:var(--k)'}, svg);
+  const smoke = [];
+  for (let k = 0; k < 3; k++) smoke.push(mk('circle', {cx:chx + chw / 2, cy:fy - roof * 2, r:fs * .35, style:'fill:var(--k);opacity:0'}, svg));
+  mk('path', {d:rp, style:'fill:var(--k)'}, svg);
+  // swiss flag
+  const fl = Math.min(fs * 1.6, fh * .22), flx = fx + fw * .08, fly = fy + fh * .1;
+  mk('rect', {x:flx, y:fly, width:fl, height:fl, rx:fl * .08, style:`fill:${RED}`}, svg);
+  mk('rect', {x:flx + fl * .4, y:fly + fl * .18, width:fl * .2, height:fl * .64, style:'fill:#fff'}, svg);
+  mk('rect', {x:flx + fl * .18, y:fly + fl * .4, width:fl * .64, height:fl * .2, style:'fill:#fff'}, svg);
+  mk('text', {x:flx + fl + fs * .5, y:fly + fl * .72, style:`font:800 ${Math.max(12,fs*.85)}px var(--body);fill:var(--c)`}, svg, 'SWISS FACTORY');
+  // lit window with shells on the line
+  const wy = fy + fh * .48, wh = fh * .4, wx = fx + fw * .08, ww = fw * .84;
+  mk('rect', {x:wx, y:wy, width:ww, height:wh, rx:fs * .3, style:'fill:var(--c)'}, svg);
+  const clip = mk('clipPath', {id:'win'}, svg);
+  mk('rect', {x:wx, y:wy, width:ww, height:wh}, clip);
+  const line = mk('g', {'clip-path':'url(#win)'}, svg);
+  mk('line', {x1:wx, y1:wy + wh * .85, x2:wx + ww, y2:wy + wh * .85, style:`stroke:var(--k);stroke-width:${Math.max(1.5,fs*.12)}`}, line);
+  const ss = wh * .55, step = ss * 1.25, belt = mk('g', {}, line);
+  const n = Math.ceil(ww / step) + 2;
+  for (let k = 0; k < n; k++) shellShape(belt, wx + k * step, wy + wh * .85 - ss * .62, ss);
+  // bank
+  const bank = mk('g', {style:`opacity:${revealed?1:0}`}, svg);
+  mk('path', {d:`M${bx},${bt + bH * .28} L${bx + bW / 2},${bt} L${bx + bW},${bt + bH * .28} Z`, style:'fill:var(--k)'}, bank);
+  const cols = 4;
+  for (let k = 0; k < cols; k++){
+    const cw = bW * .1, cxp = bx + bW * .1 + k * (bW * .8 - cw) / (cols - 1);
+    mk('rect', {x:cxp, y:bt + bH * .33, width:cw, height:bH * .52, style:'fill:var(--k)'}, bank);
+  }
+  mk('rect', {x:bx - bW * .03, y:bb - bH * .12, width:bW * 1.06, height:bH * .12, style:'fill:var(--k)'}, bank);
+  const bl = Math.max(12, fs * .8);
+  const btxt = mk('text', {x:bx + bW / 2, 'text-anchor':'middle', style:`font:800 ${bl}px var(--body);fill:var(--k)`}, bank);
+  mk('tspan', {x:bx + bW / 2, y:bt - bl * 1.6}, btxt, 'Central bank');
+  mk('tspan', {x:bx + bW / 2, y:bt - bl * .35, style:`fill:#a57d00`}, btxt, 'buys Reich gold');
+  const gold = mk('g', {}, svg);
+  const goldD = `M${boxes[2].cx},${by + bh} Q${bx + bW * 1.05},${(by + bh + bt) / 2} ${bx + bW / 2},${bt + bH * .2}`;
+  const groute = mk('path', {d:goldD, style:`fill:none;stroke:${GOLD};stroke-width:${Math.max(2,fs*.16)};stroke-dasharray:${fs*.3} ${fs*.3};opacity:${revealed?.9:0}`}, svg);
+  G = {svg, W, H, fs, routes, boxes, belt, step, smoke, bank, gold, groute, bx, bW, bb, bH, bt, chx, chw, fy, roof, by, bh, ss};
+  if (revealed){
+    routes[RIGHT].setAttribute('style', `fill:none;stroke:${RED};stroke-width:${Math.max(2.5,fs*.2)};opacity:1`);
+    for (let k = 0; k < 3; k++) goldBar(gold, bx + bW * (.25 + k * .25), bb - bH * .2, fs * 1.0);
+  }
+  idle();
+}
+
+function idle(){
+  if (Kit.calm || !G) return;
+  tweens.push(gsap.to(G.belt, {x:-G.step, duration:.9, ease:'none', repeat:-1}));
+  G.smoke.forEach((c, k) => tweens.push(gsap.fromTo(c, {attr:{cy:G.fy - G.roof * 2, r:G.fs * .3}, opacity:.35},
+    {attr:{cy:G.fy - G.roof * 3.3, r:G.fs * .8}, opacity:0, duration:2.2, ease:'sine.out', repeat:-1, delay:k * .73})));
+}
+
+function along(path, el, dur, delay, onEnd){
+  const L = path.getTotalLength(), o = {t:0};
+  const tw = gsap.to(o, {t:1, duration:dur, delay, ease:'power1.inOut', onUpdate(){
+    const p = path.getPointAtLength(o.t * L); el.setAttribute('transform', `translate(${p.x},${p.y})`);
+  }, onComplete(){ onEnd && onEnd(); }});
+  tweens.push(tw);
+}
+
+function reveal(){
+  if (Kit.calm || !G) return;
+  const r = G.routes[RIGHT], L = r.getTotalLength();
+  r.setAttribute('style', `fill:none;stroke:${RED};stroke-width:${Math.max(2.5,G.fs*.2)};opacity:1;stroke-dasharray:${L};stroke-dashoffset:${L}`);
+  tweens.push(gsap.to(r, {attr:{'stroke-dashoffset':0}, duration:.7, ease:'power2.out'}));
+  const fly = Kit.mk('g', {}, G.svg);
+  for (let k = 0; k < 5; k++){
+    const s = shellShape(fly, -99, -99, G.ss * 1.1);
+    along(r, s, 1.1, .3 + k * .22, () => { s.remove(); Kit.haptic('light'); gsap.fromTo(G.boxes[RIGHT].rect, {scale:1.06, transformOrigin:'50% 50%'}, {scale:1, duration:.3}); });
+  }
+  G.bank.style.opacity = 0; G.groute.style.opacity = 0;
+  tweens.push(gsap.to(G.bank, {opacity:1, duration:.5, delay:1.6}));
+  tweens.push(gsap.to(G.groute, {opacity:.9, duration:.4, delay:1.9}));
+  for (let k = 0; k < 3; k++){
+    const b = goldBar(G.gold, -99, -99, G.fs * 1.0);
+    const endX = G.bx + G.bW * (.25 + k * .25), endY = G.bb - G.bH * .2;
+    along(G.groute, b, 1.0, 2.1 + k * .3, () => {
+      tweens.push(gsap.to(b, {attr:{transform:`translate(${endX},${endY})`}, duration:.35, ease:'back.out(2)'}));
+    });
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = SAID[pick];
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  revealed = true;
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => {
+    draw();
+    if (!Kit.calm){ G.gold.innerHTML = ''; reveal(); }
+    Kit.haptic(ok ? 'success' : 'light');
+  });
+});
+
+function choose(i){
+  if (pick >= 0) return;
+  pick = i; Kit.haptic('selection'); draw(); sure.on();
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.boxes.map(b => b.g), {opacity:0, y:-10, stagger:.08, duration:.45, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('pic').querySelector('.dest[data-i="0"]').dispatchEvent(new MouseEvent('click', {bubbles:true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3600));
+};
+Kit.single();
+</script>
+</html>

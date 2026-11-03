@@ -1,0 +1,38 @@
+{
+  "id": "history-nagasaki-radiation-fade",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How long did the radiation linger in Nagasaki?",
+  "answer": "The bomb burst high in the air and held only a modest amount of nuclear material, and its isotopes were short-lived. So 80% of the residual radiation was gone within the first day, and within a month both cities were near normal. A reactor like Chernobyl, by contrast, holds tonnes of uranium.",
+  "move": "An air burst with little, short-lived fuel fades in days, not decades.",
+  "keywords": [
+    "nagasaki",
+    "radiation",
+    "atomic_bomb",
+    "isotopes",
+    "chernobyl"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A bar chart shows radiation falling over the first 24 hours after the Nagasaki bomb. A draggable bar asks how much had already gone after 24 hours.",
+    "graded": false
+  },
+  "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=o47-tXGxpv8&t=1213s",
+  "written": "2026-11-03"
+}

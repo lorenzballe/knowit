@@ -1,0 +1,37 @@
+{
+  "id": "maths-spoof-perfect-numbers",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What are “spoof” numbers, and what do they say about odd perfect numbers?",
+  "answer": "Treating 22021 as prime makes its sigma total come out to exactly 2n, so it looks perfect. But 22021 is 19²·61, and its true sigma total is too big. Near-misses like this are spoofs, and an odd perfect number would be a spoof too, so a property that rules out spoofs would rule it out.",
+  "move": "Spoofs fake perfection with one false prime, and every odd perfect number would be a spoof.",
+  "keywords": [
+    "odd perfect numbers",
+    "spoof numbers",
+    "descartes",
+    "22021",
+    "sigma function"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card titled Spoof numbers shows the number 22021 under a dark piece that can be tapped to lift its mask. Treating 22021 as prime makes its sigma total look exactly twice itself, so it seems perfect. Tapping reveals it is 19 squared times 61."
+  },
+  "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=1435s",
+  "written": "2026-11-03"
+}

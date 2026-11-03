@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- slug: medicine-isolated-island-illness -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#mapbox{flex:1;min-height:0;position:relative}
+#map{position:absolute;inset:0;width:100%;height:100%;display:block;color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ISOLATION</span></div>
+    <h2 class="q">How does extreme isolation affect health on Tristan da Cunha?</h2>
+    <div class="stagebox" id="stage">
+      <div id="mapbox"><svg id="map"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Fewer illnesses: germs rarely reach it</button>
+        <button class="opt" data-i="1">Some illnesses are more common than normal</button>
+        <button class="opt" data-i="2">No real difference from the mainland</button>
+      </div>
+      <div id="why" class="gone"><p class="big">More common than normal</p><p class="body">Isolation brings problems, and first of all some illnesses are more widespread than normal. With so little contact with the outside world, diseases spread more easily there than in mainland societies.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what you think is true, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Being cut off is no shield: some illnesses become more common.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, answered = false;
+let G = {};
+
+function virus(parent, x, y, r, cls){
+  const g = Kit.mk('g', {class: cls || ''}, parent);
+  for (let i = 0; i < 8; i++){
+    const a = i * Math.PI / 4;
+    Kit.mk('line', {x1: x + Math.cos(a)*r*.7, y1: y + Math.sin(a)*r*.7, x2: x + Math.cos(a)*r*1.35, y2: y + Math.sin(a)*r*1.35, style: `stroke:var(--k);stroke-width:${Math.max(1.5, r*.18)};stroke-linecap:round`}, g);
+    Kit.mk('circle', {cx: x + Math.cos(a)*r*1.4, cy: y + Math.sin(a)*r*1.4, r: r*.17, style: 'fill:var(--k)'}, g);
+  }
+  Kit.mk('circle', {cx: x, cy: y, r: r*.8, style: 'fill:var(--k)'}, g);
+  Kit.mk('circle', {cx: x - r*.25, cy: y - r*.2, r: r*.16, style: 'fill:var(--c)'}, g);
+  Kit.mk('circle', {cx: x + r*.28, cy: y + r*.15, r: r*.12, style: 'fill:var(--c)'}, g);
+  return g;
+}
+
+function draw(){
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85);
+  const ix = W * .5, iy = H - fs * 2.6;
+  // continents
+  const cw = W * .13;
+  Kit.mk('path', {d: `M0,0 L${cw*.7},0 C${cw*1.1},${H*.2} ${cw*.6},${H*.35} ${cw},${H*.55} C${cw*1.2},${H*.7} ${cw*.5},${H*.85} ${cw*.3},${H} L0,${H}Z`, style: 'fill:color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  Kit.mk('path', {d: `M${W},0 L${W-cw*.9},0 C${W-cw*1.2},${H*.25} ${W-cw*.7},${H*.45} ${W-cw*1.1},${H*.6} C${W-cw*1.2},${H*.75} ${W-cw*.6},${H*.9} ${W-cw*.5},${H} L${W},${H}Z`, style: 'fill:color-mix(in srgb,var(--k) 22%,transparent)'}, svg);
+  const t1 = Kit.mk('text', {x: cw*.42, y: H*.35, transform: `rotate(-90 ${cw*.42} ${H*.35})`, 'text-anchor': 'middle', 'dominant-baseline': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px;opacity:.75`}, svg); t1.textContent = 'S. AMERICA';
+  const t2 = Kit.mk('text', {x: W - cw*.45, y: H*.35, transform: `rotate(90 ${W - cw*.45} ${H*.35})`, 'text-anchor': 'middle', 'dominant-baseline': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px;opacity:.75`}, svg); t2.textContent = 'AFRICA';
+  // rare routes
+  const ra = [cw*1.05, H*.62], rb = [W - cw*1.15, H*.66];
+  Kit.mk('path', {id: 'routeA', d: `M${ra[0]},${ra[1]} Q${W*.3},${iy+fs} ${ix},${iy}`, style: 'fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 7;opacity:.5'}, svg);
+  Kit.mk('path', {d: `M${rb[0]},${rb[1]} Q${W*.7},${iy+fs} ${ix},${iy}`, style: 'fill:none;stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 7;opacity:.5'}, svg);
+  // ship
+  const ship = Kit.mk('g', {id: 'ship'}, svg);
+  const s = Math.max(5, fs*.45);
+  Kit.mk('path', {d: `M${-s*1.4},0 L${s*1.4},0 L${s},${s*.7} L${-s},${s*.7}Z`, style: 'fill:var(--k)'}, ship);
+  Kit.mk('path', {d: `M0,0 L0,${-s*1.6} L${s},${-s*.3}Z`, style: 'fill:var(--k)'}, ship);
+  ship.setAttribute('transform', `translate(${ra[0]+4},${ra[1]-2})`);
+  G.ship = ship; G.route = svg.querySelector('#routeA');
+  // magnifier
+  const r = Math.max(30, Math.min(W*.3, (iy - fs*1.5) / 2 - 6));
+  const mx = ix, my = 6 + r;
+  Kit.mk('line', {x1: ix, y1: iy, x2: mx, y2: my + r, style: 'stroke:var(--k);stroke-width:2'}, svg);
+  // island dot
+  Kit.mk('circle', {cx: ix, cy: iy, r: Math.max(5, fs*.4), style: 'fill:var(--k)'}, svg);
+  Kit.mk('circle', {cx: ix, cy: iy, r: Math.max(9, fs*.75), style: 'fill:none;stroke:var(--k);stroke-width:2'}, svg);
+  const t3 = Kit.mk('text', {x: ix, y: iy + fs*1.9, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${fs}px`}, svg); t3.textContent = 'Tristan da Cunha';
+  const clip = Kit.mk('clipPath', {id: 'lens'}, Kit.mk('defs', {}, svg));
+  Kit.mk('circle', {cx: mx, cy: my, r}, clip);
+  Kit.mk('circle', {cx: mx, cy: my, r, style: 'fill:var(--c)'}, svg);
+  const inner = Kit.mk('g', {'clip-path': 'url(#lens)'}, svg);
+  Kit.mk('rect', {x: mx-r, y: my+r*.35, width: r*2, height: r, style: 'fill:color-mix(in srgb,var(--k) 14%,transparent)'}, inner);
+  Kit.mk('path', {d: `M${mx-r*.85},${my+r*.38} L${mx-r*.12},${my-r*.42} L${mx+r*.06},${my-r*.42} L${mx+r*.85},${my+r*.38}Z`, style: 'fill:color-mix(in srgb,var(--k) 30%,transparent)'}, inner);
+  // houses
+  const hs = r*.09, houses = [];
+  for (let i = 0; i < 6; i++){
+    const hx = mx - r*.55 + i*r*.22, hy = my + r*.28;
+    Kit.mk('path', {d: `M${hx-hs},${hy} L${hx-hs},${hy-hs} L${hx},${hy-hs*1.8} L${hx+hs},${hy-hs} L${hx+hs},${hy}Z`, style: 'fill:var(--k)'}, inner);
+    houses.push([hx, hy - hs*3]);
+  }
+  G.first = virus(inner, mx + r*.42, my - r*.45, r*.16, 'v0');
+  G.more = houses.map(([hx, hy], i) => virus(inner, hx + (i%2 ? 3 : -3), hy - (i%2)*r*.12, r*.085, 'vm'));
+  Kit.mk('circle', {cx: mx, cy: my, r, style: 'fill:none;stroke:var(--k);stroke-width:3'}, svg);
+  G.more.forEach(v => v.style.opacity = answered ? 1 : 0);
+}
+
+function spread(){
+  if (Kit.calm){ G.more.forEach(v => v.style.opacity = 1); return; }
+  gsap.fromTo(G.more, {opacity: 0, scale: 0, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, stagger: .12, duration: .45, ease: 'back.out(2)'});
+  gsap.fromTo(G.first, {scale: 1, transformOrigin: '50% 50%'}, {scale: 1.25, yoyo: true, repeat: 3, duration: .25});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  answered = true;
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}`);
+  Kit.show('keep');
+  spread();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (G.first) gsap.to(G.first, {rotation: 360, transformOrigin: '50% 50%', duration: 12, repeat: -1, ease: 'none'});
+  if (G.route && G.ship){
+    const p = G.route, L = p.getTotalLength(), o = {t: 0};
+    gsap.to(o, {t: 1, duration: 6, delay: .6, ease: 'sine.inOut', onUpdate: () => {
+      if (!G.ship.isConnected) return;
+      const pt = G.route.getPointAtLength(o.t * G.route.getTotalLength());
+      G.ship.setAttribute('transform', `translate(${pt.x},${pt.y - 3})`);
+    }});
+  }
+};
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1200)); };
+Kit.single();
+</script>
+</html>

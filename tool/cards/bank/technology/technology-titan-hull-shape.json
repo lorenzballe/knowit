@@ -1,0 +1,39 @@
+{
+  "id": "technology-titan-hull-shape",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why was the Titan's cylindrical hull a problem at depth?",
+  "answer": "Deep water pushes equally from every side. A perfect sphere shares that push evenly, so it barely shrinks and stays round. A cylinder's long walls take the pressure unevenly and bend inward first.",
+  "move": "Under high pressure a perfect sphere holds its shape; a cylinder deforms.",
+  "keywords": [
+    "titan",
+    "submersible",
+    "hull",
+    "pressure",
+    "sphere"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two hull drawings, a perfect sphere and a cylinder, shown under deep-sea pressure. The page asks the reader to tap the hull they think gives way first under deep-sea pressure.",
+    "graded": false,
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=OPBaIzgJOKE&t=566s",
+  "written": "2026-11-03"
+}

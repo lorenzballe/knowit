@@ -1,0 +1,37 @@
+{
+  "id": "science-poles-closer-center",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why would oceans run to the poles if Earth stopped spinning?",
+  "answer": "If Earth stopped spinning, the oceans would slide toward the poles. Earth is slightly squashed, so the poles sit about 21 km closer to its centre, where gravity is a little stronger. Spin's centrifugal push holds water out at the equator, and without it the water flows to where gravity is strongest.",
+  "move": "Without spin, water flows to where gravity is strongest: the poles.",
+  "keywords": [
+    "earth",
+    "oceans",
+    "poles",
+    "gravity",
+    "centrifugal_force"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking why oceans would run to the poles if Earth stopped spinning. A brake slider can be dragged right to stop the spin, and a cross-section shows the poles about 21 km nearer Earth's centre than the equator."
+  },
+  "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=OSECBud3lD4&t=267s",
+  "written": "2026-11-03"
+}

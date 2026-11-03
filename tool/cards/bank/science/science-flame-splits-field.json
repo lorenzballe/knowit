@@ -1,0 +1,36 @@
+{
+  "id": "science-flame-splits-field",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a candle flame split in two between charged plates?",
+  "answer": "Burning makes charged particles called ions in the flame. The electric field pulls positive ions toward the negative plate and negative ions toward the positive plate. The flame spreads into two wings, like a butterfly.",
+  "move": "A flame carries electric charges, so an electric field can pull it apart.",
+  "keywords": [
+    "candle flame",
+    "ions",
+    "electric field",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A candle flame sits between two charged plates. Switch on the field and the flame splits into two wings, like a butterfly. Tap each half of the flame to explore it."
+  },
+  "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=a7_8Gc_Llr8&t=17s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "technology-sky-airspace-blocks",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.who_decides",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is the sky organized for air traffic control?",
+  "answer": "The sky is split into horizontal and vertical blocks, forming a 3D grid. Each block is the job of one or more controllers at the area control center, who follow it on radar. Two planes over the same spot can sit in different blocks.",
+  "move": "The sky is a 3D grid of blocks, each with its own controllers.",
+  "keywords": [
+    "air traffic control",
+    "airspace",
+    "radar",
+    "area control center",
+    "air traffic controller"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A switch that slices the sky into a 3D grid of blocks. The page shows 12 planes in one block with one controller. Flip the switch to see which controllers look after each plane, and ask how the sky is organized for air traffic control."
+  },
+  "source": "Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=kIkfQs_8ny0&t=295s",
+  "written": "2026-11-03"
+}

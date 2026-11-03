@@ -1,0 +1,196 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-evacuation-drill-chaos -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#simbox{flex:1;min-height:0;position:relative;border-radius:1.8cqh;overflow:hidden;background:color-mix(in srgb,var(--k) 6%,transparent)}
+#sim{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.9cqh}
+.sw{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 3.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.sw .tg{flex:none;font:700 max(1.4cqh,12px)/1 var(--mono);letter-spacing:.06em;padding:.7cqh 2cqw;border-radius:99px;background:color-mix(in srgb,var(--k) 14%,transparent);min-width:12cqw;text-align:center}
+.sw.real{background:var(--k);color:var(--c);box-shadow:none}
+.sw.real .tg{background:#e5484d;color:#fff}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Flip the switches · see the gap">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANO DRILLS</span></div>
+    <h2 class="q">Why can't a calm evacuation drill test a real Campi Flegrei escape?</h2>
+    <div class="stagebox" id="stage">
+      <div id="simbox"><canvas id="sim"></canvas></div>
+      <div id="ctl">
+        <button class="sw" data-k="crowd"><span class="tg">DRILL</span><span class="tx">A small group takes part</span></button>
+        <button class="sw" data-k="time"><span class="tg">DRILL</span><span class="tx">Volunteers leave on schedule</span></button>
+        <button class="sw" data-k="own"><span class="tg">DRILL</span><span class="tx">Buses are provided, assisted</span></button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">A real eruption means chaos.</p>
+        <p class="body">Everyone leaves at once, on their own. A small, voluntary, assisted drill never feels that stress, so it can't expose the problems a drill is meant to find. Like F1 tests: run a few laps at race speed.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Flip each switch from drill to real, and watch the road.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A test that is too calm can't find what chaos will break.</div>
+    <div class="foot"><span class="src">Source · Geopop, “RISCHIO VULCANICO CAMPI FLEGREI: LA SIMULAZIONE D'EVACUAZIONE FUNZIONERA? Considerazioni e dubbi” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = {crowd:'Everyone in the area leaves', time:'All at once, unplanned', own:'Each family in its own car'};
+const S = {crowd:0, time:0, own:0};
+let done = false;
+const cv = Kit.$('sim');
+let ctx = null, W = 300, H = 200, ink = '#111', paper = '#fff';
+let cars = [], spawned = 0, clock = 0, idle = 0;
+const BX = 0.72;
+function resetDemand(){ spawned = 0; clock = 0; idle = 0; }
+resetDemand();
+
+Kit.$('ctl').addEventListener('click', e => {
+  const b = e.target.closest('.sw'); if (!b || done) return;
+  const k = b.dataset.k;
+  if (!b.dataset.d) b.dataset.d = b.querySelector('.tx').textContent;
+  S[k] = S[k] ? 0 : 1;
+  b.classList.toggle('real', !!S[k]);
+  b.querySelector('.tg').textContent = S[k] ? 'REAL' : 'DRILL';
+  b.querySelector('.tx').textContent = S[k] ? REAL[k] : b.dataset.d;
+  Kit.haptic('selection');
+  if (!Kit.calm) gsap.fromTo(b, {scale:.97}, {scale:1, duration:.3, ease:'back.out(3)'});
+  resetDemand();
+  if (S.crowd && S.time && S.own && !done) {
+    done = true;
+    setTimeout(() => {
+      Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if (!Kit.calm) gsap.from('#why > *', {opacity:0, y:8, stagger:.1, duration:.4});
+    }, 2400);
+  }
+});
+
+function clearAt(lane, u, len){
+  for (const c of cars) if (c.lane === lane && c.x > u - len - 0.012 && c.x - c.len < u + 0.012) return false;
+  return true;
+}
+function spawn(){
+  const D = S.crowd ? 400 : 10;
+  const released = S.time ? D : Math.min(D, Math.floor(clock / 1.4) + 1);
+  if (spawned >= released) return;
+  let entries;
+  if (!S.own) entries = [[1, 0]];
+  else entries = [[0,0],[1,0],[2,0],[0,.15],[0,.32],[0,.5],[2,.24],[2,.42]];
+  for (const [lane, u] of entries) {
+    if (spawned >= released) break;
+    const bus = !S.own, len = bus ? .075 : .032;
+    const at = u === 0 ? 0 : u;
+    if (!clearAt(lane, at, len)) continue;
+    if (u === 0 && S.own === 0 && false) continue;
+    cars.push({x: at, lane, ly: u === 0 ? lane : (lane === 0 ? -1.6 : 3.6), len, bus,
+      v: u === 0 ? .06 : 0, vmax: bus ? .1 : .085 + Kit.rnd() * .06, hue: Kit.rnd()});
+    spawned++;
+    if (!S.time) break;
+  }
+}
+function step(dt){
+  clock += dt;
+  spawn();
+  const lanes = [[],[],[]];
+  for (const c of cars) lanes[c.lane].push(c);
+  for (const L of lanes) L.sort((a,b) => b.x - a.x);
+  for (const L of lanes) for (let i = 0; i < L.length; i++) {
+    const c = L[i];
+    let gap = 9;
+    if (i > 0) gap = L[i-1].x - L[i-1].len - c.x;
+    if (c.lane !== 1 && c.x < BX) gap = Math.min(gap, BX - c.x);
+    const want = Math.max(0, Math.min(c.vmax, (gap - .01) * 2.6));
+    c.v += Math.max(-1.2 * dt, Math.min(.25 * dt, want - c.v));
+    if (c.v > want) c.v = want;
+    c.x += c.v * dt;
+  }
+  for (const c of cars) {
+    if (c.lane !== 1 && c.x > BX - .16) {
+      if (clearAt(1, c.x, c.len) && Kit.rnd() < dt * 3) c.lane = 1;
+    } else if (S.own && c.x < BX - .2 && Kit.rnd() < dt * .35) {
+      const t = c.lane + (Kit.rnd() < .5 ? -1 : 1);
+      if (t >= 0 && t <= 2 && clearAt(t, c.x, c.len)) c.lane = t;
+    }
+    c.ly += (c.lane - c.ly) * Math.min(1, dt * 5);
+  }
+  cars = cars.filter(c => c.x - c.len < 1.06);
+  const D = S.crowd ? 400 : 10;
+  if (spawned >= D && cars.length === 0) { idle += dt; if (idle > 1.2) resetDemand(); }
+}
+function rr(x, y, w, h, r){ ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, r) : ctx.rect(x, y, w, h); }
+function draw(){
+  if (!ctx) return;
+  ctx.clearRect(0, 0, W, H);
+  const fs = Math.max(13, Math.min(W * .042, H * .065));
+  const laneH = Math.max(14, Math.min(H * .09, 28));
+  const yc = H * .62, x0 = W * .02, x1 = W * .98, RW = x1 - x0;
+  const X = u => x0 + u * RW, Y = l => yc + (l - 1) * laneH;
+  // town & side streets
+  ctx.fillStyle = ink;
+  ctx.globalAlpha = .1;
+  for (const u of [.15, .32, .5]) ctx.fillRect(X(u) - laneH * .35, yc - laneH * 1.5 - H * .22, laneH * .7, H * .22);
+  for (const u of [.24, .42]) ctx.fillRect(X(u) - laneH * .35, yc + laneH * 1.5, laneH * .7, H * .2);
+  ctx.globalAlpha = .16;
+  for (let i = 0; i < 9; i++) {
+    const u = .04 + i * .065; if ([.15,.32,.5].some(s => Math.abs(s - u) < .04)) continue;
+    rr(X(u), yc - laneH * 1.5 - H * .14, RW * .04, H * .09, 3); ctx.fill();
+  }
+  // road
+  ctx.globalAlpha = .16;
+  ctx.beginPath();
+  ctx.moveTo(x0, yc - laneH * 1.5); ctx.lineTo(X(BX), yc - laneH * 1.5); ctx.lineTo(X(BX + .06), yc - laneH * .5);
+  ctx.lineTo(x1, yc - laneH * .5); ctx.lineTo(x1, yc + laneH * .5); ctx.lineTo(X(BX + .06), yc + laneH * .5);
+  ctx.lineTo(X(BX), yc + laneH * 1.5); ctx.lineTo(x0, yc + laneH * 1.5); ctx.closePath(); ctx.fill();
+  ctx.globalAlpha = .35; ctx.strokeStyle = ink; ctx.setLineDash([6, 6]); ctx.lineWidth = 1.5;
+  for (const l of [.5, 1.5]) { ctx.beginPath(); ctx.moveTo(x0, Y(l)); ctx.lineTo(X(BX), Y(l)); ctx.stroke(); }
+  ctx.setLineDash([]); ctx.globalAlpha = 1;
+  // cars
+  let mv = 0, stop = 0;
+  for (const c of cars) {
+    const stopped = c.v < .02;
+    if (c.x > 0 && c.x < 1) { mv += c.v / c.vmax; if (stopped) stop++; }
+    const h = laneH * (c.bus ? .66 : .56), w = c.len * RW * .9;
+    const y = Y(c.ly) - h / 2;
+    ctx.fillStyle = stopped ? '#e5484d' : ink;
+    rr(X(c.x) - w, y, w, h, h * .3); ctx.fill();
+    if (c.bus) { ctx.fillStyle = paper; ctx.globalAlpha = .7; ctx.fillRect(X(c.x) - w * .85, y + h * .25, w * .7, h * .22); ctx.globalAlpha = 1; }
+  }
+  const n = cars.filter(c => c.x > 0 && c.x < 1).length;
+  const flow = n ? mv / n : 1;
+  let st = 'Traffic: flowing', col = '#2f9e44';
+  if (n > 6 && (stop / n > .45 || flow < .3)) { st = 'Traffic: gridlock'; col = '#e5484d'; }
+  else if (n > 3 && (stop / n > .15 || flow < .65)) { st = 'Traffic: slowing'; col = '#e8890c'; }
+  // labels
+  ctx.textBaseline = 'middle';
+  ctx.font = `700 ${fs}px ${getComputedStyle(cv).getPropertyValue('--body') || 'sans-serif'}`;
+  ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x0 + fs * .55, fs * 1.1, fs * .38, 0, 7); ctx.fill();
+  ctx.fillStyle = ink; ctx.textAlign = 'left'; ctx.fillText(st, x0 + fs * 1.3, fs * 1.1);
+  const sm = Math.max(12, fs * .78);
+  ctx.font = `700 ${sm}px sans-serif`; ctx.globalAlpha = .7;
+  ctx.fillText('RED ZONE', x0 + 2, yc + laneH * 1.5 + H * .2 + sm * 1.1 > H - 2 ? H - sm : yc + laneH * 1.5 + sm * 1.1);
+  ctx.textAlign = 'right';
+  ctx.fillText('SAFE →', x1 - 2, yc - laneH * .5 - sm * .9);
+  ctx.textAlign = 'center';
+  ctx.fillText('one lane out', X(BX + .1), yc + laneH * .5 + sm * 1.1);
+  ctx.globalAlpha = 1;
+}
+gsap.ticker.add((t, dms) => { const dt = Math.min(dms / 1000, .05); step(dt); draw(); });
+Kit.onShow.card = () => {
+  const r = Kit.fitCanvas(cv); ctx = r.x; W = r.W; H = r.H;
+  const cs = getComputedStyle(Kit.$('card'));
+  ink = cs.getPropertyValue('--k').trim() || '#111'; paper = cs.getPropertyValue('--c').trim() || '#fff';
+  draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sw', {opacity:0, y:10, stagger:.08, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  for (const b of Kit.$('ctl').querySelectorAll('.sw')) { b.click(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 3200));
+};
+Kit.single();
+</script>
+</html>

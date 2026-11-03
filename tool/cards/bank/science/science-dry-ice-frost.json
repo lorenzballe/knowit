@@ -1,0 +1,37 @@
+{
+  "id": "science-dry-ice-frost",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does CO₂ solidify on the water surface?",
+  "answer": "Drag the thermometer down: pour in solid nitrogen and chill the surface. The surface got colder than –78 °C, which is CO₂'s sublimation point. Below that, CO₂ gas from the air skips the liquid stage and deposits straight onto the surface as solid dry ice.",
+  "move": "Make a surface cold enough and the air itself turns to frost on it.",
+  "keywords": [
+    "dry ice",
+    "carbon dioxide",
+    "liquid nitrogen",
+    "frost",
+    "sublimation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Close-up of dry-ice crystals forming on a frosty water surface. The question asks why CO₂ solidifies on the water surface. A thermometer can be dragged down to chill the surface with solid nitrogen."
+  },
+  "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=rM04U5BO3Ug&t=156s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "economics-hormuz-oil-cut",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would a prolonged total closure of Hormuz cut from global oil supply?",
+  "answer": "With the strait open, tankers pass and the world gets all its oil. A big share of the world's oil sails through this one narrow strait, so a long block would stop 15–20% of global supply from reaching buyers. Brent has already hit almost $94 a barrel, up 8%.",
+  "move": "One strait carries up to a fifth of the world's oil.",
+  "keywords": [
+    "strait of hormuz",
+    "oil",
+    "tankers",
+    "brent crude",
+    "chokepoints"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An oil supply gauge with a switch between Strait open and Strait closed. The question asks what a prolonged total closure of the Strait of Hormuz would cut from global oil supply. A timeline slider lets the reader extend the closure."
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=1549s",
+  "written": "2026-11-03"
+}

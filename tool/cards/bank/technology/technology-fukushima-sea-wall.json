@@ -1,0 +1,37 @@
+{
+  "id": "technology-fukushima-sea-wall",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Fukushima plant's tsunami defenses fail?",
+  "answer": "The plant was ringed by walls about 5 m high, but the 2011 waves reached 20–30 m. The sea poured over the walls, flooded the site and wrecked the diesel generators that kept the reactors cool.",
+  "move": "A wall only stops what is shorter than it: 5 m against 30 m is no wall at all.",
+  "keywords": [
+    "fukushima",
+    "tsunami",
+    "sea_walls",
+    "diesel_generators",
+    "japan"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider labelled Sea, set at 1 metre, sits under the question: why did the Fukushima plant's tsunami defenses fail? Dragging it up to the 2011 wave height shows the sea pouring over the walls."
+  },
+  "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=228s",
+  "written": "2026-11-03"
+}

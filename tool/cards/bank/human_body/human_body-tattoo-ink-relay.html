@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- slug: human_body-tattoo-ink-relay -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why do tattoos last forever?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{display:flex;align-items:center;gap:3cqw;font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 3.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt .n{flex:none;display:grid;place-items:center;width:max(3.4cqh,22px);height:max(3.4cqh,22px);border-radius:50%;font:800 max(1.8cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent)}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.on .n{background:var(--c);color:var(--k);box-shadow:none}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Put in order">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">IN ORDER</span></div>
+    <h2 class="q">Why do tattoos last forever?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Ink in the skin with a macrophage"></svg>
+      <div id="opts">
+        <button class="opt" data-i="2"><span class="n"></span><span>The macrophage dies and lets the ink go</span></button>
+        <button class="opt" data-i="0"><span class="n"></span><span>A macrophage swallows the ink</span></button>
+        <button class="opt" data-i="3"><span class="n"></span><span>A new macrophage swallows the same ink</span></button>
+        <button class="opt" data-i="1"><span class="n"></span><span>It can't break the ink down, so it keeps it</span></button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">A relay, not a vault</p>
+        <p class="body">Macrophages swallow the ink but don't recognise it and can't get rid of it, so they hold it. When one dies, the ink comes out and a new one swallows it. The cycle goes on, and the ink stays.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the four steps in the order they happen.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tattoo ink stays because cells keep passing it on.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const order = [];
+let done = false, tl = null, idle = null;
+const CAPS = ['1 · A macrophage swallows the ink', '2 · It can\'t break it down: it keeps it', '3 · It dies and lets the ink go', '4 · A new one swallows it again'];
+// stable ink offsets (unit circle)
+const N = 11, OFF = [];
+for (let i = 0; i < N; i++) { const a = Kit.rnd() * Math.PI * 2, d = Math.sqrt(Kit.rnd()); OFF.push({a, d, s: .7 + Kit.rnd() * .6}); }
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = order.join('') === '0123';
+  Kit.answer({choice: order.join('-'), correct: ok, sure: pct});
+  done = true;
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, ok ? 'Your order: right' : 'Your order: not quite — watch the loop');
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  Kit.onShow.card();
+});
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || done || b.classList.contains('on') || order.length >= 4) return;
+  order.push(+b.dataset.i);
+  b.classList.add('on'); b.querySelector('.n').textContent = order.length;
+  Kit.haptic('selection');
+  if (order.length === 4) sure.on();
+});
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  if (tl) tl.kill(); if (idle) idle.kill();
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f * 1.05, W / 21));
+  const epi = H * .16;
+  // skin
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, style: 'fill:color-mix(in srgb,#e8a089 22%,transparent)'}, svg);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: epi, rx: Math.min(W, H) * .05, style: 'fill:color-mix(in srgb,#c9705a 30%,transparent)'}, svg);
+  const lab = (t, y) => { const e = Kit.mk('text', {x: W * .04, y, style: `font:700 ${Math.max(12, fs * .8)}px var(--mono);fill:var(--k);opacity:.6`}, svg); e.textContent = t; };
+  const capY = H - fs * .7;
+  lab('EPIDERMIS', epi * .62);
+  const dermY = epi + fs * 1.4;
+  if (dermY + fs * .4 < capY - fs * 1.2) lab('DERMIS', dermY);
+  const cx = W / 2, cy = epi + (capY - fs * 1.2 - epi) / 2 + fs * .4;
+  const r = Math.max(18, Math.min(W * .19, (capY - fs * 1.4 - epi) * .36));
+  // macrophages
+  const mkMac = () => {
+    const g = Kit.mk('g', {}, svg);
+    const pts = [];
+    for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, rr = r * (1 + .1 * Math.sin(i * 2.3)); pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]); }
+    let d = `M${pts[0]}`; for (let i = 1; i <= 14; i++) { const p = pts[i % 14], q = pts[(i - 1) % 14]; d += ` Q${q[0]},${q[1]} ${(p[0] + q[0]) / 2},${(p[1] + q[1]) / 2}`; }
+    Kit.mk('path', {d: d + 'Z', style: `fill:rgba(255,255,255,.82);stroke:var(--k);stroke-width:${Math.max(2, r * .05)}`}, g);
+    Kit.mk('ellipse', {cx: cx + r * .35, cy: cy - r * .3, rx: r * .22, ry: r * .16, style: 'fill:#b58ab8;opacity:.8'}, g);
+    return g;
+  };
+  const A = mkMac(), B = mkMac();
+  gsap.set([A, B], {transformOrigin: '50% 50%', opacity: 0});
+  // ink
+  const tight = OFF.map(o => ({x: cx - r * .1 + Math.cos(o.a) * o.d * r * .42, y: cy + r * .12 + Math.sin(o.a) * o.d * r * .42}));
+  const loose = OFF.map(o => ({x: cx + Math.cos(o.a) * (.5 + o.d) * r * 1.05, y: cy + Math.sin(o.a) * (.5 + o.d) * r * .8}));
+  const dots = OFF.map((o, i) => Kit.mk('circle', {cx: loose[i].x, cy: loose[i].y, r: Math.max(3, r * .085 * o.s), style: 'fill:#16204a'}, svg));
+  const cap = Kit.mk('text', {x: W / 2, y: capY, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);fill:var(--k)`}, svg);
+  const setCap = t => { cap.textContent = t; };
+  const gather = (pos) => dots.forEach((d, i) => tl.to(d, {attr: {cx: tight[i].x, cy: tight[i].y}, duration: .7, ease: 'power2.inOut'}, pos));
+  const scatter = (pos) => dots.forEach((d, i) => tl.to(d, {attr: {cx: loose[i].x, cy: loose[i].y}, duration: .8, ease: 'power2.out'}, pos));
+
+  if (!done) {
+    // before: ink sitting loose in the dermis, a macrophage waiting nearby
+    gsap.set(A, {opacity: 1, x: -W * .32, scale: .7});
+    setCap('Ink in the dermis…');
+    if (!Kit.calm) idle = gsap.to(A, {scale: .74, duration: 1.4, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+    return;
+  }
+  if (Kit.calm) {
+    gsap.set(A, {opacity: 1});
+    dots.forEach((d, i) => d.setAttribute('cx', tight[i].x) || d.setAttribute('cy', tight[i].y));
+    setCap('Swallow → keep → die → release → again');
+    return;
+  }
+  tl = gsap.timeline({repeat: -1});
+  const gen = (M, from, first) => {
+    tl.set(M, {x: from, opacity: 1, scale: 1});
+    tl.call(setCap, [first ? CAPS[0] : CAPS[3]]);
+    tl.to(M, {x: 0, duration: 1, ease: 'power2.out'});
+    gather('-=.45');
+    tl.call(setCap, [CAPS[1]], '+=.2');
+    tl.to(M, {scale: 1.05, duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+    tl.call(setCap, [CAPS[2]]);
+    tl.to(M, {scale: .55, opacity: 0, rotation: 12, duration: .9, ease: 'power2.in'});
+    scatter('-=.55');
+    tl.set(M, {rotation: 0}, '+=.5');
+  };
+  gen(A, -W * .7, true);
+  gen(B, W * .7, false);
+};
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+
+Kit.play.card = async () => {
+  for (let i = 0; i < 4; i++) { Kit.$('opts').querySelector(`[data-i="${i}"]`).click(); await new Promise(r => setTimeout(r, 60)); }
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,269 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1 1 auto;min-height:0}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#scene.drag{cursor:grabbing}
+#scene .k{stroke:var(--k);fill:none;stroke-linecap:round;stroke-linejoin:round}
+#scene .soft{stroke:color-mix(in srgb,var(--k) 50%,transparent)}
+#scene .dots{stroke:color-mix(in srgb,var(--k) 55%,transparent);fill:none;stroke-linecap:round}
+#scene .ringc{stroke:color-mix(in srgb,var(--k) 30%,transparent);fill:none}
+#scene .disk{fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:none}
+#scene .fk{fill:var(--k);stroke:none}
+#scene .fsoft{fill:color-mix(in srgb,var(--k) 50%,transparent);stroke:none}
+#scene .hot{fill:#ff5a1f;stroke:var(--k);stroke-linejoin:round}
+#scene .tape{stroke:#ff5a1f;fill:none}
+#scene .knob{fill:var(--c);stroke:var(--k)}
+#scene text{font-family:var(--hand);font-weight:700;fill:var(--k)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Point the way · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GYROSCOPES</span></div>
+    <h2 class="q">A spinning wheel hangs from one end of its axle. Where does it go?</h2>
+    <div class="stagebox" id="stage"><svg id="scene" role="img" aria-label="A spinning bicycle wheel hangs from a rope tied to one end of its axle"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the arrow to where it goes once let go.</p>
+    <div id="why" class="gone"><p class="big">Round, not down</p><p class="body">The weight's twist points sideways, at right angles to the spin arrow. So the arrow swings that way, without growing or dropping. The twist swings with it, so round it goes.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Twist a spinning wheel at right angles and it swings round, not down.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Gyroscopic Precession” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// World: y up, the rope's knot at the origin. The axle is horizontal; u points from the knot to the hub.
+// Weight's twist = u × (down) = e1, horizontal and at right angles to u, so the spin arrow (along u) swings toward e1.
+const TAU = Math.PI * 2, D2R = Math.PI / 180;
+const TH = 17 * D2R, CT = Math.cos(TH), SN = Math.sin(TH), DIST = 9;
+const R = 1, AX = .72, HANDLE = .3, LL = .8, TW = .6, WT = 1.32, RING = 1.3, NS = 16;
+const PHI0 = -45 * D2R, SPIN = 6, PREC = TAU / 6, RT = AX + LL;
+const st = {phi: PHI0, psi: .35, aL: 0, aW: 0, aT: 0, pw: 0, go: false, trail: 0, kp: 0};
+const view = {S: 0, OX: 0, OY: 0};
+let W = 0, H = 0, F = 14, E = null, ro = null, ropeFront = null;
+let guess = null, locked = false, armed = false, dragging = false, pulse = null, ticking = false;
+const svg = Kit.$('scene');
+
+const add = (a, b, k) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
+function geo(phi) {
+  const s = Math.sin(phi), c = Math.cos(phi), u = [s, 0, c], h = [s * AX, 0, c * AX];
+  return {u, e1: [c, 0, -s], e2: [0, 1, 0], h, t: add(h, u, LL)};
+}
+const onWheel = (g, b, r) => add(add(g.h, g.e1, r * Math.cos(b)), g.e2, r * Math.sin(b));
+function P(p) { const Y = p[1] * CT - p[2] * SN, Z = p[1] * SN + p[2] * CT, s = DIST / (DIST - Z); return [p[0] * s, -Y * s, s]; }
+function scr(p) { const q = P(p); return [view.OX + view.S * q[0], view.OY + view.S * q[1], q[2]]; }
+const fx = n => (+n).toFixed(1);
+const pts = a => a.map((q, i) => (i ? 'L' : 'M') + fx(q[0]) + ',' + fx(q[1])).join('');
+function at(el, o) { for (const k in o) el.setAttribute(k, typeof o[k] === 'number' ? fx(o[k]) : o[k]); }
+const clamp = x => Math.max(0, Math.min(1, x));
+const nrm = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1], L = Math.hypot(dx, dy) || 1; return [dx / L, dy / L]; };
+function fat(a, b, w, hw, hl) {
+  const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
+  if (L < 1.5) return '';
+  const ux = dx / L, uy = dy / L, nx = -uy, ny = ux, h = Math.min(hl, L * .6), k = Math.min(1, h / hl),
+        cx = b[0] - ux * h, cy = b[1] - uy * h, q = hw * (.5 + .5 * k) / 2, r = w / 2;
+  return pts([[a[0] + nx * r, a[1] + ny * r], [cx + nx * r, cy + ny * r], [cx + nx * q, cy + ny * q], b,
+              [cx - nx * q, cy - ny * q], [cx - nx * r, cy - ny * r], [a[0] - nx * r, a[1] - ny * r]]) + 'Z';
+}
+
+function build() {
+  if (E) return;
+  const mk = (t, a, p) => Kit.mk(t, a, p);
+  const tx = (s, p) => { const e = mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', opacity: 0}, p); e.textContent = s; return e; };
+  E = {};
+  E.trail = mk('path', {class: 'dots'}, svg);
+  E.ropeG = mk('g', {}, svg);
+  E.rope = mk('line', {class: 'k'}, E.ropeG);
+  E.knot = mk('circle', {class: 'fk'}, E.ropeG);
+  E.wheelG = mk('g', {}, svg);
+  E.disk = mk('path', {class: 'disk'}, E.wheelG);
+  E.axle = mk('line', {class: 'k'}, E.wheelG);
+  E.spokes = Array.from({length: NS}, () => mk('line', {class: 'k soft'}, E.wheelG));
+  E.rimIn = mk('path', {class: 'k soft'}, E.wheelG);
+  E.tire = mk('path', {class: 'k'}, E.wheelG);
+  E.tape = [0, 1].map(() => mk('path', {class: 'tape'}, E.wheelG));
+  E.hub = mk('path', {class: 'fk'}, E.wheelG);
+  E.sArc = mk('path', {class: 'k soft'}, E.wheelG);
+  E.sHead = mk('path', {class: 'fsoft'}, E.wheelG);
+  E.ringG = mk('g', {}, svg);
+  E.ring = mk('circle', {class: 'ringc'}, E.ringG);
+  E.guessG = mk('g', {}, svg);
+  E.gArr = mk('path', {class: 'fk'}, E.guessG);
+  E.knob = mk('circle', {class: 'knob'}, E.guessG);
+  E.arrG = mk('g', {}, svg);
+  E.wArr = mk('path', {class: 'fk'}, E.arrG); E.wTx = tx('weight', E.arrG);
+  E.lArr = mk('path', {class: 'fk'}, E.arrG); E.lTx = tx('spin', E.arrG);
+  E.tArr = mk('path', {class: 'hot'}, E.arrG); E.tTx = tx('twist', E.arrG);
+  gsap.set(E.guessG, {opacity: .45});
+}
+
+// Fit the whole swing (every position round the rope) to the stage; the guess ring counts only before the answer.
+function layout() {
+  const f = Kit.fitSvg(svg);
+  if (!f || !(f.W > 20 && f.H > 20)) return;
+  W = f.W; H = f.H; F = Math.max(13, f.f || 14);
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  const take = q => { x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); };
+  for (let k = 0; k < 36; k++) {
+    const g = geo(k / 36 * TAU);
+    take(P(g.t)); take(P(add(g.t, g.e1, TW))); take(P([g.h[0], -WT, g.h[2]]));
+    for (let j = 0; j < 12; j++) take(P(onWheel(g, j / 12 * TAU, R * 1.06)));
+  }
+  if (!locked) { const h0 = P(geo(PHI0).h), rr = RING * h0[2] + .14; take([h0[0] - rr, h0[1] - rr]); take([h0[0] + rr, h0[1] + rr]); }
+  const padX = .45, top = .55, bot = .45, bw = x1 - x0 + 2 * padX, bh = y1 - y0 + top + bot;
+  const s = Math.min(W / bw, H / bh), ox = W / 2 - s * (x0 + x1) / 2, oy = (H - s * bh) / 2 + s * (top - y0);
+  build();
+  if (view.S && locked && !Kit.calm) gsap.to(view, {S: s, OX: ox, OY: oy, duration: .6, ease: 'power2.inOut', overwrite: true, onUpdate: draw});
+  else { gsap.killTweensOf(view); view.S = s; view.OX = ox; view.OY = oy; draw(); }
+}
+
+function draw() {
+  if (!E || !view.S) return;
+  const s = view.S, g = geo(st.phi), pv = scr([0, 0, 0]), H0 = scr(g.h);
+  const front = g.h[2] < 0;   // wheel behind the rope: rope drawn over it
+  if (front !== ropeFront) { ropeFront = front; svg.insertBefore(E.ropeG, front ? E.wheelG.nextSibling : E.wheelG); }
+  at(E.rope, {x1: pv[0], y1: -4, x2: pv[0], y2: pv[1], 'stroke-width': Math.max(2.5, .04 * s)});
+  at(E.knot, {cx: pv[0], cy: pv[1], r: Math.max(3.5, .06 * s)});
+  if (st.trail > .001) {   // the path of the spin arrow's tip
+    const a = [], n = Math.max(2, Math.ceil(st.trail / (3 * D2R)));
+    for (let i = 0; i <= n; i++) { const p = PHI0 + st.trail * i / n; a.push(scr([RT * Math.sin(p), 0, RT * Math.cos(p)])); }
+    at(E.trail, {d: pts(a), 'stroke-width': Math.max(3, .05 * s), 'stroke-dasharray': '0 ' + fx(Math.max(8, .13 * s))});
+  } else E.trail.setAttribute('d', '');
+  const ring = (r, n) => { const a = []; for (let i = 0; i < n; i++) a.push(scr(onWheel(g, i / n * TAU, r))); return pts(a) + 'Z'; };
+  const tire = ring(R, 60);
+  E.disk.setAttribute('d', tire);
+  at(E.tire, {d: tire, 'stroke-width': Math.max(3.5, .085 * s)});
+  at(E.rimIn, {d: ring(.9 * R, 48), 'stroke-width': Math.max(1.2, .02 * s)});
+  E.hub.setAttribute('d', ring(.21 * R, 24));
+  const he = scr(add(g.h, g.u, HANDLE));
+  at(E.axle, {x1: pv[0], y1: pv[1], x2: he[0], y2: he[1], 'stroke-width': Math.max(3, .07 * s)});
+  E.spokes.forEach((el, i) => {
+    const b = st.psi + i / NS * TAU, p0 = scr(onWheel(g, b + (i % 2 ? .3 : -.3), .18 * R)), p1 = scr(onWheel(g, b, .9 * R));
+    at(el, {x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], 'stroke-width': Math.max(1, .014 * s)});
+  });
+  E.tape.forEach((el, k) => {
+    const a = []; for (let i = 0; i <= 6; i++) a.push(scr(onWheel(g, st.psi + .2 + k * Math.PI + i * .06, R)));
+    at(el, {d: pts(a), 'stroke-width': Math.max(4.5, .1 * s)});
+  });
+  { // which way it spins
+    const a = []; for (let i = 0; i <= 12; i++) a.push(scr(onWheel(g, (128 + i * 5) * D2R, 1.14 * R)));
+    const e = a[12], d = a[11], L = Math.hypot(e[0] - d[0], e[1] - d[1]) || 1, ux = (e[0] - d[0]) / L, uy = (e[1] - d[1]) / L, hs = Math.max(7, .12 * s);
+    at(E.sArc, {d: pts(a.slice(0, 11)), 'stroke-width': Math.max(2, .03 * s)});
+    E.sHead.setAttribute('d', pts([[e[0] + ux * hs * .5, e[1] + uy * hs * .5], [e[0] - ux * hs * .7 - uy * hs * .55, e[1] - uy * hs * .7 + ux * hs * .55],
+                                   [e[0] - ux * hs * .7 + uy * hs * .55, e[1] - uy * hs * .7 - ux * hs * .55]]) + 'Z');
+  }
+  // the reader's arrow, from where the hub starts
+  const h0 = scr(geo(PHI0).h), rho = RING * s * h0[2];
+  at(E.ring, {cx: h0[0], cy: h0[1], r: rho, 'stroke-width': Math.max(1.5, .025 * s), 'stroke-dasharray': fx(Math.max(3, .05 * s)) + ' ' + fx(Math.max(5, .08 * s))});
+  const a = guess ?? -Math.PI / 2, ca = Math.cos(a), sa = Math.sin(a), kr = Math.max(12, .15 * s) * (1 + .18 * st.kp), kx = h0[0] + ca * rho, ky = h0[1] + sa * rho;
+  at(E.knob, {cx: kx, cy: ky, r: kr, 'stroke-width': Math.max(2.5, .04 * s)});
+  E.gArr.setAttribute('d', fat([h0[0] + ca * rho * .2, h0[1] + sa * rho * .2], [kx - ca * kr * 1.15, ky - sa * kr * 1.15], Math.max(4.5, .075 * s), Math.max(16, .26 * s), Math.max(13, .22 * s)));
+  // the answer: weight, spin arrow, twist
+  const T = scr(g.t), Tf = scr(add(g.t, g.e1, TW)), dl = nrm(T, H0), dt = nrm(Tf, T);
+  if (st.aW > 0) {
+    const wt = scr([g.h[0], -WT * st.aW, g.h[2]]);
+    at(E.wArr, {d: fat(H0, wt, Math.max(3, .045 * s), Math.max(13, .18 * s), Math.max(11, .16 * s)), opacity: clamp(st.aW * 4)});
+    at(E.wTx, {x: wt[0], y: wt[1] + F * .95, 'font-size': F, opacity: clamp(st.aW * 2 - 1)});
+  } else { E.wArr.setAttribute('d', ''); E.wTx.setAttribute('opacity', 0); }
+  if (st.aL > 0) {
+    const tp = scr(add(g.h, g.u, LL * st.aL));
+    at(E.lArr, {d: fat(H0, tp, Math.max(5, .08 * s), Math.max(16, .25 * s), Math.max(13, .21 * s)), opacity: clamp(st.aL * 4)});
+    at(E.lTx, {x: T[0] + dl[0] * F * .7 - dt[0] * F * 1.5, y: T[1] + dl[1] * F * .7 - dt[1] * F * 1.5, 'font-size': F * 1.05, opacity: clamp(st.aL * 2 - 1)});
+  } else { E.lArr.setAttribute('d', ''); E.lTx.setAttribute('opacity', 0); }
+  if (st.aT > 0) {
+    const tw = scr(add(g.t, g.e1, TW * st.aT));
+    at(E.tArr, {d: fat(T, tw, Math.max(7, .12 * s), Math.max(20, .32 * s), Math.max(14, .24 * s)), 'stroke-width': Math.max(1.5, .022 * s), opacity: clamp(st.aT * 4)});
+    at(E.tTx, {x: tw[0] + dt[0] * F * 1.6, y: tw[1] + dt[1] * F * 1.6, 'font-size': F * 1.05, opacity: clamp(st.aT * 2 - 1)});
+  } else { E.tArr.setAttribute('d', ''); E.tTx.setAttribute('opacity', 0); }
+}
+
+function tick(time, dtMs) {
+  const d = Math.min(dtMs || 16, 60) / 1000;
+  st.psi = (st.psi + d * SPIN) % TAU;
+  if (st.go) { st.phi += d * PREC * st.pw; st.trail = Math.min(TAU, st.phi - PHI0); }
+  draw();
+}
+function startTick() { if (!ticking && !Kit.calm) { ticking = true; gsap.ticker.add(tick); } }
+
+function kind(a) { const d = a / D2R; return d >= 45 && d <= 135 ? 'It drops' : d <= -45 && d >= -135 ? 'It rises' : 'It swings sideways'; }
+
+function reveal() {
+  if (pulse) { pulse.kill(); pulse = null; } st.kp = 0;
+  gsap.to(E.ringG, {opacity: 0, duration: .35});
+  gsap.to(E.guessG, {opacity: .22, duration: .35});
+  layout();
+  if (Kit.calm) { st.aL = st.aW = st.aT = 1; st.phi = PHI0 + Math.PI / 2; st.trail = TAU; draw(); return; }
+  startTick();
+  gsap.timeline()
+    .to(st, {aL: 1, duration: .5, ease: 'power2.out'}, .25)
+    .to(st, {aW: 1, duration: .45, ease: 'power2.out'}, .65)
+    .to(st, {aT: 1, duration: .5, ease: 'back.out(1.8)'}, 1.05)
+    .call(() => { st.go = true; Kit.haptic('light'); }, null, 1.6)
+    .to(st, {pw: 1, duration: .9, ease: 'power1.in'}, 1.6);
+  gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .5, stagger: .15, delay: .4, ease: 'power2.out'});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (locked || guess === null) return;
+  locked = true;
+  const said = kind(guess), ok = said === 'It swings sideways';
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  reveal();
+});
+
+const startHub = () => scr(geo(PHI0).h);
+function aim(e) {
+  const r = svg.getBoundingClientRect(); if (!r.width || !r.height) return;
+  const x = (e.clientX - r.left) * W / r.width, y = (e.clientY - r.top) * H / r.height, c = startHub();
+  if (Math.hypot(x - c[0], y - c[1]) < 6) return;
+  guess = Math.atan2(y - c[1], x - c[0]); draw();
+}
+svg.addEventListener('pointerdown', e => {
+  if (locked || !E) return;
+  dragging = true; svg.classList.add('drag');
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  if (pulse) { pulse.kill(); pulse = null; st.kp = 0; }
+  gsap.to(E.guessG, {opacity: 1, duration: .2});
+  aim(e); e.preventDefault();
+});
+svg.addEventListener('pointermove', e => { if (dragging) aim(e); });
+function release() {
+  if (!dragging) return;
+  dragging = false; svg.classList.remove('drag');
+  if (guess === null || locked) return;
+  Kit.haptic('selection');
+  if (!armed) { armed = true; sure.on(); }
+}
+svg.addEventListener('pointerup', release);
+svg.addEventListener('pointercancel', release);
+
+// Draw at the card's real size: once the fonts are in, again on every resize, and when the answer makes room for the why.
+Kit.onShow.card = () => {
+  layout();
+  if (!ro && window.ResizeObserver) { ro = new ResizeObserver(() => layout()); ro.observe(Kit.$('stage')); }
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  startTick();
+  if (!armed && !pulse) pulse = gsap.to(st, {kp: 1, duration: .75, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  gsap.from(svg, {opacity: 0, duration: .6, ease: 'power2.out'});
+};
+// Plays the card through for the checker: drag the arrow sideways, say 80%, let the wheel swing round.
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect(), c = startHub(), k = r.width / (W || r.width), rho = RING * view.S * .9 * k;
+  const cx = r.left + c[0] * k, cy = r.top + c[1] * k;
+  const ev = (t, a) => svg.dispatchEvent(new PointerEvent(t, {bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true, clientX: cx + Math.cos(a) * rho, clientY: cy + Math.sin(a) * rho}));
+  ev('pointerdown', -1.6); await w(80);
+  for (let i = 1; i <= 8; i++) { ev('pointermove', -1.6 + i * 1.85 / 8); await w(30); }
+  ev('pointerup', .25); await w(200);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await w(3400);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "history-kgb-pistolero-walk",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the primary tactical purpose of the 'Pistolero Walk'?",
+  "answer": "The Pistolero Walk keeps the right arm stiff and parked by the holster, so the pistol can come out as fast as possible in an emergency. The card says it comes from the KGB training manual, and that Putin learned it in Cold War Dresden, East Germany.",
+  "move": "The stiff right arm is a gun hand kept parked by the holster.",
+  "keywords": [
+    "putin",
+    "kgb",
+    "dresden",
+    "pistol draw",
+    "pistolero walk"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two walking figures side by side: a normal walk on the left and the Pistolero Walk on the right. A DRAW! button can be tapped at any moment. The question asks who gets the pistol out first."
+  },
+  "source": "Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=REFrqE1jOUI&t=138s",
+  "written": "2026-11-03"
+}

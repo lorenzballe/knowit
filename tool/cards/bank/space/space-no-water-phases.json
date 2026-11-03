@@ -1,0 +1,38 @@
+{
+  "id": "space-no-water-phases",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.living_on_mars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When can't Artemis II astronauts add water to food, and what do they eat?",
+  "answer": "Most Artemis II food is freeze-dried, so water must be added to it. During launch and re-entry the water dispenser is not available, so for those hours the crew eats only ready-to-eat food, like tortillas.",
+  "move": "Launch and re-entry: no water, so only ready-to-eat food like tortillas.",
+  "keywords": [
+    "artemis-ii",
+    "astronauts",
+    "freeze-dried-food",
+    "water-dispenser",
+    "re-entry"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page: a capsule is drawn from launch, around the Moon, and home, with a water gauge to watch. It asks when Artemis II astronauts cannot add water to their food, and what they eat during those hours.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=W7hfmLtz_As&t=62s",
+  "written": "2026-11-03"
+}

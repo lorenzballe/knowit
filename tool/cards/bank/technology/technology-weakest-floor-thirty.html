@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: technology-weakest-floor-thirty -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#tw{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.lab{font-family:var(--body);font-weight:800}
+.lab2{font-family:var(--body);font-weight:600}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess on the drawing · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENGINEERING</span></div>
+    <h2 class="q">Which floor held this skyscraper’s weakest structural joints?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="tw" aria-label="A skyscraper: slide to pick a floor"></svg>
+      <div id="why" class="gone"><p class="big">The 30th floor</p><p class="body">LeMessurier went back to the wind-tunnel data and checked every joint on every floor, one by one. The weakest were on the 30th floor. If those gave way, the entire building would fall.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Slide your finger up the tower and stop on your guess.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A tower is only as strong as its weakest joint, and you find it by checking every one.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 59, ANS = 30, RED = '#e5383b';
+let pick = 0, locked = false, scan = 0, geo = null, armed = false;
+
+function ok() { return Math.abs(pick - ANS) <= 2; }
+
+function draw() {
+  const svg = Kit.$('tw');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * 0.95);
+  const top = Math.max(fs * 1.2, H * 0.05), bot = H - Math.max(8, fs * 0.6);
+  const crown = (bot - top) * 0.06;
+  const fh = (bot - top - crown) / N;
+  const tw = Math.min(W * 0.28, (bot - top) * 0.3);
+  const x0 = W / 2 - tw / 2, x1 = x0 + tw;
+  geo = {bot, fh, x0, x1, W};
+  const yTop = n => bot - n * fh;
+  const g = Kit.mk('g', {}, svg);
+  // ground
+  Kit.mk('line', {x1: W * 0.08, x2: W * 0.92, y1: bot, y2: bot, stroke: 'var(--k)', 'stroke-width': Math.max(2, fh * 0.5), 'stroke-linecap': 'round'}, g);
+  // crown (slanted top)
+  Kit.mk('polygon', {points: `${x0},${yTop(N)} ${x1},${yTop(N)} ${x1},${yTop(N) - crown} ${x0},${yTop(N) - crown * 0.15}`, fill: 'color-mix(in srgb,var(--k) 30%,transparent)', stroke: 'var(--k)', 'stroke-width': 1.5}, g);
+  // floors
+  for (let n = 1; n <= N; n++) {
+    const scanned = scan >= n;
+    const isAns = n === ANS && scanned;
+    Kit.mk('rect', {class: 'fl', x: x0, y: yTop(n), width: tw, height: fh,
+      fill: isAns ? RED : scanned ? 'color-mix(in srgb,var(--k) 26%,transparent)' : 'color-mix(in srgb,var(--k) 11%,transparent)',
+      stroke: 'color-mix(in srgb,var(--k) 35%,transparent)', 'stroke-width': .6}, g);
+  }
+  // columns
+  for (let i = 0; i <= 4; i++) {
+    const x = x0 + tw * i / 4;
+    Kit.mk('line', {x1: x, x2: x, y1: bot, y2: yTop(N), stroke: 'var(--k)', 'stroke-width': i % 4 ? .8 : 2, opacity: i % 4 ? .35 : 1}, g);
+  }
+  // scan line
+  if (scan > 0 && scan < N) {
+    const y = bot - scan * fh;
+    Kit.mk('line', {x1: x0 - tw * .25, x2: x1 + tw * .25, y1: y, y2: y, stroke: RED, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, g);
+  }
+  // guess (right side)
+  if (pick) {
+    const y = yTop(pick);
+    Kit.mk('rect', {x: x0 - 3, y: y - 1, width: tw + 6, height: fh + 2, fill: 'none', stroke: 'var(--k)', 'stroke-width': 3, rx: 2}, g);
+    const ly = Math.min(Math.max(y + fh / 2, top), bot - fs * 1.6);
+    Kit.mk('line', {x1: x1 + 4, y1: y + fh / 2, x2: x1 + tw * .35, y2: ly, stroke: 'var(--k)', 'stroke-width': 1.5}, g);
+    const t = Kit.mk('text', {x: x1 + tw * .4, y: ly + fs * .35, class: 'lab', 'font-size': fs * 1.15, fill: 'var(--k)'}, g);
+    t.textContent = 'Floor ' + pick;
+    if (locked) {
+      const t2 = Kit.mk('text', {x: x1 + tw * .4, y: ly + fs * .35 + fs * 1.45, class: 'lab2', 'font-size': fs * .9, fill: 'var(--k)', opacity: .75}, g);
+      t2.textContent = 'your guess';
+    }
+  }
+  // answer (left side)
+  if (scan >= ANS) {
+    const y = yTop(ANS) + fh / 2;
+    for (let i = 0; i <= 4; i++) {
+      const c = Kit.mk('circle', {class: 'jt', cx: x0 + tw * i / 4, cy: y, r: Math.max(3, fh * .75), fill: RED, stroke: 'var(--c)', 'stroke-width': 1.5}, g);
+    }
+    Kit.mk('line', {x1: x0 - 4, y1: y, x2: x0 - tw * .35, y2: y, stroke: RED, 'stroke-width': 2}, g);
+    const t = Kit.mk('text', {x: x0 - tw * .42, y: y - fs * .25, class: 'lab', 'text-anchor': 'end', 'font-size': fs * 1.15, fill: RED}, g);
+    t.textContent = '30th floor';
+    const t2 = Kit.mk('text', {x: x0 - tw * .42, y: y - fs * .25 + fs * 1.5, class: 'lab2', 'text-anchor': 'end', 'font-size': fs * .9, fill: 'var(--k)'}, g);
+    t2.textContent = 'weakest joints';
+    if (scan >= N && !Kit.calm) gsap.to('.jt', {attr: {r: Math.max(5, fh * 1.2)}, repeat: -1, yoyo: true, duration: .6, ease: 'sine.inOut'});
+  }
+}
+
+function floorAt(e) {
+  const r = Kit.$('tw').getBoundingClientRect();
+  const y = e.clientY - r.top;
+  return Math.min(N, Math.max(1, Math.ceil((geo.bot - y) / geo.fh)));
+}
+const tw = Kit.$('tw');
+let dragging = false;
+function setPick(e) {
+  if (locked) return;
+  const n = floorAt(e);
+  if (n !== pick) { pick = n; draw(); }
+  if (!armed) { armed = true; sure.on(); }
+}
+tw.addEventListener('pointerdown', e => { if (locked) return; dragging = true; try { tw.setPointerCapture(e.pointerId); } catch (_) {} setPick(e); });
+tw.addEventListener('pointermove', e => { if (dragging) setPick(e); });
+const end = () => { if (dragging) { dragging = false; Kit.haptic('selection'); } };
+tw.addEventListener('pointerup', end);
+tw.addEventListener('pointercancel', end);
+
+function finish() {
+  scan = N;
+  Kit.show('why'); Kit.show('keep');
+  draw();
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  locked = true; dragging = false;
+  const good = ok();
+  Kit.answer({choice: 'Floor ' + pick, correct: good, sure: pct});
+  Kit.hide('say');
+  sure.grade(good, pct, `Floor ${pick}, ${good ? 'right' : 'off by ' + Math.abs(pick - ANS)}`);
+  if (Kit.calm) { finish(); return; }
+  const o = {v: 0};
+  gsap.to(o, {v: N, duration: 1.6, ease: 'none', onUpdate: () => {
+    const prev = scan; scan = o.v;
+    if (prev < ANS && scan >= ANS) Kit.haptic('light');
+    draw();
+  }, onComplete: () => { Kit.haptic('success'); finish(); }});
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.fl', {opacity: 0, duration: .25, stagger: .01, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  const r = tw.getBoundingClientRect();
+  const y = r.top + geo.bot - 21.5 * geo.fh, x = r.left + r.width / 2;
+  const ev = t => tw.dispatchEvent(new PointerEvent(t, {bubbles: true, clientX: x, clientY: y, pointerId: 1}));
+  ev('pointerdown'); ev('pointermove'); ev('pointerup');
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2400));
+};
+Kit.single();
+</script>
+</html>

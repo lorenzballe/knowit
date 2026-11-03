@@ -1,0 +1,265 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh}
+#art{position:relative;flex:1 1 0;min-height:0}
+#art svg{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:max(1.8cqh,12px);background:#14100d}
+#art text{font-family:var(--hand)}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+.opt{font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1.5cqw;min-height:max(6.4cqh,40px);cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STANDING WAVES</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">Why do flames change height at different points in the tube?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg role="img" aria-label="A gas tube with a speaker at one end. Inside, the air vibrates a lot in some places and barely in others."></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Little vibration</button>
+        <button class="opt" data-i="1">Lots of vibration</button>
+        <button class="opt" data-i="2">Same everywhere</button>
+      </div>
+      <!-- The why takes the options' place once the reader has answered. -->
+      <div id="why" class="gone"><p class="body">Where the air vibrates hard, local pressure and gas flow rise, and the flame grows tall.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick where the flames will be tallest.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tall flames mark the strongest vibration.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Musical Fire Table!” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, LOBES = 3, TAU = Math.PI * 2;
+let pick = -1, G = null, running = false, lastT = 0;
+// Tweened by gsap: the dashed guess, the gas being lit (a sweep from the speaker end), the names.
+const S = {ghost: 0, ign: 0, lab: 0};
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const r1 = v => Math.round(v * 10) / 10;
+// How strongly the air vibrates along the tube (0 at a node, 1 at an antinode), and the flame it gives.
+const vib = u => Math.abs(Math.sin(Math.PI * LOBES * u));
+const tall = u => .13 + .87 * Math.pow(vib(u), 1.4);
+const guess = (u, p) => p === 1 ? tall(u) : p === 0 ? .13 + .87 * Math.pow(1 - vib(u), 1.4) : .5;
+const idle = () => { if (!running) frame(lastT); };
+
+function flame(x, y, w, h, sw) {
+  const a = w / 2;
+  return `M${r1(x - a * .42)} ${r1(y)}C${r1(x - a * 1.1)} ${r1(y - h * .16)} ${r1(x - a * .85 + sw * .4)} ${r1(y - h * .6)} ${r1(x + sw)} ${r1(y - h)}` +
+    `C${r1(x + a * .85 + sw * .4)} ${r1(y - h * .6)} ${r1(x + a * 1.1)} ${r1(y - h * .16)} ${r1(x + a * .42)} ${r1(y)}Q${r1(x)} ${r1(y + a * .55)} ${r1(x - a * .42)} ${r1(y)}Z`;
+}
+
+function build() {
+  const svg = Kit.$('art').querySelector('svg');
+  while (svg.firstChild) svg.firstChild.remove();
+  G = null;
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!(W > 60 && H > 60)) return;
+  const mk = Kit.mk;
+  const txt = (x, y, str, size, fill, anchor, weight, parent) => {
+    const t = mk('text', {x: r1(x), y: r1(y), 'text-anchor': anchor || 'start'}, parent || svg);
+    t.style.fontSize = r1(size) + 'px'; t.style.fill = fill; t.style.textAnchor = anchor || 'start';
+    if (weight) t.style.fontWeight = weight;
+    t.textContent = str; return t;
+  };
+  const pad = clamp(Math.min(W, H) * .045, 7, 16);
+  const fs = clamp(Math.min(f || 14, H * .07), 12, 17);
+  // The real height of a line of the hand font, so labels sit under each other without touching.
+  let pb = {height: 0, y: 0}; const probe = txt(0, 0, 'Hg', fs, '#fff'); try { pb = probe.getBBox(); } catch (e) {} probe.remove();
+  const lineH = pb.height || fs * 1.3, asc = pb.height ? -pb.y : fs * .95;
+  const two = H >= 190;   // room to keep "lots of vibration" and write its name under it
+  const ih = clamp(H * .11, 14, 40), tw = Math.max(3, ih * .2), tubeH = ih + 2 * tw;
+  const spW = clamp(W * .08, 20, 36), spH = tubeH * 1.6, over = (spH - tubeH) / 2, capW = tw * 1.5;
+  const tick = Math.max(5, over + 1), labH = tick + (two ? 2 * lineH + 2 : lineH) + 1;
+  const tubeTop = H - pad * .7 - labH - tubeH, tb = tubeTop + tubeH, cy = tubeTop + tubeH / 2, yb = tubeTop + 1;
+  const band = pad + lineH + 2;   // the top strip: "gas not lit yet", then the legend of the guess
+  const Hmax = Math.max(12, (yb - band) / 1.12);
+  const tx0 = pad + spW, tx1 = W - pad - capW;
+  const m = clamp((tx1 - tx0) * .02, 3, 8), hx0 = tx0 + m, L = tx1 - m - hx0;
+  const N = clamp(6 * Math.round(L / 75) + 1, 13, 37), s = L / (N - 1);
+  const fw = clamp(s * .72, 5, Hmax * .2);
+  const X = u => hx0 + u * L;
+
+  // Paints: flame (blue foot, yellow heart, orange tip), metal, speaker cone, glows.
+  const defs = mk('defs', {}, svg);
+  const grad = (tag, id, at, stops) => { const g = mk(tag, Object.assign({id}, at), defs); for (const [o, c, a] of stops) mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a == null ? 1 : a}, g); };
+  const up = {x1: 0, y1: 1, x2: 0, y2: 0}, down = {x1: 0, y1: 0, x2: 0, y2: 1};
+  grad('linearGradient', 'ft-o', up, [[0, '#4f7fff', .95], [.14, '#a9c1ff', .9], [.25, '#ffd870'], [.56, '#ff8d24'], [.85, '#ff5016', .55], [1, '#ff3a00', 0]]);
+  grad('linearGradient', 'ft-i', up, [[0, '#d2defe', .9], [.24, '#fffdf2'], [.72, '#ffe594', .7], [1, '#ffd36b', 0]]);
+  grad('linearGradient', 'ft-mt', down, [[0, '#f1f3f6'], [1, '#9aa2ad']]);
+  grad('linearGradient', 'ft-mb', down, [[0, '#8f97a2'], [1, '#555b64']]);
+  grad('linearGradient', 'ft-cn', {x1: 0, y1: 0, x2: 1, y2: 0}, [[0, '#454c57'], [1, '#a9b2be']]);
+  grad('radialGradient', 'ft-g', {}, [[0, '#ff9a3c', .6], [1, '#ff6a00', 0]]);
+  grad('radialGradient', 'ft-a', {cx: (X(.5) / W).toFixed(3), cy: ((yb - Hmax * .35) / H).toFixed(3), r: .62}, [[0, '#ff7a1a', .34], [1, '#ff7a1a', 0]]);
+  const clip = mk('clipPath', {id: 'ft-in'}, defs);
+  mk('rect', {x: r1(tx0), y: r1(tubeTop + tw), width: r1(tx1 - tx0), height: r1(ih)}, clip);
+
+  const amb = mk('rect', {x: 0, y: 0, width: r1(W), height: r1(H), fill: 'url(#ft-a)', opacity: 0}, svg);
+  const glowG = mk('g', {}, svg);
+
+  // The inside of the tube, cut open: the vibration's envelope (lobes) and the air itself (dots).
+  mk('rect', {x: r1(tx0), y: r1(tubeTop + tw), width: r1(tx1 - tx0), height: r1(ih), fill: '#0a1222'}, svg);
+  const inG = mk('g', {'clip-path': 'url(#ft-in)'}, svg);
+  const mid = tubeTop + tw + ih / 2, amp = ih / 2 - 1.5;
+  let d = '';
+  for (let k = 0; k <= 120; k++) d += `${k ? 'L' : 'M'}${r1(X(k / 120))} ${r1(mid - amp * vib(k / 120))}`;
+  for (let k = 120; k >= 0; k--) d += `L${r1(X(k / 120))} ${r1(mid + amp * vib(k / 120))}`;
+  mk('path', {d: d + 'Z', fill: '#4b7dff', 'fill-opacity': .22, stroke: '#8fb0ff', 'stroke-opacity': .55, 'stroke-width': 1}, inG);
+  const R = ih >= 30 ? 4 : 3, cs = s / 2, dr = clamp(ih * .055, 1.1, 2.4), A = cs * 1.05, dots = [];
+  for (let r = 0; r < R; r++) {
+    const y = tubeTop + tw + ih * (r + 1) / (R + 1);
+    for (let x = hx0 + (r % 2 ? cs / 2 : 0); x <= hx0 + L + .01; x += cs) {
+      const u = (x - hx0) / L;
+      dots.push({x, a: A * Math.sin(Math.PI * LOBES * u), el: mk('circle', {cx: r1(x), cy: r1(y), r: r1(dr), fill: '#d6e6ff', 'fill-opacity': r1(.3 + .7 * vib(u))}, inG)});
+    }
+  }
+
+  // Walls, end cap, the row of holes.
+  mk('rect', {x: r1(tx0), y: r1(tubeTop), width: r1(tx1 - tx0), height: r1(tw), fill: 'url(#ft-mt)'}, svg);
+  mk('line', {x1: r1(tx0), x2: r1(tx1), y1: r1(tubeTop + tw * .28), y2: r1(tubeTop + tw * .28), stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': r1(Math.max(.8, tw * .18))}, svg);
+  mk('rect', {x: r1(tx0), y: r1(tb - tw), width: r1(tx1 - tx0), height: r1(tw), fill: 'url(#ft-mb)'}, svg);
+  mk('rect', {x: r1(tx1), y: r1(tubeTop - tw * .2), width: r1(capW), height: r1(tubeH + tw * .4), rx: r1(capW * .35), fill: 'url(#ft-mb)'}, svg);
+  const hw = clamp(s * .22, 1.6, 3.4);
+  for (let i = 0; i < N; i++) mk('rect', {x: r1(X(i / (N - 1)) - hw / 2), y: r1(tubeTop), width: r1(hw), height: r1(tw * .7), fill: '#120c08'}, svg);
+
+  // One flame per hole: glow, outer flame, bright core. Unlit until the reader has answered.
+  const flG = mk('g', {}, svg), fl = [];
+  for (let i = 0; i < N; i++) {
+    const u = i / (N - 1);
+    fl.push({x: X(u), u, h: tall(u), p1: Kit.rnd() * TAU, p2: Kit.rnd() * TAU, p3: Kit.rnd() * TAU,
+      gw: mk('ellipse', {fill: 'url(#ft-g)', opacity: 0}, glowG),
+      o: mk('path', {d: 'M0 0', fill: 'url(#ft-o)'}, flG), c: mk('path', {d: 'M0 0', fill: 'url(#ft-i)'}, flG)});
+  }
+
+  // The reader's guess, dashed, with its legend; the "not lit yet" note.
+  const sw = r1(Math.max(1.6, fs * .13)), dash = `${r1(fs * .5)} ${r1(fs * .35)}`;
+  const gp = mk('path', {d: 'M0 0', fill: 'none', stroke: '#fff', 'stroke-width': sw, 'stroke-dasharray': dash, 'stroke-linecap': 'round', opacity: S.ghost}, svg);
+  const lg = mk('g', {opacity: S.ghost}, svg);
+  const lt = txt(W - pad, pad + asc, 'your guess', fs, '#ffffff', 'end', 0, lg);
+  const ltw = lt.getComputedTextLength() || fs * 5, ly = pad + asc - fs * .33;
+  mk('line', {x1: r1(W - pad - ltw - fs * 2.3), x2: r1(W - pad - ltw - fs * .5), y1: r1(ly), y2: r1(ly), stroke: '#fff', 'stroke-width': sw, 'stroke-dasharray': dash, 'stroke-linecap': 'round'}, lg);
+  const hint = txt(pad, pad + asc, 'gas not lit yet', fs, '#aca39a');
+
+  // Under the tube: what the air does there, and (once lit) the name of that spot.
+  const lab = (u, say, name) => {
+    const x = X(u), y = tb + tick + asc;
+    mk('line', {x1: r1(x), y1: r1(tb + 1.5), x2: r1(x), y2: r1(tb + tick - 1), stroke: '#8f98a5', 'stroke-width': 1.2, 'stroke-linecap': 'round'}, svg);
+    const a = txt(x, y, say, fs, '#cdd3db', 'middle'), b = txt(x, two ? y + lineH + 2 : y, name, fs, '#ffffff', 'middle', 700);
+    return {x, a, b, w: Math.max(a.getComputedTextLength(), b.getComputedTextLength()) || fs * 7};
+  };
+  const la = lab(1 / (2 * LOBES), 'lots of vibration', 'antinode'), ln = lab(2 / LOBES, 'little vibration', 'node');
+  const k = clamp((ln.x - la.x - fs * .8) / ((la.w + ln.w) / 2), 11 / fs, 1);
+  for (const o of [la, ln]) {
+    if (k < 1) o.a.style.fontSize = o.b.style.fontSize = r1(fs * k) + 'px';
+    const x = r1(clamp(o.x, pad + o.w * k / 2, W - pad - o.w * k / 2));
+    o.a.setAttribute('x', x); o.b.setAttribute('x', x);
+  }
+
+  // The speaker playing a note into the tube.
+  const spk = mk('g', {}, svg);
+  mk('rect', {x: r1(pad), y: r1(cy - spH / 2), width: r1(spW), height: r1(spH), rx: r1(spW * .2), fill: '#262a31', stroke: '#4c535d', 'stroke-width': 1}, spk);
+  const cone = mk('g', {}, spk);
+  mk('path', {d: `M${r1(pad + spW * .36)} ${r1(cy - spH * .16)}L${r1(tx0)} ${r1(cy - spH * .4)}V${r1(cy + spH * .4)}L${r1(pad + spW * .36)} ${r1(cy + spH * .16)}Z`, fill: 'url(#ft-cn)'}, cone);
+  mk('ellipse', {cx: r1(pad + spW * .4), cy: r1(cy), rx: r1(spW * .12), ry: r1(spH * .17), fill: '#353b44'}, cone);
+  const note = mk('g', {}, svg), nx = pad + spW * .42, ny = cy - spH / 2 - fs * .6;
+  mk('ellipse', {cx: r1(nx), cy: r1(ny), rx: r1(fs * .34), ry: r1(fs * .25), transform: `rotate(-22 ${r1(nx)} ${r1(ny)})`, fill: '#ffd870'}, note);
+  mk('path', {d: `M${r1(nx + fs * .3)} ${r1(ny - fs * .06)}V${r1(ny - fs * 1.05)}q${r1(fs * .18)} ${r1(fs * .32)} ${r1(fs * .5)} ${r1(fs * .44)}`, fill: 'none', stroke: '#ffd870', 'stroke-width': r1(Math.max(1.4, fs * .11)), 'stroke-linecap': 'round'}, note);
+
+  G = {W, dots, fl, cone, coneA: Math.min(2, spW * .07), note, fs, yb, Hmax, fw, s, X, amb, gp, lg, hint, two, terms: [la.b, ln.b], says: [la.a, ln.a]};
+}
+
+function setGhost() {
+  if (!G || pick < 0) return;
+  let d = '';
+  for (let k = 0; k <= 150; k++) d += `${k ? 'L' : 'M'}${r1(G.X(k / 150))} ${r1(G.yb - G.Hmax * guess(k / 150, pick))}`;
+  G.gp.setAttribute('d', d);
+}
+
+function frame(t) {
+  lastT = t;
+  if (!G) return;
+  const c = Math.cos(TAU * 2.2 * t);
+  for (const d of G.dots) d.el.setAttribute('cx', r1(d.x + d.a * c));
+  G.cone.setAttribute('transform', `translate(${r1(G.coneA * c)} 0)`);
+  G.note.setAttribute('transform', `translate(0 ${r1(-G.fs * .2 * (1 + Math.sin(t * 2.4)))})`);
+  for (const q of G.fl) {
+    let g = clamp(S.ign * 2.25 - q.u * 1.25, 0, 1);
+    g = 1 - Math.pow(1 - g, 3);
+    if (g < .002) { q.o.setAttribute('d', 'M0 0'); q.c.setAttribute('d', 'M0 0'); q.gw.setAttribute('opacity', 0); continue; }
+    const k = 1 + .07 * Math.sin(11 * t + q.p1) + .05 * Math.sin(17.3 * t + q.p2);
+    const h = G.Hmax * q.h * g * k, sw = G.fw * .38 * Math.sin(6.3 * t + q.p3) * g, w = G.fw * (.7 + .3 * q.h) * (.55 + .45 * g);
+    q.o.setAttribute('d', flame(q.x, G.yb, w, h, sw));
+    q.c.setAttribute('d', flame(q.x, G.yb, w * .5, h * .56, sw * .6));
+    const e = q.gw, ex = q.x + sw * .5, ey = G.yb - h * .42;
+    e.setAttribute('cx', r1(ex)); e.setAttribute('cy', r1(ey));
+    e.setAttribute('rx', r1(Math.min(Math.max(G.s * 1.15, w * 1.7), ex - 1, G.W - ex - 1)));
+    e.setAttribute('ry', r1(Math.min(h * .62 + G.s * .4, ey - 1)));
+    e.setAttribute('opacity', (.55 * g * q.h).toFixed(2));
+  }
+  G.amb.setAttribute('opacity', (S.ign * .9).toFixed(3));
+  G.gp.setAttribute('opacity', S.ghost.toFixed(3));
+  G.lg.setAttribute('opacity', S.ghost.toFixed(3));
+  G.hint.setAttribute('opacity', clamp(1 - S.ign * 3, 0, 1).toFixed(3));
+  for (const e of G.terms) e.setAttribute('opacity', S.lab.toFixed(3));
+  if (!G.two) for (const e of G.says) e.setAttribute('opacity', (1 - S.lab).toFixed(3));
+}
+
+// The gas is lit from the speaker end: each flame finds the height the vibration below it gives.
+function light() {
+  if (Kit.calm) { S.ghost = S.ign = S.lab = 1; idle(); return; }
+  gsap.timeline({onUpdate: idle})
+    .to(S, {ign: 1, duration: 1.2, ease: 'none'})
+    .to(S, {lab: 1, duration: .35, ease: 'power1.out'}, '-=.25');
+}
+
+// How sure, after the answer. When both are in, Kit.answer tells the app.
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  light();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  setGhost();
+  if (Kit.calm) { S.ghost = 1; idle(); } else gsap.to(S, {ghost: 1, duration: .5, ease: 'power2.out', onUpdate: idle});
+});
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => { build(); setGhost(); frame(lastT); };
+// The stage changes height when the why replaces the options: redraw at the new size.
+let rz = 0;
+if (window.ResizeObserver) new ResizeObserver(() => { cancelAnimationFrame(rz); rz = requestAnimationFrame(() => Kit.onShow.card()); }).observe(Kit.$('art'));
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (!running) { running = true; gsap.ticker.add(() => frame(gsap.ticker.time)); }
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[0].click(); await wait(500);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(1900);
+};
+Kit.single();
+</script>
+</html>

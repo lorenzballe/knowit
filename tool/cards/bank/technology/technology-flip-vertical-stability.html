@@ -1,0 +1,133 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-flip-vertical-stability -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;overflow:hidden}
+#hold .bar{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 28%,transparent)}
+#hold span{position:relative}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEA LAB</span></div>
+    <h2 class="q">Why does FLIP stay steady standing upright in the ocean?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="FLIP tipping from horizontal to vertical"></svg>
+      <button id="hold"><i class="bar" id="bar"></i><span id="holdt">Hold to tip FLIP upright</span></button>
+      <div id="why" class="gone"><p class="body">Standing upright, FLIP's center of gravity sits deep in the submerged part. With its weight hanging low, like a pendulum's bob, waves can barely rock it. Were it at the surface or above, waves would push it around far more.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button and watch where the red dot ends up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Weight hung low under the water keeps a floating thing steady.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come funziona la manovra della FLIP, la "nave" che si immergeva in verticale sul mare” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let p = 0, t = 0, holding = false, done = false, S = null;
+const lerp = (a, b, e) => a + (b - a) * e;
+const ease = x => x * x * (3 - 2 * x);
+
+function draw() {
+  if (!S) return;
+  const {W, H, L, r, y0, fs} = S, e = ease(p);
+  const k = 2 * Math.PI / (W / 2.3), A = Math.max(3, H * .014), sp = 1.7;
+  // waves
+  let d = `M0 ${H} L0 ${y0}`;
+  for (let x = 0; x <= W + 4; x += 6) d += ` L${x} ${(y0 + A * Math.sin(k * x - t * sp)).toFixed(1)}`;
+  d += ` L${W} ${H} Z`;
+  S.sea.setAttribute('d', d);
+  S.line.setAttribute('d', d.replace(/^M0 [\d.]+ L/, 'M').replace(/ L[\d.]+ [\d.]+ Z$/, '').replace(/ L[\d.]+ [\d.]+$/, ''));
+  // hull pose
+  const ph = k * W / 2 - t * sp;
+  const wob = lerp(5.5, .8, e) * Math.sin(ph + .9);
+  const heave = lerp(r * .9, r * .12, e) * Math.sin(ph);
+  const a = lerp(.5 * L, .18 * L, e);
+  const Px = W / 2, Py = lerp(y0 + .2 * r, y0, e) - heave;
+  const th = 90 * e + wob, rad = th * Math.PI / 180, c = Math.cos(rad), s = Math.sin(rad);
+  S.hull.setAttribute('transform', `translate(${Px},${Py}) rotate(${th}) translate(${-a},0)`);
+  const gx = Px + (.62 * L - a) * c, gy = Py + (.62 * L - a) * s;
+  S.dot.setAttribute('cx', gx); S.dot.setAttribute('cy', gy);
+  const px = Px + (.18 * L - a) * c, py = Py + (.18 * L - a) * s;
+  S.pend.setAttribute('x1', lerp(gx, px, e)); S.pend.setAttribute('y1', lerp(gy, py, e));
+  S.pend.setAttribute('x2', gx); S.pend.setAttribute('y2', gy);
+  S.pend.setAttribute('opacity', e);
+  const bw = S.bw;
+  let bx = gx + r + 10;
+  if (bx + bw > W - 4) bx = gx - r - 10 - bw;
+  bx = Math.max(4, Math.min(bx, W - 4 - bw));
+  S.bob.setAttribute('x', bx); S.bob.setAttribute('y', gy + fs * .35);
+  S.bob.setAttribute('opacity', Math.max(0, (e - .7) / .3));
+  S.read.textContent = e < .5 ? 'at the surface' : 'deep underwater';
+  Kit.$('bar').style.width = (p * 100) + '%';
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f);
+  const L = Math.min(W * .88, H * .86), r = .045 * L, y0 = (H - L) / 2 + .2 * L;
+  const sw = Math.max(1.5, fs * .12);
+  const hull = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: .16 * L, y: -r, width: .84 * L, height: 2 * r, rx: r, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': sw}, hull);
+  for (let i = 1; i < 6; i++) Kit.mk('line', {x1: .18 * L + i * .135 * L, y1: -r, x2: .18 * L + i * .135 * L, y2: r, stroke: 'var(--k)', 'stroke-width': sw * .5, opacity: .4}, hull);
+  Kit.mk('rect', {x: 0, y: -1.8 * r, width: .2 * L, height: 3.6 * r, rx: r * .4, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': sw}, hull);
+  for (let i = 0; i < 3; i++) Kit.mk('circle', {cx: .045 * L + i * .055 * L, cy: 0, r: r * .38, fill: 'var(--k)', opacity: .75}, hull);
+  const sea = Kit.mk('path', {fill: 'var(--k)', opacity: .17}, svg);
+  const line = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': sw * 1.2, opacity: .7}, svg);
+  const pend = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': sw, 'stroke-dasharray': `${sw * 3} ${sw * 2.5}`}, svg);
+  const dot = Kit.mk('circle', {r: Math.max(6, fs * .5), fill: '#ff4a2e', stroke: 'var(--k)', 'stroke-width': sw}, svg);
+  const wl = Kit.mk('text', {x: W - 4, y: y0 - 2.2 * r - 8, 'text-anchor': 'end', 'font-size': fs, fill: 'var(--k)', opacity: .65, class: 'lbl'}, svg);
+  wl.textContent = 'waterline';
+  const rd = Kit.mk('text', {x: 4, y: fs * 1.1, 'font-size': fs, fill: 'var(--k)', class: 'lbl'}, svg);
+  const t1 = Kit.mk('tspan', {fill: '#ff4a2e'}, rd); t1.textContent = '● ';
+  const t2 = Kit.mk('tspan', {}, rd); t2.textContent = 'center of gravity: ';
+  const read = Kit.mk('tspan', {'font-weight': 800}, rd);
+  const bob = Kit.mk('text', {'font-size': fs, fill: 'var(--k)', class: 'lbl'}, svg);
+  bob.textContent = 'like a pendulum bob';
+  let bw = 0;
+  try { bw = bob.getComputedTextLength(); } catch (_) {}
+  bw = Math.max(bw || 0, fs * .6 * bob.textContent.length);
+  S = {W, H, L, r, y0, fs, hull, sea, line, pend, dot, read, bob, bw};
+  draw();
+};
+
+function finish() {
+  if (done) return; done = true; holding = false;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+gsap.ticker.add((time, dt) => {
+  const s = Math.min(dt, 60) / 1000;
+  if (!Kit.calm) t += s;
+  if (holding && !done) { p = Math.min(1, p + s / 2.2); if (p >= 1) finish(); }
+  draw();
+});
+const btn = Kit.$('hold');
+const start = e => { if (done) return; e.preventDefault(); holding = true; Kit.haptic('light'); Kit.$('holdt').textContent = 'Keep holding…'; };
+const stop = () => { holding = false; if (!done) Kit.$('holdt').textContent = p > 0 ? 'Hold to keep tipping' : 'Hold to tip FLIP upright'; };
+btn.addEventListener('pointerdown', start);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(n => btn.addEventListener(n, stop));
+btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) start(e); });
+btn.addEventListener('keyup', stop);
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, cancelable: true}));
+  await new Promise(r => setTimeout(r, 2600));
+  if (!done) { p = 1; finish(); }
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  draw();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

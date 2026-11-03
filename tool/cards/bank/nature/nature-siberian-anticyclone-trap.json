@@ -1,0 +1,37 @@
+{
+  "id": "nature-siberian-anticyclone-trap",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What atmospheric feature traps cold air over Yakutsk?",
+  "answer": "The Siberian anticyclone is a high-pressure zone where freezing ground makes the air above it cold, dry and heavy, so weather there changes very slowly. Yakutsk sits on a valley floor ringed by mountains, so this dense air sinks in and stays trapped.",
+  "move": "Cold air is heavy: under high pressure in a valley, it settles and stays.",
+  "keywords": [
+    "yakutsk",
+    "siberian anticyclone",
+    "high pressure",
+    "cold air",
+    "valley"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A frozen land you tap five times to chill, with a counter at 0 of 5. It asks what atmospheric feature traps cold air over Yakutsk."
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=127s",
+  "written": "2026-11-03"
+}

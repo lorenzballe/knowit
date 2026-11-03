@@ -1,0 +1,37 @@
+{
+  "id": "technology-carrier-catapult-launch",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a carrier jet reach take-off speed in mere seconds?",
+  "answer": "A catapult on the carrier deck expands high-pressure steam, which drives a piston and delivers a large force over a very short distance. That force is why the jet reaches take-off speed in seconds, where a runway take-off takes far longer. The page graphs the catapult-launched acceleration against a runway take-off.",
+  "move": "A huge push over a short deck: take-off speed in seconds.",
+  "keywords": [
+    "aircraft carrier",
+    "catapult",
+    "steam",
+    "jet",
+    "take-off"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive: a carrier jet's catapult launch, step by step. Drag the slider to fire the catapult and watch the jet accelerate to take-off speed on the carrier deck."
+  },
+  "source": "Geopop, “Sulle portaerei come funziona la fase di decollo? Con le… catapulte! #geopop #aerei #airplane” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=R019u_QzMEo",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: maths-ranked-choice-paradox -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#viz{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12.5px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 1cqw;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:1.4cqw}
+.opt i{width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:50%;flex:none}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOTING MATHS</span></div>
+    <h2 class="q">How can a candidate win by doing worse in the first round?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="viz" aria-label="Instant runoff: first and second rounds, before and after Bohr's flop"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0"><i style="background:#2f5bd3"></i>Einstein</button>
+        <button class="opt" data-i="1"><i style="background:#f2b705"></i>Curie</button>
+        <button class="opt" data-i="2"><i style="background:#d6453d"></i>Bohr</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Bohr wins, with fewer votes.</p>
+        <p class="body">Say 6 of Bohr's 45 points jump to Einstein. Now Curie finishes last and is knocked out. As the centrist, her voters split half to Einstein, half to Bohr, and that pushes Bohr past 50%.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Bohr's speech flops; some voters defect to Einstein. Who wins now?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In instant runoff, losing votes can change who's knocked out first, and hand you the win.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, G = null;
+const svg = Kit.$('viz');
+const COL = {e:'#2f5bd3', c:'#f2b705', b:'#d6453d'};
+const TXT = {e:'#fff', c:'#1a1a1a', b:'#fff'};
+const NAME = {e:'Einstein', c:'Curie', b:'Bohr'};
+const st = {
+  A1:{e:25,c:30,b:45}, A2:{e:25,c:30,b:45}, resA:'', winA:'',
+  B1:{e:25,c:30,b:45}, B2:{e:31,c:30,b:39}, showB2:false, resB:'?', winB:''
+};
+const tw = (s, fs) => s.length * fs * 0.56;
+
+function bar(x0, y, bw, bh, v, fs, sm){
+  let x = x0;
+  for (const k of ['e','c','b']){
+    const w = bw * v[k] / 100;
+    if (w > 0.5){
+      Kit.mk('rect', {x, y, width: Math.max(w - 1.5, 0), height: bh, rx: Math.min(bh*.18, 6), style:`fill:${COL[k]}`}, svg);
+      const pct = Math.round(v[k]) + '%', cx = x + w/2;
+      const two = bh >= 2.7*sm && bh*.38 >= (sm + fs)*.62 + 2 && w > tw(NAME[k], sm) + 10;
+      if (w > tw(pct, fs) + 8){
+        Kit.mk('text', {x: cx, y: two ? y + bh*.68 : y + bh/2, 'text-anchor':'middle', 'dominant-baseline':'central',
+          style:`fill:${TXT[k]};font:800 ${fs}px var(--body)`}, svg).textContent = pct;
+      }
+      if (two){
+        Kit.mk('text', {x: cx, y: y + bh*.3, 'text-anchor':'middle', 'dominant-baseline':'central',
+          style:`fill:${TXT[k]};font:600 ${sm}px var(--body)`}, svg).textContent = NAME[k];
+      }
+    }
+    x += w;
+  }
+}
+function panel(y, titleH, x0, bw, bh, gap, title, r1, r2, show2, res, win, fs, sm, W){
+  Kit.mk('text', {x: 0, y: y + titleH*.45, 'dominant-baseline':'central', style:`fill:var(--k);font:800 ${fs}px var(--display)`}, svg).textContent = title;
+  if (res){
+    const t = Kit.mk('text', {x: W - 2, y: y + titleH*.45, 'text-anchor':'end', 'dominant-baseline':'central', style:`fill:var(--k);font:800 ${fs}px var(--body)`}, svg);
+    t.textContent = res;
+    if (win) Kit.mk('circle', {cx: W - 2 - tw(res, fs) - sm*.8, cy: y + titleH*.45, r: sm*.42, style:`fill:${COL[win]};stroke:var(--k);stroke-width:1`}, svg);
+  }
+  const y1 = y + titleH, y2 = y1 + bh + gap;
+  for (const [yy, lab] of [[y1,'1st'],[y2,'2nd']])
+    Kit.mk('text', {x: 0, y: yy + bh/2, 'dominant-baseline':'central', style:`fill:var(--k);opacity:.7;font:700 ${sm}px var(--body)`}, svg).textContent = lab;
+  bar(x0, y1, bw, bh, r1, fs, sm);
+  if (show2) bar(x0, y2, bw, bh, r2, fs, sm);
+  else {
+    Kit.mk('rect', {x: x0, y: y2, width: bw - 1.5, height: bh, rx: Math.min(bh*.18, 6), style:'fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-dasharray:4 4'}, svg);
+    Kit.mk('text', {x: x0 + bw/2, y: y2 + bh/2, 'text-anchor':'middle', 'dominant-baseline':'central', style:`fill:var(--k);font:800 ${fs*1.2}px var(--display)`}, svg).textContent = '?';
+  }
+  const mx = x0 + bw/2;
+  Kit.mk('line', {x1: mx, x2: mx, y1: y1 - sm*.35, y2: y2 + bh + sm*.35, style:'stroke:var(--k);stroke-width:2;stroke-dasharray:5 4;opacity:.75'}, svg);
+}
+function render(){
+  if (!G) return;
+  const {W, H, f} = G;
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13), sm = Math.max(f*.8, 12);
+  const x0 = sm*2.5, bw = W - x0 - 2;
+  const titleH = fs*1.75, gapP = fs*1.1;
+  const bh = Math.max(Math.min((H - 2*titleH - gapP) / (2*2.35), fs*3.4), fs*1.4);
+  const gap = bh*.35, ph = titleH + 2*bh + gap;
+  const y0 = Math.max((H - (2*ph + gapP)) / 2, 0);
+  panel(y0, titleH, x0, bw, bh, gap, 'As voted', st.A1, st.A2, true, st.resA, st.winA, fs, sm, W);
+  panel(y0 + ph + gapP, titleH, x0, bw, bh, gap, "After Bohr's flop", st.B1, st.B2, st.showB2, st.resB, st.winB, fs, sm, W);
+  const ly = y0 + ph + gapP/2;
+  Kit.mk('line', {x1: 0, x2: W, y1: ly, y2: ly, style:'stroke:var(--k);opacity:.15;stroke-width:1'}, svg);
+}
+function endIntro(){
+  Object.assign(st.A2, {e:0, c:55, b:45}); st.resA = 'Curie wins'; st.winA = 'c';
+  Object.assign(st.B1, {e:31, c:30, b:39}); render();
+}
+function reveal(){
+  st.showB2 = true; Object.assign(st.B2, {e:31, c:30, b:39});
+  const done = () => { st.resB = 'Bohr wins'; st.winB = 'b'; render(); };
+  if (Kit.calm){ Object.assign(st.B2, {e:46, c:0, b:54}); done(); return; }
+  render();
+  gsap.to(st.B2, {e:46, c:0, b:54, duration:1.1, ease:'power2.inOut', delay:.2, onUpdate:render, onComplete:done});
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { G = Kit.fitSvg(svg); render(); };
+let entered = false;
+Kit.onEnter.card = () => {
+  if (entered) return; entered = true;
+  if (Kit.calm){ endIntro(); return; }
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  const tl = gsap.timeline({delay:.5});
+  tl.to(st.A2, {e:0, c:55, duration:1, ease:'power2.inOut', onUpdate:render})
+    .call(() => { st.resA = 'Curie wins'; st.winA = 'c'; render(); })
+    .to(st.B1, {e:31, b:39, duration:1, ease:'power2.inOut', onUpdate:render}, '+=.5');
+};
+Kit.play.card = async () => {
+  endIntro();
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

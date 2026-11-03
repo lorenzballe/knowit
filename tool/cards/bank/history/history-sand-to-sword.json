@@ -1,0 +1,37 @@
+{
+  "id": "history-sand-to-sword",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Japanese smiths learn to make such fine swords?",
+  "answer": "Japanese smiths found every step of sword-making, from gathering iron sand to smelting, forging and sharpening, by trial and error rather than scientific theory. Centuries of failed and kept tries produced swords that are still prized today.",
+  "move": "Patient trial and error can build mastery long before theory explains it.",
+  "keywords": [
+    "katana",
+    "iron sand",
+    "smelting",
+    "japan",
+    "smiths"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline you drag across the centuries, showing a sword taking shape from iron sand through smelting, forging and sharpening, with failed and kept tries along the way."
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=1381s",
+  "written": "2026-11-03"
+}

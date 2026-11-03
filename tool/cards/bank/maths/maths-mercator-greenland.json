@@ -1,0 +1,37 @@
+{
+  "id": "maths-mercator-greenland",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Greenland look so huge on the usual world map?",
+  "answer": "Greenland looks huge on the usual world map because Mercator's projection stretches land more the farther it sits from the equator, both wider and taller at once. Up by the Arctic Circle, Greenland is blown up many times over, drawn about ×14 its real size. Slid down to the equator, its real area of 2.16 million km² shows.",
+  "move": "On a Mercator map, the nearer a pole, the bigger it lies.",
+  "keywords": [
+    "greenland",
+    "mercator_projection",
+    "world_map",
+    "arctic_circle",
+    "equator"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A world map on the Mercator projection with Greenland drawn very large near the top. Asks why Greenland looks so huge, and invites the reader to drag Greenland down to the equator to see its real size."
+  },
+  "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=147s",
+  "written": "2026-11-03"
+}

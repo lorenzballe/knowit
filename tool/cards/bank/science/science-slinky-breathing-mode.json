@@ -1,0 +1,36 @@
+{
+  "id": "science-slinky-breathing-mode",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a slinky's breathing tell you if your model is right?",
+  "answer": "Every turn of the slinky can move in and out together, which is its breathing mode. The period of that breathing depends in a simple way on the slinky's parameters. If your model's numbers give the same beat as the real slinky, the numbers pass the test. Drag the stiffness until your model breathes in step with the real one.",
+  "move": "A simple mode with a predictable period is a quick check on a model's numbers.",
+  "keywords": [
+    "slinky",
+    "veritasium",
+    "stiffness",
+    "oscillation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A coiled slinky drawn as a column of turns, shown expanding and contracting together like breathing. A slider labelled Softer to Stiffer sets the stiffness. The reader drags it until their model's breathing matches the real slinky's."
+  },
+  "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=uiyMuHuCFo4&t=321s",
+  "written": "2026-11-03"
+}

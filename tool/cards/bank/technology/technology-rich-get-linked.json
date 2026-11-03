@@ -1,0 +1,37 @@
+{
+  "id": "technology-rich-get-linked",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.who_controls_it",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the pages with the most links keep getting even more?",
+  "answer": "Pages with many links keep gaining more, because each newcomer lands on a random page. Some newcomers link to that page directly. Others first follow that page's link and then link to wherever it leads, so well-linked pages collect links faster.",
+  "move": "Being found makes you easier to find.",
+  "keywords": [
+    "barabasi",
+    "albert",
+    "krapivsky",
+    "redner",
+    "web"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A web-of-links diagram with percentages 0%, 0%, 50% and 90% labelled Barabási–Albert. The text asks why pages with the most links keep getting more, and explains that newcomers either link to a random page or follow its link onward."
+  },
+  "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
+  "written": "2026-11-03"
+}

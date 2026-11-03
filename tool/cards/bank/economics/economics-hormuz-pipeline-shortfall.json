@@ -1,0 +1,37 @@
+{
+  "id": "economics-hormuz-pipeline-shortfall",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can't Saudi and Emirati pipelines replace the oil flowing through Hormuz?",
+  "answer": "Saudi Arabia's pipeline to the Red Sea and the Emirates' pipeline to the Indian Ocean are real. Together they carry only 2–3 million barrels a day, while about 20 million normally pass through the Strait of Hormuz. The detours cover only a small part of that flow.",
+  "move": "Hormuz's detours are real but tiny: 2–3 million barrels a day, not 20.",
+  "keywords": [
+    "strait_of_hormuz",
+    "saudi_arabia",
+    "emirates",
+    "oil_pipelines",
+    "red_sea"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A map-style card asks whether Saudi and Emirati pipelines can replace oil flow through the Strait of Hormuz. Tapping the strait closes it, and a bar chart compares 2–3 million barrels a day in pipeline capacity with 20 million through Hormuz."
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=357s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-tsar-bomba-stages -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font-size:max(2.6cqh,16px)}
+#why .body{font-size:max(1.8cqh,13px);overflow-wrap:break-word}
+.part{cursor:pointer}
+.lab{font-family:var(--body);font-weight:700;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TWO STAGES</span></div>
+    <h2 class="q">The Tsar Bomba has two parts. Which one goes off first?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="big">The plutonium sphere goes first.</p><p class="body">Its explosive layers crush the plutonium core until its nuclei split: fission. That blast ignites the hydrogen in the cylinder, whose nuclei fuse: the second stage.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the part you think explodes first.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fission is the match; hydrogen fusion is the fire it lights.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Bomba Zar in 3D: ecco come funziona l’arma atomica più potente mai realizzata” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0, NAMES = ['The sphere first', 'The cylinder first'];
+let pick = -1, done = false, running = false, G = {};
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = NAMES[pick];
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  detonate();
+});
+
+function choose(i) {
+  if (pick >= 0) return;
+  pick = i; Kit.haptic('selection');
+  G.sel[i].setAttribute('opacity', 1);
+  if (!Kit.calm) gsap.fromTo(G.sel[i], {opacity: 0}, {opacity: 1, duration: .3});
+  sure.on();
+}
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13), lh = fs * 1.3;
+  const top = lh * 1.7, bot = H - lh * 1.7;
+  const cw = W * .94, x0 = (W - cw) / 2;
+  const chh = Math.max(40, Math.min(bot - top, cw * .42)), cy = (top + bot) / 2;
+  const m = (t, a, p) => Kit.mk(t, a, p || svg);
+  // casing
+  m('rect', {x: x0, y: cy - chh / 2, width: cw, height: chh, rx: chh / 2, fill: '#1c1f27', stroke: '#000', 'stroke-opacity': .4, 'stroke-width': 2});
+  const R = chh * .4, sx = x0 + cw * .27, coreR = R * .36;
+  const cx1 = x0 + cw * .5, cx2 = x0 + cw * .9, chy = chh * .5, crx = chy * .25;
+  // rays (behind)
+  const rays = m('g', {opacity: 0});
+  const ln = [];
+  for (let k = -2; k <= 2; k++) {
+    const x1 = sx + R * .9, y1 = cy + k * R * .25, x2 = cx1 + 2, y2 = cy + k * chy * .2;
+    const L = Math.hypot(x2 - x1, y2 - y1);
+    ln.push(m('line', {x1, y1, x2, y2, stroke: '#ffd36b', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-dasharray': L, 'stroke-dashoffset': L}, rays));
+  }
+  // sphere
+  const sg = m('g', {class: 'part'});
+  const layers = [[R, '#e8741c'], [R * .8, '#f39a3a'], [R * .6, '#f8c46a']].map(([r, c]) => m('circle', {cx: sx, cy, r, fill: c, stroke: '#1c1f27', 'stroke-width': 1.5}, sg));
+  const core = m('circle', {cx: sx, cy, r: coreR, fill: '#8a94a6', stroke: '#1c1f27', 'stroke-width': 1.5}, sg);
+  const pu = m('text', {x: sx, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(12, coreR * .9)}, sg);
+  pu.textContent = 'Pu';
+  const glow = m('circle', {cx: sx, cy, r: coreR, fill: '#fff3c4', opacity: 0, 'pointer-events': 'none'});
+  // cylinder
+  const cg = m('g', {class: 'part'});
+  const cyl = m('rect', {x: cx1, y: cy - chy / 2, width: cx2 - cx1, height: chy, rx: crx, fill: '#2f7fd0', stroke: '#1c1f27', 'stroke-width': 1.5}, cg);
+  const ht = m('text', {x: (cx1 + cx2) / 2, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.max(12, chy * .38)}, cg);
+  ht.textContent = 'H';
+  const cglow = m('rect', {x: cx1, y: cy - chy / 2, width: cx2 - cx1, height: chy, rx: crx, fill: '#dff3ff', opacity: 0, 'pointer-events': 'none'});
+  // selection rings
+  const sel = [
+    m('circle', {cx: sx, cy, r: R + 5, fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-dasharray': '7 5', opacity: pick === 0 ? 1 : 0, 'pointer-events': 'none'}),
+    m('rect', {x: cx1 - 5, y: cy - chy / 2 - 5, width: cx2 - cx1 + 10, height: chy + 10, rx: crx + 5, fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-dasharray': '7 5', opacity: pick === 1 ? 1 : 0, 'pointer-events': 'none'})
+  ];
+  const flash = m('rect', {x: x0, y: cy - chh / 2, width: cw, height: chh, rx: chh / 2, fill: '#fff', opacity: 0, 'pointer-events': 'none'});
+  // labels
+  const lt = m('text', {class: 'lab', x: x0 + 4, y: cy - chh / 2 - lh * .55, 'font-size': fs});
+  const lb = m('text', {class: 'lab', x: x0 + cw - 4, y: cy + chh / 2 + lh * 1.05, 'text-anchor': 'end', 'font-size': fs});
+  lt.textContent = 'Sphere: explosives around plutonium';
+  lb.textContent = 'Cylinder: hydrogen';
+  sg.addEventListener('click', () => choose(0));
+  cg.addEventListener('click', () => choose(1));
+  G = {layers, core, glow, rays, ln, cglow, cyl, ht, flash, lt, lb, sel, R, coreR};
+  if (done) endState();
+}
+
+function endState() {
+  G.layers.forEach(c => c.setAttribute('opacity', 0));
+  G.core.setAttribute('fill', '#fff8e0');
+  G.glow.setAttribute('r', G.R * 1.1); G.glow.setAttribute('opacity', .9);
+  G.rays.setAttribute('opacity', 1); G.ln.forEach(l => l.setAttribute('stroke-dashoffset', 0));
+  G.cglow.setAttribute('opacity', .92);
+  G.ht.setAttribute('fill', '#1b5c9e');
+  G.lt.textContent = '1 · Fission: plutonium nuclei split';
+  G.lb.textContent = '2 · Fusion: hydrogen nuclei join';
+}
+
+function finish() {
+  done = true; running = false;
+  Kit.show('why'); Kit.show('keep');
+  draw(); Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .4, stagger: .1});
+}
+
+function detonate() {
+  if (Kit.calm) { finish(); return; }
+  running = true;
+  const tl = gsap.timeline({onComplete: finish});
+  tl.to(G.layers, {attr: {fill: '#ffdd88'}, duration: .2})
+    .to(G.layers, {attr: {r: G.coreR * 1.05}, duration: .55, ease: 'power3.in'})
+    .set(G.layers, {opacity: 0})
+    .to(G.core, {attr: {fill: '#fff8e0'}, duration: .1})
+    .to(G.glow, {attr: {r: G.R * 1.1}, opacity: .9, duration: .4, ease: 'power2.out'})
+    .call(() => { G.lt.textContent = '1 · Fission: plutonium nuclei split'; Kit.haptic('light'); })
+    .set(G.rays, {opacity: 1}, '+=.35')
+    .to(G.ln, {attr: {'stroke-dashoffset': 0}, duration: .5, stagger: .05, ease: 'power1.in'})
+    .to(G.cglow, {opacity: .92, duration: .45})
+    .to(G.ht, {attr: {fill: '#1b5c9e'}, duration: .3}, '<')
+    .call(() => { G.lb.textContent = '2 · Fusion: hydrogen nuclei join'; Kit.haptic('light'); })
+    .to(G.flash, {opacity: .85, duration: .15}, '+=.3')
+    .to(G.flash, {opacity: 0, duration: .7});
+}
+
+Kit.onShow.card = () => { if (!running) draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || pick >= 0) return;
+  gsap.from('#pic .part', {opacity: 0, scale: .9, transformOrigin: '50% 50%', stagger: .15, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const p = Kit.$('pic').querySelector('.part');
+  p.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, Kit.calm ? 600 : 4200));
+};
+Kit.single();
+</script>
+</html>

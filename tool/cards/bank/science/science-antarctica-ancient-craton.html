@@ -1,0 +1,130 @@
+<!doctype html>
+<!-- slug: science-antarctica-ancient-craton -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#sec{flex:1;min-height:0;width:100%;display:block;color:var(--k);touch-action:none;cursor:grab}
+#read{font:700 max(1.9cqh,12px)/1.25 var(--mono);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:1.4cqh;padding:1.1cqh 3.5cqw;min-height:2.6em;display:flex;align-items:center;overflow-wrap:anywhere}
+#read.hot{background:#7a2d4a;color:#fff}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drill · reveal">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP TIME</span></div>
+    <h2 class="q">How do we know rocks under Antarctica are over 3 billion years old?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sec"></svg>
+      <div id="read">Ice lifted away. Drill into East Antarctica.</div>
+    </div>
+    <div id="why" class="gone"><p class="body">Radiometric dating of East Antarctica's igneous and metamorphic rocks gives ages above 3 billion years. This ancient shield, a craton, sits under younger layers; West Antarctica is built very differently.</p></div>
+    <p class="say" id="say">Drag the drill bit down through East Antarctica.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>East Antarctica hides some of Earth's oldest continent: over 3 billion years.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('sec'), read = Kit.$('read');
+let G = null, d = 0, phase = 0, done = false, dragging = false;
+const clock = {v: 0};
+
+function geo(){
+  const {W,H,f} = Kit.fitSvg(svg);
+  const g = H*0.3, r = H - g;
+  return {W,H,f,g,r,sedBot:g+0.17*r,maxY:H-0.05*r,dx:W*0.86,fs:Math.max(12,f*0.85)};
+}
+function txt(x,y,s,attrs,parent){
+  const t = Kit.mk('text',Object.assign({x,y,'text-anchor':'middle','font-family':'var(--body)','font-weight':700,'font-size':G.fs,fill:'currentColor'},attrs||{}),parent||svg);
+  t.textContent = s; return t;
+}
+function draw(){
+  G = geo(); const {W,H,f,g,r,sedBot,dx,fs} = G;
+  svg.innerHTML = '';
+  // ghost ice sheet
+  Kit.mk('path',{d:`M${W*.02} ${g} Q${W*.5} ${-H*.14} ${W*.98} ${g}`,fill:'currentColor','fill-opacity':.05,stroke:'currentColor','stroke-opacity':.45,'stroke-dasharray':'5 5','stroke-width':1.5},svg);
+  txt(W*.5,H*.16,'ice sheet, lifted away',{opacity:.6,'font-weight':500});
+  // east: craton then sediment
+  const crat = Kit.mk('rect',{x:W*.36,y:sedBot,width:W*.64,height:H-sedBot,fill:'#6e2743'},svg);
+  G.crat = crat;
+  for(let i=1;i<7;i++){
+    const y = sedBot + i*(H-sedBot)/7; let p = `M${W*.36} ${y}`;
+    for(let x=W*.36;x<=W;x+=W*.06) p += ` Q${x+W*.015} ${y+(i%2?6:-6)} ${x+W*.03} ${y} T${x+W*.06} ${y}`;
+    Kit.mk('path',{d:p,fill:'none',stroke:'#b9577a','stroke-width':1.4,opacity:.7},svg);
+  }
+  Kit.mk('rect',{x:W*.36,y:g,width:W*.64,height:sedBot-g,fill:'#e3b866'},svg);
+  for(let i=0;i<40;i++) Kit.mk('circle',{cx:W*.37+Kit.rnd()*W*.62,cy:g+3+Kit.rnd()*(sedBot-g-6),r:1.2,fill:'#9a7330'},svg);
+  // west block
+  Kit.mk('path',{d:`M0 ${g+.06*r} L${W*.1} ${g+.02*r} L${W*.2} ${g+.07*r} L${W*.3} ${g+.01*r} L${W*.41} ${g} L${W*.37} ${H} L0 ${H}Z`,fill:'#7e8f9e'},svg);
+  for(let i=1;i<5;i++){
+    const y = g + .1*r + i*r*.17;
+    Kit.mk('path',{d:`M0 ${y} Q${W*.1} ${y-r*.12} ${W*.2} ${y} T${W*.38} ${y}`,fill:'none',stroke:'#5d6c79','stroke-width':1.6},svg);
+  }
+  txt(W*.18,g+.42*r,'built',{fill:'#fff'}); txt(W*.18,g+.42*r+fs*1.35,'differently',{fill:'#fff'});
+  // layer labels
+  txt(W*.43,(g+sedBot)/2+fs*.35,'younger sediments',{'text-anchor':'start',fill:'#3a2a10'});
+  txt(W*.43,sedBot+.3*r,'ancient craton',{'text-anchor':'start',fill:'#fff'});
+  txt(W*.43,sedBot+.3*r+fs*1.35,'igneous + metamorphic',{'text-anchor':'start',fill:'#fff','font-weight':500});
+  // region names
+  txt(W*.19,g-H*.04,'WEST',{'font-size':Math.max(12,f)});
+  txt(W*.62,g-H*.04,'EAST',{'font-size':Math.max(12,f)});
+  // rig
+  const rt = g - H*.08;
+  Kit.mk('path',{d:`M${dx-W*.04} ${g} L${dx} ${rt} L${dx+W*.04} ${g} M${dx-W*.025} ${g-H*.03} L${dx+W*.025} ${g-H*.03}`,fill:'none',stroke:'currentColor','stroke-width':2.2,'stroke-linejoin':'round'},svg);
+  G.hole = Kit.mk('line',{x1:dx,y1:g,x2:dx,y2:g,stroke:'#1a1a1a','stroke-width':7,'stroke-linecap':'round'},svg);
+  G.pipe = Kit.mk('line',{x1:dx,y1:rt,x2:dx,y2:g,stroke:'#fff','stroke-width':2.5},svg);
+  G.ring = Kit.mk('circle',{cx:dx,cy:g,r:Math.max(14,f*1.1),fill:'none',stroke:'#ff7aa8','stroke-width':3},svg);
+  G.bit = Kit.mk('path',{d:'',fill:'#fff',stroke:'#1a1a1a','stroke-width':1.5},svg);
+  place();
+}
+function place(){
+  if(!G) return;
+  const {g,maxY,dx,sedBot} = G, y = g + d*(maxY-g), s = 8;
+  G.hole.setAttribute('y2',y); G.pipe.setAttribute('y2',y);
+  G.ring.setAttribute('cy',y);
+  G.bit.setAttribute('d',`M${dx-s} ${y-s} L${dx+s} ${y-s} L${dx} ${y+s}Z`);
+  if(done) G.crat.setAttribute('fill','#8f2f55');
+  if(phase===0 && y>g+4){ phase=1; read.textContent='Sediments: the young top layer. Keep going.'; Kit.haptic('selection'); }
+  if(phase===1 && y>sedBot+10){ phase=2; hitCraton(); }
+}
+function setText(){ read.textContent = clock.v>=3 ? 'Radiometric age: over 3 billion years' : `Radiometric clock: ${clock.v.toFixed(1)} billion years…`; }
+function hitCraton(){
+  read.classList.add('hot'); Kit.haptic('light');
+  const fin = () => { clock.v=3; setText(); finish(); };
+  if(Kit.calm) return fin();
+  gsap.to(clock,{v:3,duration:1.4,ease:'power2.in',onUpdate:setText,onComplete:fin});
+  gsap.to(G.crat,{attr:{fill:'#8f2f55'},duration:.6,yoyo:true,repeat:1});
+}
+function finish(){
+  if(done) return; done = true; Kit.haptic('success');
+  if(G) G.crat.setAttribute('fill','#8f2f55');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.4});
+}
+function drag(e){
+  const b = svg.getBoundingClientRect(), y = (e.clientY-b.top)*G.H/b.height;
+  const nd = Math.max(0,Math.min(1,(y-G.g)/(G.maxY-G.g)));
+  if(nd>d) d = nd; place();
+}
+svg.addEventListener('pointerdown',e=>{ dragging=true; try{svg.setPointerCapture(e.pointerId);}catch(_){} drag(e); });
+svg.addEventListener('pointermove',e=>{ if(dragging) drag(e); });
+const up=()=>{dragging=false;};
+svg.addEventListener('pointerup',up); svg.addEventListener('pointercancel',up);
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if(!Kit.calm && G) gsap.fromTo(G.ring,{attr:{r:Math.max(14,G.f*1.1)}},{attr:{r:Math.max(20,G.f*1.6)},opacity:.3,duration:.8,repeat:-1,yoyo:true,ease:'sine.inOut'}); };
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect(), x = b.left + b.width*.86;
+  const ev = (t,y) => svg.dispatchEvent(new PointerEvent(t,{clientX:x,clientY:y,bubbles:true,pointerId:1}));
+  ev('pointerdown', b.top + b.height*.31);
+  for(let i=1;i<=10;i++){ ev('pointermove', b.top + b.height*(.31+.6*i/10)); await new Promise(r=>setTimeout(r,30)); }
+  ev('pointerup', b.top + b.height*.91);
+  await new Promise(r=>setTimeout(r,2000));
+};
+Kit.single();
+</script>
+</html>

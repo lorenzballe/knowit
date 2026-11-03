@@ -1,0 +1,37 @@
+{
+  "id": "science-fractures-reach-aquifer",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can fracking cracks reach the water we drink?",
+  "answer": "Pumping fluid at high pressure cracks the shale open. If a crack runs far enough upward, it meets the aquifer above, and the fluid then has a direct road into the water.",
+  "move": "A crack that reaches the aquifer is an open road for contaminants.",
+  "keywords": [
+    "fracking",
+    "aquifer",
+    "shale",
+    "groundwater",
+    "contaminants"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled FRACKING asking how fracking cracks can reach drinking water. Tapping Pump four times pushes fluid into shale, which cracks open; a 3-D model shows a crack running up to a horizontal aquifer layer, giving fluid a direct path into the water."
+  },
+  "source": "Geopop, “IL FRACKING - La spiegazione geologica con parole semplici” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=fRT6ACeEh0o&t=109s",
+  "written": "2026-11-03"
+}

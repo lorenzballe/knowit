@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-swiss-nazi-gold -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#sc{flex:1;min-height:0;width:100%;display:block}
+#panel{display:flex;flex-direction:column;gap:1.1cqh}
+#fact{font:700 max(2.2cqh,14px)/1.25 var(--body);color:var(--k);margin:0;min-height:5.6cqh;overflow-wrap:anywhere}
+#btns{display:flex;gap:3cqw}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer}
+.opt.light{background:#fff;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent)}
+.opt.dark{background:var(--k);color:var(--c)}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:0 1 auto;min-height:0;overflow:auto}
+#why .big{margin:0;font-size:max(2.6cqh,16px);line-height:1.15}
+#why .body{margin:0;overflow-wrap:anywhere;font-size:max(1.8cqh,13px);line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Sort · see the balance">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SWISS GOLD</span></div>
+    <h2 class="q">Why did Switzerland keep trading with Nazi Germany?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sc"></svg>
+      <div id="panel">
+        <p id="fact"></p>
+        <div id="btns">
+          <button class="opt light" data-s="0">Survival</button>
+          <button class="opt dark" data-s="1">Self-interest</button>
+        </div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Both pans weigh.</p>
+        <p class="body">Surrounded, and dependent on imports from Germany and Italy, Switzerland traded to survive. But its banks also bought Reich gold it knew was partly taken from occupied countries and Holocaust victims, and kept Nazi leaders' money: that was interest.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Weigh each fact: survival or self-interest?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Swiss wartime neutrality was chiaroscuro: survival and profit, side by side.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ITEMS = [
+  {t: 'Switzerland was surrounded on every side.', s: 'Surrounded', k: 0},
+  {t: 'It depended on imports from Germany and Italy.', s: 'Imports', k: 0},
+  {t: 'Its banks bought Reich gold without asking where it came from.', s: 'Reich gold', k: 1},
+  {t: 'Many Nazi leaders put their money safely in Switzerland.', s: 'Nazi money', k: 1}
+];
+let step = 0, put = [], done = false;
+const st = {a: 0};
+let G = null;
+
+function showFact() {
+  if (step < ITEMS.length) {
+    Kit.$('fact').textContent = ITEMS[step].t;
+    Kit.$('say').textContent = `Fact ${step + 1} of ${ITEMS.length}: which pan does it weigh on?`;
+  }
+}
+
+function draw() {
+  const svg = Kit.$('sc'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const pw = Math.min(W * .4, fs * 9.5);
+  const L = Math.min(W * .3, W / 2 - pw / 2 - 6);
+  const px = W / 2, py = fs * 1.2;
+  let hang = H - py - L * .36 - fs * 2.2;
+  const bh = Math.max(Math.min(fs * 2.1, (hang - fs * 1.5) / 4), fs * 1.5);
+  const m = (t, a, p) => Kit.mk(t, a, p || svg);
+  // stand
+  m('path', {d: `M${px} ${py} L${px - fs * 1.6} ${H - 2} L${px + fs * 1.6} ${H - 2} Z`, style: 'fill:color-mix(in srgb,var(--k) 14%,transparent)'});
+  m('rect', {x: px - fs * 4, y: H - 4, width: fs * 8, height: 4, rx: 2, style: 'fill:var(--k)'});
+  const beam = m('line', {x1: 0, y1: 0, x2: 0, y2: 0, style: 'stroke:var(--k);stroke-width:' + Math.max(fs * .35, 4) + ';stroke-linecap:round'});
+  m('circle', {cx: px, cy: py, r: fs * .45, style: 'fill:var(--k)'});
+  const pans = [0, 1].map(side => {
+    const g = m('g', {});
+    const sw = 'stroke:var(--k);stroke-width:1.6';
+    m('line', {x1: 0, y1: 0, x2: -pw / 2, y2: hang, style: sw}, g);
+    m('line', {x1: 0, y1: 0, x2: pw / 2, y2: hang, style: sw}, g);
+    m('circle', {r: fs * .25, style: 'fill:var(--k)'}, g);
+    const blocks = m('g', {}, g);
+    m('path', {d: `M${-pw / 2 - 4} ${hang} L${pw / 2 + 4} ${hang} L${pw / 2 - 8} ${hang + fs * .7} L${-pw / 2 + 8} ${hang + fs * .7} Z`,
+      style: side ? 'fill:var(--k)' : 'fill:#fff;stroke:var(--k);stroke-width:1.6'}, g);
+    const tt = m('text', {x: 0, y: hang + fs * 1.95, 'text-anchor': 'middle',
+      style: `font:800 ${fs}px var(--body);letter-spacing:.08em;fill:var(--k)`}, g);
+    tt.textContent = side ? 'INTEREST' : 'SURVIVAL';
+    return {g, blocks};
+  });
+  G = {px, py, L, pans, beam, hang, bh, pw, fs};
+  fillPans(false);
+  render();
+}
+
+function fillPans(anim) {
+  if (!G) return;
+  const {pans, hang, bh, pw, fs} = G;
+  pans.forEach((p, side) => {
+    p.blocks.innerHTML = '';
+    put.filter(q => q.side === side).forEach((q, j) => {
+      const y = hang - (j + 1) * bh;
+      const b = Kit.mk('g', {}, p.blocks);
+      Kit.mk('rect', {x: -pw / 2 + 5, y: y + 1, width: pw - 10, height: bh - 3, rx: bh * .22,
+        style: side ? 'fill:var(--k)' : 'fill:#fff;stroke:var(--k);stroke-width:1.6'}, b);
+      const t = Kit.mk('text', {x: 0, y: y + bh / 2 + fs * .33, 'text-anchor': 'middle',
+        style: `font:700 ${fs}px var(--body);fill:${side ? 'var(--c)' : 'var(--k)'}`}, b);
+      t.textContent = (q.moved ? '↺ ' : '') + ITEMS[q.i].s;
+      if (anim === q.i || (anim === true && q.moved)) {
+        if (!Kit.calm) gsap.from(b, {y: -bh * 2, opacity: 0, duration: .5, ease: 'power3.out'});
+      }
+    });
+  });
+}
+
+function render() {
+  if (!G) return;
+  const {px, py, L, pans, beam} = G, a = st.a * Math.PI / 180;
+  const pts = [-1, 1].map(s => [px + s * L * Math.cos(a), py + s * L * Math.sin(a)]);
+  beam.setAttribute('x1', pts[0][0]); beam.setAttribute('y1', pts[0][1]);
+  beam.setAttribute('x2', pts[1][0]); beam.setAttribute('y2', pts[1][1]);
+  pans.forEach((p, i) => p.g.setAttribute('transform', `translate(${pts[i][0]},${pts[i][1]})`));
+}
+
+function tilt() {
+  const nL = put.filter(q => q.side === 0).length, nR = put.length - nL;
+  const target = Math.max(-18, Math.min(18, (nR - nL) * 6));
+  if (Kit.calm) { st.a = target; render(); return; }
+  gsap.to(st, {a: target, duration: 1, ease: 'elastic.out(1,.55)', onUpdate: render});
+}
+
+function reveal() {
+  done = true;
+  put.forEach(q => { const k = ITEMS[q.i].k; if (q.side !== k) { q.side = k; q.moved = true; } });
+  put.sort((x, y) => x.i - y.i);
+  fillPans(true); tilt();
+  Kit.hide('panel'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('btns').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || done || step >= ITEMS.length) return;
+  const side = +b.dataset.s;
+  put.push({i: step, side});
+  Kit.haptic('selection');
+  fillPans(step); tilt();
+  step++;
+  if (step < ITEMS.length) showFact();
+  else { Kit.$('fact').textContent = 'Now see where history puts them…'; setTimeout(reveal, 900); }
+});
+
+showFact();
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#sc', {opacity: 0, duration: .5}); gsap.from('#panel > *', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const btn = s => Kit.$('btns').querySelector(`[data-s="${s}"]`);
+  for (const s of [0, 1, 1, 0]) { btn(s).click(); await w(150); }
+  await w(1800);
+};
+Kit.single();
+</script>
+</html>

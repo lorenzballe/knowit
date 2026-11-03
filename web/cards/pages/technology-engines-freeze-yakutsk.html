@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-engines-freeze-yakutsk -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.4cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body)}
+.heat{animation:rise 1.6s ease-in-out infinite alternate}
+.heat:nth-child(2){animation-delay:.4s}.heat:nth-child(3){animation-delay:.8s}
+@keyframes rise{from{transform:translateY(0);opacity:.35}to{transform:translateY(-4px);opacity:1}}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FROZEN CARS</span></div>
+    <h2 class="q">Why do some Yakutsk drivers leave their engines running all night?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="big">About 20 minutes</p><p class="body">In Yakutsk's winter, where the record low is −63°C, a switched-off engine can freeze in just 20 minutes. So some drivers never turn it off, not even at night, to avoid the damage.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the marker: how many minutes until a switched-off engine freezes?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>At Yakutsk's cold, a parked engine freezes in about 20 minutes.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 20, MAX = 180, WARM = '#ff7a3d', ICE = '#7cc7ff';
+let guess = 90, touched = false, locked = false, revealed = false, P = 0;
+let S = {}, R = {};
+const st = (o) => Object.entries(o).map(([k, v]) => k + ':' + v).join(';');
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (locked) return;
+  locked = true;
+  const ok = Math.abs(guess - REAL) <= 10;
+  Kit.answer({choice: guess + ' min', correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${guess} min, ${ok ? 'right' : 'wrong'}`);
+  revealed = true;
+  requestAnimationFrame(() => {
+    draw();
+    const o = {p: 0};
+    if (Kit.calm) { P = 1; update(); Kit.haptic('success'); return; }
+    gsap.to(o, {p: 1, duration: 3.2, ease: 'none', onUpdate: () => { P = o.p; update(); }, onComplete: () => Kit.haptic('success')});
+  });
+});
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f: ff} = Kit.fitSvg(svg);
+  const f = Math.max(13, Math.min(ff, H / 14));
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const scaleY = H - 4.2 * f, pb = scaleY - 3.4 * f;
+  const L = f * 1.2, Rr = W - f * 1.8;
+  S = {L, R: Rr, scaleY, f};
+  const sx = m => L + m / MAX * (Rr - L);
+
+  // ---- engine ----
+  const avail = pb - 2.2 * f;
+  const s = Math.max(0.5, Math.min(W * 0.48 / 100, avail / 96));
+  const ex = W * 0.27 - 50 * s, ey = (avail - 96 * s) / 2 + 18 * s;
+  const g = mk('g', {transform: `translate(${ex},${ey}) scale(${s})`});
+  const ink = 'var(--k)';
+  const shape = (p, fill, op) => {
+    const gg = mk('g', {style: st({opacity: op})}, p);
+    [[18, 8, 18, 16], [41, 8, 18, 16], [64, 8, 18, 16]].forEach(([x, y, w, h]) => mk('rect', {x, y, width: w, height: h, rx: 2, style: st({fill, stroke: ink, 'stroke-width': 2})}, gg));
+    mk('rect', {x: 10, y: 22, width: 80, height: 36, rx: 6, style: st({fill, stroke: ink, 'stroke-width': 2.4})}, gg);
+    mk('path', {d: 'M18 58 L82 58 L76 70 L24 70 Z', style: st({fill, stroke: ink, 'stroke-width': 2.4, 'stroke-linejoin': 'round'})}, gg);
+    return gg;
+  };
+  shape(g, WARM, 1);
+  const pul = mk('g', {}, g);
+  mk('circle', {cx: 50, cy: 40, r: 10, style: st({fill: 'none', stroke: ink, 'stroke-width': 2.4})}, pul);
+  mk('circle', {cx: 50, cy: 40, r: 2.5, style: st({fill: ink})}, pul);
+  mk('line', {x1: 22, y1: 32, x2: 34, y2: 32, style: st({stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'})}, g);
+  mk('line', {x1: 66, y1: 32, x2: 78, y2: 32, style: st({stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'})}, g);
+  R.heat = mk('g', {}, g);
+  [27, 50, 73].forEach(x => mk('path', {class: 'heat', d: `M${x} 3 q-4 -4 0 -8 q4 -4 0 -8`, style: st({fill: 'none', stroke: WARM, 'stroke-width': 2.6, 'stroke-linecap': 'round'})}, R.heat));
+  R.frost = shape(g, '#e6f5ff', 0);
+  R.ice = mk('g', {style: 'transform-origin:50px 70px;transform:scaleY(0)'}, g);
+  [28, 38, 47, 56, 65, 73].forEach((x, i) => mk('path', {d: `M${x - 3} 70 L${x + 3} 70 L${x} ${78 + (i % 2) * 5} Z`, style: st({fill: ICE, stroke: '#3b8fd1', 'stroke-width': 1})}, R.ice));
+
+  // ---- clock ----
+  const r = Math.max(24, Math.min(W * 0.19, avail / 2 - 4)), cx = W * 0.76, cy = avail / 2 + f * 0.2;
+  R.clock = {cx, cy, r};
+  mk('circle', {cx, cy, r, style: st({fill: 'color-mix(in srgb,var(--k) 6%,transparent)', stroke: ink, 'stroke-width': Math.max(2, r * .06)})});
+  R.wedge = mk('path', {d: '', style: st({fill: ICE, opacity: .85})});
+  for (let i = 0; i < 12; i++) {
+    const a = i * Math.PI / 6, r1 = r * (i % 3 ? .86 : .78);
+    mk('line', {x1: cx + Math.sin(a) * r1, y1: cy - Math.cos(a) * r1, x2: cx + Math.sin(a) * r * .94, y2: cy - Math.cos(a) * r * .94, style: st({stroke: ink, 'stroke-width': i % 3 ? 1.5 : 3, 'stroke-linecap': 'round'})});
+  }
+  R.ctext = mk('text', {x: cx, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'central', style: st({font: `800 ${Math.max(12, r * .42)}px var(--mono)`, fill: ink})});
+
+  // ---- status labels ----
+  const ly = pb - 0.4 * f;
+  R.st1 = mk('text', {x: W * 0.27, y: ly, 'text-anchor': 'middle', style: st({font: `700 ${f}px var(--body)`, fill: ink})});
+  mk('text', {x: cx, y: ly, 'text-anchor': 'middle', style: st({font: `700 ${f}px var(--body)`, fill: 'var(--muted)'})}).textContent = 'engine off';
+
+  // ---- scale ----
+  mk('line', {x1: L, y1: scaleY, x2: Rr, y2: scaleY, style: st({stroke: 'color-mix(in srgb,var(--k) 25%,transparent)', 'stroke-width': f * .5, 'stroke-linecap': 'round'})});
+  R.gbar = mk('line', {x1: L, y1: scaleY, x2: sx(guess), y2: scaleY, style: st({stroke: WARM, 'stroke-width': f * .5, 'stroke-linecap': 'round'})});
+  for (let m = 0; m <= MAX; m += 30) {
+    mk('line', {x1: sx(m), y1: scaleY + f * .35, x2: sx(m), y2: scaleY + f * .6, style: st({stroke: ink, 'stroke-width': 1.5})});
+    mk('text', {x: sx(m), y: scaleY + 1.6 * f, 'text-anchor': 'middle', style: st({font: `600 ${f * .9}px var(--mono)`, fill: 'var(--muted)'})}).textContent = m;
+  }
+  R.real = mk('g', {style: st({opacity: revealed ? 1 : 0})});
+  mk('line', {x1: L, y1: scaleY, x2: sx(REAL), y2: scaleY, style: st({stroke: ICE, 'stroke-width': f * .5, 'stroke-linecap': 'round'})}, R.real);
+  mk('line', {x1: sx(REAL), y1: scaleY - f * .7, x2: sx(REAL), y2: scaleY + f * 2.1, style: st({stroke: '#3b8fd1', 'stroke-width': 3})}, R.real);
+  mk('text', {x: Math.max(sx(REAL), L), y: scaleY + 3.2 * f, 'text-anchor': 'start', style: st({font: `800 ${f}px var(--body)`, fill: '#3b8fd1'})}, R.real).textContent = 'real: 20 min';
+  R.mark = mk('g', {});
+  mk('path', {d: `M${-f * .55} ${-f * 1.1} L${f * .55} ${-f * 1.1} L0 ${-f * .1} Z`, style: st({fill: ink})}, R.mark);
+  R.mlab = mk('text', {x: 0, y: -f * 1.5, 'text-anchor': 'middle', style: st({font: `800 ${f * 1.05}px var(--body)`, fill: ink})}, R.mark);
+  setGuess(guess);
+  update();
+}
+
+function setGuess(m) {
+  guess = Math.max(1, Math.min(MAX, Math.round(m)));
+  const {L, R: Rr, scaleY, f} = S;
+  const x = L + guess / MAX * (Rr - L);
+  R.mark.setAttribute('transform', `translate(${x},${scaleY})`);
+  R.gbar.setAttribute('x2', x);
+  R.mlab.textContent = (touched || locked ? '' : 'guess: ') + guess + ' min';
+  const w = R.mlab.getComputedTextLength ? R.mlab.getComputedTextLength() : 0;
+  const W = Kit.$('pic').viewBox.baseVal.width;
+  R.mlab.setAttribute('x', Math.max(w / 2 - x + 2, Math.min(W - x - w / 2 - 2, 0)));
+}
+
+function update() {
+  const {cx, cy, r} = R.clock;
+  if (!revealed) { R.ctext.textContent = '?'; R.wedge.setAttribute('d', ''); R.st1.textContent = '−63°C outside'; return; }
+  const left = REAL * 60 * (1 - P), mm = Math.floor(left / 60), ss = Math.floor(left % 60);
+  R.ctext.textContent = `${mm}:${String(ss).padStart(2, '0')}`;
+  const a = 120 * (1 - P) * Math.PI / 180, rr = r * .9;
+  R.wedge.setAttribute('d', a <= 0.001 ? '' : `M${cx} ${cy} L${cx} ${cy - rr} A${rr} ${rr} 0 0 1 ${cx + Math.sin(a) * rr} ${cy - Math.cos(a) * rr} Z`);
+  R.frost.style.opacity = P * .88;
+  R.heat.style.opacity = 1 - P;
+  R.ice.style.transform = `scaleY(${Math.max(0, (P - .5) * 2)})`;
+  R.real.style.opacity = Math.min(1, P * 4);
+  R.st1.textContent = P >= 1 ? 'frozen' : P > .5 ? 'freezing…' : 'cooling…';
+  R.st1.style.fill = P > .5 ? '#3b8fd1' : '';
+}
+
+const pic = Kit.$('pic');
+let dragging = false;
+const toM = e => { const b = pic.getBoundingClientRect(); return (e.clientX - b.left - S.L) / (S.R - S.L) * MAX; };
+pic.addEventListener('pointerdown', e => {
+  if (locked) return;
+  dragging = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+  touched = true; setGuess(toM(e)); Kit.haptic('selection');
+});
+pic.addEventListener('pointermove', e => { if (dragging && !locked) setGuess(toM(e)); });
+const end = () => { if (dragging) { dragging = false; if (!locked) sure.on(); } };
+pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && R.mark) gsap.from(R.mark, {opacity: 0, y: -12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const b = pic.getBoundingClientRect();
+  const x = b.left + S.L + 45 / MAX * (S.R - S.L), y = b.top + S.scaleY;
+  const ev = (t, xx) => pic.dispatchEvent(new PointerEvent(t, {clientX: xx, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', x - 30); ev('pointermove', x); ev('pointerup', x);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3800));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-squeezed-plutonium -->
+<title>Astute · Why squeezed plutonium explodes</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{position:relative;flex:1;min-height:0;cursor:pointer}
+#pic canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CRITICAL MASS</span></div>
+    <h2 class="q">Why does compressing plutonium lower its critical mass?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Squeezing heats it until it catches fire</button>
+        <button class="opt" data-i="1">Nuclei sit closer, so neutrons hit one more often</button>
+        <button class="opt" data-i="2">Pressure makes each nucleus easier to split</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Closer nuclei, more hits.</p>
+        <p class="body">Squeezing packs the same nuclei closer together, so a stray neutron hits one before it can escape, and each split sets off more. At normal density 6 kg of plutonium-239 won't explode; crushed by explosives, it can.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the reason. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The higher the density, the lower the critical mass.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, answered = false;
+const N = 60, RH = 0.016, V = 0.8, SQ = 0.42, GOAL = 24;
+const S = {s:1, arrow:0, glow:0, nuc:[], neu:[], splits:0, top:'6 kg OF PLUTONIUM-239', sub:'normal density', count:false};
+let G = null, runId = 0;
+
+// nuclei spread evenly in a unit disk
+(function(){
+  let tries = 0;
+  while (S.nuc.length < N && tries < 20000) {
+    tries++;
+    const a = Kit.rnd()*Math.PI*2, r = Math.sqrt(Kit.rnd())*0.93;
+    const x = r*Math.cos(a), y = r*Math.sin(a);
+    if (S.nuc.every(p => Math.hypot(p.x-x, p.y-y) > 0.15)) S.nuc.push({x, y, f:0, fl:0});
+  }
+})();
+
+function resetNuc(){ S.nuc.forEach(p => {p.f = 0; p.fl = 0;}); S.neu = []; S.splits = 0; }
+function fire(n){
+  for (let i=0;i<n;i++){
+    const a = Kit.rnd()*Math.PI*2, b = Kit.rnd()*Math.PI*2, r = Kit.rnd()*0.2*S.s;
+    S.neu.push({x:r*Math.cos(b), y:r*Math.sin(b), dx:Math.cos(a), dy:Math.sin(a)});
+  }
+}
+function segDist(px,py,x1,y1,x2,y2){
+  const vx=x2-x1, vy=y2-y1, L=vx*vx+vy*vy||1e-9;
+  let t=((px-x1)*vx+(py-y1)*vy)/L; t=Math.max(0,Math.min(1,t));
+  return Math.hypot(x1+t*vx-px, y1+t*vy-py);
+}
+function step(dt){
+  const out = [];
+  for (const n of S.neu){
+    const nx = n.x+n.dx*V*dt, ny = n.y+n.dy*V*dt;
+    let hit = null;
+    for (const p of S.nuc){
+      if (p.f) continue;
+      if (segDist(p.x*S.s, p.y*S.s, n.x, n.y, nx, ny) < RH){ hit = p; break; }
+    }
+    if (hit){
+      hit.f = 1; hit.fl = 1; S.splits++;
+      if (answered) Kit.haptic('light');
+      for (let k=0;k<2;k++){
+        const a = Kit.rnd()*Math.PI*2;
+        if (S.neu.length + out.length < 250) out.push({x:hit.x*S.s, y:hit.y*S.s, dx:Math.cos(a), dy:Math.sin(a)});
+      }
+      continue;
+    }
+    n.x = nx; n.y = ny;
+    if (Math.hypot(nx, ny) < 1.7) out.push(n);
+  }
+  S.neu = out;
+  S.nuc.forEach(p => { if (p.fl > 0) p.fl = Math.max(0, p.fl - dt*1.6); });
+}
+
+function draw(){
+  if (!G) return;
+  const {x, W, H} = G, cs = getComputedStyle(Kit.$('card'));
+  const ink = cs.getPropertyValue('--k').trim() || '#111', bg = cs.getPropertyValue('--c').trim() || '#fff';
+  const fs = Math.max(13, Math.min(W, H)*0.05);
+  const cx = W/2, cy = H/2;
+  const R0 = Math.max(30, Math.min(W*0.4, (H - 4.6*fs)/2/1.18));
+  const R = R0*S.s;
+  x.clearRect(0,0,W,H);
+  if (S.glow > 0){
+    const g = x.createRadialGradient(cx,cy,R*0.3,cx,cy,R0*1.6);
+    g.addColorStop(0, `rgba(255,236,150,${S.glow})`); g.addColorStop(.45, `rgba(255,140,30,${.75*S.glow})`); g.addColorStop(1,'rgba(255,90,0,0)');
+    x.fillStyle = g; x.beginPath(); x.arc(cx,cy,R0*1.6,0,Math.PI*2); x.fill();
+  }
+  if (S.arrow > 0){
+    x.save(); x.globalAlpha = S.arrow; x.strokeStyle = '#ff7a1a'; x.lineWidth = Math.max(3, R0*0.04); x.lineCap='round'; x.lineJoin='round';
+    for (let i=0;i<10;i++){
+      const a = i/10*Math.PI*2, rr = R + R0*0.16, d = R0*0.08;
+      const tx = cx+Math.cos(a)*rr, ty = cy+Math.sin(a)*rr;
+      const ox = Math.cos(a), oy = Math.sin(a), px = -oy, py = ox;
+      x.beginPath(); x.moveTo(tx+ox*d+px*d, ty+oy*d+py*d); x.lineTo(tx, ty); x.lineTo(tx+ox*d-px*d, ty+oy*d-py*d); x.stroke();
+    }
+    x.restore();
+  }
+  // the ball
+  x.fillStyle = ink; x.beginPath(); x.arc(cx,cy,R,0,Math.PI*2); x.fill();
+  const nr = Math.max(2.6, R0*0.032);
+  for (const p of S.nuc){
+    const px = cx+p.x*R, py = cy+p.y*R;
+    if (!p.f){ x.fillStyle = bg; x.beginPath(); x.arc(px,py,nr,0,Math.PI*2); x.fill(); }
+    else {
+      x.strokeStyle = bg; x.globalAlpha = .35; x.lineWidth = 1; x.beginPath(); x.arc(px,py,nr*.7,0,Math.PI*2); x.stroke(); x.globalAlpha = 1;
+      if (p.fl > 0){ x.strokeStyle = `rgba(255,140,30,${p.fl})`; x.lineWidth = 2.5; x.beginPath(); x.arc(px,py,nr+(1-p.fl)*R0*0.14,0,Math.PI*2); x.stroke();
+        x.fillStyle = `rgba(255,200,60,${p.fl})`; x.beginPath(); x.arc(px,py,nr*1.3,0,Math.PI*2); x.fill(); }
+    }
+  }
+  for (const n of S.neu){
+    const px = cx+n.x*R0, py = cy+n.y*R0;
+    x.strokeStyle = 'rgba(255,224,102,.7)'; x.lineWidth = 2; x.beginPath(); x.moveTo(px,py); x.lineTo(px-n.dx*R0*0.09, py-n.dy*R0*0.09); x.stroke();
+    x.fillStyle = '#ffe066'; x.strokeStyle = ink; x.lineWidth = 1; x.beginPath(); x.arc(px,py,Math.max(2.4,R0*0.022),0,Math.PI*2); x.fill(); x.stroke();
+  }
+  x.fillStyle = ink; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = `800 ${fs}px ${cs.getPropertyValue('--display') || 'sans-serif'}`;
+  x.fillText(S.top, cx, fs*0.9);
+  x.font = `600 ${fs*0.92}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
+  x.fillText(S.count ? `${S.sub} · splits: ${S.splits}` : S.sub, cx, H - fs*0.9);
+}
+
+gsap.ticker.add((t, dms) => { step(Math.min(dms, 50)/1000); draw(); });
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+async function until(fn, max){ const t0 = performance.now(); while (!fn() && performance.now()-t0 < max) await wait(60); }
+
+function finalState(){
+  S.s = SQ; S.arrow = 0; S.glow = 1; S.neu = [];
+  S.nuc.forEach((p,i) => { p.f = i % 3 ? 1 : 0; p.fl = 0; });
+  S.splits = S.nuc.filter(p => p.f).length; S.count = true;
+  S.top = 'SQUEEZED: CHAIN REACTION'; S.sub = 'same 6 kg';
+}
+async function sequence(){
+  const id = ++runId;
+  if (Kit.calm){ finalState(); return; }
+  gsap.killTweensOf(S);
+  resetNuc(); S.s = 1; S.arrow = 0; S.glow = 0; S.count = true;
+  S.top = 'NORMAL DENSITY · 6 kg'; S.sub = '3 stray neutrons';
+  await wait(500); if (id !== runId) return;
+  fire(3);
+  await until(() => S.neu.length === 0, 5000); if (id !== runId) return;
+  S.top = 'NEUTRONS ESCAPE: FIZZLE'; S.sub = 'normal density';
+  await wait(1300); if (id !== runId) return;
+  S.top = 'EXPLOSIVES SQUEEZE IT'; S.sub = 'same 6 kg';
+  await gsap.to(S, {arrow:1, duration:.3});
+  await gsap.to(S, {s:SQ, duration:1.3, ease:'power2.in'}); if (id !== runId) return;
+  gsap.to(S, {arrow:0, duration:.4});
+  resetNuc(); S.top = 'SQUEEZED · SAME 6 kg'; S.sub = '3 stray neutrons';
+  await wait(300); if (id !== runId) return;
+  fire(3);
+  for (let k=0;k<5 && S.splits < GOAL; k++){
+    await until(() => S.splits >= GOAL || S.neu.length === 0, 5000); if (id !== runId) return;
+    if (S.splits < GOAL) fire(1);
+  }
+  S.top = 'SQUEEZED: CHAIN REACTION'; S.sub = 'same 6 kg';
+  Kit.haptic('success');
+  gsap.to(S, {glow:1, duration:.8, ease:'power2.out'});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: it's how close the nuclei are`);
+  Kit.show('keep');
+  answered = true;
+  requestAnimationFrame(() => { Kit.onShow.card(); sequence(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('pic').addEventListener('click', () => { if (answered) sequence(); });
+
+Kit.onShow.card = () => { G = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

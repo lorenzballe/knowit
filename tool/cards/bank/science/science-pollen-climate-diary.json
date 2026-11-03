@@ -1,0 +1,37 @@
+{
+  "id": "science-pollen-climate-diary",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is pollen a reliable indicator of past environments?",
+  "answer": "Pollen grains are produced in huge numbers and spread widely. Some survive intact for millions of years, preserved in old mud. Because they come from the plants that grew nearby, they keep a record of the vegetation that once existed.",
+  "move": "Old mud is a diary of plants, written in pollen.",
+  "keywords": [
+    "pollen",
+    "plants",
+    "mud",
+    "vegetation",
+    "climate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline you drag to follow a grain of pollen through deep time, under the question: why is pollen a reliable indicator of past environments? Dragging moves the grain along the timeline."
+  },
+  "source": "Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=JM-n3IqZRCo&t=218s",
+  "written": "2026-11-03"
+}

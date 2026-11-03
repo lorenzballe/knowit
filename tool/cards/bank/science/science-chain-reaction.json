@@ -1,0 +1,37 @@
+{
+  "id": "science-chain-reaction",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Every split frees 2.5 neutrons, each splitting another nucleus. How does it grow?",
+  "answer": "Each split frees 2.5 neutrons, and each of those splits another nucleus, so the count multiplies by 2.5 every round. It crawls at first and then explodes. By round 24 there are 3.6 billion splits at once.",
+  "move": "More than one neutron per split makes the chain multiply: slow, then all at once.",
+  "keywords": [
+    "neutron",
+    "nucleus",
+    "chain-reaction",
+    "einstein",
+    "nuclear-fission"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page on a nuclear chain reaction where each split frees 2.5 neutrons. Readers draw a guess with a finger for how the count grows round by round, up to round 24."
+  },
+  "source": "Veritasium, “Why Einstein Thought Nuclear Weapons Were Impossible” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=HD3k1hgbUXQ",
+  "written": "2026-11-03"
+}

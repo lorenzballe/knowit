@@ -1,0 +1,37 @@
+{
+  "id": "technology-iter-eiffel-weight",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many Eiffel Towers does the ITER fusion machine weigh?",
+  "answer": "The ITER tokamak weighs about 23,000 tonnes, and the Eiffel Tower weighs about 8,000. Stacking the tower nearly three times gets you to one machine, so the answer is almost 3 towers.",
+  "move": "ITER ≈ 23,000 t: nearly three Eiffel Towers in one machine.",
+  "keywords": [
+    "iter",
+    "tokamak",
+    "eiffel_tower",
+    "fusion_energy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice quiz asking how many Eiffel Towers the ITER fusion machine weighs, with four options: about 1, about 3, about 10, and almost 3 towers. The reader picks one, then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MFSwkFK7_ws&t=288s",
+  "written": "2026-11-03"
+}

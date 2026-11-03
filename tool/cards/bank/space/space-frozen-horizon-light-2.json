@@ -1,0 +1,38 @@
+{
+  "id": "space-frozen-horizon-light-2",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "With perfect eyes, what would a black hole's edge show you?",
+  "answer": "In theory, the edge shows all that fell in. Seen from afar, time at the edge stands still, so their light keeps coming.",
+  "move": "In theory, the edge shows all that fell in.",
+  "keywords": [
+    "black_hole",
+    "event_horizon",
+    "light",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dark page titled Black Holes asks what a black hole's edge would show to someone with perfect eyes. Three options are offered: seen from afar, nothing; the last one in; all that ever fell in. The reader picks one and then states how sure they are.",
+    "graded": false,
+    "ground": "#11142b"
+  },
+  "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M",
+  "written": "2026-11-03"
+}

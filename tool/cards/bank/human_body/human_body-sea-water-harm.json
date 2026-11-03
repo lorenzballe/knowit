@@ -1,0 +1,37 @@
+{
+  "id": "human_body-sea-water-harm",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can happen to you if you keep drinking sea water?",
+  "answer": "Sea water pushes the salt in your blood too high and dries you out. One glass may do nothing at first. If you keep drinking, the salt keeps climbing and can damage the kidneys, brain and stomach, and end in coma or death.",
+  "move": "With sea water the dose decides: the more you drink, the worse it gets.",
+  "keywords": [
+    "sea water",
+    "salt",
+    "blood",
+    "kidneys",
+    "hypernatremia"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Salt Overload asks what can happen if you keep drinking sea water. Each tap adds another glass and the salt in the blood climbs from normal toward too much, with effects on the kidneys, brain and stomach, ending in coma or death."
+  },
+  "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WtF2R7J9DUo&t=290s",
+  "written": "2026-11-03"
+}

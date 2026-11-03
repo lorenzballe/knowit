@@ -1,0 +1,163 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-solar-day-spin -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#sky{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#ctrl{display:flex;justify-content:center}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 7cqw;cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;transition:transform .12s}
+#hold.down{transform:scale(.96)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR DAY</span></div>
+    <h2 class="q">How far does Earth turn between one noon and the next?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sky"></svg>
+      <div id="ctrl"><button id="hold">Hold to run one day</button></div>
+      <div id="why" class="gone"><p class="big">A bit more than 360°</p><p class="body">While Earth spins, it also moves along its orbit, so the Sun ends up at a slightly different angle. One full turn isn't enough: Earth must turn a little extra to bring the Sun overhead again.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button. Watch “you” turn back toward the Sun.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A 24-hour solar day is a bit more than one full spin of Earth.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RATIO = 16;          // spin / orbit, orbit step exaggerated so it shows
+const FULL = 360 + 360 / (RATIO - 1); // turn needed to face the Sun again
+let s = 0, state = 0, holding = false, fast = false;
+let G = null;
+const D = Math.PI / 180;
+const ink = () => getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+const col = () => getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+
+function arcPath(cx, cy, r, a0, span) { // counter-clockwise on screen from a0 (deg) by span
+  if (span <= 0.01) return '';
+  if (span >= 359.99) return `M${cx + r},${cy}a${r},${r} 0 1 0 ${-2 * r},0a${r},${r} 0 1 0 ${2 * r},0`;
+  const a1 = a0 - span;
+  const p = a => [cx + r * Math.cos(a * D), cy + r * Math.sin(a * D)];
+  const [x0, y0] = p(a0), [x1, y1] = p(a1);
+  return `M${x0},${y0}A${r},${r} 0 ${span > 180 ? 1 : 0} 0 ${x1},${y1}`;
+}
+
+function build() {
+  const svg = Kit.$('sky');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const K = ink();
+  const m = Math.min(W, H);
+  const rs = m * 0.13, rE = m * 0.085;
+  const sx = W * 0.3, sy = Math.max(H * 0.1, rs * 1.35 + 4);
+  const R = Math.max(rE * 2, Math.min(H * 0.6, H - sy - rE * 1.8 - f * 1.4));
+  const g = {W, H, f, sx, sy, R, rs, rE};
+  Kit.mk('path', {d: arcPath(sx, sy, R, 100, 40), style: `fill:none;stroke:${K};stroke-opacity:.25;stroke-width:1.5;stroke-dasharray:4 6`}, svg);
+  g.trail = Kit.mk('path', {style: `fill:none;stroke:${K};stroke-opacity:.7;stroke-width:3;stroke-linecap:round`}, svg);
+  Kit.mk('circle', {cx: sx, cy: sy, r: rs * 1.35, style: 'fill:#ffb300;opacity:.25'}, svg);
+  Kit.mk('circle', {cx: sx, cy: sy, r: rs, style: `fill:#ffb300;stroke:${K};stroke-width:2`}, svg);
+  const st = Kit.mk('text', {x: sx, y: sy + f * 0.35, 'text-anchor': 'middle', style: `font:800 ${f}px var(--body);fill:#1a1200`}, svg);
+  st.textContent = 'Sun';
+  g.sunline = Kit.mk('line', {style: `stroke:#ff9800;stroke-width:2;stroke-dasharray:6 5`}, svg);
+  g.gap = Kit.mk('path', {style: 'fill:#e8452c;opacity:.28'}, svg);
+  g.ring = Kit.mk('path', {style: `fill:none;stroke:${K};stroke-width:${Math.max(3, rE * 0.12)};stroke-linecap:round`}, svg);
+  g.extra = Kit.mk('path', {style: `fill:none;stroke:#e8452c;stroke-width:${Math.max(5, rE * 0.2)};stroke-linecap:round`}, svg);
+  g.ghost = Kit.mk('line', {style: `stroke:${K};stroke-opacity:.45;stroke-width:2;stroke-dasharray:3 4`}, svg);
+  g.night = Kit.mk('circle', {r: rE, style: `fill:#16304f;stroke:${K};stroke-width:2`}, svg);
+  g.day = Kit.mk('path', {style: 'fill:#3d8be8'}, svg);
+  g.pin = Kit.mk('line', {style: `stroke:${K};stroke-width:${Math.max(3, rE * 0.1)};stroke-linecap:round`}, svg);
+  g.dot = Kit.mk('circle', {r: Math.max(4, rE * 0.16), style: `fill:#fff;stroke:${K};stroke-width:2`}, svg);
+  g.you = Kit.mk('text', {'text-anchor': 'middle', style: `font:700 ${f * 0.85}px var(--body);fill:${K}`}, svg);
+  g.you.textContent = 'you';
+  const lab = Kit.mk('text', {x: W - 6, y: f * 1.1, 'text-anchor': 'end', style: `font:600 ${f * 0.85}px var(--body);fill:${K};opacity:.75`}, svg);
+  lab.textContent = 'Earth has turned';
+  g.num = Kit.mk('text', {x: W - 6, y: f * 1.1 + f * 3.1, 'text-anchor': 'end', style: `font:800 ${f * 2.3}px var(--mono);fill:${K}`}, svg);
+  const note = Kit.mk('text', {x: 6, y: H - 6, style: `font:500 ${Math.max(12, f * 0.75)}px var(--body);fill:${K};opacity:.6`}, svg);
+  note.textContent = 'orbit step exaggerated';
+  G = g;
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const g = G, o = s / RATIO, phi = (90 - o) * D;
+  const ex = g.sx + g.R * Math.cos(phi), ey = g.sy + g.R * Math.sin(phi);
+  g.trail.setAttribute('d', arcPath(g.sx, g.sy, g.R, 90, o));
+  const a = Math.atan2(g.sy - ey, g.sx - ex) / D; // sun direction from Earth
+  const pa = -90 - s;                              // where "you" points
+  // day side faces the Sun
+  const r = g.rE, p1 = [ex + r * Math.cos((a - 90) * D), ey + r * Math.sin((a - 90) * D)], p2 = [ex + r * Math.cos((a + 90) * D), ey + r * Math.sin((a + 90) * D)];
+  g.night.setAttribute('cx', ex); g.night.setAttribute('cy', ey);
+  g.day.setAttribute('d', `M${p1}A${r},${r} 0 0 1 ${p2}Z`);
+  const dS = Math.hypot(g.sx - ex, g.sy - ey) - g.rs * 1.1;
+  g.sunline.setAttribute('x1', ex); g.sunline.setAttribute('y1', ey);
+  g.sunline.setAttribute('x2', ex + dS * Math.cos(a * D)); g.sunline.setAttribute('y2', ey + dS * Math.sin(a * D));
+  const rr = r * 1.55;
+  g.ring.setAttribute('d', arcPath(ex, ey, rr, -90, Math.min(s, 360)));
+  g.extra.setAttribute('d', s > 360 ? arcPath(ex, ey, rr, -90, s - 360) : '');
+  // the angle still to turn once a full spin is done
+  if (s >= 360 && state < 2) {
+    const rem = FULL - s, R2 = r * 1.3, a0 = pa;
+    const q = arcPath(ex, ey, R2, a0, rem);
+    g.gap.setAttribute('d', rem > 0.05 ? `M${ex},${ey}L${ex + R2 * Math.cos(a0 * D)},${ey + R2 * Math.sin(a0 * D)}${q.replace(/^M[^A]*/, '')}Z` : '');
+    g.ghost.setAttribute('x1', ex); g.ghost.setAttribute('y1', ey);
+    g.ghost.setAttribute('x2', ex); g.ghost.setAttribute('y2', ey - r * 2.1);
+  } else { g.gap.setAttribute('d', ''); g.ghost.setAttribute('x2', ex); g.ghost.setAttribute('y2', ey); g.ghost.setAttribute('x1', ex); g.ghost.setAttribute('y1', ey); }
+  const tx = ex + r * 1.3 * Math.cos(pa * D), ty = ey + r * 1.3 * Math.sin(pa * D);
+  g.pin.setAttribute('x1', ex); g.pin.setAttribute('y1', ey); g.pin.setAttribute('x2', tx); g.pin.setAttribute('y2', ty);
+  g.dot.setAttribute('cx', tx); g.dot.setAttribute('cy', ty);
+  g.you.setAttribute('x', ex + r * 2.15 * Math.cos(pa * D)); g.you.setAttribute('y', ey + r * 2.15 * Math.sin(pa * D) + g.f * 0.3);
+  g.num.textContent = (state === 2 ? '360°+' : Math.round(s) + '°');
+}
+
+function tick(t, dt) {
+  if (!holding || state === 2) return;
+  const k = fast ? 8 : 1, sec = Math.min(dt, 50) / 1000;
+  if (state === 0) {
+    s += 90 * k * sec;
+    if (s >= 360) {
+      s = 360; state = 1; release(); Kit.haptic('light');
+      Kit.$('say').textContent = 'One full turn, 360°. But the Sun isn\u2019t overhead yet. Hold again.';
+      Kit.$('hold').textContent = 'Hold to keep turning';
+      if (!Kit.calm) gsap.fromTo('#say', {opacity: 0}, {opacity: 1, duration: .35});
+    }
+  } else if (state === 1) {
+    s += 10 * k * sec;
+    if (s >= FULL) { s = FULL; finish(); }
+  }
+  render();
+}
+
+function finish() {
+  state = 2; release(); Kit.haptic('success');
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  render();
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+function press(e) { if (e) e.preventDefault(); if (state === 2) return; holding = true; Kit.$('hold').classList.add('down'); Kit.haptic('selection'); }
+function release() { holding = false; Kit.$('hold').classList.remove('down'); }
+const hb = Kit.$('hold');
+hb.addEventListener('pointerdown', press);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => hb.addEventListener(ev, release));
+hb.addEventListener('contextmenu', e => e.preventDefault());
+gsap.ticker.add(tick);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  fast = true;
+  press(); let n = 0; while (state === 0 && n++ < 200) await wait(30);
+  press(); n = 0; while (state === 1 && n++ < 200) await wait(30);
+  if (state !== 2) { s = FULL; finish(); }
+  await wait(600);
+};
+Kit.single();
+</script>
+</html>

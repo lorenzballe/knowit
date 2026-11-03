@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-flashover-temperature -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+#pic{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRE</span></div>
+    <h2 class="q">How hot does a burning room get before it all ignites at once?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the thermometer to where the whole room bursts into flame.</p>
+    <div id="why" class="gone"><p class="body">Hot gases pile up under the ceiling and the heat climbs out of control. At their combustion limit, typically 500–600°C, all those gases catch fire together: that is flashover, and it is practically unstoppable.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>At about 500–600°C, a room's gases ignite all at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {guess: null, t: 20, smoke: 0, flash: 0, white: 0, band: 0, locked: false, dragging: false};
+let G = {}, E = {};
+const svg = Kit.$('pic');
+const ty = t => G.bot - (t / 1000) * (G.bot - G.top);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const g = S.guess, ok = g >= 450 && g <= 650;
+  S.locked = true;
+  Kit.answer({choice: g + '°C', correct: ok, sure: pct});
+  sure.grade(ok, pct, `${g}°C, ${ok ? 'right' : 'off'}`);
+  Kit.hide('say');
+  const tl = gsap.timeline({onUpdate: render});
+  tl.to(S, {t: 500, smoke: 1, duration: Kit.calm ? .3 : 2.6, ease: 'power2.in'})
+    .call(() => Kit.haptic('success'))
+    .to(S, {flash: 1, t: 600, duration: .35, ease: 'power4.out'})
+    .fromTo(S, {white: .9}, {white: 0, duration: .7, ease: 'power2.out'}, '<')
+    .to(S, {band: 1, duration: .4}, '<.2')
+    .call(() => { Kit.show('why'); Kit.show('keep'); });
+});
+
+function setFrom(e) {
+  const r = svg.getBoundingClientRect();
+  const yy = e.clientY - r.top;
+  let t = (G.bot - yy) / (G.bot - G.top) * 1000;
+  t = Math.max(0, Math.min(1000, Math.round(t / 10) * 10));
+  S.guess = t; render();
+}
+svg.addEventListener('pointerdown', e => {
+  if (S.locked) return; S.dragging = true;
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  setFrom(e); Kit.haptic('selection');
+});
+svg.addEventListener('pointermove', e => { if (S.dragging && !S.locked) setFrom(e); });
+const up = () => { if (!S.dragging) return; S.dragging = false; if (S.guess != null && !S.locked) sure.on(); };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+function flamePath(x0, x1, base, top, n, seed) {
+  let d = `M${x0},${base}`, w = (x1 - x0) / n;
+  for (let i = 0; i < n; i++) {
+    const h = top + (base - top) * (0.05 + 0.3 * Math.abs(Math.sin(seed + i * 2.3)));
+    d += ` Q${x0 + w * i + w * .1},${(base + h) / 2} ${x0 + w * (i + .5)},${h} Q${x0 + w * (i + .9)},${(base + h) / 2} ${x0 + w * (i + 1)},${base - (base - top) * .25}`;
+  }
+  return d + ` L${x1},${base} Z`;
+}
+
+Kit.onShow.card = () => {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85), pad = Math.max(6, W * .02);
+  const rx = pad, ry = H * .04, rw = W * .52, rh = H * .92;
+  const tx = W * .76, tw = Math.max(10, W * .045), bulbR = tw * 1.15;
+  const top = H * .05 + tw, bot = H * .95 - bulbR * 2;
+  G = {W, H, f, fs, rx, ry, rw, rh, tx, tw, bulbR, top, bot};
+  const ink = 'var(--k)';
+  const defs = Kit.mk('defs', {}, svg);
+  const clip = Kit.mk('clipPath', {id: 'roomclip'}, defs);
+  Kit.mk('rect', {x: rx, y: ry, width: rw, height: rh, rx: 6}, clip);
+  const gr = Kit.mk('linearGradient', {id: 'fl', x1: 0, y1: 1, x2: 0, y2: 0}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#ffd23f'}, gr);
+  Kit.mk('stop', {offset: .55, 'stop-color': '#ff7a1a'}, gr);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#d7261e'}, gr);
+
+  // room
+  const room = Kit.mk('g', {'clip-path': 'url(#roomclip)'}, svg);
+  Kit.mk('rect', {x: rx, y: ry, width: rw, height: rh, fill: '#1f1c2b'}, room);
+  E.glow = Kit.mk('rect', {x: rx, y: ry, width: rw, height: rh, fill: '#ff4a14', opacity: 0}, room);
+  const floor = ry + rh * .9;
+  Kit.mk('rect', {x: rx, y: floor, width: rw, height: rh * .1, fill: '#3a3346'}, room);
+  Kit.mk('rect', {x: rx + rw * .74, y: ry + rh * .45, width: rw * .18, height: floor - ry - rh * .45, fill: '#0f0d16', stroke: '#4b4458', 'stroke-width': 2}, room);
+  // sofa
+  Kit.mk('rect', {x: rx + rw * .08, y: floor - rh * .1, width: rw * .4, height: rh * .1, rx: 4, fill: '#5b4a3a'}, room);
+  E.fire = Kit.mk('path', {d: flamePath(rx + rw * .14, rx + rw * .38, floor - rh * .08, floor - rh * .3, 3, 1), fill: 'url(#fl)'}, room);
+  E.fireBase = floor - rh * .08; E.fireX = rx + rw * .26;
+  E.smoke = Kit.mk('rect', {x: rx, y: ry, width: rw, height: 0, fill: '#6b6470', opacity: .9}, room);
+  E.flash = Kit.mk('g', {opacity: 0}, room);
+  Kit.mk('path', {d: flamePath(rx - 4, rx + rw + 4, floor + 4, ry - rh * .1, 6, 3), fill: 'url(#fl)'}, E.flash);
+  Kit.mk('path', {d: flamePath(rx - 4, rx + rw + 4, floor + 4, ry + rh * .25, 9, 7), fill: '#ffd23f', opacity: .75}, E.flash);
+  E.white = Kit.mk('rect', {x: rx, y: ry, width: rw, height: rh, fill: '#fff', opacity: 0}, room);
+  Kit.mk('rect', {x: rx, y: ry, width: rw, height: rh, rx: 6, fill: 'none', style: `stroke:${ink}`, 'stroke-width': 3}, svg);
+  E.read = Kit.mk('text', {x: rx + rw / 2, y: ry + rh * .5, 'text-anchor': 'middle', fill: '#fff', style: `font:800 ${Math.max(18, f * 1.9)}px var(--display)`}, svg);
+  E.word = Kit.mk('text', {x: rx + rw / 2, y: ry + rh * .5 + Math.max(18, f * 1.9) * 1.1, 'text-anchor': 'middle', fill: '#fff', opacity: 0, style: `font:800 ${Math.max(13, f * 1.1)}px var(--body);letter-spacing:.06em`}, svg);
+  E.word.textContent = 'FLASHOVER';
+
+  // thermometer
+  E.band = Kit.mk('rect', {x: tx - tw / 2 - 6, y: ty(600), width: tw + 12, height: ty(500) - ty(600), rx: 4, fill: '#ff7a1a', opacity: 0}, svg);
+  Kit.mk('rect', {x: tx - tw / 2, y: top - tw / 2, width: tw, height: bot - top + tw, rx: tw / 2, fill: 'color-mix(in srgb,var(--c) 70%,#fff)', style: `stroke:${ink}`, 'stroke-width': 2.5}, svg);
+  E.merc = Kit.mk('rect', {x: tx - tw * .28, width: tw * .56, rx: tw * .28, fill: '#e03a1e'}, svg);
+  Kit.mk('circle', {cx: tx, cy: bot + bulbR * .9, r: bulbR, fill: '#e03a1e', style: `stroke:${ink}`, 'stroke-width': 2.5}, svg);
+  for (let t = 0; t <= 1000; t += 200) {
+    Kit.mk('line', {x1: tx + tw / 2, x2: tx + tw / 2 + 6, y1: ty(t), y2: ty(t), style: `stroke:${ink}`, 'stroke-width': 2}, svg);
+    const tt = Kit.mk('text', {x: tx + tw / 2 + 9, y: ty(t), 'dominant-baseline': 'middle', style: `fill:${ink};font:600 ${fs}px var(--mono)`}, svg);
+    tt.textContent = t + '°';
+  }
+  E.gline = Kit.mk('line', {x1: tx - tw / 2 - 12, x2: tx + tw / 2 + 2, style: `stroke:${ink}`, 'stroke-width': 3, 'stroke-dasharray': '5 3', opacity: 0}, svg);
+  E.glab = Kit.mk('text', {x: tx - tw / 2 - 14, 'text-anchor': 'end', 'dominant-baseline': 'middle', style: `fill:${ink};font:800 ${Math.max(13, f)}px var(--body)`, opacity: 0}, svg);
+  E.hint = Kit.mk('text', {x: tx - tw / 2 - 14, y: ty(500), 'text-anchor': 'end', 'dominant-baseline': 'middle', style: `fill:${ink};font:400 ${Math.max(16, f * 1.4)}px var(--hand)`}, svg);
+  E.hint.textContent = '?';
+  render();
+};
+
+function render() {
+  if (!E.merc) return;
+  const {rh, top, bot, bulbR} = G;
+  const y = ty(S.t);
+  E.merc.setAttribute('y', y); E.merc.setAttribute('height', bot - y + bulbR);
+  E.smoke.setAttribute('height', rh * .55 * S.smoke);
+  E.glow.setAttribute('opacity', Math.min(.45, (S.t / 600) * .4));
+  const s = 1 + 1.3 * Math.min(1, S.t / 500);
+  E.fire.setAttribute('transform', `translate(${E.fireX},${E.fireBase}) scale(${s}) translate(${-E.fireX},${-E.fireBase})`);
+  E.flash.setAttribute('opacity', S.flash);
+  E.white.setAttribute('opacity', S.white);
+  E.word.setAttribute('opacity', S.flash);
+  E.band.setAttribute('opacity', S.band * .9);
+  E.read.textContent = Math.round(S.t) + '°C';
+  if (S.guess != null) {
+    const gy = ty(S.guess);
+    E.gline.setAttribute('y1', gy); E.gline.setAttribute('y2', gy); E.gline.setAttribute('opacity', 1);
+    E.glab.setAttribute('y', gy); E.glab.setAttribute('opacity', 1); E.glab.textContent = S.guess + '°';
+    E.hint.setAttribute('opacity', 0);
+  }
+}
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !E.hint) return;
+  gsap.fromTo(E.hint, {opacity: .2}, {opacity: 1, duration: .7, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+  gsap.from(E.merc, {attr: {y: G.bot}, duration: .8, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect();
+  const o = {clientX: r.left + G.tx, clientY: r.top + ty(300), bubbles: true, pointerId: 1};
+  svg.dispatchEvent(new PointerEvent('pointerdown', o));
+  svg.dispatchEvent(new PointerEvent('pointerup', o));
+  await new Promise(res => setTimeout(res, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(res => setTimeout(res, 4500));
+};
+Kit.single();
+</script>
+</html>

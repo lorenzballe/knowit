@@ -1,0 +1,36 @@
+{
+  "id": "technology-traction-control-slip",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What electronic aid stops the rear wheel spinning when you accelerate?",
+  "answer": "Traction control is the electronic aid that stops the rear wheel spinning when you accelerate. Sensors detect when the rear wheel turns faster than the bike moves, and the control unit then cuts engine torque so the tyre keeps its grip at full gas, leaned over. Rossi says rear slides on acceleration are now much rarer.",
+  "move": "Traction control trims power the moment the rear wheel starts to slip.",
+  "keywords": [
+    "traction control",
+    "valentino rossi",
+    "motogp",
+    "rear wheel"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Traction control, asking which electronic aid stops the rear wheel spinning when you accelerate. The answer shows sensors detecting wheel slip and a control unit cutting engine torque, plus a prompt to open the throttle with TC off, then switch it on and try again."
+  },
+  "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=1144s",
+  "written": "2026-11-03"
+}

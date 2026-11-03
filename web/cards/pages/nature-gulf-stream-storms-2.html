@@ -1,0 +1,161 @@
+<!doctype html>
+<!-- slug: nature-gulf-stream-storms -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#mapbox{flex:1;min-height:0;position:relative}
+#map{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctrl{display:flex;gap:2cqw;align-items:center}
+#steps{display:flex;gap:1.2cqw;flex:1}
+.dot{flex:1;height:max(.7cqh,5px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 18%,transparent)}
+.dot.on{background:var(--k)}
+#next{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer;white-space:nowrap}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#map text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Layers · build it up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BERMUDA TRIANGLE</span></div>
+    <h2 class="q">Why does the Gulf Stream contribute to accidents in the Bermuda Triangle?</h2>
+    <div class="stagebox" id="stage">
+      <div id="mapbox"><svg id="map"></svg></div>
+      <div id="ctrl">
+        <div id="steps"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+        <button id="next">Add the warm current</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Warm water makes wild weather.</p>
+        <p class="body">The Gulf Stream carries warm surface water, about 26 °C, right through the triangle. That heat fuels strong storms that change fast, shaking ships and aircraft with turbulence.</p>
+      </div>
+    </div>
+    <p class="say" id="say">A calm sea. Add the layers one by one and watch the weather change.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No mystery: a warm current breeds sudden storms.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Esiste davvero il triangolo delle Bermuda? In realtà il "mistero" ha una spiegazione scientifica” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, L = {}, tweens = [];
+const SAYS = [
+  'A calm sea. Add the layers one by one and watch the weather change.',
+  'The Gulf Stream: warm surface water, about 26 °C, flowing through the triangle.',
+  'Cooler air sweeps in over the warm water. Heat and moisture rise into it.',
+  'Storms build and change fast. Ships and planes get thrown around.'
+];
+const BTN = ['Add the warm current', 'Add cooler air', 'Add the storms', ''];
+
+function draw() {
+  const svg = Kit.$('map');
+  svg.innerHTML = '';
+  tweens.forEach(t => t.kill()); tweens = [];
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12), mk = Kit.mk, X = v => v * W, Y = v => v * H;
+  const defs = mk('defs', {}, svg);
+  const gr = mk('linearGradient', {id: 'gs', x1: 0, y1: 1, x2: 1, y2: 0}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#ffb02e'}, gr);
+  mk('stop', {offset: 1, 'stop-color': '#ff4d2e'}, gr);
+  const r = Math.min(W, H) * .05;
+  const clip = mk('clipPath', {id: 'cl'}, defs);
+  mk('rect', {x: 0, y: 0, width: W, height: H, rx: r}, clip);
+  const root = mk('g', {'clip-path': 'url(#cl)'}, svg);
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#0f3352'}, root);
+  // Florida + coast
+  mk('path', {d: `M0 0 L${X(.16)} 0 L${X(.17)} ${Y(.2)} L${X(.2)} ${Y(.44)} L${X(.19)} ${Y(.58)} L${X(.15)} ${Y(.66)} L${X(.1)} ${Y(.6)} L${X(.06)} ${Y(.5)} L0 ${Y(.48)} Z`, fill: '#e2cf9c'}, root);
+  // islands
+  mk('ellipse', {cx: X(.74), cy: Y(.9), rx: X(.06), ry: Y(.018), fill: '#e2cf9c'}, root);
+  mk('circle', {cx: X(.82), cy: Y(.2), r: Math.max(3, W * .01), fill: '#e2cf9c'}, root);
+
+  // Layer 1: Gulf Stream
+  const g1 = L.g1 = mk('g', {opacity: 0}, root);
+  const sp = `M${X(.1)} ${Y(1.02)} C${X(.24)} ${Y(.8)} ${X(.22)} ${Y(.6)} ${X(.25)} ${Y(.48)} S${X(.36)} ${Y(.2)} ${X(.7)} ${Y(-.02)}`;
+  mk('path', {d: sp, fill: 'none', stroke: 'url(#gs)', 'stroke-width': W * .09, 'stroke-linecap': 'round', opacity: .35}, g1);
+  mk('path', {d: sp, fill: 'none', stroke: 'url(#gs)', 'stroke-width': W * .04, 'stroke-linecap': 'round'}, g1);
+  const flow = mk('path', {d: sp, fill: 'none', stroke: '#fff3c4', 'stroke-width': Math.max(2, W * .008), 'stroke-dasharray': `${W * .03} ${W * .05}`, 'stroke-linecap': 'round'}, g1);
+  if (!Kit.calm) tweens.push(gsap.to(flow, {attr: {'stroke-dashoffset': -W * .8}, duration: 6, repeat: -1, ease: 'none'}));
+  const t1 = mk('text', {x: X(.36), y: Y(.13), fill: '#ffd27a', 'font-size': fs * 1.3, 'font-weight': 800}, g1); t1.textContent = '26 °C';
+  const t1b = mk('text', {x: X(.36), y: Y(.13) + fs * 1.4, fill: '#ffd27a', 'font-size': fs}, g1); t1b.textContent = 'warm current';
+
+  // Layer 2: cool air
+  const g2 = L.g2 = mk('g', {opacity: 0}, root);
+  const arrows = [];
+  [[.02, .2], [.06, .32], [.0, .42]].forEach(([a, b], i) => {
+    const ar = mk('g', {}, g2);
+    mk('path', {d: `M${X(a)} ${Y(b)} Q${X(a + .14)} ${Y(b - .05)} ${X(a + .26)} ${Y(b + .02)}`, fill: 'none', stroke: '#9fd8ff', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round'}, ar);
+    const ex = X(a + .26), ey = Y(b + .02), s = W * .025;
+    mk('path', {d: `M${ex - s} ${ey - s * .9} L${ex + s * .3} ${ey + s * .1} L${ex - s * .9} ${ey + s * .8}`, fill: 'none', stroke: '#9fd8ff', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, ar);
+    arrows.push(ar);
+  });
+  if (!Kit.calm) tweens.push(gsap.to(arrows, {x: W * .03, duration: 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut', stagger: .3}));
+  const t2 = mk('text', {x: X(.03), y: Y(.07), fill: '#0f3352', 'font-size': fs}, g2); t2.textContent = 'cooler air';
+
+  // Triangle
+  mk('path', {d: `M${X(.2)} ${Y(.56)} L${X(.82)} ${Y(.2)} L${X(.74)} ${Y(.86)} Z`, fill: 'rgba(255,255,255,.05)', stroke: '#fff', 'stroke-width': Math.max(1.5, W * .005), 'stroke-dasharray': `${W * .02} ${W * .015}`}, root);
+  const lb = (x, y, t, a) => { const e = mk('text', {x, y, fill: '#fff', 'font-size': fs, 'text-anchor': a}, root); e.textContent = t; };
+  lb(X(.82), Y(.2) - fs * .9, 'Bermuda', 'middle');
+  lb(X(.74), Y(.86) + fs * 1.5, 'Puerto Rico', 'middle');
+  const mt = mk('text', {x: X(.17), y: Y(.56) - fs * .5, fill: '#0f3352', 'font-size': fs, 'text-anchor': 'end'}, root); mt.textContent = 'Miami';
+  mk('circle', {cx: X(.2), cy: Y(.56), r: Math.max(3, W * .01), fill: '#fff'}, root);
+
+  // ship and plane
+  const sw = W * .07;
+  const ship = L.ship = mk('g', {transform: `translate(${X(.6)},${Y(.66)})`}, root);
+  const shipIn = mk('g', {}, ship);
+  mk('path', {d: `M${-sw} 0 L${sw} 0 L${sw * .7} ${sw * .4} L${-sw * .7} ${sw * .4} Z`, fill: '#fff'}, shipIn);
+  mk('rect', {x: -sw * .3, y: -sw * .4, width: sw * .5, height: sw * .4, fill: '#fff'}, shipIn);
+  const pw = W * .06;
+  const plane = mk('g', {transform: `translate(${X(.55)},${Y(.38)})`}, root);
+  const planeIn = mk('g', {}, plane);
+  mk('path', {d: `M${-pw} 0 L${pw} 0 M${pw * .1} 0 L${-pw * .3} ${-pw * .7} M${pw * .1} 0 L${-pw * .3} ${pw * .7} M${-pw * .9} 0 L${-pw} ${-pw * .35}`, stroke: '#fff', 'stroke-width': Math.max(3, W * .014), 'stroke-linecap': 'round', fill: 'none'}, planeIn);
+  L.shake = [shipIn, planeIn];
+
+  // Layer 3: storms
+  const g3 = L.g3 = mk('g', {opacity: 0}, root);
+  const clouds = [];
+  [[.44, .48, 1], [.62, .5, .85], [.5, .7, .9]].forEach(([cx, cy, s]) => {
+    const c = mk('g', {transform: `translate(${X(cx)},${Y(cy)})`}, g3);
+    const R = W * .055 * s;
+    mk('path', {d: `M${-R * .4} ${R * .6} L${-R * .7} ${R * 1.4} L${-R * .3} ${R * 1.3} L${-R * .55} ${R * 2.1}`, stroke: '#ffe14d', 'stroke-width': Math.max(2.5, W * .01), fill: 'none', 'stroke-linejoin': 'round', class: 'bolt'}, c);
+    [[-R, 0, R * .8], [0, -R * .5, R], [R, 0, R * .8], [0, R * .2, R * .9]].forEach(([a, b, rr]) => mk('circle', {cx: a, cy: b, r: rr, fill: '#c9d3dd'}, c));
+    clouds.push(c);
+  });
+  const st = mk('text', {x: X(.3), y: Y(.86) - fs * .3, fill: '#fff', 'font-size': fs}, g3); st.textContent = 'sudden storms';
+  L.clouds = clouds;
+  apply(false);
+}
+
+function apply(anim) {
+  const d = anim && !Kit.calm ? .7 : 0;
+  ['g1', 'g2', 'g3'].forEach((k, i) => gsap.to(L[k], {opacity: step > i ? 1 : 0, duration: d}));
+  if (step >= 3) {
+    if (anim && !Kit.calm) gsap.from(L.clouds, {scale: .2, transformOrigin: '50% 50%', opacity: 0, duration: .8, stagger: .12, ease: 'back.out(1.6)'});
+    if (!Kit.calm) {
+      tweens.push(gsap.to(L.shake, {rotation: 14, transformOrigin: '50% 50%', duration: .22, repeat: -1, yoyo: true, ease: 'sine.inOut', stagger: .11}));
+      tweens.push(gsap.to('#map .bolt', {opacity: .1, duration: .15, repeat: -1, yoyo: true, repeatDelay: .6, stagger: .3}));
+    }
+  }
+  [...Kit.$('steps').children].forEach((e, i) => e.classList.toggle('on', i < step));
+}
+
+Kit.$('next').addEventListener('click', () => {
+  if (step >= 3) return;
+  step++; Kit.haptic(step === 3 ? 'success' : 'light');
+  apply(true);
+  Kit.$('say').textContent = SAYS[step];
+  if (step < 3) Kit.$('next').textContent = BTN[step];
+  else { Kit.hide('ctrl'); Kit.show('why'); Kit.show('keep'); Kit.hide('say'); }
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map', {opacity: 0, scale: .96, duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 3; i++) { Kit.$('next').click(); await new Promise(r => setTimeout(r, 300)); }
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

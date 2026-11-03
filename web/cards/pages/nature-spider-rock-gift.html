@@ -1,0 +1,190 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-spider-rock-gift -->
+<title>Astute free card · The rock gift</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#cap{min-height:8.5cqh;font:600 max(2.1cqh,13px)/1.3 var(--body);color:var(--k);overflow-wrap:anywhere}
+#cap b{font-weight:800}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap the parts">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPIDER GIFTS</span></div>
+    <h2 class="q">What does a male Pisaura mirabilis do if it has no prey?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A male spider offers a silk-wrapped bundle to a female"></svg>
+      <p id="cap">A male <i>Pisaura mirabilis</i> meets a female. He carries something.</p>
+      <div id="why" class="gone">
+        <p class="big">He wraps a pebble in silk.</p>
+        <p class="body">Males court with a gift: prey caught and wrapped in silk. If he finds nothing edible, he balls silk around a small bit of rock or earth and offers that instead.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the male, his gift and the female.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No prey? A silk-wrapped stone still gets offered as a gift.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const seen = {male:false, gift:false, female:false};
+let done = false;
+const TEXT = {
+  male: '<b>The male.</b> Before mating, he catches prey and wraps it in silk, as a present for a potential mate.',
+  gift: '<b>The gift.</b> Look inside: no prey at all. Finding nothing edible, he balled silk around a small bit of rock.',
+  female: '<b>The female.</b> The gift is how he attracts her and wins her over to mate.'
+};
+const INK = '#2b1c10', PANEL = '#f6efdf', SOIL = '#d9c7a1';
+let parts = {};
+
+function spider(g, cx, cy, s, d, body, G, hold){
+  const hx = cx + d*s*0.6, hy = cy;
+  const legs = (off, col, w) => {
+    const dx = [2.3, 1.25, -0.95, -2.1];
+    dx.forEach((k, i) => {
+      const ax = hx + off*d, fx = ax + d*k*s;
+      let kx = ax + d*k*s*0.42, ky = cy - s*(1.35 - i*0.12), fy = G;
+      let ex = fx;
+      if (hold && i === 0){ ex = hold[0] - d*s*0.15; fy = hold[1]; kx = ax + d*s*0.9; ky = cy - s*1.1; }
+      Kit.mk('polyline', {points:`${ax},${hy} ${kx},${ky} ${ex},${fy}`, fill:'none', stroke:col, 'stroke-width':w, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, g);
+    });
+  };
+  legs(-s*0.25, '#a07c55', s*0.11);
+  // abdomen
+  Kit.mk('ellipse', {cx:cx - d*s*0.75, cy:cy - s*0.05, rx:s*1.0, ry:s*0.5, fill:body, stroke:INK, 'stroke-width':s*0.08}, g);
+  Kit.mk('path', {d:`M${cx - d*s*1.6},${cy - s*0.05} Q${cx - d*s*0.75},${cy - s*0.28} ${cx + d*s*0.05},${cy - s*0.08}`, fill:'none', stroke:'#ecdcb6', 'stroke-width':s*0.1, 'stroke-linecap':'round'}, g);
+  // cephalothorax
+  Kit.mk('ellipse', {cx:hx, cy:hy, rx:s*0.55, ry:s*0.38, fill:body, stroke:INK, 'stroke-width':s*0.08}, g);
+  Kit.mk('path', {d:`M${hx - d*s*0.45},${hy - s*0.05} L${hx + d*s*0.35},${hy - s*0.12}`, fill:'none', stroke:'#ecdcb6', 'stroke-width':s*0.09, 'stroke-linecap':'round'}, g);
+  Kit.mk('circle', {cx:hx + d*s*0.38, cy:hy - s*0.16, r:s*0.07, fill:INK}, g);
+  // palps
+  Kit.mk('path', {d:`M${hx + d*s*0.45},${hy + s*0.1} q${d*s*0.35},${s*0.05} ${d*s*0.45},${s*0.35}`, fill:'none', stroke:INK, 'stroke-width':s*0.09, 'stroke-linecap':'round'}, g);
+  legs(0, INK, s*0.12);
+}
+
+function pill(g, x, y, text, f){
+  const p = Kit.mk('g', {class:'pill'}, g);
+  const t = Kit.mk('text', {x, y, 'text-anchor':'middle', 'dominant-baseline':'central', 'font-family':'var(--body)', 'font-weight':800, 'font-size':f, fill:INK}, p);
+  t.textContent = text;
+  const w = text.length*f*0.62 + f*1.4, h = f*1.9;
+  const r = Kit.mk('rect', {x:x - w/2, y:y - h/2, width:w, height:h, rx:h/2, fill:'#fff', stroke:INK, 'stroke-width':Math.max(1.5, f*0.12)}, p);
+  p.insertBefore(r, t);
+  return {p, r, t};
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(13, f*0.95);
+  const G = H*0.78;
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:Math.min(W,H)*0.05, fill:PANEL}, svg);
+  Kit.mk('path', {d:`M0,${G} H${W} V${H - Math.min(W,H)*0.05} Q${W},${H} ${W - Math.min(W,H)*0.05},${H} H${Math.min(W,H)*0.05} Q0,${H} 0,${H - Math.min(W,H)*0.05} Z`, fill:SOIL}, svg);
+  for (let i = 0; i < 26; i++){
+    const x = (i + 0.5)*W/26 + (Kit.rnd() - .5)*8, h = H*0.04 + Kit.rnd()*H*0.05;
+    Kit.mk('path', {d:`M${x},${G} q${(Kit.rnd()-.5)*10},${-h*0.6} ${(Kit.rnd()-.5)*14},${-h}`, fill:'none', stroke:'#7d9a4e', 'stroke-width':2, 'stroke-linecap':'round'}, svg);
+  }
+  const u = Math.min(W/8.5, H/3.6);
+  const ms = u*0.5, fsz = u*0.62;
+  const mx = W*0.27, fx = W*0.76;
+  const bx = W*0.5, by = G - u*0.95, br = u*0.32;
+
+  // male
+  const mg = Kit.mk('g', {class:'hit'}, svg);
+  spider(mg, mx, G - ms*1.05, ms, 1, '#7a5230', G, [bx - br*0.6, by + br*0.2]);
+  // female
+  const fg = Kit.mk('g', {class:'hit'}, svg);
+  spider(fg, fx, G - fsz*1.05, fsz, -1, '#94704a', G, null);
+  // gift
+  const gg = Kit.mk('g', {class:'hit'}, svg);
+  const rock = Kit.mk('path', {d:`M${bx - br*0.6},${by + br*0.1} L${bx - br*0.25},${by - br*0.5} L${bx + br*0.45},${by - br*0.4} L${bx + br*0.62},${by + br*0.2} L${bx + br*0.1},${by + br*0.55} L${bx - br*0.45},${by + br*0.48} Z`, fill:'#8a8277', stroke:'#4a443c', 'stroke-width':Math.max(1.5, br*0.08), 'stroke-linejoin':'round'}, gg);
+  Kit.mk('path', {d:`M${bx - br*0.2},${by - br*0.2} l${br*0.3},${br*0.1}`, stroke:'#b9b1a5', 'stroke-width':Math.max(1.5, br*0.07), 'stroke-linecap':'round'}, gg);
+  const silk = Kit.mk('g', {}, gg);
+  Kit.mk('ellipse', {cx:bx, cy:by, rx:br*1.05, ry:br*0.92, fill:'#fdfcf8', stroke:'#bdb5a6', 'stroke-width':Math.max(1.5, br*0.07)}, silk);
+  for (let i = 0; i < 6; i++){
+    const a = i*Math.PI/6;
+    Kit.mk('ellipse', {cx:bx, cy:by, rx:br*1.0, ry:br*0.32, fill:'none', stroke:'#d8d1c3', 'stroke-width':Math.max(1, br*0.05), transform:`rotate(${a*180/Math.PI} ${bx} ${by})`}, silk);
+  }
+  Kit.mk('circle', {cx:bx, cy:by, r:br*1.5, fill:'transparent'}, gg);
+
+  // labels: male and female at top, gift in the soil below the bundle
+  const lm = pill(svg, mx, H*0.11, 'Male', fs);
+  const lf = pill(svg, fx, H*0.11, 'Female', fs);
+  const lg = pill(svg, bx, G + (H - G)*0.5, 'Gift?', fs);
+  [lm, lf, lg].forEach(l => l.p.classList.add('hit'));
+
+  parts = {male:{g:mg, l:lm}, female:{g:fg, l:lf}, gift:{g:gg, l:lg, silk, rock, bx, by}};
+  Object.keys(parts).forEach(k => {
+    const pr = parts[k];
+    [pr.g, pr.l.p].forEach(el => el.addEventListener('click', () => tap(k)));
+    if (seen[k]) mark(k, false);
+  });
+  rock.style.opacity = seen.gift ? 1 : 0;
+  silk.style.opacity = seen.gift ? 0.28 : 1;
+  pulse();
+}
+
+function mark(k){
+  const l = parts[k].l;
+  l.r.setAttribute('fill', INK); l.t.setAttribute('fill', '#fff');
+  if (k === 'gift') l.t.textContent = 'A rock!';
+}
+
+let pulses = [];
+function pulse(){
+  pulses.forEach(t => t.kill()); pulses = [];
+  if (Kit.calm) return;
+  Object.keys(parts).forEach((k, i) => {
+    if (seen[k]) return;
+    const p = parts[k].l.p;
+    pulses.push(gsap.fromTo(p, {opacity:1}, {opacity:.55, duration:.8, yoyo:true, repeat:-1, ease:'sine.inOut', delay:i*.25}));
+  });
+}
+
+function tap(k){
+  const pr = parts[k];
+  Kit.haptic('light');
+  Kit.$('cap').innerHTML = TEXT[k];
+  const first = !seen[k];
+  seen[k] = true; mark(k); pulse();
+  gsap.set(pr.l.p, {opacity:1});
+  if (k === 'gift'){
+    if (Kit.calm){ pr.silk.style.opacity = .28; pr.rock.style.opacity = 1; }
+    else {
+      gsap.to(pr.silk, {opacity:.28, duration:.7, ease:'power2.out'});
+      gsap.fromTo(pr.rock, {opacity:0, scale:.4, transformOrigin:'50% 50%'}, {opacity:1, scale:1, duration:.6, ease:'back.out(2)'});
+    }
+  } else if (!Kit.calm){
+    gsap.fromTo(pr.g, {y:0}, {y:-6, duration:.18, yoyo:true, repeat:1, ease:'power2.out'});
+  }
+  if (first && !done && seen.male && seen.gift && seen.female){
+    done = true;
+    setTimeout(() => {
+      Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+      if (!Kit.calm) gsap.from('#why, #keep', {opacity:0, y:8, stagger:.12, duration:.45, ease:'power3.out'});
+    }, 1400);
+  }
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic .hit', {opacity:0, y:10, stagger:.1, duration:.5, ease:'power3.out'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (const k of ['male', 'gift', 'female']){
+    parts[k].l.p.dispatchEvent(new MouseEvent('click', {bubbles:true}));
+    await wait(250);
+  }
+  await wait(1900);
+};
+Kit.single();
+</script>
+</html>

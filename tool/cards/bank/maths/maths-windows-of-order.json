@@ -1,0 +1,37 @@
+{
+  "id": "maths-windows-of-order",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Past chaos, does the logistic map ever find order again?",
+  "answer": "Past about 3.57 the logistic map is chaotic, but not everywhere. At R = 3.83 it locks into a stable 3-year cycle, which then splits into 6, 12, 24 before chaos returns. Islands like this hide cycles of every length.",
+  "move": "Chaos has windows of order: the right R gives a stable cycle.",
+  "keywords": [
+    "logistic map",
+    "chaos",
+    "period-3 cycle",
+    "bifurcation",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive diagram of the logistic map, a chaotic sea with calm islands labeled by their cycle period. Tap to pick an R and race it against R = 3.83. Asks whether the map ever finds order again past chaos."
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=346s",
+  "written": "2026-11-03"
+}

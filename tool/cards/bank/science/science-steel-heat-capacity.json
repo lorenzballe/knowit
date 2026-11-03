@@ -1,0 +1,37 @@
+{
+  "id": "science-steel-heat-capacity",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much load can a steel column still carry at 1000 °C?",
+  "answer": "Steel loses stiffness and strength as it heats up. At 1000 °C it has lost 95% of its ability to carry loads, as NIST notes. The floors it holds then become too heavy for it, and it gives way.",
+  "move": "At 1000 °C steel keeps just 5% of its load-bearing capacity.",
+  "keywords": [
+    "steel",
+    "steel column",
+    "nist",
+    "load-bearing capacity",
+    "high temperature"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive slider from 20 °C to 1000 °C beside a steel column, asking how much load the column can still carry at 1000 °C. Dragging it reveals that only about 5% is left."
+  },
+  "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=PvhMUg70Jtc&t=756s",
+  "written": "2026-11-03"
+}

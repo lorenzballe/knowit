@@ -1,0 +1,168 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-not-a-flamethrower -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1.1cqh}
+#why .big{overflow-wrap:anywhere}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#cmp{display:flex;gap:2cqw}
+.dev{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1cqw;cursor:pointer;overflow-wrap:anywhere}
+.dev.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .body{font-size:max(1.9cqh,13px)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRE &amp; LAW</span></div>
+    <h2 class="q">What is the official name of Elon Musk’s consumer flamethrower?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">The Musk Flame X</button>
+        <button class="opt" data-i="1">The Not‑a‑Flamethrower</button>
+        <button class="opt" data-i="2">The Mars Torch</button>
+      </div>
+      <div id="why" class="gone">
+        <div id="cmp">
+          <button class="dev" data-d="0">M9</button>
+          <button class="dev" data-d="1">XM42</button>
+          <button class="dev on" data-d="2">NAF</button>
+        </div>
+        <p class="body">The name is a legal dodge: calling it “not a flamethrower” helped it sidestep the rules on flamethrowers. Yet it still throws real fire. Tap to compare its jet.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the name. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A product’s name can be a legal move, not a description.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Sapevate che Elon Musk ha la sua linea di lanciafiamme? Reggerà il confronto con altri modelli?” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false, cur = 2;
+const DEV = [
+  {tag:'M9', name:'M9', what:'Military, 1960s, used in Vietnam', L:1},
+  {tag:'XM42', name:'XM42', what:'Sold freely in US gun shops', L:.62},
+  {tag:'NAF', name:'Not‑a‑Flamethrower', what:'Musk’s model: smaller, still real fire', L:.3}
+];
+const S = {L:.3};
+let G = null; // geometry and elements
+
+function flamePath(fx, cy, len, h, w){
+  const tx = fx + len, ty = cy + w;
+  return `M${fx},${cy-h*.3} C${fx+len*.25},${cy-h} ${fx+len*.75},${cy-h*.55+w*.6} ${tx},${ty} C${fx+len*.75},${cy+h*.55+w*.6} ${fx+len*.25},${cy+h} ${fx},${cy+h*.3} Z`;
+}
+
+function render(){
+  if (!G) return;
+  const t = performance.now()/1000, calm = Kit.calm;
+  const len = Math.max(4, S.L * G.Lmax);
+  const layers = [[1, 0], [.72, .7], [.42, 1.4]];
+  G.fl.forEach((p, i) => {
+    const [k, ph] = layers[i];
+    const w = calm ? 0 : Math.sin(t*9 + ph)*G.th*.18 + Math.sin(t*15.3 + ph*2)*G.th*.08;
+    const ll = len * k * (calm ? 1 : 1 + Math.sin(t*12 + ph)*.04);
+    const h = (G.th*.35 + len*.16) * (k*.85 + .15);
+    p.setAttribute('d', flamePath(G.fx, G.cy, ll, h, w*k));
+  });
+}
+
+function setTexts(){
+  if (!G) return;
+  const d = DEV[cur];
+  G.lab.textContent = revealed ? d.tag : '???';
+  G.c1.textContent = revealed ? d.name : 'Elon Musk’s consumer model';
+  G.c2.textContent = revealed ? d.what : 'Its name is the riddle';
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const th = Math.min(H*.15, W*.1);
+  const cy = Math.min(H*.36, H - fs*3.4 - th*1.9);
+  const x0 = W*.03, x1 = W*.42, nz = W*.04;
+  const fx = x1 + nz, Lmax = W*.97 - fx;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id:'metal', x1:0, y1:0, x2:0, y2:1}, defs);
+  [['0','#4a4a4a'],['.35','#1c1c1c'],['.7','#070707'],['1','#2a2a2a']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, lg));
+  const rg = Kit.mk('radialGradient', {id:'glow'}, defs);
+  Kit.mk('stop', {offset:'0', 'stop-color':'#ff8a1f', 'stop-opacity':.45}, rg);
+  Kit.mk('stop', {offset:'1', 'stop-color':'#ff8a1f', 'stop-opacity':0}, rg);
+  // glow behind flame
+  G = {th, cy, fx, Lmax};
+  G.glow = Kit.mk('ellipse', {cx:fx + Lmax*.35, cy, rx:Lmax*.55, ry:th*1.6, fill:'url(#glow)'}, svg);
+  G.fl = ['#ff4d1a', '#ff9a1f', '#ffe56b'].map(c => Kit.mk('path', {fill:c}, svg));
+  // grips
+  const gx = x0 + (x1-x0)*.55;
+  Kit.mk('path', {d:`M${gx},${cy+th*.45} L${gx+th*.7},${cy+th*.45} L${gx+th*.35},${cy+th*1.75} L${gx-th*.35},${cy+th*1.75} Z`, fill:'#111', stroke:'#000', 'stroke-width':1}, svg);
+  Kit.mk('path', {d:`M${x0+th*.3},${cy+th*.45} L${x0+th*1.0},${cy+th*.45} L${x0+th*.9},${cy+th*1.35} L${x0+th*.2},${cy+th*1.35} Z`, fill:'#151515'}, svg);
+  // tube
+  Kit.mk('rect', {x:x0, y:cy-th/2, width:x1-x0, height:th, rx:th*.22, fill:'url(#metal)', stroke:'#000', 'stroke-width':1}, svg);
+  Kit.mk('rect', {x:x1-1, y:cy-th*.28, width:nz+1, height:th*.56, rx:th*.08, fill:'#2c2c2c', stroke:'#000', 'stroke-width':1}, svg);
+  Kit.mk('rect', {x:x0+th*.3, y:cy-th*.4, width:(x1-x0)-th*.6, height:th*.08, rx:th*.04, fill:'#fff', opacity:.12}, svg);
+  // logo: small flame + text
+  const lx = x0 + (x1-x0)*.5, lfs = Math.max(Math.min(th*.5, W*.05), 12);
+  const ix = lx - lfs*1.7;
+  Kit.mk('path', {d:`M${ix},${cy+lfs*.42} C${ix-lfs*.4},${cy+lfs*.42} ${ix-lfs*.45},${cy-lfs*.05} ${ix},${cy-lfs*.5} C${ix+lfs*.05},${cy-lfs*.15} ${ix+lfs*.4},${cy} ${ix},${cy+lfs*.42} Z`, fill:'#ff8a1f'}, svg);
+  G.lab = Kit.mk('text', {x:lx+lfs*.1, y:cy, 'text-anchor':'middle', 'dominant-baseline':'central', fill:'#f4f4f4', 'font-family':'var(--display)', 'font-weight':800, 'font-size':lfs, 'letter-spacing':lfs*.08}, svg);
+  // captions
+  const cyA = H - fs*1.9, cyB = H - fs*.45;
+  G.c1 = Kit.mk('text', {x:W/2, y:cyA, 'text-anchor':'middle', fill:'var(--k)', 'font-family':'var(--display)', 'font-weight':800, 'font-size':fs*1.1}, svg);
+  G.c2 = Kit.mk('text', {x:W/2, y:cyB, 'text-anchor':'middle', fill:'var(--k)', opacity:.75, 'font-family':'var(--body)', 'font-size':Math.max(fs*.85, 12)}, svg);
+  setTexts(); render();
+};
+
+gsap.ticker.add(render);
+
+function choose(d){
+  cur = d;
+  [...Kit.$('cmp').children].forEach(b => b.classList.toggle('on', +b.dataset.d === d));
+  setTexts();
+  Kit.haptic('light');
+  if (Kit.calm) S.L = DEV[d].L;
+  else gsap.to(S, {L:DEV[d].L, duration:.9, ease:'power2.out', overwrite:true});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  revealed = true; setTexts();
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why', {opacity:0, y:8, duration:.4});
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('cmp').addEventListener('click', e => {
+  const b = e.target.closest('.dev'); if (!b) return;
+  choose(+b.dataset.d);
+});
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  S.L = 0; gsap.to(S, {L:DEV[2].L, duration:1.1, ease:'power2.out', delay:.2});
+  gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  Kit.$('cmp').children[0].click();
+  await new Promise(r => setTimeout(r, 1100));
+};
+Kit.single();
+</script>
+</html>

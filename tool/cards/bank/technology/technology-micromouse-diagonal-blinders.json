@@ -1,0 +1,37 @@
+{
+  "id": "technology-micromouse-diagonal-blinders",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a robot mouse drive down a diagonal?",
+  "answer": "Two infrared sensors on the mouse's nose measure how far the walls are on the left and right. A diagonal has no wall to follow, so the mouse needs its own rule for that run: blinders on.",
+  "move": "A diagonal has no wall to follow, so it needs its own rule: blinders on.",
+  "keywords": [
+    "micromouse",
+    "robot mouse",
+    "infrared sensors",
+    "maze",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A question asks how a robot mouse drives down a diagonal. Three runs, labelled 1 Straight, 2 Diagonal and 3 Blinders, are tapped in order, each showing red infrared sensor beams on the mouse's nose."
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=893s",
+  "written": "2026-11-03"
+}

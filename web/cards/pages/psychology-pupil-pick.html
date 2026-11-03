@@ -1,0 +1,186 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The pupil test</title>
+<!-- Two polaroids of one drawn face, identical but for the pupils (A: pupil 58% of the iris, B: 27%).
+     The reader taps the one that looks more attractive; lenses then show the pupils, and four studies
+     give their verdicts. Hess, "Attitude and pupil size", Scientific American 212(4):46-54 (1965), a
+     magazine report: men preferred a photo of a woman retouched to enlarge her pupils, unaware of the
+     change (as described by Stass & Willis, Psychonomic Science 1967, and later reviews). Hicks, Reaney
+     & Hill, Perceptual and Motor Skills 24:388 (1967): facial angle mattered, pupil size did not.
+     Tombs & Silverman, Evolution and Human Behavior 25:221-228 (2004): men preferred larger pupils in
+     women; women's choices for men were mixed (most preferred medium pupils). Cossu, Trupia & Estes,
+     "Beauty is in the iris", Cognition 250:105842 (2024): six experiments, nearly 3,000 people in
+     Canada, the US, the UK and the Netherlands, headshots of men and women with blue or brown eyes:
+     constricted pupils were rated more attractive, also in black and white; the authors attribute it
+     to brighter-looking eyes, as more iris shows (City St George's and UvA releases; PsyPost).
+     Inspired by Diventare Strong (Alex Onofri), "Come Capire Se Piaci Dal Suo Sguardo": the card tests
+     the reader, then shows what research found. Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:max(1.2cqh,7px)}
+#pics{flex:1;min-height:0;width:100%;display:block;overflow:visible;user-select:none;-webkit-user-select:none}
+#tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:max(.7cqh,4px)}
+#tl li{display:grid;grid-template-columns:max(8.5cqw,34px) max(2.5cqh,16px) minmax(0,1fr);align-items:center;column-gap:max(2.4cqw,8px);font:600 max(2cqh,13px)/1.25 var(--body)}
+#tl b{font:800 max(1.6cqh,11.5px)/1 var(--mono);letter-spacing:.03em;opacity:.78}
+#tl i{display:block;width:max(2.5cqh,16px);height:max(2.5cqh,16px);border-radius:50%;background:radial-gradient(circle,#140a12 0 var(--p),#a8723a calc(var(--p) + 1%),#5b3619 100%);box-shadow:0 0 0 max(.22cqh,1.5px) #fff}
+#tl i.big{--p:44%}#tl i.small{--p:19%}
+#tl i.eq{background:none;box-shadow:none;font:800 max(2.2cqh,14px)/max(2.5cqh,16px) var(--body);font-style:normal;text-align:center}
+#tl li.now{font-weight:800}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .answered .in{gap:7px}
+  .answered .keep{padding:9px 15px}
+  .answered #stage{gap:5px}
+  #tl{gap:3px}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Pick a face · pupils">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ATTRACTION</span></div>
+    <h2 class="q">Which of these two faces looks more attractive to you?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pics" role="img" aria-label="Two polaroids of the same drawn face, A and B. Tap the one you find more attractive."></svg>
+      <ol id="tl" class="gone">
+        <li><b>1965</b><i class="big"></i><span>Hess, in a magazine: big won</span></li>
+        <li><b>1967</b><i class="eq">=</i><span>A retest: no clear effect</span></li>
+        <li><b>2004</b><i class="big"></i><span>Men rating women: big won</span></li>
+        <li class="now"><b>2024</b><i class="small"></i><span>~3,000 people, six tests: small won</span></li>
+      </ol>
+    </div>
+    <p class="say" id="say">Don’t study them. Go with your gut and tap one.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Details you never notice sway your eye, and the famous ‘big pupils attract’ rule may be backwards.</div>
+    <div class="foot"><span class="src">Source · Cossu, Trupia &amp; Estes, “Beauty is in the iris”, Cognition, 2024</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), svg = Kit.$('pics'), say = Kit.$('say');
+  const PUPIL = {A: .58, B: .27};
+  const SKIN = '#f3c6a5', SHADE = '#dc9c79', HAIR = '#3a2331', TOP = '#2aa596', LIPS = '#c95a6c', INKD = '#26104f';
+  const anim = () => !Kit.calm && typeof gsap !== 'undefined';
+  let pick = null, lensed = false, G = null;
+
+  // One eye, centred on (ex, ey), for a face s wide; k is -1 for the face's left eye, 1 for its right.
+  function eye(g, ex, ey, s, frac, k, cid, brows = true) {
+    const m = (tag, a, p = g) => Kit.mk(tag, a, p);
+    const ew = .27 * s, eh = .13 * s, ir = eh * .54;
+    const Q = (x, y) => `${(ex + k * x * ew).toFixed(2)},${(ey + y * eh).toFixed(2)}`;
+    const almond = `M${Q(-.5, .02)} C${Q(-.26, -.78)} ${Q(.26, -.82)} ${Q(.5, -.06)} C${Q(.26, .56)} ${Q(-.26, .58)} ${Q(-.5, .02)} Z`;
+    m('path', {d: almond}, m('clipPath', {id: cid}, G.defs));
+    m('path', {d: `M${Q(-.42, -.6)} Q${Q(0, -1.3)} ${Q(.46, -.52)}`, fill: 'none', stroke: SHADE, 'stroke-width': eh * .08, 'stroke-linecap': 'round'});
+    if (brows) m('path', {d: `M${Q(-.6, -1.3)} Q${Q(-.1, -1.85)} ${Q(.55, -1.5)}`, fill: 'none', stroke: HAIR, 'stroke-width': eh * .2, 'stroke-linecap': 'round'});
+    const ball = m('g', {'clip-path': `url(#${cid})`});
+    m('path', {d: almond, fill: '#fffdfb'}, ball);
+    const ix = ex, iy = ey - eh * .02;
+    m('circle', {cx: ix, cy: iy, r: ir, fill: 'url(#irisG)'}, ball);
+    for (let j = 0; j < 18; j++) { const a = j / 18 * Math.PI * 2; m('line', {x1: ix + Math.cos(a) * ir * .45, y1: iy + Math.sin(a) * ir * .45, x2: ix + Math.cos(a) * ir * .9, y2: iy + Math.sin(a) * ir * .9, stroke: '#d9a35e', 'stroke-opacity': .35, 'stroke-width': ir * .07}, ball); }
+    m('circle', {cx: ix, cy: iy, r: ir * .96, fill: 'none', stroke: '#3a210f', 'stroke-width': ir * .12}, ball);
+    // The one thing that differs between the two faces.
+    m('circle', {cx: ix, cy: iy, r: ir * frac, fill: '#120a10'}, ball);
+    m('circle', {cx: ix - ir * .32, cy: iy - ir * .38, r: ir * .22, fill: '#fff', 'fill-opacity': .95}, ball);
+    m('circle', {cx: ix + ir * .34, cy: iy + ir * .28, r: ir * .09, fill: '#fff', 'fill-opacity': .8}, ball);
+    m('path', {d: `M${Q(-.5, .02)} C${Q(-.26, -.78)} ${Q(.26, -.82)} ${Q(.5, -.06)} L${Q(.62, -.32)}`, fill: 'none', stroke: '#2a1a24', 'stroke-width': eh * .2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'});
+    m('path', {d: `M${Q(-.36, .36)} C${Q(-.1, .52)} ${Q(.2, .5)} ${Q(.44, .2)}`, fill: 'none', stroke: SHADE, 'stroke-width': eh * .07, 'stroke-linecap': 'round'});
+  }
+
+  // One face in a photo w wide and h high whose top left is (x0, y0); every shape stays inside it.
+  function face(g, x0, y0, w, h, frac, id) {
+    const m = (tag, a, p = g) => Kit.mk(tag, a, p);
+    const s = w * .62, cx = x0 + w / 2, cy = y0 + h * .43, hw = w / 2 / s, yb = (y0 + h - cy) / s, yt = (y0 - cy) / s;
+    const P = (x, y) => `${(cx + Math.max(-hw, Math.min(hw, x)) * s).toFixed(2)},${(cy + Math.max(yt, Math.min(yb, y)) * s).toFixed(2)}`;
+    m('path', {d: `M${P(-.68, yb)} L${P(-.66, .7)} C${P(-.74, .1)} ${P(-.6, -.9)} ${P(0, -.9)} C${P(.6, -.9)} ${P(.74, .1)} ${P(.66, .7)} L${P(.68, yb)} Z`, fill: HAIR});
+    m('path', {d: `M${P(-hw, yb)} L${P(-hw, .98)} C${P(-.6, .88)} ${P(-.4, .84)} ${P(-.2, .82)} L${P(.2, .82)} C${P(.4, .84)} ${P(.6, .88)} ${P(hw, .98)} L${P(hw, yb)} Z`, fill: TOP});
+    m('path', {d: `M${P(-.15, .45)} L${P(-.15, .83)} C${P(-.07, .92)} ${P(.07, .92)} ${P(.15, .83)} L${P(.15, .45)} Z`, fill: SHADE});
+    m('path', {d: `M${P(0, -.66)} C${P(.5, -.66)} ${P(.53, -.1)} ${P(.47, .2)} C${P(.4, .55)} ${P(.18, .7)} ${P(0, .7)} C${P(-.18, .7)} ${P(-.4, .55)} ${P(-.47, .2)} C${P(-.53, -.1)} ${P(-.5, -.66)} ${P(0, -.66)} Z`, fill: SKIN});
+    for (const k of [-1, 1]) m('ellipse', {cx: cx + k * .27 * s, cy: cy + .3 * s, rx: .1 * s, ry: .06 * s, fill: '#f08b8b', 'fill-opacity': .3});
+    m('path', {d: `M${P(-.58, .15)} C${P(-.62, -.5)} ${P(-.3, -.8)} ${P(.06, -.78)} C${P(.46, -.76)} ${P(.64, -.46)} ${P(.6, .12)} C${P(.52, -.24)} ${P(.32, -.42)} ${P(.06, -.42)} C${P(-.14, -.4)} ${P(-.25, -.35)} ${P(-.34, -.47)} C${P(-.43, -.3)} ${P(-.52, -.1)} ${P(-.58, .15)} Z`, fill: HAIR});
+    for (const k of [-1, 1]) eye(g, cx + k * .2 * s, cy + .03 * s, s, frac, k, `${id}e${k}`);
+    m('path', {d: `M${P(.02, .1)} Q${P(.07, .27)} ${P(-.04, .3)}`, fill: 'none', stroke: SHADE, 'stroke-width': .022 * s, 'stroke-linecap': 'round'});
+    m('path', {d: `M${P(-.13, .43)} Q${P(-.05, .405)} ${P(0, .425)} Q${P(.05, .405)} ${P(.13, .43)} Q${P(0, .465)} ${P(-.13, .43)} Z`, fill: LIPS});
+    m('path', {d: `M${P(-.12, .437)} Q${P(0, .53)} ${P(.12, .437)} Q${P(0, .468)} ${P(-.12, .437)} Z`, fill: '#d96d7e'});
+    m('path', {d: `M${P(-.15, .415)} Q${P(-.135, .43)} ${P(-.12, .437)} M${P(.15, .415)} Q${P(.135, .43)} ${P(.12, .437)}`, fill: 'none', stroke: '#b9505f', 'stroke-width': .012 * s, 'stroke-linecap': 'round'});
+    return {ex: cx - .2 * s, ey: cy + .03 * s, s};
+  }
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const defs = Kit.mk('defs', {}, svg);
+    G = {defs};
+    const ig = Kit.mk('radialGradient', {id: 'irisG'}, defs);
+    [[0, '#c48a46'], [.55, '#94602d'], [1, '#55331a']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, ig));
+    const bg = Kit.mk('linearGradient', {id: 'bgG', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [[0, '#efe5ff'], [1, '#d9c6ff']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, bg));
+    // Side by side on a short stage; on a tall one, two bigger prints tossed one below the other.
+    const gap = W * .05, tall = H > W * 1.05;
+    const fw = tall ? Math.min(W * .96 / 1.6, H * .96 / (1.62 * 1.24)) : Math.min((W - gap) / 2 * .93, H * .94 / 1.24), fh = fw * 1.24;
+    const mg = fw * .06, pw = fw - 2 * mg, ph = pw * 1.02, bottom = fh - mg - ph;
+    const fs = Math.max(13, Math.min(bottom * .62, fw * .14));
+    G.frames = {};
+    for (const [key, side, turn] of [['A', -1, tall ? -4 : -3], ['B', 1, tall ? 3 : 2.5]]) {
+      const cx = tall ? W / 2 + side * fw * .3 : W / 2 + side * (gap / 2 + fw / 2), cy = tall ? H / 2 + side * fh * .31 : H / 2;
+      const wrap = Kit.mk('g', {class: 'frame'}, svg);
+      const fr = Kit.mk('g', {transform: `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${turn})`, 'data-tap': '', style: pick ? '' : 'cursor:pointer'}, wrap);
+      Kit.mk('rect', {x: -fw / 2 + fw * .02, y: -fh / 2 + fw * .035, width: fw, height: fh, rx: fw * .02, fill: INKD, 'fill-opacity': .28}, fr);
+      Kit.mk('rect', {x: -fw / 2, y: -fh / 2, width: fw, height: fh, rx: fw * .02, fill: '#fffdf8'}, fr);
+      const px = -fw / 2 + mg, py = -fh / 2 + mg;
+      Kit.mk('rect', {x: px, y: py, width: pw, height: ph}, Kit.mk('clipPath', {id: 'ph' + key}, defs));
+      const photo = Kit.mk('g', {id: 'photo' + key, 'clip-path': `url(#ph${key})`}, fr);
+      Kit.mk('rect', {x: px, y: py, width: pw, height: ph, fill: 'url(#bgG)'}, photo);
+      const at = face(photo, px, py, pw, ph, PUPIL[key], key);
+      // Under the photo, the letter; after the pick, what differs.
+      const t = Kit.mk('text', {x: 0, y: fh / 2 - bottom * .32, 'text-anchor': 'middle', 'font-family': 'Caveat', 'font-weight': 700, 'font-size': fs, fill: INKD}, fr);
+      const size = PUPIL[key] > .4 ? 'big' : 'small';
+      t.textContent = !lensed ? key : fw * .14 >= 13 ? `${key} · ${size} pupils` : `${key} · ${size}`;
+      // The lens over one eye, magnifying the same drawing.
+      const R = at.s * .3, k = 2.4, lens = Kit.mk('g', {opacity: lensed ? 1 : 0}, fr);
+      const lx = at.ex, ly = at.ey;
+      Kit.mk('line', {x1: lx + R * .72, y1: ly + R * .72, x2: lx + R * 1.55, y2: ly + R * 1.55, stroke: INKD, 'stroke-width': Math.max(4, R * .26), 'stroke-linecap': 'round'}, lens);
+      Kit.mk('circle', {cx: lx, cy: ly, r: R}, Kit.mk('clipPath', {id: 'ln' + key}, defs));
+      const inside = Kit.mk('g', {'clip-path': `url(#ln${key})`}, lens);
+      Kit.mk('circle', {cx: lx, cy: ly, r: R, fill: SKIN}, inside);
+      eye(inside, lx, ly, at.s * k, PUPIL[key], -1, 'lz' + key, false);
+      Kit.mk('circle', {cx: lx, cy: ly, r: R, fill: 'none', stroke: '#fff', 'stroke-width': Math.max(2.5, R * .12)}, lens);
+      Kit.mk('circle', {cx: lx, cy: ly, r: R + Math.max(2.5, R * .12) / 2, fill: 'none', stroke: INKD, 'stroke-width': 1.4}, lens);
+      // The reader's pick: a strip of tape across the top of the polaroid.
+      if (pick === key) {
+        const tape = Kit.mk('g', {transform: `translate(0 ${-fh / 2}) rotate(${-turn * 1.5})`}, fr);
+        Kit.mk('rect', {x: -fw * .32, y: -fs * .62, width: fw * .64, height: fs * 1.24, fill: '#ffd45e', 'fill-opacity': .92}, tape);
+        const tt = Kit.mk('text', {x: 0, y: fs * .3, 'text-anchor': 'middle', 'font-family': 'Caveat', 'font-weight': 700, 'font-size': fs * .95, fill: INKD}, tape);
+        tt.textContent = 'your pick';
+      }
+      fr.addEventListener('click', () => choose(key));
+      G.frames[key] = {fr, lens};
+    }
+  }
+
+  function choose(key) {
+    if (pick) return;
+    pick = key;
+    Kit.haptic('selection');
+    svg.setAttribute('aria-label', `Two polaroids of the same drawn face. You picked ${key}. Lenses show the only difference: A has big pupils, B small ones.`);
+    draw();
+    const end = () => {
+      lensed = true;
+      card.classList.add('answered');
+      say.innerHTML = PUPIL[key] > .4 ? 'You picked <b>A: the big pupils</b>, the only difference. In 2024 small ones won: they show more iris, so the eyes look brighter.' : 'You picked <b>B: the small pupils</b>, the only difference. In 2024 they won too: they show more iris, so the eyes look brighter.';
+      Kit.show('tl'); Kit.show('keep');
+      draw();
+      if (anim()) gsap.from('#tl li', {opacity: 0, x: -10, duration: .4, stagger: .12, ease: 'power2.out', clearProps: 'opacity,transform'});
+      Kit.haptic('success');
+    };
+    if (!anim()) return end();
+    // First the lenses, on the big photos; then the verdicts.
+    for (const k of ['A', 'B']) gsap.fromTo(G.frames[k].lens, {opacity: 0, scale: .4, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .5, delay: k === 'A' ? 0 : .15, ease: 'back.out(1.6)'});
+    say.innerHTML = 'Now look closer.';
+    setTimeout(end, 1500);
+  }
+
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (anim()) gsap.from('#pics > g.frame', {opacity: 0, y: 14, duration: .55, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform'}); };
+  Kit.play.card = async () => { choose('B'); await new Promise(r => setTimeout(r, Kit.calm ? 60 : 2200)); };
+})();
+Kit.single();
+</script>

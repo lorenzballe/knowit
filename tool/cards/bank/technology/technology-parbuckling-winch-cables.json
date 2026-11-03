@@ -1,0 +1,37 @@
+{
+  "id": "technology-parbuckling-winch-cables",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the parbuckling technique used to right the ship?",
+  "answer": "Parbuckling attaches massive cables to the hull, and winches reel them in to rotate the ship upright. The ship turns only as far as the cable is reeled, so every degree is under control. That precision is why the method was chosen for the Costa Concordia.",
+  "move": "Parbuckling: pull a ship upright with cables and winches, slowly and precisely.",
+  "keywords": [
+    "parbuckling",
+    "costa-concordia",
+    "winch",
+    "ship-salvage",
+    "cables"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card asking what the parbuckling technique is used for. A winch control starts at 0%. Dragging it reels in cables fixed to a ship's hull, slowly rotating the ship upright, and it stops when you stop dragging."
+  },
+  "source": "Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=ebznV-0cKF4",
+  "written": "2026-11-03"
+}

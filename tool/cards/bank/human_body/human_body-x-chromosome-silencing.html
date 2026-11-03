@@ -1,0 +1,135 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-x-chromosome-silencing -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k);overflow:visible}
+#pic .cell{cursor:pointer}
+#ctl{display:flex;justify-content:center}
+.go{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer}
+.go:disabled{opacity:.45;cursor:default}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap and watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">X CHROMOSOMES</span></div>
+    <h2 class="q">How is one X chromosome silenced in early female embryos?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl"><button class="go" id="go">Start day 4</button></div>
+      <div id="why" class="gone"><p class="body">In every cell, Mom’s X and Dad’s X fight a tiny molecular battle, and the winner is random. The loser is packed tight, marked on its histone tails, bound by proteins and tagged with methyl groups, so the cell shuts it down.</p></div>
+    </div>
+    <p class="say" id="say">This embryo is 4 days old: about 100 cells. Start the battle.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Around day 4, each cell randomly packs away one X and keeps the other on.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Women Are Stripey” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MOM='#ff4f86', DAD='#2e9bff', OFF='#5f5f6b', BOTH='#f3eaff', MARK='#ffd23f';
+const N=100;
+let phase=0, sel=0, tl=null, cap=null, cellEls=[], X={};
+const cells=[]; for(let i=0;i<N;i++) cells.push({win: Kit.rnd()<.5?'m':'d'});
+const momCount=cells.filter(c=>c.win==='m').length;
+
+function qb(s,t,dir){ // point on one arm curve
+  const p0=[-.75*s*dir,-1.3*s], p1=[.35*s*dir,0], p2=[-.75*s*dir,1.3*s];
+  const a=(1-t)*(1-t), b=2*(1-t)*t, c=t*t;
+  return [a*p0[0]+b*p1[0]+c*p2[0], a*p0[1]+b*p1[1]+c*p2[1]];
+}
+function makeX(parent,x,y,s,col,on,lost){
+  const o=Kit.mk('g',{transform:`translate(${x},${y})`},parent);
+  const g=Kit.mk('g',{},o);
+  const arms=Kit.mk('g',{fill:'none','stroke-linecap':'round','stroke-width':s*.42,stroke:on?col:OFF},g);
+  if(on) arms.setAttribute('filter','url(#glow)');
+  [1,-1].forEach(d=>Kit.mk('path',{d:`M${-.75*s*d},${-1.3*s} Q${.35*s*d},0 ${-.75*s*d},${1.3*s}`},arms));
+  const d1=Kit.mk('g',{opacity:lost?1:0,stroke:MARK,'stroke-width':Math.max(2,s*.08),'stroke-linecap':'round'},g);
+  const d2=Kit.mk('g',{opacity:lost?1:0,fill:'#ececf2',stroke:'#222','stroke-width':1},g);
+  const d3=Kit.mk('g',{opacity:lost?1:0,fill:'#fff',stroke:'#222','stroke-width':1},g);
+  [1,-1].forEach(d=>{
+    [.12,.32,.68,.88].forEach(t=>{const [px,py]=qb(s,t,d);const e=-d*.32*s;Kit.mk('line',{x1:px,y1:py,x2:px+e,y2:py-.12*s},d1);});
+    [.24,.76].forEach(t=>{const [px,py]=qb(s,t,d);Kit.mk('rect',{x:px-.36*s,y:py-.09*s,width:.72*s,height:.18*s,rx:.06*s},d2);});
+    [.05,.45,.55,.95].forEach(t=>{const [px,py]=qb(s,t,d);Kit.mk('circle',{cx:px+d*.3*s,cy:py,r:Math.max(2.5,s*.1)},d3);});
+  });
+  if(lost) g.setAttribute('transform','scale(.62)');
+  return {o,g,arms,d:[d1,d2,d3]};
+}
+function draw(){
+  const svg=Kit.$('pic'); const {W,H,f}=Kit.fitSvg(svg); svg.innerHTML='';
+  const fs=Math.max(f*.85,12);
+  const defs=Kit.mk('defs',{},svg), fl=Kit.mk('filter',{id:'glow',x:'-50%',y:'-50%',width:'200%',height:'200%'},defs);
+  Kit.mk('feGaussianBlur',{stdDeviation:3,result:'b'},fl);
+  const m=Kit.mk('feMerge',{},fl); Kit.mk('feMergeNode',{in:'b'},m); Kit.mk('feMergeNode',{in:'SourceGraphic'},m);
+  // embryo
+  const eh=Math.max(H*.3,Math.min(H*.54,H-f*.5-fs*6-2)), R=Math.min(W*.42,eh*.45), ex=W/2, ey=eh/2;
+  Kit.mk('circle',{cx:ex,cy:ey,r:R*1.08,fill:'none',stroke:'currentColor','stroke-width':2,opacity:.45},svg);
+  const r=R*.092; cellEls=[];
+  const cg=Kit.mk('g',{},svg);
+  for(let i=0;i<N;i++){
+    const rr=R*Math.sqrt((i+.5)/N)*.97, a=i*2.39996;
+    const cx=ex+rr*Math.cos(a), cy=ey+rr*Math.sin(a);
+    cells[i].x=cx; cells[i].y=cy;
+    const fill=phase===2?(cells[i].win==='m'?MOM:DAD):BOTH;
+    const el=Kit.mk('circle',{class:'cell',cx,cy,r,fill,stroke:'#1a1a22','stroke-width':1},cg);
+    el.addEventListener('click',()=>{ if(phase!==2||i===sel) return; sel=i; Kit.haptic('selection'); draw(); });
+    cellEls.push(el);
+  }
+  const sc=cells[sel];
+  Kit.mk('circle',{cx:sc.x,cy:sc.y,r:r*1.75,fill:'none',stroke:'currentColor','stroke-width':2.5},svg);
+  // panel
+  const py0=eh+f*.5, ph=H-py0-2;
+  const box=Kit.mk('rect',{x:W*.05,y:py0,width:W*.9,height:ph,rx:Math.max(10,f*.8),fill:'currentColor','fill-opacity':.08,stroke:'currentColor','stroke-opacity':.3,'stroke-width':1.5},svg);
+  const s=Math.max(8,Math.min((ph-fs*4.6)/2.8,W*.1));
+  const cy=py0+fs*2.1+1.3*s, mx=W*.3, dx=W*.7;
+  const done=phase===2, w=cells[sel].win;
+  X.m=makeX(svg,mx,cy,s,MOM,!done||w==='m',done&&w!=='m');
+  X.d=makeX(svg,dx,cy,s,DAD,!done||w==='d',done&&w!=='d');
+  const lab=(x,t,c)=>{const e=Kit.mk('text',{x,y:py0+fs*1.2,'text-anchor':'middle',fill:c,'font-family':'var(--body)','font-weight':800,'font-size':fs},svg);e.textContent=t;};
+  lab(mx,"MOM’S X",'currentColor'); lab(dx,"DAD’S X",'currentColor');
+  Kit.mk('circle',{cx:mx-fs*3.3,cy:py0+fs*.85,r:fs*.32,fill:MOM},svg);
+  Kit.mk('circle',{cx:dx+fs*3.3,cy:py0+fs*.85,r:fs*.32,fill:DAD},svg);
+  const cfs=Math.min(fs,W*.85/(42*.55));
+  cap=Kit.mk('text',{x:W/2,y:Math.max(py0+ph-fs*.8,py0+fs*2.8+cfs),'text-anchor':'middle',fill:'currentColor','font-family':'var(--body)','font-weight':600,'font-size':cfs},svg);
+  cap.textContent=done?(w==='m'?'Ringed cell: Mom’s X on, Dad’s X shut down':'Ringed cell: Dad’s X on, Mom’s X shut down'):'Ringed cell: both Xs active';
+}
+function setCap(t){ if(cap) cap.textContent=t; }
+function finish(){
+  phase=2; Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
+  Kit.$('say').textContent=`Mom’s X won in ${momCount} cells, Dad’s in ${N-momCount}. Tap any cell to look inside.`;
+  Kit.haptic('success');
+  requestAnimationFrame(()=>draw());
+}
+function start(){
+  if(phase) return; phase=1; Kit.$('go').disabled=true; Kit.haptic('light');
+  const w=cells[sel].win, Wn=w==='m'?X.m:X.d, L=w==='m'?X.d:X.m;
+  tl=gsap.timeline({onComplete:finish});
+  tl.call(()=>setCap('A tiny molecular battle…'));
+  tl.to(X.m.g,{rotation:9,svgOrigin:'0 0',duration:.12,yoyo:true,repeat:5});
+  tl.to(X.d.g,{rotation:-9,svgOrigin:'0 0',duration:.12,yoyo:true,repeat:5},'<');
+  tl.call(()=>{setCap('1 · Loser’s DNA packed closer'); L.arms.removeAttribute('filter');});
+  tl.to(L.g,{scale:.62,svgOrigin:'0 0',duration:.7,ease:'power2.inOut'});
+  tl.to(L.arms,{attr:{stroke:OFF},duration:.7},'<');
+  tl.to(Wn.g,{scale:1.08,svgOrigin:'0 0',duration:.35,yoyo:true,repeat:1},'<');
+  tl.call(()=>setCap('2 · Histone tails marked'),null,'+=.35');
+  tl.to(L.d[0],{opacity:1,duration:.5});
+  tl.call(()=>setCap('3 · Structural proteins bind it'),null,'+=.4');
+  tl.to(L.d[1],{opacity:1,duration:.5});
+  tl.call(()=>setCap('4 · Methyl groups tag the DNA'),null,'+=.4');
+  tl.to(L.d[2],{opacity:1,duration:.5});
+  tl.call(()=>setCap('Now every cell picks, at random…'),null,'+=.6');
+  tl.addLabel('flip');
+  cellEls.forEach((el,i)=>tl.to(el,{attr:{fill:cells[i].win==='m'?MOM:DAD},duration:.3},`flip+=${(Kit.rnd()*1.6).toFixed(3)}`));
+  tl.to({}, {duration:.4});
+  if(Kit.calm) tl.progress(1);
+}
+Kit.$('go').addEventListener('click',start);
+Kit.onShow.card = () => { if(phase!==1) draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic .cell', {scale:0, transformOrigin:'50% 50%', stagger:.008, duration:.35, ease:'back.out(2)'}); };
+Kit.play.card = async () => { Kit.$('go').click(); await new Promise(r => setTimeout(r, 100)); if (tl) tl.progress(1); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

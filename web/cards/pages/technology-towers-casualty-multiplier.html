@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-towers-casualty-multiplier -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#pic .bar{transform-box:fill-box;transform-origin:50% 100%}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess · drag the bar">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENGINEERING</span></div>
+    <h2 class="q">How many times more lives might weaker towers have cost?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Bar chart: lives lost as it happened, and a draggable bar for weaker towers"></svg>
+      <div id="why" class="gone">
+        <p class="big">About 10 times more</p>
+        <p class="body">The Twin Towers fell, but they were very solid. Had they been weaker, the documentary estimates the loss of life might have been ten times greater. That is why civil engineers say the towers behaved excellently.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the right bar up to your guess, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A building that falls can still have done its job well.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAXG = 15, TRUTH = 10;
+const S = {g: 3, touched: false, done: false, anim: false};
+let G = null;
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f * .9, 12);
+  const top = fs * 2.4, base = H - fs * 2.2;
+  const u = Math.max((base - top) / MAXG, 0.5);
+  const bw = Math.min(W * .22, 96);
+  const c1 = W * .3, c2 = W * .68;
+  const x1 = c1 - bw / 2, x2 = c2 - bw / 2;
+  G = {W, H, base, u, rectH: 0};
+  const ink = 'var(--k)';
+  // faint grid of "×" steps on the right column
+  for (let i = 1; i <= MAXG; i++) {
+    Kit.mk('line', {x1: x2 - 4, x2: x2 + bw + 4, y1: base - i * u, y2: base - i * u,
+      stroke: ink, 'stroke-opacity': .08, 'stroke-width': 1}, svg);
+  }
+  // baseline
+  Kit.mk('line', {x1: W * .06, x2: W * .94, y1: base, y2: base, stroke: ink, 'stroke-width': Math.max(2, fs * .14), 'stroke-linecap': 'round'}, svg);
+  // actual bar = 1 unit
+  Kit.mk('rect', {class: 'bar', x: x1, y: base - u, width: bw, height: u, rx: 3, fill: ink}, svg);
+  const t1 = Kit.mk('text', {x: c1, y: base - u - fs * .5, 'text-anchor': 'middle', fill: ink,
+    style: `font:800 ${fs * 1.1}px var(--display)`}, svg); t1.textContent = '1×';
+  const l1 = Kit.mk('text', {x: c1, y: base + fs * 1.5, 'text-anchor': 'middle', fill: ink,
+    style: `font:700 ${fs}px var(--body)`}, svg); l1.textContent = 'What happened';
+  const l2 = Kit.mk('text', {x: c2, y: base + fs * 1.5, 'text-anchor': 'middle', fill: ink,
+    style: `font:700 ${fs}px var(--body)`}, svg); l2.textContent = 'Weaker towers';
+
+  const gy = base - S.g * u;
+  if (!S.done) {
+    // the reader's bar
+    Kit.mk('rect', {class: 'bar', x: x2, y: gy, width: bw, height: S.g * u, rx: 3,
+      fill: 'color-mix(in srgb, var(--k) 22%, transparent)', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '6 4'}, svg);
+    // grip
+    for (let k = -1; k <= 1; k++) Kit.mk('line', {x1: c2 - bw * .22, x2: c2 + bw * .22,
+      y1: gy + 7 + k * 4 + 4, y2: gy + 7 + k * 4 + 4, stroke: ink, 'stroke-width': 1.6, 'stroke-opacity': .6}, svg);
+    const tg = Kit.mk('text', {x: c2, y: gy - fs * .5, 'text-anchor': 'middle', fill: ink,
+      style: `font:800 ${fs * 1.1}px var(--display)`}, svg);
+    tg.textContent = S.touched ? `×${S.g}?` : `×${S.g}? drag`;
+  } else {
+    // ten blocks, each the size of what happened
+    const blocks = [];
+    const gap = Math.min(3, u * .3);
+    for (let i = 0; i < TRUTH; i++) {
+      blocks.push(Kit.mk('rect', {x: x2, y: base - (i + 1) * u + gap / 2, width: bw, height: Math.max(0, u - gap), rx: 2, fill: ink}, svg));
+    }
+    const tt = Kit.mk('text', {x: c2, y: base - TRUTH * u - fs * .5, 'text-anchor': 'middle', fill: ink,
+      style: `font:800 ${fs * 1.2}px var(--display)`}, svg); tt.textContent = '≈10×';
+    // the reader's guess as a dashed mark
+    Kit.mk('line', {x1: x2 - 6, x2: x2 + bw + 6, y1: gy, y2: gy, stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '4 4'}, svg);
+    const ty = Kit.mk('text', {x: x2 + bw + 9, y: gy + fs * .35, 'text-anchor': 'start', fill: ink,
+      style: `font:700 ${fs * .95}px var(--hand)`}, svg); ty.textContent = `you ×${S.g}`;
+    if (S.anim && !Kit.calm) {
+      gsap.from(blocks, {opacity: 0, y: -u * 2, stagger: .09, duration: .35, ease: 'power2.out'});
+      gsap.from(tt, {opacity: 0, delay: .9, duration: .4});
+    }
+    S.anim = false;
+  }
+}
+
+function setFromY(clientY){
+  if (S.done || !G) return;
+  const svg = Kit.$('pic'), r = svg.getBoundingClientRect();
+  const y = (clientY - r.top) * (G.H / r.height);
+  const g = Math.max(1, Math.min(MAXG, Math.round((G.base - y) / G.u)));
+  if (g !== S.g || !S.touched) {
+    if (g !== S.g) Kit.haptic('selection');
+    S.g = g;
+    if (!S.touched) { S.touched = true; sure.on(); }
+    draw();
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(S.g - TRUTH) <= 2;
+  Kit.answer({choice: `${S.g}×`, correct: ok, sure: pct});
+  S.done = true; S.anim = true;
+  Kit.hide('say'); Kit.show('why');
+  draw();
+  sure.grade(ok, pct, `${S.g}×, ${ok ? 'right' : 'off'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+});
+
+let dragging = false;
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => { dragging = true; try { pic.setPointerCapture(e.pointerId); } catch(_){} setFromY(e.clientY); });
+pic.addEventListener('pointermove', e => { if (dragging) setFromY(e.clientY); });
+pic.addEventListener('pointerup', () => { dragging = false; });
+pic.addEventListener('pointercancel', () => { dragging = false; });
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic .bar', {scaleY: 0, stagger: .15, duration: .6, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect();
+  const x = r.left + r.width * .68;
+  const y = r.top + r.height * .45;
+  pic.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  pic.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: y - 10, bubbles: true, pointerId: 1}));
+  pic.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y - 10, bubbles: true, pointerId: 1}));
+  await new Promise(r => setTimeout(r, 120));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1600));
+};
+Kit.single();
+</script>
+</html>

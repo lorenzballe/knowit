@@ -1,0 +1,295 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The sail that spins</title>
+<!-- A rotor sail seen from above. The wind is drawn as streamlines of the ideal flow past a
+     cylinder (uniform flow + doublet + vortex): equal flow between neighbouring lines, so lines
+     crowd where the air is fast. Spinning adds circulation; the push (Kutta-Joukowski) is at right
+     angles to the wind. A tap anywhere sets where the wind comes from; the spin is set the way that
+     pushes the ship ahead. Inspired by Veritasium, "Backspin Basketball Flies Off Dam". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;border-radius:2.6cqh;background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 10%,transparent);overflow:hidden;cursor:pointer}
+#sea,#over{position:absolute;inset:0;width:100%;height:100%;display:block}
+#over{overflow:visible;pointer-events:none}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:700px){.answered .in{gap:1.6cqh}.answered .keep{padding:max(1.5cqh,9px) max(4.5cqw,14px)}}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap the wind · rotor sail">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE WIND</span></div>
+    <h2 class="q">Why do some cargo ships carry giant spinning cylinders?</h2>
+    <div class="stagebox" id="stage" role="img" aria-label="A ship seen from above with one tall cylinder on deck. Lines show the wind flowing around the cylinder; an arrow shows the push on it.">
+      <canvas id="sea"></canvas>
+      <svg id="over"></svg>
+    </div>
+    <p class="say" id="say">A cargo ship seen from above, wind from the side. The cylinder stands still: the air parts evenly around it.</p>
+    <button class="btn" id="go">Spin the cylinder</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A spinning cylinder is pushed across the wind, so a side wind drives the ship ahead.</div>
+    <div class="foot"><span class="src">Source · Norsepower &amp; Maersk Tankers, Maersk Pelican rotor sail trial, verified by Lloyd's Register, 2019</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const stage = Kit.$('stage'), cv = Kit.$('sea'), over = Kit.$('over'), say = Kit.$('say'), go = Kit.$('go');
+  const INK = '#10100c', AIR = 'rgba(255,255,255,', GAMMA = 1.6 * 2 * Math.PI; // spin ratio 1.6: stagnation points stay on the surface
+  // The wind, as the direction it blows TOWARD (math angle, y up). It starts from the port side, blowing down.
+  let alpha = -Math.PI / 2, alphaTo = alpha, g = 0, gTo = 0, spun = false, taps = 0, lastFrom = null, ended = false;
+  let ctx = null, W = 0, H = 0, S = 1, cx = 0, cy = 0, lines = [], dirty = true, t0 = performance.now(), raf = 0;
+
+  // Ideal flow past a unit cylinder: free stream (cos a, sin a), circulation G (G>0 turns clockwise).
+  function vel(x, y, a, G) {
+    const r2 = x * x + y * y, r4 = r2 * r2, ca = Math.cos(a), sa = Math.sin(a);
+    // w = e^{-ia} - e^{ia}/z^2 + iG/(2 pi z); velocity = conj(w)
+    const zx2 = (x * x - y * y) / r4, zy2 = (-2 * x * y) / r4;           // 1/z^2
+    const ex = ca * zx2 - sa * zy2, ey = ca * zy2 + sa * zx2;           // e^{ia}/z^2
+    const k = G / (2 * Math.PI * r2), ix = k * y, iy = k * x;            // iG/(2 pi z) = iG conj(z)/(2 pi r^2)
+    const wx = ca - ex + ix, wy = -sa - ey + iy;
+    return [wx, -wy];
+  }
+  // Streamlines from a row of seeds upstream: equal spacing there means equal flow between lines.
+  function trace() {
+    lines = [];
+    const a = alpha, d = [Math.cos(a), Math.sin(a)], n = [-d[1], d[0]];
+    const ext = Math.hypot(W, H) / 2 / S + .5, span = ext * .98, N = Math.max(15, Math.round(2 * span * S / 13));
+    for (let i = 0; i < N; i++) {
+      const s = -span + (2 * span) * (i + .5) / N;
+      let x = -d[0] * ext + n[0] * s, y = -d[1] * ext + n[1] * s;
+      const pts = [[x, y, 0]]; let tau = 0, inside = false;
+      for (let k = 0; k < 1400; k++) {
+        const h = .045;
+        const v1 = vel(x, y, a, g), m1 = Math.hypot(...v1) || 1e-9;
+        const xm = x + v1[0] / m1 * h / 2, ym = y + v1[1] / m1 * h / 2;
+        const v2 = vel(xm, ym, a, g), m2 = Math.hypot(...v2) || 1e-9;
+        x += v2[0] / m2 * h; y += v2[1] / m2 * h;
+        const r = Math.hypot(x, y); if (r < 1.02) { x *= 1.02 / r; y *= 1.02 / r; }
+        tau += h / Math.max(m2, .04);
+        pts.push([x, y, tau]);
+        const out = Math.abs(x * S) > W / 2 + 24 || Math.abs(y * S) > H / 2 + 24;
+        if (!out) inside = true; else if (inside) break;
+      }
+      if (inside) lines.push(pts);
+    }
+    dirty = false;
+  }
+  const P = (x, y) => [cx + x * S, cy - y * S];
+  // The push: at right angles to the wind, turned the way the spin turns it.
+  const push = () => { const d = [Math.cos(alpha), Math.sin(alpha)], sg = Math.sign(g) || 1; return [-d[1] * sg, d[0] * sg]; };
+  const ahead = () => Math.max(0, push()[0]);
+
+  function hull(c) {
+    // A long hull heading right, the rotor amidships.
+    const L = Math.min(W * .44, S * 7.2), B = Math.min(H * .2, S * 1.85);
+    c.beginPath();
+    c.moveTo(cx - L, cy - B * .78);
+    c.lineTo(cx + L * .55, cy - B);
+    c.quadraticCurveTo(cx + L * .98, cy - B * .9, cx + L * 1.08, cy);
+    c.quadraticCurveTo(cx + L * .98, cy + B * .9, cx + L * .55, cy + B);
+    c.lineTo(cx - L, cy + B * .78);
+    c.quadraticCurveTo(cx - L * 1.05, cy, cx - L, cy - B * .78);
+    c.closePath();
+    c.fillStyle = 'rgba(16,16,12,.16)'; c.fill();
+    c.lineWidth = 1.5; c.strokeStyle = 'rgba(16,16,12,.38)'; c.stroke();
+    // the bridge at the stern, cargo hatches fore and aft of the rotor
+    c.fillStyle = 'rgba(16,16,12,.22)';
+    c.fillRect(cx - L * .93, cy - B * .62, L * .16, B * 1.24);
+    c.strokeStyle = 'rgba(16,16,12,.2)'; c.lineWidth = 1.2;
+    for (const [x0, x1] of [[-.7, -.42], [-.36, -.2], [.2, .36], [.42, .68]]) c.strokeRect(cx + L * x0, cy - B * .5, L * (x1 - x0), B);
+  }
+
+  function frame(now) {
+    raf = 0;
+    if (!ctx) return;
+    // ease the wind and the spin toward where they are going
+    const k = Kit.calm ? 1 : .12;
+    let da = Math.atan2(Math.sin(alphaTo - alpha), Math.cos(alphaTo - alpha));
+    if (Math.abs(da) > 1e-3) { alpha += da * k; dirty = true; } else if (alpha !== alphaTo) { alpha = alphaTo; dirty = true; }
+    if (Math.abs(gTo - g) > 1e-3) { g += (gTo - g) * (Kit.calm ? 1 : .09); dirty = true; } else if (g !== gTo) { g = gTo; dirty = true; }
+    if (dirty) { trace(); arrows(); }
+    const c = ctx, t = (now - t0) / 1000;
+    c.clearRect(0, 0, W, H);
+    hull(c);
+    // the streamlines, faint
+    c.lineWidth = 1.2; c.strokeStyle = AIR + '.34)'; c.lineCap = 'round';
+    for (const pts of lines) { c.beginPath(); pts.forEach(([x, y], i) => { const [X, Y] = P(x, y); i ? c.lineTo(X, Y) : c.moveTo(X, Y); }); c.stroke(); }
+    // puffs riding them at the speed of the air there
+    const speed = Kit.calm ? 0 : 52 / S, gap = 34 / S, tail = 9 / S;
+    c.lineWidth = 2.6; c.strokeStyle = AIR + '.95)';
+    for (const pts of lines) {
+      const end = pts[pts.length - 1][2];
+      for (let tau = ((t * speed) % gap); tau < end; tau += gap) {
+        const a = at(pts, tau - tail), b = at(pts, tau); if (!a || !b) continue;
+        c.beginPath(); c.moveTo(...P(...a)); c.lineTo(...P(...b)); c.stroke();
+      }
+    }
+    // the rotor: a white disc, its stripes turning with the spin
+    const [X, Y] = P(0, 0), R = S;
+    c.beginPath(); c.arc(X, Y, R, 0, 7); c.fillStyle = '#fff'; c.fill(); c.lineWidth = 2; c.strokeStyle = INK; c.stroke();
+    const turn = spinAngle(now);
+    c.save(); c.translate(X, Y); c.rotate(turn);
+    c.strokeStyle = INK; c.lineWidth = 2.4; c.lineCap = 'round';
+    for (let i = 0; i < 3; i++) { const q = i * Math.PI * 2 / 3; c.beginPath(); c.arc(0, 0, R * .62, q, q + .7); c.stroke(); }
+    c.beginPath(); c.arc(0, 0, R * .16, 0, 7); c.fillStyle = INK; c.fill();
+    c.restore();
+    spinArrow(c, X, Y, R);
+    if (!Kit.calm) raf = requestAnimationFrame(frame);
+  }
+  let spinPhase = 0, spinLast = performance.now();
+  function spinAngle(now) { const dt = Math.min(.05, (now - spinLast) / 1000); spinLast = now; spinPhase += dt * g * .55; return spinPhase; }
+  function at(pts, tau) {
+    if (tau < 0) return null; let lo = 0, hi = pts.length - 1; if (tau > pts[hi][2]) return null;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (pts[m][2] < tau) lo = m; else hi = m; }
+    const A = pts[lo], B = pts[hi], f = (tau - A[2]) / ((B[2] - A[2]) || 1); return [A[0] + (B[0] - A[0]) * f, A[1] + (B[1] - A[1]) * f];
+  }
+
+  // The arrows and their words, drawn in SVG over the flow.
+  function arrows() {
+    over.innerHTML = '';
+    const fs = Math.max(11.5, Math.min(14, W / 26));
+    const defs = Kit.mk('defs', {}, over);
+    const mkTip = (id, col) => { const m = Kit.mk('marker', {id, viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 4.2, markerHeight: 4.2, orient: 'auto'}, defs); Kit.mk('path', {d: 'M0 0L10 5L0 10z', fill: col}, m); };
+    mkTip('tipk', INK); mkTip('tipw', '#fff');
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: INK, 'letter-spacing': '.06em'}, a), over); e.textContent = s; return e; };
+    const clampX = x => Math.min(W - 8, Math.max(8, x)), clampY = y => Math.min(H - 8, Math.max(fs + 6, y));
+    // Where the wind comes from: a white arrow near the upstream edge, its word beside it.
+    const d = [Math.cos(alpha), Math.sin(alpha)], n = [-d[1], d[0]];
+    // near the edge of the box, whichever way the wind comes from
+    const edge = Math.min(Math.abs(d[0]) > 1e-3 ? (W / 2) / Math.abs(d[0]) : 1e9, Math.abs(d[1]) > 1e-3 ? (H / 2) / Math.abs(d[1]) : 1e9);
+    const from = Math.max(2.4, edge / S - .8), to = from - 1.35;
+    const [wx0, wy0] = P(-d[0] * from, -d[1] * from), [wx1, wy1] = P(-d[0] * to, -d[1] * to);
+    Kit.mk('line', {x1: wx0, y1: wy0, x2: wx1, y2: wy1, stroke: '#fff', 'stroke-width': 4, 'stroke-linecap': 'round', 'marker-end': 'url(#tipw)'}, over);
+    // The word in a pill beside the arrow: the first place that stays in the box and clear of the
+    // arrow (its head included), trying both sides of its middle, then around its tail.
+    { const pw = fs * 4.1, ph = fs * 1.75, pad = 5;
+      const mid = [(wx0 + wx1) / 2, (wy0 + wy1) / 2], off = fs * 1.6;
+      const spots = [];
+      for (const sg of [1, -1]) spots.push([mid[0] + n[0] * sg * off, mid[1] - n[1] * sg * off, n[0] * sg]);
+      for (const [dx, dy] of [[-1, 0], [1, 0], [0, 1], [0, -1]]) spots.push([wx0 + dx * (pw / 2 + 12), wy0 + dy * (ph / 2 + 12), dx]);
+      const hits = (x0, y0) => { for (let k = 0; k <= 12; k++) { const f = k / 12, px = wx0 + (wx1 - wx0) * f * 1.15, py = wy0 + (wy1 - wy0) * f * 1.15; if (px > x0 - pad && px < x0 + pw + pad && py > y0 - pad && py < y0 + ph + pad) return true; } return false; };
+      let best = null;
+      for (const [x, y, ox] of spots) {
+        const anc = ox > .35 ? 0 : ox < -.35 ? -1 : -.5, x0 = x + anc * pw, y0 = y - ph / 2;
+        if (x0 < 6 || y0 < 6 || x0 + pw > W - 6 || y0 + ph > H - 6 || hits(x0, y0)) continue;
+        best = [x0, y0]; break;
+      }
+      if (!best) { const x0 = Math.min(W - pw - 6, Math.max(6, mid[0] - pw / 2)), y0 = Math.min(H - ph - 6, Math.max(6, mid[1] + off)); best = [x0, y0]; }
+      Kit.mk('rect', {x: best[0], y: best[1], width: pw, height: ph, rx: ph / 2, fill: INK}, over);
+      txt(best[0] + pw / 2, best[1] + ph / 2 + fs * .36, 'WIND', {fill: '#fff', 'text-anchor': 'middle'}); }
+    if (Math.abs(g) < .05) return;
+    // The push, at right angles to the wind, and its share along the hull (dashed).
+    const f = push(), mag = Math.min(1, Math.abs(g) / GAMMA);
+    const [px0, py0] = P(f[0] * 1.2, f[1] * 1.2);
+    // as long as the box allows, the head (12 px) and a margin kept inside
+    const room = Math.min(Math.abs(f[0]) > 1e-3 ? (f[0] > 0 ? W - px0 : px0) / Math.abs(f[0]) : 1e9, Math.abs(f[1]) > 1e-3 ? (f[1] > 0 ? py0 : H - py0) / Math.abs(f[1]) : 1e9) - 26;
+    const len = Math.max(10, Math.min(Math.min(W, H) * .34, room)) * mag, px1 = px0 + f[0] * len, py1 = py0 - f[1] * len;
+    const fw = Math.max(0, f[0]) * len;
+    if (fw > 6) Kit.mk('line', {x1: cx + S * 1.2, y1: cy, x2: cx + S * 1.2 + fw, y2: cy, stroke: INK, 'stroke-width': 3, 'stroke-dasharray': '1 6', 'stroke-linecap': 'round', opacity: .75, 'marker-end': 'url(#tipk)'}, over);
+    Kit.mk('line', {x1: px0, y1: py0, x2: px1, y2: py1, stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round', 'marker-end': 'url(#tipk)'}, over);
+    // The readout: a chip in a free corner.
+    const pct = Math.round(Math.max(0, f[0]) * mag * 100);
+    // bottom left, unless the wind comes from there
+    const chipY = (-d[1] < -.5 || (-d[0] < -.2 && -d[1] < .3)) ? fs * .6 : H - fs * 2.6;
+    const g2 = Kit.mk('g', {}, over);
+    const h = fs * 2, rect = Kit.mk('rect', {x: 8, y: chipY, height: h, rx: h / 2, fill: INK}, g2);
+    const t = Kit.mk('text', {x: 8 + fs * .9, y: chipY + h / 2 + fs * .36, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: '#00A6FF', 'letter-spacing': '.08em'}, g2);
+    t.textContent = `AHEAD ${pct}%`;
+    let tw = fs * 7; try { tw = t.getComputedTextLength() || tw; } catch (e) {}
+    rect.setAttribute('width', tw + fs * 1.8);
+    // The word PUSH: beyond the arrowhead if it fits, else beside the tip; never on the arrow,
+    // the chip or past the edge. The head runs about 12 px past the line's end.
+    const pw = fs * 3.5, chip = [8, chipY, 8 + tw + fs * 1.8, chipY + h];
+    const tip = [px1 + f[0] * 12, py1 - f[1] * 12];
+    const spots = [
+      [tip[0] + f[0] * (fs * .4 + 6), tip[1] - f[1] * (fs * .9 + 4), f[0] > .3 ? 'start' : f[0] < -.3 ? 'end' : 'middle'],
+      [tip[0] + 6, tip[1] - fs * 1.1, 'end'], [tip[0] + 14, tip[1] + fs * .36, 'start'],
+      [tip[0] - 14, tip[1] + fs * .36, 'end'], [tip[0] + 6, tip[1] + fs * 1.6, 'end'], [tip[0] - 6, tip[1] - fs * 1.1, 'start'],
+      [tip[0] + 12, tip[1] - fs * .9, 'start'], [tip[0] - 12, tip[1] - fs * .9, 'end'], [tip[0] + 12, tip[1] + fs * 1.9, 'start'], [tip[0] + 12, tip[1] - fs * 2.2, 'start']];
+    const boxOf = (x, y, an) => { const x0 = an === 'start' ? x : an === 'end' ? x - pw : x - pw / 2; return [x0, y - fs * .85, x0 + pw, y + fs * .2]; };
+    const meets = (A, B) => A[0] < B[2] && B[0] < A[2] && A[1] < B[3] && B[1] < A[3];
+    const onArrow = bx => { for (let k = 0; k <= 14; k++) { const q = k / 14, x = px0 + (tip[0] - px0) * q, y = py0 + (tip[1] - py0) * q; if (x > bx[0] - 4 && x < bx[2] + 4 && y > bx[1] - 4 && y < bx[3] + 4) return true; } return false; };
+    let spot = spots.find(([x, y, an]) => { const bx = boxOf(x, y, an); return bx[0] > 6 && bx[1] > 4 && bx[2] < W - 6 && bx[3] < H - 4 && !meets(bx, chip) && !onArrow(bx); }) || spots[1];
+    txt(spot[0], spot[1], 'PUSH', {'text-anchor': spot[2]});
+  }
+
+  // The spin, as a curved arrow round the cylinder.
+  function spinArrow(c, X, Y, R) {
+    if (Math.abs(g) < .05) return;
+    const cw = g > 0, r = R * 1.5, a0 = -Math.PI * .95, a1 = -Math.PI * .4;
+    c.save(); c.strokeStyle = INK; c.fillStyle = INK; c.lineWidth = 2.4; c.lineCap = 'round';
+    c.beginPath(); c.arc(X, Y, r, a0, a1); c.stroke();
+    const e = cw ? a1 : a0, dir = cw ? 1 : -1;
+    const ex = X + r * Math.cos(e), ey = Y + r * Math.sin(e), tx = -Math.sin(e) * dir, ty = Math.cos(e) * dir;
+    const sz = Math.max(6, R * .42);
+    c.beginPath(); c.moveTo(ex + tx * sz, ey + ty * sz); c.lineTo(ex - ty * sz * .55, ey + tx * sz * .55); c.lineTo(ex + ty * sz * .55, ey - tx * sz * .55); c.closePath(); c.fill();
+    c.restore();
+  }
+
+  function draw() {
+    const fit = Kit.fitCanvas(cv); ctx = fit.x; W = fit.W; H = fit.H;
+    Kit.fitSvg(over);
+    S = Math.max(14, Math.min(W, H) * .085); cx = W / 2; cy = H / 2;
+    dirty = true;
+    if (!raf) raf = requestAnimationFrame(frame);
+    if (Kit.calm) frame(performance.now());
+  }
+
+  // What the wind is about to do, from where it is going (not where the drawing has got to).
+  const pushTo = () => { const d = [Math.cos(alphaTo), Math.sin(alphaTo)], sg = Math.sign(gTo) || 1; return [-d[1] * sg, d[0] * sg]; };
+  function sayWind() {
+    const p = Math.round(Math.max(0, pushTo()[0]) * 100);
+    if (p >= 90) say.innerHTML = 'Wind from the side: <b>the whole push</b> drives the ship ahead.';
+    else if (p >= 25) say.innerHTML = `Wind at an angle: <b>${p}%</b> of the push drives the ship ahead.`;
+    else say.innerHTML = Math.cos(alphaTo) < 0 ? 'Wind from ahead: the push is all sideways. <b>No help.</b>' : 'Wind from behind: the push is all sideways. <b>Almost no help.</b>';
+  }
+  function end() {
+    if (ended) return; ended = true;
+    Kit.$('card').classList.add('answered'); Kit.show('keep'); Kit.haptic('success');
+    requestAnimationFrame(draw);
+  }
+  function setWind(from) {
+    // from: angle (math) the wind comes from; it blows the opposite way
+    alphaTo = from + Math.PI;
+    const d = [Math.cos(alphaTo), Math.sin(alphaTo)];
+    if (Math.abs(d[1]) > .05) gTo = (d[1] < 0 ? 1 : -1) * GAMMA;
+    else gTo = Math.sign(g || 1) * GAMMA;
+    if (Kit.calm) { alpha = alphaTo; g = gTo; }
+    dirty = true;
+    if (!raf) raf = requestAnimationFrame(frame);
+    if (Kit.calm) frame(performance.now());
+  }
+  go.addEventListener('click', () => {
+    if (spun) return; spun = true; gTo = GAMMA; if (Kit.calm) g = gTo; dirty = true;
+    Kit.haptic('light'); go.classList.add('gone');
+    say.innerHTML = 'Spinning, it drags air round one side and flings it off, as a spinning ball does (the Magnus effect). Air thrown one way pushes the cylinder the other: <b>across the wind</b>. Tap to move the wind.';
+    if (!raf) raf = requestAnimationFrame(frame);
+    if (Kit.calm) frame(performance.now());
+  });
+  stage.addEventListener('click', e => {
+    if (!spun) { go.click(); return; }
+    const b = stage.getBoundingClientRect(), x = e.clientX - b.left - cx, y = -(e.clientY - b.top - cy);
+    if (Math.hypot(x, y) < S * 1.2) return;
+    const from = Math.atan2(y, x);
+    setWind(from); Kit.haptic('light'); sayWind();
+    if (ended || taps >= 1) say.innerHTML += ' Real ships do it: in a 2018–19 trial two 30&nbsp;m rotors cut a tanker’s fuel by <b>8.2%</b>, one day’s fuel in twelve.';
+    if (lastFrom === null || Math.abs(Math.atan2(Math.sin(from - lastFrom), Math.cos(from - lastFrom))) > .5) taps++;
+    lastFrom = from;
+    if (taps >= 2) end();
+  });
+  Kit.onShow.card = draw;
+  // the words below the drawing change length as the card goes on: redraw at the new size
+  let lastBox = '';
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const b = stage.getBoundingClientRect(), key = Math.round(b.width) + 'x' + Math.round(b.height); if (key !== lastBox && W) { lastBox = key; requestAnimationFrame(draw); } }).observe(stage);
+  // Plays the card through: spin, the wind from ahead, then from the quarter.
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 40 : ms));
+    const tap = (fx, fy) => { const b = stage.getBoundingClientRect(); stage.dispatchEvent(new MouseEvent('click', {bubbles: true, clientX: b.left + cx + fx * Math.min(W, H) * .45, clientY: b.top + cy - fy * Math.min(W, H) * .45})); };
+    go.click(); await wait(900);
+    tap(1, .08); await wait(900);
+    tap(.75, .7); await wait(600);
+  };
+})();
+Kit.single();
+</script>
+</html>

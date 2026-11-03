@@ -1,0 +1,37 @@
+{
+  "id": "science-iter-hot-cold",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How can one machine be the hottest and coldest place in the universe?",
+  "answer": "At 150 million degrees, no material can hold the plasma, so magnets hold it floating inside the hollow ring. Those superconducting magnets keep their magnetic properties only when chilled to −269 °C. So in ITER, the hottest thing is held in place by the coldest thing.",
+  "move": "In ITER, the hottest thing is held in place by the coldest thing.",
+  "keywords": [
+    "iter",
+    "nuclear_fusion",
+    "plasma",
+    "superconducting_magnets"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Shows a ring-shaped reactor beside a thermometer running from deep blue (cold) to bright white (hot). Asks the reader to drag a marker to set how cold the superconducting magnets must be; the answer is −269 °C.",
+    "graded": false
+  },
+  "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=W3C02y8A8LY&t=57s",
+  "written": "2026-11-03"
+}

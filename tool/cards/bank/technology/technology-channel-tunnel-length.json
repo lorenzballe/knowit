@@ -1,0 +1,37 @@
+{
+  "id": "technology-channel-tunnel-length",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long is the Eurotunnel's stretch under the sea, and why does it matter?",
+  "answer": "The Eurotunnel runs 39 km under the sea, and no rail tunnel in the world has a longer stretch beneath the sea. Digging that far took seven years and about 4,000 workers following one plan. Their secret weapon was the geology below the seabed.",
+  "move": "The Eurotunnel runs 39 km under the sea: the longest undersea rail stretch on Earth.",
+  "keywords": [
+    "eurotunnel",
+    "english_channel",
+    "england",
+    "france",
+    "seabed_geology"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drill is dragged from England to France across a map of the English Channel, and kilometres pile up as it moves. The reader watches the undersea stretch of the Eurotunnel add up to 39 km."
+  },
+  "source": "Geopop, “Tunnel della Manica: come è stato costruito l’Eurotunnel che collega Inghilterra e Francia?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=1i1Z63xL3MQ&t=19s",
+  "written": "2026-11-03"
+}

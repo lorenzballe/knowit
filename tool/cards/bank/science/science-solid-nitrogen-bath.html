@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-solid-nitrogen-bath -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block;color:var(--k);overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLD PHYSICS</span></div>
+    <h2 class="q">Why does pouring solid nitrogen onto a water bath work?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Solid nitrogen chunks above a water bath"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It sinks, and the warm water slowly melts it away.</button>
+        <button class="opt" data-i="1">It turns straight to gas, pulling heat out of the water.</button>
+        <button class="opt" data-i="2">It floats like a lid that keeps the water's heat in.</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It turns to gas and drinks heat.</p><p class="body">Solid nitrogen sublimates fast: it goes straight from solid to gas. That takes huge amounts of heat, which it pulls out of the water bath, so the surface stays extremely cold.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one and say how sure you are. Then watch.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Turning solid into gas soaks up heat from whatever it touches.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, played = false;
+const S = {tw: []};
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: watch what really happens`);
+  Kit.show('keep');
+  Kit.onShow.card(); // stage is now taller: redraw, then play
+  reveal(!Kit.calm);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function chunkPts(r, seed) {
+  const n = 7, p = [];
+  for (let i = 0; i < n; i++) {
+    const a = i / n * Math.PI * 2 + seed, rr = r * (.72 + .32 * Math.abs(Math.sin(seed * 3 + i * 1.7)));
+    p.push((Math.cos(a) * rr).toFixed(1) + ',' + (Math.sin(a) * rr * .8).toFixed(1));
+  }
+  return p.join(' ');
+}
+
+function draw() {
+  S.tw.forEach(t => t.kill()); S.tw = [];
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(f, 12);
+  const wy = H * .56, x0 = W * .05, x1 = W * .95, yb = H * .98;
+  Object.assign(S, {W, H, fs, wy, yb});
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#5fb4e8'}, lg);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#174e86'}, lg);
+  const mk = Kit.mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 5, refY: 5, markerWidth: 4, markerHeight: 4, orient: 'auto'}, defs);
+  Kit.mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: '#ff8a3d'}, mk);
+
+  Kit.mk('rect', {x: x0, y: wy, width: x1 - x0, height: yb - wy, fill: 'url(#wg)'}, svg);
+  S.cold = Kit.mk('rect', {x: x0, y: wy, width: x1 - x0, height: H * .13, fill: '#e8f7ff', opacity: 0}, svg);
+  Kit.mk('path', {d: `M${x0} ${H * .3} V${yb} H${x1} V${H * .3}`, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(2, W * .008), 'stroke-linejoin': 'round'}, svg);
+  S.surf = Kit.mk('line', {x1: x0, x2: x1, y1: wy, y2: wy, stroke: '#ffffff', 'stroke-width': 2, opacity: .6}, svg);
+
+  const r = Math.min(W * .085, H * .075);
+  S.r = r;
+  S.xs = [W * .3, W * .5, W * .7];
+  S.heat = Kit.mk('g', {opacity: 0}, svg);
+  S.arrows = S.xs.map(cx => Kit.mk('line', {x1: cx, x2: cx, y1: yb - H * .11, y2: wy + H * .15, stroke: '#ff8a3d', 'stroke-width': Math.max(3, W * .012), 'stroke-linecap': 'round', 'stroke-dasharray': '6 7', 'marker-end': 'url(#ah)'}, S.heat));
+  S.vap = Kit.mk('g', {}, svg);
+  S.chunks = S.xs.map((cx, i) => {
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('polygon', {points: chunkPts(r, i * 1.3 + .4), fill: '#f6fbff', stroke: '#8fbbe0', 'stroke-width': 2, 'stroke-linejoin': 'round'}, g);
+    Kit.mk('polygon', {points: chunkPts(r * .45, i + 2), fill: '#ffffff', opacity: .9, transform: `translate(${-r * .2},${-r * .2})`}, g);
+    gsap.set(g, {x: cx, y: H * .2, transformOrigin: '50% 50%'});
+    return g;
+  });
+  const T = (txt, x, y, anchor, fill, w) => Kit.mk('text', {x, y, 'text-anchor': anchor, fill, 'font-size': fs, 'font-weight': w || 700, 'font-family': 'var(--body)'}, svg);
+  S.l1 = T('', W / 2, H * .07, 'middle', 'currentColor'); S.l1.textContent = 'solid nitrogen';
+  S.l2 = T('', W / 2, H * .07, 'middle', 'currentColor'); S.l2.textContent = 'nitrogen gas'; S.l2.setAttribute('opacity', 0);
+  S.l3 = T('', x0 + W * .03, wy + H * .105, 'start', '#0b2b4a', 800); S.l3.textContent = 'surface: extremely cold'; S.l3.setAttribute('opacity', 0);
+  S.l4 = T('', W / 2, yb - H * .03, 'middle', '#ffffff'); S.l4.textContent = 'water bath'; 
+  S.l5 = T('', W / 2, yb - H * .03, 'middle', '#ffd2b0', 800); S.l5.textContent = 'heat pulled out of the water'; S.l5.setAttribute('opacity', 0);
+
+  if (!played && !Kit.calm) S.chunks.forEach((g, i) => S.tw.push(gsap.to(g, {y: '+=' + H * .025, duration: 1.4 + i * .2, yoyo: true, repeat: -1, ease: 'sine.inOut'})));
+}
+
+function puffs(animate) {
+  const {H, r, wy} = S, cy = wy - r * .4;
+  S.xs.forEach((cx, i) => {
+    for (let k = 0; k < 5; k++) {
+      const c = Kit.mk('circle', {cx, cy, r: r * .3, fill: '#ffffff'}, S.vap);
+      const dx = (k % 2 ? 1 : -1) * r * (.4 + .3 * k / 5);
+      if (animate) S.tw.push(gsap.fromTo(c, {attr: {cy, cx, r: r * .3}, opacity: .85}, {attr: {cy: H * .1, cx: cx + dx, r: r * .95}, opacity: 0, duration: 2.2, repeat: -1, delay: k * .44 + i * .15, ease: 'sine.out'}));
+      else { c.setAttribute('cy', cy - (H * .1 + k * H * .06)); c.setAttribute('cx', cx + dx * k / 4); c.setAttribute('r', r * (.4 + k * .1)); c.setAttribute('opacity', .55 - k * .08); }
+    }
+  });
+}
+
+function reveal(animate) {
+  played = true;
+  S.tw.forEach(t => t.kill()); S.tw = [];
+  const {H, r, wy} = S, sit = wy - r * .4;
+  if (!animate) {
+    S.chunks.forEach(g => gsap.set(g, {y: sit, scale: .45}));
+    gsap.set([S.cold, S.heat, S.l2, S.l3, S.l5], {opacity: 1}); gsap.set(S.cold, {opacity: .9}); gsap.set([S.l1, S.l4], {opacity: 0});
+    puffs(Kit.calm ? false : true);
+    if (!Kit.calm) S.tw.push(gsap.to(S.arrows, {attr: {'stroke-dashoffset': -26}, duration: .8, repeat: -1, ease: 'none'}));
+    return;
+  }
+  const tl = gsap.timeline();
+  S.tw.push(tl);
+  tl.to(S.chunks, {y: sit, duration: .7, ease: 'bounce.out', stagger: .12})
+    .to(S.l1, {opacity: 0, duration: .3}, '<')
+    .add(() => { puffs(true); Kit.haptic('light'); }, '-=.2')
+    .to(S.l2, {opacity: 1, duration: .4})
+    .to(S.heat, {opacity: 1, duration: .5}, '+=.2')
+    .to(S.l4, {opacity: 0, duration: .3}, '<')
+    .to(S.l5, {opacity: 1, duration: .4}, '<.1')
+    .to(S.cold, {opacity: .9, duration: 1.4}, '<')
+    .to(S.l3, {opacity: 1, duration: .4}, '-=.5')
+    .to(S.chunks, {scale: .45, duration: 4, ease: 'sine.inOut'}, 1);
+  S.tw.push(gsap.to(S.arrows, {attr: {'stroke-dashoffset': -26}, duration: .8, repeat: -1, ease: 'none'}));
+}
+
+Kit.onShow.card = () => { draw(); if (played) reveal(false); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 5600)); };
+Kit.single();
+</script>
+</html>

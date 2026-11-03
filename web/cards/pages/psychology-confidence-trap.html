@@ -1,0 +1,127 @@
+<!doctype html>
+<!-- slug: psychology-confidence-trap -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#picbox{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CONFIDENCE</span></div>
+    <h2 class="q">What happens to students' confidence after a clear, standard explanation video?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">It goes up</button>
+        <button class="opt" data-i="1">It stays the same</button>
+        <button class="opt" data-i="2">It goes down</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It goes up.</p><p class="body">Students called the video clear, concise and easy to understand, and felt surer of their answers than on the pretest. That feeling rises even when the correct idea never got in.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess, then press play on the student's video.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Feeling sure after a clear explanation is not proof you learned it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, played = false;
+const lvl = {v: .35}, BEFORE = .35, AFTER = .9;
+let R = {};
+
+function setFill(){
+  if (!R.fill) return;
+  const h = (R.bot - R.top) * lvl.v;
+  R.fill.setAttribute('y', R.bot - h); R.fill.setAttribute('height', h);
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const g = (t, a, p = svg) => Kit.mk(t, a, p);
+  const fs = Math.max(f * .8, 12);
+  R = {};
+  // screen
+  const sx = W * .03, sw = W * .55, sy = H * .03, sh = H * .38;
+  g('rect', {x: sx, y: sy, width: sw, height: sh, rx: Math.min(14, sh * .08), style: 'fill:var(--k)'});
+  g('rect', {x: sx + sw/2 - sw*.03, y: sy + sh, width: sw*.06, height: H*.03, style: 'fill:var(--k)'});
+  for (let i = 0; i < 3; i++)
+    g('rect', {x: sx + sw*.1, y: sy + sh*(.2 + i*.16), width: sw*(i === 2 ? .3 : .45), height: sh*.06, rx: sh*.03, style: 'fill:var(--c);opacity:.45'});
+  const px = sx + sw*.75, py = sy + sh*.42, ps = Math.min(sw, sh) * .16;
+  R.play = g('path', {d: `M${px - ps*.6},${py - ps} L${px + ps},${py} L${px - ps*.6},${py + ps} Z`, style: 'fill:var(--c)'});
+  R.pw = sw * .84;
+  g('rect', {x: sx + sw*.08, y: sy + sh*.84, width: R.pw, height: sh*.05, rx: sh*.025, style: 'fill:var(--c);opacity:.25'});
+  R.prog = g('rect', {x: sx + sw*.08, y: sy + sh*.84, width: played ? R.pw : 0, height: sh*.05, rx: sh*.025, style: 'fill:var(--c)'});
+  // student
+  const hx = sx + sw/2, r = Math.min(H * .095, W * .1), hy = H - r * 1.55;
+  g('path', {d: `M${hx - r*1.9},${H} Q${hx - r*1.7},${hy + r*1.05} ${hx},${hy + r*1.05} Q${hx + r*1.7},${hy + r*1.05} ${hx + r*1.9},${H} Z`, style: 'fill:var(--k);opacity:.85'});
+  R.head = g('g', {});
+  g('circle', {cx: hx, cy: hy, r, style: 'fill:var(--c);stroke:var(--k);stroke-width:' + Math.max(2, r*.09)}, R.head);
+  g('circle', {cx: hx - r*.35, cy: hy - r*.2, r: r*.1, style: 'fill:var(--k)'}, R.head);
+  g('circle', {cx: hx + r*.35, cy: hy - r*.2, r: r*.1, style: 'fill:var(--k)'}, R.head);
+  g('path', {d: `M${hx - r*.4},${hy + r*.3} Q${hx},${hy + r*.62} ${hx + r*.4},${hy + r*.3}`, style: `fill:none;stroke:var(--k);stroke-linecap:round;stroke-width:${Math.max(2, r*.09)}`}, R.head);
+  // speech bubble
+  const by = sy + sh + H*.05, bh = fs * 2.1, bw = sw * .96;
+  R.bub = g('g', {style: 'opacity:' + (played ? 1 : 0)});
+  g('rect', {x: hx - bw/2, y: by, width: bw, height: bh, rx: bh/2, style: 'fill:var(--c);stroke:var(--k);stroke-width:2'}, R.bub);
+  g('path', {d: `M${hx + bw*.18},${by + bh - 1} l${-fs*.5},${fs*.8} l${-fs*.3},${-fs*.8}`, style: 'fill:var(--c);stroke:var(--k);stroke-width:2;stroke-linejoin:round'}, R.bub);
+  const t = g('text', {x: hx, y: by + bh*.66, 'text-anchor': 'middle', 'font-size': fs, style: 'fill:var(--k)'}, R.bub);
+  t.textContent = 'Easy! I knew that.';
+  // bars
+  const bw2 = W * .12, x1 = W * .66, x2 = W * .85;
+  R.top = H * .04; R.bot = H - fs * 2.2;
+  g('rect', {x: x1, y: R.top, width: bw2, height: R.bot - R.top, rx: 6, style: 'fill:none;stroke:var(--k);stroke-width:2'});
+  R.fill = g('rect', {x: x1, width: bw2, rx: 6, style: 'fill:var(--k)'});
+  setFill();
+  const ly = R.bot - (R.bot - R.top) * BEFORE;
+  g('line', {x1: x1 - W*.025, x2: x1 + bw2 + W*.01, y1: ly, y2: ly, style: 'stroke:var(--c);stroke-width:2;stroke-dasharray:4 3'});
+  g('line', {x1: x1 - W*.025, x2: x1, y1: ly, y2: ly, style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:4 3'});
+  g('rect', {x: x2, y: R.top, width: bw2, height: R.bot - R.top, rx: 6, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:6 5;opacity:.6'});
+  const q = g('text', {x: x2 + bw2/2, y: (R.top + R.bot)/2 + fs*.9, 'text-anchor': 'middle', 'font-size': Math.max(fs*2.4, 20), style: 'fill:var(--k);opacity:.6'});
+  q.textContent = '?';
+  const l1 = g('text', {x: x1 + bw2/2, y: H - fs*.45, 'text-anchor': 'middle', 'font-size': fs, style: 'fill:var(--k)'}); l1.textContent = 'SURE';
+  const l2 = g('text', {x: x2 + bw2/2, y: H - fs*.45, 'text-anchor': 'middle', 'font-size': fs, style: 'fill:var(--k)'}); l2.textContent = 'RIGHT?';
+}
+
+function run(){
+  played = true;
+  if (Kit.calm){ lvl.v = AFTER; draw(); return; }
+  gsap.to(R.play, {opacity: 0, duration: .3});
+  gsap.to(R.prog, {attr: {width: R.pw}, duration: 1.8, ease: 'none'});
+  gsap.to(R.head, {y: 6, duration: .18, yoyo: true, repeat: 7, ease: 'sine.inOut', delay: .3});
+  gsap.to(R.bub, {opacity: 1, duration: .4, delay: .9});
+  gsap.to(lvl, {v: AFTER, duration: 1.7, ease: 'power2.out', delay: .3, onUpdate: setFill});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm){ gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); if (R.play) gsap.from(R.play, {scale: .6, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(3)'}); } };
+Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2600)); };
+Kit.single();
+</script>
+</html>

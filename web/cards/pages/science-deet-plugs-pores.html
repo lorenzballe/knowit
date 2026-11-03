@@ -1,0 +1,193 @@
+<!doctype html>
+<!-- slug: science-deet-plugs-pores -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute · How DEET blinds a mosquito's nose</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{display:block;width:100%;height:100%;flex:1;min-height:0}
+#dial{display:flex;align-items:center;gap:3cqw;margin-top:.6cqh}
+#dial span{font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);white-space:nowrap}
+#dose{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12.5px)/1.3 var(--body);margin:0}
+#why .big{margin:0}
+.say,.keep,#why{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slide · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOSQUITOES</span></div>
+    <h2 class="q">How does DEET stop a mosquito from smelling you?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" aria-label="A magnified mosquito antenna with pores; scent molecules rise from skin, DEET drops plug the pores"></svg></div>
+    <div id="dial"><span>No DEET</span><input id="dose" type="range" min="0" max="100" value="0" aria-label="DEET dose"><span>Full spray</span></div>
+    <p class="say" id="say">Slide to spray DEET, and watch what happens to the antenna's pores.</p>
+    <div id="why" class="gone"><p class="big">It corks the mosquito's nose.</p><p class="body">A mosquito smells you through tiny pores on its antennae. DEET plugs those pores, so the odours your skin gives off never get in.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>DEET works by blocking the pores mosquitoes smell with.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 10;
+const ODOR = '#f07a2e', DEET = '#1f9be0';
+const order = (() => { const a = [...Array(N).keys()]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })();
+const plugged = new Array(N).fill(false);
+let G = null, mols = [], shown = 0, done = false, spawnT = 0, sig = 1;
+
+function ink() { return getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111'; }
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  svg.innerHTML = ''; mols = [];
+  let {W, H, f} = Kit.fitSvg(svg);
+  f = Math.max(f, 12);
+  const K = ink();
+  const g = {W, H, f, svg, pores: []};
+  const txt = (x, y, s, anchor, w) => { const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'start', 'dominant-baseline': 'middle', style: `font:${w || 700} ${f * .85}px var(--body);fill:${K}`}, svg); t.textContent = s; return t; };
+
+  // Meters: the two quantities that trade off
+  const bx = W * .5, bw = W * .5, bh = f * .6;
+  const r1 = f * .8, r2 = f * 2.5;
+  txt(0, r1, 'Pores plugged');
+  txt(0, r2, 'Scent getting in');
+  Kit.mk('rect', {x: bx, y: r1 - bh / 2, width: bw, height: bh, rx: bh / 2, style: `fill:color-mix(in srgb,${K} 12%,transparent)`}, svg);
+  Kit.mk('rect', {x: bx, y: r2 - bh / 2, width: bw, height: bh, rx: bh / 2, style: `fill:color-mix(in srgb,${K} 12%,transparent)`}, svg);
+  g.barP = Kit.mk('rect', {x: bx, y: r1 - bh / 2, width: 0, height: bh, rx: bh / 2, fill: DEET}, svg);
+  g.barS = Kit.mk('rect', {x: bx, y: r2 - bh / 2, width: bw, height: bh, rx: bh / 2, fill: ODOR}, svg);
+  g.bx = bx; g.bw = bw;
+  const top = r2 + f * 1.3;
+
+  // Skin at the bottom
+  const skinY = H - Math.max(H * .11, f * 2);
+  let d = `M0 ${skinY}`;
+  for (let x = 0; x <= W; x += W / 12) d += ` Q${x + W / 24} ${skinY - f * .35} ${x + W / 12} ${skinY}`;
+  d += ` L${W} ${H} L0 ${H}Z`;
+  Kit.mk('path', {d, fill: '#f2c4a4', stroke: K, 'stroke-width': Math.max(1.5, f * .1)}, svg);
+  const sl = txt(f * .6, (skinY + H) / 2 + f * .1, 'your skin, giving off odours', 'start', 700);
+  sl.setAttribute('style', `font:700 ${f * .8}px var(--body);fill:#3a2216`);
+  g.skinY = skinY;
+
+  // Antenna, magnified
+  const ay = top + (skinY - top) * .42;
+  const th = Math.min((skinY - top) * .16, W * .085);
+  const x0 = W * .03, x1 = W * .97;
+  txt(x0, ay - th - f * 1.05, 'mosquito antenna, magnified', 'start', 700);
+  const hairs = Kit.mk('g', {stroke: K, 'stroke-width': Math.max(1, f * .08), 'stroke-linecap': 'round'}, svg);
+  for (let i = 0; i < 26; i++) {
+    const x = x0 + th + (x1 - x0 - 2 * th) * (i + .5) / 26;
+    Kit.mk('line', {x1: x, y1: ay - th, x2: x + th * .35, y2: ay - th - th * .45}, hairs);
+    Kit.mk('line', {x1: x, y1: ay + th, x2: x + th * .35, y2: ay + th + th * .45}, hairs);
+  }
+  Kit.mk('rect', {x: x0, y: ay - th, width: x1 - x0, height: 2 * th, rx: th, fill: '#6b5a3e', stroke: K, 'stroke-width': Math.max(1.5, f * .12)}, svg);
+  Kit.mk('rect', {x: x0 + th * .5, y: ay - th * .75, width: x1 - x0 - th, height: th * .35, rx: th * .17, fill: '#ffffff', opacity: .18}, svg);
+  const pr = Math.min(th * .5, (x1 - x0) / N * .3);
+  for (let i = 0; i < N; i++) {
+    const x = x0 + th * .8 + (x1 - x0 - th * 1.6) * (i + .5) / N;
+    const hole = Kit.mk('circle', {cx: x, cy: ay, r: pr, fill: '#1a120a', stroke: '#e9dcc4', 'stroke-width': Math.max(1, f * .08)}, svg);
+    const glow = Kit.mk('circle', {cx: x, cy: ay, r: pr * .8, fill: ODOR, opacity: 0}, svg);
+    const plug = Kit.mk('circle', {cx: x, cy: ay, r: pr * 1.18, fill: DEET, stroke: '#fff', 'stroke-width': Math.max(1, f * .08), opacity: plugged[i] ? 1 : 0}, svg);
+    const shine = Kit.mk('circle', {cx: x - pr * .35, cy: ay - pr * .35, r: pr * .3, fill: '#fff', opacity: plugged[i] ? .7 : 0}, svg);
+    g.pores.push({x, y: ay, hole, glow, plug, shine});
+  }
+  g.ay = ay; g.th = th; g.pr = pr;
+  g.molLayer = Kit.mk('g', {}, svg);
+  G = g;
+  bars(true);
+};
+
+function bars(now) {
+  if (!G) return;
+  const k = plugged.filter(Boolean).length;
+  gsap.to(G.barP, {attr: {width: G.bw * k / N}, duration: now ? 0 : .4, ease: 'power2.out'});
+}
+
+function setPlug(i, on) {
+  if (plugged[i] === on) return;
+  plugged[i] = on;
+  if (!G) return;
+  const p = G.pores[i];
+  gsap.killTweensOf([p.plug, p.shine]);
+  if (on) {
+    const from = G.ay - G.th - G.f * 2.2;
+    if (Kit.calm) { gsap.set(p.plug, {opacity: 1, attr: {cy: p.y}}); gsap.set(p.shine, {opacity: .7}); }
+    else {
+      gsap.fromTo(p.plug, {opacity: 0, attr: {cy: from}}, {opacity: 1, attr: {cy: p.y}, duration: .55, ease: 'bounce.out'});
+      gsap.fromTo(p.shine, {opacity: 0}, {opacity: .7, duration: .3, delay: .4});
+    }
+  } else {
+    gsap.to([p.plug, p.shine], {opacity: 0, duration: .25});
+  }
+}
+
+function spawn() {
+  const g = G, i = Math.floor(Kit.rnd() * N), p = g.pores[i];
+  const x = Kit.rnd() * g.W, y = g.skinY - g.f * .2;
+  const el = Kit.mk('circle', {cx: x, cy: y, r: Math.max(2.5, g.pr * .38), fill: ODOR, stroke: '#7a3410', 'stroke-width': 1}, g.molLayer);
+  mols.push({el, x, y, i, tx: p.x, ty: p.y + g.pr * .2, sp: (g.skinY - p.y) / (1.5 + Kit.rnd() * .9), ph: Kit.rnd() * 6, st: 0, vx: 0, vy: 0, life: 0});
+}
+
+gsap.ticker.add((t, dms) => {
+  if (!G) return;
+  const dt = Math.min(dms, 50) / 1000;
+  spawnT += dt;
+  if (spawnT > .14 && mols.length < 22) { spawnT = 0; spawn(); }
+  for (let m = mols.length - 1; m >= 0; m--) {
+    const o = mols[m];
+    if (o.st === 0) {
+      const dx = o.tx - o.x, dy = o.ty - o.y, dist = Math.hypot(dx, dy);
+      const step = o.sp * dt;
+      if (dist <= step + 1) {
+        const p = G.pores[o.i];
+        if (!plugged[o.i]) {
+          o.el.remove(); mols.splice(m, 1);
+          gsap.fromTo(p.glow, {opacity: .95}, {opacity: 0, duration: .5});
+          continue;
+        }
+        o.st = 1; o.vx = (Kit.rnd() - .5) * G.f * 8; o.vy = G.f * (4 + Kit.rnd() * 3); o.el.setAttribute('fill', '#c9a58c');
+      } else {
+        o.ph += dt * 4;
+        o.x += dx / dist * step + Math.sin(o.ph) * G.f * .03;
+        o.y += dy / dist * step;
+      }
+    } else {
+      o.life += dt; o.x += o.vx * dt; o.y += o.vy * dt;
+      o.el.setAttribute('opacity', Math.max(0, 1 - o.life / .9));
+      if (o.life > .9) { o.el.remove(); mols.splice(m, 1); continue; }
+    }
+    o.el.setAttribute('cx', o.x); o.el.setAttribute('cy', o.y);
+  }
+  const target = 1 - plugged.filter(Boolean).length / N;
+  sig += (target - sig) * Math.min(1, dt * 4);
+  G.barS.setAttribute('width', Math.max(0, G.bw * sig));
+});
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('dose').addEventListener('input', e => {
+  const k = Math.round(+e.target.value / 100 * N);
+  if (k !== shown) Kit.haptic('selection');
+  shown = k;
+  order.forEach((p, j) => setPlug(p, j < k));
+  bars(false);
+  if (k === N) finish();
+});
+
+Kit.onEnter.card = () => {
+  if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+
+Kit.play.card = async () => {
+  const s = Kit.$('dose');
+  for (let v = 0; v <= 100; v += 20) { s.value = v; s.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

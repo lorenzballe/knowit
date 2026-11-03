@@ -1,0 +1,37 @@
+{
+  "id": "medicine-premium-lens-race",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.risks_of_surgery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Cataract surgery swaps the cloudy lens. Can the new one do more?",
+  "answer": "Removing the cloudy lens clears the fog, but the eye's old focusing faults stay. A premium lens carries its own prescription, so the same implant can also correct short-sight, long-sight, astigmatism and ageing near vision.",
+  "move": "A new lens can be both clear and a prescription.",
+  "keywords": [
+    "cataract",
+    "intraocular lens",
+    "astigmatism",
+    "presbyopia",
+    "eye surgery"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card with five eye-problem options to select: short-sighted, long-sighted, astigmatism, ageing near vision, and operate on both eyes. The reader picks the patient's problems, then operates to see whether one clear, corrected implant fixes them."
+  },
+  "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Y3b8egQvI0A&t=160s",
+  "written": "2026-11-03"
+}

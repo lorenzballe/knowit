@@ -1,0 +1,240 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The crosswalk test</title>
+<!-- A crosswalk seen from above. Berkeley, 2012 (Piff et al., PNAS, study 2): 152 drivers, cars
+     rated from beaten-up (1) to luxury (5); the cheapest always stopped for the waiting pedestrian,
+     the priciest drove through nearly half the time. The reader watches cars come (a beaten-up one
+     always stops, a luxury one sometimes does not: a dramatisation; the bars carry the study's
+     figures), then predicts what an exact, preregistered re-run with more cars found (Jung, Smeets,
+     Stoop & Vosgerau, J. Exp. Psychol. Gen. 2023: no link). Then the ledger: Las Vegas 2020
+     (Coughenour et al., 461 cars: odds of stopping 3% lower per $1,000 of car value). The street
+     stays as a strip above the question and the ledger. Inspired by Diventare Strong (Alex Onofri), "Diventa
+     POTENTE in 8 Punti": what power and status do to people.
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#watch{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.1cqh}
+.legend{display:flex;gap:4cqw;font:700 max(1.5cqh,11.5px)/1 var(--body)}
+.legend span{display:flex;align-items:center;gap:1.6cqw}
+.legend svg{width:max(4.6cqh,28px);height:max(2.2cqh,13px);flex:none}
+#road{flex:1;min-height:0;width:100%;display:block}
+.tally{display:flex;flex-direction:column;gap:.8cqh}
+.tally .hdr{font:800 max(1.5cqh,11.5px)/1.2 var(--body);letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.bar{display:grid;grid-template-columns:22cqw 1fr 17cqw;align-items:center;gap:2.4cqw;font:700 max(1.5cqh,11.5px)/1.2 var(--body)}
+.bar i{height:max(1.6cqh,10px);border-radius:99px;background:color-mix(in srgb,var(--k) 12%,transparent);position:relative;overflow:hidden}
+.bar i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w,0%);background:var(--k);border-radius:99px;transition:width .9s cubic-bezier(.23,1,.32,1)}
+.bar b{font:800 max(1.5cqh,11.5px)/1.2 var(--body);text-align:right;opacity:0;transition:opacity .4s}
+.tally.on .bar b{opacity:1}
+#opts{display:flex;flex-direction:column;gap:1.1cqh;flex:none}
+/* After the watching, the street stays as a strip above the question and the ledger. */
+#watch.mini{flex:1 1 auto;min-height:max(8cqh,44px)}
+#watch.mini .legend,#watch.mini .tally{display:none}
+.ask{margin:0 0 .6cqh;font:600 max(2.1cqh,13px)/1.42 var(--body);text-wrap:pretty}
+.opt{font:700 max(2.1cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#ledger{flex:none;display:flex;flex-direction:column;justify-content:center;gap:.9cqh;margin:0;padding:0;list-style:none}
+#ledger li{display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:2.6cqw;row-gap:.3cqh;padding:1.1cqh 3.4cqw;border-radius:1.6cqh;background:color-mix(in srgb,var(--k) 7%,transparent);font:600 max(1.5cqh,11.5px)/1.25 var(--body)}
+#ledger li small{grid-column:2 / 4;font:500 max(1.5cqh,11.5px)/1.25 var(--body);opacity:.75}
+#ledger li b{font:800 max(2.1cqh,13px)/1 var(--display)}
+#ledger li em{font-style:normal;font-weight:800;display:flex;align-items:center;gap:1.4cqw;white-space:nowrap}
+#ledger li em::before{content:"";width:1.4cqh;height:1.4cqh;min-width:9px;min-height:9px;border-radius:50%;box-shadow:inset 0 0 0 .22cqh var(--k)}
+#ledger li.link em::before{background:var(--k)}
+#ledger li.first{background:var(--k);color:var(--c)}
+#ledger li.first em::before{background:var(--c);box-shadow:none}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (min-height:640px){
+  #ledger{gap:1.4cqh}
+  #ledger li{padding:1.7cqh 3.8cqw;row-gap:.6cqh}
+}
+@container (max-height:520px){
+  .answered .in{gap:1.5cqh}
+  .answered #ledger{gap:.6cqh}
+  .answered #ledger li{padding:.8cqh 3cqw}
+  #ledger li small{display:none}
+  .answered .keep{padding:1.3cqh 4.5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Watch the crosswalk · then guess the re-run">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE CROSSWALK</span></div>
+    <h2 class="q">Do drivers of fancier cars stop less for pedestrians?</h2>
+    <div class="stagebox" id="stage">
+      <div id="watch">
+        <div class="legend" aria-hidden="true"><span><svg id="lgOld"></svg>beaten-up</span><span><svg id="lgLux"></svg>luxury</span></div>
+        <svg id="road" role="img" aria-label="A street seen from above with a zebra crossing. A pedestrian waits at the kerb while cars arrive from the left."></svg>
+        <div class="tally" id="tally">
+          <span class="hdr">Drove on while someone waited · 2012</span>
+          <div class="bar" id="barOld"><span>Beaten-up</span><i></i><b>never</b></div>
+          <div class="bar" id="barLux"><span>Luxury</span><i></i><b>nearly half</b></div>
+        </div>
+      </div>
+      <div id="opts" class="gone">
+        <p class="ask">2023: an exact re-run, with more cars and the analysis fixed in advance. What did it find?</p>
+        <button class="opt" data-i="0">The same big gap</button>
+        <button class="opt" data-i="1">A smaller gap</button>
+        <button class="opt" data-i="2">No clear link</button>
+      </div>
+      <ul id="ledger" class="gone">
+        <li class="link first"><b>2012</b><span>UC Berkeley · 152 drivers</span><em>big gap</em><small>Cheapest never drove on; priciest nearly half the time</small></li>
+        <li class="link"><b>2020</b><span>Las Vegas · 461 cars</span><em>small link</em><small>Odds of stopping 3% lower per $1,000 of car value</small></li>
+        <li><b>2023</b><span>Exact re-run · more cars</span><em>no clear link</em><small>Analysis fixed before the data came in</small></li>
+      </ul>
+    </div>
+    <div id="sure" class="gone"></div>
+    <p class="say" id="say">2012, a UC Berkeley team: someone waits at a crosswalk. Observers rate each car, beaten-up to luxury, and note if it stops.</p>
+    <button class="btn" id="go">Watch the cars</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When a study flatters what you already think about “them”, look for the re-run.</div>
+    <div class="foot"><span class="src">Source · Piff et al., PNAS 2012; Coughenour et al., J. Transp. Health 2020; Jung et al., J. Exp. Psychol. Gen. 2023</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const $ = Kit.$, INK = '#10100c', PEACH = '#FFC49B', RUST = '#a8714a', RIGHT = 2;
+  const say = $('say'), go = $('go');
+  // The cars that come, in order: o = beaten-up, L = luxury; true = drives on past the pedestrian.
+  // Beaten-up cars always stop; two luxury cars in four drive on (a dramatisation of "nearly half").
+  const SEQ = [['o', false], ['L', false], ['o', false], ['L', true], ['o', false], ['L', true], ['L', false], ['o', false]];
+  let step = 0, geo = null, pick = -1, running = null;
+
+  // A car seen from above, nose to the right, drawn at the origin.
+  function car(parent, kind, len, wid) {
+    const g = Kit.mk('g', {}, parent), lux = kind === 'L', l = lux ? len : len * .84, w = lux ? wid : wid * .96;
+    for (const fx of [-.3, .3]) for (const fy of [-1, 1]) Kit.mk('rect', {x: l * fx - l * .09, y: fy * w * .5 - w * .1, width: l * .18, height: w * .2, rx: w * .06, fill: '#000', opacity: .85}, g);
+    Kit.mk('rect', {x: -l / 2, y: -w * .44, width: l, height: w * .88, rx: lux ? w * .4 : w * .15, fill: lux ? INK : RUST}, g);
+    // Windscreen and rear window.
+    Kit.mk('rect', {x: l * .08, y: -w * .36, width: l * .16, height: w * .72, rx: w * .12, fill: lux ? '#3c3c38' : '#e9c3a4'}, g);
+    Kit.mk('rect', {x: -l * .36, y: -w * .32, width: l * .12, height: w * .64, rx: w * .1, fill: lux ? '#3c3c38' : '#e9c3a4'}, g);
+    if (lux) {
+      // A gleam along the bonnet and the roof.
+      Kit.mk('line', {x1: -l * .2, y1: -w * .18, x2: l * .06, y2: -w * .18, stroke: '#fff', 'stroke-width': Math.max(1, w * .07), 'stroke-linecap': 'round', opacity: .55}, g);
+      Kit.mk('line', {x1: l * .3, y1: -w * .22, x2: l * .44, y2: -w * .22, stroke: '#fff', 'stroke-width': Math.max(1, w * .06), 'stroke-linecap': 'round', opacity: .45}, g);
+    } else {
+      // A dent and a patch of rust.
+      Kit.mk('path', {d: `M${-l * .1},${w / 2} q${l * .06},${-w * .16} ${l * .12},0`, fill: 'none', stroke: INK, 'stroke-width': Math.max(1, w * .07), opacity: .55}, g);
+      Kit.mk('circle', {cx: l * .34, cy: w * .18, r: w * .1, fill: INK, opacity: .3}, g);
+    }
+    return g;
+  }
+  function legend() {
+    for (const [id, k] of [['lgOld', 'o'], ['lgLux', 'L']]) {
+      const svg = $(id); svg.innerHTML = '';
+      const {W, H} = Kit.fitSvg(svg), c = car(svg, k, W * .96, H * .92);
+      c.setAttribute('transform', `translate(${W / 2} ${H / 2})`);
+    }
+  }
+
+  // The street: two lanes, a zebra, the kerbs, the pedestrian waiting on the far side.
+  function draw() {
+    legend();
+    let svg = $('road');
+    // Drawn again while the cars are still coming: the cars finish at once, and the end is drawn.
+    if (running) { const r = running; running = null; r.progress(1); return; }
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const rh = Math.min(H * .62, W * .5), top = (H - rh) / 2 + H * .06, bot = top + rh, lane = rh / 2;
+    const zx = W * .66, zw = Math.max(W * .12, 30), stopX = zx - zw / 2 - Math.max(6, W * .02);
+    const len = Math.min(W * .19, lane * 1.75), wid = lane * .58, cy = top + lane * 1.5;
+    const clip = Kit.mk('clipPath', {id: 'roadClip'}, Kit.mk('defs', {}, svg));
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(14, H * .06)}, clip);
+    svg = Kit.mk('g', {'clip-path': 'url(#roadClip)'}, svg);
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#f3b98f'}, svg);
+    Kit.mk('rect', {x: 0, y: top, width: W, height: rh, fill: '#2b2622'}, svg);
+    for (const y of [top, bot]) Kit.mk('line', {x1: 0, y1: y, x2: W, y2: y, stroke: '#fff', 'stroke-width': 2, opacity: .5}, svg);
+    Kit.mk('line', {x1: 0, y1: top + lane, x2: W, y2: top + lane, stroke: PEACH, 'stroke-width': 2, 'stroke-dasharray': '10 9', opacity: .7}, svg);
+    const n = 7, sh = rh / (n * 2 - 1);
+    for (let k = 0; k < n; k++) Kit.mk('rect', {x: zx - zw / 2, y: top + sh * (k * 2), width: zw, height: sh, fill: '#fff', opacity: .92}, svg);
+    Kit.mk('line', {x1: stopX, y1: top + lane + 3, x2: stopX, y2: bot - 3, stroke: '#fff', 'stroke-width': 2.5, opacity: .8}, svg);
+    // The pedestrian, standing at the edge of the far kerb, about to cross.
+    const ph = Math.min(top * .82, lane * 1.15), px = zx, py = top - 2, pr = ph * .13;
+    const ped = Kit.mk('g', {transform: `translate(${px} ${py})`}, svg);
+    const lw = Math.max(2, ph * .1);
+    Kit.mk('path', {d: `M${-ph * .1},0 L${-ph * .02},${-ph * .4} M${ph * .12},0 L${ph * .02},${-ph * .4}`, stroke: INK, 'stroke-width': lw, 'stroke-linecap': 'round', fill: 'none'}, ped);
+    Kit.mk('path', {d: `M0,${-ph * .42} L0,${-ph * .72} M${-ph * .14},${-ph * .5} L0,${-ph * .7} L${ph * .15},${-ph * .52}`, stroke: INK, 'stroke-width': lw * 1.15, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none'}, ped);
+    Kit.mk('circle', {cx: 0, cy: -ph * .86, r: pr, fill: INK}, ped);
+    const cars = Kit.mk('g', {}, svg);
+    geo = {W, H, len, wid, cy, stopX, cars, ped, pr, py, px};
+    if (step === 0) {
+      // Before the cars come: one beaten-up car on its way.
+      const c = car(cars, 'o', len, wid); c.setAttribute('transform', `translate(${W * .16} ${cy})`);
+    } else {
+      // After: the moment a luxury car drives on past someone waiting, the beaten-up one stopped behind.
+      const a = car(cars, 'o', len, wid); a.setAttribute('transform', `translate(${stopX - len * .55} ${cy})`);
+      const b = car(cars, 'L', len, wid); b.setAttribute('transform', `translate(${zx + len * .75} ${cy})`);
+    }
+  }
+
+  function fillBars() { $('barOld').querySelector('i').style.setProperty('--w', '0%'); $('barLux').querySelector('i').style.setProperty('--w', '46%'); $('tally').classList.add('on'); }
+
+  // The cars come one by one: a car that stops brakes at the line, waits, then goes; one that does not stop just goes.
+  function play() {
+    const {W, len, wid, cy, stopX, cars, ped} = geo;
+    cars.innerHTML = '';
+    if (Kit.calm || typeof gsap === 'undefined') { step = 1; draw(); fillBars(); return Promise.resolve(); }
+    return new Promise(done => {
+      const tl = gsap.timeline({onComplete: () => { running = null; step = 1; draw(); done(); }});
+      running = tl;
+      let t = 0;
+      SEQ.forEach(([k, through], i) => {
+        const c = car(cars, k, len, wid), from = -len, stopAt = stopX - len * .55, out = W + len;
+        const pos = {x: from}, put = () => c.setAttribute('transform', `translate(${pos.x} ${cy})`);
+        put();
+        if (through) {
+          tl.to(pos, {x: out, duration: .95, ease: 'none', onUpdate: put}, t);
+          // The pedestrian steps back as it passes.
+          tl.fromTo(ped, {attr: {transform: `translate(${geo.px} ${geo.py})`}}, {attr: {transform: `translate(${geo.px} ${geo.py - geo.pr * 1.1})`}, duration: .18, yoyo: true, repeat: 1}, t + .35);
+          t += .62;
+        } else {
+          tl.to(pos, {x: stopAt, duration: .55, ease: 'power2.out', onUpdate: put}, t);
+          tl.to(pos, {x: out, duration: .6, ease: 'power2.in', onUpdate: put}, t + .55 + .38);
+          t += .78;
+        }
+      });
+      tl.call(fillBars, null, t * .55);
+    });
+  }
+
+  go.addEventListener('click', async () => {
+    if (step === 0 && !running) {
+      go.disabled = true;
+      await play();
+      say.innerHTML = 'The cheapest cars <b>never</b> drove on. The priciest did <b>nearly half</b> the time.';
+      go.disabled = false; go.textContent = 'Then it was re-run';
+      Kit.haptic('light');
+    } else if (step === 1) {
+      step = 2;
+      $('watch').classList.add('mini'); Kit.hide('go'); Kit.hide('say'); Kit.show('opts'); Kit.show('sure');
+      requestAnimationFrame(draw);
+    }
+  });
+
+  const sure = Kit.sure($('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = $('opts').querySelectorAll('.opt')[pick].textContent;
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.show('ledger');
+    sure.grade(ok, pct, ok ? 'Right: no clear link' : 'They found no clear link');
+    say.innerHTML = 'One crosswalk and 152 drivers made the headline. Checks with more cars found a small link or none.';
+    Kit.show('say');
+    $('card').classList.add('answered');
+    Kit.show('keep');
+    Kit.haptic(ok ? 'success' : 'light');
+  });
+  $('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+
+  Kit.onShow.card = draw;
+  if (typeof ResizeObserver !== 'undefined') { let last = ''; new ResizeObserver(([en]) => { const k = Math.round(en.contentRect.width) + 'x' + Math.round(en.contentRect.height); if (last && k !== last && !running && en.contentRect.height > 1) draw(); last = k; }).observe($('road')); }
+  Kit.onEnter.card = () => { if (!Kit.calm && typeof gsap !== 'undefined') gsap.from('#road', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+  const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 30 : ms));
+  // Waits for the cars to finish before the next tap, however long the frames take.
+  const until = async (f, ms = 12000) => { const t0 = Date.now(); while (!f() && Date.now() - t0 < ms) await new Promise(r => setTimeout(r, 50)); };
+  Kit.play.card = async () => { go.click(); await until(() => step === 1 && !go.disabled); await wait(300); go.click(); await until(() => step === 2); await wait(400); $('opts').querySelector('.opt').click(); await wait(150); $('sure').querySelector('[data-v="70"]').click(); await wait(700); };
+})();
+Kit.single();
+</script>
+</html>

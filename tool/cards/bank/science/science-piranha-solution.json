@@ -1,0 +1,37 @@
+{
+  "id": "science-piranha-solution",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.mixing_cleaners",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the most corrosive substance for organic matter?",
+  "answer": "Piranha solution is sulfuric acid mixed with hydrogen peroxide. When a piece of mandarin goes in, the fruit first turns into black carbon. Then the carbon leaves as carbon dioxide gas, so it literally vaporizes.",
+  "move": "Piranha doesn't just eat organic matter: it turns it into gas.",
+  "keywords": [
+    "piranha solution",
+    "sulfuric acid",
+    "hydrogen peroxide",
+    "mandarin",
+    "carbon dioxide"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A glass beaker of clear liquid sits on a lab bench, with a piece of mandarin shown beside it, ready to drop in. The question asks: what is the most corrosive substance for organic matter? Tap the beaker to drop the fruit in."
+  },
+  "source": "Geopop, “L’acido fluoroantimonico è il più forte del mondo: la differenza tra corrosività e acidità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=5G0YVPLSbW8&t=402s",
+  "written": "2026-11-03"
+}

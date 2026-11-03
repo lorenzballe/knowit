@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-laser-eye-monitor -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#sw{display:flex;gap:2cqw;justify-content:center}
+.sw{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3cqw;cursor:pointer}
+.sw.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CATARACT SURGERY</span></div>
+    <h2 class="q">How does the laser stay safe while it works inside the eye?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="An eye under a laser, with a live chart of the eye's parameters"></svg>
+      <div id="sw">
+        <button class="sw on" data-m="0">Computer off</button>
+        <button class="sw" data-m="1">Computer on</button>
+      </div>
+    </div>
+    <p class="say" id="say">Flip the computer on and watch the laser and the chart.</p>
+    <div id="why" class="gone"><p class="body">The instrument has a computer inside that keeps watching the eye's parameters the whole time. The laser is adjusted to what it reads, so the operation stays inside its safety limits.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A built-in computer watches the eye non-stop, so the laser stays safe.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let mode = 0, t = 0, G = null, done = false, seenOn = false;
+const hist = [], N = 140, EMAX = 1.6, THR = 0.45;
+const RED = '#ff4d3d', GREEN = '#2fc46f';
+let L = null; // laser point offset from eye centre (in units of drift amplitude)
+
+function draw() {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * 0.78), pad = Math.max(8, W * 0.035);
+  const h1 = H * 0.6, y2 = H * 0.63;
+  const s = (tag, a, p) => Kit.mk(tag, a, p || svg);
+  // panels
+  s('rect', {x: 0, y: 0, width: W, height: h1, rx: fs * 0.9, style: 'fill:var(--k)'});
+  s('rect', {x: 0, y: y2, width: W, height: H - y2, rx: fs * 0.9, style: 'fill:var(--k)'});
+  const lab = (x, y, txt, anchor, col) => { const e = s('text', {x, y, 'text-anchor': anchor || 'start', style: `font:700 ${fs}px var(--mono);fill:${col || 'var(--c)'};letter-spacing:.04em`}); e.textContent = txt; return e; };
+  lab(pad, pad + fs, 'THE EYE');
+  const status = lab(W - pad, pad + fs, '', 'end');
+  // eye
+  const cx = W / 2, top = pad + fs * 2.2;
+  const cy = top + (h1 - top) * 0.55;
+  const a = Math.min(W * 0.36, (h1 - top) * 0.9), b = Math.min(a * 0.5, (h1 - top) * 0.4);
+  const defs = s('defs', {});
+  const cp = s('clipPath', {id: 'eyeclip'}, defs);
+  const almond = `M${cx - a},${cy} Q${cx},${cy - b * 2} ${cx + a},${cy} Q${cx},${cy + b * 2} ${cx - a},${cy}Z`;
+  s('path', {d: almond}, cp);
+  s('path', {d: almond, style: 'fill:#f4f1ea'});
+  const g = s('g', {'clip-path': 'url(#eyeclip)'});
+  const iris = s('g', {}, g);
+  const ir = b * 0.82;
+  s('circle', {cx: 0, cy: 0, r: ir, style: 'fill:#3c6e8f'}, iris);
+  s('circle', {cx: 0, cy: 0, r: ir * 0.72, style: 'fill:none;stroke:#2a5370;stroke-width:' + ir * 0.12}, iris);
+  s('circle', {cx: 0, cy: 0, r: ir * 0.45, style: 'fill:#d9dcdc;opacity:.92'}, iris); // cloudy lens
+  s('path', {d: almond, style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(2, fs * 0.15)});
+  // laser
+  const beam = s('line', {style: `stroke:${RED};stroke-width:${Math.max(2, fs * .2)};opacity:.85`});
+  const glow = s('circle', {r: ir * 0.32, style: `fill:${RED};opacity:.25`});
+  const ring = s('circle', {r: ir * 0.22, style: `fill:none;stroke:${RED};stroke-width:${Math.max(2, fs * .16)}`});
+  const head = s('rect', {width: fs * 2.6, height: fs * 0.9, rx: fs * 0.25, style: 'fill:#9aa3a8'});
+  // chart
+  lab(pad, y2 + pad + fs, 'EYE PARAMETERS · LIVE');
+  const px0 = pad, px1 = W - pad, py1 = H - pad;
+  const py0 = Math.min(y2 + pad + fs * 2, py1 - Math.max(4, fs * 0.5));
+  const Y = e => py1 - Math.min(e, EMAX) / EMAX * (py1 - py0);
+  s('rect', {x: px0, y: Y(THR), width: Math.max(0, px1 - px0), height: Math.max(0, py1 - Y(THR)), style: `fill:${GREEN};opacity:.22`});
+  s('line', {x1: px0, x2: px1, y1: Y(THR), y2: Y(THR), style: `stroke:${GREEN};stroke-width:2;stroke-dasharray:6 5`});
+  lab(px1 - fs * .3, py1 - fs * .35, 'SAFE ZONE', 'end', GREEN);
+  const line = s('polyline', {style: `fill:none;stroke-width:${Math.max(2.5, fs * .2)};stroke-linejoin:round;stroke-linecap:round`});
+  const dot = s('circle', {r: Math.max(4, fs * .3)});
+  G = {W, H, fs, cx, cy, b, A: b * 0.38, ir, iris, beam, glow, ring, head, line, dot, status, px0, px1, Y, top};
+  if (!L) L = {x: 0, y: 0};
+}
+
+function tick(time, dt) {
+  if (!G) return;
+  t += Math.min(dt, 50) / 1000;
+  const k = Kit.calm ? 0.5 : 1;
+  const dx = (Math.sin(t * 0.9) + 0.6 * Math.sin(t * 2.3 + 1)) / 1.6 * k;
+  const dy = (Math.sin(t * 1.3 + 2) + 0.5 * Math.sin(t * 3.1)) / 1.5 * k * 0.8;
+  if (mode) { L.x += (dx - L.x) * 0.3; L.y += (dy - L.y) * 0.3; }
+  else { L.x += (0 - L.x) * 0.15; L.y += (0 - L.y) * 0.15; }
+  const err = Math.hypot(L.x - dx, L.y - dy) * 1.9;
+  hist.push(err); if (hist.length > N) hist.shift();
+  const {cx, cy, A, fs} = G;
+  G.iris.setAttribute('transform', `translate(${cx + dx * A * 1.6},${cy + dy * A * 1.6})`);
+  const lx = cx + L.x * A * 1.6, ly = cy + L.y * A * 1.6;
+  G.ring.setAttribute('cx', lx); G.ring.setAttribute('cy', ly);
+  G.glow.setAttribute('cx', lx); G.glow.setAttribute('cy', ly);
+  G.head.setAttribute('x', lx - fs * 1.3); G.head.setAttribute('y', G.top - fs * 0.4);
+  G.beam.setAttribute('x1', lx); G.beam.setAttribute('y1', G.top + fs * 0.5);
+  G.beam.setAttribute('x2', lx); G.beam.setAttribute('y2', ly);
+  const ok = err < THR, col = ok ? GREEN : RED;
+  G.status.textContent = ok ? '● IN SAFE LIMITS' : '● OFF TARGET';
+  G.status.style.fill = col;
+  const step = (G.px1 - G.px0) / (N - 1), off = N - hist.length;
+  G.line.setAttribute('points', hist.map((e, i) => `${(G.px0 + (i + off) * step).toFixed(1)},${G.Y(e).toFixed(1)}`).join(' '));
+  G.line.style.stroke = col;
+  G.dot.setAttribute('cx', G.px1); G.dot.setAttribute('cy', G.Y(err)); G.dot.style.fill = col;
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('.sw'); if (!b) return;
+  mode = +b.dataset.m;
+  [...Kit.$('sw').children].forEach(x => x.classList.toggle('on', x === b));
+  Kit.haptic('selection');
+  if (mode && !seenOn) { seenOn = true; setTimeout(finish, 1600); }
+});
+
+gsap.ticker.add(tick);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('sw').children[1].click(); await new Promise(r => setTimeout(r, 2400)); };
+Kit.single();
+</script>
+</html>

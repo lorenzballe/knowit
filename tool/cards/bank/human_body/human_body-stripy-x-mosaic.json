@@ -1,0 +1,37 @@
+{
+  "id": "human_body-stripy-x-mosaic",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some tissues in women show a stripy mosaic?",
+  "answer": "Early in development, each cell of the embryo randomly picks whether Mum's or Dad's X chromosome stays active, and the other one shuts down. Every cell keeps that choice, so each one grows into its own patch. Side by side, these patches make stripes.",
+  "move": "A woman is a mosaic: some patches run on Mum's X, others on Dad's.",
+  "keywords": [
+    "x chromosome",
+    "embryo",
+    "mosaic",
+    "stripes",
+    "tissue"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Diagram of a growing embryo made of cells. Tap each cell to see it randomly shut down either Mum's or Dad's X chromosome. The patches that result form stripes across the tissue. The page asks why some tissues look stripy."
+  },
+  "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=163s",
+  "written": "2026-11-03"
+}

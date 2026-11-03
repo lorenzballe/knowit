@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-tunnel-core-samples -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.sw{display:inline-block;width:1.1em;height:.7em;border-radius:.2em;vertical-align:baseline;margin:0 .15em}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Guess · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">How much rock core was drilled to map the Turin–Lyon tunnel's geology?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Drag to set the length of all the rock core, end to end"></svg>
+      <div id="why" class="gone">
+        <p class="big">About 65 km of core</p>
+        <p class="body">Every cylinder of rock pulled up along the route was examined. Together they identified all the rock formations, the faults <span class="sw" style="background:#c0392b"></span> and the water <span class="sw" style="background:#2f80c8"></span>, before the digging.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the drill down: how long is all the core, laid end to end?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A big tunnel is first read in rock: here, about 65 km of it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 65, MIN = 0.01, MAX = 200;
+let guess = null, revealed = false, animNext = false, geo = null, lastSize = '';
+const svg = Kit.$('pic');
+const ROCK = ['#6b5d4f','#9a8a74','#3f4a52','#b9ae98','#7d6e5c','#545e66'];
+// layers in log-fraction space
+const layers = []; { let p = 0; while (p < 1) { const w = .02 + Kit.rnd() * .045; const water = Kit.rnd() < .12; layers.push({a: p, b: Math.min(1, p + w), c: water ? '#2f80c8' : ROCK[Math.floor(Kit.rnd() * ROCK.length)], water}); p += w; } }
+const faults = []; for (let i = 0; i < 9; i++) faults.push(.06 + Kit.rnd() * .9);
+const L = v => Math.log10(v);
+function fmt(km) { if (km < 1) return Number((km * 1000).toPrecision(2)) + ' m'; return Number(km.toPrecision(2)) + ' km'; }
+
+function draw() {
+  gsap.killTweensOf('#pic *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  lastSize = W + 'x' + H;
+  const fs = Math.max(f * .95, 12);
+  const top = fs * 2.0, bot = H - fs * .9;
+  const yOf = km => top + (L(km) - L(MIN)) / (L(MAX) - L(MIN)) * (bot - top);
+  const kmOf = y => Math.pow(10, L(MIN) + Math.max(0, Math.min(1, (y - top) / (bot - top))) * (L(MAX) - L(MIN)));
+  geo = {kmOf};
+  const ax = W * .2, cw = Math.max(W * .12, 26), xA = W * .26, xB = xA + cw + W * .06, xL = xB + cw + W * .04;
+  const ink = 'var(--k)';
+  // axis
+  Kit.mk('line', {x1: ax, x2: ax, y1: top, y2: bot, stroke: ink, 'stroke-width': 1.5, opacity: .5}, svg);
+  let lastLabelY = -Infinity;
+  [[.01,'10 m'],[.1,'100 m'],[1,'1 km'],[10,'10 km'],[100,'100 km']].forEach(([v, t]) => {
+    const y = yOf(v);
+    Kit.mk('line', {x1: ax - 5, x2: W * .98, y1: y, y2: y, stroke: ink, 'stroke-width': 1, opacity: .13}, svg);
+    if (y - lastLabelY < fs * 1.1) return;
+    lastLabelY = y;
+    const tx = Kit.mk('text', {x: ax - 8, y: y + fs * .35, 'text-anchor': 'end', fill: ink, 'font-size': fs * .85, 'font-family': 'var(--mono)', opacity: .75}, svg); tx.textContent = t;
+  });
+  // headers
+  [[xA, 'you'], [xB, 'real']].forEach(([x, t], i) => {
+    if (i === 1 && !revealed) return;
+    const tx = Kit.mk('text', {x: x + cw / 2, y: top - fs * .7, 'text-anchor': 'middle', fill: ink, 'font-size': fs, 'font-weight': 800, 'font-family': 'var(--body)'}, svg); tx.textContent = t;
+  });
+  function column(x, km, id, real) {
+    const defs = Kit.mk('defs', {}, svg);
+    const cp = Kit.mk('clipPath', {id}, defs);
+    const h = yOf(km) - top;
+    const cr = Kit.mk('rect', {x, y: top, width: cw, height: h, rx: cw * .25}, cp);
+    const g = Kit.mk('g', {'clip-path': `url(#${id})`}, svg);
+    layers.forEach(l => {
+      const y1 = top + l.a * (bot - top), y2 = top + l.b * (bot - top);
+      Kit.mk('rect', {x, y: y1, width: cw, height: y2 - y1 + .5, fill: (!real && l.water) ? ROCK[1] : l.c, opacity: real ? 1 : .55}, g);
+    });
+    if (real) faults.forEach(p => {
+      const y = top + p * (bot - top), n = 4, s = cw / n; let d = `M${x} ${y}`;
+      for (let i = 1; i <= n; i++) d += ` L${x + i * s} ${y + (i % 2 ? -fs * .3 : fs * .3)}`;
+      Kit.mk('path', {d, fill: 'none', stroke: '#c0392b', 'stroke-width': Math.max(2, fs * .17)}, g);
+    });
+    const ol = Kit.mk('rect', {x, y: top, width: cw, height: h, rx: cw * .25, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
+    // drill bit
+    const bit = Kit.mk('path', {d: `M${x - 2} ${top + h} L${x + cw + 2} ${top + h} L${x + cw / 2} ${top + h + fs * .8} Z`, fill: ink}, svg);
+    return {cr, ol, bit, h};
+  }
+  const gk = guess == null ? MIN * 2 : guess;
+  const A = column(xA, gk, 'cA', false);
+  // labels
+  const yR = yOf(REAL);
+  let yG = yOf(gk);
+  if (revealed && Math.abs(yG - yR) < fs * 1.5) yG = yG <= yR ? yR - fs * 1.5 : yR + fs * 1.5;
+  const gl = Kit.mk('text', {x: xL, y: yG + fs * .35, fill: ink, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
+  gl.textContent = guess == null ? 'drag ↓' : fmt(guess);
+  if (guess == null && !revealed && !Kit.calm) gsap.to(gl, {attr: {y: yG + fs * .9}, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  if (revealed) {
+    const B = column(xB, REAL, 'cB', true);
+    const rl = Kit.mk('text', {x: xL, y: yR + fs * .35, fill: ink, 'font-size': fs * 1.25, 'font-weight': 900, 'font-family': 'var(--display)'}, svg);
+    rl.textContent = '65 km';
+    Kit.mk('line', {x1: xB + cw + 3, x2: xL - 4, y1: yR, y2: yR, stroke: ink, 'stroke-width': 2}, svg);
+    if (animNext && !Kit.calm) {
+      animNext = false;
+      gsap.from([B.cr, B.ol], {attr: {height: 0}, duration: 1.6, ease: 'power2.inOut'});
+      gsap.from(B.bit, {y: -B.h, duration: 1.6, ease: 'power2.inOut'});
+      gsap.from(rl, {opacity: 0, x: -8, delay: 1.4, duration: .4});
+    }
+    animNext = false;
+  }
+}
+
+function setFromEvent(e) {
+  if (revealed || !geo) return;
+  const r = svg.getBoundingClientRect();
+  const km = geo.kmOf(e.clientY - r.top);
+  const old = guess; guess = km;
+  if (old == null || fmt(old) !== fmt(km)) { if (old != null) Kit.haptic('selection'); }
+  draw();
+}
+let dragging = false;
+svg.addEventListener('pointerdown', e => { if (revealed) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFromEvent(e); });
+svg.addEventListener('pointermove', e => { if (dragging) setFromEvent(e); });
+const end = () => { if (!dragging) return; dragging = false; if (guess != null && !revealed) sure.on(); };
+svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (guess == null) return;
+  const ok = guess >= 30 && guess <= 130, said = fmt(guess);
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  revealed = true; animNext = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'close' : (guess < 30 ? 'far too little' : 'too much')}`);
+  Kit.haptic('success');
+  requestAnimationFrame(() => requestAnimationFrame(draw));
+});
+
+new ResizeObserver(() => { const r = svg.getBoundingClientRect(); if (r.width && (Math.round(r.width) + 'x' + Math.round(r.height)) !== lastSize && !animNext) draw(); }).observe(svg);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), x = r.left + r.width * .3;
+  const ev = (t, y) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', r.top + r.height * .3); ev('pointermove', r.top + r.height * .5); ev('pointerup', r.top + r.height * .5);
+  await new Promise(res => setTimeout(res, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(res => setTimeout(res, 2200));
+};
+Kit.single();
+</script>
+</html>

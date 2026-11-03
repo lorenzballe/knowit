@@ -1,0 +1,37 @@
+{
+  "id": "technology-night-yard-rovers",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How are heavy components moved around the shipyard at night?",
+  "answer": "At night, automatic rovers carry heavy parts around the shipyard. Each rover calculates the shortest route and steers around obstacles on its own, with no driver. The card lets you tap the floor to drop crates into a rover's path and watch it dodge them.",
+  "move": "Night shift: the rover finds the shortest path and dodges what's in it.",
+  "keywords": [
+    "rover",
+    "shipyard",
+    "robot",
+    "pathfinding"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Robot logistics, asking how heavy components are moved around the shipyard at night. A rover icon and a prompt to tap the floor to drop crates in its path, with a counter reading 0 of 3.",
+    "ground": "#0b1220"
+  },
+  "source": "Geopop, “In uno dei cantieri più grandi d’Europa per assistere alla costruzione di una nave di più 300 m” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Q0FlhJ7-P-g&t=224s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "technology-vinyl-stereo-groove",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can one single groove carry both left and right stereo sound?",
+  "answer": "A record's groove is cut in a V, and the needle's tip touches both walls. The two walls slope at about 45° and meet at right angles, so one wall carries the left channel and the other the right. Each wall pushes the needle along its own diagonal, which lets the pickup separate the two signals.",
+  "move": "One V-groove, two walls at 45°: one wall per stereo channel.",
+  "keywords": [
+    "vinyl",
+    "stereo",
+    "groove",
+    "stylus",
+    "record"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cross-section of a V-shaped record groove with a needle tip touching both walls, which slope at 45 degrees. Three buttons play Left only, Right only, or Both at once, and the reader watches how the needle moves."
+  },
+  "source": "Geopop, “Come è fatto un vinile e come funziona? Figo! Non lo sapevo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=E5NV8VQQaKQ&t=158s",
+  "written": "2026-11-03"
+}

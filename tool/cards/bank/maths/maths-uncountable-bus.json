@@ -1,0 +1,37 @@
+{
+  "id": "maths-uncountable-bus",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the significance of saying the bus has uncountably many people?",
+  "answer": "Calling the bus's passengers uncountable means they cannot be paired one-to-one with 1, 2, 3, so no seating plan can work. Whatever plan the manager tries, someone is left with no room. Some infinities are bigger than others, and this is the bigger kind. Holding the button lets you try handing out rooms yourself.",
+  "move": "Uncountable means: pair them with 1, 2, 3… and someone is always left over.",
+  "keywords": [
+    "infinite hotel",
+    "uncountable infinity",
+    "hotel manager",
+    "bus",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card with a hold-to-run button. A bus carries uncountably many people to a hotel with no room for all. Hold the button to hand out rooms and see whether everyone can be housed."
+  },
+  "source": "Veritasium, “How An Infinite Hotel Ran Out Of Room” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=OxGsU8oIWjY",
+  "written": "2026-11-03"
+}

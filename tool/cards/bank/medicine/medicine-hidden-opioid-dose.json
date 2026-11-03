@@ -1,0 +1,38 @@
+{
+  "id": "medicine-hidden-opioid-dose",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why is pink cocaine likelier to cause overdose than a pure drug?",
+  "answer": "Pink cocaine is a mix, so no user knows what is inside or how much. Three pinches of the same pink powder can hold very different amounts of a potent opioid like fentanyl, and you can't tell which has the least. Because the dose is unknown, it is easy to take too much, and an overdose can kill.",
+  "move": "In an unknown mix, you can't know your dose of anything.",
+  "keywords": [
+    "pink cocaine",
+    "fentanyl",
+    "opioids",
+    "overdose",
+    "drug mixes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three identical pinches of pink powder are shown. The reader is asked to tap the one they think hides the least opioid. The reveal says no one can tell, because the contents and amounts of an unknown mix are unknown.",
+    "graded": false
+  },
+  "source": "Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=meoJvw-9tM4&t=312s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "technology-tatara-steel-race",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why do the best Japanese swords still need tatara steel?",
+  "answer": "The mill wins the race, but every bit of its steel is the same. The tatara, lit one night a year in Shimane as it was 1300 years ago, gives a carbon spread and impurities that mass production can't copy. That uneven, impure character is why the best Japanese swords still need tatara steel.",
+  "move": "Faster and more uniform is not always better steel.",
+  "keywords": [
+    "tatara",
+    "japanese-swords",
+    "shimane",
+    "steel",
+    "mass-production"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two steel furnaces race side by side: a modern mill makes fast, even steel, while the ancient tatara makes slow, uneven steel. The page asks why the best Japanese swords still need tatara steel.",
+    "graded": false,
+    "ground": "#1b1714"
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=52s",
+  "written": "2026-11-03"
+}

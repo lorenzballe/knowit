@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-rally-thousandth-second -->
+<title>A thousandth of a second in rally</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1;min-height:0;touch-action:manipulation}
+#pic .hot{cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.6cqh,20px)/1.05 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RALLY PHYSICS</span></div>
+    <h2 class="q">How can a thousandth of a second decide a rally championship?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Tap the wheel, the brake and the throttle: give each a tiny error.</p>
+    <div id="why" class="gone"><p class="big">0.001 s</p><p class="body">A tiny late or extra input pushes the car off its best line, and off the line it loses grip and time. Those losses add up stage after stage, and over a season they can swing a world championship.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In rally, a title can hang on half a degree or a thousandth of a second.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come fa un pilota di rally a controllare l’auto su asfalto, sterrato e neve” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#ff4d2e';
+const CTRL = [
+  {name:'Steering', tag:'+0.5°', say:'Half a degree more steering: the car slides off its line and loses grip.', d:t=>sm((t-.35)/.5)},
+  {name:'Brake', tag:'+0.001 s', say:'Braking one thousandth of a second late: the car comes in too fast and runs wide.', d:t=>sm((t-.22)/.4)},
+  {name:'Throttle', tag:'too much', say:'A touch too much throttle before a jump: the car lands off its line.', d:t=>sm((t-.62)/.3)}
+];
+function sm(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}
+const done = new Set(); let last = -1, G = null, finished = false;
+
+function draw(){
+  const svg = Kit.$('pic'); gsap.killTweensOf('#pic *'); svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const ry1 = H*.64, ry0 = H*.05, cx = W/2;
+  const hw = Math.min(W*.3, (ry1-ry0)*.62), rw = hw*.42;
+  const P = [[cx-hw,ry1],[cx-hw,ry0],[cx+hw,ry0],[cx+hw,ry1]];
+  const bez = t => { const u=1-t; const a=u*u*u,b=3*u*u*t,c=3*u*t*t,d=t*t*t;
+    return {x:a*P[0][0]+b*P[1][0]+c*P[2][0]+d*P[3][0], y:a*P[0][1]+b*P[1][1]+c*P[2][1]+d*P[3][1]}; };
+  const N = 90, C = {x:cx, y:ry1};
+  const ideal = [], paths = CTRL.map(()=>[]);
+  for (let i=0;i<=N;i++){ const t=i/N, p=bez(t); ideal.push(p);
+    let nx=p.x-C.x, ny=p.y-C.y; const l=Math.hypot(nx,ny)||1; nx/=l; ny/=l;
+    CTRL.forEach((c,k)=>{ const o=c.d(t)*rw*1.15; paths[k].push({x:p.x+nx*o, y:p.y+ny*o}); }); }
+  const road = `M${P[0]} C${P[1]} ${P[2]} ${P[3]}`;
+  Kit.mk('path',{d:road,fill:'none',stroke:'color-mix(in srgb,var(--k) 88%,transparent)','stroke-width':rw,'stroke-linecap':'butt'},svg);
+  Kit.mk('path',{d:road,fill:'none',stroke:'var(--c)','stroke-width':Math.max(2,f*.18),'stroke-dasharray':`${f*.6} ${f*.5}`,opacity:.9},svg);
+  const ps = a => a.map(p=>p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
+  // past errors, faded
+  done.forEach(k=>{ if(k===last) return;
+    Kit.mk('polyline',{points:ps(paths[k]),fill:'none',stroke:RED,'stroke-width':f*.3,opacity:.35,'stroke-linecap':'round'},svg); });
+  // centre readout
+  const rd = Kit.mk('text',{x:cx,y:ry1-(ry1-ry0)*.18,'text-anchor':'middle',fill:'var(--k)',
+    style:`font:800 ${f*1.7}px var(--display)`},svg);
+  rd.textContent = last<0 ? 'best line' : CTRL[last].tag;
+  const rs = Kit.mk('text',{x:cx,y:ry1-(ry1-ry0)*.18+f*1.5,'text-anchor':'middle',fill:'var(--k)',opacity:.7,
+    style:`font:600 ${Math.max(12,f*.85)}px var(--body)`},svg);
+  rs.textContent = last<0 ? 'dashed = ideal' : 'late or extra input';
+  // cars
+  const cw = Math.max(14,W*.055), ch = cw*.55;
+  const car = (fill) => { const g=Kit.mk('g',{},svg);
+    Kit.mk('rect',{x:-cw/2,y:-ch/2,width:cw,height:ch,rx:ch*.3,fill,stroke:'var(--k)','stroke-width':1.5},g); return g; };
+  const place = (g,a,i) => { i=Math.max(1,Math.min(N,i)); const p=a[i], q=a[i-1];
+    g.setAttribute('transform',`translate(${p.x},${p.y}) rotate(${Math.atan2(p.y-q.y,p.x-q.x)*57.3})`); };
+  let trail=null, ghost=null, rc=null, lab=null;
+  if (last>=0){
+    trail = Kit.mk('polyline',{points:ps(paths[last]),fill:'none',stroke:RED,'stroke-width':f*.38,'stroke-linecap':'round'},svg);
+    ghost = car('var(--c)'); rc = car(RED);
+    place(ghost,ideal,N); place(rc,paths[last],N);
+    // grip-lost label beside where it leaves the road
+    let j = paths[last].findIndex((p,i)=>CTRL[last].d(i/N)*1.15>.5); if (j<0) j=N;
+    const p = paths[last][j], lx = Math.max(f*3, Math.min(W-f*3, p.x+(p.x<cx?-1:1)*f*.4));
+    const ly = Math.max(f*1.2, p.y + (p.y<ry0+f*2 ? f*1.6 : 0));
+    lab = Kit.mk('text',{x:lx,y:ly,'text-anchor':p.x<cx?'end':'start',fill:RED,
+      style:`font:800 ${Math.max(12,f*.95)}px var(--body);paint-order:stroke;stroke:var(--k);stroke-width:3px`},svg);
+    if (p.x<cx-hw*.5) lab.setAttribute('text-anchor','start'), lab.setAttribute('x',f*.4);
+    if (p.x>cx+hw*.5) lab.setAttribute('text-anchor','end'), lab.setAttribute('x',W-f*.4);
+    lab.textContent = 'grip lost';
+  }
+  // controls
+  const iy = ry1 + (H-ry1)*.42, r = Math.min(W*.075,(H-ry1)*.24);
+  CTRL.forEach((c,k)=>{
+    const x = W*(k*2+1)/6, on = done.has(k);
+    const g = Kit.mk('g',{class:'hot','data-c':k},svg);
+    Kit.mk('circle',{cx:x,cy:iy,r:r*1.25,fill:on?RED:'color-mix(in srgb,var(--k) 12%,transparent)',stroke:'var(--k)','stroke-width':on?0:2},g);
+    const s = {fill:'none',stroke:'var(--k)','stroke-width':Math.max(2,r*.14),'stroke-linecap':'round'};
+    if (k===0){ Kit.mk('circle',{cx:x,cy:iy,r:r*.75,...s},g);
+      Kit.mk('path',{d:`M${x-r*.75},${iy} H${x+r*.75} M${x},${iy} V${iy+r*.75}`,...s},g); }
+    else if (k===1){ Kit.mk('rect',{x:x-r*.6,y:iy-r*.35,width:r*1.2,height:r*.7,rx:r*.15,...s},g); }
+    else { Kit.mk('rect',{x:x-r*.25,y:iy-r*.7,width:r*.5,height:r*1.4,rx:r*.15,...s},g); }
+    const t = Kit.mk('text',{x,y:iy+r*1.25+f*1.15,'text-anchor':'middle',fill:'var(--k)',style:`font:700 ${Math.max(12,f*.9)}px var(--body)`},g);
+    t.textContent = c.name;
+    g.addEventListener('click',()=>tap(k));
+    if (!on && !Kit.calm) gsap.to(g.querySelector('circle'),{attr:{r:r*1.35},duration:.7,repeat:-1,yoyo:true,ease:'sine.inOut'});
+  });
+  G = {trail,ghost,rc,lab,ideal,paths,place,ps,N};
+}
+
+function tap(k){
+  if (finished) return;
+  last = k; done.add(k); Kit.haptic('light');
+  Kit.$('say').textContent = CTRL[k].say;
+  draw();
+  if (!Kit.calm){
+    const {trail,ghost,rc,lab,ideal,paths,place,ps,N} = G, a = paths[k];
+    gsap.set(lab,{opacity:0});
+    const o1={i:1}, o2={i:1};
+    gsap.to(o1,{i:N,duration:1.3,ease:'none',onUpdate:()=>place(ghost,ideal,Math.round(o1.i))});
+    gsap.to(o2,{i:N,duration:1.5,ease:'none',onUpdate:()=>{const i=Math.round(o2.i);place(rc,a,i);trail.setAttribute('points',ps(a.slice(0,i+1)));
+      if (CTRL[k].d(i/N)>.45) gsap.set(lab,{opacity:1});}});
+  }
+  if (done.size===3){
+    finished = true;
+    setTimeout(()=>{ Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      requestAnimationFrame(draw); }, Kit.calm ? 0 : 1700);
+  }
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic .hot',{opacity:0,y:10,stagger:.1,duration:.45,ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r=>setTimeout(r,ms));
+  for (const k of [0,1,2]){ Kit.$('pic').querySelector(`[data-c="${k}"]`).dispatchEvent(new MouseEvent('click',{bubbles:true})); await w(200); }
+  await w(2000);
+};
+Kit.single();
+</script>
+</html>

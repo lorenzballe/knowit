@@ -1,0 +1,37 @@
+{
+  "id": "science-slinky-bottom-waits",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Drop a hanging slinky. Why does its bottom end wait?",
+  "answer": "The bottom end stays still because gravity pulls it down and tension pulls it up with equal and opposite force. It falls only when the news that the tension changed reaches it, and that news takes time to travel down the coils.",
+  "move": "A force changes only when the news arrives, and news takes time.",
+  "keywords": [
+    "slinky",
+    "tension",
+    "gravity",
+    "veritasium",
+    "information propagation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A hanging slinky the reader taps to let go, followed by four choices asking why the bottom end waits: air pushes it up, tension hasn't changed yet, the bottom coils are heaviest, or tension still balances gravity."
+  },
+  "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eCMmmEEyOO0&t=65s",
+  "written": "2026-11-03"
+}

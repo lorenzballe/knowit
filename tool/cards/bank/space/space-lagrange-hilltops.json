@@ -1,0 +1,37 @@
+{
+  "id": "space-lagrange-hilltops",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Where can a spacecraft park for free?",
+  "answer": "The saddle spots cost fuel: Webb, parked at L2, fires its thrusters every few weeks. The spots where a nudged object stays are L4 and L5, which is where Jupiter's over 15,000 asteroids gather.",
+  "move": "Saddles cost fuel: Webb, at L2, fires thrusters every few weeks.",
+  "keywords": [
+    "lagrange_points",
+    "webb",
+    "jupiter",
+    "trojan_asteroids",
+    "l2_point"
+  ],
+  "era": "early_modern",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A hilltop-shaped landscape, not to scale, with five flat spots and saddles, labelled with the Lagrange points, and Earth shown turning nearby. The question asks where a spacecraft can park for free. The reader taps one spot to pick it."
+  },
+  "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
+  "written": "2026-11-03"
+}

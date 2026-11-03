@@ -1,0 +1,37 @@
+{
+  "id": "science-quantum-superposition",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the state of an electron before it is measured?",
+  "answer": "Before it is measured, an electron is in a superposition: spin up and spin down at once. Measuring always gives just one of them. The mix only sets how likely each result is.",
+  "move": "Unmeasured, it is both at once; measured, it is one.",
+  "keywords": [
+    "electron",
+    "superposition",
+    "spin",
+    "measurement",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks what state an electron is in before it is measured. A control shows an up/down mix. Hold the button, let go to measure, and repeat a few times to see the results."
+  },
+  "source": "Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)",
+  "reference": "https://www.youtube.com/watch?v=g_IaVepNDT4&t=81s",
+  "written": "2026-11-03"
+}

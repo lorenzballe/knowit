@@ -1,0 +1,37 @@
+{
+  "id": "technology-tin-pancake",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "To make the light that prints chips, a laser hits each tin drop twice, microseconds apart. Why not once?",
+  "answer": "The card asks why a laser hits each tin drop twice rather than once. The drop is 25 µm across and flies at 70 m/s, and two infrared pulses, microseconds apart, wait for it. A weak pulse shapes the target and a strong one fires, 50,000 times a second.",
+  "move": "A weak pulse shapes the target, a strong one fires: 50,000 times a second.",
+  "keywords": [
+    "tin-droplet",
+    "euv-lithography",
+    "asml",
+    "infrared-laser",
+    "chip-making"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Animated timeline of a molten tin drop, 25 micrometres across, flying at 70 metres per second. Two infrared laser pulses, microseconds apart, are shown hitting it. A draggable clock lets the reader move through the timing. The page asks why the laser hits the drop twice and not once."
+  },
+  "source": "Veritasium, “The Closest Thing We Have to Alien Technology” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=MiUHjLxm3V0",
+  "written": "2026-11-03"
+}

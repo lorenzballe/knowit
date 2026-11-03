@@ -1,0 +1,37 @@
+{
+  "id": "human_body-plastic-credit-card",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much plastic does an average person ingest each week?",
+  "answer": "An average person ingests about 5 grams of plastic each week, roughly the weight of a credit card. It arrives as tiny bits that end up in what we eat and drink. Each meal adds only a crumb, but the crumbs add up over the week.",
+  "move": "We swallow about 5 g of plastic a week, a credit card's worth, mostly through food and drink.",
+  "keywords": [
+    "plastic",
+    "microplastics",
+    "food",
+    "drink",
+    "credit-card"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A week strip labelled MON to SUN with a credit-card shape that fills as you drag through meals. It asks how much plastic an average person ingests each week, and the reveal says about 5 grams."
+  },
+  "source": "Geopop, “L'ISOLA DI PLASTICA NELL'OCEANO PACIFICO - Cos'è e come si è formata la Great Pacific Garbage Patch” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=Lgr3FBt_QM8&t=207s",
+  "written": "2026-11-03"
+}

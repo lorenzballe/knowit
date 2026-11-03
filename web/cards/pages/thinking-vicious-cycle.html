@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- slug: thinking-vicious-cycle -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The vicious cycle</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#sv{width:100%;flex:1;min-height:0;display:block}
+#sv text{font-family:var(--body);fill:var(--k)}
+#scrub{width:100%;height:max(4cqh,28px);accent-color:var(--k);margin:0;cursor:pointer;touch-action:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Scrub · the loop">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MISCONCEPTIONS</span></div>
+    <h2 class="q">What is the 'vicious cycle' in science education?</h2>
+    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
+    <input type="range" id="scrub" min="0" max="100" value="0" step="0.5" aria-label="Go round the loop">
+    <p class="say" id="say">Drag the slider to send the student round the loop.</p>
+    <div id="why" class="gone"><p class="body">Each time round, the student feels surer of the wrong idea. The surer they feel, the less of the correct explanation gets in, so the next round starts even surer.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Confidence in a wrong idea blocks the right one, so tackle the misconception first.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const sv = Kit.$('sv'), scrub = Kit.$('scrub');
+const S = {v: 0};
+let G = null, done = false, lastPhase = '';
+const ROUNDS = 3;
+
+function draw() {
+  while (sv.firstChild) sv.removeChild(sv.firstChild);
+  const {W, H, f} = Kit.fitSvg(sv);
+  const cx = W / 2, cy = H / 2;
+  const r = Math.max(f * 5, Math.min(W * 0.36, H / 2 - f * 3.4));
+  const pt = a => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  const defs = Kit.mk('defs', {}, sv);
+  const m = Kit.mk('marker', {id: 'ah', viewBox: '0 0 10 10', refX: 6, refY: 5, markerWidth: 3.2, markerHeight: 3.2, orient: 'auto-start-reverse', markerUnits: 'strokeWidth'}, defs);
+  Kit.mk('path', {d: 'M0,0 L10,5 L0,10 z', fill: 'var(--k)'}, m);
+  const g = 0.22;
+  const arc = (a0, a1) => { const [x0, y0] = pt(a0), [x1, y1] = pt(a1); return `M${x0},${y0} A${r},${r} 0 0 1 ${x1},${y1}`; };
+  const top = Kit.mk('path', {d: arc(Math.PI + g, 2 * Math.PI - g), fill: 'none', stroke: 'var(--k)', 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, sv);
+  const bot = Kit.mk('path', {d: arc(g, Math.PI - g), fill: 'none', stroke: 'var(--k)', 'stroke-linecap': 'round', 'marker-end': 'url(#ah)'}, sv);
+  const tl = Kit.mk('text', {x: cx, y: cy - r - f * 1.2, 'text-anchor': 'middle', 'font-size': f * 1.05, 'font-weight': 800}, sv);
+  tl.textContent = 'Confidence in wrong idea';
+  const bl = Kit.mk('text', {x: cx, y: cy + r + f * 2.0, 'text-anchor': 'middle', 'font-size': f * 1.05, 'font-weight': 800}, sv);
+  bl.textContent = 'Less learning';
+  Kit.mk('circle', {cx, cy, r: r - f * 1.2, fill: 'color-mix(in srgb, var(--k) 7%, transparent)'}, sv);
+  const qt = Kit.mk('text', {x: cx, y: cy - f * 2.6, 'text-anchor': 'middle', 'font-size': f * 0.9, 'font-style': 'italic'}, sv);
+  qt.textContent = '“Humans lived with dinosaurs”';
+  const big = Kit.mk('text', {x: cx, y: cy + f * 0.5, 'text-anchor': 'middle', 'font-size': f * 2.1, 'font-weight': 800}, sv);
+  const lrn = Kit.mk('text', {x: cx, y: cy + f * 2.5, 'text-anchor': 'middle', 'font-size': f * 0.95, 'font-weight': 600}, sv);
+  const dot = Kit.mk('circle', {r: f * 0.75, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': f * 0.3}, sv);
+  G = {f, r, cx, cy, top, bot, big, lrn, dot, pt};
+  update();
+}
+
+function update() {
+  if (!G) return;
+  const turns = S.v / 100 * ROUNDS;
+  const conf = Math.round(55 + 40 * (1 - Math.exp(-turns * 0.9)));
+  const learn = Math.round(60 * Math.exp(-turns * 0.7));
+  const a = Math.PI + turns * 2 * Math.PI;
+  const [x, y] = G.pt(a);
+  G.dot.setAttribute('cx', x); G.dot.setAttribute('cy', y);
+  const w = G.f * 0.22 * (1 + turns * 0.6);
+  G.top.setAttribute('stroke-width', w); G.bot.setAttribute('stroke-width', w);
+  G.big.textContent = `TRUE · ${conf}% sure`;
+  G.lrn.textContent = `takes in ${learn}% of the fix`;
+  if (S.v > 0.5 && !done) {
+    const onTop = (turns % 1) < 0.5;
+    const p = onTop ? `Round ${Math.min(ROUNDS, Math.floor(turns) + 1)}: the student feels surer it's true…` : `…so less of the correct answer gets in.`;
+    if (p !== lastPhase) { lastPhase = p; Kit.$('say').textContent = p; Kit.haptic('selection'); }
+  }
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  requestAnimationFrame(() => { draw(); if (!Kit.calm && G) gsap.from(G.dot, {attr: {r: G.f * 1.6}, duration: .6, ease: 'elastic.out(1,.4)'}); });
+}
+
+scrub.addEventListener('input', () => {
+  const v = +scrub.value;
+  gsap.to(S, {v, duration: Kit.calm ? 0 : .25, ease: 'power2.out', overwrite: true, onUpdate: update});
+  if (v >= 100) finish();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from([G.top, G.bot], {opacity: 0, duration: .5, stagger: .15, ease: 'power2.out'});
+  gsap.fromTo(G.dot, {attr: {r: G.f * 0.75}}, {attr: {r: G.f * 1.1}, duration: .6, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  scrub.value = 100; scrub.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

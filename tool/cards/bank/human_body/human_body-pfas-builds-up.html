@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- slug: human_body-pfas-builds-up -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute · PFAS build up</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#read{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;flex-wrap:wrap}
+#lvl{font:800 max(3.4cqh,20px)/1.1 var(--display);color:var(--k)}
+#ratio{font:700 max(1.9cqh,13px)/1.2 var(--mono);color:var(--k);opacity:.75}
+#g{flex:1;min-height:0;width:100%;display:block}
+#btn{font:800 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;align-self:stretch}
+#btn:active{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:600 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.lab{font-family:var(--mono);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap to add">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PFAS</span></div>
+    <h2 class="q">How can tap water with trace PFAS lead to high blood levels?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><span id="lvl">Blood: 0 ppb</span><span id="ratio">0× the water</span></div>
+      <svg id="g"></svg>
+      <button id="btn">Keep drinking · 0/8</button>
+      <div id="why" class="gone">
+        <p class="body">PFAS build up in your body over time: every glass adds a little, and little leaves. So water with just 4 parts per trillion, plus other exposure, can keep your blood at 2 parts per billion: 500 times higher.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to keep drinking water with 4 ppt of PFOA. Watch your blood.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Tiny doses that stay add up: trace water can keep blood high.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const STEPS = 8, TOP = 2000, R = 0.6;          // levels in ppt; 2000 ppt = 2 ppb
+const level = t => TOP * (1 - Math.pow(R, t));
+let n = 0, G = null, busy = false;
+const shown = {v: 0};
+
+function fmt(v){ return v >= 1990 ? '≈ 2 ppb' : (v/1000).toFixed(2) + ' ppb'; }
+function setRead(v){
+  Kit.$('lvl').textContent = 'Blood: ' + fmt(v);
+  Kit.$('ratio').textContent = (n >= STEPS ? 500 : Math.round(v/4)) + '× the water';
+}
+
+function draw(){
+  const svg = Kit.$('g'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const L = W*0.04, Rr = W*0.96, T = fs*2.4, B = H - fs*2.2;
+  const xs = t => L + (Rr - L) * t / STEPS;
+  const ys = v => B - (B - T) * v / (TOP*1.08);
+  G = {svg, W, H, fs, L, Rr, T, B, xs, ys};
+  // axes
+  Kit.mk('line', {x1:L, y1:B, x2:Rr, y2:B, stroke:'var(--k)', 'stroke-width':Math.max(2,fs*.12), 'stroke-linecap':'round'}, svg);
+  // target line
+  Kit.mk('line', {x1:L, y1:ys(TOP), x2:Rr, y2:ys(TOP), stroke:'var(--k)', 'stroke-width':Math.max(1.5,fs*.09), 'stroke-dasharray':`${fs*.5} ${fs*.4}`, opacity:.55}, svg);
+  const tl = Kit.mk('text', {x:L, y:ys(TOP) - fs*.55, class:'lab', 'font-size':fs, fill:'var(--k)', opacity:.8}, svg);
+  tl.textContent = '2 ppb in blood';
+  // water level
+  Kit.mk('line', {x1:L, y1:B - Math.max(2,fs*.12), x2:Rr, y2:B - Math.max(2,fs*.12), stroke:'#2a7fff', 'stroke-width':Math.max(3,fs*.25), 'stroke-linecap':'round'}, svg);
+  const wl = Kit.mk('text', {x:Rr, y:B + fs*1.5, 'text-anchor':'end', class:'lab', 'font-size':fs, fill:'var(--k)'}, svg);
+  wl.textContent = 'water: 4 ppt';
+  const xl = Kit.mk('text', {x:L, y:B + fs*1.5, class:'lab', 'font-size':fs, fill:'var(--k)', opacity:.6}, svg);
+  xl.textContent = 'time →';
+  G.curve = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx:xs(0), cy:ys(0), r:fs*.35, fill:'var(--k)'}, G.curve);
+  for (let i = 1; i <= n; i++) seg(i, false);
+}
+
+function seg(i, anim){
+  const {xs, ys, fs} = G;
+  let d = '';
+  for (let k = 0; k <= 16; k++){ const t = i - 1 + k/16; d += (k ? 'L' : 'M') + xs(t).toFixed(1) + ' ' + ys(level(t)).toFixed(1); }
+  const p = Kit.mk('path', {d, fill:'none', stroke:'var(--k)', 'stroke-width':Math.max(3,fs*.3), 'stroke-linecap':'round', 'stroke-linejoin':'round'}, G.curve);
+  // the glass added this step: a little blue drop falling into the point
+  const c = Kit.mk('circle', {cx:xs(i), cy:ys(level(i)), r:fs*.42, fill:'var(--k)'}, G.curve);
+  if (anim && !Kit.calm){
+    const len = p.getTotalLength();
+    gsap.fromTo(p, {strokeDasharray:len, strokeDashoffset:len}, {strokeDashoffset:0, duration:.5, ease:'power2.out'});
+    gsap.from(c, {attr:{r:0}, duration:.3, delay:.45, ease:'back.out(3)'});
+    const drop = Kit.mk('circle', {cx:xs(i), cy:G.B, r:fs*.3, fill:'#2a7fff'}, G.svg);
+    gsap.to(drop, {attr:{cy:ys(level(i))}, opacity:0, duration:.55, ease:'power1.in', onComplete:() => drop.remove()});
+  }
+}
+
+function step(){
+  if (busy || n >= STEPS) return;
+  n++; busy = !Kit.calm;
+  Kit.haptic('light');
+  seg(n, true);
+  const target = level(n);
+  if (Kit.calm){ shown.v = target; setRead(target); busy = false; }
+  else gsap.to(shown, {v:target, duration:.5, ease:'power2.out', onUpdate:() => setRead(shown.v), onComplete:() => { busy = false; setRead(target); }});
+  Kit.$('btn').textContent = `Keep drinking · ${n}/${STEPS}`;
+  if (n >= STEPS){
+    setTimeout(() => {
+      setRead(target);
+      Kit.hide('btn'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+      requestAnimationFrame(draw);
+      if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:8, stagger:.1, duration:.4});
+    }, Kit.calm ? 0 : 550);
+  }
+}
+
+Kit.$('btn').addEventListener('click', step);
+Kit.onShow.card = () => { draw(); setRead(level(n)); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#g', {opacity:0, y:10, duration:.5, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < STEPS; i++){ Kit.$('btn').click(); await new Promise(r => setTimeout(r, 650)); }
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

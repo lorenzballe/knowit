@@ -1,0 +1,37 @@
+{
+  "id": "history-ecuador-terrorist-label",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "How does Ecuador's emergency decree classify its 22 criminal groups?",
+  "answer": "The decree lists 22 organized-crime groups and officially defines them as terrorists. That label lets the government treat them under the laws of armed conflict: an enemy to neutralize, not just suspects to arrest. The label the decree uses is Terrorists.",
+  "move": "Calling gangs \"terrorists\" turned a police job into an armed conflict.",
+  "keywords": [
+    "ecuador",
+    "emergency decree",
+    "organized crime",
+    "terrorism",
+    "armed conflict"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three-choice quiz on how Ecuador's emergency decree classifies its 22 criminal groups: organized crime (suspects to arrest), terrorists (targets to neutralize), or insurgents (groups to negotiate with). The reader picks one label."
+  },
+  "source": "Geopop, “L'Ecuador sotto attacco dei narcos. Perché il Paese è in stato d'emergenza e cosa sta succedendo” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=8-KoJBcxLek&t=141s",
+  "written": "2026-11-03"
+}

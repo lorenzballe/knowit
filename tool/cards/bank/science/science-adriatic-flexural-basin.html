@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-adriatic-flexural-basin -->
+<title>Astute · Why the Adriatic is a flexural basin</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.say b{font-family:var(--mono)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · watch it bend">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">Why is the Adriatic Sea considered a flexural basin?</h2>
+    <div class="stagebox" id="stage"><svg id="sv" aria-label="Cross-section of the Apennines and the crust beneath"></svg></div>
+    <p class="say" id="say">Tap the picture to pile weight on the Apennines · <b id="cnt">0/5</b></p>
+    <div id="why" class="gone"><p class="body">Mountains are heavy. As the Apennines rose, their weight bent the crust beneath them downward, opening a depression in front of the chain: a foreland basin. Water filled it, and that is the Adriatic.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heavy mountains bend the crust; the sag in front of them becomes a basin.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 5;
+const st = {L: .08, water: 0};
+let taps = 0, G = null, pulse = null;
+const sv = Kit.$('sv');
+
+function surf(x){
+  const {W,H} = G, x0 = .35*W, a = .17*W, D = .26*H*st.L;
+  const u = Math.abs(x - x0)/a;
+  return .4*H + D*Math.exp(-u)*(Math.cos(u) + Math.sin(u));
+}
+const MX = [-1,-.72,-.5,-.28,-.1,.08,.26,.46,.7,1];
+const MY = [0,.3,.48,.7,1,.82,.62,.5,.24,0];
+
+function draw(){
+  if (!G) return;
+  const {W,H,f,e} = G, x0 = .35*W, b = .13*W, y0 = .4*H, T = .2*H;
+  let top = [], bot = [];
+  for (let i = 0; i <= 90; i++){ const x = W*i/90, y = surf(x); top.push([x,y]); bot.push([x,y+T]); }
+  e.crust.setAttribute('d', 'M' + top.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join('L') + 'L' + bot.reverse().map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join('L') + 'Z');
+  const h = .34*H*st.L;
+  const pts = MX.map((m,i) => { const x = x0 + m*b; return [x, surf(x) - h*MY[i]]; });
+  e.mtn.setAttribute('d', 'M' + pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join('L') + 'Z');
+  e.snow.setAttribute('d', `M${pts[3][0]+ (pts[4][0]-pts[3][0])*.55},${pts[3][1]+(pts[4][1]-pts[3][1])*.55}L${pts[4][0]},${pts[4][1]}L${pts[4][0]+(pts[5][0]-pts[4][0])*.55},${pts[4][1]+(pts[5][1]-pts[4][1])*.55}Z`);
+  e.snow.setAttribute('opacity', st.L > .5 ? 1 : 0);
+  const peak = pts[4][1];
+  e.ap.setAttribute('x', x0); e.ap.setAttribute('y', Math.max(peak - .7*f, 1.1*f));
+  e.ap.setAttribute('opacity', Math.min(1, st.L*2));
+  // weight arrows inside the crust
+  e.arrows.forEach((ar,i) => {
+    const x = x0 + (i-1)*.07*W, y = surf(x) + .03*H, len = .12*H*st.L;
+    ar.setAttribute('d', `M${x},${y}L${x},${y+len}M${x-.012*W-2},${y+len-.02*H-2}L${x},${y+len}L${x+.012*W+2},${y+len-.02*H-2}`);
+    ar.setAttribute('opacity', st.L > .2 ? .9 : 0);
+  });
+  e.ring.setAttribute('cx', x0); e.ring.setAttribute('cy', (peak + surf(x0))/2);
+  e.water.setAttribute('opacity', st.water*.92);
+  e.ad.setAttribute('opacity', st.water); e.fb.setAttribute('opacity', st.water);
+  e.bend.setAttribute('opacity', Math.min(1, st.L*1.6));
+  const cy = surf(.33*W) + T*.55;
+  e.crustT.setAttribute('y', surf(.08*W) + T*.55);
+}
+
+Kit.onShow.card = () => {
+  G = Kit.fitSvg(sv);
+  const {W,H} = G, f = Math.max(G.f, 13), y0 = .4*H, T = .2*H, x0 = .35*W;
+  G.f = f;
+  sv.innerHTML = '';
+  const mk = (t,a,p=sv) => Kit.mk(t,a,p);
+  mk('rect',{x:0,y:y0,width:W,height:H-y0,fill:'#b8462b'});
+  for (let i = 1; i < 4; i++) mk('path',{d:`M0,${y0+T+i*(H-y0-T)/4+.02*H}Q${W/2},${y0+T+i*(H-y0-T)/4-.02*H} ${W},${y0+T+i*(H-y0-T)/4+.02*H}`,fill:'none',stroke:'#ffffff',"stroke-opacity":.13,"stroke-width":Math.max(1,.004*H)});
+  const e = {};
+  e.water = mk('rect',{x:x0,y:y0,width:W-x0,height:T*.85,fill:'#2f7fd1',opacity:0});
+  e.crust = mk('path',{fill:'#d9b77a',stroke:'#4a3420',"stroke-width":Math.max(1.5,.004*H)});
+  e.bend = mk('line',{x1:0,y1:y0,x2:W,y2:y0,stroke:'#1b1b1b',"stroke-width":Math.max(1.5,.004*H),"stroke-dasharray":`${.012*H} ${.01*H}`,opacity:0});
+  e.mtn = mk('path',{fill:'#7a5a3a',stroke:'#3b2a18',"stroke-width":Math.max(1.5,.004*H),"stroke-linejoin":'round'});
+  e.snow = mk('path',{fill:'#fff'});
+  e.arrows = [0,1,2].map(() => mk('path',{fill:'none',stroke:'#3b2a18',"stroke-width":Math.max(2,.007*H),"stroke-linecap":'round',"stroke-linejoin":'round'}));
+  e.ring = mk('circle',{r:.09*Math.min(W,H)+8,fill:'none',stroke:'var(--k)',"stroke-width":Math.max(2,.006*H),opacity:0});
+  const txt = (s,a) => { const t = mk('text',Object.assign({"font-family":'var(--body)',"font-weight":700,"font-size":f,fill:'var(--k)'},a)); t.textContent = s; return t; };
+  e.ap = txt('Apennines',{"text-anchor":'middle'});
+  e.ad = txt('Adriatic Sea',{x:.66*W,y:y0-1.95*f,"text-anchor":'middle',fill:'#1d5fa3',opacity:0});
+  e.fb = txt('foreland basin',{x:.66*W,y:y0-.6*f,"text-anchor":'middle',"font-weight":500,"font-size":f*.9,opacity:0});
+  e.crustT = txt('crust',{x:.04*W,"text-anchor":'start',"font-size":f*.9,fill:'#3b2a18'});
+  txt('mantle',{x:.04*W,y:H-.9*f,"text-anchor":'start',"font-size":f*.9,fill:'#fff'});
+  G.e = e;
+  draw();
+  if (taps < N && !Kit.calm){
+    if (pulse) pulse.kill();
+    pulse = gsap.fromTo(e.ring,{attr:{r:.06*Math.min(W,H)+6},opacity:.8},{attr:{r:.13*Math.min(W,H)+10},opacity:0,duration:1.4,repeat:-1,ease:'power2.out'});
+  }
+};
+
+Kit.$('stage').addEventListener('click', () => {
+  if (taps >= N) return;
+  taps++; Kit.haptic('light');
+  Kit.$('cnt').textContent = taps + '/' + N;
+  const d = Kit.calm ? 0 : .7;
+  gsap.to(st,{L:.08 + .92*taps/N, duration:d, ease:'back.out(1.4)', onUpdate:draw, onComplete:draw});
+  if (taps === N){
+    if (pulse){ pulse.kill(); pulse = null; G && G.e.ring.setAttribute('opacity',0); }
+    gsap.to(st,{water:1, duration:Kit.calm?0:1.2, delay:d, ease:'power1.inOut', onUpdate:draw, onComplete:() => {
+      draw(); Kit.haptic('success');
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.4});
+    }});
+  }
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.e.mtn,{opacity:0,duration:.5}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < N; i++){ Kit.$('stage').click(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 2400));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "maths-hundred-bets-safety",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the probability of losing money in 100 favorable bets?",
+  "answer": "One coin flip is a gamble: you win $20 or lose $10. Over 100 flips you win roughly 45 to 55 times, and every win counts double, so on average you end up $500 ahead. Only 1 in 2300 players ends up down.",
+  "move": "One good bet is a gamble; a hundred of them is almost a sure win.",
+  "keywords": [
+    "coin_flip",
+    "betting",
+    "law_of_large_numbers",
+    "veritasium",
+    "expected_value"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Astute free card on the law of large numbers. It asks: what is the probability of losing money in 100 favorable bets? Each bet is a coin flip that wins $20 or loses $10. A draggable coin lets you run 100 bets."
+  },
+  "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=vBX-KulgJ1o&t=237s",
+  "written": "2026-11-03"
+}

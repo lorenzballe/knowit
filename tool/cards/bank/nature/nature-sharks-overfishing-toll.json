@@ -1,0 +1,37 @@
+{
+  "id": "nature-sharks-overfishing-toll",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.overfishing",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "What share of shark and ray species is over-fishing pushing toward extinction?",
+  "answer": "Over-fishing threatens more than 1 in 3 shark and ray species with extinction. It kills about 100 million sharks and rays every year, roughly 274,000 a day.",
+  "move": "Over-fishing threatens over 1 in 3 shark and ray species: 100 million die a year.",
+  "keywords": [
+    "sharks",
+    "rays",
+    "over-fishing",
+    "extinction",
+    "species"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card asking what share of shark and ray species over-fishing pushes toward extinction. Four options: about 1 in 20, about 1 in 10, more than 1 in 3, about 9 in 10. The reader picks one, then rates how sure they are. A reveal then shows the answer."
+  },
+  "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=126s",
+  "written": "2026-11-03"
+}

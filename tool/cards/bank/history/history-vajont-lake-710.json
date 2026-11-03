@@ -1,0 +1,37 @@
+{
+  "id": "history-vajont-lake-710",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How high did the Vajont lake rise before Monte Toc gave way?",
+  "answer": "The lake behind the dam was raised to 710 m while the slope of Monte Toc above it was creeping 2 cm a day. The level was brought back to a safe height on 26 September, but it was too late: on 9 October, 270 million m³ of rock broke away.",
+  "move": "At Vajont, lowering the water came after the mountain had already started to move.",
+  "keywords": [
+    "vajont",
+    "monte toc",
+    "vajont dam",
+    "landslide",
+    "italy"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Diagram of a dam and reservoir in a valley above a mountain slope. Drag up to raise the lake level, and see how high it rose before the slope of Monte Toc gave way."
+  },
+  "source": "Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=xUtCwhN8-pQ&t=487s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<!-- slug: nature-landslide-speed-range -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#clock{font:800 max(3.4cqh,20px)/1.1 var(--display);color:var(--k);text-align:center}
+#clock small{display:block;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#reads{display:flex;gap:4cqw}
+#reads p{flex:1;margin:0;font:600 max(1.7cqh,12px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
+#reads b{display:block;font:800 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+#sl{width:100%;margin:0;height:max(4cqh,28px);accent-color:var(--k);cursor:pointer}
+#ticks{position:relative;height:max(2.2cqh,15px);font:700 max(1.5cqh,12px)/1 var(--mono);color:var(--muted)}
+#ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+#ticks span.l{transform:none}#ticks span.r{transform:translateX(-100%)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{margin:0;font:500 max(1.8cqh,12px)/1.3 var(--body)}
+#stage.end{gap:.6cqh}
+#stage.end #clock small{display:none}
+#stage.end #reads p{line-height:1.2}
+#stage.end #why .body{font-size:max(1.6cqh,12px);line-height:1.25}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Slider · watch time pass">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LANDSLIDE SPEED</span></div>
+    <h2 class="q">How fast does a landslide move: in seconds, or over years?</h2>
+    <div class="stagebox" id="stage">
+      <div id="clock"><small>time watched</small><span id="tt">0 seconds</span></div>
+      <svg id="pic"></svg>
+      <div id="reads">
+        <p><b>Rockfall</b><span id="ra">Breaking loose…</span></p>
+        <p><b>Slide, like Niscemi</b><span id="rb">Not visibly moved.</span></p>
+      </div>
+      <div>
+        <input type="range" id="sl" min="0" max="1000" value="0" aria-label="Time watched">
+        <div id="ticks"><span class="l" style="left:0">0 s</span><span style="left:25%">1 min</span><span style="left:58%">1 day</span><span style="left:88%">1 yr</span><span class="r" style="left:100%">10 yr</span></div>
+      </div>
+      <div id="why" class="gone"><p class="body">A rockfall, or a mud flow like Sarno in 1998, comes down like a snow avalanche: seconds, minutes at most. A slide like Niscemi's moves millimetres a year, so it takes years to see.</p></div>
+    </div>
+    <p class="say" id="say">Drag the slider to let time pass. Watch both slopes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A landslide can be over in seconds or creep millimetres a year.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LOGMAX = 8.5, FALL = 6, YEAR = 3.156e7;
+let v = 0, G = null, done = false;
+const tOf = v => Math.pow(10, v * LOGMAX) - 1;
+function fmt(t){
+  if (t < 60) { const s = Math.round(t); return s + (s === 1 ? ' second' : ' seconds'); }
+  if (t < 3600) { const m = Math.round(t/60); return m + (m === 1 ? ' minute' : ' minutes'); }
+  if (t < 86400) { const h = Math.round(t/3600); return h + (h === 1 ? ' hour' : ' hours'); }
+  if (t < YEAR) { const d = Math.round(t/86400); return d + (d === 1 ? ' day' : ' days'); }
+  const y = t / YEAR; const r = y < 2 ? Math.round(y*10)/10 : Math.round(y); return r + (r === 1 ? ' year' : ' years');
+}
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const gap = W * .06, pw = Math.max(1, (W - gap) / 2), L = 0, R = pw + gap;
+  const y0 = 4, y1 = Math.max(y0 + 1, H - 2), h = Math.max(1, y1 - y0);
+  const g = {};
+  // left: cliff
+  const top = y0 + .18*h, foot = y1 - .16*h;
+  Kit.mk('polygon', {points:`${L},${top} ${L+.4*pw},${top} ${L+.48*pw},${foot} ${L+pw},${y1} ${L},${y1}`, fill:'currentColor', 'fill-opacity':.18, stroke:'currentColor', 'stroke-width':Math.max(2,f*.12), 'stroke-linejoin':'round'}, svg);
+  const r = Math.max(.5, Math.min(pw*.07, h*.07));
+  const xs = L+.36*pw, ys = top - r, xe = L+.8*pw;
+  const fr = (.8-.48)/.52, ye = foot + (y1-foot)*fr - r;
+  g.dust = [];
+  for (let i=0;i<5;i++) g.dust.push(Kit.mk('circle',{cx:xe+(i-2)*r*.9, cy:ye+r*.6, r:r*.5, fill:'currentColor', opacity:0}, svg));
+  g.rock = Kit.mk('g', {}, svg);
+  Kit.mk('polygon', {points:[0,1,2,3,4,5,6].map(i=>{const a=i/7*6.283, k=r*(.85+.3*((i*37)%5)/5); return `${Math.cos(a)*k},${Math.sin(a)*k}`}).join(' '), fill:'currentColor'}, g.rock);
+  g.rk = {xs, ys, xe, ye};
+  // right: slow slide
+  const ax = R, ay = y0 + .22*h, bx = R + pw, by = y1 - .08*h;
+  const tx = R + .18*pw, ty = ay;
+  const len = Math.max(1, Math.hypot(bx-tx, by-ty)), ux = (bx-tx)/len, uy = (by-ty)/len;
+  Kit.mk('polygon', {points:`${ax},${ay} ${tx},${ty} ${bx},${by} ${bx},${y1} ${ax},${y1}`, fill:'currentColor', 'fill-opacity':.18, stroke:'currentColor', 'stroke-width':Math.max(2,f*.12), 'stroke-linejoin':'round'}, svg);
+  const th = Math.max(.5, Math.min(h*.1, pw*.1)), nx = -uy, ny = ux; // normal pointing down-left; slab sits above slope so use -n
+  const s0 = .12*len, s1 = .62*len;
+  const P = s => [tx+ux*s, ty+uy*s];
+  const [a1,a2] = P(s0), [b1,b2] = P(s1);
+  g.scar = Kit.mk('polygon', {points:`${a1},${a2} ${a1},${a2}`, fill:'currentColor', 'fill-opacity':.75}, svg);
+  g.slab = Kit.mk('g', {}, svg);
+  const up = [-nx*th, -ny*th];
+  // slab sits in the slope surface (cut into hill)
+  Kit.mk('polygon', {points:`${a1},${a2} ${b1},${b2} ${b1+nx*th*.0+ (-up[0])},${b2-up[1]} ${a1-up[0]},${a2-up[1]}`, fill:'currentColor', 'fill-opacity':.42, stroke:'currentColor', 'stroke-width':Math.max(1.5,f*.09), 'stroke-dasharray':`${f*.4} ${f*.25}`}, g.slab);
+  const [hx,hy] = P((s0+s1)/2), hs = Math.max(.5, Math.min(pw*.11, h*.1));
+  const hg = Kit.mk('g', {transform:`translate(${hx},${hy})`}, g.slab);
+  Kit.mk('rect', {x:-hs/2, y:-hs*.9, width:hs, height:hs*.9, fill:'var(--c)', stroke:'currentColor', 'stroke-width':Math.max(1.5,f*.1)}, hg);
+  Kit.mk('polygon', {points:`${-hs*.65},${-hs*.85} 0,${-hs*1.5} ${hs*.65},${-hs*.85}`, fill:'currentColor'}, hg);
+  g.sl = {a1,a2,ux,uy,up, dmax:.16*len};
+  G = g; update();
+}
+function update(){
+  if (!G) return;
+  const t = tOf(v);
+  Kit.$('tt').textContent = fmt(t);
+  // rockfall
+  const p = Math.min(1, t / FALL), k = G.rk;
+  const x = k.xs + (k.xe-k.xs)*p, y = k.ys + (k.ye-k.ys)*p*p;
+  G.rock.setAttribute('transform', `translate(${x},${y}) rotate(${p*400})`);
+  const dust = p >= 1 ? Math.max(0, .35 - Math.log10(1+t-FALL)*.12) : 0;
+  G.dust.forEach((d,i)=>d.setAttribute('opacity', dust*(1-Math.abs(i-2)*.25)));
+  Kit.$('ra').textContent = p < .02 ? 'Breaking loose…' : p < 1 ? 'Falling!' : 'Over. It took seconds.';
+  // slide: linear in time, invisible until years
+  const yrs = t / YEAR, d = Math.min(1, yrs/10) * G.sl.dmax, s = G.sl;
+  G.slab.setAttribute('transform', `translate(${s.ux*d},${s.uy*d})`);
+  G.scar.setAttribute('points', `${s.a1},${s.a2} ${s.a1+s.ux*d},${s.a2+s.uy*d} ${s.a1+s.ux*d-s.up[0]},${s.a2+s.uy*d-s.up[1]} ${s.a1-s.up[0]},${s.a2-s.up[1]}`);
+  Kit.$('rb').textContent = t < 86400 ? 'Not visibly moved.' : yrs < 1 ? 'Less than a millimetre.' : 'Millimetres a year. (Drawing exaggerated.)';
+  if (!done && v >= .99) finish();
+}
+function finish(){
+  done = true; Kit.haptic('success');
+  Kit.$('stage').classList.add('end');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:8, stagger:.1, duration:.4, ease:'power3.out'});
+}
+let lastZone = -1;
+Kit.$('sl').addEventListener('input', e => {
+  v = e.target.value / 1000;
+  const z = [60,86400,YEAR].filter(x => tOf(v) >= x).length;
+  if (z !== lastZone) { lastZone = z; Kit.haptic('selection'); }
+  update();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {v:0};
+  gsap.to(o, {v:.12, duration:1.2, ease:'power2.inOut', yoyo:true, repeat:1, delay:.3, onUpdate(){ if (v < .13) { v = o.v; Kit.$('sl').value = v*1000; update(); } }});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('sl');
+  for (const x of [200, 500, 800, 1000]) { s.value = x; s.dispatchEvent(new Event('input', {bubbles:true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

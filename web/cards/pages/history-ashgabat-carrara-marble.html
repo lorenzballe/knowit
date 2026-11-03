@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-ashgabat-carrara-marble -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#cityBox{flex:1;min-height:0;position:relative}
+#city{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1.1cqh 2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--display);font-weight:800;fill:var(--k)}
+.sub{font-family:var(--body);font-weight:600;fill:var(--k);opacity:.75}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MARBLE CITY</span></div>
+    <h2 class="q">How much Carrara marble has been used for Ashgabat’s construction?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cityBox"><svg id="city"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">45,000 m²</button>
+        <button class="opt" data-i="1">450,000 m²</button>
+        <button class="opt" data-i="2">4.5 million m²</button>
+        <button class="opt" data-i="3">45 million m²</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About 4.5 million m²</p><p class="body">Turkmenistan’s capital clad more than 540 new buildings in very white Carrara marble, brought mainly from Italy, to make the city gleam. Laid flat, that is a square about 2.1 km on each side.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick an amount, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ashgabat: 540+ buildings dressed in about 4.5 million m² of Carrara marble.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, slabs = [], num = null;
+// Fixed skyline: [width share, height share, cap]
+const B = [[.09,.38,0],[.12,.62,1],[.08,.30,0],[.1,.5,2],[.14,.78,1],[.09,.42,0],[.11,.58,2],[.08,.34,0],[.1,.48,0]];
+
+function fmt(v){ return v < .05 ? '0 m²' : v.toFixed(1) + ' million m²'; }
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('city');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  slabs = [];
+  const fs = Math.max(f * 1.35, 18), fs2 = Math.max(f * .85, 12);
+  num = Kit.mk('text', {x: 2, y: fs, class: 'lbl', 'font-size': fs}, svg);
+  num.textContent = done ? '4.5 million m²' : '? m²';
+  const sub = Kit.mk('text', {x: 2, y: fs + fs2 * 1.5, class: 'sub', 'font-size': fs2}, svg);
+  sub.textContent = done ? 'Carrara marble · 540+ buildings' : 'Ashgabat · how much marble?';
+  const top = fs + fs2 * 2.3, avail = H - top - 4;
+  const totalW = B.reduce((a, b) => a + b[0], 0), gap = W * .012;
+  const scale = (W - gap * (B.length - 1)) / totalW;
+  const s = Math.max(6, Math.min(W / 26, avail / 14));
+  let x = 0;
+  const ground = H - 2;
+  const ink = 'var(--k)';
+  B.forEach(([wf, hf, cap], bi) => {
+    const w = wf * scale, h = hf * avail;
+    const y0 = ground - h;
+    // cap
+    if (cap === 1) Kit.mk('path', {d: `M${x + w*.3},${y0} L${x + w/2},${y0 - Math.min(h*.18, s*2.5)} L${x + w*.7},${y0} Z`, fill: 'none', stroke: ink, 'stroke-width': 1.5}, svg);
+    if (cap === 2) Kit.mk('path', {d: `M${x + w*.15},${y0} A${w*.35},${w*.3} 0 0 1 ${x + w*.85},${y0}`, fill: 'none', stroke: ink, 'stroke-width': 1.5}, svg);
+    Kit.mk('rect', {x, y: y0, width: w, height: h, fill: 'color-mix(in srgb,var(--k) 10%,transparent)', stroke: ink, 'stroke-width': 1.5}, svg);
+    const cols = Math.max(1, Math.floor(w / s)), rows = Math.max(1, Math.floor(h / s));
+    const cw = w / cols, ch = h / rows;
+    for (let r = rows - 1; r >= 0; r--) for (let c = 0; c < cols; c++) {
+      const g = Kit.mk('g', {opacity: done ? 1 : 0}, svg);
+      Kit.mk('rect', {x: x + c*cw + .8, y: y0 + r*ch + .8, width: cw - 1.6, height: ch - 1.6, fill: '#fbfaf6', stroke: '#c9c3b6', 'stroke-width': .6}, g);
+      const k = (bi * 7 + r * 3 + c) % 5;
+      if (k < 2) {
+        const vx = x + c*cw, vy = y0 + r*ch;
+        Kit.mk('path', {d: `M${vx + cw*.15},${vy + ch*.7} Q${vx + cw*.5},${vy + ch*(k ? .2 : .55)} ${vx + cw*.85},${vy + ch*.35}`, fill: 'none', stroke: '#b9b2a4', 'stroke-width': .7}, g);
+      }
+      slabs.push({g, row: rows - 1 - r});
+    }
+    x += w + gap;
+  });
+  Kit.mk('line', {x1: 0, x2: W, y1: ground + 1, y2: ground + 1, stroke: ink, 'stroke-width': 2}, svg);
+};
+
+function reveal(){
+  done = true;
+  const sub = Kit.$('city').querySelectorAll('.sub')[0];
+  if (sub) sub.textContent = 'Carrara marble · 540+ buildings';
+  const gs = slabs.slice().sort((a, b) => a.row - b.row).map(o => o.g);
+  if (Kit.calm) { gs.forEach(g => g.setAttribute('opacity', 1)); num.textContent = '4.5 million m²'; return; }
+  gsap.to(gs, {attr: {opacity: 1}, duration: .25, stagger: {each: 1.8 / gs.length}, ease: 'power1.out'});
+  const o = {v: 0};
+  gsap.to(o, {v: 4.5, duration: 2, ease: 'power2.out', onUpdate: () => { if (num) num.textContent = fmt(o.v); }, onComplete: () => { if (num) num.textContent = '4.5 million m²'; Kit.haptic('success'); }});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2600)); };
+Kit.single();
+</script>
+</html>

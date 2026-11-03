@@ -1,0 +1,38 @@
+{
+  "id": "science-grape-plasma",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a grape in a microwave produce plasma?",
+  "answer": "A grape in a microwave produces plasma because the microwave's electric field pours energy into the water vapor inside the grape and rips electrons off its molecules. Those free electrons make the gas conduct electricity, and a gas that conducts this way is plasma.",
+  "move": "Plasma is a gas energized until its electrons are ripped free.",
+  "keywords": [
+    "grape",
+    "microwave",
+    "plasma",
+    "electron",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page titled PULL APART asking why a grape in a microwave produces plasma. A glow covers the grape, and the reader drags up to pull the glow apart layer by layer to reveal the explanation.",
+    "ground": "#0e0705"
+  },
+  "source": "Veritasium, “Make Plasma With Grapes In The Microwave!” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=RwTjsRt0Fzo",
+  "written": "2026-11-03"
+}

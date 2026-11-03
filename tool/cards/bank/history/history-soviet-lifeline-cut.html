@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-soviet-lifeline-cut -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#map{flex:1;min-height:0;width:100%;display:block}
+#next{align-self:center;font:700 max(2.2cqh,14px)/1.2 var(--body);background:var(--k);color:var(--c);border:0;border-radius:99px;padding:1.4cqh 7cqw;cursor:pointer;flex:none}
+#next .n{opacity:.6;font-weight:600;margin-left:.6em}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap through · steps">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FAMINE</span></div>
+    <h2 class="q">What outside event set off North Korea's 1990s famine?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map"></svg>
+      <button id="next">Next ▸<span class="n">1/4</span></button>
+      <div id="why" class="gone">
+        <p class="body">North Korea leaned on the Soviet Union's aid and trade. When the Soviet Union broke apart, both stopped. In the 1990s over 3.5 million people died of hunger. It was not the only cause, but it was a big one.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Next to follow what happened, one step at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Soviet collapse cut North Korea's aid and trade, and famine followed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CAPS = [
+  'Tap Next to follow what happened, one step at a time.',
+  '1991: the Soviet Union falls apart.',
+  'The aid it sent North Korea stops.',
+  'The trade stops too.',
+  '1990s: over 3.5 million North Koreans die of hunger.'
+];
+const FOOD = [1, .9, .6, .35, .12];
+let step = 0, R = null;
+const svg = Kit.$('map');
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const pad = W * .06;
+  const r = {W, H, f, flows: []};
+
+  // Soviet Union
+  let d = '', N = 12;
+  for (let i = 0; i <= N; i++) { const x = pad + (W - 2 * pad) * i / N, y = H * (.05 + .015 * Math.sin(i * 1.7)); d += (i ? 'L' : 'M') + x + ' ' + y; }
+  for (let i = N; i >= 0; i--) { const x = pad + (W - 2 * pad) * i / N, y = H * (.31 + .022 * Math.sin(i * 2.3 + 1)); d += 'L' + x + ' ' + y; }
+  r.ussr = mk('path', {d: d + 'Z', style: 'fill:var(--k);fill-opacity:.88;stroke:var(--k);stroke-width:2;stroke-linejoin:round'});
+  r.cracks = [.3, .55, .78].map((fx, j) => {
+    let cd = '', x0 = W * fx;
+    for (let k = 0; k <= 6; k++) { const y = H * (.03 + .32 * k / 6), x = x0 + (k % 2 ? 1 : -1) * W * .025 * (1 + (j % 2)); cd += (k ? 'L' : 'M') + x + ' ' + y; }
+    const p = mk('path', {d: cd, style: 'fill:none;stroke:var(--c);stroke-width:' + Math.max(2.5, f * .25) + ';stroke-linejoin:round'});
+    const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p._L = L;
+    return p;
+  });
+  r.ussrLbl = mk('text', {x: W / 2, y: H * .18 + f * .4, 'text-anchor': 'middle', style: `font:800 ${f * 1.15}px var(--display);fill:var(--c);letter-spacing:.08em`});
+  r.ussrLbl.textContent = 'SOVIET UNION';
+
+  // North Korea
+  const cx = W * .62, cy = H * .73, sy = H * .08, sx = Math.min(W * .16, sy * 1.5);
+  const nkP = [[-1, -.6], [-.2, -1], [.8, -.9], [1, -.3], [.4, .1], [.15, .8], [-.45, 1], [-.75, .3]];
+  r.nk = mk('path', {d: 'M' + nkP.map(p => (cx + p[0] * sx) + ' ' + (cy + p[1] * sy)).join('L') + 'Z', style: 'fill:var(--k);fill-opacity:.88;stroke:var(--k);stroke-width:2;stroke-linejoin:round'});
+  r.nkLbl = mk('text', {x: cx, y: cy + sy + f * 1.5, 'text-anchor': 'middle', style: `font:800 ${f}px var(--display);fill:var(--k);letter-spacing:.06em`});
+  r.nkLbl.textContent = 'NORTH KOREA';
+
+  // Flows: aid and trade
+  const defs = [
+    {name: 'AID', a: [W * .3, H * .32], q: [W * .24, H * .62], b: [cx - sx * .55, cy - sy * .85], side: 1},
+    {name: 'TRADE', a: [W * .82, H * .32], q: [W * .93, H * .6], b: [cx + sx * .6, cy - sy * .85], side: -1}
+  ];
+  defs.forEach(o => {
+    const g = mk('g', {});
+    const p = mk('path', {d: `M${o.a}Q${o.q} ${o.b}`, style: `fill:none;stroke:var(--k);stroke-width:${Math.max(2, f * .18)};stroke-dasharray:${f * .5} ${f * .35};stroke-linecap:round`}, g);
+    const L = p.getTotalLength(), m = p.getPointAtLength(L * .5);
+    const lbl = mk('text', {x: m.x + o.side * f * .7, y: m.y + f * .35, 'text-anchor': o.side > 0 ? 'start' : 'end', style: `font:800 ${f}px var(--mono);fill:var(--k);letter-spacing:.08em`}, g);
+    lbl.textContent = o.name;
+    const dots = [];
+    for (let i = 0; i < 5; i++) dots.push({t: i / 5, el: mk('circle', {r: Math.max(3, f * .32), style: 'fill:var(--k)'}, g)});
+    const x = mk('g', {style: 'opacity:0'}, svg), s = f * .55;
+    mk('circle', {cx: m.x, cy: m.y, r: s * 1.5, style: 'fill:var(--c);stroke:var(--k);stroke-width:2'}, x);
+    mk('path', {d: `M${m.x - s} ${m.y - s}L${m.x + s} ${m.y + s}M${m.x + s} ${m.y - s}L${m.x - s} ${m.y + s}`, style: `stroke:var(--k);stroke-width:${Math.max(2.5, f * .25)};stroke-linecap:round`}, x);
+    const fl = {g, p, L, lbl, dots, x, on: true};
+    dots.forEach(dt => place(fl, dt));
+    r.flows.push(fl);
+  });
+
+  // Food gauge
+  const bx = pad, bw = Math.max(W * .05, 12), bt = H * .44, bb = H * .84;
+  r.bar = {bt, bb};
+  mk('rect', {x: bx, y: bt, width: bw, height: bb - bt, rx: bw * .3, style: 'fill:none;stroke:var(--k);stroke-width:2'});
+  r.fill = mk('rect', {x: bx + 3, y: bt + 3, width: bw - 6, height: bb - bt - 6, rx: bw * .2, style: 'fill:var(--k)'});
+  const fl2 = mk('text', {x: bx, y: bb + f * 1.5, style: `font:800 ${f * .95}px var(--mono);fill:var(--k);letter-spacing:.06em`});
+  fl2.textContent = 'FOOD';
+
+  // Famine
+  r.fam = mk('g', {style: 'opacity:0;display:none'});
+  const t1 = mk('text', {x: W * .56, y: H * .5, 'text-anchor': 'middle', style: `font:800 ${f * 1.7}px var(--display);fill:var(--k)`}, r.fam);
+  t1.textContent = '3.5 million+';
+  const t2 = mk('text', {x: W * .56, y: H * .5 + f * 1.6, 'text-anchor': 'middle', style: `font:700 ${f}px var(--body);fill:var(--k)`}, r.fam);
+  t2.textContent = 'died of hunger';
+
+  R = r;
+  apply(step, false);
+}
+
+function place(fl, dt) { const pt = fl.p.getPointAtLength(fl.L * dt.t); dt.el.setAttribute('cx', pt.x); dt.el.setAttribute('cy', pt.y); }
+
+function apply(s, anim) {
+  const r = R, D = anim && !Kit.calm ? .8 : 0;
+  const to = (t, v, extra) => gsap.to(t, Object.assign({duration: D, ease: 'power2.inOut', overwrite: 'auto'}, v, extra || {}));
+  // Soviet Union breaks
+  if (s >= 1) {
+    r.cracks.forEach((c, i) => to(c, {strokeDashoffset: 0}, {delay: i * .12 * (D ? 1 : 0)}));
+    to(r.ussr, {fillOpacity: .12}, {delay: D * .6});
+    to(r.cracks, {opacity: 0}, {delay: D * 1.2});
+    r.ussrLbl.textContent = '1991 · GONE';
+    to(r.ussrLbl, {fill: 'var(--k)'}, {delay: D * .6});
+    r.ussr.style.strokeDasharray = s >= 1 ? `${r.f * .6} ${r.f * .4}` : '';
+  }
+  // Cut flows
+  r.flows.forEach((fl, i) => {
+    const cut = s >= i + 2;
+    fl.on = !cut;
+    if (cut) { to(fl.p, {opacity: .2}); to(fl.dots.map(d => d.el), {opacity: 0}); to(fl.x, {opacity: 1}, {ease: 'back.out(2)'}); }
+    if (s >= 4) { to(fl.lbl, {opacity: 0}); to(fl.x, {opacity: .25}); }
+  });
+  // Food
+  const h = (r.bar.bb - r.bar.bt - 6) * FOOD[s];
+  to(r.fill, {attr: {y: r.bar.bb - 3 - h, height: h}});
+  if (s >= 4) {
+    to(r.nk, {fillOpacity: .3});
+    r.fam.style.display = '';
+    to(r.fam, {opacity: 1}, {delay: D * .5});
+    if (D) gsap.fromTo(r.nk, {scale: 1, transformOrigin: '50% 50%'}, {scale: 1.06, yoyo: true, repeat: 3, duration: .25, delay: D});
+  }
+}
+
+gsap.ticker.add(() => {
+  if (!R || Kit.calm) return;
+  R.flows.forEach(fl => { if (!fl.on) return; fl.dots.forEach(dt => { dt.t = (dt.t + .006) % 1; place(fl, dt); }); });
+});
+
+Kit.$('next').addEventListener('click', () => {
+  if (step >= 4) return;
+  Kit.haptic(step === 3 ? 'success' : 'light');
+  if (step === 3) {
+    Kit.hide('next'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    draw();
+    step = 4; apply(4, true);
+    return;
+  }
+  step++;
+  Kit.$('say').textContent = CAPS[step];
+  Kit.$('next').innerHTML = 'Next ▸<span class="n">' + (step + 1) + '/4</span>';
+  apply(step, true);
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && R) gsap.from([R.ussr, R.ussrLbl, R.nk, R.nkLbl], {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 4; i++) { Kit.$('next').click(); await w(250); }
+  await w(1200);
+};
+Kit.single();
+</script>
+</html>

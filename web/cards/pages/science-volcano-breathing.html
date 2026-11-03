@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-volcano-breathing -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;position:relative}
+#art svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">What slowly lifts and sinks the ground at Campi Flegrei?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Sea tides pulling on the coast</button>
+        <button class="opt" data-i="1">Fluids and magma pushing from below</button>
+        <button class="opt" data-i="2">Old buildings slowly settling</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Fluids and magma below</p><p class="body">This is bradisismo: magma and fluids push the ground up, then it sinks back as they ease. Slow and cyclic, like the volcano breathing. In the 1970s and 80s it was so intense that quakes shook Pozzuoli and whole areas were evacuated.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Watch the coast rise and sink. Pick the cause, then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Under Campi Flegrei the ground breathes: up when fluids push, down when they ease.</div>
+    <div class="foot"><span class="src">Source · Geopop, “BRADISISMO: IL RESPIRO DEL SUPERVULCANO CAMPI FLEGREI - Documentario - Sub-Eng” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false;
+const st = {v: -0.6, last: -0.6, rising: true};
+let D = null, R = {}, loop = null, ticking = false;
+const dots = Array.from({length: 7}, (_, i) => ({f: i / 7, o: (i % 2 ? 1 : -1) * (0.02 + 0.03 * (i % 4))}));
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function surf(x, v) {
+  const {W, H} = D;
+  return H * (0.33 - 0.10 * x / W) - H * 0.05 * v * Math.exp(-Math.pow((x - W * 0.5) / (W * 0.3), 2));
+}
+function line(fn, n) { let s = ''; for (let i = 0; i <= n; i++) { const x = D.W * i / n; s += (i ? 'L' : 'M') + x.toFixed(1) + ',' + fn(x).toFixed(1); } return s; }
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  D = Kit.fitSvg(svg);
+  const {W, H} = D, fs = Math.max(D.f * 0.8, 12);
+  const defs = Kit.mk('defs', {}, svg);
+  const g = Kit.mk('radialGradient', {id: 'mg'}, defs);
+  Kit.mk('stop', {offset: '0%', 'stop-color': '#ffd27a'}, g);
+  Kit.mk('stop', {offset: '60%', 'stop-color': '#f0532c'}, g);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#a51f14'}, g);
+  R.g1 = Kit.mk('path', {fill: '#c79a63'}, svg);
+  R.g2 = Kit.mk('path', {fill: '#a37748'}, svg);
+  R.g3 = Kit.mk('path', {fill: '#6d4a2e'}, svg);
+  R.houses = [0.66, 0.73, 0.8, 0.87].map((p, i) => Kit.mk('rect', {width: W * 0.045, height: H * (0.035 + 0.012 * (i % 2)), fill: '#f4ecdc', stroke: '#5b4630', 'stroke-width': 1.2, 'data-x': p}, svg));
+  R.cols = [0, 1, 2].map(i => Kit.mk('rect', {width: W * 0.02, height: H * 0.11, fill: '#f6efe0', stroke: '#5b4630', 'stroke-width': 1.2}, svg));
+  R.sea = Kit.mk('path', {fill: '#2f7fc1', opacity: 0.62}, svg);
+  R.seaLine = Kit.mk('line', {x1: 0, x2: W, y1: H * 0.30, y2: H * 0.30, stroke: '#2f7fc1', 'stroke-width': 1.4, 'stroke-dasharray': '5 5'}, svg);
+  R.seaTxt = Kit.mk('text', {x: 6, y: H * 0.30 - fs * 0.5, 'font-size': fs, fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700}, svg); R.seaTxt.textContent = 'sea level';
+  R.colTxt = Kit.mk('text', {'font-size': fs, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700}, svg); R.colTxt.textContent = 'Serapis columns';
+  R.townTxt = Kit.mk('text', {'font-size': fs, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700}, svg); R.townTxt.textContent = 'Pozzuoli';
+  R.sy = Math.max(fs * 1.3, H * 0.08);
+  R.status = Kit.mk('text', {x: W / 2, y: R.sy, 'font-size': fs * 1.15, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--display)', 'font-weight': 700}, svg);
+  R.fl = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
+  R.dots = dots.map(() => Kit.mk('circle', {r: Math.max(2.5, W * 0.009), fill: '#ffb347', stroke: '#7a2a10', 'stroke-width': 1}, R.fl));
+  R.mystery = Kit.mk('g', {opacity: revealed ? 0 : 1}, svg);
+  Kit.mk('ellipse', {cx: W / 2, cy: H * 0.8, rx: W * 0.2, ry: H * 0.07, fill: 'none', stroke: '#f4ecdc', 'stroke-width': 2, 'stroke-dasharray': '6 6'}, R.mystery);
+  const q = Kit.mk('text', {x: W / 2, y: H * 0.8 + fs * 0.6, 'font-size': fs * 1.8, 'text-anchor': 'middle', fill: '#f4ecdc', 'font-family': 'var(--display)', 'font-weight': 700}, R.mystery); q.textContent = '?';
+  R.mg = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
+  R.ch = Kit.mk('ellipse', {cx: W / 2, cy: H * 0.8, fill: 'url(#mg)', stroke: '#ffd27a', 'stroke-width': 1.5}, R.mg);
+  R.chTxt = Kit.mk('text', {x: W / 2, y: H * 0.8 + fs * 0.35, 'font-size': fs, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800}, R.mg); R.chTxt.textContent = 'magma & fluids';
+  R.fs = fs;
+  draw();
+}
+
+function draw() {
+  if (!D) return;
+  const {W, H} = D, v = st.v, fs = R.fs;
+  const dv = v - st.last;
+  if (Math.abs(dv) > 1e-5) st.rising = dv > 0;
+  st.last = v;
+  const s = x => surf(x, v);
+  R.g1.setAttribute('d', line(s, 48) + `L${W},${H}L0,${H}Z`);
+  R.g2.setAttribute('d', line(x => surf(x, v * 0.7) + H * 0.16, 48) + `L${W},${H}L0,${H}Z`);
+  R.g3.setAttribute('d', line(x => surf(x, v * 0.45) + H * 0.32, 48) + `L${W},${H}L0,${H}Z`);
+  const seaY = H * 0.30;
+  let d = `M0,${seaY}L${W},${seaY}`;
+  for (let i = 48; i >= 0; i--) { const x = W * i / 48; d += `L${x.toFixed(1)},${Math.max(s(x), seaY).toFixed(1)}`; }
+  R.sea.setAttribute('d', d + 'Z');
+  const cw = W * 0.02, ch = H * 0.11;
+  const minY = R.sy + fs * 1.5;
+  let top = 1e9;
+  R.cols.forEach((c, i) => { const x = W * 0.36 + i * W * 0.035; const y = s(x + cw / 2) - ch; top = Math.min(top, y); c.setAttribute('x', x); c.setAttribute('y', y); });
+  R.colTxt.setAttribute('x', W * 0.395); R.colTxt.setAttribute('y', Math.max(top - fs * 0.5, minY));
+  let ht = 1e9;
+  R.houses.forEach(h => { const x = W * +h.dataset.x, hh = +h.getAttribute('height'); const y = s(x + W * 0.022) - hh; ht = Math.min(ht, y); h.setAttribute('x', x); h.setAttribute('y', y); });
+  R.townTxt.setAttribute('x', W * 0.79); R.townTxt.setAttribute('y', Math.max(ht - fs * 0.5, minY));
+  R.status.textContent = st.rising ? 'ground rising ↑' : 'ground sinking ↓';
+  const rx = W * 0.2 * (1 + 0.12 * v), ry = H * 0.07 * (1 + 0.4 * v), cy = H * 0.8;
+  R.ch.setAttribute('rx', rx); R.ch.setAttribute('ry', ry);
+  const y0 = cy - ry, y1 = s(W / 2) + H * 0.06;
+  dots.forEach((p, i) => {
+    if (ticking && revealed) { p.f += st.rising ? 0.007 : -0.005; if (p.f > 1) p.f -= 1; if (p.f < 0) p.f += 1; }
+    const c = R.dots[i];
+    c.setAttribute('cx', W / 2 + p.o * W * (1 + p.f));
+    c.setAttribute('cy', y0 + (y1 - y0) * p.f);
+    c.setAttribute('opacity', (st.rising ? 0.95 : 0.45) * Math.sin(Math.PI * p.f));
+  });
+}
+
+function startLoop(period) {
+  if (loop) loop.kill();
+  if (Kit.calm) { st.v = 0.5; draw(); return; }
+  loop = gsap.fromTo(st, {v: -0.9}, {v: 1, duration: period, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+  if (!ticking) { ticking = true; gsap.ticker.add(draw); }
+}
+function reveal() {
+  revealed = true;
+  if (Kit.calm) { R.mg.setAttribute('opacity', 1); R.fl.setAttribute('opacity', 1); R.mystery.setAttribute('opacity', 0); draw(); return; }
+  gsap.to(R.mystery, {attr: {opacity: 0}, duration: .4});
+  gsap.to([R.mg, R.fl], {attr: {opacity: 1}, duration: .8, delay: .2});
+  startLoop(2.4);
+}
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) { draw(); return; }
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  startLoop(2.8);
+};
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1200)); };
+Kit.single();
+</script>
+</html>

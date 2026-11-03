@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-impact-vs-sumatra -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#read{display:flex;justify-content:space-between;align-items:flex-end;gap:3cqw}
+#num{font:800 max(4.6cqh,26px)/1 var(--display);color:var(--k);white-space:nowrap}
+#lab{font:600 max(1.7cqh,12px)/1.25 var(--body);color:var(--muted);text-align:right}
+#legend{font:600 max(1.6cqh,12px)/1.25 var(--body);color:var(--k);display:flex;align-items:center;gap:2cqw}
+#legend i{display:inline-block;width:max(1.2cqh,9px);height:max(1.2cqh,9px);border-radius:50%;box-shadow:0 0 0 .3cqh var(--k);flex:none}
+#box{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#ctl .ends{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#rng{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;touch-action:none}
+#rng::-webkit-slider-runnable-track{height:max(.8cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 20%,transparent)}
+#rng::-moz-range-track{height:max(.8cqh,6px);border-radius:9px;background:color-mix(in srgb,var(--k) 20%,transparent)}
+#rng::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);margin-top:calc(max(.8cqh,6px)/2 - max(3.6cqh,26px)/2);border:0}
+#rng::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);border:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font-size:max(1.8cqh,12px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Aim and launch · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP IMPACT</span></div>
+    <h2 class="q">How much more energy did the impact release than the 2004 Sumatra earthquake?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><span id="num">×100</span><span id="lab">your guess:<br>100 Sumatra quakes</span></div>
+      <div id="legend"><i></i><span>1 dot = the 2004 Sumatra quake, magnitude 9.1</span></div>
+      <div id="box"><canvas id="cv"></canvas></div>
+      <div id="ctl">
+        <input id="rng" type="range" min="0" max="1000" value="250" aria-label="Your guess">
+        <div class="ends"><span>×10</span><span>×100,000</span></div>
+      </div>
+      <div id="why" class="gone"><p class="body">The asteroid released an estimated 50,000 times the energy of the Sumatra quake, itself one of the strongest ever measured. It shook the whole planet for weeks.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag to guess how many Sumatra quakes the impact equals.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A magnitude 9.1 megaquake is one speck next to the dinosaur-killing impact.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’estinzione dei dinosauri fu causata da un asteroide più grande del monte Everest: cosa accadde” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUE_N = 50000, CAP = 100000;
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const nice = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+let guess = 100, touched = false, revealed = false, shown = 0, G = null;
+const rng = Kit.$('rng');
+const fromSlider = () => nice(Math.pow(10, 1 + 4 * (+rng.value / 1000)));
+
+function setRead() {
+  if (!revealed) {
+    Kit.$('num').textContent = '×' + fmt(guess);
+    Kit.$('lab').innerHTML = 'your guess:<br>' + fmt(guess) + ' Sumatra quakes';
+  } else {
+    Kit.$('num').textContent = '×' + fmt(shown);
+    Kit.$('lab').innerHTML = 'the impact<br>you guessed ×' + fmt(guess);
+  }
+}
+
+function layout() {
+  const c = Kit.fitCanvas(Kit.$('cv'));
+  const {W, H} = c;
+  let s = Math.sqrt(W * H / CAP), cols, rows;
+  for (let i = 0; i < 60; i++) {
+    cols = Math.max(1, Math.floor(W / s)); rows = Math.ceil(CAP / cols);
+    if (rows * s <= H) break;
+    s *= 0.98;
+  }
+  const cs = getComputedStyle(Kit.$('card'));
+  G = {x: c.x, W, H, s, cols, rows, ox: (W - cols * s) / 2, oy: (H - rows * s) / 2,
+       k: cs.getPropertyValue('--k').trim() || '#111', c: cs.getPropertyValue('--c').trim() || '#fff',
+       body: cs.getPropertyValue('--body').trim() || 'sans-serif'};
+}
+
+function fillN(n) {
+  const {x, s, cols, ox, oy} = G;
+  n = Math.min(CAP, Math.max(0, n));
+  const full = Math.floor(n / cols), rem = n - full * cols;
+  if (full) x.fillRect(ox, oy, cols * s, full * s);
+  if (rem) x.fillRect(ox, oy + full * s, rem * s, s);
+}
+
+function draw() {
+  if (!G) return;
+  const {x, W, H, s, cols, rows, ox, oy, k, c} = G;
+  x.clearRect(0, 0, W, H);
+  x.globalAlpha = .1; x.fillStyle = k; x.fillRect(ox, oy, cols * s, rows * s);
+  if (!revealed) { x.globalAlpha = .5; fillN(guess); }
+  else {
+    x.globalAlpha = 1; fillN(shown);
+    // the guess as a dashed line
+    const gy = oy + Math.min(rows, guess / cols) * s;
+    x.setLineDash([6, 5]); x.lineWidth = 2; x.strokeStyle = k; x.globalAlpha = .9;
+    x.beginPath(); x.moveTo(ox, gy); x.lineTo(ox + cols * s, gy); x.stroke(); x.setLineDash([]);
+    const f = Math.max(12, H * .055), t = 'your guess';
+    x.font = `700 ${f}px ${G.body}`;
+    const tw = x.measureText(t).width, px = ox + cols * s - tw - 14;
+    let py = gy + 4; if (py + f * 1.5 > oy + rows * s) py = gy - f * 1.5 - 4;
+    x.globalAlpha = 1; x.fillStyle = c; x.fillRect(px - 6, py, tw + 12, f * 1.5);
+    x.fillStyle = k; x.textBaseline = 'middle'; x.fillText(t, px, py + f * .75);
+  }
+  // ring around the single Sumatra dot
+  const r = Math.max(7, s * 4), cx = ox + s / 2, cy = oy + s / 2;
+  x.globalAlpha = 1;
+  x.lineWidth = 5; x.strokeStyle = c; x.beginPath(); x.arc(cx + r * .6, cy + r * .6, r, 0, 7); x.stroke();
+  x.lineWidth = 2; x.strokeStyle = k; x.beginPath(); x.arc(cx + r * .6, cy + r * .6, r, 0, 7); x.stroke();
+  x.fillStyle = c; x.fillRect(ox, oy, Math.max(s, 2), Math.max(s, 2));
+  x.fillStyle = k; x.fillRect(ox, oy, Math.max(s, 2), Math.max(s, 2));
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = guess >= 20000 && guess <= 125000;
+  Kit.answer({choice: '×' + fmt(guess), correct: ok, sure: pct});
+  rng.disabled = true; revealed = true; shown = 0; setRead();
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  requestAnimationFrame(() => { layout(); draw(); });
+  sure.grade(ok, pct, `×${fmt(guess)}, ${ok ? 'right' : 'off'}: it was ×50,000`);
+  Kit.show('keep'); Kit.haptic('success');
+  const o = {n: 0};
+  if (Kit.calm) { shown = TRUE_N; setRead(); draw(); return; }
+  gsap.to(o, {n: TRUE_N, duration: 2.2, ease: 'power2.inOut', onUpdate: () => { shown = o.n; setRead(); draw(); },
+    onComplete: () => {
+      shown = TRUE_N; setRead(); draw();
+      gsap.fromTo('#box', {x: -4}, {x: 4, duration: .045, repeat: 15, yoyo: true, ease: 'none', onComplete: () => gsap.set('#box', {x: 0})});
+    }});
+});
+
+rng.addEventListener('input', () => {
+  if (revealed) return;
+  guess = fromSlider(); setRead(); draw();
+  if (!touched) { touched = true; Kit.haptic('selection'); sure.on(); }
+});
+
+Kit.onShow.card = () => { layout(); draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {n: 1};
+  gsap.from('#ctl', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+  gsap.to(o, {n: guess, duration: .9, ease: 'power2.out', onUpdate: () => { if (!touched && !revealed) { const g = guess; guess = Math.round(o.n); draw(); guess = g; } }, onComplete: draw});
+};
+Kit.play.card = async () => {
+  rng.value = 900; rng.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3400));
+};
+Kit.single();
+</script>
+</html>

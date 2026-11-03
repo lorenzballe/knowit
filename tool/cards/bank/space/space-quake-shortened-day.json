@@ -1,0 +1,37 @@
+{
+  "id": "space-quake-shortened-day",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.tiny_and_huge",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the 2011 Japan earthquake change the way Earth spins?",
+  "answer": "The magnitude 9 quake off Miyagi, Japan, in 2011 was so violent that, according to NASA, it moved Earth's axis by 17 centimetres. Since then, Earth has spun a tiny bit faster, and every day is 1.8 microseconds shorter.",
+  "move": "A big enough quake nudges a whole planet: 17 cm of axis, 1.8 µs off every day.",
+  "keywords": [
+    "japan",
+    "miyagi",
+    "nasa",
+    "earth axis",
+    "earthquake"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page titled 'The quake that shortened the day'. A tap-to-shake control shakes Earth at magnitude 9, then the reader zooms in. Text explains the 2011 Japan quake moved Earth's axis 17 cm and shortened each day by 1.8 microseconds."
+  },
+  "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=102s",
+  "written": "2026-11-03"
+}

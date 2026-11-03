@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-teflon-mechanical-grip -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 1.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{font:600 max(1.9cqh,12px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · pick one">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MATERIALS</span></div>
+    <h2 class="q">How does Teflon stick to pans without chemical bonding?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Smooth</button>
+        <button class="opt" data-i="1">Sandblasted</button>
+        <button class="opt" data-i="2">Same</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The sandblasted one.</p><p class="body">Sandblasting cuts nanoscopic grooves. When heated, the water and C8 evaporate but Teflon only softens and flows into them. No chemical bond: it is mechanically stuck.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Two pans, seen up close. Which one keeps its Teflon when scraped?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Teflon doesn't glue to the pan; it locks into a rough surface.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+const STEEL = '#8b95a1', HOT = '#cf7a45', TEF = '#f6f3ec';
+let pick = -1, phase = 0, tl = null, P = [];
+const say = t => { Kit.$('say').textContent = t; };
+
+function build(svg, i, x0, pw, H, fs, rough){
+  const ns = 'clip' + i;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: ns}, defs);
+  Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, rx: fs * .8}, cp);
+  const g = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, rx: fs * .8, fill: '#12161c'}, g);
+  const c = Kit.mk('g', {'clip-path': `url(#${ns})`}, g);
+  const ty = fs * 2.4, by = H - fs * 2.3, A = by - ty;
+  const sy = ty + A * .5, yc = sy - A * .17, d = A * .34, x1 = x0 + pw;
+  const cx0 = x0 + pw * .14;
+  // coating: behind the metal, so growing it downward fills the grooves
+  const coat = Kit.mk('rect', {x: cx0, y: yc, width: x1 - cx0 + 2, height: sy - yc, fill: TEF, opacity: 0}, c);
+  // metal
+  let metal;
+  if (!rough) {
+    metal = Kit.mk('rect', {x: x0 - 2, y: sy, width: pw + 4, height: H, fill: STEEL}, c);
+  } else {
+    const pts = [[x0 - 2, sy]];
+    let x = x0 + pw * .05, prevU = 0;
+    while (x < x1) {
+      const gw = pw * (.06 + Kit.rnd() * .06), dep = d * (.5 + Kit.rnd() * .5), u = gw * (.2 + Kit.rnd() * .3);
+      const tw = Math.max(pw * (.02 + Kit.rnd() * .05), prevU + u + 3);
+      const j = () => (Kit.rnd() - .5) * d * .12;
+      pts.push([x, sy + j()], [x + tw, sy + j()]);
+      const a = x + tw, b = a + gw * .6;
+      pts.push([a - u, sy + dep * .6], [a + gw * .1, sy + dep], [b + u * .5, sy + dep * .9], [b + u, sy + dep * .5], [b, sy + j()]);
+      x = b; prevU = u;
+    }
+    pts.push([x1 + 4, sy], [x1 + 4, H + 4], [x0 - 4, H + 4]);
+    metal = Kit.mk('path', {d: 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z', fill: STEEL}, c);
+  }
+  // wet spray: water film, Teflon particles, water and C8 droplets
+  const film = Kit.mk('rect', {x: cx0, y: yc, width: x1 - cx0, height: sy - yc, fill: '#2f7ee0', opacity: .35}, c);
+  const r = (sy - yc) * .23, parts = [], wet = [];
+  for (let row = 0; row < 2; row++) for (let px = cx0 + r + row * r; px < x1 - r * .5; px += r * 2.1) {
+    parts.push(Kit.mk('circle', {cx: px, cy: sy - r - row * r * 1.7, r: r * .95, fill: TEF}, c));
+  }
+  for (let k = 0; k < pw / (r * 1.6); k++) {
+    const c8 = k % 3 === 0;
+    wet.push(Kit.mk('circle', {cx: cx0 + Kit.rnd() * (x1 - cx0), cy: yc + Kit.rnd() * (sy - yc), r: r * (c8 ? .38 : .45), fill: c8 ? '#ff9a3c' : '#6cc0ff'}, c));
+  }
+  // scraper
+  const bw = Math.max(5, pw * .05);
+  const blade = Kit.mk('g', {opacity: 0}, c);
+  Kit.mk('rect', {x: x0 + 2, y: yc - (sy - yc) * 1.4, width: bw, height: (sy - yc) * 2.4 - 1, rx: 1.5, fill: '#ffd34d'}, blade);
+  const font = `font-family:var(--body);font-weight:700;font-size:${fs}px`;
+  const lab = Kit.mk('text', {x: x0 + pw / 2, y: fs * 1.5, 'text-anchor': 'middle', fill: '#fff', style: font + ';letter-spacing:.04em'}, g);
+  lab.textContent = rough ? 'SANDBLASTED' : 'SMOOTH';
+  const res = Kit.mk('text', {x: x0 + pw / 2, y: H - fs * .8, 'text-anchor': 'middle', fill: rough ? '#5be08a' : '#ff6b6b', style: font, opacity: 0}, g);
+  res.textContent = rough ? 'Locked in ✓' : 'Slides off ✗';
+  return {coat, metal, film, parts, wet, blade, res, lab, pw, yc, by: H, contact: cx0 - (x0 + 2 + bw), rough, rise: yc + r};
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, W / 20));
+  const gap = W * .04, pw = (W - gap) / 2;
+  P = [build(svg, 0, 0, pw, H, fs, false), build(svg, 1, pw + gap, pw, H, fs, true)];
+  if (pick >= 0 && pick < 2) P[pick].lab.setAttribute('fill', '#ffd34d');
+}
+
+function setEnd(){
+  P.forEach(p => {
+    gsap.set([p.film, ...p.wet, ...p.parts], {opacity: 0});
+    gsap.set(p.coat, {opacity: p.rough ? 1 : 0, attr: {height: p.by - p.yc}});
+    gsap.set(p.blade, {opacity: p.rough ? 1 : 0, x: p.contact});
+    gsap.set(p.res, {opacity: 1});
+  });
+}
+
+function finish(){
+  phase = 2;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4});
+  Kit.haptic('success');
+}
+
+function race(){
+  phase = 1;
+  const [s, r] = P, metals = P.map(p => p.metal), coats = P.map(p => p.coat);
+  tl = gsap.timeline({onComplete: finish});
+  tl.call(() => say('Heat: water (blue) and C8 (orange) evaporate. Teflon (white) only softens…'));
+  tl.to(metals, {attr: {fill: HOT}, duration: .6});
+  tl.to(P.map(p => p.film), {opacity: 0, duration: 1}, '<.2');
+  P.forEach(p => tl.to(p.wet, {y: -p.rise, opacity: 0, duration: 1.3, ease: 'power1.in', stagger: {each: .03, from: 'random'}}, '<'));
+  tl.to(P.flatMap(p => p.parts), {opacity: 0, duration: .7}, '-=.6');
+  tl.to(coats, {opacity: 1, duration: .7}, '<');
+  tl.call(() => say('…and flows down into every groove it can find.'));
+  P.forEach((p, k) => tl.to(p.coat, {attr: {height: p.by - p.yc}, duration: 1.4, ease: 'power2.inOut'}, k ? '<' : '+=.1'));
+  tl.to(metals, {attr: {fill: STEEL}, duration: .6});
+  tl.call(() => say('Now scrape both.'));
+  tl.to(P.map(p => p.blade), {opacity: 1, duration: .2});
+  P.forEach((p, k) => tl.to(p.blade, {x: p.contact, duration: .5, ease: 'power2.out'}, k ? '<' : '>'));
+  tl.addLabel('push', '+=.1');
+  tl.to(s.blade, {x: s.contact + s.pw, duration: 1, ease: 'power1.in'}, 'push');
+  tl.to(s.coat, {attr: {x: '+=' + s.pw}, duration: 1, ease: 'power1.in'}, 'push');
+  tl.to(s.coat, {opacity: 0, duration: .3}, 'push+=.7');
+  tl.to(r.blade, {x: r.contact + 3, duration: .07, repeat: 9, yoyo: true}, 'push');
+  tl.to(P.map(p => p.res), {opacity: 1, duration: .4, stagger: .15}, 'push+=1');
+  tl.to({}, {duration: .5});
+  if (Kit.calm) tl.progress(1);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  race();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  if (pick < 2) P[pick].lab.setAttribute('fill', '#ffd34d');
+});
+Kit.onShow.card = () => {
+  if (phase === 1 && tl) { tl.kill(); draw(); setEnd(); finish(); return; }
+  draw();
+  if (phase === 2) setEnd();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 100));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-gulf-idle-fleet -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#rng{width:100%;margin:0;height:max(4cqh,28px);accent-color:var(--k);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.ship{transition:opacity .25s}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Build it · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHOKEPOINT</span></div>
+    <h2 class="q">What are the ~1,000 ships stuck in the Gulf worth?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Ships stuck in the Gulf and their value"></svg>
+      <input id="rng" type="range" min="0" max="1000" step="10" value="0" aria-label="Ships stuck">
+      <div id="why" class="gone">
+        <p class="body">Lloyd’s Market Association in London puts the idle fleet at over $25 billion. About half of these ships carry oil or gas: cargo that can’t reach buyers while it waits.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to trap ships in the Gulf, one by one.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>About 1,000 stuck ships: over $25 billion idle, half carrying oil and gas.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 1000;
+let n = 0, done = false, ships = [], big, sub, water;
+// Random filling order: which grid slot the r-th trapped ship takes.
+const order = Array.from({length: N}, (_, i) => i);
+for (let i = N - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+
+function fmt(v){ return v.toLocaleString('en-US'); }
+
+function draw(){
+  const svg = Kit.$('pic');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const bf = Math.max(f * 2, 22), sf = Math.max(f * 0.95, 12);
+  big = Kit.mk('text', {x: W/2, y: bf * 1.05, 'text-anchor': 'middle', style: `font:800 ${bf}px var(--display);fill:var(--k)`}, svg);
+  sub = Kit.mk('text', {x: W/2, y: bf * 1.05 + sf * 1.6, 'text-anchor': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k);opacity:.75`}, svg);
+  const top = bf * 1.05 + sf * 2.6, legH = sf * 2.2, bottom = H - legH;
+  const gx = 2, gw = W - 4, gh = Math.max(bottom - top, 40);
+  water = Kit.mk('rect', {x: gx, y: top, width: gw, height: gh, rx: Math.min(18, gh/8), style: 'fill:color-mix(in srgb,var(--k) 8%,transparent);stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.5'}, svg);
+  // Grid that fits 1000 slots inside the water.
+  const pad = 6, w = gw - pad*2, h = gh - pad*2;
+  let cell = Math.sqrt(w * h / N);
+  while (cell > 1 && Math.floor(w / cell) * Math.floor(h / cell) < N) cell *= 0.98;
+  const cols = Math.floor(w / cell), rows = Math.ceil(N / cols);
+  const ox = gx + pad + (w - cols * cell) / 2, oy = top + pad + (h - rows * cell) / 2;
+  const sw = cell * 0.8, sh = cell * 0.46;
+  ships = [];
+  for (let r = 0; r < N; r++) {
+    const s = order[r], c = s % cols, rw = Math.floor(s / cols);
+    const oil = r % 2 === 0;
+    ships.push(Kit.mk('rect', {class: 'ship', x: ox + c * cell + (cell - sw)/2, y: oy + rw * cell + (cell - sh)/2, width: sw, height: sh, rx: sh/2,
+      style: oil ? 'fill:var(--k)' : 'fill:color-mix(in srgb,var(--k) 38%,transparent)', opacity: 0}, svg));
+  }
+  // Legend
+  const ly = H - legH/2, k = sf * 1.1;
+  const g = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: 0, y: ly - k*0.25, width: k*1.4, height: k*0.5, rx: k*0.25, style: 'fill:var(--k)'}, g);
+  Kit.mk('text', {x: k*1.8, y: ly, 'dominant-baseline': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k)`}, g).textContent = 'oil & gas';
+  const x2 = W/2;
+  Kit.mk('rect', {x: x2, y: ly - k*0.25, width: k*1.4, height: k*0.5, rx: k*0.25, style: 'fill:color-mix(in srgb,var(--k) 38%,transparent)'}, g);
+  Kit.mk('text', {x: x2 + k*1.8, y: ly, 'dominant-baseline': 'middle', style: `font:600 ${sf}px var(--body);fill:var(--k)`}, g).textContent = 'other cargo';
+  update(true);
+}
+
+function update(){
+  ships.forEach((s, r) => s.setAttribute('opacity', r < n ? 1 : 0));
+  const b = n / N * 25;
+  big.textContent = n >= N ? 'over $25 billion' : '$' + b.toFixed(1) + ' billion';
+  sub.textContent = n >= N ? '1,000 ships stuck · half oil & gas' : fmt(n) + ' ships stuck';
+}
+
+let lastStep = 0;
+Kit.$('rng').addEventListener('input', e => {
+  if (done) return;
+  n = +e.target.value;
+  update();
+  const step = Math.floor(n / 100);
+  if (step !== lastStep) { lastStep = step; Kit.haptic('light'); }
+  if (n >= N) finish();
+});
+
+function finish(){
+  done = true;
+  Kit.$('rng').disabled = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.hide('rng'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => {
+    draw();
+    if (!Kit.calm) gsap.from(big, {opacity: 0, scale: .85, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(2)'});
+  });
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && water) gsap.from(water, {opacity: 0, duration: .6, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  const r = Kit.$('rng');
+  for (const v of [300, 600, 1000]) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(res => setTimeout(res, 150)); }
+  await new Promise(res => setTimeout(res, 800));
+};
+Kit.single();
+</script>
+</html>

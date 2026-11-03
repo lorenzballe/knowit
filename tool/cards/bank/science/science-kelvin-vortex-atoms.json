@@ -1,0 +1,37 @@
+{
+  "id": "science-kelvin-vortex-atoms",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Lord Kelvin's theory of atoms?",
+  "answer": "In 1867 Lord Kelvin proposed that atoms are tiny, stable vortex rings in the ether, with each kind of knot making a different element. He reasoned from Tait's smoke rings, which hold their shape, and a vortex ring in a perfect fluid should last forever. The page lets you zoom in from a smoke box down to an atom.",
+  "move": "Kelvin, 1867: an atom is a knotted, spinning ring of ether.",
+  "keywords": [
+    "kelvin",
+    "ether",
+    "vortex_rings",
+    "smoke_rings",
+    "tait"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card 1 of 4 asks 'What was Lord Kelvin's theory of atoms?' It shows a diagram of a smoke ring labeled Ether with a swirling vortex inside, and a Zoom in button that goes from a smoke box down to an atom."
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=321s",
+  "written": "2026-11-03"
+}

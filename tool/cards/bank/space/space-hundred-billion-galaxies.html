@@ -1,0 +1,472 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#viz{position:relative;flex:1 1 0;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;outline:none;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+#cv:focus-visible{outline:max(.3cqh,2px) solid var(--k);outline-offset:max(.4cqh,3px);border-radius:max(1.8cqh,12px)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="space" data-kind="Zoom out · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ZOOM OUT</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">How many galaxies are thought to exist in the observable universe?</h2>
+    <div class="stagebox" id="stage">
+      <div id="viz"><canvas id="cv" tabindex="0" role="slider" aria-label="Your guess: how many galaxies there are" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" aria-valuetext="1 galaxy"></canvas></div>
+      <!-- The why joins the picture once the zoom has landed. -->
+      <div id="why" class="gone"><p class="body">Our galaxy holds about 100 billion stars. As far as we know, there are about as many galaxies, each with billions of stars of its own.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag to zoom out until you think you see every galaxy.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>About 100 billion galaxies: as many as the stars in our galaxy.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Far Away is the Moon? (The Scale of the Universe)” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// The zoom: z is how far out we are; the view holds 10^z galaxies. The reader stops where they
+// think every galaxy is in view; then the zoom flies to 10^11, where the edge comes into view.
+const TRUE = 11, ZMAX = 14, C1 = 1.65;
+const WORDS = ['1', '10', '100', '1,000', '10,000', '100,000', '1 million', '10 million', '100 million', '1 billion', '10 billion', '100 billion', '1 trillion', '10 trillion', '100 trillion'];
+const TICKS = [[0, '1'], [3, '1,000'], [6, '1 million'], [9, '1 billion'], [12, '1 trillion']];
+const TYPES = [[175, 202, 255], [238, 236, 248], [255, 212, 140], [255, 240, 222], [255, 178, 108]];
+const SPEC = TYPES.map(c => [.22, .45, .7, .95].map(a => `rgba(${c[0]},${c[1]},${c[2]},${a})`));
+const S = {z: 0, zc: 0, guess: -1, touched: false, locked: false, bounded: false, outA: 1, ring: 0, pulse: 0, landed: false, spin: 0};
+const card = Kit.$('card'), cv = Kit.$('cv');
+let G = null, dirty = true, drag = null, sureOn = false, hintTw = null, onLand = null;
+let SPR = null, MW = null, DUST = null;
+
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const said = g => g === 0 ? '1 galaxy' : WORDS[g] + ' galaxies';
+const short = g => g === 0 ? '1 galaxy' : WORDS[g];
+
+// Seeded randomness, so every galaxy keeps its place, shape and colour from frame to frame.
+let _s = 1;
+const R = () => { _s = (_s + 0x6D2B79F5) | 0; let t = Math.imul(_s ^ (_s >>> 15), 1 | _s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+const N = () => Math.sqrt(-2 * Math.log(R() + 1e-9)) * Math.cos(6.2832 * R());
+const h32 = (a, b, c) => { let h = Math.imul(a, 0x27d4eb2d) ^ Math.imul(b, 0x165667b1) ^ Math.imul(c, 0x2f0b3c55); h = Math.imul(h ^ (h >>> 15), 0x85ebca6b); h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35); return h ^ (h >>> 16); };
+
+function count(z) {
+  const n = Math.pow(10, z);
+  if (n < 9.5) return String(Math.max(1, Math.round(n)));
+  const p = Math.pow(10, Math.max(0, Math.floor(Math.log10(n)) - 1));
+  return (Math.round(n / p) * p).toLocaleString('en-US');
+}
+const caption = z => S.landed ? 'galaxies, as far as we know' : count(z) === '1' ? 'galaxy: ours, about 100 billion stars' : 'galaxies in view';
+
+// The kit's colours and fonts, read once they are in.
+const probe = document.createElement('canvas'); probe.width = probe.height = 1;
+const pcx = probe.getContext('2d', {willReadFrequently: true});
+function rgb(css, fb) {
+  try {
+    cv.style.color = css; const c = getComputedStyle(cv).color; cv.style.color = '';
+    pcx.clearRect(0, 0, 1, 1); pcx.fillStyle = '#010203'; pcx.fillStyle = c; pcx.fillRect(0, 0, 1, 1);
+    const d = pcx.getImageData(0, 0, 1, 1).data;
+    return d[3] < 128 || (d[0] === 1 && d[1] === 2 && d[2] === 3) ? fb : [d[0], d[1], d[2]];
+  } catch (e) { return fb; }
+}
+const fam = (v, fb) => (getComputedStyle(card).getPropertyValue(v) || '').trim() || fb;
+
+// ---- sprites: drawn once, then stamped ----
+function spiralSprite(P, col, seed) {
+  const c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d'), m = P / 2, r = P / 2.5;
+  const g = x.createRadialGradient(m, m, 0, m, m, r * 1.15);
+  g.addColorStop(0, 'rgba(255,246,228,1)'); g.addColorStop(.1, 'rgba(255,228,182,.8)'); g.addColorStop(.32, `rgba(${col},.24)`); g.addColorStop(1, `rgba(${col},0)`);
+  x.fillStyle = g; x.fillRect(0, 0, P, P);
+  x.globalCompositeOperation = 'lighter'; _s = seed;
+  for (let n = 0; n < 900; n++) {
+    const th = R() * 3 * Math.PI, rr = .11 * Math.exp(.235 * th), sc = .03 + .07 * rr, a = th + (n & 1) * Math.PI;
+    x.fillStyle = `rgba(${col},${(.18 + .4 * R()).toFixed(3)})`;
+    x.fillRect(m + (Math.cos(a) * rr + N() * sc) * r, m + (Math.sin(a) * rr + N() * sc) * r, 1.3, 1.3);
+  }
+  return c;
+}
+function ellSprite(P, col) {
+  const c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d'), m = P / 2;
+  const g = x.createRadialGradient(m, m, 0, m, m, m);
+  g.addColorStop(0, 'rgba(255,250,236,1)'); g.addColorStop(.1, `rgba(${col},.9)`); g.addColorStop(.35, `rgba(${col},.38)`); g.addColorStop(.7, `rgba(${col},.08)`); g.addColorStop(1, `rgba(${col},0)`);
+  x.fillStyle = g; x.fillRect(0, 0, P, P); return c;
+}
+// Our galaxy: a barred spiral of a few thousand dots (radius Rpx in CSS px).
+function mwSprite(Rpx, dpr) {
+  const r = Math.max(16, Math.min(440, Math.round(Rpx * dpr))), P = Math.ceil(r * 2.5);
+  const c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d'), m = P / 2;
+  const g = x.createRadialGradient(m, m, 0, m, m, r * 1.1);
+  g.addColorStop(0, 'rgba(255,240,212,1)'); g.addColorStop(.06, 'rgba(255,224,172,.7)'); g.addColorStop(.2, 'rgba(236,210,190,.2)'); g.addColorStop(.55, 'rgba(140,165,255,.07)'); g.addColorStop(1, 'rgba(120,150,255,0)');
+  x.fillStyle = g; x.fillRect(0, 0, P, P);
+  x.globalCompositeOperation = 'lighter'; _s = 90173;
+  const n = Math.round(clamp(Rpx * Rpx * .45, 250, 7000)), sz = Math.max(1, r / 120);
+  for (let i = 0; i < n; i++) {
+    const u = R(); let px, py, col, al, s = sz * (.6 + .9 * R());
+    if (u < .6) {
+      const th = R() * 3.1 * Math.PI, rr = .1 * Math.exp(.235 * th), sc = .022 + .055 * rr, a = th + (i & 1) * Math.PI + .3, hot = R();
+      px = Math.cos(a) * rr + N() * sc; py = Math.sin(a) * rr + N() * sc;
+      col = hot < .05 ? '255,150,195' : hot < .55 ? '170,198,255' : '236,238,255'; al = .25 + .6 * R(); if (hot < .05) s *= 1.7;
+    } else if (u < .8) {
+      const bar = R() < .5, gx = N() * (bar ? .17 : .07), gy = N() * (bar ? .045 : .065);
+      px = gx * .955 - gy * .296; py = gx * .296 + gy * .955;
+      col = R() < .6 ? '255,220,165' : '255,240,214'; al = .3 + .5 * R();
+    } else {
+      const rr = Math.min(1.05, -Math.log(1 - .97 * R()) * .3), a = R() * 6.2832;
+      px = Math.cos(a) * rr; py = Math.sin(a) * rr; col = '226,228,252'; al = .1 + .28 * R(); s *= .8;
+    }
+    x.fillStyle = `rgba(${col},${al.toFixed(3)})`; x.fillRect(m + px * r - s / 2, m + py * r - s / 2, s, s);
+  }
+  return {c, r};
+}
+// Galaxies too small to draw one by one: a tile of specks, scaled with the zoom.
+function dustTile(T, dpr) {
+  const P = Math.ceil(T * dpr), c = document.createElement('canvas'); c.width = c.height = P; const x = c.getContext('2d');
+  _s = 4242; const n = Math.round(T * T / 24);
+  for (let i = 0; i < n; i++) {
+    const t = R(), s = (.55 + .75 * R()) * dpr;
+    x.fillStyle = rgba(TYPES[t < .32 ? 2 : t < .52 ? 3 : t < .64 ? 4 : t < .86 ? 1 : 0], (.18 + .7 * R() * R()).toFixed(3));
+    x.fillRect(R() * P, R() * P, s, s);
+  }
+  return c;
+}
+
+// ---- layout: the card's real size ----
+let rq = 0;
+const layoutSoon = () => { if (!rq) rq = requestAnimationFrame(() => { rq = 0; layout(); }); };
+function layout() {
+  cv.style.width = ''; cv.style.height = '';
+  const f = Kit.fitCanvas(cv);
+  if (!f || !(f.W > 0) || !(f.H > 0)) return;
+  const {x, W, H} = f;
+  const tr = x.getTransform ? x.getTransform() : null, dpr = tr && tr.a > 0 ? tr.a : 1;
+  const box = card.getBoundingClientRect(), cq = Math.max(4, box.height / 100), cw = Math.max(3, box.width / 100);
+  const fs = {big: Math.max(3.3 * cq, 20), cap: Math.max(1.65 * cq, 12), lab: Math.max(2.05 * cq, 13), tick: Math.max(1.5 * cq, 11)};
+  const font = {mono: fam('--mono', 'ui-monospace, Menlo, monospace'), body: fam('--body', 'system-ui, sans-serif')};
+  const th = Math.max(7, fs.lab * .55);
+  const rulerH = fs.lab * 1.15 + 5 + th * 2 + 3 + fs.tick * 1.25;
+  const gap = Math.max(8, cq * 1.3);
+  const Hw = Math.max(H * .5, H - rulerH - gap);
+  const pad = Math.max(12, 3.6 * cw), padT = Math.max(10, 1.5 * cq);
+  const bandH = padT + fs.big * .95 + 5 + fs.cap * 1.2;
+  const Hf = Math.max(40, Hw - bandH - 6);
+  const U = Math.max(30, Math.min(W - 2 * pad, Hf));
+  const cx = W / 2, cy = Math.min(Hw - U / 2 - 3, bandH + 3 + Hf / 2);
+  const R0 = .46 * U, yL = Hw + gap + fs.lab * 1.15 + 5 + th, xr0 = Math.max(th + 3, pad), xr1 = W - xr0;
+  if (!SPR) SPR = [spiralSprite(96, '175,202,255', 11), spiralSprite(96, '238,236,248', 29), ellSprite(64, '255,212,140'), ellSprite(64, '255,240,222'), ellSprite(64, '255,178,108')];
+  const mk = Math.round(R0) + '|' + dpr;
+  if (!MW || MW.key !== mk) MW = {key: mk, list: [mwSprite(Math.min(R0, 22), dpr), mwSprite(R0 / 3, dpr), mwSprite(R0, dpr)].sort((a, b) => a.r - b.r)};
+  const T = Math.round(Math.max(W, Hw)), dk = T + '|' + dpr;
+  if (!DUST || DUST.key !== dk) DUST = {key: dk, c: dustTile(T, dpr)};
+  const bg = x.createRadialGradient(cx, cy, 0, cx, cy, Math.hypot(W, Hw) * .62);
+  bg.addColorStop(0, '#0f1534'); bg.addColorStop(.5, '#080b1f'); bg.addColorStop(1, '#030409');
+  G = {x, W, H, dpr, fs, font, th, Hw, pad, padT, U, cx, cy, R0, yL, yTick: yL + th + 3 + fs.tick, xr0, xr1,
+       ink: rgb('var(--k)', [24, 24, 28]), paper: rgb('var(--c)', null), rad: Math.max(1.8 * cq, 12),
+       pat: x.createPattern(DUST.c, 'repeat'), bg};
+  draw();
+}
+
+// ---- drawing ----
+function rrect(x, a, b, w, h, r) {
+  x.beginPath();
+  if (x.roundRect) x.roundRect(a, b, w, h, r);
+  else { x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+}
+function dustLayer(x, g, s, alpha, n) {
+  if (alpha < .01) return;
+  const m = s / g.dpr, inv = 1 / m, ox = (n * 397 % 1000) * .37 * g.dpr, oy = (n * 211 % 1000) * .23 * g.dpr;
+  x.save(); x.globalAlpha = alpha; x.translate(g.cx, g.cy); x.scale(m, m); x.translate(-ox, -oy);
+  x.fillStyle = g.pat; x.fillRect(-g.cx * inv + ox, -g.cy * inv + oy, g.W * inv, g.Hw * inv); x.restore();
+}
+function dust(x, g, z, alpha) {
+  if (alpha < .01) return;
+  const n0 = Math.floor(z);
+  for (let n = n0; n <= n0 + 1; n++) { const u = n - z, w = .5 + .5 * Math.cos(Math.PI * u); if (w > .02) dustLayer(x, g, .9 * Math.pow(10, u / 2), alpha * w, n); }
+}
+// Galaxies one by one: each decade of zoom brings a new layer that shrinks as we pull back.
+const BUCK = Array.from({length: 20}, () => []), BIG = [];
+function field(x, g, z, k, RUw) {
+  for (const b of BUCK) b.length = 0; BIG.length = 0;
+  const wx0 = -g.cx / k, wx1 = (g.W - g.cx) / k, wy0 = -g.cy / k, wy1 = (g.Hw - g.cy) / k;
+  const jLo = Math.max(1, Math.floor(z - 1.3)), jHi = Math.ceil(z + 1) - 1;
+  for (let j = jLo; j <= jHi; j++) {
+    const d = z - j + 1; if (d <= 0 || d >= 2.3) continue;
+    const la = d < .75 ? smooth(0, .75, d) : d > 1.8 ? 1 - smooth(1.8, 2.3, d) : 1;
+    if (la < .03) continue;
+    const sc = Math.pow(10, (j - 1) / 2), c = C1 * sc, gs = .44 * sc, m = gs * .65;
+    const i0 = Math.floor((wx0 - m) / c), i1 = Math.floor((wx1 + m) / c), k0 = Math.floor((wy0 - m) / c), k1 = Math.floor((wy1 + m) / c);
+    for (let i = i0; i <= i1; i++) for (let q = k0; q <= k1; q++) {
+      _s = h32(j, i, q);
+      const wx = (i + .06 + .88 * R()) * c, wy = (q + .06 + .88 * R()) * c;
+      const wr = (.16 + .34 * Math.pow(R(), 2.4)) * gs, dist = Math.sqrt(wx * wx + wy * wy);
+      if (dist < wr * 1.4 + .62) continue;
+      let ef = 1;
+      if (RUw < Infinity) { ef = S.outA + (1 - S.outA) * clamp((1 - dist / RUw) / .07, 0, 1); if (ef < .01) continue; }
+      const sx = g.cx + wx * k, sy = g.cy + wy * k, rs = wr * k;
+      const tr = R(), type = tr < .22 ? 0 : tr < .36 ? 1 : tr < .7 ? 2 : tr < .86 ? 3 : 4;
+      const a = la * ef * (.55 + .45 * R());
+      if (rs < 1.15) {
+        if (sx < -2 || sx > g.W + 2 || sy < -2 || sy > g.Hw + 2) continue;
+        const s = Math.max(.8, rs * 1.7), ab = Math.min(3, Math.floor(a * 4 * Math.min(1, .35 + rs * 1.3)));
+        BUCK[type * 4 + ab].push(sx - s / 2, sy - s / 2, s);
+      } else {
+        const e = rs * 1.3; if (sx < -e || sx > g.W + e || sy < -e || sy > g.Hw + e) continue;
+        const rot = R() * 6.2832, edge = type < 2 && R() < .3;
+        const asp = edge ? .15 + .1 * R() : type < 2 ? .4 + .6 * R() : .55 + .45 * R();
+        BIG.push(sx, sy, rs, rot, asp, a, type);
+      }
+    }
+  }
+  for (let t = 0; t < 5; t++) for (let ab = 0; ab < 4; ab++) {
+    const b = BUCK[t * 4 + ab]; if (!b.length) continue;
+    x.fillStyle = SPEC[t][ab]; x.beginPath();
+    for (let n = 0; n < b.length; n += 3) x.rect(b[n], b[n + 1], b[n + 2], b[n + 2]);
+    x.fill();
+  }
+  for (let n = 0; n < BIG.length; n += 7) {
+    x.save(); x.translate(BIG[n], BIG[n + 1]); x.rotate(BIG[n + 3]); x.scale(1, BIG[n + 4]); x.globalAlpha = BIG[n + 5];
+    const e = BIG[n + 2] * 1.25; x.drawImage(SPR[BIG[n + 6]], -e, -e, e * 2, e * 2); x.restore();
+  }
+}
+function ours(x, g, z) {
+  const rs = g.R0 * Math.pow(10, -z / 2);
+  if (rs * g.dpr < .8) { x.fillStyle = 'rgba(255,238,205,.9)'; x.fillRect(g.cx - .7, g.cy - .7, 1.4, 1.4); }
+  else {
+    const need = rs * g.dpr * .85; let sp = MW.list[MW.list.length - 1];
+    for (const m of MW.list) if (m.r >= need) { sp = m; break; }
+    x.save(); x.imageSmoothingQuality = 'high';
+    x.translate(g.cx, g.cy); x.rotate(-.42); x.scale(1, .74); x.rotate(S.spin);
+    const e = rs * 1.25; x.drawImage(sp.c, -e, -e, e * 2, e * 2); x.restore();
+  }
+  const oa = smooth(.45, .9, z) * (1 - smooth(3.6, 4.5, z)) * (S.landed ? 0 : 1);
+  if (oa > .01) {
+    const rr = Math.max(rs * 1.15, 7);
+    x.save(); x.globalAlpha = oa;
+    x.strokeStyle = 'rgba(255,255,255,.75)'; x.lineWidth = 1.2; x.setLineDash([3, 3]);
+    x.beginPath(); x.arc(g.cx, g.cy, rr, 0, 6.2832); x.stroke(); x.setLineDash([]);
+    x.font = `600 ${g.fs.tick}px ${g.font.body}`; x.fillStyle = '#fff'; x.textAlign = 'left'; x.textBaseline = 'middle';
+    x.shadowColor = 'rgba(0,0,0,.8)'; x.shadowBlur = 4;
+    x.fillText('ours', g.cx + rr * .74 + 4, g.cy - rr * .74 - 3);
+    x.restore();
+  }
+}
+function counter(x, g, z) {
+  const maxW = g.W - 2 * g.pad, num = count(z), cap = caption(z), yb = g.padT + g.fs.big * .8;
+  x.save(); x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.shadowColor = 'rgba(0,0,0,.85)'; x.shadowBlur = 8;
+  let f = g.fs.big; x.font = `700 ${f}px ${g.font.mono}`;
+  while (x.measureText(num).width > maxW && f > 12) { f -= 1; x.font = `700 ${f}px ${g.font.mono}`; }
+  x.fillStyle = '#f8f3e9'; x.fillText(num, g.pad, yb);
+  let fc = g.fs.cap; x.font = `500 ${fc}px ${g.font.body}`;
+  while (x.measureText(cap).width > maxW && fc > 10) { fc -= .5; x.font = `500 ${fc}px ${g.font.body}`; }
+  x.fillStyle = 'rgba(248,243,233,.8)'; x.fillText(cap, g.pad, yb + 5 + g.fs.cap);
+  x.restore();
+}
+function label(x, g, t, at, y) {
+  x.font = `700 ${g.fs.lab}px ${g.font.body}`; const w = x.measureText(t).width;
+  x.fillStyle = rgba(g.ink, 1); x.fillText(t, clamp(at - w / 2, 1, g.W - w - 1), y);
+}
+// The scale under the picture: one notch for every ten times more galaxies.
+function ruler(x, g) {
+  const X = v => g.xr0 + (g.xr1 - g.xr0) * v / ZMAX, yL = g.yL, th = g.th, yLab = yL - th - 6;
+  x.save(); x.lineCap = 'round'; x.lineJoin = 'round';
+  x.strokeStyle = rgba(g.ink, .28); x.lineWidth = 2;
+  x.beginPath(); x.moveTo(g.xr0, yL); x.lineTo(g.xr1, yL); x.stroke();
+  for (let i = 0; i <= ZMAX; i++) {
+    const maj = i % 3 === 0, xx = X(i), hh = maj ? 5.5 : 3.5;
+    x.strokeStyle = rgba(g.ink, maj ? .65 : .38); x.lineWidth = maj ? 1.6 : 1.1;
+    x.beginPath(); x.moveTo(xx, yL - hh); x.lineTo(xx, yL + hh); x.stroke();
+  }
+  x.font = `500 ${g.fs.tick}px ${g.font.body}`; x.fillStyle = rgba(g.ink, .7); x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+  for (const [i, t] of TICKS) { const w = x.measureText(t).width; x.fillText(t, clamp(X(i) - w / 2, 1, g.W - w - 1), g.yTick); }
+  if (!S.locked) {
+    const xx = X(S.zc);
+    if (!S.touched) {
+      x.strokeStyle = rgba(g.ink, .6); x.lineWidth = 1.6;
+      for (let n = 0; n < 3; n++) { const c0 = xx + th + 6 + n * 6.5; x.globalAlpha = .9 - n * .28; x.beginPath(); x.moveTo(c0, yL - 3.5); x.lineTo(c0 + 3.5, yL); x.lineTo(c0, yL + 3.5); x.stroke(); }
+      x.globalAlpha = 1;
+    }
+    x.fillStyle = rgba(g.ink, 1); x.beginPath(); x.arc(xx, yL, th, 0, 6.2832); x.fill();
+    if (g.paper) { x.fillStyle = rgba(g.paper, 1); x.beginPath(); x.arc(xx, yL, th * .36, 0, 6.2832); x.fill(); }
+    label(x, g, WORDS[Math.round(S.zc)], xx, yLab);
+  } else {
+    const xg = X(S.guess), xt = X(S.z), hit = S.guess === TRUE;
+    if (S.landed && !hit) { x.strokeStyle = rgba(g.ink, .9); x.lineWidth = 4; x.beginPath(); x.moveTo(xg, yL); x.lineTo(xt, yL); x.stroke(); }
+    x.lineWidth = 2; x.strokeStyle = rgba(g.ink, .95); x.fillStyle = g.paper ? rgba(g.paper, 1) : 'rgba(0,0,0,0)';
+    x.beginPath(); x.arc(xg, yL, hit ? th * 1.3 : th * .8, 0, 6.2832); x.fill(); x.stroke();
+    x.fillStyle = '#f3b63f'; x.strokeStyle = rgba(g.ink, 1); x.lineWidth = 1.6;
+    x.beginPath(); x.arc(xt, yL, th * .9, 0, 6.2832); x.fill(); x.stroke();
+    const tt = S.landed ? WORDS[TRUE] : WORDS[Math.round(S.z)], gt = 'you';
+    x.font = `700 ${g.fs.lab}px ${g.font.body}`; const wt = x.measureText(tt).width;
+    x.font = `600 ${g.fs.lab}px ${g.font.body}`; const wg = x.measureText(gt).width;
+    let lt = clamp(xt - wt / 2, 1, g.W - wt - 1), lg = clamp(xg - wg / 2, 1, g.W - wg - 1), showG = !hit;
+    if (showG) {
+      const left = xg <= xt, ov = left ? lg + wg + 8 - lt : lt + wt + 8 - lg;
+      if (ov > 0) {
+        if (!S.landed) showG = false;
+        else if (left) { lg -= ov / 2; lt += ov / 2; if (lg < 1) { lt += 1 - lg; lg = 1; } if (lt + wt > g.W - 1) { lg -= lt + wt - g.W + 1; lt = g.W - 1 - wt; } }
+        else { lg += ov / 2; lt -= ov / 2; if (lt < 1) { lg += 1 - lt; lt = 1; } if (lg + wg > g.W - 1) { lt -= lg + wg - g.W + 1; lg = g.W - 1 - wg; } }
+      }
+    }
+    if (showG) { x.font = `600 ${g.fs.lab}px ${g.font.body}`; x.fillStyle = rgba(g.ink, .7); x.fillText(gt, lg, yLab); }
+    x.font = `700 ${g.fs.lab}px ${g.font.body}`; x.fillStyle = rgba(g.ink, 1); x.fillText(tt, lt, yLab);
+  }
+  x.restore();
+}
+function draw() {
+  const g = G; if (!g) return;
+  const x = g.x, z = S.z, k = g.U * Math.pow(10, -z / 2), RUs = g.U * .47 * Math.pow(10, (TRUE - z) / 2), ring = S.bounded ? S.ring : 0;
+  x.save();
+  x.clearRect(0, 0, g.W, g.H);
+  x.save();
+  rrect(x, 0, 0, g.W, g.Hw, g.rad); x.clip();
+  x.fillStyle = g.bg; x.fillRect(0, 0, g.W, g.Hw);
+  if (ring > .01) {
+    const gr = x.createRadialGradient(g.cx, g.cy, RUs * .5, g.cx, g.cy, RUs);
+    gr.addColorStop(0, 'rgba(255,206,140,0)'); gr.addColorStop(1, `rgba(255,206,140,${(.14 * ring).toFixed(3)})`);
+    x.fillStyle = gr; x.beginPath(); x.arc(g.cx, g.cy, RUs, 0, 6.2832); x.fill();
+  }
+  const dA = smooth(1.5, 3.4, z) * .9;
+  if (S.bounded && S.outA < 1) {
+    dust(x, g, z, dA * S.outA);
+    x.save(); x.beginPath(); x.arc(g.cx, g.cy, RUs, 0, 6.2832); x.clip();
+    dust(x, g, z, dA * (1 - S.outA));
+    dustLayer(x, g, .45 * Math.pow(10, (TRUE - z) / 2), .75 * ring, 5);
+    x.restore();
+  } else dust(x, g, z, dA);
+  field(x, g, z, k, S.bounded ? RUs / k : Infinity);
+  ours(x, g, z);
+  if (ring > .01) {
+    x.save();
+    x.strokeStyle = `rgba(255,228,180,${((.6 + .4 * S.pulse) * ring).toFixed(3)})`; x.lineWidth = 1.4 + 1.6 * S.pulse;
+    x.shadowColor = `rgba(255,196,110,${(.9 * ring).toFixed(3)})`; x.shadowBlur = 12;
+    x.beginPath(); x.arc(g.cx, g.cy, RUs, 0, 6.2832); x.stroke();
+    x.restore();
+  }
+  counter(x, g, z);
+  x.restore();
+  x.strokeStyle = rgba(g.ink, .18); x.lineWidth = 1; rrect(x, .5, .5, g.W - 1, g.Hw - 1, g.rad); x.stroke();
+  ruler(x, g);
+  x.restore();
+}
+gsap.ticker.add(() => {
+  const spin = !Kit.calm && S.z < 4.6;
+  if (spin) S.spin = performance.now() * 4e-5;
+  if (G && (dirty || spin || gsap.isTweening(S))) { dirty = false; draw(); }
+});
+
+// ---- the reader: aim (drag), say how sure, and the zoom flies to where it lands ----
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (S.locked) return;
+  const g = Math.round(drag || S.guess < 0 ? S.zc : S.guess);
+  drag = null; S.guess = g; S.locked = true; killHint();
+  const ok = g === TRUE;
+  Kit.answer({choice: said(g), correct: ok, sure: pct});
+  launch(g, ok, pct);
+});
+const zAt = px => clamp((px - G.xr0) / (G.xr1 - G.xr0) * ZMAX, 0, ZMAX);
+function setZc(v) {
+  v = clamp(v, 0, ZMAX);
+  if (Math.round(v) !== Math.round(S.zc)) Kit.haptic('selection');
+  S.zc = v; S.z = v; dirty = true;
+  const r = Math.round(v); cv.setAttribute('aria-valuenow', r); cv.setAttribute('aria-valuetext', said(r));
+}
+function commit() {
+  const g = Math.round(S.zc); S.guess = g;
+  if (Kit.calm) { S.zc = S.z = g; dirty = true; } else gsap.to(S, {zc: g, z: g, duration: .25, ease: 'power2.out'});
+  if (!sureOn) { sureOn = true; sure.on(); }
+}
+function killHint() { if (hintTw) { hintTw.kill(); hintTw = null; } }
+cv.addEventListener('pointerdown', e => {
+  if (S.locked || !G) return;
+  e.preventDefault(); killHint(); gsap.killTweensOf(S); S.touched = true;
+  const b = cv.getBoundingClientRect(), px = e.clientX - b.left, py = e.clientY - b.top, onRuler = py > G.Hw;
+  drag = {id: e.pointerId, ruler: onRuler, x0: px, z0: S.zc, moved: onRuler};
+  if (onRuler) setZc(zAt(px)); else dirty = true;
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+});
+addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id || S.locked) return;
+  const px = e.clientX - cv.getBoundingClientRect().left;
+  if (drag.ruler) setZc(zAt(px));
+  else { if (Math.abs(px - drag.x0) > 4) drag.moved = true; if (drag.moved) setZc(drag.z0 + (px - drag.x0) / (G.xr1 - G.xr0) * ZMAX); }
+});
+const up = e => { if (!drag || e.pointerId !== drag.id) return; const m = drag.moved; drag = null; if (m && !S.locked) commit(); };
+addEventListener('pointerup', up); addEventListener('pointercancel', up);
+cv.addEventListener('keydown', e => {
+  if (S.locked) return;
+  const step = {ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1}[e.key];
+  const v = step ? Math.round(S.zc) + step : e.key === 'Home' ? 0 : e.key === 'End' ? ZMAX : null;
+  if (v === null) return;
+  e.preventDefault(); killHint(); gsap.killTweensOf(S); S.touched = true; setZc(v); commit();
+});
+function launch(g, ok, pct) {
+  gsap.killTweensOf(S);
+  S.zc = S.z = g; S.bounded = true; dirty = true; cv.style.cursor = 'default';
+  const done = () => land(g, ok, pct);
+  if (Kit.calm) { S.z = TRUE; S.outA = 0; S.ring = 1; done(); return; }
+  let last = g;
+  const tl = gsap.timeline({onComplete: done});
+  if (g >= TRUE) tl.to(S, {outA: 0, duration: .9, ease: 'power1.inOut'}); else S.outA = 0;
+  const dur = g === TRUE ? .05 : Math.min(4.2, 1.1 + .33 * Math.abs(TRUE - g));
+  tl.to(S, {z: TRUE, duration: dur, ease: 'power2.inOut', onUpdate: () => { const i = Math.round(S.z); if (i !== last) { last = i; Kit.haptic('selection'); } }});
+  tl.to(S, {ring: 1, duration: .8, ease: 'power2.out'}, g < TRUE ? '>-0.65' : '<');
+}
+function land(g, ok, pct) {
+  S.z = TRUE; S.landed = true; dirty = true;
+  const d = TRUE - g, times = Math.pow(10, Math.abs(d)).toLocaleString('en-US');
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, ok ? `${WORDS[g]}, right` : `${short(g)}, ${times}× too ${d > 0 ? 'few' : 'many'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  if (!Kit.calm) {
+    gsap.fromTo(S, {pulse: 1}, {pulse: 0, duration: 1.4, ease: 'power2.out'});
+    gsap.from(['#why', '#keep'], {opacity: 0, y: 8, duration: .45, stagger: .12, ease: 'power3.out'});
+  }
+  layoutSoon();
+  if (onLand) { const f = onLand; onLand = null; setTimeout(f, 60); }
+}
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = layout;
+new ResizeObserver(layoutSoon).observe(Kit.$('viz'));
+// Motion the reader should see starts here: a small pull back and return shows what dragging does.
+Kit.onEnter.card = () => {
+  if (Kit.calm || S.touched || S.locked) return;
+  killHint();
+  hintTw = gsap.timeline({delay: .6})
+    .to(S, {zc: 1.1, z: 1.1, duration: 1.1, ease: 'sine.inOut'})
+    .to(S, {zc: 0, z: 0, duration: .9, ease: 'sine.inOut'});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  if (!G) layout();
+  if (!G || S.locked) return;
+  killHint(); gsap.killTweensOf(S); S.zc = S.z = 0;
+  const b = cv.getBoundingClientRect(), X = v => b.left + G.xr0 + (G.xr1 - G.xr0) * v / ZMAX, Y = b.top + G.yL;
+  const ev = (type, v) => cv.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, composed: true, pointerId: 7, pointerType: 'touch', isPrimary: true, clientX: X(v), clientY: Y}));
+  ev('pointerdown', 0);
+  for (let i = 1; i <= 10; i++) { await wait(25); ev('pointermove', .6 * i); }
+  ev('pointerup', 6);
+  await wait(400);
+  const landed = new Promise(r => { onLand = r; });
+  const host = Kit.$('sure'), btn = host.querySelector('[data-v="80"]') || host.querySelector('button');
+  if (btn) btn.click();
+  await Promise.race([landed, wait(7000)]);
+  await wait(800);
+};
+Kit.single();
+</script>
+</html>

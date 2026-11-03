@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-cave-rescue-time -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:5.4cqh;margin:0;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+.hot{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CAVE RESCUE</span></div>
+    <h2 class="q">What is the shortest possible rescue time from deep in a cave?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <p id="cap">A caver is hurt at the bottom. Tap spot 1 to start the clock.</p>
+      <div id="why" class="gone"><p class="big">At least 9–10 hours</p><p class="body">No rescue gets you out in an hour. Two people must climb out to call help, rescuers rig every wall with ropes, and the injured caver crosses the rock on a stretcher.</p></div>
+    </div>
+    <p class="say" id="say">Tap the glowing spots in order to run the rescue.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In a cave there is no quick rescue: even the shortest takes 9–10 hours.</div>
+    <div class="foot"><span class="src">Source · Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const P=[[.80,.20],[.80,.40],[.50,.44],[.46,.62],[.74,.67],[.70,.85],[.30,.88]];
+const PITCH=[[0,1],[2,3],[4,5]];
+const HT=[0,2,5.5,9.5];
+const CAPS=[
+ 'A caver is hurt at the bottom. Tap spot 1 to start the clock.',
+ 'First, two people leave the cave to call the rescue. The rest stay with the injured.',
+ 'Rescuers must rig every wall with ropes before anyone can be moved.',
+ 'The injured caver rides a stretcher the whole way, through the rock.'
+];
+const OR='#ff7a1a', YE='#ffd23f';
+let step=0, busy=false, SPD=1, G={}, clk={h:0}, mv={p:0}, car={t:0};
+
+function along(pts,t){
+  const seg=[];let tot=0;
+  for(let i=1;i<pts.length;i++){const d=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);seg.push(d);tot+=d;}
+  let r=Math.max(0,Math.min(1,t))*tot;
+  for(let i=0;i<seg.length;i++){if(r<=seg[i]||i===seg.length-1){const k=seg[i]?Math.min(1,r/seg[i]):0;return[pts[i][0]+(pts[i+1][0]-pts[i][0])*k,pts[i][1]+(pts[i+1][1]-pts[i][1])*k];}r-=seg[i];}
+}
+function setClock(){
+  if(!G.hh)return;
+  const h=clk.h, a=h*30, m=h*360;
+  G.hh.setAttribute('transform',`rotate(${a} ${G.cx} ${G.cy})`);
+  G.mh.setAttribute('transform',`rotate(${m} ${G.cx} ${G.cy})`);
+  G.ct.textContent= step>=3 && h>=9.4 ? '≥ 9–10 h' : (h<=0.01 ? '0 h' : 'running…');
+}
+function setPeople(){
+  if(!G.ppl)return;
+  const rev=G.pts.slice().reverse();
+  G.ppl.forEach((c,i)=>{const q=along(rev,Math.max(0,mv.p-i*.06)/(1-.06*0)) ;c.setAttribute('cx',q[0]+(i?-G.u*1.4:G.u*1.4)*0);c.setAttribute('cy',q[1]-(i?G.u*1.8:0));});
+}
+function setCar(){
+  if(!G.st)return;
+  const rev=G.pts.slice().reverse(), q=along(rev,car.t), q2=along(rev,Math.min(1,car.t+.01));
+  const ang=Math.atan2(q2[1]-q[1],q2[0]-q[0])*180/Math.PI;
+  G.st.setAttribute('transform',`translate(${q[0]},${q[1]}) rotate(${car.t>=1?0:ang})`);
+}
+function draw(){
+  const svg=Kit.$('svg'); svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg); G={W,H};
+  const fs=Math.max(f*.8,12), u=Math.min(W,H)/100; G.u=u;
+  const pts=P.map(([a,b])=>[a*W,b*H]); G.pts=pts;
+  const sy=.2*H;
+  // rock
+  Kit.mk('rect',{x:0,y:sy,width:W,height:H-sy,rx:u*2,style:'fill:var(--k)'},svg);
+  Kit.mk('line',{x1:0,y1:sy,x2:W,y2:sy,style:'stroke:var(--k);stroke-width:3'},svg);
+  // passage
+  const pw=Math.max(.055*W,16);
+  Kit.mk('polyline',{points:pts.map(p=>p.join(',')).join(' '),style:`fill:none;stroke:var(--c);stroke-width:${pw};stroke-linejoin:round;stroke-linecap:round`},svg);
+  Kit.mk('circle',{cx:pts[6][0],cy:pts[6][1],r:pw*.9,style:'fill:var(--c)'},svg);
+  // ropes
+  G.ropes=PITCH.map(([a,b])=>{
+    const L=Math.hypot(pts[b][0]-pts[a][0],pts[b][1]-pts[a][1]);
+    const l=Kit.mk('line',{x1:pts[a][0],y1:pts[a][1],x2:pts[b][0],y2:pts[b][1],style:`stroke:${OR};stroke-width:${Math.max(3,u*.8)};stroke-linecap:round;stroke-dasharray:${L};stroke-dashoffset:${step>=2?0:L}`},svg);
+    Kit.mk('circle',{cx:pts[a][0],cy:pts[a][1],r:Math.max(3,u*1.1),style:`fill:${OR};opacity:${step>=2?1:0}`},svg).classList.add('anc');
+    return {l,L};
+  });
+  // injured caver label
+  Kit.mk('text',{x:pts[6][0]+pw*1.1,y:pts[6][1]+fs*.35,style:`font:700 ${fs}px var(--body);fill:var(--c)`},svg).textContent='injured caver';
+  Kit.mk('text',{x:pts[0][0]-pw*1.2,y:sy-fs*.6,'text-anchor':'end',style:`font:700 ${fs}px var(--body);fill:var(--k)`},svg).textContent='entrance';
+  // two people
+  G.ppl=[0,1].map(()=>Kit.mk('circle',{r:Math.max(4,u*1.3),style:`fill:${OR};stroke:var(--k);stroke-width:1.5`},svg));
+  setPeople();
+  // stretcher
+  const sw=Math.max(.09*W,30), sh=Math.max(sw*.32,10);
+  G.st=Kit.mk('g',{},svg);
+  Kit.mk('rect',{x:-sw/2,y:-sh/2,width:sw,height:sh,rx:sh/2,style:`fill:${OR};stroke:var(--k);stroke-width:2`},G.st);
+  Kit.mk('circle',{cx:sw/2-sh*.55,cy:0,r:sh*.32,style:'fill:var(--c);stroke:var(--k);stroke-width:1.5'},G.st);
+  setCar();
+  // clock
+  const r=Math.min(.075*H,.09*W); G.cx=.04*W+r; G.cy=.1*H;
+  Kit.mk('circle',{cx:G.cx,cy:G.cy,r,style:'fill:var(--c);stroke:var(--k);stroke-width:3'},svg);
+  for(let i=0;i<12;i++){const a=i*Math.PI/6;Kit.mk('line',{x1:G.cx+Math.sin(a)*r*.78,y1:G.cy-Math.cos(a)*r*.78,x2:G.cx+Math.sin(a)*r*.92,y2:G.cy-Math.cos(a)*r*.92,style:'stroke:var(--k);stroke-width:2'},svg);}
+  G.mh=Kit.mk('line',{x1:G.cx,y1:G.cy,x2:G.cx,y2:G.cy-r*.78,style:'stroke:var(--k);stroke-width:2;stroke-linecap:round'},svg);
+  G.hh=Kit.mk('line',{x1:G.cx,y1:G.cy,x2:G.cx,y2:G.cy-r*.5,style:`stroke:${OR};stroke-width:${Math.max(4,r*.12)};stroke-linecap:round`},svg);
+  Kit.mk('circle',{cx:G.cx,cy:G.cy,r:3,style:'fill:var(--k)'},svg);
+  G.ct=Kit.mk('text',{x:G.cx+r+u*2,y:G.cy+fs*.4,style:`font:800 ${fs*1.25}px var(--mono);fill:var(--k)`},svg);
+  setClock();
+  // hotspot
+  if(step<3){
+    const spots=[pts[0],[(pts[2][0]+pts[3][0])/2,(pts[2][1]+pts[3][1])/2],pts[6]];
+    const [hx,hy]=spots[step], hr=Math.max(15,u*4.2);
+    const g=Kit.mk('g',{class:'hot'},svg); G.hot=g;
+    const ring=Kit.mk('circle',{cx:hx,cy:hy,r:hr,style:`fill:none;stroke:${YE};stroke-width:3`},g);
+    Kit.mk('circle',{cx:hx,cy:hy,r:hr,style:`fill:${YE};stroke:var(--k);stroke-width:2`},g);
+    Kit.mk('text',{x:hx,y:hy+fs*.4,'text-anchor':'middle',style:`font:800 ${fs*1.1}px var(--body);fill:#111`},g).textContent=step+1;
+    g.style.opacity=busy?0:1;
+    if(!Kit.calm)gsap.fromTo(ring,{attr:{r:hr}},{attr:{r:hr*1.8},opacity:0,duration:1.2,repeat:-1,ease:'power2.out'});
+    g.addEventListener('click',tap);
+  }
+}
+function tap(){
+  if(busy||step>=3)return;
+  busy=true; Kit.haptic('light');
+  const s=step+1, d=(Kit.calm?.05:1)*SPD;
+  if(G.hot)G.hot.style.opacity=0;
+  Kit.$('cap').textContent=CAPS[s];
+  const tl=gsap.timeline({onComplete:()=>{step=s;busy=false;
+    if(step>=3){setClock();Kit.haptic('success');Kit.hide('cap');Kit.hide('say');Kit.show('why');Kit.show('keep');
+      if(!Kit.calm)gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.4});}
+    draw();}});
+  step=s===3?2:step; // keep state until done
+  if(s===1) tl.to(mv,{p:1,duration:2.2*d,ease:'none',onUpdate:setPeople},0);
+  if(s===2){G.ropes.forEach((r,i)=>tl.to(r.l,{style:`stroke-dashoffset:0`,duration:.8*d,ease:'power1.inOut'},i*.75*d));
+    tl.to('#svg .anc',{opacity:1,stagger:.75*d,duration:.2*d},0);}
+  if(s===3) tl.to(car,{t:1,duration:3.2*d,ease:'none',onUpdate:setCar},0);
+  tl.to(clk,{h:HT[s],duration:tl.duration()||1*d,ease:'none',onUpdate:setClock},0);
+}
+Kit.onShow.card=()=>draw();
+Kit.onEnter.card=()=>{if(!Kit.calm&&G.hot)gsap.from(G.hot,{scale:0,transformOrigin:'center',duration:.5,ease:'back.out(2)'});};
+Kit.play.card=async()=>{SPD=.05;const w=ms=>new Promise(r=>setTimeout(r,ms));
+  for(let i=0;i<3;i++){if(G.hot)G.hot.dispatchEvent(new MouseEvent('click',{bubbles:true}));await w(700);}
+  await w(500);};
+Kit.single();
+</script>
+</html>

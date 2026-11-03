@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-ketamine-mdma-clash -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:calc(3 * 1.3 * max(2cqh,13px));margin:0}
+#cap b{font-weight:800}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#slide{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
+#ticks{display:flex;justify-content:space-between;gap:1cqw}
+#ticks button{font:700 max(1.6cqh,12px)/1.1 var(--body);color:var(--muted);background:none;border:0;padding:.4cqh 0;cursor:pointer;flex:1;text-align:center}
+#ticks button:first-child{text-align:left}
+#ticks button:last-child{text-align:right}
+#ticks button.on{color:var(--k)}
+.lab{font-family:var(--body);font-weight:800;fill:var(--k)}
+.lab .s{font-weight:600;fill:var(--k);opacity:.75}
+.pill text{font-family:var(--body);font-weight:900;letter-spacing:.06em}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Scrub · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRUG MIX</span></div>
+    <h2 class="q">What happens when one dose mixes ketamine and MDMA?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <p id="cap"></p>
+      <div id="ctl">
+        <input id="slide" type="range" min="0" max="3" step="1" value="0" aria-label="Step through the mix">
+        <div id="ticks"><button data-i="0" class="on">MDMA</button><button data-i="1">Ketamine</button><button data-i="2">Both</button><button data-i="3">Unknown mix</button></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider: add one drug, then the other, then both.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Opposite drugs don't cancel out: they collide in your nervous system.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cocaina rosa: cos'è, cosa contiene e quali sono i pericolosi effetti di questa nuova droga” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CAPS = [
+  '<b>MDMA alone</b> is a stimulant. It pushes the nervous system <b>up</b>: euphoria, pleasure, disinhibition.',
+  '<b>Ketamine alone</b> is a dissociative anaesthetic. It pulls the other way, <b>down</b>: almost the opposite of MDMA.',
+  '<b>Both in one dose:</b> two nearly opposite drugs push against each other inside the same nervous system.',
+  'They don\u2019t cancel out: they collide, and can overload the nervous system into severe neurochemical imbalance. And no one knows the mix: some even hide opioids like fentanyl.'
+];
+// u = MDMA arrow (from, to), d = ketamine arrow, in fractions of H from the centre line
+const F = [
+  {uf:.04, ut:-.36, ua:1, df:-.04, dt:-.04, da:0, fen:0, ch:0},
+  {uf:.04, ut:.04,  ua:0, df:-.04, dt:.36,  da:1, fen:0, ch:0},
+  {uf:.42, ut:.04,  ua:1, df:-.42, dt:-.04, da:1, fen:0, ch:1},
+  {uf:.42, ut:.04,  ua:1, df:-.42, dt:-.04, da:1, fen:1, ch:1.25}
+];
+const st = Object.assign({}, F[0], {ua:0, ut:.04});
+let frame = 0, el = {}, dim = null, shake = null;
+
+function arrowPath(x, y0, y1, w){
+  const len = y1 - y0; if (Math.abs(len) < 2) return '';
+  const s = Math.sign(len), hl = Math.min(Math.abs(len) * .45, w * 1.3), hw = w * 1.1, yb = y1 - s * hl;
+  return `M${x-w/2},${y0}L${x-w/2},${yb}L${x-hw},${yb}L${x},${y1}L${x+hw},${yb}L${x+w/2},${yb}L${x+w/2},${y0}Z`;
+}
+function label(parent, l1, l2, f, anchor){
+  const t = Kit.mk('text', {class:'lab', 'text-anchor':anchor, 'font-size':f}, parent);
+  const a = Kit.mk('tspan', {x:0, dy:0}, t); a.textContent = l1;
+  const b = Kit.mk('tspan', {x:0, dy:f*1.3, class:'s'}, t); b.textContent = l2;
+  return t;
+}
+function draw(){
+  if (!dim) return;
+  const {W,H,f} = dim, cy = H/2, cx = W/2, w = Math.min(W*.11, H*.09, 46);
+  el.up.setAttribute('d', arrowPath(cx, cy + st.uf*H, cy + st.ut*H, w)); el.up.setAttribute('opacity', st.ua);
+  el.dn.setAttribute('d', arrowPath(cx, cy + st.df*H, cy + st.dt*H, w)); el.dn.setAttribute('opacity', st.da);
+  const lx = cx - w*1.25 - 6;
+  el.ul.setAttribute('transform', `translate(${lx},${cy + (st.uf+st.ut)/2*H - f*.4})`); el.ul.setAttribute('opacity', st.ua);
+  el.dl.setAttribute('transform', `translate(${lx},${cy + (st.df+st.dt)/2*H - f*.4})`); el.dl.setAttribute('opacity', st.da);
+  const fx = W*.82, fw = w*.5;
+  el.fen.setAttribute('d', arrowPath(fx, cy - .3*H, cy - .3*H + (.18*H)*st.fen, fw)); el.fen.setAttribute('opacity', st.fen);
+  el.fl.setAttribute('transform', `translate(${fx},${cy - .3*H - f*1.9})`); el.fl.setAttribute('opacity', st.fen);
+  el.star.setAttribute('transform', `translate(${cx},${cy}) scale(${Math.max(st.ch, .001)})`);
+  el.star.setAttribute('opacity', Math.min(st.ch, 1));
+  el.pill.setAttribute('opacity', Math.min(st.ch, 1));
+  el.base.setAttribute('opacity', 1 - Math.min(st.ch, 1) * .6);
+}
+function setFrame(i, instant){
+  frame = i;
+  Kit.$('slide').value = i;
+  [...Kit.$('ticks').children].forEach((b, k) => b.classList.toggle('on', k === i));
+  Kit.$('cap').innerHTML = CAPS[i];
+  gsap.killTweensOf(st);
+  gsap.to(st, Object.assign({}, F[i], {duration: (instant || Kit.calm) ? 0 : .7, ease:'power2.inOut', onUpdate:draw, onComplete:draw}));
+  if (shake) { shake.kill(); shake = null; gsap.set(el.jit, {rotation:0, x:0, y:0}); }
+  if (i >= 2 && !Kit.calm) {
+    shake = gsap.to(el.jit, {rotation:()=>gsap.utils.random(-9,9), x:()=>gsap.utils.random(-3,3), y:()=>gsap.utils.random(-3,3),
+      svgOrigin:'0 0', duration: i === 3 ? .06 : .1, repeat:-1, repeatRefresh:true, ease:'none'});
+  }
+  if (i === 3) { Kit.hide('say'); Kit.show('keep'); Kit.haptic('success'); }
+  else Kit.haptic('selection');
+}
+Kit.$('slide').addEventListener('input', e => { const v = +e.target.value; if (v !== frame) setFrame(v); });
+Kit.$('ticks').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setFrame(+b.dataset.i); });
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  dim = Kit.fitSvg(svg); const {W,H,f} = dim, cy = H/2;
+  el.base = Kit.mk('line', {x1:W*.04, x2:W*.96, y1:cy, y2:cy, stroke:'var(--k)', 'stroke-width':1.5, 'stroke-dasharray':'4 5', opacity:1}, svg);
+  const r = Math.min(W, H) * .2, pts = [];
+  for (let k = 0; k < 28; k++) { const a = k/28*Math.PI*2, rr = (k%2 ? r*.5 : r) * (.8 + Kit.rnd()*.4); pts.push(`${(Math.cos(a)*rr).toFixed(1)},${(Math.sin(a)*rr).toFixed(1)}`); }
+  el.star = Kit.mk('g', {}, svg);
+  el.jit = Kit.mk('g', {}, el.star);
+  Kit.mk('polygon', {points:pts.join(' '), fill:'#ffd23f', stroke:'var(--k)', 'stroke-width':2, 'stroke-linejoin':'round'}, el.jit);
+  el.up = Kit.mk('path', {fill:'#ff5a36', stroke:'var(--k)', 'stroke-width':2, 'stroke-linejoin':'round'}, svg);
+  el.dn = Kit.mk('path', {fill:'#3f74ff', stroke:'var(--k)', 'stroke-width':2, 'stroke-linejoin':'round'}, svg);
+  el.fen = Kit.mk('path', {fill:'#9a9a9a', stroke:'var(--k)', 'stroke-width':1.5, 'stroke-dasharray':'4 3'}, svg);
+  el.ul = label(svg, 'MDMA', 'stimulant \u2191', f, 'end');
+  el.dl = label(svg, 'Ketamine', 'anaesthetic \u2193', f, 'end');
+  el.fl = label(svg, 'opioids', '(fentanyl)', f*.9, 'middle');
+  const fs = Math.max(f*.85, 12), pw = Math.min(W*.86, fs*13.5), ph = fs*2.1;
+  el.pill = Kit.mk('g', {class:'pill', transform:`translate(${W/2},${cy})`}, svg);
+  Kit.mk('rect', {x:-pw/2, y:-ph/2, width:pw, height:ph, rx:ph/2, fill:'var(--k)'}, el.pill);
+  const pt = Kit.mk('text', {'text-anchor':'middle', y:fs*.35, 'font-size':fs, fill:'var(--c)'}, el.pill);
+  pt.textContent = 'NEUROCHEMICAL CHAOS';
+  draw();
+  if (frame >= 2 && shake) { shake.kill(); shake = null; setFrame(frame, true); }
+};
+Kit.$('cap').innerHTML = CAPS[0];
+Kit.onEnter.card = () => { setFrame(0, Kit.calm); };
+Kit.play.card = async () => {
+  for (const i of [1, 2, 3]) { const s = Kit.$('slide'); s.value = i; s.dispatchEvent(new Event('input', {bubbles:true})); await new Promise(r => setTimeout(r, 300)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

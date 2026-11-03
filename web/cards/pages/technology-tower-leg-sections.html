@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-tower-leg-sections -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;position:relative}
+#scene{width:100%;height:100%;display:block;touch-action:none}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;width:100%;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#hold.down{transform:scale(.97);opacity:.88}
+#hold:disabled{opacity:.45;cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font-size:max(3cqh,18px)}
+#why .body{font-size:max(1.8cqh,12px)}
+.lab{font-family:var(--mono);font-weight:700;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRIDGE TOWERS</span></div>
+    <h2 class="q">How tall and how heavy is one section of a bridge tower leg?</h2>
+    <div class="stagebox" id="stage"><svg id="scene"></svg></div>
+    <button id="hold">Hold to lift a section</button>
+    <p class="say" id="say">Hold the button to lift a section onto the tower legs.</p>
+    <div id="why" class="gone"><p class="big">20 m · 1,200 t</p><p class="body">The tower legs of the Messina Strait bridge are stacked from 44 prefabricated sections. Each one is 20 meters tall and weighs 1,200 tons, so the crane lifts a whole block at a time.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One tower section: 20 m tall, 1,200 tons; 44 of them make the legs.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come sarà il Ponte sullo stretto di Messina? La ricostruzione 3D dai progetti originali” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TOTAL = 44, SEC = 20, HALFW = 6, LEGX = [0, 24], STAGEX = 60, WMIN = -8, WMAX = 66;
+const S = {k: 3, p: 0, n: 0};
+let D = null, E = {}, cur = null, holding = false, revealed = false;
+const svg = Kit.$('scene'), btn = Kit.$('hold');
+
+const ease = a => a < .5 ? 2*a*a : 1 - Math.pow(-2*a + 2, 2)/2;
+const legTop = L => { let c = 0; for (let i = 0; i < S.n; i++) if (i % 2 === L) c++; return c * SEC; };
+function kTarget(n) {
+  const {W, H, f} = D, R = f * 5.5, groundY = H - f * 1.9;
+  const nextLevels = Math.ceil((Math.min(n, TOTAL - 1) + 1) / 2);
+  const top = nextLevels * SEC + 32;
+  const kH = (W - R - f) / (WMAX - WMIN), kV = (groundY - f * 2.2) / top, k0 = H * 0.2 / SEC;
+  return Math.min(kH, kV, k0);
+}
+function build() {
+  svg.innerHTML = '';
+  const {f} = D;
+  E.jib = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(2, f*.18), 'stroke-linecap': 'round'}, svg);
+  E.ground = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(2, f*.16)}, svg);
+  E.pad = Kit.mk('rect', {fill: 'var(--k)', opacity: .18, rx: 3}, svg);
+  E.stack = Kit.mk('g', {}, svg);
+  E.blocks = [];
+  for (let i = 0; i < TOTAL; i++) E.blocks.push(Kit.mk('rect', {fill: 'var(--k)', opacity: .5, rx: 1.5}, E.stack));
+  E.cable = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f*.1)}, svg);
+  E.hook = Kit.mk('path', {fill: 'var(--k)'}, svg);
+  E.move = Kit.mk('rect', {fill: 'var(--k)', rx: 2}, svg);
+  E.stripe = Kit.mk('line', {stroke: 'var(--c)', 'stroke-width': Math.max(1.5, f*.12), opacity: .7}, svg);
+  E.br = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f*.1)}, svg);
+  E.brT = Kit.mk('text', {class: 'lab', 'font-size': f*1.05, 'dominant-baseline': 'middle'}, svg); E.brT.textContent = '20 m';
+  E.tagR = Kit.mk('rect', {fill: 'var(--k)', rx: f*.35}, svg);
+  E.tagT = Kit.mk('text', {class: 'lab', 'font-size': f*1.05, 'dominant-baseline': 'middle', style: 'fill:var(--c)'}, svg);
+  E.count = Kit.mk('text', {class: 'lab', 'font-size': f*1.0, 'dominant-baseline': 'middle'}, svg);
+}
+function render() {
+  if (!D) return;
+  const {W, H, f} = D, R = f * 5.5, k = S.k, groundY = H - f * 1.9;
+  const ox = (W - R - (WMAX - WMIN) * k) / 2 - WMIN * k;
+  const sx = x => ox + x * k, sy = y => groundY - y * k;
+  E.jib.setAttribute('x1', sx(WMIN)); E.jib.setAttribute('x2', W - f*.4);
+  E.jib.setAttribute('y1', f*.3); E.jib.setAttribute('y2', f*.3);
+  E.ground.setAttribute('x1', 0); E.ground.setAttribute('x2', W);
+  E.ground.setAttribute('y1', groundY); E.ground.setAttribute('y2', groundY);
+  Object.entries({x: sx(STAGEX - HALFW - 3), y: groundY - Math.max(3, k*1.2), width: (HALFW*2 + 6)*k, height: Math.max(3, k*1.2)}).forEach(([a, v]) => E.pad.setAttribute(a, v));
+  const gap = Math.max(1, k * .6);
+  E.blocks.forEach((b, i) => {
+    if (i >= S.n) { b.setAttribute('display', 'none'); return; }
+    const L = i % 2, lv = Math.floor(i / 2);
+    b.setAttribute('display', '');
+    b.setAttribute('x', sx(LEGX[L] - HALFW)); b.setAttribute('y', sy(lv*SEC + SEC) + gap/2);
+    b.setAttribute('width', HALFW*2*k); b.setAttribute('height', SEC*k - gap);
+  });
+  E.count.setAttribute('x', f*.4); E.count.setAttribute('y', groundY + f*1.0);
+  E.count.textContent = `Sections placed  ${S.n} / ${TOTAL}`;
+  const moving = [E.cable, E.hook, E.move, E.stripe, E.br, E.brT, E.tagR, E.tagT];
+  if (S.n >= TOTAL) { moving.forEach(m => m.setAttribute('display', 'none')); return; }
+  moving.forEach(m => m.setAttribute('display', ''));
+  // where the section is, and what the crane feels
+  const L = S.n % 2, lv = Math.floor(S.n / 2), tx = LEGX[L], ty = lv * SEC;
+  const clear = Math.max(legTop(0), legTop(1), ty) + 8;
+  let x = STAGEX, y = 0, load = 0; const p = S.p;
+  if (p < .3) { const a = p/.3; load = 1200 * ease(Math.min(1, a/.8)); y = a > .8 ? (a - .8)/.2 * 2 : 0; }
+  else if (p < .6) { const a = ease((p - .3)/.3); load = 1200; y = 2 + (clear - 2) * a; }
+  else if (p < .82) { const a = ease((p - .6)/.22); load = 1200; y = clear; x = STAGEX + (tx - STAGEX) * a; }
+  else { const a = (p - .82)/.18; const e = ease(Math.min(1, a/.85)); x = tx; y = clear + (ty - clear) * e; load = a > .85 ? 1200 * (1 - (a - .85)/.15) : 1200; }
+  const bx = sx(x - HALFW), by = sy(y + SEC), bw = HALFW*2*k, bh = SEC*k - gap;
+  E.move.setAttribute('x', bx); E.move.setAttribute('y', by); E.move.setAttribute('width', bw); E.move.setAttribute('height', bh);
+  E.stripe.setAttribute('x1', bx + bw*.5); E.stripe.setAttribute('x2', bx + bw*.5);
+  E.stripe.setAttribute('y1', by + bh*.12); E.stripe.setAttribute('y2', by + bh*.88);
+  const cx = sx(x), hookY = by - Math.max(4, f*.5);
+  E.cable.setAttribute('x1', cx); E.cable.setAttribute('x2', cx); E.cable.setAttribute('y1', f*.3); E.cable.setAttribute('y2', hookY);
+  const hs = Math.max(4, f*.45);
+  E.hook.setAttribute('d', `M${cx - hs} ${hookY} L${cx + hs} ${hookY} L${cx} ${by} Z`);
+  const rx = bx + bw + f*.5, tick = f*.35;
+  E.br.setAttribute('d', `M${rx - tick} ${by} H${rx + tick} M${rx} ${by} V${by + bh} M${rx - tick} ${by + bh} H${rx + tick}`);
+  E.brT.setAttribute('x', rx + f*.6); E.brT.setAttribute('y', by + bh/2);
+  const txt = `${Math.round(load).toLocaleString('en')} t`;
+  E.tagT.textContent = txt;
+  const tw = f * .66 * txt.length + f*.8, th = f * 1.6;
+  let tagX = cx + f*.5; if (tagX + tw > W - 2) tagX = cx - f*.5 - tw;
+  const tagY = Math.max(f*.9, by - th - f*.6);
+  E.tagR.setAttribute('x', tagX); E.tagR.setAttribute('y', tagY); E.tagR.setAttribute('width', tw); E.tagR.setAttribute('height', th);
+  E.tagT.setAttribute('x', tagX + f*.4); E.tagT.setAttribute('y', tagY + th/2);
+}
+function startSection() {
+  cur = gsap.to(S, {p: 1, duration: 2.4, ease: 'none', paused: true, onUpdate: render, onComplete: placed});
+  cur.timeScale(Math.min(1 + S.n * .3, 6));
+}
+function placed() {
+  S.n++; S.p = 0; cur = null; Kit.haptic('light');
+  gsap.to(S, {k: kTarget(S.n), duration: .6, ease: 'power2.out', onUpdate: render});
+  render();
+  if (!revealed) { revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+  if (S.n >= TOTAL) { btn.disabled = true; btn.textContent = 'All 44 sections placed'; btn.classList.remove('down'); return; }
+  btn.textContent = 'Hold to lift the next section';
+  if (holding) { startSection(); cur.play(); }
+}
+function down(e) {
+  if (btn.disabled) return; if (e) e.preventDefault();
+  holding = true; btn.classList.add('down'); Kit.haptic('selection');
+  if (!cur) startSection(); cur.play();
+}
+function up() { holding = false; btn.classList.remove('down'); if (cur) cur.pause(); }
+btn.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(t => btn.addEventListener(t, up));
+btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !holding) down(e); });
+btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') up(); });
+
+Kit.onShow.card = () => {
+  D = Kit.fitSvg(svg);
+  build();
+  S.k = kTarget(S.n);
+  render();
+};
+Kit.onEnter.card = () => { if (!Kit.calm && E.move) gsap.from([E.move, E.stripe, E.br, E.brT], {opacity: 0, y: -10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 3300));
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

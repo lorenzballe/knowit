@@ -1,0 +1,204 @@
+<!doctype html>
+<!-- slug: space-elastic-resistance -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;color:var(--k);touch-action:none;user-select:none;-webkit-user-select:none}
+#modes{display:flex;gap:2cqw}
+.mode{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 1.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.mode.on{background:var(--k);color:var(--c);box-shadow:none}
+.mode .ok{opacity:0}
+.mode.done .ok{opacity:1}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+.grab{cursor:grab}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Try it · three places">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ZERO-G</span></div>
+    <h2 class="q">Why is lifting weights useless for astronauts in zero-G?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="modes">
+        <button class="mode on" data-m="0">Earth <span class="ok">✓</span></button>
+        <button class="mode" data-m="1">Orbit <span class="ok">✓</span></button>
+        <button class="mode" data-m="2">Orbit + band <span class="ok">✓</span></button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">In orbit the dumbbell weighs nothing, so lifting it asks nothing of your muscles. Unused, they shrink: up to 20% of muscle mass can go on flights of just 5 to 11 days.</p>
+        <p class="body">A stretched elastic pulls back the way weight would, so astronauts train against bands instead.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the dumbbell up in all three places. Watch the load.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Muscles need a pull to work against; in space it comes from elastic, not weight.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const st = {lift: 0, mode: 0};
+const tried = new Set();
+let G = null, dragging = false, finished = false, hinted = false;
+const STATUS = ['On Earth · gravity pulls it down', 'In orbit · it weighs nothing', 'In orbit · a band pulls it down'];
+
+function force() {
+  if (st.mode === 0) return st.lift > 0.01 ? 0.75 : 0;
+  if (st.mode === 1) return 0;
+  return Math.max(0, Math.min(1, st.lift));
+}
+
+function draw() {
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 13);
+  const g = {W, H, f};
+  g.floorY = H * 0.88;
+  g.topY = Math.max(H * 0.17, f * 3.4);
+  g.cx = W * 0.36;
+  g.L = Math.min(W * 0.4, H * 0.55);
+  g.bw = Math.max(12, g.L * 0.13);
+  g.ph = Math.min(H * 0.2, g.L * 0.42);
+  g.range = Math.max(10, g.floorY - g.ph - g.topY);
+  g.mx = W * 0.78; g.mw = Math.max(16, W * 0.08);
+
+  // stars (orbit)
+  g.stars = Kit.mk('g', {}, svg);
+  for (let i = 0; i < 40; i++) Kit.mk('circle', {cx: Kit.rnd() * W * 0.68, cy: f * 2.2 + Kit.rnd() * (g.floorY - f * 2.6), r: 0.6 + Kit.rnd() * 1.6, fill: 'currentColor', opacity: 0.25 + Kit.rnd() * 0.35}, g.stars);
+  // ground / deck
+  g.ground = Kit.mk('rect', {x: 0, y: g.floorY, width: W * 0.7, height: H - g.floorY, fill: 'currentColor', opacity: 0.14}, svg);
+  Kit.mk('line', {x1: 0, x2: W * 0.7, y1: g.floorY, y2: g.floorY, stroke: 'currentColor', 'stroke-width': Math.max(2, f * 0.18)}, svg);
+
+  // status line
+  g.status = Kit.mk('text', {x: W * 0.03, y: f * 1.2, 'font-size': f, 'font-weight': 700, fill: 'currentColor', 'font-family': 'var(--body)'}, svg);
+
+  // bands
+  const lx = g.cx - g.L / 2 + g.bw / 2, rx = g.cx + g.L / 2 - g.bw / 2;
+  g.bands = Kit.mk('g', {}, svg);
+  g.b1 = Kit.mk('line', {x1: lx, y1: g.floorY, x2: lx, y2: g.floorY, stroke: 'currentColor', 'stroke-linecap': 'round'}, g.bands);
+  g.b2 = Kit.mk('line', {x1: rx, y1: g.floorY, x2: rx, y2: g.floorY, stroke: 'currentColor', 'stroke-linecap': 'round'}, g.bands);
+  Kit.mk('rect', {x: lx - g.bw * 0.6, y: g.floorY - 4, width: g.bw * 1.2, height: 8, rx: 3, fill: 'currentColor'}, g.bands);
+  Kit.mk('rect', {x: rx - g.bw * 0.6, y: g.floorY - 4, width: g.bw * 1.2, height: 8, rx: 3, fill: 'currentColor'}, g.bands);
+
+  // dumbbell
+  g.db = Kit.mk('g', {class: 'grab'}, svg);
+  Kit.mk('rect', {x: g.cx - g.L / 2 - 10, y: -10, width: g.L + 20, height: g.ph + 20, fill: 'transparent'}, g.db);
+  Kit.mk('rect', {x: g.cx - g.L / 2, y: g.ph * 0.42, width: g.L, height: g.ph * 0.16, rx: g.ph * 0.06, fill: 'currentColor'}, g.db);
+  Kit.mk('rect', {x: g.cx - g.L / 2, y: 0, width: g.bw, height: g.ph, rx: g.bw * 0.3, fill: 'currentColor'}, g.db);
+  Kit.mk('rect', {x: g.cx + g.L / 2 - g.bw, y: 0, width: g.bw, height: g.ph, rx: g.bw * 0.3, fill: 'currentColor'}, g.db);
+  Kit.mk('rect', {x: g.cx - g.L * 0.12, y: g.ph * 0.3, width: g.L * 0.24, height: g.ph * 0.4, rx: g.ph * 0.12, fill: 'var(--c)', stroke: 'currentColor', 'stroke-width': Math.max(2, f * 0.15)}, g.db);
+
+  // hint
+  g.hint = Kit.mk('text', {x: g.cx, y: 0, 'text-anchor': 'middle', 'font-size': f, 'font-weight': 700, fill: 'currentColor', 'font-family': 'var(--hand)'}, svg);
+  g.hint.textContent = 'drag up ↑';
+  if (hinted) g.hint.setAttribute('opacity', 0);
+
+  // meter
+  const mh = g.floorY - g.topY;
+  const lab = Kit.mk('text', {x: g.mx + g.mw / 2, y: g.topY - f * 0.7, 'text-anchor': 'middle', 'font-size': f * 0.9, 'font-weight': 700, fill: 'currentColor', 'font-family': 'var(--body)', 'letter-spacing': '.06em'}, svg);
+  lab.textContent = 'LOAD';
+  Kit.mk('rect', {x: g.mx, y: g.topY, width: g.mw, height: mh, rx: g.mw * 0.25, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(2, f * 0.16)}, svg);
+  const clip = Kit.mk('clipPath', {id: 'mclip'}, svg);
+  Kit.mk('rect', {x: g.mx, y: g.topY, width: g.mw, height: mh, rx: g.mw * 0.25}, clip);
+  g.fill = Kit.mk('rect', {x: g.mx, y: g.floorY, width: g.mw, height: 0, fill: 'currentColor', 'clip-path': 'url(#mclip)'}, svg);
+  g.zero = Kit.mk('text', {x: g.mx + g.mw / 2, y: g.floorY - f * 0.6, 'text-anchor': 'middle', 'font-size': f, 'font-weight': 800, fill: 'currentColor', 'font-family': 'var(--body)', opacity: 0}, svg);
+  g.zero.textContent = 'none';
+
+  // pointer
+  let y0 = 0, l0 = 0, peak = 0;
+  g.db.addEventListener('pointerdown', e => {
+    if (finished) return;
+    dragging = true; y0 = e.clientY; l0 = st.lift; peak = 0;
+    gsap.killTweensOf(st);
+    svg.setPointerCapture(e.pointerId);
+    if (!hinted) { hinted = true; gsap.to(g.hint, {opacity: 0, duration: .3}); }
+    Kit.haptic('light');
+  });
+  svg.onpointermove = e => {
+    if (!dragging) return;
+    st.lift = Math.max(0, Math.min(1, l0 + (y0 - e.clientY) / G.range));
+    peak = Math.max(peak, st.lift); update();
+  };
+  svg.onpointerup = svg.onpointercancel = () => {
+    if (!dragging) return; dragging = false;
+    if (peak > 0.35) markTried();
+    release();
+  };
+  G = g; setMode(st.mode, true); update();
+}
+
+function update() {
+  const g = G; if (!g) return;
+  const lift = Math.max(0, Math.min(1, st.lift));
+  const top = g.floorY - g.ph - lift * g.range;
+  g.db.setAttribute('transform', `translate(0,${top})`);
+  g.hint.setAttribute('y', top - g.f * 0.7);
+  const lx = g.cx - g.L / 2 + g.bw / 2, rx = g.cx + g.L / 2 - g.bw / 2;
+  const by = top + g.ph;
+  [g.b1, g.b2].forEach(b => { b.setAttribute('y2', by); b.setAttribute('stroke-width', Math.max(2, g.bw * 0.5 * (1 - 0.6 * lift))); });
+  const F = force(), mh = g.floorY - g.topY;
+  g.fill.setAttribute('y', g.floorY - F * mh);
+  g.fill.setAttribute('height', F * mh);
+  g.zero.setAttribute('opacity', st.mode === 1 && lift > 0.05 ? 1 : 0);
+}
+
+function setMode(m, quiet) {
+  st.mode = m;
+  document.querySelectorAll('.mode').forEach(b => b.classList.toggle('on', +b.dataset.m === m));
+  if (!G) return;
+  G.stars.setAttribute('opacity', m === 0 ? 0 : 1);
+  G.ground.setAttribute('opacity', m === 0 ? 0.14 : 0.05);
+  G.bands.setAttribute('opacity', m === 2 ? 1 : 0);
+  G.status.textContent = STATUS[m];
+  if (!quiet) { gsap.killTweensOf(st); gsap.to(st, {lift: 0, duration: .35, ease: 'power2.out', onUpdate: update}); }
+}
+
+function release() {
+  if (st.mode === 0) gsap.to(st, {lift: 0, duration: .55, ease: 'bounce.out', onUpdate: update});
+  else if (st.mode === 1) gsap.to(st, {lift: Math.min(1, st.lift + 0.06), duration: 2.5, ease: 'sine.out', onUpdate: update});
+  else gsap.to(st, {lift: 0, duration: .3, ease: 'power2.in', onUpdate: update});
+  if (tried.size === 3) setTimeout(finish, 650);
+}
+
+function markTried() {
+  if (tried.has(st.mode)) return;
+  tried.add(st.mode);
+  document.querySelector(`.mode[data-m="${st.mode}"]`).classList.add('done');
+  Kit.haptic('selection');
+}
+
+function finish() {
+  if (finished) return; finished = true;
+  Kit.hide('modes'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => { Kit.onShow.card(); setMode(2); });
+}
+
+Kit.$('modes').addEventListener('click', e => {
+  const b = e.target.closest('.mode'); if (!b || finished) return;
+  setMode(+b.dataset.m); Kit.haptic('selection');
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.hint, {y: 0}, {y: -6, duration: .6, repeat: 5, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  hinted = true;
+  for (const m of [0, 1, 2]) {
+    setMode(m, true); st.lift = 0.8; update(); markTried(); await wait(60);
+  }
+  st.lift = 0.6; update();
+  finish();
+  await wait(600);
+};
+Kit.single();
+</script>
+</html>

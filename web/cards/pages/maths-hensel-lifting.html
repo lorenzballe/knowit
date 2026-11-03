@@ -1,0 +1,146 @@
+<!doctype html>
+<!-- slug: maths-hensel-lifting -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#scrub{display:flex;align-items:center;gap:3cqw}
+#scrub input{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);margin:0;cursor:pointer}
+#cnt{font:700 max(1.9cqh,12px)/1.2 var(--mono);white-space:nowrap}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Scrub · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HENSEL LIFTING</span></div>
+    <h2 class="q">How can you solve an equation one prime-power digit at a time?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="scrub"><input type="range" id="sl" min="0" max="9" step="1" value="0" aria-label="digits found"><span id="cnt">0 / 9 digits</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider: each step tries 0, 1, 2 for the next power of 3.</p>
+    <div id="why" class="gone"><p class="body">Each new digit only has to work for one more power of 3, so there are just three choices to test, and exactly one fits. Keep going forever and the digits build an exact 3-adic solution of x² = 7.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Solve modulo 3, then 9, then 27… each step adds one digit of the answer.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const D = [1,1,1,0,2,0,0,2,1];
+const X = [0], Q = [0];
+for (let n = 1; n <= 9; n++) { X[n] = X[n-1] + D[n-1] * 3 ** (n-1); Q[n] = (X[n] * X[n] - 7) / 3 ** n; }
+const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+const pw = n => '3' + SUP[n];
+let cur = 0, cells = [], hl = null, L1, L2, L3, tl = null, done = false, geo = null;
+
+function setCell(j, d, st, t) {
+  const o = cells[j][d], dur = t || 0;
+  const fo = st === 'yes' ? 1 : st === 'test' ? .3 : 0;
+  const so = st === 'no' ? .15 : st === 'yes' ? 1 : .35;
+  const to = st === 'no' ? .25 : st === 'idle' ? .5 : 1;
+  gsap.to(o.c, {attr: {'fill-opacity': fo, 'stroke-opacity': so}, duration: dur});
+  gsap.to(o.t, {opacity: to, duration: dur});
+  gsap.to(o.s, {opacity: st === 'no' ? .55 : 0, duration: dur});
+  o.t.style.fill = st === 'yes' ? 'var(--c)' : 'var(--k)';
+}
+function texts(n) {
+  if (!L1) return;
+  if (n === 0) {
+    L1.textContent = 'x = ?';
+    L2.textContent = 'Find x with x² = 7';
+    L3.textContent = 'Only digits 0, 1, 2 allowed';
+  } else {
+    L1.textContent = 'x so far = ' + X[n];
+    L2.textContent = 'x² − 7 = ' + pw(n) + ' × ' + (Q[n] < 0 ? '(' + Q[n] + ')' : Q[n]);
+    L3.textContent = n < 9 ? '✓ works up to ' + pw(n) + ' · next digit sharpens it' : '✓ works up to ' + pw(9) + ' · and on forever';
+  }
+}
+function moveHl(n, t) {
+  if (!hl) return;
+  if (n >= 9) gsap.to(hl, {opacity: 0, duration: t || 0});
+  else gsap.to(hl, {attr: {x: geo.m + geo.cw * n + geo.cw * .06}, opacity: 1, duration: t || 0});
+}
+function render(n, anim) {
+  if (tl) { tl.kill(); tl = null; }
+  if (!cells.length) return;
+  for (let j = 0; j < 9; j++) for (let d = 0; d < 3; d++) {
+    const st = j < n ? (d === D[j] ? 'yes' : 'no') : 'idle';
+    if (anim && j === n - 1) setCell(j, d, 'idle'); else setCell(j, d, st);
+  }
+  if (!anim) { texts(n); moveHl(n); return; }
+  const j = n - 1;
+  moveHl(j, .15);
+  tl = gsap.timeline();
+  for (let d = 0; d < 3; d++) {
+    const o = cells[j][d];
+    tl.to(o.c, {attr: {'fill-opacity': .3, 'stroke-opacity': 1}, duration: .1});
+    tl.to(o.g, {scale: 1.15, transformOrigin: '50% 50%', duration: .08, yoyo: true, repeat: 1});
+    tl.call(() => setCell(j, d, d === D[j] ? 'yes' : 'no', .15));
+    tl.to({}, {duration: .06});
+  }
+  tl.call(() => { texts(n); moveHl(n, .2); if (n === 9) Kit.haptic('success'); });
+}
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H / 15, W / 24));
+  const m = Math.max(6, W * .02), cw = (W - 2 * m) / 9;
+  const top = fs * 1.2, hy = top + fs * 1.9;
+  const gt = hy + fs * .6, gb = H - fs * 5.4, rh = Math.max(10, (gb - gt) / 3);
+  const r = Math.max(10, Math.min(cw * .4, rh * .4));
+  geo = {m, cw};
+  const ink = 'fill:var(--k)';
+  hl = Kit.mk('rect', {x: m + cw * .06, y: hy - fs * 1.1, width: cw * .88, height: gb - hy + fs * 1.1 + rh * .05, rx: cw * .25, style: 'fill:var(--k)', 'fill-opacity': .08}, svg);
+  const tx = (x, y, s, txt, extra) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', style: ink + ';font-size:' + s + 'px;font-family:var(--mono);font-weight:700'}, extra || {}), svg); t.textContent = txt; return t; };
+  tx(W / 2, top, fs * 1.05, 'x = x₀ + x₁·3 + x₂·3² + x₃·3³ + …');
+  cells = [];
+  for (let j = 0; j < 9; j++) {
+    const cx = m + cw * (j + .5);
+    tx(cx, hy, Math.max(12, fs * .9), pw(j), {opacity: .7});
+    cells[j] = [];
+    for (let d = 0; d < 3; d++) {
+      const cy = gt + rh * (2 - d + .5);
+      const g = Kit.mk('g', {}, svg);
+      const c = Kit.mk('circle', {cx, cy, r, style: 'fill:var(--k);stroke:var(--k)', 'stroke-width': Math.max(1.5, r * .12), 'fill-opacity': 0, 'stroke-opacity': .35}, g);
+      const t = Kit.mk('text', {x: cx, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'central', style: 'fill:var(--k);font-size:' + Math.max(12, Math.min(r * 1.1, fs * 1.1)) + 'px;font-family:var(--mono);font-weight:700'}, g);
+      t.textContent = d;
+      const s = Kit.mk('line', {x1: cx - r * .75, y1: cy + r * .75, x2: cx + r * .75, y2: cy - r * .75, style: 'stroke:var(--k)', 'stroke-width': Math.max(1.5, r * .14), 'stroke-linecap': 'round', opacity: 0}, g);
+      cells[j][d] = {g, c, t, s};
+    }
+  }
+  L1 = tx(W / 2, H - fs * 3.5, fs * 1.35, '');
+  L2 = tx(W / 2, H - fs * 1.75, fs * 1.05, '');
+  L3 = tx(W / 2, H - fs * .3, Math.max(12, fs * .85), '', {opacity: .7, style: ink + ';font-size:' + Math.max(12, fs * .85) + 'px;font-family:var(--body);font-weight:600'});
+  render(cur, false);
+};
+
+Kit.$('sl').addEventListener('input', e => {
+  const n = +e.target.value;
+  if (n === cur) return;
+  const anim = n === cur + 1 && !Kit.calm;
+  cur = n;
+  Kit.$('cnt').textContent = n + ' / 9 digits';
+  Kit.haptic('selection');
+  render(n, anim);
+  if (n === 9) finish();
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm && hl) gsap.fromTo(hl, {attr: {'fill-opacity': 0}}, {attr: {'fill-opacity': .08}, duration: .6, repeat: 3, yoyo: true}); };
+Kit.play.card = async () => {
+  const sl = Kit.$('sl');
+  for (let n = 1; n <= 9; n++) { sl.value = n; sl.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 60)); }
+  render(9, false);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

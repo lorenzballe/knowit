@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-swell-travels-far -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#sv{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+#why{margin:0}
+#why .body{font:600 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN WAVES</span></div>
+    <h2 class="q">Why do low-frequency waves travel farther than high-frequency ones?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv" aria-label="Waves leaving a storm, and the energy each kind keeps over distance"></svg>
+    </div>
+    <div id="why" class="gone"><p class="body">Near the storm, both kinds of wave are strong. High-frequency waves lose their energy quickly, so they fade close to the storm. The fast, low-frequency swell keeps going and arrives hundreds of miles away.</p></div>
+    <p class="say" id="say">Drag the boat away from the storm and watch which waves are still there.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Far from a storm, only the long, low-frequency swell is left.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let G = null, u = 0.06, done = false, running = false;
+const DH = 0.17, DL = 1.6; // decay lengths: high frequency fades fast, swell slowly
+const eH = v => Math.exp(-v / DH), eL = v => Math.exp(-v / DL);
+
+function build() {
+  const svg = Kit.$('sv');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const x0 = W * 0.17, x1 = W * 0.96;
+  const y1 = H * 0.21, y2 = H * 0.43, A = H * 0.07;
+  const gy0 = H * 0.6, gy1 = H * 0.87;
+  const ink = 'var(--k)', soft = 'color-mix(in srgb,var(--k) 55%,transparent)';
+  const g = {W, H, f, x0, x1, y1, y2, A, gy0, gy1};
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const txt = (x, y, s, a) => { const e = mk('text', Object.assign({x, y, fill: ink, 'font-family': 'var(--body)', 'font-size': f, 'font-weight': 700}, a || {})); e.textContent = s; return e; };
+
+  // storm
+  const sx = W * 0.075, sy = H * 0.27, r = Math.min(W * 0.045, H * 0.05);
+  [[-1, 0, 1], [0.2, -0.6, 1.25], [1.1, 0, 0.95]].forEach(([dx, dy, k]) => mk('circle', {cx: sx + dx * r, cy: sy + dy * r, r: r * k, fill: ink}));
+  mk('rect', {x: sx - 2 * r, y: sy, width: 4.1 * r, height: r * 0.9, rx: r * 0.45, fill: ink});
+  for (let i = 0; i < 4; i++) mk('line', {x1: sx - r * 1.3 + i * r * 0.9, y1: sy + r * 1.3, x2: sx - r * 1.6 + i * r * 0.9, y2: sy + r * 2.3, stroke: ink, 'stroke-width': Math.max(1.5, f * 0.14), 'stroke-linecap': 'round'});
+  txt(sx, sy + r * 2.3 + f * 1.2, 'storm', {'text-anchor': 'middle'});
+
+  // lanes
+  mk('line', {x1: x0, y1: y1, x2: x1, y2: y1, stroke: soft, 'stroke-width': 1, 'stroke-dasharray': '2 4'});
+  mk('line', {x1: x0, y1: y2, x2: x1, y2: y2, stroke: soft, 'stroke-width': 1, 'stroke-dasharray': '2 4'});
+  txt(x0, y1 - A - f * 0.45, 'high-frequency waves', {fill: soft});
+  txt(x0, y2 - A - f * 0.45, 'low-frequency swell');
+  g.pH = mk('path', {fill: 'none', stroke: soft, 'stroke-width': Math.max(1.6, f * 0.16), 'stroke-linejoin': 'round'});
+  g.pL = mk('path', {fill: 'none', stroke: ink, 'stroke-width': Math.max(2.6, f * 0.28), 'stroke-linejoin': 'round'});
+
+  // graph
+  txt(x0, gy0 - f * 0.6, 'energy left');
+  mk('line', {x1: x0, y1: gy0, x2: x0, y2: gy1, stroke: ink, 'stroke-width': 1.5});
+  mk('line', {x1: x0, y1: gy1, x2: x1, y2: gy1, stroke: ink, 'stroke-width': 1.5});
+  const curve = fn => { let d = ''; for (let i = 0; i <= 80; i++) { const v = i / 80; d += (i ? 'L' : 'M') + (x0 + v * (x1 - x0)).toFixed(1) + ',' + (gy1 - fn(v) * (gy1 - gy0)).toFixed(1); } return d; };
+  mk('path', {d: curve(eH), fill: 'none', stroke: soft, 'stroke-width': Math.max(1.6, f * 0.16)});
+  mk('path', {d: curve(eL), fill: 'none', stroke: ink, 'stroke-width': Math.max(2.6, f * 0.28)});
+  const lx = 0.3, gx = x0 + lx * (x1 - x0);
+  txt(gx + f * 0.4, gy1 - eH(lx) * (gy1 - gy0) - f * 0.4, 'high-frequency', {fill: soft, 'font-size': f * 0.9});
+  txt(gx, gy1 - eL(lx) * (gy1 - gy0) - f * 0.6, 'swell', {'font-size': f * 0.9});
+  txt(x0, gy1 + f * 1.3, 'near the storm', {'font-size': Math.max(10, f * 0.85), 'font-weight': 600});
+  txt(x1, gy1 + f * 1.3, 'hundreds of miles →', {'font-size': Math.max(10, f * 0.85), 'font-weight': 600, 'text-anchor': 'end'});
+
+  // the boat / marker
+  g.guide = mk('line', {y1: f * 1.9, y2: gy1, stroke: ink, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'});
+  g.dH = mk('circle', {r: f * 0.32, fill: 'var(--c)', stroke: soft, 'stroke-width': 2});
+  g.dL = mk('circle', {r: f * 0.36, fill: 'var(--c)', stroke: ink, 'stroke-width': 2.5});
+  g.boat = mk('g', {});
+  mk('path', {d: `M${-f},0 L${f},0 L${f * 0.65},${f * 0.6} L${-f * 0.65},${f * 0.6} Z`, fill: ink}, g.boat);
+  mk('line', {x1: 0, y1: 0, x2: 0, y2: -f * 1.1, stroke: ink, 'stroke-width': 2}, g.boat);
+  mk('path', {d: `M0,${-f * 1.1} L${f * 0.75},${-f * 0.25} L0,${-f * 0.25} Z`, fill: ink}, g.boat);
+  g.by = f * 1.4;
+  G = g;
+  draw();
+}
+
+function draw() {
+  if (!G) return;
+  const {W, x0, x1, y1, y2, A, gy0, gy1} = G;
+  const t = Kit.calm ? 0 : gsap.ticker.time;
+  const lh = W * 0.055, ch = W * 0.07, ll = W * 0.3, cl = W * 0.22; // swell is longer and faster
+  let dH = '', dL = '';
+  const N = 170;
+  for (let i = 0; i <= N; i++) {
+    const v = i / N, x = x0 + v * (x1 - x0), s = x - x0;
+    const yh = y1 + A * eH(v) * Math.sin(2 * Math.PI * (s - ch * t) / lh);
+    const yl = y2 + A * eL(v) * Math.sin(2 * Math.PI * (s - cl * t) / ll);
+    dH += (i ? 'L' : 'M') + x.toFixed(1) + ',' + yh.toFixed(1);
+    dL += (i ? 'L' : 'M') + x.toFixed(1) + ',' + yl.toFixed(1);
+  }
+  G.pH.setAttribute('d', dH); G.pL.setAttribute('d', dL);
+  const bx = x0 + u * (x1 - x0);
+  G.guide.setAttribute('x1', bx); G.guide.setAttribute('x2', bx);
+  G.dH.setAttribute('cx', bx); G.dH.setAttribute('cy', gy1 - eH(u) * (gy1 - gy0));
+  G.dL.setAttribute('cx', bx); G.dL.setAttribute('cy', gy1 - eL(u) * (gy1 - gy0));
+  G.boat.setAttribute('transform', `translate(${bx},${G.by})`);
+}
+
+function setU(clientX) {
+  if (!G) return;
+  const rc = Kit.$('sv').getBoundingClientRect();
+  const px = (clientX - rc.left) * (G.W / rc.width);
+  u = Math.max(0.02, Math.min(0.98, (px - G.x0) / (G.x1 - G.x0)));
+  if (Kit.calm || !running) draw();
+  if (!done && u >= 0.85) {
+    done = true;
+    Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+
+const sv = Kit.$('sv');
+let dragging = false;
+sv.addEventListener('pointerdown', e => { dragging = true; try { sv.setPointerCapture(e.pointerId); } catch (_) {} Kit.haptic('selection'); setU(e.clientX); });
+sv.addEventListener('pointermove', e => { if (dragging) setU(e.clientX); });
+sv.addEventListener('pointerup', () => { dragging = false; });
+sv.addEventListener('pointercancel', () => { dragging = false; });
+
+Kit.onShow.card = () => build();
+new ResizeObserver(() => { if (G) build(); }).observe(Kit.$('stage'));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) { draw(); return; }
+  if (!running) { running = true; gsap.ticker.add(draw); }
+  if (G) gsap.from(G.boat, {opacity: 0, duration: .5, ease: 'power2.out'});
+};
+
+Kit.play.card = async () => {
+  const rc = sv.getBoundingClientRect(), y = rc.top + rc.height * 0.1;
+  const ev = (type, x) => sv.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', rc.left + rc.width * 0.2);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', rc.left + rc.width * (0.2 + i * 0.075)); await new Promise(r => setTimeout(r, 40)); }
+  ev('pointerup', rc.left + rc.width * 0.95);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

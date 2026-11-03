@@ -1,0 +1,37 @@
+{
+  "id": "technology-trieste-gasoline-float",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Trieste carry 85,000 litres of gasoline just to float?",
+  "answer": "The Trieste carried 85,000 litres of gasoline because gasoline is lighter than seawater, litre for litre. Swapping that much water for fuel, plus the two air tanks, made the float push up harder than the steel pulled down. Dragging to swap seawater for gasoline in the float shows the effect.",
+  "move": "Anything lighter than water, held in a tank, lifts what it’s tied to.",
+  "keywords": [
+    "trieste",
+    "bathyscaphe",
+    "gasoline",
+    "buoyancy",
+    "mariana_trench"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled BUOYANCY asking why the Trieste carried 85,000 litres of gasoline just to float. A float diagram shows seawater being swapped for gasoline by dragging, with a counter reading 0 L gasoline."
+  },
+  "source": "Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=CYUaD_ROqGM&t=198s",
+  "written": "2026-11-03"
+}

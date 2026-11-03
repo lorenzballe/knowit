@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-venice-high-water -->
+<title>Astute · Venice 187 cm</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;gap:2cqw}
+.tg{flex:1;font:700 max(1.9cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.tg.on{background:var(--hue);color:#fff;box-shadow:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Build it · layers">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VENICE FLOOD</span></div>
+    <h2 class="q">What piled Venice's water 187 cm high in November 2019?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Water rising against a Venetian building, with a bar stacking the causes"></svg>
+      <div id="ctl">
+        <button class="tg" data-k="t" style="--hue:#2b6cb0">Peak tide</button>
+        <button class="tg" data-k="w" style="--hue:#1f9488">Scirocco wind</button>
+        <button class="tg" data-k="p" style="--hue:#7a4bb8">Low pressure</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">187 cm, all at once</p>
+        <p class="body">On 12–13 November a peak astronomical tide met a strong south-east scirocco pushing the water north, and a low-pressure system. They summed: 40–50 of the 187 cm came from the weather.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap each cause to stack it onto the water.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The tide sets the base; wind and low pressure stack on top.</div>
+    <div class="foot"><span class="src">Source · Geopop, “ACQUA ALTA VENEZIA:  L'ANALISI SCIENTIFICA DELLE CAUSE” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const COL = {t:'#2b6cb0', w:'#1f9488', p:'#7a4bb8'};
+const FULL = {t:142, w:22.5, p:22.5};
+const on = {t:false, w:false, p:false};
+const lv = {t:0, w:0, p:0};
+let G = null, done = false;
+
+function render(){
+  if (!G) return;
+  const {y, pc, W, fs, bx, bw, yb} = G;
+  // stacked bar
+  let base = 0;
+  ['t','w','p'].forEach(k => {
+    const h = lv[k] * pc, top = y(base + lv[k]);
+    G.seg[k].setAttribute('y', top); G.seg[k].setAttribute('height', Math.max(0, h));
+    const tx = G.txt[k];
+    tx.setAttribute('y', top + h/2 + fs*0.35);
+    tx.setAttribute('opacity', h > fs*1.25 ? 1 : 0);
+    base += lv[k];
+  });
+  // water
+  const top = y(base), x1 = W*0.6;
+  let d = `M0 ${yb+2} L0 ${top}`;
+  for (let x = 0; x <= x1; x += 6) d += ` L${x} ${top + Math.sin(x/14)*Math.min(3, base*pc*0.05)}`;
+  d += ` L${x1} ${yb+2} Z`;
+  G.water.setAttribute('d', d);
+  G.water.setAttribute('opacity', base > 0.5 ? 1 : 0);
+  // total label
+  const all = on.t && on.w && on.p;
+  G.tot.textContent = all ? '187 cm' : (on.t && !on.w && !on.p ? '≈140 cm' : '');
+  G.tot.setAttribute('y', y(base) - fs*0.6);
+  G.line.setAttribute('y1', top); G.line.setAttribute('y2', top);
+  G.line.setAttribute('opacity', all ? 1 : 0);
+  // sky icons
+  G.ic.t.setAttribute('opacity', on.t ? 1 : .18);
+  G.ic.w.setAttribute('opacity', on.w ? 1 : .18);
+  G.ic.p.setAttribute('opacity', on.p ? 1 : .18);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const M = (t, a, p) => Kit.mk(t, a, p || svg);
+  const fs = Math.max(12, f*0.85);
+  const yb = H*0.92, yt = H*0.24, pc = (yb - yt)/200, y = cm => yb - cm*pc;
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const bx = W*0.66, bw = W*0.3;
+  G = {W, H, fs, yb, pc, y, bx, bw, seg:{}, txt:{}, ic:{}};
+
+  // building
+  const b0 = W*0.17, b1 = W*0.56, btop = H*0.2;
+  M('rect', {x:b0, y:btop, width:b1-b0, height:yb-btop, fill:'#e9c9a3', stroke:ink, 'stroke-width':1.5});
+  M('rect', {x:b0-4, y:btop-6, width:b1-b0+8, height:8, fill:ink});
+  const aw = (b1-b0)/4;
+  for (let i = 0; i < 3; i++) {           // upper windows
+    const cx = b0 + aw*(i+0.5) + aw*0.5 - aw*0.5 + aw*0.25, ww = aw*0.5;
+    const wx = b0 + (b1-b0)*(i+0.5)/3 - ww/2, wy = btop + (yb-btop)*0.12, wh = (yb-btop)*0.2;
+    M('path', {d:`M${wx} ${wy+wh} V${wy+ww/2} A${ww/2} ${ww/2} 0 0 1 ${wx+ww} ${wy+ww/2} V${wy+wh} Z`, fill:'#3a4a5c'});
+  }
+  for (let i = 0; i < 2; i++) {           // ground arches
+    const ww = (b1-b0)*0.3, wx = b0 + (b1-b0)*(i ? 0.6 : 0.1), wy = y(210);
+    M('path', {d:`M${wx} ${yb} V${wy+ww/2} A${ww/2} ${ww/2} 0 0 1 ${wx+ww} ${wy+ww/2} V${yb} Z`, fill:'#5b3b2a'});
+  }
+  // person 175 cm, for scale
+  const px = (b0+b1)/2, hr = 11*pc, top = y(175);
+  M('circle', {cx:px, cy:top+hr, r:hr, fill:ink});
+  M('path', {d:`M${px} ${top+2*hr} V${y(85)} M${px} ${y(85)} L${px-12*pc} ${yb} M${px} ${y(85)} L${px+12*pc} ${yb} M${px-22*pc} ${y(110)} L${px} ${y(145)} L${px+22*pc} ${y(110)}`, stroke:ink, 'stroke-width':Math.max(2, 5*pc), 'stroke-linecap':'round', fill:'none'});
+
+  // water
+  G.water = M('path', {fill:'rgba(30,110,190,.72)', stroke:'#0b3d75', 'stroke-width':1.5});
+  // ground
+  M('line', {x1:0, x2:W, y1:yb, y2:yb, stroke:ink, 'stroke-width':2});
+
+  // ruler
+  for (let c = 0; c <= 200; c += 50) {
+    M('line', {x1:W*0.11, x2:W*0.14, y1:y(c), y2:y(c), stroke:ink, 'stroke-width':1.5});
+    const t = M('text', {x:W*0.1, y:y(c)+fs*0.35, 'text-anchor':'end', fill:ink, 'font-family':'var(--mono)', 'font-size':fs});
+    t.textContent = c;
+  }
+  M('line', {x1:W*0.14, x2:W*0.14, y1:y(0), y2:y(200), stroke:ink, 'stroke-width':1.5});
+  const u = M('text', {x:W*0.1, y:y(200)-fs*1.1, 'text-anchor':'end', fill:ink, 'font-family':'var(--mono)', 'font-size':fs}); u.textContent = 'cm';
+
+  // bar frame
+  M('rect', {x:bx, y:y(200), width:bw, height:200*pc, fill:'none', stroke:ink, 'stroke-opacity':.25, 'stroke-dasharray':'4 4'});
+  const names = {t:'Peak tide', w:'Scirocco', p:'Low pressure'};
+  ['t','w','p'].forEach(k => {
+    G.seg[k] = M('rect', {x:bx, y:yb, width:bw, height:0, fill:COL[k], stroke:'#fff', 'stroke-width':1.5});
+  });
+  ['t','w','p'].forEach(k => {
+    G.txt[k] = M('text', {x:bx+bw/2, y:yb, 'text-anchor':'middle', fill:'#fff', 'font-family':'var(--body)', 'font-weight':700, 'font-size':Math.max(12, fs*0.92), opacity:0});
+    G.txt[k].textContent = names[k];
+  });
+  G.line = M('line', {x1:0, x2:bx+bw, stroke:'#c0392b', 'stroke-width':2, 'stroke-dasharray':'6 4', opacity:0});
+  G.tot = M('text', {x:bx+bw/2, y:yb, 'text-anchor':'middle', fill:ink, 'font-family':'var(--display)', 'font-weight':800, 'font-size':Math.max(14, fs*1.35)});
+
+  // sky icons
+  const iy = H*0.08, ir = Math.min(H*0.05, W*0.05);
+  G.ic.t = M('g', {});
+  M('circle', {cx:W*0.24, cy:iy, r:ir, fill:'#f3e6a0', stroke:COL.t, 'stroke-width':2}, G.ic.t);
+  G.ic.p = M('g', {});
+  M('circle', {cx:W*0.4, cy:iy, r:ir, fill:'none', stroke:COL.p, 'stroke-width':2.5}, G.ic.p);
+  M('circle', {cx:W*0.4, cy:iy, r:ir*1.6, fill:'none', stroke:COL.p, 'stroke-width':1.5, 'stroke-opacity':.5}, G.ic.p);
+  const L = M('text', {x:W*0.4, y:iy+ir*0.42, 'text-anchor':'middle', fill:COL.p, 'font-family':'var(--display)', 'font-weight':800, 'font-size':ir*1.2}, G.ic.p); L.textContent = 'L';
+  G.ic.w = M('g', {});
+  for (let i = 0; i < 3; i++) {
+    const ax = W*0.62 + i*W*0.1, ay = iy + ir*0.6 - i*ir*0.25, l = W*0.07;
+    M('path', {d:`M${ax+l} ${ay+l*0.35} L${ax} ${ay} M${ax} ${ay} l${l*0.3} ${-l*0.12} M${ax} ${ay} l${l*0.18} ${l*0.26}`, stroke:COL.w, 'stroke-width':3, 'stroke-linecap':'round', fill:'none'}, G.ic.w);
+  }
+  render();
+};
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  setTimeout(() => { Kit.hide('say'); Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity:0, y:8, stagger:.1, duration:.45}); }, Kit.calm ? 0 : 900);
+}
+
+Kit.$('ctl').addEventListener('click', e => {
+  const b = e.target.closest('.tg'); if (!b || done) return;
+  const k = b.dataset.k;
+  on[k] = !on[k]; b.classList.toggle('on', on[k]); Kit.haptic('selection');
+  const target = on[k] ? FULL[k] : 0;
+  if (Kit.calm) { lv[k] = target; render(); }
+  else gsap.to(lv, {[k]:target, duration:.9, ease:'power2.inOut', onUpdate:render});
+  render();
+  if (on.t && on.w && on.p) finish();
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.tg', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const b of Kit.$('ctl').children) { b.click(); await w(1000); }
+  await w(1200);
+};
+Kit.single();
+</script>
+</html>

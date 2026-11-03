@@ -1,0 +1,37 @@
+{
+  "id": "science-fukushima-tritium-filter",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is tritium the only radioactive thing left in Fukushima's treated water?",
+  "answer": "A first filter removes cesium-137, and ALPS removes essentially every other radionuclide. Tritium is an isotope of hydrogen, chemically the same as ordinary hydrogen, so it sits inside the water molecule itself. It can't be separated chemically.",
+  "move": "Filters catch what's dissolved in water, not what water is made of.",
+  "keywords": [
+    "fukushima",
+    "tritium",
+    "alps-filtration",
+    "cesium-137",
+    "hydrogen"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page titled 'Why only tritium is left in Fukushima's water'. It asks why tritium is the only radioactive thing left in treated water. Text explains that filters remove cesium-137 and other radionuclides, but tritium is part of the water molecule. A tap-to-zoom drop illustration follows."
+  },
+  "source": "Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=IPH3uqi0a-w&t=177s",
+  "written": "2026-11-03"
+}

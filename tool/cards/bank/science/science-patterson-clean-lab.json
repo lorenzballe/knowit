@@ -1,0 +1,37 @@
+{
+  "id": "science-patterson-clean-lab",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Clair Patterson keep lead off his samples at Caltech?",
+  "answer": "Lead was everywhere: in the solder of the wiring, in dust, in the air, and on people. Specks of it on Clair Patterson's zircon spoiled their age measurements. So in 1952 at Caltech he built a lab from scratch to keep lead out, and basically invented the cleanroom.",
+  "move": "To measure a trace of something, first remove it from everywhere else.",
+  "keywords": [
+    "clair patterson",
+    "caltech",
+    "lead",
+    "zircon",
+    "cleanroom"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page with a counter reading 'Lead specks on the zircon: 0' and 'sources left: 4'. Lead keeps landing on a zircon from sources such as wiring solder, dust, air and people. The reader is asked to tap each source to shut it off."
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=766s",
+  "written": "2026-11-03"
+}

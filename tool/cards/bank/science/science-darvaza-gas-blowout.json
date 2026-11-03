@@ -1,0 +1,37 @@
+{
+  "id": "science-darvaza-gas-blowout",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a pressure blowout during gas drilling form the Darvaza crater?",
+  "answer": "The drill hit natural gas under high pressure, and its sudden rush upward set off the accident. A chasm opened under the crew's feet, and the ground and all the drilling gear collapsed into it. That collapse formed the Darvaza crater.",
+  "move": "Let high-pressure gas escape from below, and the ground above can cave in.",
+  "keywords": [
+    "darvaza crater",
+    "turkmenistan",
+    "gas drilling",
+    "natural gas",
+    "blowout"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A desert near Darvaza, Turkmenistan, with a drill rig on the sand. The question asks how a pressure blowout during gas drilling formed the Darvaza crater. Tap the drill rig to start drilling."
+  },
+  "source": "Geopop, “La \"Porta dell'Inferno\", come si è formata e perché dopo 50 anni brucia nel deserto in Turkmenistan?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=5hk3wTF3Ti0",
+  "written": "2026-11-03"
+}

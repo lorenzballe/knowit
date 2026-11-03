@@ -1,0 +1,37 @@
+{
+  "id": "nature-greenland-ice-air",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does Greenland's ice mass influence global weather patterns?",
+  "answer": "Greenland's ice shapes the seas and winds of half the planet. Its sheer volume directly affects sea levels and drives atmospheric circulation across the whole Northern Hemisphere. Tap ICE, SEA and AIR on the page to see what each one does.",
+  "move": "Greenland's ice shapes the seas and winds of half the planet.",
+  "keywords": [
+    "greenland",
+    "ice sheet",
+    "sea level",
+    "atmospheric circulation",
+    "northern hemisphere"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A side view of a dome of ice, red where it is thickest and blue where it thins out. The question asks how Greenland's ice mass influences global weather patterns. Three buttons, ICE, SEA and AIR, reveal what each one does."
+  },
+  "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=59s",
+  "written": "2026-11-03"
+}

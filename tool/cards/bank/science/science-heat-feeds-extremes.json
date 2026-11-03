@@ -1,0 +1,37 @@
+{
+  "id": "science-heat-feeds-extremes",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the climate crisis make extreme weather more frequent and stronger?",
+  "answer": "Greenhouse gases trap more heat, and a hotter atmosphere is more unstable, so heat waves and storms come more often and hit harder. Milan just had its first 21 June with a 30° average. Dragging the slider to add greenhouse gas shows the whole chain and the year reacting.",
+  "move": "More heat in the air means extremes that are both more frequent and more intense.",
+  "keywords": [
+    "climate crisis",
+    "greenhouse gases",
+    "heat waves",
+    "storms",
+    "milan"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A slider runs from less gas to more gas and shows a chain: greenhouse gases trap heat, the atmosphere grows unstable, and heat waves and storms become more frequent and stronger. The question asks how the climate crisis makes extreme weather more frequent and stronger."
+  },
+  "source": "Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=PYf8dpcHm_E&t=57s",
+  "written": "2026-11-03"
+}

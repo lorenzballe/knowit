@@ -1,0 +1,37 @@
+{
+  "id": "history-hydrogen-wall",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Red LEDs glowed in 1962. Why did blue take another 30 years?",
+  "answer": "Red LEDs glowed in 1962, but blue took about 30 more years. Magnesium should leave holes in the crystal that carry current, yet it barely conducts and the LED stays dark. The card dates an electron-beam step to 1989, and Akasaki, Amano and Nakamura won the 2014 Nobel for blue LEDs.",
+  "move": "White LED bulbs waited on one stray atom.",
+  "keywords": [
+    "blue led",
+    "magnesium",
+    "electron beam",
+    "white led",
+    "nobel prize"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled The hydrogen wall. It asks why blue LEDs took about 30 years after red LEDs glowed in 1962. It shows magnesium-doped crystal that should carry current but barely conducts, so the LED stays dark, and an electron-beam step dated 1989."
+  },
+  "source": "Veritasium, “Why It Was Almost Impossible to Make the Blue LED” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=AF8d72mA41M",
+  "written": "2026-11-03"
+}

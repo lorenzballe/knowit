@@ -1,0 +1,173 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-fat-man-implosion -->
+<title>Astute · The Implosion Design</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;gap:2.4cqw}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt:disabled{opacity:.55}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.foot .src{display:block;padding-right:100px;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">IMPLOSION</span></div>
+    <h2 class="q">How did Fat Man achieve a supercritical mass?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Plutonium sphere ringed by 32 explosive charges"></svg>
+      <div id="why" class="gone">
+        <p class="body">Plutonium-239 is so reactive that a gun design would have set it off before the pieces met. So Fat Man fired 32 charges in perfect unison, within a microsecond, crushing one sphere evenly until it was dense enough for a chain reaction: about 21 kilotons.</p>
+      </div>
+    </div>
+    <div id="ctl">
+      <button class="opt" id="bOff">Fire out of step</button>
+      <button class="opt" id="bOn">Fire in unison</button>
+    </div>
+    <p class="say" id="say">Fire the 32 charges. Try out of step first, then all at once.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Not more plutonium: the same plutonium, squeezed denser from every side at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 32, M = 128, TRAVEL = .55;
+const S = {t: 0, glow: 0, mode: null};
+let delays = new Array(N).fill(0), busy = false, G = null, done = false;
+const top0 = 'Fat Man · 3.25 m wide · 4.6 tonnes';
+const bot0 = '6.2 kg plutonium-239 · 32 charges';
+let topTxt = top0, botTxt = bot0;
+const lerpCol = gsap.utils.interpolate('#8e97a3', '#fff3b0');
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12);
+  const R = Math.max(40, Math.min(W / 2 - 4, (H - fs * 4.2) / 2));
+  const cx = W / 2, cy = H / 2;
+  const Rin = R * .76, Rc = R * .3;
+  const g = {W, H, fs, R, cx, cy, Rin, Rc, wedges: []};
+  Kit.mk('circle', {cx, cy, r: R + 3, fill: '#14161c'}, svg);
+  // shock gap
+  Kit.mk('circle', {cx, cy, r: Rin, fill: '#1f232c'}, svg);
+  for (let i = 0; i < N; i++) {
+    const a0 = (i / N) * Math.PI * 2 + .02, a1 = ((i + 1) / N) * Math.PI * 2 - .02;
+    const p = (r, a) => `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
+    const d = `M${p(Rin + 2, a0)} L${p(R, a0)} A${R},${R} 0 0 1 ${p(R, a1)} L${p(Rin + 2, a1)} A${Rin + 2},${Rin + 2} 0 0 0 ${p(Rin + 2, a0)}Z`;
+    g.wedges.push(Kit.mk('path', {d, fill: '#ff8a3d'}, svg));
+  }
+  g.front = Kit.mk('path', {fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(2, R * .025), 'stroke-linejoin': 'round', opacity: 0}, svg);
+  g.flash = Kit.mk('circle', {cx, cy, r: 0, fill: '#fff3b0', opacity: 0}, svg);
+  g.core = Kit.mk('path', {fill: '#8e97a3', stroke: '#d5dbe2', 'stroke-width': 1.5}, svg);
+  g.dots = [];
+  for (let i = 0; i < 24; i++) g.dots.push(Kit.mk('circle', {cx, cy, r: Math.max(2, R * .022), fill: '#fff', opacity: 0}, svg));
+  g.coreT = Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', fill: '#14161c', style: `font:700 ${fs}px var(--mono)`}, svg);
+  g.coreT.textContent = 'Pu-239';
+  g.top = Kit.mk('text', {x: cx, y: cy - R - fs * .8, 'text-anchor': 'middle', fill: 'var(--k)', style: `font:700 ${fs}px var(--body)`}, svg);
+  g.bot = Kit.mk('text', {x: cx, y: cy + R + fs * 1.6, 'text-anchor': 'middle', fill: 'var(--k)', style: `font:600 ${fs}px var(--body)`}, svg);
+  G = g; render();
+}
+
+function render() {
+  if (!G) return;
+  const g = G, t = S.t;
+  g.top.textContent = topTxt; g.bot.textContent = botTxt;
+  g.wedges.forEach((w, i) => {
+    const d = delays[i];
+    const fill = S.mode === null || t < d ? '#ff8a3d' : (t - d < .08 ? '#ffffff' : '#5b3a2a');
+    w.setAttribute('fill', fill);
+  });
+  const fr = [], cr = [];
+  let comp = 0;
+  for (let j = 0; j < M; j++) {
+    const i = Math.floor(j / (M / N));
+    const k = S.mode === null ? 0 : Math.min(1, Math.max(0, (t - delays[i]) / TRAVEL));
+    const f = g.Rin * (1 - k);
+    fr.push(f);
+    const c = Math.max(g.Rc * .58, Math.min(g.Rc, f));
+    cr.push(c); comp += (g.Rc - c) / g.Rc;
+  }
+  comp /= M;
+  const bulge = S.mode === 'off' ? g.Rc * 2.2 * comp : 0;
+  let dc = '', df = '', anyF = false;
+  for (let j = 0; j < M; j++) {
+    const a = j / M * Math.PI * 2;
+    let c = cr[j];
+    if (c >= g.Rc - .5) c = g.Rc + bulge;
+    const f = Math.max(fr[j], c);
+    if (fr[j] > c + 1) anyF = true;
+    dc += (j ? 'L' : 'M') + (g.cx + c * Math.cos(a)).toFixed(1) + ',' + (g.cy + c * Math.sin(a)).toFixed(1);
+    df += (j ? 'L' : 'M') + (g.cx + f * Math.cos(a)).toFixed(1) + ',' + (g.cy + f * Math.sin(a)).toFixed(1);
+  }
+  g.core.setAttribute('d', dc + 'Z');
+  g.front.setAttribute('d', df + 'Z');
+  g.front.setAttribute('opacity', S.mode && t > 0 && anyF ? .95 : 0);
+  const gl = S.glow;
+  g.core.setAttribute('fill', lerpCol(gl));
+  g.flash.setAttribute('r', g.Rc * .6 + gl * g.R * 1.1);
+  g.flash.setAttribute('opacity', gl > 0 ? (1 - gl) * .7 : 0);
+  g.dots.forEach((d, i) => {
+    const a = i / 24 * Math.PI * 2 + .13, r = g.Rc * .3 + gl * g.R * .85;
+    d.setAttribute('cx', g.cx + r * Math.cos(a)); d.setAttribute('cy', g.cy + r * Math.sin(a));
+    d.setAttribute('opacity', gl > 0 && gl < 1 ? 1 - gl * .8 : 0);
+  });
+  g.coreT.setAttribute('opacity', comp > .2 ? 0 : 1);
+}
+
+function fire(mode) {
+  if (busy || done) return;
+  busy = true; Kit.haptic('light');
+  Kit.$('bOff').disabled = Kit.$('bOn').disabled = true;
+  Kit.$(mode === 'off' ? 'bOff' : 'bOn').classList.add('on');
+  Kit.$(mode === 'off' ? 'bOn' : 'bOff').classList.remove('on');
+  const phi = 0.7;
+  delays = Array.from({length: N}, (_, i) => mode === 'on' ? 0
+    : .36 * (.5 + .5 * Math.cos(i / N * Math.PI * 2 - phi)) + .07 * Kit.rnd());
+  S.mode = mode; S.t = 0; S.glow = 0;
+  topTxt = mode === 'on' ? 'All 32 within a microsecond…' : 'Charges firing out of step…';
+  botTxt = '';
+  const dur = Kit.calm ? .4 : 2;
+  gsap.to(S, {t: 1, duration: dur, ease: 'none', onUpdate: render, onComplete: () => after(mode)});
+}
+
+function after(mode) {
+  if (mode === 'off') {
+    topTxt = 'Out of step: the core squirts sideways';
+    botTxt = 'Pushed, not crushed · no chain reaction';
+    render(); busy = false;
+    Kit.$('bOn').disabled = false; Kit.$('bOff').disabled = false;
+    Kit.$('say').textContent = 'Now fire all 32 at the same instant.';
+    return;
+  }
+  topTxt = 'In unison: crushed evenly, denser';
+  botTxt = 'Supercritical → chain reaction · 21 kt';
+  gsap.to(S, {glow: 1, duration: Kit.calm ? .2 : 1.1, ease: 'power2.out', onUpdate: render, onComplete: () => {
+    S.glow = .999; render();
+  }});
+  render(); Kit.haptic('success');
+  done = true; busy = false;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(build);
+}
+
+Kit.$('bOff').addEventListener('click', () => fire('off'));
+Kit.$('bOn').addEventListener('click', () => fire('on'));
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.wedges, {opacity: 0, duration: .35, stagger: .02, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('bOff').click(); await w(2300);
+  Kit.$('bOn').click(); await w(3400);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-burning-plastic-energy -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#plot{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
+    <h2 class="q">Does burning plastic give back the energy it takes to make new plastic?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="why" class="gone">
+        <p class="big">No: it gives back less.</p>
+        <p class="body">Burning plastic does release energy, but less than the energy spent making new plastic from fossil fuels. Burn it, and that plastic must be made all over again; recycle it well, and those fossil fuels are spared.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the flame bar up or down: how much energy does burning give back?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Burning plastic recovers less energy than making new plastic costs, so recycle.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAKE = .72, FINAL = .44;           // shapes only: the video says "smaller", not by how much
+const S = {g: .2, shown: .2, phase: 0, moved: false, gapA: 0};
+let G = null, E = {};
+const svg = Kit.$('plot');
+
+function build(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13), small = Math.max(f * .85, 12);
+  const labelH = fs * 1.3 * 2 + fs * .7;
+  const baseY = H - labelH, topY = fs * 1.9;
+  const bw = Math.min(W * .26, 150), cx1 = W * .29, cx2 = W * .69;
+  G = {W, H, fs, small, baseY, topY, avail: baseY - topY, bw, cx1, cx2};
+  const defs = Kit.mk('defs', {}, svg);
+  const gr = Kit.mk('linearGradient', {id: 'fl', x1: 0, y1: 1, x2: 0, y2: 0}, defs);
+  Kit.mk('stop', {offset: '0', 'stop-color': '#ff5a12'}, gr);
+  Kit.mk('stop', {offset: '1', 'stop-color': '#ffc21a'}, gr);
+  const pat = Kit.mk('pattern', {id: 'hatch', width: 8, height: 8, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+  Kit.mk('rect', {width: 8, height: 8, fill: 'rgba(220,30,40,.18)'}, pat);
+  Kit.mk('rect', {width: 3, height: 8, fill: 'rgba(220,30,40,.75)'}, pat);
+  // baseline
+  Kit.mk('line', {x1: W * .06, x2: W * .94, y1: baseY, y2: baseY, style: 'stroke:var(--k);stroke-width:2'}, svg);
+  // make bar
+  const my = baseY - MAKE * G.avail;
+  Kit.mk('rect', {x: cx1 - bw / 2, y: my, width: bw, height: baseY - my, rx: 6, style: 'fill:var(--k)'}, svg);
+  // reference line at the make level
+  E.ref = Kit.mk('line', {x1: cx1 + bw / 2, x2: cx2 + bw / 2, y1: my, y2: my, 'stroke-dasharray': '5 5', style: 'stroke:var(--k);stroke-width:1.6;opacity:.55'}, svg);
+  // gap
+  E.gap = Kit.mk('rect', {x: cx2 - bw / 2, width: bw, fill: 'url(#hatch)', opacity: 0}, svg);
+  E.gapT = Kit.mk('text', {x: cx2, 'text-anchor': 'middle', 'dominant-baseline': 'middle', opacity: 0, style: `font:800 ${fs}px var(--body);fill:#c8102e;paint-order:stroke;stroke:var(--c);stroke-width:4px`}, svg);
+  E.gapT.textContent = 'lost';
+  // burn bar
+  E.burn = Kit.mk('rect', {x: cx2 - bw / 2, width: bw, rx: 6, fill: 'url(#fl)'}, svg);
+  E.grip = Kit.mk('rect', {x: cx2 - bw * .3, width: bw * .6, height: 6, rx: 3, fill: '#fff', opacity: .9}, svg);
+  E.hint = Kit.mk('text', {x: cx2, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);fill:var(--k)`}, svg);
+  E.hint.textContent = '↕ drag';
+  // ghost of the guess
+  E.ghost = Kit.mk('line', {x1: cx2 - bw / 2, x2: cx2 + bw / 2, 'stroke-dasharray': '3 4', opacity: 0, style: 'stroke:var(--k);stroke-width:2.2'}, svg);
+  E.you = Kit.mk('text', {x: cx2 + bw / 2 + 5, 'dominant-baseline': 'middle', opacity: 0, style: `font:700 ${small}px var(--body);fill:var(--k)`}, svg);
+  E.you.textContent = 'you';
+  // labels under the bars
+  const lab = (cx, a, b) => {
+    const t = Kit.mk('text', {x: cx, y: baseY + fs * 1.35, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);fill:var(--k)`}, svg); t.textContent = a;
+    const u = Kit.mk('text', {x: cx, y: baseY + fs * 1.35 + fs * 1.3, 'text-anchor': 'middle', style: `font:600 ${small}px var(--body);fill:var(--k);opacity:.7`}, svg); u.textContent = b;
+  };
+  lab(cx1, 'Make new', 'energy spent');
+  lab(cx2, 'Burn old', 'energy back');
+  E.note = Kit.mk('text', {x: W * .06, y: fs, opacity: 0, style: `font:600 ${small}px var(--body);fill:var(--k);opacity:0`}, svg);
+  E.note.textContent = 'shapes, not measured values';
+  update();
+}
+
+function update(){
+  if (!G) return;
+  const {baseY, avail, fs, cx2, bw} = G;
+  const y = baseY - S.shown * avail, my = baseY - MAKE * avail;
+  E.burn.setAttribute('y', y); E.burn.setAttribute('height', Math.max(baseY - y, 0));
+  E.grip.setAttribute('y', y + 6);
+  E.hint.setAttribute('y', y - fs * .55);
+  E.hint.style.opacity = S.phase ? 0 : 1;
+  E.grip.style.opacity = S.phase ? 0 : .9;
+  const gy = baseY - S.g * avail;
+  E.ghost.setAttribute('y1', gy); E.ghost.setAttribute('y2', gy);
+  E.you.setAttribute('y', gy);
+  if (y > my) {
+    E.gap.setAttribute('y', my); E.gap.setAttribute('height', y - my);
+    E.gapT.setAttribute('y', (my + y) / 2);
+    E.gapT.setAttribute('opacity', (y - my) > fs * 1.6 ? S.gapA : 0);
+  } else { E.gap.setAttribute('height', 0); E.gapT.setAttribute('opacity', 0); }
+  E.gap.setAttribute('opacity', S.gapA);
+  if (S.phase) { E.ghost.setAttribute('opacity', .8); E.you.setAttribute('opacity', 1); E.note.style.opacity = .7; }
+}
+
+function setFromY(clientY){
+  const r = svg.getBoundingClientRect();
+  const y = (clientY - r.top) * (G.H / r.height);
+  S.g = S.shown = Math.min(1, Math.max(.04, (G.baseY - y) / G.avail));
+  update();
+}
+let drag = false;
+svg.addEventListener('pointerdown', e => {
+  if (S.phase || !G) return;
+  drag = true; svg.setPointerCapture && svg.setPointerCapture(e.pointerId);
+  setFromY(e.clientY); Kit.haptic('selection');
+});
+svg.addEventListener('pointermove', e => { if (drag) { setFromY(e.clientY); S.moved = true; } });
+const end = () => {
+  if (!drag) return; drag = false;
+  if (!S.phase) { sure.on(); Kit.$('say').textContent = 'Happy with your bar? Say how sure you are.'; }
+};
+svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+const verdict = () => Math.abs(S.g - MAKE) < .05 ? 'about the same' : (S.g < MAKE ? 'less' : 'more');
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (S.phase) return;
+  S.phase = 1;
+  const said = verdict(), ok = said === 'less';
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); svg.style.cursor = 'default';
+  update();
+  const tl = gsap.timeline({onUpdate: update});
+  tl.to(S, {shown: FINAL, duration: Kit.calm ? 0 : 1.1, ease: 'power2.inOut'})
+    .to(S, {gapA: 1, duration: Kit.calm ? 0 : .5});
+  Kit.show('why');
+  sure.grade(ok, pct, `You said ${said}: ${ok ? 'right' : 'it gives back less'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || S.phase) return;
+  gsap.fromTo(S, {shown: 0}, {shown: S.g, duration: .7, ease: 'power3.out', onUpdate: update});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect();
+  const x = r.left + r.width * .69, y0 = r.top + r.height * .8, y1 = r.top + r.height * .35;
+  const ev = (t, y) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', y0); ev('pointermove', (y0 + y1) / 2); ev('pointermove', y1); ev('pointerup', y1);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1900));
+};
+Kit.single();
+</script>
+</html>

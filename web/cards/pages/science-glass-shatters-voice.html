@@ -1,0 +1,189 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-glass-shatters-voice -->
+<title>Astute free card · The glass that breaks</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;display:flex;flex-direction:column;flex:1;min-height:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#art{display:block;width:100%;flex:1;min-height:0}
+#why{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;gap:1cqh;padding:0 2cqw;pointer-events:none}
+#why .big{margin:0}
+#why .body{margin:0;font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.say,.q,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · watch it break">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLOW MOTION</span></div>
+    <h2 class="q">When a voice breaks a glass, what happens at the very end?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="art" aria-label="A wine glass that wobbles a little more with every note you sing"></svg>
+      <div id="why" class="gone">
+        <p class="big">It shatters.</p>
+        <p class="body">Every note pushes the glass and makes it swing a bit wider. In slow motion you can see it oscillate, until it bends further than it can take and breaks.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap fast to sing at the glass. Watch it wobble in slow motion.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Small pushes add up into a swing big enough to break the glass.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let amp = 0, phase = 0, notes = 0, broken = false, G = null, last = performance.now();
+const svg = Kit.$('art');
+const OM = Math.PI * 2 * 1.1;           // slow-motion wobble speed
+
+function bowlPath(d) {
+  const {cx, y0, bh, R} = G, N = 26, L = [], Rt = [];
+  for (let k = 0; k <= N; k++) {
+    const t = k / N, y = y0 + t * bh;
+    const hw = R * Math.sin(Math.PI * (.5 + .5 * t)) * (1 + d * (1 - t) * (1 - t * .3));
+    Rt.push([cx + hw, y]); L.push([cx - hw, y]);
+  }
+  const pts = Rt.concat(L.reverse());
+  return 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
+}
+function hwAt(t, d) { return G.R * Math.sin(Math.PI * (.5 + .5 * t)) * (1 + d * (1 - t) * (1 - t * .3)); }
+
+function draw() {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f);
+  const y0 = H * .34, yb = H * .95, gh = yb - y0;
+  const bh = gh * .46, R = Math.min(W * .21, bh * .78), cx = W * .44;
+  G = {W, H, fs, y0, yb, bh, R, cx};
+  const ink = 'var(--k)';
+  // floor
+  Kit.mk('line', {x1: W * .04, x2: W * .96, y1: yb, y2: yb, style: `stroke:${ink};stroke-width:${Math.max(1.5, fs * .1)};opacity:.35`}, svg);
+  // stem + base
+  const ry = R * .13, stemW = Math.max(3, W * .011);
+  G.stem = Kit.mk('rect', {x: cx - stemW / 2, y: y0 + bh - 2, width: stemW, height: yb - ry * 1.4 - (y0 + bh) + 2, rx: stemW / 2, style: `fill:${ink};opacity:.85`}, svg);
+  Kit.mk('ellipse', {cx, cy: yb - ry, rx: R * .78, ry, style: `fill:color-mix(in srgb,var(--k) 18%,transparent);stroke:${ink};stroke-width:${Math.max(2, fs * .14)}`}, svg);
+  // envelope of the swing (the extremes), faint and dashed
+  G.ghostA = Kit.mk('path', {style: `fill:none;stroke:${ink};stroke-width:${Math.max(1, fs * .08)};stroke-dasharray:4 5;opacity:.4`}, svg);
+  G.ghostB = Kit.mk('path', {style: `fill:none;stroke:${ink};stroke-width:${Math.max(1, fs * .08)};stroke-dasharray:4 5;opacity:.4`}, svg);
+  G.bowl = Kit.mk('path', {style: `fill:color-mix(in srgb,var(--k) 14%,transparent);stroke:${ink};stroke-width:${Math.max(2.2, fs * .16)};stroke-linejoin:round`}, svg);
+  G.shine = Kit.mk('path', {style: `fill:none;stroke:var(--c);stroke-width:${Math.max(2, fs * .2)};stroke-linecap:round;opacity:.8`}, svg);
+  G.rim = Kit.mk('ellipse', {cx, cy: y0, style: `fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:${ink};stroke-width:${Math.max(2, fs * .14)}`}, svg);
+  // waves layer
+  G.waves = Kit.mk('g', {}, svg);
+  // meter
+  const mx = W * .87, mw = Math.max(10, W * .04), mt = y0 - fs * .2, mb = yb - fs * 1.9;
+  G.meter = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: mx - mw / 2, y: mt, width: mw, height: mb - mt, rx: mw / 2, style: `fill:none;stroke:${ink};stroke-width:${Math.max(1.5, fs * .1)};opacity:.5`}, G.meter);
+  G.mfill = Kit.mk('rect', {x: mx - mw / 2, width: mw, rx: mw / 2, style: `fill:${ink}`}, G.meter);
+  Kit.mk('line', {x1: mx - mw, x2: mx + mw, y1: mt, y2: mt, style: `stroke:${ink};stroke-width:${Math.max(2, fs * .14)};stroke-dasharray:3 3`}, G.meter);
+  const tb = Kit.mk('text', {x: mx, y: mt - fs * .6, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:${ink}`}, G.meter); tb.textContent = 'breaks';
+  const tw = Kit.mk('text', {x: mx, y: mb + fs * 1.35, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:${ink};opacity:.7`}, G.meter); tw.textContent = 'swing';
+  Object.assign(G, {mx, mw, mt, mb});
+  // top labels
+  G.top = Kit.mk('g', {}, svg);
+  const sm = Kit.mk('text', {x: W * .04, y: fs * 1.3, style: `font:700 ${fs}px var(--mono);fill:${ink};letter-spacing:.08em`}, G.top); sm.textContent = '● SLOW MOTION';
+  G.count = Kit.mk('text', {x: W * .04, y: fs * 2.9, style: `font:600 ${fs * 1.05}px var(--body);fill:${ink};opacity:.75`}, G.top);
+  G.count.textContent = notes ? `notes sung: ${notes}` : 'tap anywhere to sing';
+  G.shards = Kit.mk('g', {}, svg);
+  if (broken) { hideWhole(); shatter(true); }
+  render();
+}
+
+function render() {
+  if (!G || broken) return;
+  const d = amp * .26 * Math.sin(phase), e = amp * .26;
+  G.bowl.setAttribute('d', bowlPath(d));
+  G.ghostA.setAttribute('d', amp > .02 ? bowlPath(e) : '');
+  G.ghostB.setAttribute('d', amp > .02 ? bowlPath(-e) : '');
+  G.rim.setAttribute('rx', G.R * (1 + d));
+  G.rim.setAttribute('ry', G.R * .16 * (1 - d * .9));
+  const s1 = hwAt(.2, d), s2 = hwAt(.62, d);
+  G.shine.setAttribute('d', `M${G.cx - s1 * .7},${G.y0 + G.bh * .2} Q${G.cx - s2 * .95},${G.y0 + G.bh * .42} ${G.cx - s2 * .62},${G.y0 + G.bh * .62}`);
+  const h = (G.mb - G.mt) * Math.min(1, amp);
+  G.mfill.setAttribute('y', G.mb - h); G.mfill.setAttribute('height', h);
+}
+
+function tick() {
+  const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (broken) return;
+  phase += dt * OM;
+  amp *= Math.exp(-dt * .28);
+  render();
+}
+gsap.ticker.add(tick);
+
+function wave() {
+  if (!G || Kit.calm) return;
+  const y = G.y0 + G.bh * .35, x0 = G.W * .05;
+  for (let i = 0; i < 3; i++) {
+    const r = G.fs * (1.2 + i * .9);
+    const p = Kit.mk('path', {d: `M${x0 + r * .5},${y - r} A${r},${r} 0 0 1 ${x0 + r * .5},${y + r}`, style: `fill:none;stroke:var(--k);stroke-width:${Math.max(2, G.fs * .15)};stroke-linecap:round`}, G.waves);
+    gsap.fromTo(p, {x: 0, opacity: .9}, {x: G.cx - G.R - x0 - r, opacity: 0, duration: .7, delay: i * .06, ease: 'power1.out', onComplete: () => p.remove()});
+  }
+}
+
+function hideWhole() {
+  [G.bowl, G.ghostA, G.ghostB, G.rim, G.shine, G.meter, G.top].forEach(el => el.style.display = 'none');
+  G.stem.setAttribute('y', G.y0 + G.bh + G.bh * .12);
+}
+
+function shatter(instant) {
+  const {cx, y0, bh, yb, fs, W} = G, d = amp * .26 * Math.sin(phase);
+  const rows = 4, cols = 5, P = [];
+  for (let i = 0; i <= rows; i++) {
+    const t = i / rows * .93, row = [];
+    for (let j = 0; j <= cols; j++) {
+      const hw = hwAt(t, d), jit = (i > 0 && i < rows && j > 0 && j < cols) ? 1 : 0;
+      row.push([cx + hw * (-1 + 2 * j / cols) + jit * (Kit.rnd() - .5) * G.R * .25, y0 + t * bh + jit * (Kit.rnd() - .5) * bh * .12]);
+    }
+    P.push(row);
+  }
+  const tris = [];
+  for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) {
+    const a = P[i][j], b = P[i][j + 1], c = P[i + 1][j + 1], e = P[i + 1][j];
+    tris.push([a, b, c], [a, c, e]);
+  }
+  tris.forEach(tr => {
+    const mxp = (tr[0][0] + tr[1][0] + tr[2][0]) / 3, myp = (tr[0][1] + tr[1][1] + tr[2][1]) / 3;
+    const el = Kit.mk('path', {d: 'M' + tr.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z',
+      style: `fill:color-mix(in srgb,var(--k) 22%,transparent);stroke:var(--k);stroke-width:${Math.max(1.4, fs * .1)};stroke-linejoin:round`}, G.shards);
+    const dir = mxp - cx, spread = (dir === 0 ? (Kit.rnd() - .5) : Math.sign(dir)) * (G.R * .4 + Kit.rnd() * G.R * 1.3) + dir * .6;
+    let fx = mxp + spread; fx = Math.max(W * .05, Math.min(W * .78, fx));
+    const dx = fx - mxp, dy = yb - fs * .25 - Kit.rnd() * fs * .5 - myp, rot = (Kit.rnd() - .5) * 540;
+    if (instant || Kit.calm) { gsap.set(el, {x: dx, y: dy, rotation: rot, transformOrigin: '50% 50%', scale: .8}); return; }
+    gsap.timeline()
+      .to(el, {x: dx * .55, y: -bh * (.15 + Kit.rnd() * .3), rotation: rot * .4, transformOrigin: '50% 50%', duration: .45, ease: 'power2.out'})
+      .to(el, {x: dx, y: dy, rotation: rot, scale: .8, duration: .9 + Kit.rnd() * .4, ease: 'bounce.out'});
+  });
+}
+
+function breakIt() {
+  broken = true;
+  Kit.haptic('success');
+  if (!Kit.calm) {
+    const fl = Kit.mk('circle', {cx: G.cx, cy: G.y0 + G.bh * .4, r: G.R * .4, style: 'fill:none;stroke:var(--k);stroke-width:3'}, svg);
+    gsap.to(fl, {attr: {r: G.R * 2.2}, opacity: 0, duration: .6, ease: 'power2.out', onComplete: () => fl.remove()});
+  }
+  hideWhole(); shatter(false);
+  Kit.hide('say');
+  setTimeout(() => { Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .5, ease: 'power3.out'}); }, Kit.calm ? 0 : 900);
+}
+
+Kit.$('stage').addEventListener('pointerdown', () => {
+  if (broken || !G) return;
+  notes++;
+  amp = Math.min(1, amp + .15);
+  G.count.textContent = `notes sung: ${notes}`;
+  Kit.haptic('light'); wave();
+  if (amp >= .999) breakIt();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) { amp = Math.max(amp, .12); gsap.from('#art', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  const st = Kit.$('stage');
+  for (let i = 0; i < 12 && !broken; i++) { st.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true})); await new Promise(r => setTimeout(r, 60)); }
+  await new Promise(r => setTimeout(r, 2200));
+};
+Kit.single();
+</script>
+</html>

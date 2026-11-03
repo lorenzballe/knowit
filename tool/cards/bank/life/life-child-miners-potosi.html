@@ -1,0 +1,139 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: life-child-miners-potosi -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#mine{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh;overflow:hidden}
+#go{--p:0;position:relative;overflow:hidden;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 5cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#go::before{content:"";position:absolute;inset:0;width:calc(var(--p)*100%);background:color-mix(in srgb,var(--c) 28%,transparent)}
+#go span{position:relative}
+#go.held{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHILD MINERS</span></div>
+    <h2 class="q">Why do children work the narrow tunnels of Potosí's silver mine?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="mine"></svg>
+      <button id="go"><span>Hold to send them in</span></button>
+      <div id="why" class="gone"><p class="big">Only the small one fits.</p><p class="body">Some tunnels in Potosí's silver mine are too tight for a grown man. Children are small enough to squeeze through, so they are sent in to carry the material out.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button: both miners walk toward the silver.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Kids are used because their small bodies fit where adults can't.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let P = 0, holding = false, done = false, rate = 0.24, S = null;
+const svg = Kit.$('mine'), go = Kit.$('go');
+
+function figure(parent, h, sack) {
+  const g = Kit.mk('g', {}, parent), ink = '#1b1410';
+  Kit.mk('rect', {x: -h*.11, y: -h*.42, width: h*.08, height: h*.42, rx: h*.03, fill: ink}, g);
+  Kit.mk('rect', {x: h*.03, y: -h*.42, width: h*.08, height: h*.42, rx: h*.03, fill: ink}, g);
+  Kit.mk('rect', {x: -h*.15, y: -h*.78, width: h*.3, height: h*.4, rx: h*.07, fill: '#2f5d8a'}, g);
+  Kit.mk('circle', {cx: 0, cy: -h*.87, r: h*.085, fill: '#a8714f'}, g);
+  Kit.mk('path', {d: `M${-h*.11},${-h*.88} A${h*.11},${h*.11} 0 0 1 ${h*.11},${-h*.88} Z`, fill: '#ffcf3a'}, g);
+  Kit.mk('circle', {cx: h*.1, cy: -h*.93, r: h*.025, fill: '#fff6c8'}, g);
+  let s = null;
+  if (sack) { s = Kit.mk('ellipse', {cx: -h*.2, cy: -h*.62, rx: h*.13, ry: h*.16, fill: '#b9bfc6', stroke: ink, 'stroke-width': Math.max(1, h*.015), opacity: 0}, g); }
+  return {g, s};
+}
+
+Kit.onShow.card = () => {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(12, f*.9);
+  const ground = H*.8, ceilG = H*.07, neckX = W*.5, endX = W*.96;
+  let aH = Math.min((ground - ceilG)*.74, W*.42), cH = aH*.56;
+  const passTop = ground - cH*1.2;
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#3b2a20'}, svg);
+  // tunnel interior with a rough ceiling
+  let d = `M0,${ground} L0,${ceilG}`;
+  for (let x = W*.06; x < neckX; x += W*.06) d += ` L${x},${ceilG + (Kit.rnd()-.5)*H*.03}`;
+  d += ` L${neckX},${ceilG} L${neckX},${passTop}`;
+  for (let x = neckX + W*.05; x < endX; x += W*.05) d += ` L${x},${passTop - Kit.rnd()*H*.012}`;
+  d += ` L${endX},${passTop} L${endX},${ground} Z`;
+  Kit.mk('path', {d, fill: '#e9caa0'}, svg);
+  Kit.mk('line', {x1: 0, y1: ground, x2: endX, y2: ground, stroke: '#1b1410', 'stroke-width': Math.max(2, H*.006)}, svg);
+  // silver ore at the end of the narrow tunnel
+  const ores = [];
+  const oreX = endX - cH*.35;
+  [[0,0,.17],[-.22,.02,.12],[-.08,-.2,.11]].forEach(([dx,dy,r]) => ores.push(Kit.mk('circle', {cx: oreX + dx*cH, cy: ground - r*cH + dy*cH, r: r*cH, fill: '#c9d0d8', stroke: '#1b1410', 'stroke-width': 1.2}, svg)));
+  // red mark where the adult hits the rock
+  const hit = Kit.mk('rect', {x: neckX - Math.max(3, W*.008), y: ground - aH, width: Math.max(6, W*.016), height: aH - (ground - passTop), fill: '#e0352b', opacity: 0}, svg);
+  const line = Kit.mk('line', {x1: W*.04, y1: passTop, x2: neckX, y2: passTop, stroke: '#e0352b', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: 0}, svg);
+  const adult = figure(svg, aH, false), child = figure(svg, cH, true);
+  const aLab = Kit.mk('text', {y: ground - aH - fs*.6, 'text-anchor': 'middle', fill: '#1b1410', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  const cLab = Kit.mk('text', {y: ground + fs*1.4, 'text-anchor': 'middle', fill: '#ffe9c4', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  const tLab = Kit.mk('text', {x: (neckX + endX)/2, y: ground + fs*2.9, 'text-anchor': 'middle', fill: '#ffe9c4', 'font-family': 'var(--body)', 'font-size': Math.max(12, fs*.85), opacity: .85}, svg);
+  tLab.textContent = 'narrow tunnel';
+  S = {W, H, ground, neckX, aH, cH, oreX, adult, child, aLab, cLab, ores, hit, line, fs};
+  render();
+};
+
+function render() {
+  if (!S) return;
+  const {W, ground, neckX, aH, cH, oreX, adult, child, aLab, cLab, ores, hit, line} = S;
+  const a0 = W*.2, aStop = neckX - aH*.16, aT = Math.min(1, P/.35);
+  const stuck = P >= .35;
+  const shake = stuck && P < 1 && holding ? Math.sin(P*400)*aH*.01 : 0;
+  const ax = a0 + (aStop - a0)*aT + shake;
+  const aBob = !stuck && holding ? -Math.abs(Math.sin(P*55))*aH*.02 : 0;
+  adult.g.setAttribute('transform', `translate(${ax},${ground + aBob})`);
+  aLab.setAttribute('x', Math.max(S.fs*4, ax)); aLab.textContent = stuck ? 'Adult: stuck' : 'Adult';
+  aLab.setAttribute('fill', stuck ? '#c0241b' : '#1b1410');
+  hit.setAttribute('opacity', stuck ? .85 : 0); line.setAttribute('opacity', stuck ? .9 : 0);
+  const c0 = W*.07, cStop = oreX - cH*.5, cEnd = neckX + (cStop - neckX)*.35;
+  let cx;
+  if (P < .6) cx = c0 + (cStop - c0)*(P/.6);
+  else if (P < .7) cx = cStop;
+  else cx = cStop - (cStop - cEnd)*((P - .7)/.3);
+  const moving = holding && (P < .6 || P >= .7) && P < 1;
+  const cBob = moving ? -Math.abs(Math.sin(P*70))*cH*.03 : 0;
+  child.g.setAttribute('transform', `translate(${cx},${ground + cBob})${P >= .7 ? ' scale(-1,1)' : ''}`);
+  const got = P >= .65;
+  child.s.setAttribute('opacity', got ? 1 : 0);
+  ores[2].setAttribute('opacity', got ? 0 : 1);
+  cLab.setAttribute('x', Math.max(S.fs*3, cx)); cLab.textContent = got ? 'Child + ore' : 'Child';
+}
+
+function finish() {
+  done = true; holding = false; go.classList.remove('held');
+  Kit.haptic('success');
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.onShow.card();
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+let wasStuck = false;
+gsap.ticker.add((t, dt) => {
+  if (!holding || done) return;
+  P = Math.min(1, P + rate*dt/1000);
+  go.style.setProperty('--p', P);
+  if (P >= .35 && !wasStuck) { wasStuck = true; Kit.haptic('light'); }
+  render();
+  if (P >= 1) finish();
+});
+const down = e => { if (done) return; e.preventDefault(); holding = true; go.classList.add('held'); Kit.haptic('selection'); };
+const up = () => { holding = false; go.classList.remove('held'); render(); };
+go.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(n => go.addEventListener(n, up));
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  rate = 2;
+  go.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  for (let i = 0; i < 40 && !done; i++) await new Promise(r => setTimeout(r, 50));
+  if (!done) { P = 1; render(); finish(); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

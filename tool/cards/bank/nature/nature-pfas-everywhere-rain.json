@@ -1,0 +1,37 @@
+{
+  "id": "nature-pfas-everywhere-rain",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does 'planetary saturation' mean for PFAS?",
+  "answer": "PFAS leak into soil and groundwater, then spread through the whole water cycle. Because of this, there is no clean rain left. Rain anywhere, even on the remote Tibetan Plateau, carries unsafe levels of at least four PFAS species.",
+  "move": "Planetary saturation: PFAS are in the rain everywhere, not just near factories.",
+  "keywords": [
+    "pfas",
+    "rain",
+    "groundwater",
+    "tibetan plateau",
+    "water cycle"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Global map with rain clouds labeled with PFAS counts. Drag the cloud over a place and let it rain. The page asks what 'planetary saturation' means for PFAS."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2610s",
+  "written": "2026-11-03"
+}

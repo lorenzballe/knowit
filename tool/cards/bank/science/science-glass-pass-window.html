@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-glass-pass-window -->
+<title>Why glass lets light through but not UV</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#lab{width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Explore · slide">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LIGHT &amp; GLASS</span></div>
+    <h2 class="q">Why is glass transparent to light but not to UV rays?</h2>
+    <div class="stagebox" id="stage"><svg id="lab"></svg></div>
+    <div id="why" class="gone"><p class="body">Light comes in many frequencies, and a material lets only some of them through. Glass lets visible light pass, so it looks clear. Ultraviolet is outside its window, so it is stopped.</p></div>
+    <p class="say" id="say">Drag along the colour bar: try visible light, then go past violet.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Transparent is never absolute: it always means "transparent to which frequencies".</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si produce il Vetro - Figo non lo sapevo” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const VIS = 0.7;           // fraction of the bar that is visible light; the rest is UV
+let F = 0.12, seenVis = false, seenUV = false, done = false, dash = 0;
+let G = null;              // current geometry and elements
+
+function col(f){ return f <= VIS ? `hsl(${Math.round(f/VIS*275)},100%,62%)` : '#c9a6ff'; }
+function nameOf(f){
+  if (f > VIS) return 'Ultraviolet';
+  const h = f/VIS;
+  return h < .12 ? 'Red light' : h < .24 ? 'Orange light' : h < .34 ? 'Yellow light' : h < .55 ? 'Green light' : h < .76 ? 'Blue light' : 'Violet light';
+}
+
+function draw(){
+  if (!G) return;
+  const {beam, rest, refl, face, spot, read, handle, x0, x1, gL, gR, sx, scrX, by, f} = G;
+  const c = col(F), uv = F > VIS;
+  beam.setAttribute('x2', gL);
+  beam.setAttribute('stroke', c);
+  beam.setAttribute('stroke-dasharray', uv ? `${f*.5} ${f*.7}` : `${f*1.2} ${f*.35}`);
+  rest.setAttribute('stroke', c);
+  rest.style.opacity = uv ? 0 : 1;
+  refl.setAttribute('stroke', c);
+  refl.style.opacity = uv ? .9 : 0;
+  face.style.opacity = uv ? 1 : 0;
+  face.setAttribute('fill', c);
+  spot.setAttribute('fill', c);
+  spot.style.opacity = uv ? 0 : 1;
+  read.textContent = `${nameOf(F)} · ${uv ? 'blocked by the glass' : 'goes through'}`;
+  read.setAttribute('fill', uv ? '#ffb4c8' : '#e8fff0');
+  handle.setAttribute('cx', x0 + F*(x1-x0));
+  handle.setAttribute('fill', c);
+}
+
+function setF(v, fromReader){
+  F = Math.max(0, Math.min(1, v));
+  if (fromReader){
+    if (F < VIS - .04) seenVis = true;
+    if (F > VIS + .04) seenUV = true;
+  }
+  draw();
+  if (seenVis && seenUV && !done) finish();
+}
+
+function finish(){
+  done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (G){
+    if (Kit.calm) G.win.style.opacity = 1;
+    else gsap.to(G.win, {opacity: 1, duration: .5});
+  }
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('lab');
+  svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(W*.042, H*.055));
+  // vertical budget, from the bottom up
+  const axisY = H - .35*f;
+  const regY = axisY - 1.6*f;
+  const trY = regY - 1.75*f;
+  const winY = trY - 1.7*f;
+  const pB = winY - 1.4*f;        // panel bottom
+  const ink = 'var(--k)';
+  const t = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle'}, a), svg); e.textContent = s; e.style.font = `700 ${a.fs || f}px var(--body)`; return e; };
+
+  // dark lab panel so beams glow on any card colour
+  const defs = Kit.mk('defs', {}, svg);
+  const gr = Kit.mk('linearGradient', {id: 'spec', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  for (let i = 0; i <= 10; i++) Kit.mk('stop', {offset: i/10*VIS, 'stop-color': `hsl(${i*27.5},100%,58%)`}, gr);
+  Kit.mk('stop', {offset: VIS + .001, 'stop-color': '#4b2d86'}, gr);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#24163f'}, gr);
+  const gl = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: f*.35, result: 'b'}, gl);
+  const m = Kit.mk('feMerge', {}, gl); Kit.mk('feMergeNode', {in: 'b'}, m); Kit.mk('feMergeNode', {in: 'SourceGraphic'}, m);
+
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: pB, rx: f*.9, fill: '#0f1220'}, svg);
+
+  const by = (pB + 1.6*f) / 2 + .2*f;
+  const sx = W*.1, gL = W*.42, gR = W*.6, scrX = W*.9;
+  const gH = Math.min(pB*.5, W*.4);
+
+  // lamp
+  Kit.mk('circle', {cx: sx, cy: by, r: f*.9, fill: '#2a2f45', stroke: '#e9ecff', 'stroke-width': 2}, svg);
+  // screen
+  Kit.mk('rect', {x: scrX - f*.25, y: by - gH*.6, width: f*.5, height: gH*1.2, rx: f*.2, fill: '#2a2f45'}, svg);
+
+  const beam = Kit.mk('line', {x1: sx + f*.9, y1: by, x2: gL, y2: by, 'stroke-width': f*.45, 'stroke-linecap': 'round', filter: 'url(#glow)'}, svg);
+  const rest = Kit.mk('line', {x1: gL, y1: by, x2: scrX - f*.3, y2: by, 'stroke-width': f*.45, 'stroke-linecap': 'round', filter: 'url(#glow)', 'stroke-dasharray': `${f*1.2} ${f*.35}`}, svg);
+  const refl = Kit.mk('line', {x1: gL, y1: by, x2: gL - W*.1, y2: by - gH*.38, 'stroke-width': f*.3, 'stroke-linecap': 'round', 'stroke-dasharray': `${f*.5} ${f*.7}`, filter: 'url(#glow)'}, svg);
+
+  // glass block, drawn over the beam
+  Kit.mk('rect', {x: gL, y: by - gH/2, width: gR - gL, height: gH, rx: f*.35, fill: 'rgba(170,215,255,.2)', stroke: 'rgba(205,235,255,.85)', 'stroke-width': 2}, svg);
+  Kit.mk('line', {x1: gL + (gR-gL)*.22, y1: by - gH*.38, x2: gL + (gR-gL)*.42, y2: by - gH*.12, stroke: 'rgba(255,255,255,.55)', 'stroke-width': 2, 'stroke-linecap': 'round'}, svg);
+  const face = Kit.mk('rect', {x: gL - f*.2, y: by - gH/2, width: f*.4, height: gH, rx: f*.2, filter: 'url(#glow)'}, svg);
+  const spot = Kit.mk('circle', {cx: scrX, cy: by, r: f*.7, filter: 'url(#glow)'}, svg);
+
+  const read = t(W/2, 1.45*f, '', {fs: f*1.05});
+  const ly = pB - .6*f;
+  t(sx, ly, 'lamp', {fill: '#aeb4d6'});
+  t((gL+gR)/2, ly, 'glass', {fill: '#aeb4d6'});
+  t(scrX, ly, 'screen', {fill: '#aeb4d6'});
+
+  // spectrum bar = the control
+  const x0 = W*.06, x1 = W*.94, th = f*1.1;
+  Kit.mk('rect', {x: x0, y: trY - th/2, width: x1 - x0, height: th, rx: th/2, fill: 'url(#spec)'}, svg);
+  const xv = x0 + VIS*(x1-x0);
+  t((x0 + xv)/2, regY, 'VISIBLE', {}).style.fill = ink;
+  t((xv + x1)/2, regY, 'ULTRAVIOLET', {}).style.fill = ink;
+  const ax = t(W/2, axisY, 'lower frequency  →  higher frequency', {fs: f*.9}); ax.style.fill = ink; ax.style.opacity = .7;
+
+  // the pass window, revealed at the end
+  const win = Kit.mk('g', {}, svg);
+  win.style.opacity = done ? 1 : 0;
+  const wb = winY + .45*f;
+  const p = Kit.mk('path', {d: `M${x0+2},${trY - th/2 - 3} V${wb} H${xv-2} V${trY - th/2 - 3}`, fill: 'none', 'stroke-width': 2}, win);
+  p.style.stroke = ink;
+  const wt = Kit.mk('text', {x: (x0 + xv)/2, y: winY, 'text-anchor': 'middle'}, win);
+  wt.textContent = "glass's pass window"; wt.style.font = `700 ${f*.95}px var(--body)`; wt.style.fill = ink;
+
+  const handle = Kit.mk('circle', {cy: trY, r: th*.85, stroke: '#ffffff', 'stroke-width': 3}, svg);
+  handle.style.filter = 'drop-shadow(0 1px 3px rgba(0,0,0,.5))';
+
+  G = {beam, rest, refl, face, spot, read, handle, x0, x1, gL, gR, sx, scrX, by, f, win, trY};
+  draw();
+
+  const pick = e => { const r = svg.getBoundingClientRect(); setF(((e.clientX - r.left)/r.width*W - x0)/(x1 - x0), true); };
+  let drag = false;
+  svg.onpointerdown = e => { drag = true; svg.setPointerCapture(e.pointerId); pick(e); Kit.haptic('selection'); };
+  svg.onpointermove = e => { if (drag) pick(e); };
+  svg.onpointerup = svg.onpointercancel = () => { drag = false; };
+};
+
+let ticking = false;
+Kit.onEnter.card = () => {
+  if (Kit.calm || ticking) return;
+  ticking = true;
+  gsap.ticker.add(() => {
+    if (!G) return;
+    dash -= G.f*.12;
+    G.beam.setAttribute('stroke-dashoffset', dash);
+    G.rest.setAttribute('stroke-dashoffset', dash);
+    G.refl.setAttribute('stroke-dashoffset', dash);
+  });
+  if (G) gsap.from(G.handle, {attr: {r: 0}, duration: .5, ease: 'back.out(2)'});
+};
+
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  setF(.4, true); await w(200);
+  setF(.88, true); await w(700);
+};
+Kit.single();
+</script>
+</html>

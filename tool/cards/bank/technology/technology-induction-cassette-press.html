@@ -1,0 +1,173 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-induction-cassette-press -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pv{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none}
+#pv.done{cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.fr{fill:var(--k)}
+.die{fill:color-mix(in srgb,var(--k) 78%,var(--c))}
+.dieline{fill:none;stroke:var(--k);stroke-width:2}
+.ink{fill:none;stroke:var(--k);stroke-linejoin:round;stroke-linecap:round}
+.steel{fill:none;stroke:#c9d3dc;stroke-linejoin:round;stroke-linecap:round}
+.rd{fill:var(--c);font-family:var(--mono);font-weight:700}
+.rdsm{fill:var(--c);font-family:var(--body);font-weight:700;opacity:.8}
+.cap{fill:var(--k);font-family:var(--body);font-weight:700}
+.copper{fill:#c8742c;stroke:var(--k);stroke-width:1.5}
+.cwire{stroke:#8a4a17;stroke-width:1.4}
+.punch{fill:color-mix(in srgb,var(--k) 88%,var(--c))}
+.pull{fill:var(--c);font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see it form">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MADE HOW</span></div>
+    <h2 class="q">How is the coil cassette of an induction hob given its shape?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pv" aria-label="A press shaping a thin steel sheet"></svg>
+      <div id="why" class="gone">
+        <p class="big">1000 tons on a sheet under 1 mm</p>
+        <p class="body">The cassette starts as a thin flat steel sheet. A 1000-ton press molds it until it has the shape it needs. Then it is filled by hand with the electronics and the copper coil.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the press down and squeeze the steel sheet.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The coil's box is pressed, not built: thin steel plus enormous force.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Consuma più un piano a induzione o un piano a gas? Abbiamo fatto un test per scoprirlo” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {T: 0, depth: 0, coil: 0, hint: 1};
+let done = false, G = null, el = {}, drag = null, lastStep = 0;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+function draw() {
+  const svg = Kit.$('pv'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const sw = Math.max(3, H * 0.011);
+  const cx = W / 2, w = W * 0.48, s = W * 0.035;
+  const beamT = H * 0.02, beamB = H * 0.15;
+  const sheetY = H * 0.5, d = H * 0.15;
+  const restPb = beamB + d + H * 0.05;
+  const travel = sheetY + d - restPb;
+  const dieB = H * 0.79, baseB = H * 0.83;
+  G = {W, H, f, sw, cx, w, s, sheetY, d, restPb, travel};
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+
+  // columns and base
+  mk('rect', {class: 'fr', x: W * 0.05, y: beamT, width: W * 0.06, height: baseB - beamT, rx: 3});
+  mk('rect', {class: 'fr', x: W * 0.89, y: beamT, width: W * 0.06, height: baseB - beamT, rx: 3});
+  mk('rect', {class: 'fr', x: W * 0.03, y: dieB, width: W * 0.94, height: baseB - dieB, rx: 3});
+
+  // lower die with cavity
+  const L = W * 0.12, R = W * 0.88, top = sheetY + sw / 2;
+  const dieP = `M${L},${top} L${cx - w / 2},${top} L${cx - w / 2 + s},${top + d} L${cx + w / 2 - s},${top + d} L${cx + w / 2},${top} L${R},${top} L${R},${dieB} L${L},${dieB} Z`;
+  mk('path', {class: 'die', d: dieP});
+  mk('path', {class: 'dieline', d: dieP});
+
+  // coil (drops into the formed cassette)
+  el.coil = mk('g', {});
+  const cw = w - 2 * s - sw * 6, ch = Math.max(8, d * 0.22);
+  const cy0 = sheetY + d - sw / 2 - ch;
+  mk('rect', {class: 'copper', x: cx - cw / 2, y: cy0, width: cw, height: ch, rx: ch / 2}, el.coil);
+  const n = Math.floor(cw / 7);
+  for (let i = 1; i < n; i++) {
+    const x = cx - cw / 2 + i * cw / n;
+    mk('line', {class: 'cwire', x1: x, y1: cy0 + 2, x2: x, y2: cy0 + ch - 2}, el.coil);
+  }
+
+  // sheet
+  el.sInk = mk('polyline', {class: 'ink', 'stroke-width': sw + 3});
+  el.sSteel = mk('polyline', {class: 'steel', 'stroke-width': sw});
+
+  // ram + punch (drawn at rest, moved by transform)
+  el.ram = mk('g', {});
+  const pt = restPb - d;
+  mk('rect', {class: 'fr', x: cx - w * 0.36, y: -H, width: w * 0.72, height: pt + H}, el.ram);
+  const a = w / 2 - sw * 1.4, b = w / 2 - s - sw * 1.4;
+  mk('path', {class: 'punch', d: `M${cx - a},${pt} L${cx + a},${pt} L${cx + b},${restPb} L${cx - b},${restPb} Z`}, el.ram);
+  el.pull = mk('text', {class: 'pull', x: cx, y: pt + d * 0.62, 'text-anchor': 'middle', 'font-size': Math.max(13, f * 0.95)}, el.ram);
+  el.pull.textContent = 'PULL ↓';
+
+  // top beam with tonnage readout (covers the ram's top)
+  mk('rect', {class: 'fr', x: W * 0.03, y: beamT, width: W * 0.94, height: beamB - beamT, rx: 4});
+  const fs = Math.max(16, (beamB - beamT) * 0.48);
+  el.rd = mk('text', {class: 'rd', x: cx, y: beamT + (beamB - beamT) * 0.62, 'text-anchor': 'middle', 'font-size': fs});
+  el.rdl = mk('text', {class: 'rdsm', x: W * 0.07, y: beamT + (beamB - beamT) * 0.6, 'font-size': Math.max(12, fs * 0.42)});
+  el.rdl.textContent = 'PRESS';
+
+  // caption under the press
+  el.cap = mk('text', {class: 'cap', x: cx, y: Math.min(H - 4, baseB + Math.max(18, f * 1.5)), 'text-anchor': 'middle', 'font-size': Math.max(12, f * 0.8)});
+
+  svg.classList.toggle('done', done);
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {W, cx, w, s, sheetY, d, restPb, travel, sw} = G;
+  const pb = restPb + S.T * travel;
+  const cur = clamp(pb - sheetY - sw / 2, 0, d);
+  S.depth = Math.max(S.depth, cur);
+  const p = S.depth;
+  const pts = [[W * 0.12, sheetY], [cx - w / 2, sheetY], [cx - w / 2 + s * (p / d), sheetY + p], [cx + w / 2 - s * (p / d), sheetY + p], [cx + w / 2, sheetY], [W * 0.88, sheetY]].map(q => q.join(',')).join(' ');
+  el.sInk.setAttribute('points', pts); el.sSteel.setAttribute('points', pts);
+  el.ram.setAttribute('transform', `translate(0,${pb - restPb})`);
+  el.pull.setAttribute('opacity', S.hint);
+  const tons = done ? 1000 : Math.round(1000 * Math.pow(cur / d, 1.6));
+  el.rd.textContent = `${tons} / 1000 t`;
+  el.coil.setAttribute('opacity', S.coil);
+  el.coil.setAttribute('transform', `translate(0,${-(1 - S.coil) * G.H * 0.25})`);
+  el.cap.textContent = S.coil > 0.5 ? 'The cassette · copper coil goes in by hand'
+    : p >= d * 0.999 ? 'Shaped: the cassette'
+    : 'Flat steel sheet · under 1 mm thick';
+}
+
+function finish() {
+  if (done) return;
+  done = true; S.T = 1; S.depth = G.d;
+  Kit.haptic('success');
+  Kit.$('pv').classList.add('done');
+  render();
+  const tl = gsap.timeline({onUpdate: render});
+  tl.to(S, {hint: 0, duration: .2})
+    .to(S, {T: 0, duration: Kit.calm ? .01 : .9, ease: 'power2.inOut', onUpdate: render})
+    .to(S, {coil: 1, duration: Kit.calm ? .01 : .6, ease: 'bounce.out', onUpdate: render});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => draw());
+}
+
+const svg = Kit.$('pv');
+svg.addEventListener('pointerdown', e => {
+  if (done || !G) return;
+  drag = {y: e.clientY, t: S.T}; svg.setPointerCapture(e.pointerId);
+  gsap.to(S, {hint: 0.35, duration: .3, onUpdate: render});
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || done) return;
+  S.T = clamp(drag.t + (e.clientY - drag.y) / G.travel, 0, 1);
+  render();
+  const step = Math.floor(Math.pow(clamp((G.restPb + S.T * G.travel - G.sheetY) / G.d, 0, 1), 1.6) * 4);
+  if (step > lastStep) { lastStep = step; Kit.haptic('light'); }
+  if (S.T >= 0.995) { drag = null; finish(); }
+});
+const up = () => { drag = null; };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  gsap.fromTo(S, {T: 0}, {T: 0.12, duration: .5, yoyo: true, repeat: 1, ease: 'power2.inOut', onUpdate: render});
+};
+Kit.play.card = async () => {
+  S.T = 1; render(); finish();
+  await new Promise(r => setTimeout(r, 1900));
+};
+Kit.single();
+</script>
+</html>

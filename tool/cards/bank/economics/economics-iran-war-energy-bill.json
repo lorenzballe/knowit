@@ -1,0 +1,38 @@
+{
+  "id": "economics-iran-war-energy-bill",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.percent_or_points",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "What extra cost could the Iran war impose on Italian companies in 2026?",
+  "answer": "The CGIA of Mestre estimates nearly €10 billion in extra energy costs for Italian firms in 2026: €7.2 billion on electricity and €2.6 billion on gas. That is about 13.5% on top of 2025. The cost reaches consumers through the prices of what firms buy.",
+  "move": "A far-away war lands as about +13.5% on firms' energy bills, then on our shopping.",
+  "keywords": [
+    "iran war",
+    "italian firms",
+    "energy bills",
+    "cgia di mestre",
+    "italy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A round knob on a ring that you drag to show how much bigger Italian firms' 2026 energy bill is. It asks what extra cost the Iran war could impose on Italian companies in 2026.",
+    "graded": false
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=1468s",
+  "written": "2026-11-03"
+}

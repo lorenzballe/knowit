@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-carbon-fibre-buckling -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+#svg{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#ctl{display:flex;gap:2cqw;align-items:center;flex-wrap:wrap}
+.seg{font:700 max(2cqh,13px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 3.6cqw;cursor:pointer}
+.seg.on{background:var(--k);color:var(--c);box-shadow:none}
+#new{margin-left:auto}
+#rng{width:100%;accent-color:var(--k);height:max(4cqh,28px);margin:0;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MATERIALS</span></div>
+    <h2 class="q">Carbon fibre is super strong. So why is it risky deep underwater?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="svg"></svg>
+      <div id="ctl">
+        <button class="seg" data-m="pull">Pull</button>
+        <button class="seg on" data-m="sq">Squeeze</button>
+        <button class="seg" id="new">↺ New panel</button>
+      </div>
+      <input type="range" id="rng" min="0" max="1000" value="0" aria-label="Pressure">
+      <div id="why" class="gone"><p class="body">Carbon fibre is light and very strong when you pull it. When it is squeezed, its thin fibres can bend sideways and buckle, and when that starts is hard to predict. A deep-sea hull like Titan's is squeezed at up to 300 times atmospheric pressure.</p></div>
+    </div>
+    <p class="say" id="say">Drag the pressure up to 300×. Then try Pull, or a new panel.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Carbon fibre is strong when pulled, unpredictable when squeezed.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TITAN, due anni dopo: la ricostruzione 3D dell'implosione del batiscafo e le possibili cause” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 14, RED = '#d0142c';
+const svg = Kit.$('svg'), rng = Kit.$('rng');
+let S = null, mode = 'sq', p = 0, th = [], x0f = .5, done = false, broken = 0;
+function seed(){ th = Array.from({length: N}, () => .35 + .6 * Kit.rnd()); x0f = .35 + .3 * Kit.rnd(); }
+seed();
+function arrow(x1, x2, y, sw){
+  const d = Math.sign(x2 - x1), hd = sw * 2.4;
+  Kit.mk('line', {x1, y1: y, x2: x2 - d * hd * .8, y2: y, stroke: 'currentColor', 'stroke-width': sw, 'stroke-linecap': 'round'}, svg);
+  Kit.mk('path', {d: `M${x2},${y} L${x2 - d * hd},${y - hd * .7} L${x2 - d * hd},${y + hd * .7} Z`, fill: 'currentColor'}, svg);
+}
+function render(){
+  if (!S) return;
+  const {W, H} = S, fs = Math.max(S.f, 12);
+  svg.innerHTML = '';
+  const pr = Math.round(1 + 299 * p);
+  const t = Kit.mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.3}, svg);
+  t.textContent = (mode === 'sq' ? 'Squeeze ' : 'Pull ') + '×' + pr + ' atmospheric';
+  const ph = Math.max(40, Math.min(H - fs * 6, W * .45)), top = (H - ph) / 2 + fs * .2;
+  let pw = W * .62 * (mode === 'pull' ? 1 + .04 * p : 1 - .05 * p);
+  const left = W / 2 - pw / 2, gap = ph / N;
+  Kit.mk('rect', {x: left - 4, y: top - 4, width: pw + 8, height: ph + 8, rx: 6, fill: 'currentColor', 'fill-opacity': .08, stroke: 'currentColor', 'stroke-opacity': .25}, svg);
+  let nb = 0;
+  for (let i = 0; i < N; i++){
+    const y0 = top + (i + .5) * gap;
+    let k = 0, pts = [];
+    if (mode === 'sq') k = Math.max(0, Math.min(1, (p - th[i]) / .12));
+    if (k > .5) nb++;
+    const xc = left + pw * x0f + (i - N / 2) * gap * .7, w = pw * .07, D = gap * 2.4 * k;
+    for (let s = 0; s <= 80; s++){
+      const x = left + pw * s / 80;
+      let dy = 0;
+      if (mode === 'sq') dy = gap * .22 * p * Math.sin(s / 80 * Math.PI * 6 + i * 1.3) + D * Math.max(0, 1 - Math.abs(x - xc) / w);
+      pts.push(x.toFixed(1) + ',' + (y0 - dy).toFixed(1));
+    }
+    Kit.mk('polyline', {points: pts.join(' '), fill: 'none', stroke: k > .5 ? RED : 'currentColor', 'stroke-width': gap * .42, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  }
+  const sw = Math.max(3, gap * .45), len = W * .04 + p * W * .08, ag = W * .025, ay = top + ph / 2;
+  if (mode === 'sq'){ arrow(left - ag - len, left - ag, ay, sw); arrow(left + pw + ag + len, left + pw + ag, ay, sw); }
+  else { arrow(left - ag, left - ag - len, ay, sw); arrow(left + pw + ag, left + pw + ag + len, ay, sw); }
+  const r = Kit.mk('text', {x: W / 2, y: H - fs * .5, 'text-anchor': 'middle', fill: nb ? RED : 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  if (mode === 'pull') r.textContent = `${N} of ${N} fibres holding`;
+  else {
+    const mt = Math.min(...th);
+    r.textContent = `${nb} of ${N} fibres buckled` + (p >= mt ? ` · first at ×${Math.round(1 + 299 * mt)}` : '');
+  }
+  if (nb > broken){ Kit.haptic('light'); if (!Kit.calm) gsap.fromTo(svg, {x: -3}, {x: 0, duration: .25, ease: 'elastic.out(1,.3)'}); }
+  broken = nb;
+}
+rng.addEventListener('input', () => {
+  p = rng.value / 1000; render();
+  if (mode === 'sq' && p >= .999 && !done){
+    done = true; Kit.haptic('success'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (S) render();
+  }
+});
+Kit.$('ctl').addEventListener('click', e => {
+  const b = e.target.closest('.seg'); if (!b) return;
+  if (b.id === 'new') seed();
+  else { mode = b.dataset.m; document.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b)); }
+  Kit.haptic('selection'); p = 0; broken = 0; rng.value = 0; render();
+});
+Kit.onShow.card = () => { S = Kit.fitSvg(svg); render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#svg', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  rng.value = 1000; rng.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

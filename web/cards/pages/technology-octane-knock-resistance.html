@@ -1,0 +1,242 @@
+<!doctype html>
+<!-- slug: technology-octane-knock-resistance -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute card · What octane really measures</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#svg{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#ctrl{display:flex;flex-direction:column;gap:1.2cqh}
+#fuels{display:flex;gap:2.4cqw}
+.fuel{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.fuel small{display:block;font:500 max(1.5cqh,12px)/1.25 var(--mono);opacity:.8;margin-top:.3cqh}
+.fuel.on{background:var(--k);color:var(--c);box-shadow:none}
+.fuel .ok{float:right;opacity:0}
+.fuel.tried .ok{opacity:1}
+#hold{font:800 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:2cqh;padding:2cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .12s}
+#hold.on{transform:scale(.96)}
+#hold:disabled{opacity:.45}
+#why{display:flex;flex-direction:column;gap:1.2cqh}
+#why .big{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold to run · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENGINES</span></div>
+    <h2 class="q">What does a fuel's octane rating actually measure?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="svg" aria-label="A cylinder with a spark plug and a rising piston"></svg>
+    </div>
+    <div id="ctrl">
+      <div id="fuels">
+        <button class="fuel on" data-f="0">n-heptane <span class="ok">✓</span><small>octane 0</small></button>
+        <button class="fuel" data-f="1">iso-octane <span class="ok">✓</span><small>octane 100</small></button>
+      </div>
+      <button id="hold">Hold to compress</button>
+    </div>
+    <div id="why" class="gone">
+      <p class="big">Resistance to knocking</p>
+      <p class="body">Squeeze a fuel and air mix hard enough and it can ignite on its own, before the spark: that's knocking. Iso-octane takes far more squeezing than n-heptane, so it was simply set at 100 and n-heptane at 0. The number says how much squeeze a fuel can take, not how good it is.</p>
+    </div>
+    <p class="say" id="say">Pick a fuel, then hold the button to squeeze the mix.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Octane measures resistance to knocking, not the quality of the fuel.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const KN = 0.55;                       // where n-heptane self-ignites in this little engine
+const S = {fuel: 0, p: 0, phase: 'idle', holding: false, tried: [false, false], spd: 1, t: 0, done: false};
+const parts = Array.from({length: 26}, () => ({rx: Kit.rnd(), ry: Kit.rnd(), ph: Kit.rnd() * 6.28, w: 3 + Kit.rnd() * 4}));
+let G = null;
+const NS = 'http://www.w3.org/2000/svg';
+const mk = (t, a, p) => Kit.mk(t, a, p);
+
+function draw() {
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const cw = Math.min(W * 0.42, H * 0.42), cx = W * 0.5, xL = cx - cw / 2, xR = cx + cw / 2;
+  const t = Math.max(4, cw * 0.06);
+  const y0 = H * 0.2, top0 = H * 0.6, top1 = y0 + (top0 - y0) * 0.2, ph = H * 0.11, wallB = top0 + ph + H * 0.05;
+  const defs = mk('defs', {}, svg);
+  const cp = mk('clipPath', {id: 'cp'}, defs);
+  const clip = mk('rect', {x: xL, y: y0, width: cw, height: top0 - y0}, cp);
+  const gr = mk('radialGradient', {id: 'fl'}, defs);
+  mk('stop', {offset: '0', 'stop-color': '#fff6c2'}, gr);
+  mk('stop', {offset: '.5', 'stop-color': '#ffb020'}, gr);
+  mk('stop', {offset: '1', 'stop-color': '#ff6a1f'}, gr);
+
+  const shake = mk('g', {}, svg);
+  mk('rect', {x: xL, y: y0, width: cw, height: wallB - y0, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, shake);
+  const inner = mk('g', {'clip-path': 'url(#cp)'}, shake);
+  mk('rect', {x: xL, y: y0, width: cw, height: wallB - y0, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'}, inner);
+  const pg = mk('g', {}, inner);
+  const dots = parts.map(() => mk('circle', {r: Math.max(2, cw * 0.022), style: 'fill:var(--k);opacity:.55'}, pg));
+  const tipY = y0 + H * 0.03;
+  const flame = mk('circle', {cx: cx, cy: tipY, r: 0, fill: 'url(#fl)', opacity: .95}, inner);
+  const knockG = mk('g', {}, inner);
+
+  // piston, drawn at its lowest point and moved by translate
+  const piston = mk('g', {}, shake);
+  mk('rect', {x: cx - cw * 0.09, y: top0 + ph * 0.5, width: cw * 0.18, height: H - top0, style: 'fill:color-mix(in srgb,var(--k) 55%,transparent)'}, piston);
+  mk('rect', {x: xL + 1.5, y: top0, width: Math.max(0, cw - 3), height: ph, rx: Math.min(6, ph * 0.12), style: 'fill:var(--k)'}, piston);
+  for (let i = 1; i <= 2; i++) mk('rect', {x: xL + 1.5, y: top0 + ph * 0.2 * i, width: Math.max(0, cw - 3), height: Math.max(1.5, ph * 0.05), style: 'fill:var(--c);opacity:.5'}, piston);
+
+  // walls and head
+  const wall = 'fill:var(--k)';
+  mk('rect', {x: xL - t, y: y0 - t, width: t, height: wallB - y0 + t, style: wall}, shake);
+  mk('rect', {x: xR, y: y0 - t, width: t, height: wallB - y0 + t, style: wall}, shake);
+  mk('rect', {x: xL - t, y: y0 - t, width: cw + 2 * t, height: t, style: wall}, shake);
+
+  // spark plug
+  const pw = cw * 0.16, pTop = y0 - t - H * 0.12;
+  mk('rect', {x: cx - pw * 0.3, y: pTop, width: pw * 0.6, height: H * 0.04, rx: 2, style: 'fill:var(--k)'}, shake);
+  mk('rect', {x: cx - pw / 2, y: pTop + H * 0.04, width: pw, height: H * 0.08, rx: 3, style: 'fill:color-mix(in srgb,var(--k) 22%,var(--c));stroke:var(--k);stroke-width:2'}, shake);
+  mk('line', {x1: cx, y1: y0 - t, x2: cx, y2: tipY, style: 'stroke:var(--k);stroke-width:3'}, shake);
+  const spark = mk('polygon', {points: star(cx, tipY, Math.max(10, cw * 0.11), 8, 0.4, 0), fill: '#ffd23f', stroke: '#ff6a1f', 'stroke-width': 1.5, opacity: 0}, shake);
+
+  const lab = (x, y, s, anchor, w, extra) => { const e = mk('text', {x, y, 'text-anchor': anchor, style: `font:${w} ${fs}px/1 var(--body);fill:var(--k);${extra || ''}`}, svg); e.textContent = s; return e; };
+  const fx = xL - t - 8, fy = (y0 + top0) / 2;
+  const sy = pTop + H * 0.06 + fs * 0.35;
+  if (fy - fs * 1.1 > sy + fs * 0.3) lab(cx - pw / 2 - 8, sy, 'spark plug', 'end', 600);
+
+  // fuel name to the left
+  lab(fx, fy, S.fuel ? 'iso-octane' : 'n-heptane', 'end', 800);
+  lab(fx, fy + fs * 1.45, S.fuel ? 'octane 100' : 'octane 0', 'end', 500, 'font-family:var(--mono);opacity:.8');
+
+  // squeeze gauge to the right
+  const gw = Math.max(10, W * 0.03), gx = Math.min(xR + t + (W - xR - t) * 0.45, W - fs * 2.6);
+  const gy0 = y0, gy1 = top0 + ph;
+  lab(gx, pTop + H * 0.06 + fs * 0.35, 'squeeze', 'middle', 600);
+  mk('rect', {x: gx - gw / 2, y: gy0, width: gw, height: gy1 - gy0, rx: gw / 2, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent);stroke:var(--k);stroke-width:1.5'}, svg);
+  const gfill = mk('rect', {x: gx - gw / 2, y: gy1, width: gw, height: 0, rx: gw / 2, style: 'fill:var(--k)'}, svg);
+  if (!S.fuel) { const ky = gy1 - (gy1 - gy0) * KN; mk('line', {x1: gx - gw, y1: ky, x2: gx + gw, y2: ky, stroke: '#e01e37', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg); }
+
+  const ktxt = mk('text', {x: cx, y: (y0 + top0) / 2, 'text-anchor': 'middle', opacity: 0, style: `font:900 ${fs * 1.7}px/1 var(--display);fill:#e01e37;stroke:var(--c);stroke-width:3;paint-order:stroke`}, svg);
+  ktxt.textContent = 'KNOCK!';
+
+  G = {W, H, cw, cx, xL, xR, y0, top0, top1, wallB, tipY, clip, dots, flame, knockG, piston, spark, shake, gfill, gy0, gy1, ktxt};
+  render();
+}
+
+function star(x, y, r, n, k, rot) {
+  let s = '';
+  for (let i = 0; i < n * 2; i++) {
+    const a = rot + i * Math.PI / n, rr = i % 2 ? r * k : r * (0.75 + 0.25 * Kit.rnd());
+    s += `${(x + Math.cos(a) * rr).toFixed(1)},${(y + Math.sin(a) * rr).toFixed(1)} `;
+  }
+  return s;
+}
+
+const pTopNow = () => G.top0 + (G.top1 - G.top0) * S.p;
+
+function render() {
+  const pt = pTopNow();
+  G.clip.setAttribute('height', Math.max(1, pt - G.y0));
+  G.piston.setAttribute('transform', `translate(0,${pt - G.top0})`);
+  const amp = 1 + S.p * 4;
+  parts.forEach((q, i) => {
+    const x = G.xL + 6 + q.rx * (G.cw - 12) + Math.sin(S.t * q.w + q.ph) * amp;
+    const y = G.y0 + 6 + q.ry * Math.max(1, pt - G.y0 - 12) + Math.cos(S.t * q.w * 1.1 + q.ph) * amp;
+    G.dots[i].setAttribute('cx', x); G.dots[i].setAttribute('cy', y);
+  });
+  const h = Math.max(0, (G.gy1 - G.gy0) * S.p);
+  G.gfill.setAttribute('y', G.gy1 - h); G.gfill.setAttribute('height', h);
+  G.gfill.style.fill = (!S.fuel && S.p > KN * 0.8) ? '#e01e37' : 'var(--k)';
+}
+
+let last = performance.now();
+gsap.ticker.add(() => {
+  const now = performance.now(), dt = Math.min(0.05, (now - last) / 1000) * S.spd; last = now; S.t += dt;
+  if (S.phase === 'idle') {
+    if (S.holding) S.p = Math.min(1, S.p + dt / 1.6); else S.p = Math.max(0, S.p - dt / 0.8);
+    if (S.fuel === 0 && S.p >= KN) knock();
+    else if (S.fuel === 1 && S.p >= 1) fire();
+  }
+  if (G) render();
+});
+
+const say = s => { Kit.$('say').textContent = s; };
+function release() { S.holding = false; Kit.$('hold').classList.remove('on'); }
+
+function knock() {
+  S.phase = 'knock'; release(); Kit.haptic('light');
+  const tl = gsap.timeline({onComplete: () => end(0)}); tl.timeScale(S.spd);
+  const pt = pTopNow();
+  const blasts = [];
+  for (let i = 0; i < 5; i++) {
+    const x = G.xL + G.cw * (0.15 + 0.7 * Kit.rnd()), y = G.y0 + (pt - G.y0) * (0.2 + 0.6 * Kit.rnd());
+    const r = G.cw * (0.22 + 0.15 * Kit.rnd());
+    blasts.push(mk('polygon', {points: star(x, y, r, 7, 0.45, Kit.rnd() * 6), fill: i % 2 ? '#ffb020' : '#e01e37', stroke: '#ffd23f', 'stroke-width': 1.5, opacity: .95}, G.knockG));
+  }
+  tl.from(blasts, {scale: 0, transformOrigin: '50% 50%', duration: .12, stagger: .05, ease: 'back.out(3)'})
+    .to(G.ktxt, {opacity: 1, scale: 1.15, transformOrigin: '50% 50%', duration: .12}, 0.05)
+    .fromTo(G.shake, {x: -6}, {x: 6, duration: .04, repeat: 9, yoyo: true, ease: 'none'}, 0)
+    .set(G.shake, {x: 0})
+    .to(S, {p: 0, duration: .7, ease: 'power4.out'}, 0.3)
+    .to(blasts, {opacity: 0, duration: .5}, 0.5)
+    .to(G.ktxt, {opacity: 0, duration: .4}, 1.0);
+  say('Knock! n-heptane exploded by itself, all over, before the piston reached the top and before any spark.');
+}
+
+function fire() {
+  S.phase = 'burn'; release(); Kit.haptic('light');
+  const R = Math.hypot(G.cw, G.wallB - G.y0);
+  const tl = gsap.timeline({onComplete: () => end(1)}); tl.timeScale(S.spd);
+  tl.fromTo(G.spark, {opacity: 1, scale: 0.3, transformOrigin: '50% 50%'}, {scale: 1.3, duration: .15, ease: 'power2.out'})
+    .to(G.spark, {opacity: 0, duration: .2})
+    .fromTo(G.flame, {attr: {r: 0}, opacity: .95}, {attr: {r: R}, duration: 1.0, ease: 'power1.in'}, 0.1)
+    .to(S, {p: 0, duration: 1.0, ease: 'power2.inOut'}, 0.75)
+    .to(G.flame, {opacity: 0, duration: .5}, 1.4)
+    .set(G.flame, {attr: {r: 0}});
+  say('Clean burn: iso-octane took the full squeeze, waited for the spark, and one smooth flame pushed the piston.');
+}
+
+function end(fu) {
+  S.tried[fu] = true; S.phase = 'idle';
+  Kit.$('fuels').children[fu].classList.add('tried');
+  if (S.tried[0] && S.tried[1]) { setTimeout(finish, 500 / S.spd); return; }
+  say(fu === 0 ? 'Now pick iso-octane and squeeze the same way.' : 'Now pick n-heptane and squeeze the same way.');
+}
+
+function finish() {
+  if (S.done) return; S.done = true;
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+Kit.$('fuels').addEventListener('click', e => {
+  const b = e.target.closest('.fuel'); if (!b || S.phase !== 'idle') return;
+  S.fuel = +b.dataset.f; S.p = 0;
+  [...Kit.$('fuels').children].forEach(x => x.classList.toggle('on', x === b));
+  Kit.haptic('selection'); draw();
+});
+const hold = Kit.$('hold');
+hold.addEventListener('pointerdown', e => {
+  if (S.phase !== 'idle') return;
+  S.holding = true; hold.classList.add('on');
+  try { hold.setPointerCapture(e.pointerId); } catch (_) {}
+});
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => hold.addEventListener(n, release));
+hold.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#svg', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const until = async (fn, max = 8000) => { const t0 = Date.now(); while (!fn() && Date.now() - t0 < max) await wait(40); };
+  S.spd = 5;
+  for (const fu of [0, 1]) {
+    Kit.$('fuels').children[fu].click(); await wait(60);
+    hold.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+    await until(() => S.tried[fu] && S.phase === 'idle');
+  }
+  await until(() => S.done); await wait(700);
+};
+Kit.single();
+</script>
+</html>

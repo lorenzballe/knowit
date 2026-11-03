@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-two-four-seven -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#chips{display:flex;flex-wrap:wrap;gap:1cqh 2.4cqw;justify-content:center}
+.chip{font:700 max(2.1cqh,14px)/1.1 var(--mono);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:1.6cqh;padding:1.4cqh 3.6cqw;cursor:pointer}
+.chip:disabled{opacity:.35;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Try it · test a rule">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CONFIRMATION BIAS</span></div>
+    <h2 class="q">Why does guessing 2, 4, 7 crack the rule faster than 3, 6, 12?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="chips">
+        <button class="chip" data-t="3,6,12">3, 6, 12</button>
+        <button class="chip" data-t="10,20,40">10, 20, 40</button>
+        <button class="chip" data-t="2,4,7">2, 4, 7</button>
+        <button class="chip" data-t="100,200,400">100, 200, 400</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">The hidden rule is just “numbers in ascending order”. Every doubling triple also goes up, so its “yes” can never tell ×2 apart from the real rule.</p>
+        <p class="body">2, 4, 7 is the test where ×2 says no — and the rule still says yes. Your guess breaks.</p>
+      </div>
+    </div>
+    <p class="say" id="say">2, 4, 8 follows the rule. You guess “×2”. Tap a triple to test it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Test what could prove you wrong, not what agrees with you.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const tests = [[2,4,8]];
+let fresh = -1, done = false;
+const rule = t => t[0] < t[1] && t[1] < t[2];
+const dbl = t => t[1] === 2*t[0] && t[2] === 2*t[1];
+const sv = Kit.$('pic');
+function el(tag, a, p, style){ const e = Kit.mk(tag, a, p); if (style) e.setAttribute('style', style); return e; }
+function mark(g, cx, cy, r, yes, strong){
+  const c = el('circle', {cx, cy, r}, g, yes ? 'fill:var(--k)' : `fill:none;stroke:var(--k);stroke-width:${Math.max(2,r*.16)}`);
+  const t = el('text', {x: cx, y: cy, 'text-anchor':'middle', 'dominant-baseline':'central'}, g,
+    `font:800 ${r*1.15}px var(--body);fill:${yes ? 'var(--c)' : 'var(--k)'}`);
+  t.textContent = yes ? '✓' : '✗';
+  return [c, t];
+}
+function draw(){
+  while (sv.firstChild) sv.removeChild(sv.firstChild);
+  const {W, H, f} = Kit.fitSvg(sv);
+  const fs = Math.max(f, 13), small = Math.max(fs*.72, 12);
+  const headH = small*1.4 + fs*1.6 + 8;
+  const rowH = Math.min((H - headH) / 5, fs*3.4);
+  const xR = W*.63, xG = W*.87;
+  // headers
+  const hd = (x, a, b) => {
+    el('text', {x, y: small, 'text-anchor':'middle'}, sv, `font:700 ${small}px var(--body);fill:var(--k);opacity:.6;letter-spacing:.06em`).textContent = a;
+    const t = el('text', {x, y: small*1.4 + fs*1.2, 'text-anchor':'middle'}, sv, `font:800 ${fs*1.1}px var(--display);fill:var(--k)`);
+    t.textContent = b; return t;
+  };
+  hd(xR, 'RULE', done ? 'going up' : '?').setAttribute('id', 'ruleName');
+  hd(xG, 'YOUR GUESS', '×2');
+  el('text', {x: 0, y: small}, sv, `font:700 ${small}px var(--body);fill:var(--k);opacity:.6;letter-spacing:.06em`).textContent = 'TESTED';
+  el('line', {x1: 0, x2: W, y1: headH - 4, y2: headH - 4}, sv, 'stroke:var(--k);stroke-width:1.5;opacity:.25');
+  tests.forEach((t, i) => {
+    const y0 = headH + i*rowH, cy = y0 + rowH/2;
+    const R = rule(t), G = dbl(t), split = R !== G;
+    const g = el('g', {}, sv);
+    if (split) el('rect', {x: 0, y: y0 + 3, width: W, height: rowH - 6, rx: rowH*.22}, g, 'fill:var(--k);fill-opacity:.12;stroke:var(--k);stroke-width:2');
+    // little bars: the triple's shape
+    const bw = Math.max(5, rowH*.11), bh = rowH*.56, mx = Math.max(...t);
+    t.forEach((n, j) => {
+      const h = Math.max(3, bh * n / mx);
+      el('rect', {x: 8 + j*(bw+3), y: cy + bh/2 - h, width: bw, height: h, rx: 1.5}, g, 'fill:var(--k);opacity:.75');
+    });
+    el('text', {x: 8 + 3*(bw+3) + 8, y: cy, 'dominant-baseline':'central'}, g, `font:700 ${fs}px var(--mono);fill:var(--k)`).textContent = t.join(', ');
+    const r = Math.min(rowH*.3, fs*.95);
+    const m1 = mark(g, xR, cy, r, R), m2 = mark(g, xG, cy, r, G);
+    if (!split && i > 0) el('text', {x: (xR+xG)/2, y: cy + r + small*.2, 'text-anchor':'middle', 'dominant-baseline':'hanging'}, g, `font:600 ${small}px var(--body);fill:var(--k);opacity:0`);
+    if (i === fresh && !Kit.calm){
+      gsap.from(g, {opacity: 0, x: -24, duration: .45, ease: 'power3.out'});
+      gsap.from([...m1, ...m2], {scale: 0, transformOrigin: 'center', transformBox: 'fill-box', stagger: .12, delay: .3, duration: .4, ease: 'back.out(2.5)'});
+    }
+  });
+  fresh = -1;
+}
+Kit.$('chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b || b.disabled || done) return;
+  b.disabled = true;
+  const t = b.dataset.t.split(',').map(Number);
+  tests.push(t); fresh = tests.length - 1;
+  const say = Kit.$('say');
+  if (dbl(t)) {
+    Kit.haptic('light');
+    say.textContent = `“Follows my rule.” But ×2 said yes too — you learned nothing new. Try another.`;
+    draw();
+  } else {
+    done = true; Kit.haptic('success');
+    draw();
+    Kit.hide('chips'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    const rn = document.getElementById('ruleName');
+    if (rn && !Kit.calm) gsap.from(rn, {opacity: 0, y: 8, duration: .5, delay: .6});
+  }
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.chip', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('chips').children[0].click(); await w(300);
+  Kit.$('chips').children[1].click(); await w(300);
+  Kit.$('chips').children[2].click(); await w(1200);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-graphene-flagship-billion -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#hex{display:block;width:100%;flex:1;min-height:0}
+#count{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;flex-wrap:wrap}
+#yr{font:700 max(2.4cqh,15px)/1.1 var(--mono);color:var(--k)}
+#eur{font:800 max(3.6cqh,20px)/1.1 var(--display);color:var(--k);letter-spacing:-.01em}
+#eur small{font:700 max(1.7cqh,12px)/1 var(--body);color:var(--muted);margin-left:1cqw}
+#slide{width:100%;height:max(4cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);overflow-wrap:anywhere}
+.foot .src{display:block;padding-right:112px;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slide · watch it fill">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GRAPHENE</span></div>
+    <h2 class="q">How big was the EU's bet on graphene research?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="hex" aria-label="Ten hexagons, one per year of funding"></svg>
+      <div id="count"><span id="yr">2013</span><span id="eur">€0<small>so far</small></span></div>
+      <input id="slide" type="range" min="0" max="10" step="0.01" value="0" aria-label="Years of the project">
+      <div id="why" class="gone">
+        <p class="body">In 2013 the EU launched the <b>Graphene Flagship</b>: one billion euros for ten years, about 100 million a year, to study graphene and develop its uses. It runs until 2023.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag through the years and watch the money pile up, one hexagon per year.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene Flagship: €1 billion over 10 years, 2013–2023.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {v: 0};
+let cells = [], done = false;
+const fmt = n => '€' + n.toLocaleString('en-US');
+
+function render() {
+  const v = st.v;
+  cells.forEach((c, i) => {
+    const a = Math.max(0, Math.min(1, v - i));
+    c.fill.style.opacity = a;
+    const ink = a > 0.5 ? 'var(--c)' : 'var(--k)';
+    c.t1.style.fill = ink; c.t2.style.fill = ink;
+    c.t2.style.opacity = a > 0.5 ? 1 : 0.55;
+  });
+  const m = Math.round(v * 100);
+  Kit.$('yr').textContent = (v >= 10 ? '2013 → 2023' : String(2013 + Math.floor(v)));
+  Kit.$('eur').innerHTML = (m >= 1000 ? '€1 billion' : fmt(m * 1e6)) + '<small>' + (m >= 1000 ? 'in 10 years' : 'so far') + '</small>';
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+Kit.$('slide').addEventListener('input', e => {
+  const t = +e.target.value;
+  if (Math.floor(t) !== Math.floor(st.v)) Kit.haptic('selection');
+  gsap.to(st, {v: t, duration: Kit.calm ? 0 : .25, ease: 'power2.out', overwrite: true, onUpdate: render, onComplete: render});
+  if (t >= 9.99) finish();
+});
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('hex');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const s3 = Math.sqrt(3);
+  const r = Math.max(10, Math.min(W / (5.5 * s3), H / 3.5) * 0.96);
+  const w = s3 * r;
+  const ox = (W - 5.5 * w) / 2 + w / 2, oy = (H - 3.5 * r) / 2 + r;
+  const fs = Math.max(12, Math.min(r * 0.32, f * 1.05));
+  cells = [];
+  for (let i = 0; i < 10; i++) {
+    const row = i % 2, col = Math.floor(i / 2);
+    const cx = ox + col * w + row * w / 2, cy = oy + row * 1.5 * r;
+    const pts = [];
+    for (let k = 0; k < 6; k++) { const a = Math.PI / 180 * (60 * k - 90); pts.push((cx + r * .93 * Math.cos(a)).toFixed(1) + ',' + (cy + r * .93 * Math.sin(a)).toFixed(1)); }
+    const g = Kit.mk('g', {}, svg);
+    const base = Kit.mk('polygon', {points: pts.join(' ')}, g);
+    base.style.fill = 'none'; base.style.stroke = 'var(--k)'; base.style.strokeWidth = Math.max(1.5, r * .05); base.style.opacity = .35;
+    const fill = Kit.mk('polygon', {points: pts.join(' ')}, g);
+    fill.style.fill = 'var(--k)';
+    const gap = fs * 1.35;
+    const t1 = Kit.mk('text', {x: cx, y: cy - gap / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle'}, g);
+    t1.textContent = String(2013 + i);
+    t1.style.font = `700 ${fs}px var(--mono)`;
+    const t2 = Kit.mk('text', {x: cx, y: cy + gap / 2, 'text-anchor': 'middle', 'dominant-baseline': 'middle'}, g);
+    t2.textContent = '€100M';
+    t2.style.font = `800 ${fs}px var(--body)`;
+    cells.push({g, fill, t1, t2});
+  }
+  render();
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(cells.map(c => c.g), {opacity: 0, scale: .4, transformOrigin: '50% 50%', stagger: .05, duration: .45, ease: 'back.out(1.6)'});
+};
+
+Kit.play.card = async () => {
+  const s = Kit.$('slide');
+  s.value = 10; s.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 800));
+};
+Kit.single();
+</script>
+</html>

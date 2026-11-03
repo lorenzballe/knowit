@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- slug: maths-mercator-stretch -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:.8cqh}
+#read{font:700 max(2.4cqh,14px)/1.2 var(--body);color:var(--k);min-height:1.2em}
+#read b{font-family:var(--display);font-size:1.25em}
+#mapbox{flex:1;min-height:0;position:relative}
+#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.say,.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Build it · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MAPS</span></div>
+    <h2 class="q">Why do Mercator maps make countries near the poles look so huge?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">Drawn <b>×1.0</b> its equator size</div>
+      <div id="mapbox"><svg id="map"></svg></div>
+    </div>
+    <p class="say" id="say">Drag Wyoming north, toward the pole. Watch the gaps between latitude lines.</p>
+    <div id="why" class="gone">
+      <p class="body">Mercator keeps every angle true, so wherever it widens a place east–west it must stretch it north–south just as much. Near the poles the latitude lines spread apart and both stretches grow, so the same land is drawn far bigger. That is why Russia looks larger than Africa, yet is really smaller.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On a Mercator map, the farther from the equator, the more a country is blown up.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const R = Math.PI/180;
+const merc = d => Math.log(Math.tan(Math.PI/4 + d*R/2));
+const LAT_MIN = -8, LAT_MAX = 84, HW = 5, HH = 3; // shape: 10° wide at the equator, 6° tall
+const S = {lat: 6, done: false};
+let G = null, shape, label, ghost;
+
+function X(lon){ return G.cx + lon*R*G.k; }
+function Y(lat){ return G.y0 - merc(lat)*G.k; }
+function rect(lat, lonC){
+  const w = HW/Math.cos(lat*R);
+  const x1 = X(lonC - w), x2 = X(lonC + w), y1 = Y(lat + HH), y2 = Y(lat - HH);
+  return {x:x1, y:y1, w:x2-x1, h:y2-y1};
+}
+function update(){
+  if (!G) return;
+  const r = rect(S.lat, G.lonS);
+  shape.setAttribute('x', r.x); shape.setAttribute('y', r.y);
+  shape.setAttribute('width', r.w); shape.setAttribute('height', r.h);
+  label.setAttribute('x', r.x + r.w/2); label.setAttribute('y', r.y + r.h/2);
+  label.style.opacity = r.h > G.f*1.1 ? 1 : 0;
+  const factor = (r.w*r.h)/(G.g.w*G.g.h);
+  Kit.$('read').innerHTML = `Drawn <b>×${factor < 10 ? factor.toFixed(1) : Math.round(factor)}</b> its equator size`;
+  if (!S.done && S.lat >= 68) finish();
+}
+function finish(){
+  S.done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:8, stagger:.12, duration:.45, ease:'power3.out'});
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('map');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const padL = f*2.6, padT = f*.6, padB = f*.4;
+  const span = merc(LAT_MAX) - merc(LAT_MIN);
+  const k = Math.min((H - padT - padB)/span, (W - padL - f)/(118*R));
+  const y0 = H - padB + merc(LAT_MIN)*k;
+  const cx = padL + (W - padL)/2;
+  G = {W, H, f, k, y0, cx, lonS: 20, lonG: -34};
+  const ink = 'var(--k)';
+  const lonEdge = (W - padL)/2/(k*R);
+  // alternating 10° bands: equal on the globe, unequal here
+  for (let a = 0; a < 80; a += 10){
+    const y1 = Y(a+10), y2 = Y(a);
+    Kit.mk('rect', {x: padL, y: y1, width: W - padL, height: y2 - y1,
+      fill: `color-mix(in srgb, var(--k) ${a/10 % 2 ? 4 : 11}%, transparent)`}, svg);
+  }
+  // meridians: evenly spaced
+  for (let l = -60; l <= 60; l += 20){
+    const x = X(l); if (x < padL || x > W) continue;
+    Kit.mk('line', {x1:x, x2:x, y1:Y(LAT_MAX), y2:Y(LAT_MIN), stroke:ink, 'stroke-opacity':.18, 'stroke-width':1}, svg);
+  }
+  // parallels: spreading apart
+  for (let a = 0; a <= 80; a += 10){
+    const y = Y(a);
+    Kit.mk('line', {x1:padL, x2:W, y1:y, y2:y, stroke:ink, 'stroke-opacity': a === 0 ? .7 : .35, 'stroke-width': a === 0 ? 2 : 1}, svg);
+    if (a % 20 === 0){
+      const t = Kit.mk('text', {x: padL - f*.4, y: y, 'text-anchor':'end', 'dominant-baseline':'middle',
+        fill: ink, 'font-size': f*.9, 'font-family':'var(--mono)', 'font-weight':700}, svg);
+      t.textContent = a + '°';
+    }
+  }
+  // ghost: the same land at the equator
+  G.g = rect(0, G.lonG);
+  ghost = Kit.mk('rect', {x:G.g.x, y:G.g.y, width:G.g.w, height:G.g.h, fill:'none', stroke:ink,
+    'stroke-width':2, 'stroke-dasharray':'4 3', rx:2}, svg);
+  const gt = Kit.mk('text', {x:G.g.x + G.g.w/2, y:G.g.y - f*.5, 'text-anchor':'middle', fill:ink,
+    'font-size':f*.85, 'font-family':'var(--body)', 'font-weight':700}, svg);
+  gt.textContent = 'same land at equator';
+  if (G.g.x + G.g.w/2 - gt.getComputedTextLength()/2 < padL) gt.setAttribute('x', padL + gt.getComputedTextLength()/2 + 2);
+  // the draggable state
+  shape = Kit.mk('rect', {fill:ink, rx:3, stroke:ink, 'stroke-width':2}, svg);
+  label = Kit.mk('text', {'text-anchor':'middle', 'dominant-baseline':'middle', fill:'var(--c)',
+    'font-size':f*.95, 'font-family':'var(--display)', 'font-weight':700, 'pointer-events':'none'}, svg);
+  label.textContent = 'Wyoming';
+  update();
+};
+
+// dragging: only north–south matters
+(function(){
+  const svg = Kit.$('map'); let drag = false;
+  const latAt = e => {
+    const b = svg.getBoundingClientRect();
+    const y = (e.clientY - b.top) * (G.H / b.height);
+    const m = (G.y0 - y)/G.k;
+    const lat = (2*Math.atan(Math.exp(m)) - Math.PI/2)/R;
+    return Math.max(LAT_MIN + HH + 1, Math.min(LAT_MAX - HH - 1, lat));
+  };
+  svg.addEventListener('pointerdown', e => { if (!G) return; drag = true; gsap.killTweensOf(S);
+    try{ svg.setPointerCapture(e.pointerId); }catch(_){}
+    Kit.haptic('selection'); S.lat = latAt(e); update(); });
+  svg.addEventListener('pointermove', e => { if (!drag) return; S.lat = latAt(e); update(); });
+  const up = () => { drag = false; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+})();
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || S.done) return;
+  gsap.to(S, {lat: 22, duration: .9, delay: .4, ease: 'power2.inOut', yoyo: true, repeat: 1, onUpdate: update});
+};
+
+Kit.play.card = async () => {
+  const svg = Kit.$('map'), b = svg.getBoundingClientRect();
+  const ev = (type, y) => svg.dispatchEvent(new PointerEvent(type, {bubbles:true, pointerId:1, clientX:b.left + b.width*.7, clientY:y}));
+  ev('pointerdown', b.top + b.height*.85);
+  for (let i = 1; i <= 10; i++){ ev('pointermove', b.top + b.height*(.85 - .8*i/10)); await new Promise(r => setTimeout(r, 30)); }
+  ev('pointerup', b.top + b.height*.05);
+  if (!S.done){ S.lat = 76; update(); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

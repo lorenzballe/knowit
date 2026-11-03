@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-final-push-phase -->
+<title>Contractions vs pushing</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.btn{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;transition:opacity .3s}
+.btn.hot{background:var(--k);color:var(--c);box-shadow:none}
+.btn:disabled{opacity:.3;cursor:default}
+.t1{font-weight:800;font-family:var(--body);fill:var(--k);letter-spacing:.04em}
+.t2{font-weight:600;font-family:var(--mono);fill:var(--k);opacity:.75}
+.lab{font-weight:700;font-family:var(--body);fill:var(--k)}
+.cry{font-weight:700;font-family:var(--hand);fill:var(--k)}
+.wall{fill:none;stroke:color-mix(in srgb,#d0466a 80%,var(--k));stroke-linecap:round}
+.ufill{fill:color-mix(in srgb,#ff8fa8 24%,transparent)}
+.canal{fill:none;stroke:color-mix(in srgb,#d0466a 55%,var(--k));stroke-linecap:round}
+.baby{fill:#f4c2a8;stroke:var(--k)}
+.arr{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+.arrP{fill:none;stroke:#e8743b;stroke-linecap:round;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Try it · two phases">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BIRTH</span></div>
+    <h2 class="q">Final contractions vs the push phase: what's the difference?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl">
+        <button class="btn hot" id="bSq">Squeeze</button>
+        <button class="btn" id="bPu" disabled>Push</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">Contractions are the uterus squeezing on its own: they open the cervix, the door at its bottom.</p>
+        <p class="body">In the final phase they change and the push phase starts: the mother actively pushes until the head, then the whole baby, comes out.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Squeeze three times: watch the cervix at the bottom.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Contractions open the door; the mother's pushing moves the baby through it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {o:0, d:0, s:0, p:0, bo:1, cry:0};
+let E = null, dims = null, nSq = 0, nPu = 0, busy = false;
+const D = () => Kit.calm ? 0.01 : 1;
+const svg = Kit.$('pic');
+
+function arrowD(x1,y1,x2,y2,h){
+  const a = Math.atan2(y2-y1,x2-x1), b = .55;
+  return `M${x1} ${y1}L${x2} ${y2}M${x2-h*Math.cos(a-b)} ${y2-h*Math.sin(a-b)}L${x2} ${y2}L${x2-h*Math.cos(a+b)} ${y2-h*Math.sin(a+b)}`;
+}
+
+function build(){
+  svg.innerHTML = '';
+  dims = Kit.fitSvg(svg);
+  const f = Math.max(dims.f, 12);
+  dims.F = f;
+  E = {};
+  E.fill = Kit.mk('path', {class:'ufill'}, svg);
+  E.baby = Kit.mk('g', {}, svg);
+  E.body = Kit.mk('ellipse', {class:'baby'}, E.baby);
+  E.arm = Kit.mk('path', {class:'baby', fill:'none'}, E.baby);
+  E.head = Kit.mk('circle', {class:'baby'}, E.baby);
+  E.wall = Kit.mk('path', {class:'wall'}, svg);
+  E.cL = Kit.mk('path', {class:'canal'}, svg);
+  E.cR = Kit.mk('path', {class:'canal'}, svg);
+  E.sqL = Kit.mk('path', {class:'arr'}, svg);
+  E.sqR = Kit.mk('path', {class:'arr'}, svg);
+  E.puL = Kit.mk('path', {class:'arrP'}, svg);
+  E.puR = Kit.mk('path', {class:'arrP'}, svg);
+  E.t1 = Kit.mk('text', {class:'t1', 'text-anchor':'middle', 'font-size':f*1.1}, svg);
+  E.t2 = Kit.mk('text', {class:'t2', 'text-anchor':'middle', 'font-size':f*.9}, svg);
+  E.cx = Kit.mk('text', {class:'lab', 'font-size':f*.95}, svg);
+  E.cx.textContent = 'Cervix';
+  E.cry = Kit.mk('text', {class:'cry', 'text-anchor':'middle', 'font-size':f*1.6}, svg);
+  E.cry.textContent = 'Waaah! Born.';
+  render();
+}
+
+function render(){
+  if (!E) return;
+  const {W,H,F:f} = dims;
+  const R = Math.min(W*.31, H*.27), cx = W/2, cy = H*.46;
+  const k = .9*(1-.1*S.s), g = R*(.06+.32*S.o), by = cy+R*.95;
+  const wd = `M${cx-g} ${by}C${cx-g-R*.3} ${by-R*.2} ${cx-R*k} ${cy+R*.4} ${cx-R*k} ${cy}C${cx-R*k} ${cy-R*1.1} ${cx+R*k} ${cy-R*1.1} ${cx+R*k} ${cy}C${cx+R*k} ${cy+R*.4} ${cx+g+R*.3} ${by-R*.2} ${cx+g} ${by}`;
+  E.wall.setAttribute('d', wd); E.wall.setAttribute('stroke-width', R*.13);
+  E.fill.setAttribute('d', wd+'Z');
+  const ce = R*.45;
+  E.cL.setAttribute('d', `M${cx-g} ${by}L${cx-Math.max(g*.9,R*.08)} ${by+ce}`);
+  E.cR.setAttribute('d', `M${cx+g} ${by}L${cx+Math.max(g*.9,R*.08)} ${by+ce}`);
+  E.cL.setAttribute('stroke-width', R*.07); E.cR.setAttribute('stroke-width', R*.07);
+  // baby
+  const hr = R*.3, hy = cy+R*.38+S.d*R*1.3, sq = 1-.06*S.s;
+  E.head.setAttribute('cx', cx); E.head.setAttribute('cy', hy); E.head.setAttribute('r', hr*sq);
+  E.body.setAttribute('cx', cx); E.body.setAttribute('cy', hy-R*.52); E.body.setAttribute('rx', R*.27*sq); E.body.setAttribute('ry', R*.36);
+  E.arm.setAttribute('d', `M${cx-R*.12} ${hy-R*.62}q${R*.2} ${R*.12} ${R*.08} ${R*.3}`);
+  [E.head,E.body,E.arm].forEach(e => e.setAttribute('stroke-width', Math.max(1.5,R*.025)));
+  E.baby.setAttribute('opacity', S.bo);
+  // squeeze arrows
+  const off = R*.12*S.s, ah = R*.09, sw = Math.max(2,R*.035);
+  E.sqL.setAttribute('d', arrowD(cx-R*1.28+off, cy, cx-R*1.04+off, cy, ah));
+  E.sqR.setAttribute('d', arrowD(cx+R*1.28-off, cy, cx+R*1.04-off, cy, ah));
+  E.sqL.setAttribute('opacity', S.s); E.sqR.setAttribute('opacity', S.s);
+  E.sqL.setAttribute('stroke-width', sw); E.sqR.setAttribute('stroke-width', sw);
+  // push arrows
+  const pb = R*.1*S.p;
+  E.puL.setAttribute('d', arrowD(cx-R*1.22, cy-R*.78+pb, cx-R*.98, cy-R*.46+pb, ah));
+  E.puR.setAttribute('d', arrowD(cx+R*1.22, cy-R*.78+pb, cx+R*.98, cy-R*.46+pb, ah));
+  E.puL.setAttribute('opacity', Math.min(1,S.p*1.4)); E.puR.setAttribute('opacity', Math.min(1,S.p*1.4));
+  E.puL.setAttribute('stroke-width', sw*1.3); E.puR.setAttribute('stroke-width', sw*1.3);
+  // texts
+  E.t1.setAttribute('x', cx); E.t1.setAttribute('y', f*1.3);
+  E.t1.textContent = nSq < 3 ? '1 · CONTRACTIONS' : '2 · PUSH PHASE';
+  E.t2.setAttribute('x', cx); E.t2.setAttribute('y', f*1.3+f*1.5);
+  const out = Math.round(Math.min(1, S.d/2.4)*100);
+  E.t2.textContent = `Cervix open ${Math.round(S.o*100)}% · Baby out ${out}%`;
+  E.cx.setAttribute('x', cx+R*.62); E.cx.setAttribute('y', by+f*.35);
+  E.cry.setAttribute('x', cx); E.cry.setAttribute('y', H-f*.7); E.cry.setAttribute('opacity', S.cry);
+}
+
+const say = t => { Kit.$('say').textContent = t; };
+
+function squeeze(){
+  if (busy || nSq >= 3) return Promise.resolve();
+  busy = true; nSq++; Kit.haptic('light');
+  const tl = gsap.timeline({onUpdate: render});
+  tl.to(S, {s:1, o:nSq/3, duration:.6*D(), ease:'power2.inOut', onUpdate:render})
+    .to(S, {s:0, duration:.5*D(), ease:'power2.out', onUpdate:render});
+  return tl.then(() => {
+    busy = false; render();
+    if (nSq < 3) say(nSq === 1 ? 'The uterus tightens by itself: the cervix opens a little. Again.' : 'Squeeze… but the baby barely moves. Once more.');
+    else {
+      say('Cervix open. Contractions change: now tap Push, the mother pushes.');
+      Kit.$('bSq').disabled = true; Kit.$('bSq').classList.remove('hot');
+      const p = Kit.$('bPu'); p.disabled = false; p.classList.add('hot');
+      gsap.to(S, {p:.35, duration:.4*D(), onUpdate:render});
+    }
+  });
+}
+
+function push(){
+  if (busy || nSq < 3 || nPu >= 3) return Promise.resolve();
+  busy = true; nPu++; Kit.haptic(nPu === 3 ? 'success' : 'light');
+  const target = [0, .5, 1, 2.4][nPu];
+  const tl = gsap.timeline();
+  tl.to(S, {p:1, s:.5, duration:.25*D(), onUpdate:render})
+    .to(S, {d:target, duration:(nPu===3?1.1:.8)*D(), ease:'power2.inOut', onUpdate:render}, '<.1')
+    .to(S, {p:nPu===3?0:.35, s:0, duration:.4*D(), onUpdate:render});
+  if (nPu === 3) tl.to(S, {bo:0, duration:.3*D(), onUpdate:render}, '-=.6').to(S, {cry:1, duration:.4*D(), onUpdate:render});
+  return tl.then(() => {
+    busy = false; render();
+    if (nPu === 1) say('Pushing moves the baby down, through the open cervix. Push again.');
+    else if (nPu === 2) say('The head is out! One last push.');
+    else { Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+  });
+}
+
+Kit.$('bSq').addEventListener('click', squeeze);
+Kit.$('bPu').addEventListener('click', push);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity:0, scale:.96, transformOrigin:'50% 50%', duration:.6, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 3; i++) await squeeze();
+  for (let i = 0; i < 3; i++) await push();
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

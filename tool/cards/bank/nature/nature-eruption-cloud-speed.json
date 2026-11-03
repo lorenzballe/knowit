@@ -1,0 +1,38 @@
+{
+  "id": "nature-eruption-cloud-speed",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How fast can the fastest eruption clouds race across the land?",
+  "answer": "Eruption clouds race at 50 to 700 km/h, so they can spread hazardous material fast. In Plinian eruptions, very viscous magma builds towering columns, and when a column collapses it races out as flows. The fastest is 14 times quicker than the slowest.",
+  "move": "Eruption clouds race at 50 to 700 km/h, spreading danger fast.",
+  "keywords": [
+    "volcanoes",
+    "eruptions",
+    "magma",
+    "plinian-eruptions",
+    "eruption-clouds"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive scale from 50 to 700 km/h. The reader drags a marker to guess the top speed of volcanic eruption clouds. Text explains Plinian eruptions and how collapsing columns race out as flows.",
+    "graded": false
+  },
+  "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7GaeRnYefws",
+  "written": "2026-11-03"
+}

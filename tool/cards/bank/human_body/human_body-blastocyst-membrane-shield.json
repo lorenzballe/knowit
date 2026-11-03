@@ -1,0 +1,37 @@
+{
+  "id": "human_body-blastocyst-membrane-shield",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Why does the blastocyst keep its membrane as it rolls through the uterus?",
+  "answer": "The blastocyst keeps its membrane as a shield. It protects the cluster of cells while the cluster rolls along the uterine cavity. The membrane only breaks open where the uterus offers the right conditions.",
+  "move": "The membrane stays shut until the right spot, then it opens.",
+  "keywords": [
+    "blastocyst",
+    "uterus",
+    "implantation",
+    "membrane",
+    "embryo"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A transparent bubble of cells rolls along a uterine cavity while the reader picks one of three reasons why its membrane is kept. The bubble opens only when it reaches a green OK zone."
+  },
+  "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vCWzf0yxik8&t=344s",
+  "written": "2026-11-03"
+}

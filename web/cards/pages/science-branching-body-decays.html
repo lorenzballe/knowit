@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-branching-body-decays -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ew-resize;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{font:700 max(2cqh,13px)/1.25 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Aim · launch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANY WORLDS</span></div>
+    <h2 class="q">How often do the radioactive atoms in your body split the universe?</h2>
+    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
+    <div id="why" class="gone"><p class="big">About 5,000 times a second</p><p class="body">Each radioactive nucleus in you is in a superposition: decayed and not decayed. When one decays, it hits what is around it, becomes entangled, and the universe branches. Your body has about 5,000 such decays every second.</p></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag along the scale to guess how many splits per second. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Branching is constant: your own body does it thousands of times a second.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUE = 5000, TG = Math.log10(TRUE), N = 5000;
+const cv = Kit.$('cv');
+let L = null, g = -1, locked = false;
+const S = {t: 0, m: 0, ran: false};
+// one second of decays, precomputed
+const forks = [];
+for (let i = 0; i < N; i++) forks.push({t: Kit.rnd(), d: Kit.rnd() < .5 ? 1 : -1, l: .2 + .8 * Math.pow(Kit.rnd(), 1.6), a: .35 + .5 * Kit.rnd()});
+forks.sort((a, b) => a.t - b.t);
+
+const fmt = v => {
+  if (v >= 1000) return Math.round(v / (v >= 10000 ? 1000 : 100) * (v >= 10000 ? 1 : 1)) * (v >= 10000 ? 1000 : 100);
+  if (v >= 10) return Math.round(v / (v >= 100 ? 10 : 1)) * (v >= 100 ? 10 : 1);
+  return Math.round(v);
+};
+const num = v => fmt(v).toLocaleString('en-US');
+
+function layout() {
+  const r = Kit.fitCanvas(cv); if (!r || !r.W) return;
+  const cs = getComputedStyle(Kit.$('card'));
+  const fs = Math.max(12, Math.min(r.W * .045, r.H * .05));
+  L = {x: r.x, W: r.W, H: r.H, fs,
+    ink: cs.getPropertyValue('--k').trim() || '#111',
+    bg: cs.getPropertyValue('--c').trim() || '#fff',
+    font: cs.getPropertyValue('--body').trim() || 'sans-serif',
+    disp: cs.getPropertyValue('--display').trim() || 'sans-serif',
+    mono: cs.getPropertyValue('--mono').trim() || 'monospace'};
+  L.xl = fs * 1.8; L.xr = r.W - fs * 1.8;
+  L.tick = r.H - fs * .7; L.trueY = r.H - fs * 2.4; L.track = r.H - fs * 4.0; L.guessY = r.H - fs * 5.7;
+  L.topY = fs * 1.4; L.treeT = fs * 3.2; L.treeB = r.H - fs * 7.2;
+  L.ym = (L.treeT + L.treeB) / 2; L.half = Math.max(10, (L.treeB - L.treeT) / 2);
+}
+const gx = v => L.xl + (L.xr - L.xl) * v / 5;
+
+function label(x, txt, y, font) {
+  const c = L.x; c.font = font; const w = c.measureText(txt).width;
+  const cx = Math.min(Math.max(x, w / 2 + 2), L.W - w / 2 - 2);
+  c.fillText(txt, cx, y);
+}
+
+function render() {
+  if (!L) return;
+  const c = L.x, {W, H, fs, ink} = L;
+  c.clearRect(0, 0, W, H);
+  c.strokeStyle = ink; c.fillStyle = ink; c.textBaseline = 'middle'; c.lineCap = 'round';
+  // timeline
+  const xh = L.xl + (L.xr - L.xl) * S.t;
+  c.globalAlpha = .2; c.lineWidth = Math.max(1.5, fs * .12); c.setLineDash([fs * .3, fs * .4]);
+  c.beginPath(); c.moveTo(L.xl, L.ym); c.lineTo(L.xr, L.ym); c.stroke(); c.setLineDash([]);
+  // forks: each decay peels off a world
+  let n = 0;
+  c.lineWidth = Math.max(.6, fs * .05);
+  c.globalAlpha = .16; c.beginPath();
+  for (const f of forks) {
+    if (f.t > S.t) break; n++;
+    const x = L.xl + (L.xr - L.xl) * f.t, len = L.half * f.l;
+    c.moveTo(x, L.ym); c.lineTo(x + len * f.a, L.ym - f.d * len);
+  }
+  c.stroke();
+  if (S.t > 0 && S.t < 1) { // the freshest splits, bold
+    c.globalAlpha = .8; c.lineWidth = Math.max(1, fs * .1); c.beginPath();
+    for (let i = Math.max(0, n - 8); i < n; i++) { const f = forks[i], x = L.xl + (L.xr - L.xl) * f.t, len = L.half * f.l;
+      c.moveTo(x, L.ym); c.lineTo(x + len * f.a, L.ym - f.d * len); }
+    c.stroke();
+  }
+  // our branch
+  c.globalAlpha = 1; c.lineWidth = Math.max(2.5, fs * .22);
+  c.beginPath(); c.moveTo(L.xl, L.ym); c.lineTo(xh, L.ym); c.stroke();
+  c.beginPath(); c.arc(xh, L.ym, fs * .35, 0, 7); c.fill();
+  // counter
+  c.textAlign = 'left';
+  c.font = `800 ${fs * 1.7}px ${L.disp}`;
+  c.fillText(S.ran ? `${n.toLocaleString('en-US')} splits` : '? splits', L.xl - fs, L.topY);
+  c.textAlign = 'right'; c.font = `700 ${fs}px ${L.mono}`; c.globalAlpha = .7;
+  c.fillText(`${S.t.toFixed(3)} s of you`, L.xr + fs, L.topY);
+  // scale
+  c.globalAlpha = .35; c.lineWidth = Math.max(2, fs * .18);
+  c.beginPath(); c.moveTo(L.xl, L.track); c.lineTo(L.xr, L.track); c.stroke();
+  c.textAlign = 'center'; c.font = `700 ${fs * .9}px ${L.font}`; c.globalAlpha = .65;
+  ['1', '10', '100', '1k', '10k', '100k'].forEach((t, i) => {
+    const x = gx(i); c.fillRect(x - 1, L.track - fs * .35, 2, fs * .7); c.fillText(t, x, L.tick);
+  });
+  c.globalAlpha = 1;
+  // guess pin
+  if (g >= 0) {
+    const x = gx(g); c.lineWidth = Math.max(2, fs * .16);
+    c.fillStyle = L.bg; c.beginPath(); c.arc(x, L.track, fs * .55, 0, 7); c.fill(); c.stroke(); c.fillStyle = ink;
+    label(x, `You: ${num(Math.pow(10, g))} / s`, L.guessY, `800 ${fs}px ${L.font}`);
+  } else {
+    c.globalAlpha = .5; label(W / 2, '← drag here →', L.guessY, `700 ${fs}px ${L.font}`); c.globalAlpha = 1;
+  }
+  // the real rate lands
+  if (S.m > 0) {
+    const x = gx(TG); c.globalAlpha = S.m;
+    const yd = L.track - (1 - S.m) * fs * 3;
+    c.beginPath(); c.moveTo(x, yd - fs * .9); c.lineTo(x - fs * .55, yd - fs * 1.7); c.lineTo(x + fs * .55, yd - fs * 1.7); c.closePath(); c.fill();
+    c.beginPath(); c.arc(x, yd, fs * .4, 0, 7); c.fill();
+    label(x, `Real: ~5,000 / s`, L.trueY, `800 ${fs}px ${L.font}`);
+    c.globalAlpha = 1;
+  }
+}
+
+function setFrom(e) {
+  const r = cv.getBoundingClientRect(), x = e.clientX - r.left;
+  g = Math.min(5, Math.max(0, (x - L.xl) / (L.xr - L.xl) * 5));
+  render();
+}
+let drag = false;
+cv.addEventListener('pointerdown', e => {
+  if (locked || !L) return; drag = true; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  const first = g < 0; setFrom(e); if (first) { sure.on(); } Kit.haptic('selection');
+});
+cv.addEventListener('pointermove', e => { if (drag && !locked) setFrom(e); });
+['pointerup', 'pointercancel'].forEach(t => cv.addEventListener(t, () => drag = false));
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (locked || g < 0) return; locked = true;
+  const v = Math.pow(10, g), ok = Math.abs(g - TG) <= .5;
+  Kit.answer({choice: `${num(v)} per second`, correct: ok, sure: pct});
+  S.ran = true;
+  const end = () => {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    sure.grade(ok, pct, `${num(v)} a second, ${ok ? 'close' : 'off'}`);
+    Kit.haptic('success'); requestAnimationFrame(() => { layout(); render(); });
+  };
+  if (Kit.calm) { S.t = 1; S.m = 1; render(); end(); return; }
+  gsap.timeline({onUpdate: render, onComplete: end})
+    .to(S, {t: 1, duration: 2.6, ease: 'none', onUpdate: render})
+    .to(S, {m: 1, duration: .5, ease: 'back.out(2)', onUpdate: render});
+});
+
+Kit.onShow.card = () => { layout(); render(); };
+if (window.ResizeObserver) new ResizeObserver(() => { if (L) { layout(); render(); } }).observe(Kit.$('stage'));
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cv', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = cv.getBoundingClientRect(), y = r.top + r.height - 30;
+  const ev = (t, x) => cv.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', r.left + r.width * .45); ev('pointermove', r.left + r.width * .6); ev('pointerup', r.left + r.width * .6);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3600));
+};
+Kit.single();
+</script>
+</html>

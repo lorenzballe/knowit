@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- slug: maths-knot-tricolorability -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Tricolorability</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;align-items:stretch;flex:1;min-height:0;gap:1cqh}
+#knot{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#stat{font:700 max(2cqh,13px)/1.3 var(--body);text-align:center;color:var(--k);min-height:2.6em;overflow-wrap:anywhere}
+#stat .n{font-family:var(--mono)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font-size:max(2.8cqh,17px)}
+#why .body{font-size:max(1.9cqh,13px);line-height:1.35}
+.hit{cursor:pointer}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Try it · colour the knot">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KNOT THEORY</span></div>
+    <h2 class="q">What simple test can prove two knots are different?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="knot" role="img" aria-label="A trefoil knot made of three strands you can recolour"></svg>
+      <div id="stat"></div>
+      <div id="why" class="gone">
+        <p class="big">The trefoil is tricolorable.</p>
+        <p class="body">Twists, pokes and slides never change whether a knot can be coloured this way. A plain loop is one strand, so it can only ever be one colour. So no amount of moving turns the trefoil into a plain loop.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap a strand to change its colour. Make every crossing work.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>If one knot is tricolorable and another isn't, they're different knots.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const COLS = ['#ff4757', '#22c55e', '#3b82f6'];
+const NAMES = ['red', 'green', 'blue'];
+const N = 720;
+const P = [];
+for (let i = 0; i < N; i++) { const t = 2 * Math.PI * i / N; P.push([Math.sin(t) + 2 * Math.sin(2 * t), -(Math.cos(t) - 2 * Math.cos(2 * t))]); }
+const at = s => { s = ((s % N) + N) % N; const i = Math.floor(s), f = s - i, a = P[i], b = P[(i + 1) % N]; return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]; };
+
+// find self-crossings
+const X = [];
+for (let i = 0; i < N; i++) for (let j = i + 2; j < N; j++) {
+  if (i === 0 && j === N - 1) continue;
+  const a = P[i], b = P[(i + 1) % N], c = P[j], d = P[(j + 1) % N];
+  const den = (b[0] - a[0]) * (d[1] - c[1]) - (b[1] - a[1]) * (d[0] - c[0]);
+  if (Math.abs(den) < 1e-12) continue;
+  const u = ((c[0] - a[0]) * (d[1] - c[1]) - (c[1] - a[1]) * (d[0] - c[0])) / den;
+  const v = ((c[0] - a[0]) * (b[1] - a[1]) - (c[1] - a[1]) * (b[0] - a[0])) / den;
+  if (u >= 0 && u < 1 && v >= 0 && v < 1) X.push({ti: i + u, tj: j + v, pt: [a[0] + u * (b[0] - a[0]), a[1] + u * (b[1] - a[1])]});
+}
+// alternate over / under along the curve
+const passes = [];
+X.forEach(c => { passes.push({p: c.ti, c}); passes.push({p: c.tj, c}); });
+passes.sort((a, b) => a.p - b.p);
+passes.forEach((q, k) => { q.over = k % 2 === 0; if (q.over) q.c.overP = q.p; else q.c.underP = q.p; });
+const unders = passes.filter(q => !q.over).map(q => q.p).sort((a, b) => a - b);
+const M = unders.length;
+const arcOf = p => { for (let k = 0; k < M; k++) { const s = unders[k], e = k + 1 < M ? unders[k + 1] : unders[0] + N; const pp = p < s ? p + N : p; if (pp > s && pp < e) return k; } return 0; };
+X.forEach(c => { const k = unders.indexOf(c.underP); c.arcs = [arcOf(c.overP), k, (k - 1 + M) % M]; });
+
+const col = Array(M).fill(0);
+let solved = false, G = null, arcEls = [], ringEls = [];
+
+function arcPts(k, gap) {
+  const s = unders[k] + gap, e = (k + 1 < M ? unders[k + 1] : unders[0] + N) - gap, pts = [];
+  for (let x = s; x < e; x += 2) pts.push(at(x));
+  pts.push(at(e)); return pts;
+}
+function status() {
+  const ok = X.map(c => { const n = new Set(c.arcs.map(a => col[a])).size; return n === 1 || n === 3; });
+  const used = new Set(col).size, good = ok.filter(Boolean).length;
+  return {ok, used, good, win: good === X.length && used >= 2};
+}
+function paint(anim) {
+  const s = status();
+  arcEls.forEach((e, k) => { if (anim && !Kit.calm) gsap.to(e, {attr: {stroke: COLS[col[k]]}, duration: .3}); else e.setAttribute('stroke', COLS[col[k]]); });
+  ringEls.forEach((r, i) => {
+    gsap.killTweensOf(r);
+    r.setAttribute('stroke-dasharray', s.ok[i] ? 'none' : '4 4');
+    r.setAttribute('stroke-width', s.ok[i] ? r.dataset.w : r.dataset.w * 1.6);
+    r.setAttribute('opacity', s.ok[i] ? .9 : 1);
+    gsap.set(r, {scale: 1, transformOrigin: '50% 50%'});
+    if (!s.ok[i] && !Kit.calm && !solved) gsap.to(r, {scale: 1.18, duration: .6, yoyo: true, repeat: -1, ease: 'sine.inOut', transformOrigin: '50% 50%'});
+  });
+  const st = Kit.$('stat');
+  if (s.win) st.innerHTML = '';
+  else if (s.good === X.length) st.innerHTML = 'All <span class="n">3/3</span> crossings match, but with one colour any knot can. Use at least two.';
+  else st.innerHTML = `<span class="n">${s.good}/3</span> crossings work. At each, the three strand ends must be all the same or all different.`;
+  return s;
+}
+function win() {
+  solved = true; Kit.haptic('success');
+  ringEls.forEach(r => gsap.killTweensOf(r));
+  Kit.hide('say'); Kit.hide('stat'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm && G) {
+    gsap.fromTo(G, {rotation: 0}, {rotation: 120, duration: 1.4, ease: 'power2.inOut', svgOrigin: G.dataset.o});
+    gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .12, duration: .45, delay: .2});
+  }
+}
+function tap(k) {
+  if (solved) return;
+  col[k] = (col[k] + 1) % 3; Kit.haptic('selection');
+  const s = paint(true);
+  if (s.win) win();
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('knot');
+  const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const sc = Math.min(W, H) / 2 / 3.35, cx = W / 2, cy = H / 2 + sc * .1;
+  const w = Math.max(7, sc * .32), gap = (w * 1.6 / sc) / (2 * Math.PI * 3 / N) ;
+  const toD = pts => pts.map((p, i) => (i ? 'L' : 'M') + (cx + p[0] * sc).toFixed(1) + ' ' + (cy + p[1] * sc).toFixed(1)).join('');
+  G = Kit.mk('g', {}, svg); G.dataset.o = cx + ' ' + cy;
+  if (solved) gsap.set(G, {rotation: 120, svgOrigin: cx + ' ' + cy});
+  arcEls = []; ringEls = [];
+  const ringG = Kit.mk('g', {}, G);
+  X.forEach(c => {
+    const r = Kit.mk('circle', {cx: cx + c.pt[0] * sc, cy: cy + c.pt[1] * sc, r: w * 1.9, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, w * .22)}, ringG);
+    r.dataset.w = Math.max(2, w * .22); ringEls.push(r);
+  });
+  for (let k = 0; k < M; k++) {
+    const d = toD(arcPts(k, gap));
+    Kit.mk('path', {d, fill: 'none', stroke: 'var(--k)', 'stroke-width': w + Math.max(4, w * .45), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G);
+    arcEls.push(Kit.mk('path', {d, fill: 'none', stroke: COLS[col[k]], 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, G));
+  }
+  for (let k = 0; k < M; k++) {
+    const h = Kit.mk('path', {d: toD(arcPts(k, gap)), class: 'hit', fill: 'none', stroke: '#000', 'stroke-opacity': 0, 'stroke-width': w * 3.2, 'pointer-events': 'stroke', 'data-k': k, role: 'button', 'aria-label': 'Strand ' + (k + 1)}, G);
+    h.addEventListener('click', () => tap(k));
+  }
+  paint(false);
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(arcEls, {opacity: 0, duration: .6, stagger: .15, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const hit = k => Kit.$('knot').querySelector(`.hit[data-k="${k}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  hit(1); await wait(150); hit(2); await wait(150); hit(2); await wait(1800);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "maths-coin-extra-turn",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A coin rolls once around a circle with 3× its circumference. How many turns?",
+  "answer": "A coin rolling once around a circle with 3 times its circumference makes 4 turns. Rolling along the 3-coin rim gives 3 turns, and circling the path once adds one more, so the total is N + 1.",
+  "move": "Around the outside: ratio of circumferences, plus one turn.",
+  "keywords": [
+    "coin",
+    "circle",
+    "circumference",
+    "rolling",
+    "turns"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz page: a coin rolls once around a circle three coin-lengths around. Choose 3, 4 or 9 turns, then race coins of 1x, 2x, 3x or 4x size around the outside to see both coins move."
+  },
+  "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=334s",
+  "written": "2026-11-03"
+}

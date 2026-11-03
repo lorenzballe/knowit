@@ -1,0 +1,37 @@
+{
+  "id": "history-bakelite-fossil-plastic",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Bakelite change what plastic is made from?",
+  "answer": "Early plastic was made from cellulose, a plant material, and it caught fire easily. Bakelite, invented in 1907, used oil and methane gas instead. These were far more abundant and far less flammable, so plastic could be made in huge amounts.",
+  "move": "Bakelite (1907) moved plastic from plants to fossil fuels, and plastic went mass-made.",
+  "keywords": [
+    "bakelite",
+    "plastic",
+    "cellulose",
+    "fossil fuels",
+    "methane"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A split view of plastic's source: on one side a plant, labeled cellulose, the material used before Bakelite; on the other an oil rig and gas, the switch Bakelite made in 1907. The page asks how Bakelite changed what plastic is made from."
+  },
+  "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MRju0pJp3mk&t=73s",
+  "written": "2026-11-03"
+}

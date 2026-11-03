@@ -1,0 +1,38 @@
+{
+  "id": "science-transtensional-fault",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How do the two sides of Messina's West Fault move?",
+  "answer": "The West Fault is trans-tensional. The west block heads southwest, and part of that move pulls it away from the other block, which is why the Strait of Messina is opening. The rest slides it along the fault, to the left (strike-slip).",
+  "move": "A trans-tensional fault pulls apart and slides sideways at the same time.",
+  "keywords": [
+    "messina",
+    "strait_of_messina",
+    "west_fault",
+    "strike_slip",
+    "earthquake"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map of the Messina area with the West Fault marked between two rock blocks. The reader is asked to drag on the map to draw how the west block moves.",
+    "graded": false
+  },
+  "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=4cJ9IdeTZ2A&t=135s",
+  "written": "2026-11-03"
+}

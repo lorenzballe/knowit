@@ -1,0 +1,36 @@
+{
+  "id": "science-paper-plastic-cycles",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.recycling_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many times can plastic be recycled, compared with paper?",
+  "answer": "Every time paper is pulped, its fibres get weaker. After about 7 rounds they lose their strength and end up as processing waste. Plastic can go round at least 20 times.",
+  "move": "Paper wears out after about 7 recyclings; plastic lasts at least 20.",
+  "keywords": [
+    "paper",
+    "plastic",
+    "recycling",
+    "fibres"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A slider labelled Recycling cycles starts at 0. Dragging it sends paper and plastic through recycling again and again. The page asks how many times plastic can be recycled compared with paper."
+  },
+  "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=AFEMHZioqJU&t=319s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,162 @@
+<!doctype html>
+<!-- slug: technology-graphene-plastic-century -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1cqh;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1;min-height:0}
+#ctl{display:flex;flex-direction:column;gap:.5cqh}
+#t{width:100%;accent-color:var(--k);height:max(3.6cqh,26px);margin:0;cursor:pointer}
+#ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.pL{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+.pR{fill:color-mix(in srgb,var(--k) 90%,transparent)}
+.yrL{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle}
+.yrR{fill:var(--c);font-family:var(--display);font-weight:800;text-anchor:middle}
+.capL{fill:var(--k);font-family:var(--body);font-weight:700;text-anchor:middle}
+.capR{fill:var(--c);font-family:var(--body);font-weight:700;text-anchor:middle}
+.linkL{stroke:color-mix(in srgb,var(--k) 25%,transparent);stroke-width:1.2}
+.linkR{stroke:color-mix(in srgb,var(--c) 35%,transparent);stroke-width:1.2;stroke-dasharray:3 4}
+.slotL{fill:var(--c);stroke:var(--k);stroke-width:2}
+.slotR{fill:none;stroke:var(--c);stroke-width:2;stroke-dasharray:4 4}
+.ico{fill:none;stroke:var(--k);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qm{fill:var(--c);font-family:var(--display);font-weight:800;text-anchor:middle;dominant-baseline:central}
+.blob{fill:var(--k)}
+.shine{fill:var(--c);opacity:.35}
+.hexo{fill:none;stroke:var(--c);stroke-width:2.5}
+.hexi{fill:none;stroke:var(--c);stroke-width:1.2;opacity:.85}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slider · then and now">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SLIDE TIME</span></div>
+    <h2 class="q">How should we think about the future of graphene?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Left: a piece of plastic in 1919. Right: a sheet of graphene in 2019."></svg>
+      <div id="ctl">
+        <input id="t" type="range" min="0" max="100" step="1" value="0" aria-label="Years that pass">
+        <div id="ends"><span>today</span><span>+100 years</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag time forward a century, on both sides.</p>
+    <div id="why" class="gone">
+      <p class="body">Asked what graphene can do, Andre Geim, Nobel 2010 for discovering it, said: “I don't know.” It's like handing a piece of plastic to a person from a century ago: you can make a bit of everything.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Graphene is at an early stage: most of its uses are still unknown.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ICONS = [
+  "M-.3-.3h.6v1h-.6z M-.15-.3v-.35h.3v.35 M-.2-.7h.4",
+  "M-.8-.2h1.6v.7h-1.6z M-.55-.2v-.25h.3v.25 M.25-.2v-.25h.3v.25",
+  "M-.8-.4h1.6v.3h-1.6z M-.6-.1v.6 M-.3-.1v.6 M0-.1v.6 M.3-.1v.6 M.6-.1v.6",
+  "M-.4-.75h.8v1.5h-.8z M-.28-.6h.56v1.05h-.56z",
+  "M-.15 0a.3.3 0 1 1-.6 0a.3.3 0 1 1 .6 0 M.75 0a.3.3 0 1 1-.6 0a.3.3 0 1 1 .6 0 M-.15 0q.15-.15.3 0",
+  "M-.55-.25h1.1l-.15.85h-.8z M-.55-.25q.55-.75 1.1 0",
+  "M-.65.75l1.1-1.1l.25.25l-1.1 1.1z M-.65.75l-.15.15",
+  "M-.35-.8v1.6 M-.35.05h.75v.75"
+];
+const N = 8;
+let T = 0, done = false, S = null;
+const svg = Kit.$('pic'), range = Kit.$('t');
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const gap = W * .03, pw = (W - gap) / 2;
+  const R = Math.min(pw * .33, H * .27), s = R * .3, cy = H * .52, objR = R * .48;
+  const yf = Math.max(f * 1.5, 16), cf = Math.max(f * .85, 12);
+  S = {L: [], R: [], yl: null, yr: null, objs: []};
+  [0, 1].forEach(side => {
+    const x0 = side ? pw + gap : 0, cx = x0 + pw / 2, K = side ? 'R' : 'L';
+    Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, rx: Math.max(f * .9, 10), class: 'p' + K}, svg);
+    const yt = Kit.mk('text', {x: cx, y: Math.max(H * .1, yf), class: 'yr' + K, 'font-size': yf}, svg);
+    if (side) S.yr = yt; else S.yl = yt;
+    const cap = Kit.mk('text', {x: cx, y: H - Math.max(H * .035, 8), class: 'cap' + K, 'font-size': cf}, svg);
+    cap.textContent = side ? 'a sheet of graphene' : 'a piece of plastic';
+    for (let i = 0; i < N; i++) {
+      const a = (-90 + 22.5 + i * 45) * Math.PI / 180;
+      const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R * .95;
+      const o = Kit.mk('g', {}, svg);
+      const ln = Kit.mk('line', {x1: cx + Math.cos(a) * objR, y1: cy + Math.sin(a) * objR, x2: x - Math.cos(a) * s, y2: y - Math.sin(a) * s, class: 'link' + K}, o);
+      const pos = Kit.mk('g', {transform: `translate(${x},${y})`}, o);
+      const g = Kit.mk('g', {}, pos);
+      Kit.mk('circle', {r: s, class: 'slot' + K}, g);
+      if (side) {
+        const q = Kit.mk('text', {class: 'qm', 'font-size': Math.max(s * 1.1, 12), y: 1}, g); q.textContent = '?';
+      } else {
+        const sc = Kit.mk('g', {transform: `scale(${s * .62})`}, g);
+        Kit.mk('path', {d: ICONS[i], class: 'ico', 'vector-effect': 'non-scaling-stroke'}, sc);
+      }
+      S[K].push({g, ln});
+    }
+    const ob = Kit.mk('g', {transform: `translate(${cx},${cy})`}, svg);
+    const inner = Kit.mk('g', {}, ob);
+    if (!side) {
+      const pts = [], rs = [1, .86, .97, .8, 1.05, .9, .95, .84];
+      for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; pts.push([Math.cos(a) * objR * rs[i] * .9, Math.sin(a) * objR * rs[i] * .8]); }
+      let d = `M${(pts[0][0] + pts[1][0]) / 2},${(pts[0][1] + pts[1][1]) / 2}`;
+      for (let i = 1; i <= 8; i++) { const p = pts[i % 8], q = pts[(i + 1) % 8]; d += `Q${p[0]},${p[1]} ${(p[0] + q[0]) / 2},${(p[1] + q[1]) / 2}`; }
+      Kit.mk('path', {d: d + 'Z', class: 'blob'}, inner);
+      Kit.mk('ellipse', {cx: -objR * .3, cy: -objR * .3, rx: objR * .25, ry: objR * .12, transform: `rotate(-30 ${-objR * .3} ${-objR * .3})`, class: 'shine'}, inner);
+    } else {
+      const hex = r => Array.from({length: 6}, (_, i) => { const a = (i * 60 + 30) * Math.PI / 180; return `${Math.cos(a) * r},${Math.sin(a) * r}`; }).join(' ');
+      const cp = Kit.mk('clipPath', {id: 'gclip'}, svg);
+      Kit.mk('polygon', {points: hex(objR)}, cp);
+      const lat = Kit.mk('g', {'clip-path': 'url(#gclip)'}, inner);
+      const a = objR / 3.4, w = Math.sqrt(3) * a;
+      for (let r = -5; r <= 5; r++) for (let c = -5; c <= 5; c++) {
+        const x = c * w + (r & 1 ? w / 2 : 0), y = r * a * 1.5;
+        if (Math.hypot(x, y) < objR + a * 1.5) Kit.mk('polygon', {points: hex(a).split(' ').map(p => { const [u, v] = p.split(',').map(Number); return `${u + x},${v + y}`; }).join(' '), class: 'hexi'}, lat);
+      }
+      Kit.mk('polygon', {points: hex(objR), class: 'hexo'}, inner);
+    }
+    S.objs.push(inner);
+  });
+  update(false);
+}
+
+function update(anim){
+  if (!S) return;
+  S.yl.textContent = 1919 + T;
+  S.yr.textContent = 2019 + T;
+  const n = Math.floor(T * N / 100 + 1e-6), d = anim && !Kit.calm ? .35 : 0;
+  ['L', 'R'].forEach(K => S[K].forEach((it, i) => {
+    const on = i < n;
+    gsap.to(it.g, {scale: on ? 1 : .2, opacity: on ? 1 : 0, transformOrigin: '50% 50%', duration: d, ease: on ? 'back.out(2)' : 'power2.in', overwrite: true});
+    gsap.to(it.ln, {opacity: on ? 1 : 0, duration: d, overwrite: true});
+  }));
+  if (T >= 100 && !done) {
+    done = true;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    Kit.haptic('success');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  }
+}
+
+let lastN = 0;
+range.addEventListener('input', () => {
+  T = +range.value;
+  const n = Math.floor(T * N / 100 + 1e-6);
+  if (n !== lastN) { Kit.haptic('selection'); lastN = n; }
+  update(true);
+});
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !S) return;
+  gsap.from(S.objs, {scale: .3, opacity: 0, transformOrigin: '50% 50%', stagger: .15, duration: .6, ease: 'back.out(1.8)'});
+  gsap.fromTo('#t', {x: 0}, {x: 6, yoyo: true, repeat: 3, duration: .18, delay: .8, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  for (const v of [30, 60, 100]) { range.value = v; range.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

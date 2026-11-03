@@ -1,0 +1,37 @@
+{
+  "id": "nature-spider-rock-gift",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a male Pisaura mirabilis do if it has no prey?",
+  "answer": "Males court females with a gift of prey wrapped in silk. If a male finds nothing edible, he balls silk around a small bit of rock or earth and offers that instead.",
+  "move": "No prey? A silk-wrapped stone still gets offered as a gift.",
+  "keywords": [
+    "pisaura mirabilis",
+    "spider",
+    "courtship",
+    "silk",
+    "gift"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled The rock gift, asking what a male Pisaura mirabilis spider does if it has no prey. Shows a male spider holding a silk-wrapped rock to offer a female. Tap the male, his gift and the female."
+  },
+  "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=_Uch42IMwbM&t=172s",
+  "written": "2026-11-03"
+}

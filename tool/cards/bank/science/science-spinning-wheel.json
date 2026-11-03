@@ -1,0 +1,37 @@
+{
+  "id": "science-spinning-wheel",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A spinning wheel held by one end floats instead of falling. Does it get lighter?",
+  "answer": "A spinning wheel held by one end floats instead of falling. The weight's twist turns the spin sideways, so the wheel swings round instead of tipping.",
+  "move": "The weight's twist turns the spin sideways, so it swings round instead of tipping.",
+  "keywords": [
+    "spinning wheel",
+    "gyroscope",
+    "rope",
+    "axle",
+    "laithwaite"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Shows a 2 kg wheel hanging from a rope tied to one end of its axle, not spinning (0 rpm). Asks whether a spinning wheel held by one end floats instead of falling, and whether it gets lighter."
+  },
+  "source": "Veritasium, “Anti-Gravity Wheel?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=GeyDf4ooPdo",
+  "written": "2026-11-03"
+}

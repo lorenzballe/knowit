@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-beccaria-deterrence -->
+<title>Astute free card · Beccaria and the death penalty</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#sw{display:flex;gap:1cqw;align-self:center;background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent);border-radius:99px;padding:.5cqh}
+#sw button{font:700 max(1.9cqh,13px)/1.15 var(--body);border:0;background:transparent;color:var(--k);padding:1.2cqh 4cqw;border-radius:99px;cursor:pointer;transition:background .25s,color .25s}
+#sw button.on{background:var(--k);color:var(--c)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);overflow-wrap:anywhere}
+.say,.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BECCARIA</span></div>
+    <h2 class="q">What was Cesare Beccaria's main argument against the death penalty?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Fear of execution and crime, with and without the death penalty"></svg>
+      <div id="sw" role="group">
+        <button data-v="0" class="on">Without</button>
+        <button data-v="1">With the death penalty</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Cruel, and it doesn't work</p>
+        <p class="body">In 1764 Cesare Beccaria argued the death penalty is not only inhumane but useless: the terror of execution does not reduce crime. Data has backed his idea over time.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Flip the switch: bring in the death penalty and watch crime.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Fear of the gallows doesn't cut crime, so Beccaria called it cruel and useless.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let on = 0, revealed = false, G = {};
+const FEAR = [0.14, 0.92], CRIME = 0.58, RED = '#c8322b';
+
+function draw(){
+  const s = Kit.$('pic'); s.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(s);
+  const fs = Math.max(f, 13);
+  const ground = H * 0.36;
+  const base = H - fs * 2.0;
+  const maxH = Math.max(20, base - ground - fs * 2.4);
+  const bw = Math.min(W * 0.2, maxH * 0.6);
+  const xF = W * 0.3, xC = W * 0.7;
+  G = {base, maxH, bw, xF, xC, fs};
+
+  // gallows: a faint ghost and the real one
+  const gal = (op) => {
+    const g = Kit.mk('g', {opacity: op}, s);
+    const px = W * 0.4, top = H * 0.04, bx = W * 0.6, sw = Math.max(4, W * 0.016);
+    Kit.mk('line', {x1: W*0.3, y1: ground, x2: W*0.7, y2: ground, stroke: '#7a4a24', 'stroke-width': sw, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: px, y1: ground, x2: px, y2: top, stroke: '#7a4a24', 'stroke-width': sw*1.3, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: px - sw*0.6, y1: top, x2: bx, y2: top, stroke: '#7a4a24', 'stroke-width': sw*1.3, 'stroke-linecap': 'round'}, g);
+    Kit.mk('line', {x1: px, y1: top + (ground-top)*0.3, x2: px + (bx-px)*0.35, y2: top, stroke: '#7a4a24', 'stroke-width': sw*0.8}, g);
+    const r = Math.max(6, (ground-top)*0.1), ny = top + (ground-top)*0.48;
+    Kit.mk('line', {x1: bx, y1: top, x2: bx, y2: ny - r, stroke: '#b8975a', 'stroke-width': sw*0.5}, g);
+    Kit.mk('circle', {cx: bx, cy: ny, r, fill: 'none', stroke: '#b8975a', 'stroke-width': sw*0.5}, g);
+    return g;
+  };
+  const ghost = gal(0.12);
+  ghost.setAttribute('stroke-dasharray', '4 4');
+  G.gal = gal(on ? 1 : 0);
+
+  // baseline
+  Kit.mk('line', {x1: W*0.08, y1: base, x2: W*0.92, y2: base, style: 'stroke:var(--k)', 'stroke-width': 2, opacity: .5}, s);
+
+  // bars
+  const hF = maxH * FEAR[on], hC = maxH * CRIME;
+  G.fear = Kit.mk('rect', {x: xF - bw/2, y: base - hF, width: bw, height: hF, rx: bw*0.12, fill: RED}, s);
+  G.crime = Kit.mk('rect', {x: xC - bw/2, y: base - hC, width: bw, height: hC, rx: bw*0.12, style: 'fill:var(--k)'}, s);
+
+  // reference line for crime level
+  G.ref = Kit.mk('line', {x1: xC - bw*0.8, y1: base - hC, x2: xC + bw*0.8, y2: base - hC, stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '5 4', opacity: on ? 1 : 0}, s);
+  G.same = Kit.mk('text', {x: xC, y: base - hC - fs*0.6, 'text-anchor': 'middle', fill: RED, 'font-size': fs, 'font-weight': 800, style: 'font-family:var(--body)', opacity: on ? 1 : 0}, s);
+  G.same.textContent = 'unchanged';
+
+  // labels
+  const lab = (x, t, c) => { const e = Kit.mk('text', {x, y: base + fs*1.4, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700, style: 'font-family:var(--body);fill:' + c}, s); e.textContent = t; };
+  lab(xF, 'Fear', RED); lab(xC, 'Crime', 'var(--k)');
+}
+
+function setState(v){
+  if (v === on) return;
+  on = v; Kit.haptic('selection');
+  [...Kit.$('sw').children].forEach(b => b.classList.toggle('on', +b.dataset.v === on));
+  const {base, maxH, fs} = G, hF = maxH * FEAR[on], hC = maxH * CRIME;
+  const d = Kit.calm ? 0 : 1;
+  gsap.to(G.gal, {opacity: on, duration: .5 * d});
+  if (on && d) gsap.fromTo(G.gal, {y: -12}, {y: 0, duration: .6, ease: 'bounce.out'});
+  gsap.to(G.fear, {attr: {y: base - hF, height: hF}, duration: .9 * d, ease: 'power3.out'});
+  if (d) gsap.fromTo(G.crime, {x: 0}, {x: 0, keyframes: {x: [0, -3, 3, -2, 2, 0]}, duration: .6, delay: .5});
+  gsap.to([G.ref, G.same], {opacity: on, duration: .4 * d, delay: on ? .9 * d : 0});
+  if (on && !revealed){
+    revealed = true;
+    setTimeout(() => {
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      requestAnimationFrame(draw);
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+    }, Kit.calm ? 50 : 1400);
+  }
+}
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  setState(+b.dataset.v);
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from([G.fear, G.crime], {attr: {y: G.base, height: 0}, duration: .8, stagger: .12, ease: 'power3.out'});
+  gsap.from('#sw', {opacity: 0, y: 10, duration: .5, delay: .3, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('sw').children[1].click();
+  await new Promise(r => setTimeout(r, 2200));
+};
+Kit.single();
+</script>
+</html>

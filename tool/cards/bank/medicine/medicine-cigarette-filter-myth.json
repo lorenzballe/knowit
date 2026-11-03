@@ -1,0 +1,36 @@
+{
+  "id": "medicine-cigarette-filter-myth",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a cigarette filter actually stop?",
+  "answer": "A cigarette filter holds back loose tobacco and the bigger smoke particles. The toxic, cancer-causing gases pass almost all the way through. The filter exists mostly for marketing.",
+  "move": "A filter stops what you can see, not the gases that harm you.",
+  "keywords": [
+    "cigarette filter",
+    "tobacco",
+    "smoke particles",
+    "toxic gases"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks what a cigarette filter actually stops. Three items: loose tobacco bits are stopped, big smoke particles are mostly trapped, and toxic gases almost all get through."
+  },
+  "source": "Geopop, “5 curiosità sulle sigarette che forse non sapevi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=lKBS9b924KA&t=19s",
+  "written": "2026-11-03"
+}

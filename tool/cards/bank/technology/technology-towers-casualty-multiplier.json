@@ -1,0 +1,37 @@
+{
+  "id": "technology-towers-casualty-multiplier",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many times more lives might weaker towers have cost?",
+  "answer": "The Twin Towers fell, but they were very solid. Had they been weaker, the documentary estimates the loss of life might have been ten times greater. That is why civil engineers say the towers behaved excellently.",
+  "move": "A building that falls can still have done its job well.",
+  "keywords": [
+    "twin_towers",
+    "civil_engineers",
+    "september_11",
+    "world_trade_center"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Drag-a-bar estimation: a slider to guess how many times more lives might have been lost had the Twin Towers been weaker, plus a rating of how confident the reader is in the guess.",
+    "graded": false
+  },
+  "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=PvhMUg70Jtc&t=1423s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-falling-elevator-flat -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block;overflow:hidden;cursor:pointer}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.6cqh;min-height:0;flex-shrink:1;overflow:auto}
+#why .big{font-size:max(2.4cqh,15px);line-height:1.2;margin:0}
+#why .body{overflow-wrap:break-word;font-size:max(1.7cqh,12px);line-height:1.3;margin:0}
+.opt{font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 2cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FREE FALL</span></div>
+    <h2 class="q">A lift's cable snaps. What's your best chance of surviving the fall?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Stand still</button>
+        <button class="opt" data-i="1">Jump at the last second</button>
+        <button class="opt" data-i="2">Lie flat on the floor</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Lie flat on the floor</p><p class="body">To cancel the fall by jumping, you would have to leap up at the lift's own speed, about 130 km/h: a job for Superman. Lying flat spreads the same blow over your whole body instead of two small feet.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a pose and watch it change in the lift.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Same force, bigger area: each part of you takes less.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2, POSES = ['stand', 'jump', 'flat'], RED = '#e5383b';
+const CAP = {
+  idle: 'Cable snapped · falling at 130 km/h',
+  stand: 'All the blow lands on two feet',
+  jump: '130 km/h upward? Only Superman',
+  flat: 'Same blow, spread over your body'
+};
+let pick = -1, posture = 'stand', landed = false, answered = false, busy = false, S = {};
+
+function person(g, p, floorY, cx, h, sw) {
+  const r = h * .1, st = `fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round`;
+  let d, head, contact = null;
+  if (p === 'stand') {
+    const top = floorY - h, neck = top + 2 * r + sw * .3, sh = neck + h * .05, hip = floorY - h * .47, fy = floorY - sw / 2;
+    head = [cx, top + r];
+    d = `M${cx},${neck}L${cx},${hip}M${cx - h * .17},${hip + h * .02}L${cx},${sh}L${cx + h * .17},${hip + h * .02}M${cx - h * .08},${fy}L${cx},${hip}L${cx + h * .08},${fy}`;
+    contact = [cx - h * .11, cx + h * .11];
+  } else if (p === 'jump') {
+    const top = floorY - h * .96, neck = top + 2 * r + sw * .3, hip = neck + h * .3;
+    head = [cx, top + r];
+    d = `M${cx},${neck}L${cx},${hip}M${cx - h * .17},${neck - h * .12}L${cx},${neck + h * .05}L${cx + h * .17},${neck - h * .12}` +
+        `M${cx - h * .07},${hip + h * .28}L${cx - h * .13},${hip + h * .14}L${cx},${hip}L${cx + h * .13},${hip + h * .14}L${cx + h * .07},${hip + h * .28}`;
+  } else {
+    const L = h, x0 = cx - L / 2, by = floorY - sw / 2 - h * .02, neckX = x0 + 2 * r + sw * .3, hipX = x0 + L * .52, fy = floorY - sw / 2;
+    head = [x0 + r, floorY - r - sw * .1];
+    d = `M${neckX},${by}L${hipX},${by}M${neckX + h * .05},${by}L${neckX + h * .24},${by - h * .05}` +
+        `M${hipX},${by}L${x0 + L - sw / 2},${fy - h * .03}M${hipX},${by}L${x0 + L - sw / 2},${fy}`;
+    contact = [x0, x0 + L];
+  }
+  Kit.mk('path', {d, style: st, 'stroke-width': sw}, g);
+  Kit.mk('circle', {cx: head[0], cy: head[1], r: Math.max(0, r), style: 'fill:var(--k)'}, g);
+  return contact;
+}
+
+function draw() {
+  const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const mk = Kit.mk, fs = Math.max(12, Math.min(f, W / 24));
+  const car = mk('g', {}, svg), arr = mk('g', {}, car), spd = mk('g', {}, car);
+  const cap = mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  S = {car, arr, spd, cap};
+  if (!(W > 80 && H > 80)) { cap.textContent = ''; return; }
+  car.remove(); cap.remove();
+  const groundY = H - Math.max(8, H * .05);
+  const cw = Math.min(W * .7, H * .95), ch = Math.min(H * .55, cw * .72);
+  const carX = (W - cw) / 2, restY = groundY - ch, cx = carX + cw / 2;
+  const idleDy = Math.min(0, Math.max(fs * 2.4, restY - H * .17) - restY);
+  const wall = Math.max(3, cw * .02), slab = ch * .16, floorY = groundY - slab;
+  mk('rect', {x: 0, y: groundY, width: Math.max(0, W), height: Math.max(0, H - groundY), style: 'fill:var(--k);opacity:.2'}, svg);
+  [carX - wall * 2.5, carX + cw + wall * 2.5].forEach(x => mk('line', {x1: x, x2: x, y1: 0, y2: groundY, 'stroke-width': 2, style: 'stroke:var(--k);opacity:.25'}, svg));
+  svg.appendChild(car); car.innerHTML = '';
+  car.appendChild(spd);
+  const top = Math.max(restY - ch * .38, fs * 2 - idleDy);
+  for (let i = 0; i < 5; i++) {
+    const x = carX + cw * (.14 + .18 * i), y1 = top + (i % 2) * ch * .08;
+    if (y1 < restY - 8) mk('line', {x1: x, x2: x, y1, y2: restY - 6, 'stroke-width': 2, 'stroke-linecap': 'round', style: 'stroke:var(--k);opacity:.35'}, spd);
+  }
+  mk('line', {x1: cx, x2: cx + 4, y1: restY - Math.min(ch * .14, 14), y2: restY, 'stroke-width': 3, style: 'stroke:var(--k)'}, car);
+  mk('rect', {x: carX, y: restY, width: Math.max(0, cw), height: Math.max(0, ch), rx: wall * 1.5, 'stroke-width': wall, style: 'fill:var(--k);fill-opacity:.07;stroke:var(--k)'}, car);
+  mk('rect', {x: carX + wall / 2, y: floorY, width: Math.max(0, cw - wall), height: Math.max(0, slab - wall / 2), style: 'fill:var(--k);opacity:.16'}, car);
+  const iw = cw - 2 * wall, ih = floorY - restY - wall;
+  const h = Math.max(0, Math.min(ih * .82, iw * .8)), sw = Math.max(3, h * .075);
+  const c = h > 0 ? person(car, posture, floorY, cx, h, sw) : null;
+  car.appendChild(arr);
+  if (c) {
+    const [a, b] = c, N = 9, aw = Math.max(1.5, cw * .008), hd = Math.max(4, slab * .22);
+    mk('rect', {x: a, y: floorY, width: Math.max(0, b - a), height: Math.max(3, slab * .16), style: `fill:${RED}`}, arr);
+    for (let i = 0; i < N; i++) {
+      const x = a + (b - a) * (i + .5) / N, y0 = floorY + slab * .92, y1 = floorY + slab * .28;
+      mk('line', {x1: x, x2: x, y1: y0, y2: y1 + hd * .6, 'stroke-width': aw, style: `stroke:${RED}`}, arr);
+      mk('path', {d: `M${x - hd * .5},${y1 + hd}L${x},${y1}L${x + hd * .5},${y1 + hd}Z`, style: `fill:${RED}`}, arr);
+    }
+  }
+  svg.appendChild(cap);
+  cap.textContent = landed ? CAP[posture] : CAP.idle;
+  if (landed) { gsap.set(arr, {opacity: 1}); gsap.set(spd, {opacity: 0}); gsap.set(car, {y: 0}); }
+  else { gsap.set(arr, {opacity: 0}); gsap.set(car, {y: idleDy}); }
+}
+
+function playHit(p) {
+  posture = p; landed = false; draw();
+  if (Kit.calm) { landed = true; draw(); return Promise.resolve(); }
+  return new Promise(res => {
+    gsap.timeline({onComplete: res})
+      .to(S.car, {y: 0, duration: .55, ease: 'power2.in'})
+      .add(() => { landed = true; S.cap.textContent = CAP[p]; Kit.haptic('light'); })
+      .to(S.spd, {opacity: 0, duration: .1}, '<')
+      .to(S.car, {y: -4, duration: .05, yoyo: true, repeat: 3}, '<')
+      .fromTo(S.arr, {opacity: 0}, {opacity: 1, duration: .3}, '<');
+  });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', async pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.$('say').textContent = 'Tap the lift to drop it with another pose.';
+  answered = true; busy = true;
+  await playHit(POSES[pick]);
+  if (!ok) { await new Promise(r => setTimeout(r, 900)); await playHit('flat'); }
+  busy = false;
+});
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+  posture = POSES[pick]; landed = false; draw();
+  sure.on();
+});
+
+Kit.$('pic').addEventListener('click', async () => {
+  if (!answered || busy) return;
+  busy = true; Kit.haptic('selection');
+  await playHit(POSES[(POSES.indexOf(posture) + 1) % 3]);
+  busy = false;
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1500));
+};
+Kit.single();
+</script>
+</html>

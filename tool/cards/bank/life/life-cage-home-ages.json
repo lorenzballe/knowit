@@ -1,0 +1,37 @@
+{
+  "id": "life-cage-home-ages",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How old are the people living in Hong Kong's cage homes?",
+  "answer": "Most residents of Hong Kong's cage homes are working-age adults, aged 25 to 64. But 16% are under 15, so thousands of children grow up in these cages, at least 50,000 by some estimates. The page fills 100 cages, one per resident, one age group at a time.",
+  "move": "About 1 in 6 cage-home residents is a child under 15.",
+  "keywords": [
+    "hong kong",
+    "cage homes",
+    "children",
+    "residents",
+    "housing"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A grid of 100 cage icons, each standing for one resident. Tap to fill them by age group and show how old Hong Kong cage-home residents are."
+  },
+  "source": "Geopop, “Il fenomeno delle “case bara” di Hong Kong: come sono fatte e perché ci vivono 220 mila persone?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6fBSVSmYSaE&t=321s",
+  "written": "2026-11-03"
+}

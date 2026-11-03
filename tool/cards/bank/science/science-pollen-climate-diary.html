@@ -1,0 +1,191 @@
+<!doctype html>
+<!-- slug: science-pollen-climate-diary -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why pollen remembers old landscapes</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#sv{flex:1;min-height:0;width:100%;display:block;color:var(--k);touch-action:none}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:calc(3.9*max(1.9cqh,13px));margin:0;overflow-wrap:anywhere}
+#cap b{font-family:var(--display)}
+#scrub{display:flex;flex-direction:column;gap:.4cqh}
+#tl{width:100%;margin:0;accent-color:var(--k);height:max(3.4cqh,26px);cursor:grab}
+#ticks{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.1 var(--mono);color:var(--muted)}
+#ticks span.on{color:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · step through">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CLIMATE CLUES</span></div>
+    <h2 class="q">Why is pollen a reliable indicator of past environments?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv" aria-label="A tree releases pollen that settles into lake mud, layer by layer"></svg>
+      <p id="cap"></p>
+      <div id="scrub">
+        <input id="tl" type="range" min="0" max="400" value="0" aria-label="Timeline">
+        <div id="ticks"><span>made</span><span>spread</span><span>sink</span><span>buried</span><span>read</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the timeline to follow a grain of pollen.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Old mud is a diary of plants, written in pollen.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La Sicilia non era un'isola e Sardegna e Corsica si toccavano: l'ultima era glaciale in Italia” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 84, R = [];
+for (let i = 0; i < N; i++) R.push({a: Kit.gauss(), b: Kit.gauss(), c: Kit.rnd(), d: Kit.rnd(), e: Kit.rnd(), g: Kit.rnd(), h: Kit.rnd()});
+const CAPS = [
+  '<b>1 ·</b> Plants make pollen, the dust from their male parts, in huge amounts.',
+  '<b>2 ·</b> Wind scatters it far and wide: it lands almost everywhere.',
+  '<b>3 ·</b> Some falls into lakes and sinks with the mud.',
+  '<b>4 ·</b> Layer on layer it gets buried, and can stay intact for millions of years.',
+  '<b>Why:</b> pollen is made in vast numbers, spreads everywhere and survives intact. So each mud layer keeps a sample of the plants that grew then.'
+];
+const T = {t: 0};
+let G = null, capIdx = -1, ended = false;
+const ink = 'var(--k)', gold = '#f4b52c';
+const st = (o) => Object.entries(o).map(([k, v]) => k + ':' + v).join(';');
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const ease = u => u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+function build() {
+  const svg = Kit.$('sv'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .78);
+  const gy = H * .40, lx0 = W * .5, lx1 = W * .97, wb = gy + H * .06, sb = H * .97;
+  const bh = (sb - wb) / 5;
+  const g = {W, H, f, fs, gy, lx0, lx1, wb, sb, bh, dots: [], bands: [], blabels: []};
+  // earth below the ground
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, style: st({fill: 'color-mix(in srgb,var(--k) 7%,transparent)'})}, svg);
+  // sediment column under the lake
+  Kit.mk('rect', {x: lx0, y: wb, width: lx1 - lx0, height: sb - wb, rx: 4, style: st({fill: 'color-mix(in srgb,var(--k) 10%,transparent)'})}, svg);
+  for (let k = 0; k < 5; k++) {
+    g.bands.push(Kit.mk('rect', {x: lx0, y: wb + k * bh, width: lx1 - lx0, height: bh, style: st({fill: `color-mix(in srgb,var(--k) ${k % 2 ? 14 : 28}%,transparent)`, opacity: 0})}, svg));
+  }
+  // water
+  Kit.mk('path', {d: `M${lx0},${gy} L${lx1},${gy} L${lx1},${wb} L${lx0},${wb} Z`, style: st({fill: 'color-mix(in srgb,#3d86e0 45%,transparent)'})}, svg);
+  Kit.mk('line', {x1: 0, y1: gy, x2: W, y2: gy, style: st({stroke: ink, 'stroke-width': Math.max(2, f * .14)})}, svg);
+  // grass tufts
+  for (let i = 0; i < 6; i++) {
+    const x = W * (.04 + i * .075), s = f * .7;
+    Kit.mk('path', {d: `M${x - s * .5},${gy} Q${x - s * .4},${gy - s} ${x - s * .7},${gy - s * 1.3} M${x},${gy} L${x + s * .05},${gy - s * 1.4} M${x + s * .5},${gy} Q${x + s * .4},${gy - s} ${x + s * .8},${gy - s * 1.2}`, style: st({stroke: ink, fill: 'none', 'stroke-width': Math.max(1.5, f * .1), 'stroke-linecap': 'round'})}, svg);
+  }
+  // tree
+  const tx = W * .22, cy = gy - H * .2, cr = Math.min(W * .13, H * .12);
+  g.tx = tx; g.cy = cy; g.cr = cr;
+  Kit.mk('rect', {x: tx - f * .35, y: cy, width: f * .7, height: gy - cy, style: st({fill: ink})}, svg);
+  [[0, 0, 1], [-.65, .3, .7], [.65, .3, .7], [0, -.55, .7]].forEach(([dx, dy, s]) =>
+    Kit.mk('circle', {cx: tx + dx * cr, cy: cy + dy * cr, r: cr * s, style: st({fill: 'color-mix(in srgb,#2f9e55 80%,var(--k))', stroke: ink, 'stroke-width': Math.max(1.5, f * .1)})}, svg));
+  // labels on the layers
+  const lab = (txt, x, y, anchor) => Kit.mk('text', {x, y, 'text-anchor': anchor, 'dominant-baseline': 'middle', style: st({font: `700 ${fs}px var(--body)`, fill: ink, opacity: 0, 'paint-order': 'stroke', stroke: 'var(--c)', 'stroke-width': fs * .25})}, svg);
+  const vege = ['trees', 'grasses', 'trees', 'grasses', 'trees'];
+  const tight = bh < fs * 1.35;
+  vege.forEach((v, k) => {
+    const odd = tight && k % 2;
+    const t = lab(v, odd ? lx0 + (lx1 - lx0) * .5 : lx0 + f * .5, wb + (k + .5) * bh, odd ? 'middle' : 'start');
+    t.textContent = v; g.blabels.push(t);
+  });
+  g.newer = lab('', lx1 - f * .5, wb + .5 * bh, 'end'); g.newer.textContent = 'newer';
+  g.older = lab('', lx1 - f * .5, wb + 4.5 * bh, 'end'); g.older.textContent = 'older';
+  // pollen dots
+  const pr = Math.max(2.2, f * .26);
+  for (let i = 0; i < N; i++) {
+    const r = R[i], k = i % 7;
+    const p0 = [tx + r.a * cr * .55, cy + r.b * cr * .45];
+    const p1 = [W * (.04 + r.c * .92), H * (.04 + r.d * .28)];
+    let p2, p3;
+    if (k < 5) {
+      p2 = [lx0 + (.04 + r.e * .92) * (lx1 - lx0), wb - pr * 1.2 - r.g * H * .03];
+      p3 = [lx0 + (.04 + r.e * .92) * (lx1 - lx0), wb + (k + .2 + .6 * r.h) * bh];
+    } else {
+      p2 = [W * (.03 + r.e * .42), gy - pr];
+      p3 = p2;
+    }
+    const el = Kit.mk('circle', {r: pr, style: st({fill: gold, stroke: ink, 'stroke-width': Math.max(1, f * .07)})}, svg);
+    g.dots.push({el, k, keys: [p0, p1, p2, p3], i});
+  }
+  // microscope
+  const mr = Math.min(W * .21, H * .22), mx = W * .25, my = Math.min(H - mr - f * .4, gy + H * .14 + mr);
+  g.mx = mx; g.my = my; g.mr = mr;
+  g.link = Kit.mk('line', {x1: mx + mr, y1: my, x2: lx0, y2: wb + 2.5 * bh, style: st({stroke: ink, 'stroke-width': Math.max(1.5, f * .1), 'stroke-dasharray': `${f * .4} ${f * .3}`, opacity: 0})}, svg);
+  const m = Kit.mk('g', {style: 'opacity:0'}, svg); g.m = m;
+  const id = 'clip' + Math.round(W);
+  const defs = Kit.mk('defs', {}, m);
+  const cp = Kit.mk('clipPath', {id}, defs); Kit.mk('circle', {r: mr}, cp);
+  Kit.mk('circle', {r: mr, style: st({fill: 'var(--c)'})}, m);
+  const inner = Kit.mk('g', {'clip-path': `url(#${id})`}, m);
+  Kit.mk('circle', {r: mr, style: st({fill: 'color-mix(in srgb,#f4b52c 14%,transparent)'})}, inner);
+  const gs = mr * .2, sw = Math.max(1.5, f * .1);
+  const gst = st({fill: gold, stroke: ink, 'stroke-width': sw});
+  const sac = (x, y, rot) => { const q = Kit.mk('g', {transform: `translate(${x},${y}) rotate(${rot})`}, inner);
+    Kit.mk('circle', {cx: -gs * .8, cy: 0, r: gs * .62, style: gst}, q); Kit.mk('circle', {cx: gs * .8, cy: 0, r: gs * .62, style: gst}, q);
+    Kit.mk('ellipse', {rx: gs * .85, ry: gs * .7, style: gst}, q); };
+  const tri = (x, y) => { Kit.mk('circle', {cx: x, cy: y, r: gs * .75, style: gst}, inner);
+    for (let j = 0; j < 3; j++) { const a = j * 2.094 - 1.57; Kit.mk('circle', {cx: x + Math.cos(a) * gs * .52, cy: y + Math.sin(a) * gs * .52, r: gs * .14, style: st({fill: ink})}, inner); } };
+  const grs = (x, y) => { Kit.mk('circle', {cx: x, cy: y, r: gs * .55, style: gst}, inner);
+    Kit.mk('circle', {cx: x + gs * .2, cy: y - gs * .15, r: gs * .16, style: st({fill: 'none', stroke: ink, 'stroke-width': sw})}, inner); };
+  sac(-mr * .35, -mr * .4, 15); sac(mr * .38, mr * .3, -25); tri(mr * .35, -mr * .4); tri(-mr * .45, mr * .35);
+  grs(0, 0); grs(mr * .05, mr * .62); grs(-mr * .7, -mr * .02);
+  Kit.mk('circle', {r: mr, style: st({fill: 'none', stroke: ink, 'stroke-width': Math.max(3, f * .3)})}, m);
+  g.mlab = Kit.mk('text', {x: mx, y: my - mr - fs * .75, 'text-anchor': 'middle', style: st({font: `700 ${fs}px var(--body)`, fill: ink, opacity: 0})}, svg);
+  g.mlab.textContent = 'one layer, magnified';
+  G = g; upd();
+}
+
+function upd() {
+  if (!G) return;
+  const t = T.t, g = G;
+  for (const d of g.dots) {
+    let x, y, op = 1;
+    if (t < 2) {
+      const seg = Math.floor(t), u = ease(t - seg), a = d.keys[seg], b = d.keys[seg + 1];
+      x = lerp(a[0], b[0], u); y = lerp(a[1], b[1], u);
+      const w = Math.sin(Math.PI * t / 2);
+      x += Math.sin(t * 5 + d.i) * g.W * .025 * w; y += Math.cos(t * 4 + d.i * 1.7) * g.H * .015 * w;
+    } else {
+      const u = d.k < 5 ? ease(clamp((t - 2 - (4 - d.k) * .17) / .3)) : 0;
+      x = lerp(d.keys[2][0], d.keys[3][0], u); y = lerp(d.keys[2][1], d.keys[3][1], u);
+      if (d.k >= 5) op = 1 - clamp(t - 2);
+    }
+    if (t < .15) { op = .4 + 4 * t; }
+    d.el.setAttribute('cx', x); d.el.setAttribute('cy', y); d.el.style.opacity = op;
+  }
+  g.bands.forEach((b, k) => b.style.opacity = clamp((t - 2 - (4 - k) * .17) / .25));
+  const lo = clamp((t - 3.4) / .5);
+  g.blabels.forEach(l => l.style.opacity = lo);
+  g.newer.style.opacity = g.older.style.opacity = clamp((t - 2.9) / .4);
+  const mo = clamp((t - 3.2) / .6), s = .5 + .5 * ease(mo);
+  g.m.setAttribute('transform', `translate(${g.mx},${g.my}) scale(${s})`);
+  g.m.style.opacity = mo; g.mlab.style.opacity = mo; g.link.style.opacity = mo;
+  const idx = Math.round(t);
+  if (idx !== capIdx) {
+    capIdx = idx; const cap = Kit.$('cap'); cap.innerHTML = CAPS[idx];
+    if (!Kit.calm) gsap.fromTo(cap, {opacity: .2}, {opacity: 1, duration: .3});
+    [...Kit.$('ticks').children].forEach((s, j) => s.classList.toggle('on', j === idx));
+    Kit.haptic('selection');
+    if (idx === 4 && !ended) { ended = true; Kit.hide('say'); Kit.show('keep'); Kit.haptic('success'); }
+  }
+}
+
+const tl = Kit.$('tl');
+tl.addEventListener('input', () => { gsap.killTweensOf(T); T.t = tl.value / 100; upd(); });
+tl.addEventListener('change', () => {
+  gsap.to(T, {t: Math.round(T.t), duration: Kit.calm ? 0 : .35, ease: 'power2.out', onUpdate: () => { tl.value = T.t * 100; upd(); }});
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.fromTo(T, {t: 0}, {t: .4, duration: .7, ease: 'power2.out', yoyo: true, repeat: 1, delay: .3, onUpdate: () => { tl.value = T.t * 100; upd(); }});
+};
+Kit.play.card = async () => {
+  for (let v = 0; v <= 400; v += 50) { tl.value = v; tl.dispatchEvent(new Event('input')); await new Promise(r => setTimeout(r, 40)); }
+  tl.dispatchEvent(new Event('change'));
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

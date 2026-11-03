@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- slug: science-ice-regelation-wire -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PHASE CHANGE</span></div>
+    <h2 class="q">A weighted wire is pulled down through a block of ice. What's left?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Two halves, cut clean apart</button>
+        <button class="opt" data-i="1">One solid block, still whole</button>
+        <button class="opt" data-i="2">A block with an open slit</button>
+      </div>
+      <div id="why" class="gone"><p class="big">One solid block</p><p class="body">Under the thin wire the pressure is huge, so the ice right below it melts. The water slips above the wire, the pressure is gone, and it freezes again. This is called regelation.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Bet on what's left. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Regelation: pressure melts ice, and it refreezes once the pressure is gone.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, tw = null;
+const S = {p: 0};
+let G = null;
+const bubbles = [];
+for (let i = 0; i < 26; i++) bubbles.push({x: Kit.rnd(), y: Kit.rnd(), r: .5 + Kit.rnd()});
+
+function draw() {
+  const svg = Kit.$('svg');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'ice', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#eaf8ff'}, lg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#a6d6f0'}, lg);
+  const top = Math.max(H * .1, fs * 2.2), bh = H * .52 - top + H * .1;
+  const bx = W * .24, bw = W * .52;
+  const air = Kit.mk('text', {x: 4, y: fs * 1.1, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: 'var(--k)'}, svg);
+  air.textContent = 'Air: warmer than 0 °C';
+  Kit.mk('rect', {x: bx, y: top, width: bw, height: bh, rx: 6, fill: 'url(#ice)', stroke: '#0b3550', 'stroke-width': 2}, svg);
+  const scar = Kit.mk('rect', {x: bx + 2, y: top, width: bw - 4, height: 0, fill: '#ffffff', opacity: .35}, svg);
+  const bg = Kit.mk('g', {}, svg);
+  const bs = bubbles.map(b => Kit.mk('circle', {cx: bx + 8 + b.x * (bw - 16), cy: top + 4 + b.y * (bh - 8), r: b.r * Math.max(1.5, W * .006), fill: '#ffffff', opacity: 0}, bg));
+  const film = Kit.mk('rect', {x: bx + 2, y: top, width: bw - 4, height: 0, fill: '#2f8fd8'}, svg);
+  const lx = bx - W * .06, rx = bx + bw + W * .06, L = H * .14, bH = H * .15, bW = W * .1;
+  const wire = Kit.mk('polyline', {fill: 'none', stroke: 'var(--k)', 'stroke-width': 3, 'stroke-linejoin': 'round'}, svg);
+  const mkBottle = () => {
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: -bW * .15, y: 0, width: bW * .3, height: bH * .18, fill: '#0b3550'}, g);
+    Kit.mk('rect', {x: -bW / 2, y: bH * .16, width: bW, height: bH * .84, rx: bW * .2, fill: '#ffffff', stroke: '#0b3550', 'stroke-width': 2}, g);
+    Kit.mk('rect', {x: -bW / 2 + 3, y: bH * .38, width: bW - 6, height: bH * .58, rx: bW * .16, fill: '#2f8fd8'}, g);
+    return g;
+  };
+  const b1 = mkBottle(), b2 = mkBottle();
+  const tStyle = {'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#0b3550', 'text-anchor': 'middle'};
+  const tMelt = Kit.mk('text', {...tStyle, x: bx + bw / 2}, svg); tMelt.textContent = 'melts under the wire';
+  const tFreeze = Kit.mk('text', {...tStyle, x: bx + bw / 2}, svg); tFreeze.textContent = 'freezes again above';
+  const tDone = Kit.mk('text', {...tStyle, x: bx + bw / 2, y: top + bh / 2, 'font-size': fs * 1.15}, svg); tDone.textContent = 'still one block';
+  const fitText = t => { const w = t.getComputedTextLength ? t.getComputedTextLength() : 0; if (w > bw - 10) t.setAttribute('font-size', fs * (bw - 10) / w); };
+  [tMelt, tFreeze].forEach(fitText);
+  G = {top, bh, bx, bw, lx, rx, L, H, fs, scar, bs, film, wire, b1, b2, tMelt, tFreeze, tDone};
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {top, bh, lx, rx, L, H, fs, scar, bs, film, wire, b1, b2, tMelt, tFreeze, tDone} = G;
+  const p = S.p, bot = top + bh;
+  const wy = top - 2 + p * (bh + 2 + H * .03);
+  const fh = Math.max(3, H * .014);
+  wire.setAttribute('points', `${lx},${wy + L} ${lx},${wy} ${rx},${wy} ${rx},${wy + L}`);
+  b1.setAttribute('transform', `translate(${lx},${wy + L})`);
+  b2.setAttribute('transform', `translate(${rx},${wy + L})`);
+  const inside = wy > top && wy < bot;
+  film.setAttribute('y', Math.max(top, wy + 1.5));
+  film.setAttribute('height', inside ? Math.max(0, Math.min(fh, bot - wy - 2)) : 0);
+  const sh = Math.max(0, Math.min(wy, bot) - top - 1);
+  scar.setAttribute('height', sh);
+  bs.forEach(c => c.setAttribute('opacity', +c.getAttribute('cy') < wy - fh ? .7 : 0));
+  const showM = inside && wy + fs * 2.2 < bot, showF = inside && wy - fs * 2.4 > top;
+  tMelt.setAttribute('y', wy + fs * 1.7); tMelt.setAttribute('opacity', showM ? 1 : 0);
+  tFreeze.setAttribute('y', wy - fs * .9); tFreeze.setAttribute('opacity', showF ? 1 : 0);
+  tDone.setAttribute('opacity', p >= 1 ? 1 : 0);
+}
+
+function playCut() {
+  if (Kit.calm) { S.p = 1; render(); return; }
+  S.p = 0;
+  tw = gsap.to(S, {p: 1, duration: 4.5, ease: 'none', onUpdate: render, onComplete: () => Kit.haptic('success')});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { draw(); playCut(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tw) tw.progress(1); S.p = 1; render();
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

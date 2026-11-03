@@ -1,0 +1,38 @@
+{
+  "id": "space-four-copies",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.distances",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A million times sharper start: how much longer can you predict three orbiting stars?",
+  "answer": "Four copies of three stars are let go at rest, starting 1,000,000 km, 1,000 km and 1 km off. The bet pits the 1 km copy against the 1,000,000 km one. The lesson: in chaos, every 1,000× sharper start buys the same small slice of extra forecast.",
+  "move": "In chaos, every 1,000× sharper start buys the same small slice of extra forecast.",
+  "keywords": [
+    "three-body-problem",
+    "szebehely",
+    "chaos",
+    "orbital-mechanics"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four copies of three orbiting stars, released at rest with starting errors of 1,000,000 km, 1,000 km and 1 km. The page asks how much longer each copy can be predicted, with options a million times, a thousand times, ten times, or less than twice.",
+    "graded": false,
+    "ground": "#0c1e66"
+  },
+  "source": "Veritasium, “Do we know how magnets work yet?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=XKSjCOKDtpk",
+  "written": "2026-11-03"
+}

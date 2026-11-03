@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- slug: nature-milan-first-30 -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Milan's first 30 °C June 21</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#grid{display:block;width:100%;flex:1;min-height:0}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.tile{fill:transparent;stroke:color-mix(in srgb,var(--k) 35%,transparent);transition:fill .35s ease,stroke .35s ease}
+.tile.r{fill:color-mix(in srgb,var(--k) 16%,transparent);stroke:transparent}
+.tile.hot.r{fill:#ff4d2e;stroke:#ff4d2e}
+.yr{fill:var(--k);font-family:var(--mono);font-weight:700;transition:fill .35s ease}
+.yr.hot.r{fill:#fff}
+.lg{fill:var(--k);font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CLIMATE</span></div>
+    <h2 class="q">Before 2026, how many June 21sts in Milan averaged 30 °C?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="grid"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Over 10 times</button>
+        <button class="opt" data-i="1">A few times</button>
+        <button class="opt" data-i="2">Never before</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Never. 2026 was the first.</p>
+        <p class="body">From 1973 to 2026, June 21 in Milan never had a 30 °C average until 2026. Average temperatures have risen: the climate crisis is happening now.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Each square is one June 21 since 1973. Make your guess.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In 54 years of June 21sts, Milan hit a 30 °C average only once: in 2026.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché fa così tanto caldo? C'è una relazione con la crisi climatica?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2, Y0 = 1973, Y1 = 2026, N = Y1 - Y0 + 1;
+let pick = -1, revealed = false;
+
+function reveal(){
+  revealed = true;
+  const svg = Kit.$('grid');
+  const tiles = [...svg.querySelectorAll('.tile')], yrs = [...svg.querySelectorAll('.yr')];
+  tiles.forEach((t, i) => {
+    const d = Kit.calm ? 0 : i * 28;
+    t.style.transitionDelay = d + 'ms'; yrs[i].style.transitionDelay = d + 'ms';
+    t.classList.add('r'); yrs[i].classList.add('r');
+  });
+  setLegend(true);
+  const hot = svg.querySelector('g.hotg');
+  if (hot && !Kit.calm) gsap.fromTo(hot, {scale: 1}, {scale: 1.25, duration: .3, yoyo: true, repeat: 1, delay: N * .028, transformOrigin: '50% 50%', ease: 'power2.out', onStart: () => Kit.haptic('light')});
+}
+
+function setLegend(done){
+  const lg = Kit.$('grid').querySelector('#lg'); if (!lg) return;
+  lg.querySelector('.l0').style.display = done ? 'none' : '';
+  lg.querySelector('.l1').style.display = done ? '' : 'none';
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('grid');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const lf = Math.max(12, Math.min(f * .9, 16));
+  const Lh = lf * 2;
+  const cols = 9, rows = Math.ceil(N / cols);
+  const g = Math.max(3, W * .012);
+  const tw = (W - (cols - 1) * g) / cols;
+  const th = Math.max(18, Math.min((H - Lh - (rows - 1) * g) / rows, tw * 1.05));
+  const gh = rows * th + (rows - 1) * g;
+  const top = Math.max(Lh, (H - gh - Lh) / 2 + Lh);
+  const fs = Math.max(12, Math.min(th * .38, tw * .27));
+
+  // legend
+  const lg = Kit.mk('g', {id: 'lg'}, svg);
+  const ly = top - lf * .8;
+  const l0 = Kit.mk('text', {class: 'lg l0', x: 0, y: ly, 'font-size': lf}, lg);
+  l0.textContent = `${N} June 21sts in Milan, ${Y0}–${Y1}`;
+  const l1 = Kit.mk('g', {class: 'l1'}, lg);
+  const s = lf * .9;
+  Kit.mk('rect', {x: 0, y: ly - s * .85, width: s, height: s, rx: 3, fill: 'color-mix(in srgb,var(--k) 16%,transparent)', style: 'fill:color-mix(in srgb,var(--k) 22%,transparent)'}, l1);
+  const t1 = Kit.mk('text', {class: 'lg', x: s + 6, y: ly, 'font-size': lf}, l1); t1.textContent = 'below 30 °C';
+  const x2 = Math.max(W * .5, s + 6 + lf * 7);
+  Kit.mk('rect', {x: x2, y: ly - s * .85, width: s, height: s, rx: 3, fill: '#ff4d2e'}, l1);
+  const t2 = Kit.mk('text', {class: 'lg', x: x2 + s + 6, y: ly, 'font-size': lf}, l1); t2.textContent = '30 °C average';
+
+  for (let i = 0; i < N; i++) {
+    const c = i % cols, r = Math.floor(i / cols), yr = Y0 + i, hot = yr === Y1;
+    const x = c * (tw + g), y = top + r * (th + g);
+    const grp = Kit.mk('g', {class: hot ? 'hotg' : ''}, svg);
+    const rect = Kit.mk('rect', {class: 'tile' + (hot ? ' hot' : '') + (revealed ? ' r' : ''), x, y, width: tw, height: th, rx: Math.min(6, tw * .15), 'stroke-width': 1.5}, grp);
+    const tx = Kit.mk('text', {class: 'yr' + (hot ? ' hot' : '') + (revealed ? ' r' : ''), x: x + tw / 2, y: y + th / 2, 'font-size': fs, 'text-anchor': 'middle', 'dominant-baseline': 'central'}, grp);
+    tx.textContent = tw > fs * 2.6 ? yr : "'" + String(yr).slice(2);
+  }
+  setLegend(revealed);
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#grid g:not(#lg)', {opacity: 0, scale: .6, transformOrigin: '50% 50%', stagger: .012, duration: .35, ease: 'back.out(2)'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
+};
+
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<!-- slug: science-bank-floor-rubbish -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative;border-radius:1.6cqh;overflow:hidden}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;justify-content:center}
+#dig{font:800 max(2.3cqh,15px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 9cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .12s}
+#dig.on{transform:scale(.95)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why p{margin:0;overflow-wrap:anywhere}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold to dig">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">UNDERGROUND</span></div>
+    <h2 class="q">What does the bank's floor rest on, letting thieves dig silently?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="pic"></svg></div>
+      <div id="ctl"><button id="dig">Hold to dig</button></div>
+      <div id="why" class="gone">
+        <p class="big">Old rubbish, not rock</p>
+        <p class="body">The floor slab sits on metres of fill: soil, shards, tiles, blocks and rubble piled up over decades, maybe centuries. It is loose, like sand with chunks in it, so it digs out easily. Only the foundations go deeper, down to hard tuff.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button to tunnel under the bank's vault.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Under the vault's floor lay loose historic rubbish, not rock.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {p: 0};
+let G = null, done = false, tw = null, lastSpawn = 0;
+const PAL = ['#b5523b', '#d9c7a3', '#6d6a64', '#c98a5a', '#9c8f7a', '#e6dccb', '#8b3f2c'];
+const chunks = [];
+for (let i = 0; i < 110; i++) chunks.push({x: Kit.rnd(), y: .06 + Kit.rnd() * .88, w: .015 + Kit.rnd() * .045, h: .012 + Kit.rnd() * .03, r: (Kit.rnd() - .5) * 70, c: PAL[Math.floor(Kit.rnd() * PAL.length)]});
+const dots = [];
+for (let i = 0; i < 90; i++) dots.push({x: Kit.rnd(), y: Kit.rnd(), r: .6 + Kit.rnd() * 1.4});
+const clamp = v => Math.max(0, Math.min(1, v));
+
+function geo() {
+  const {W, H} = G;
+  const fl = .27 * H, sl = .03 * H, fT = fl + sl, fB = .68 * H, pB = .77 * H;
+  const ty = .52 * H, th = .09 * H, tT = ty - th / 2, tB = ty + th / 2;
+  const sx = .62 * W, sw = Math.max(.08 * W, 20);
+  const p1 = Math.min(st.p / .78, 1), p2 = clamp((st.p - .78) / .22);
+  const xf = p1 * (sx + sw / 2);
+  const sTop = tT - p2 * (tT - (fl - 1));
+  return {fl, sl, fT, fB, pB, ty, th, tT, tB, sx, sw, p1, p2, xf, sTop};
+}
+
+function pill(g, x, y, txt, size, weight, op) {
+  const grp = Kit.mk('g', {opacity: op}, g);
+  const r = Kit.mk('rect', {fill: 'rgba(255,252,246,.93)', rx: size * .45}, grp);
+  const t = Kit.mk('text', {x: x + size * .5, y, 'dominant-baseline': 'central', fill: '#1c1712', style: `font:${weight} ${size}px var(--body)`}, grp);
+  t.textContent = txt;
+  const b = t.getBBox();
+  r.setAttribute('x', x); r.setAttribute('y', y - size * .72);
+  r.setAttribute('width', b.width + size); r.setAttribute('height', size * 1.44);
+}
+
+function spreadLabels(L, H) {
+  const gap = 3;
+  for (let i = 1; i < L.length; i++) {
+    const min = L[i - 1].y + (L[i - 1].s + L[i].s) * .72 + gap;
+    if (L[i].y < min) L[i].y = min;
+  }
+  const last = L[L.length - 1], maxY = H - last.s * .72 - 2;
+  if (last.y > maxY) last.y = maxY;
+  for (let i = L.length - 2; i >= 0; i--) {
+    const max = L[i + 1].y - (L[i + 1].s + L[i].s) * .72 - gap;
+    if (L[i].y > max) L[i].y = max;
+  }
+}
+
+function render() {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  G = {W, H, f};
+  let base = svg.querySelector('#base');
+  if (!base) { base = Kit.mk('g', {id: 'base'}, svg); Kit.mk('g', {id: 'fx'}, svg); }
+  base.innerHTML = '';
+  const m = (t, a) => Kit.mk(t, a, base);
+  const g = geo();
+  const fs = Math.max(12, f * .9), fsB = Math.max(13, f * 1.02);
+
+  // bank interior
+  m('rect', {x: 0, y: 0, width: W, height: g.fl, fill: '#efe9df'});
+  const vx0 = .44 * W, vx1 = .84 * W, vy0 = .06 * H, vy1 = g.fl - .015 * H, cols = 5, rows = 3, gp = 3;
+  const bw = (vx1 - vx0 - gp * (cols - 1)) / cols, bh = (vy1 - vy0 - gp * (rows - 1)) / rows;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const x = vx0 + c * (bw + gp), y = vy0 + r * (bh + gp);
+    m('rect', {x, y, width: bw, height: bh, rx: 2, fill: '#c5cad1', stroke: '#6f7680', 'stroke-width': 1});
+    m('circle', {cx: x + bw / 2, cy: y + bh / 2, r: Math.max(1.5, bh * .08), fill: '#6f7680'});
+  }
+  // layers
+  m('rect', {x: 0, y: g.fT, width: W, height: g.fB - g.fT, fill: '#7a5a3e'});
+  m('rect', {x: 0, y: g.fB, width: W, height: g.pB - g.fB, fill: '#a39b8f'});
+  m('rect', {x: 0, y: g.pB, width: W, height: H - g.pB, fill: '#d9b44a'});
+  dots.forEach(d => {
+    m('circle', {cx: d.x * W, cy: g.fB + 2 + d.y * (g.pB - g.fB - 4), r: d.r * .8, fill: '#6f685e'});
+    m('circle', {cx: (d.x * 1.7 % 1) * W, cy: g.pB + 3 + d.y * (H - g.pB - 6), r: d.r * 1.2, fill: '#b38a2c'});
+  });
+  // rubbish chunks
+  chunks.forEach(c => {
+    const cx = c.x * W, cy = g.fT + c.y * (g.fB - g.fT);
+    if (cx < g.xf + 3 && cy > g.tT - 5 && cy < g.tB + 5) return;
+    if (g.p2 > 0 && Math.abs(cx - g.sx) < g.sw / 2 + 3 && cy < g.tT && cy > g.sTop - 5) return;
+    const w = c.w * W, h = c.h * H;
+    m('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 1.5, fill: c.c, stroke: 'rgba(0,0,0,.25)', 'stroke-width': .8, transform: `rotate(${c.r} ${cx} ${cy})`});
+  });
+  // slab and foundation
+  m('rect', {x: 0, y: g.fl, width: W, height: g.sl, fill: '#5b5f66'});
+  m('rect', {x: .9 * W, y: g.fl, width: .06 * W, height: .86 * H - g.fl, fill: '#8a8d93', stroke: '#45484e', 'stroke-width': 1.2});
+  // tunnel
+  if (g.xf > 1) {
+    const r = Math.min(g.th / 2, g.xf);
+    m('path', {d: `M-2 ${g.tT} H${g.xf - r} Q${g.xf} ${g.tT} ${g.xf} ${g.ty} Q${g.xf} ${g.tB} ${g.xf - r} ${g.tB} H-2 Z`, fill: '#1e1611'});
+    for (let i = 0; i < 9; i++) {
+      const x = g.xf - r - (i * .013 * W) - 2, s = 3 + (i * 7 % 5);
+      if (x > 2) m('rect', {x, y: g.tB - s, width: s * 1.4, height: s, rx: 1, fill: PAL[i % PAL.length]});
+    }
+    if (!done) m('circle', {cx: Math.max(6, g.xf - r * .7), cy: g.ty, r: g.th * .17, fill: '#ffd36b', opacity: .95});
+  }
+  if (g.p2 > 0) m('rect', {x: g.sx - g.sw / 2, y: g.sTop, width: g.sw, height: g.tT - g.sTop + 2, fill: '#1e1611'});
+  if (g.p2 >= 1) m('rect', {x: g.sx - g.sw / 2 - 3, y: g.fl - 3, width: g.sw + 6, height: 3, fill: '#ffd36b'});
+
+  // labels
+  const lx = .035 * W;
+  const fsP = Math.max(12, fs * .85);
+  const L = [
+    {y: .14 * H, s: fs},
+    {y: g.fT + .075 * H, s: fsB},
+    {y: (g.tB + g.fB) / 2, s: fs},
+    {y: (g.fB + g.pB) / 2, s: fsP},
+    {y: .885 * H, s: fs}
+  ];
+  spreadLabels(L, H);
+  pill(base, lx, L[0].y, 'BANK VAULT', fs, 800, 1);
+  pill(base, lx, L[1].y, 'HISTORIC RUBBISH · metres deep', fsB, 800, 1);
+  pill(base, lx, L[2].y, 'loose like sand, full of chunks', fs, 600, clamp((st.p - .12) / .2));
+  pill(base, lx, L[3].y, 'PYROCLASTIC LAYER', fsP, 700, 1);
+  pill(base, lx, L[4].y, 'TUFF · solid rock', fs, 800, 1);
+}
+
+function spawn() {
+  if (Kit.calm || !G) return;
+  const now = performance.now(); if (now - lastSpawn < 70) return; lastSpawn = now;
+  const fx = Kit.$('pic').querySelector('#fx'); if (!fx) return;
+  const g = geo();
+  const s = 3 + Kit.rnd() * 5;
+  let x, y, dx, dy;
+  if (g.p2 > 0) { x = g.sx - g.sw / 2 + Kit.rnd() * g.sw; y = g.sTop + 2; dx = (Kit.rnd() - .5) * 8; dy = g.tB - y - s; }
+  else { x = g.xf - 4; y = g.tT + Kit.rnd() * g.th * .6; dx = -(6 + Kit.rnd() * 22); dy = g.tB - y - s; }
+  const el = Kit.mk('rect', {x, y, width: s * 1.3, height: s, rx: 1, fill: PAL[Math.floor(Kit.rnd() * PAL.length)]}, fx);
+  gsap.to(el, {x: dx, y: dy, rotation: (Kit.rnd() - .5) * 180, transformOrigin: '50% 50%', duration: .5, ease: 'bounce.out', onComplete: () => gsap.to(el, {opacity: 0, duration: .3, onComplete: () => el.remove()})});
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.$('dig').classList.remove('on');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(render);
+}
+function startDig(e) {
+  if (done) return; if (e) e.preventDefault();
+  Kit.$('dig').classList.add('on'); Kit.haptic('light');
+  if (tw) tw.kill();
+  tw = gsap.to(st, {p: 1, duration: Math.max(.2, (1 - st.p) * 4.2), ease: 'none', onUpdate: () => { render(); spawn(); }, onComplete: finish});
+}
+function stopDig() { Kit.$('dig').classList.remove('on'); if (tw && !done) { tw.kill(); tw = null; } }
+const btn = Kit.$('dig');
+btn.addEventListener('pointerdown', startDig);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(t => btn.addEventListener(t, stopDig));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+new ResizeObserver(() => { if (G) render(); }).observe(Kit.$('wrap'));
+Kit.onShow.card = () => render();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.fromTo('#dig', {scale: .9, opacity: 0}, {scale: 1, opacity: 1, duration: .5, ease: 'back.out(2)'}); };
+Kit.play.card = async () => { if (tw) tw.kill(); st.p = 1; render(); finish(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

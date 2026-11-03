@@ -1,0 +1,37 @@
+{
+  "id": "history-concordia-salvage-crew",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long did removing the Costa Concordia take, and how many worked on it?",
+  "answer": "Removing the wreck took almost two and a half years. More than 500 engineers and technicians worked on it full time, about 450,000 working days in all. The card calls it a project on a massive scale.",
+  "move": "Concordia's removal: almost 2.5 years, over 500 people full time.",
+  "keywords": [
+    "costa concordia",
+    "shipwreck",
+    "salvage",
+    "engineers",
+    "technicians"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A question asks how long removing the Costa Concordia wreck took and how many people worked on it. Holding a button runs a clock showing about 2.5 years and over 500 people, with each dot standing for one full-time worker."
+  },
+  "source": "Geopop, “Costa Concordia, la ricostruzione del naufragio dal momento dell’impatto alla rimozione del relitto” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=ebznV-0cKF4",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,168 @@
+<!doctype html>
+<!-- slug: technology-asbestos-stays-onsite -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Asbestos never leaves the site</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#scene{flex:1 1 0;min-height:0;position:relative}
+#scene svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw;flex:none}
+.st{text-align:center;border-radius:1.4cqh;padding:.8cqh 1cqw;background:color-mix(in srgb,var(--k) 8%,transparent)}
+.st b{display:block;font:800 max(3.4cqh,20px)/1 var(--display);color:var(--k)}
+.st span{display:block;font:600 max(1.5cqh,12px)/1.15 var(--body);color:var(--muted);overflow-wrap:anywhere}
+.st.zero b{color:#d8342c}
+#ctrl{display:flex;justify-content:center;flex:none}
+#dig{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 7cqw;cursor:pointer}
+#dig:disabled{opacity:.55;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none;min-height:min-content}
+#why .body{overflow-wrap:break-word;margin:0}
+@media (max-width:420px),(max-height:700px){#why .body{font-size:max(1.9cqh,13px);line-height:1.3}}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Build it · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TUNNEL SAFETY</span></div>
+    <h2 class="q">How does the Turin–Lyon tunnel deal with asbestos in the rock?</h2>
+    <div class="stagebox" id="stage">
+      <div id="scene"><svg id="svg"></svg></div>
+      <div id="stats">
+        <div class="st"><b id="sMade">0</b><span>lining segments</span></div>
+        <div class="st"><b id="sKept">0</b><span>asbestos loads kept on site</span></div>
+        <div class="st zero"><b id="sOut">0</b><span>asbestos loads that left</span></div>
+      </div>
+      <div id="ctrl"><button id="dig">Dig a load (1/4)</button></div>
+      <div id="why" class="gone">
+        <p class="body">These mountains are likely to hold asbestos. TELT, the company building the line, guarantees that rock with asbestos never leaves the worksite: it stays inside, handled under a strict safety protocol. Clean rock gets reused, even as aggregate for the tunnel's lining segments.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Dig, then watch where each load of rock ends up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Asbestos rock stays on site; clean rock becomes tunnel lining.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SEQ = ['clean', 'asb', 'clean', 'asb'];
+const ORANGE = '#e8742a', GREEN = '#2fa36b', RED = '#d8342c', YEL = '#f2c230';
+let n = 0, made = 0, kept = 0, busy = false, fast = false, tl = null, G = {};
+const st = (o) => o; // readability
+function el(tag, attrs, parent, style) { const e = Kit.mk(tag, attrs, parent); if (style) e.setAttribute('style', style); return e; }
+
+function build() {
+  if (tl) { tl.progress(1); tl = null; }
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85);
+  const g = H * .72, r = Math.min(W * .045, H * .07);
+  Object.assign(G, {W, H, g, r, fs, px: W * .07, sx: W * .27, kx: W * .45, cx: W * .62, fx: W * .78, tx: W * .9});
+  const back = el('g', {}, svg), rocks = el('g', {}, svg), front = el('g', {}, svg);
+  G.back = back; G.rocks = rocks; G.front = front;
+  const {px, sx, kx, cx, fx, tx} = G;
+  // ground
+  el('rect', {x: 0, y: g, width: W, height: H - g}, back, 'fill:color-mix(in srgb,var(--k) 12%,transparent)');
+  el('line', {x1: 0, y1: g, x2: W, y2: g}, back, 'stroke:var(--k);stroke-width:2.5');
+  // mountain + portal
+  el('path', {d: `M0,${g} L0,${H * .08} L${W * .12},${H * .2} L${W * .2},${g} Z`}, back, 'fill:color-mix(in srgb,var(--k) 22%,transparent)');
+  el('path', {d: `M${px - 1.4 * r},${g} L${px - 1.4 * r},${g - 1.6 * r} A${1.4 * r},${1.4 * r} 0 0 1 ${px + 1.4 * r},${g - 1.6 * r} L${px + 1.4 * r},${g} Z`}, back, 'fill:var(--k)');
+  // scanner
+  const sh = 3.4 * r;
+  el('rect', {x: sx - 1.6 * r, y: g - sh, width: .35 * r, height: sh}, back, 'fill:var(--k)');
+  el('rect', {x: sx + 1.25 * r, y: g - sh, width: .35 * r, height: sh}, back, 'fill:var(--k)');
+  G.beam = el('rect', {x: sx - 1.6 * r, y: g - sh - .4 * r, width: 3.2 * r, height: .55 * r, rx: .15 * r}, back, 'fill:var(--k)');
+  G.stat = el('text', {x: sx, y: g - sh - .4 * r - fs * .6, 'text-anchor': 'middle'}, back, `font:800 ${fs}px var(--body);fill:var(--muted)`);
+  G.stat.textContent = 'TEST GATE';
+  // segment stack
+  G.segs = el('g', {}, back);
+  for (let i = 0; i < made; i++) seg(i);
+  // container (body in front layer, lid separately)
+  const cw = 3.6 * r, chh = 2.5 * r;
+  G.lidO = `${cx - cw / 2} ${g - chh}`;
+  G.lid = el('rect', {x: cx - cw / 2 - .1 * r, y: g - chh - .45 * r, width: cw + .2 * r, height: .45 * r, rx: .12 * r}, front, 'fill:var(--k)');
+  el('rect', {x: cx - cw / 2, y: g - chh, width: cw, height: chh, rx: .15 * r}, front, 'fill:color-mix(in srgb,var(--k) 78%,var(--c))');
+  const ty = g - chh / 2, ts = .9 * r;
+  el('path', {d: `M${cx},${ty - ts} L${cx + ts},${ty + ts * .7} L${cx - ts},${ty + ts * .7} Z`}, front, `fill:${YEL};stroke:var(--k);stroke-width:2;stroke-linejoin:round`);
+  el('text', {x: cx, y: ty + ts * .55, 'text-anchor': 'middle'}, front, `font:900 ${ts * 1.2}px var(--body);fill:var(--k)`).textContent = '!';
+  // fence + gate
+  const top = Math.max(fs * 2, g - 6 * r);
+  el('line', {x1: fx, y1: top, x2: fx, y2: g - 2.6 * r}, back, 'stroke:var(--k);stroke-width:3;stroke-dasharray:6 5');
+  el('rect', {x: fx - .2 * r, y: g - 2.8 * r, width: .4 * r, height: .4 * r}, back, 'fill:var(--k)');
+  el('text', {x: Math.min(fx, W - 52), y: top - fs * .5, 'text-anchor': 'middle'}, back, `font:800 ${Math.max(12, fs * .85)}px var(--body);fill:var(--muted);letter-spacing:.05em`).textContent = 'SITE BOUNDARY';
+  G.bar = el('rect', {x: fx - .15 * r, y: g - 2.6 * r, width: .3 * r, height: 2.6 * r}, back, `fill:${RED};opacity:0`);
+  // road + truck (outside)
+  el('rect', {x: fx + .3 * r, y: g, width: W - fx, height: .35 * r}, back, 'fill:color-mix(in srgb,var(--k) 30%,transparent)');
+  el('rect', {x: tx - 1.8 * r, y: g - 1.9 * r, width: 2.3 * r, height: 1.1 * r, rx: .1 * r}, back, 'fill:none;stroke:var(--k);stroke-width:2.5');
+  el('rect', {x: tx + .6 * r, y: g - 2.3 * r, width: 1.0 * r, height: 1.5 * r, rx: .2 * r}, back, 'fill:var(--k)');
+  for (const wx of [tx - 1.2 * r, tx + 1.05 * r]) el('circle', {cx: wx, cy: g - .45 * r, r: .42 * r}, back, 'fill:var(--k)');
+  // no-export sign
+  G.no = el('g', {}, front);
+  const nr = 1.15 * r, ny = g - 1.4 * r;
+  el('circle', {cx: fx, cy: ny, r: nr}, G.no, `fill:#fff;stroke:${RED};stroke-width:${.28 * r}`);
+  el('rect', {x: fx - .55 * r, y: ny - .25 * r, width: .7 * r, height: .45 * r}, G.no, 'fill:#222');
+  el('rect', {x: fx + .15 * r, y: ny - .4 * r, width: .35 * r, height: .6 * r}, G.no, 'fill:#222');
+  el('line', {x1: fx - nr * .7, y1: ny - nr * .7, x2: fx + nr * .7, y2: ny + nr * .7}, G.no, `stroke:${RED};stroke-width:${.28 * r}`);
+  gsap.set(G.no, {scale: 0, svgOrigin: `${fx} ${ny}`});
+  G.noT = el('text', {x: Math.min(fx, W - 50), y: g + fs * 1.7, 'text-anchor': 'middle'}, front, `font:900 ${fs}px var(--body);fill:${RED};opacity:0`);
+  G.noT.textContent = 'NEVER LEAVES';
+  stats();
+}
+function seg(i) {
+  const {kx, g, r} = G, w = 3.2 * r, h = .8 * r, y = g - (i + 1) * (h + .15 * r);
+  const p = el('path', {d: `M${kx - w / 2},${y + h} L${kx - w / 2},${y + .3 * h} Q${kx},${y - .35 * h} ${kx + w / 2},${y + .3 * h} L${kx + w / 2},${y + h} Z`}, G.segs, 'fill:color-mix(in srgb,var(--k) 62%,var(--c));stroke:var(--k);stroke-width:2');
+  return p;
+}
+function rock(type) {
+  const {px, g, r} = G, grp = el('g', {}, G.rocks);
+  const pts = []; for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2, rr = r * (.8 + .25 * Kit.rnd()); pts.push(`${(Math.cos(a) * rr).toFixed(1)},${(Math.sin(a) * rr).toFixed(1)}`); }
+  el('polygon', {points: pts.join(' ')}, grp, `fill:${type === 'asb' ? ORANGE : '#8d8f94'};stroke:var(--k);stroke-width:2`);
+  if (type === 'asb') for (let i = -1; i <= 1; i++) el('path', {d: `M${-.6 * r},${i * .35 * r} q${.3 * r},${-.25 * r} ${.6 * r},0 t${.6 * r},0`}, grp, 'fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round');
+  gsap.set(grp, {x: px, y: g - r});
+  return grp;
+}
+function stats() { Kit.$('sMade').textContent = made; Kit.$('sKept').textContent = kept; Kit.$('sOut').textContent = 0; }
+function scan(color, text) { G.beam.setAttribute('style', `fill:${color}`); G.stat.setAttribute('style', `font:800 ${G.fs}px var(--body);fill:${color}`); G.stat.textContent = text; }
+function dig() {
+  if (busy || n >= SEQ.length) return Promise.resolve();
+  busy = true; Kit.$('dig').disabled = true; Kit.haptic('light');
+  const type = SEQ[n++];
+  return new Promise(res => {
+    const {sx, kx, cx, fx, g, r} = G, R = rock(type);
+    tl = gsap.timeline({onComplete: () => { tl = null; busy = false; done(); res(); }});
+    tl.from(R, {scale: 0, duration: .3, ease: 'back.out(2)'})
+      .to(R, {x: sx, duration: .7, ease: 'power1.inOut'})
+      .call(() => type === 'asb' ? scan(ORANGE, 'ASBESTOS!') : scan(GREEN, 'CLEAN ROCK'))
+      .to({}, {duration: .5});
+    if (type === 'clean') {
+      tl.to(R, {x: kx, duration: .6, ease: 'power1.inOut'})
+        .to(R, {scale: .3, opacity: 0, duration: .3})
+        .call(() => { const p = seg(made); made++; stats(); gsap.from(p, {opacity: 0, y: -12, duration: .35}); Kit.haptic('selection'); });
+    } else {
+      tl.to(R, {x: fx - 1.6 * r, duration: .7, ease: 'power2.in'})
+        .call(() => { gsap.to(G.no, {scale: 1, duration: .3, ease: 'back.out(3)'}); G.bar.style.opacity = 1; G.noT.style.opacity = 1; Kit.haptic('success'); })
+        .to(R, {x: fx - 2.4 * r, duration: .25, ease: 'power2.out'})
+        .to({}, {duration: .35})
+        .to(G.lid, {rotation: -115, svgOrigin: G.lidO, duration: .35})
+        .to(R, {x: cx, y: g - 4.2 * r, duration: .6, ease: 'power1.out'}, '<')
+        .to(R, {y: g - 1.2 * r, scale: .75, duration: .35, ease: 'power2.in'})
+        .to(G.lid, {rotation: 0, svgOrigin: G.lidO, duration: .3})
+        .call(() => { kept++; stats(); })
+        .to(G.no, {scale: 0, duration: .25, delay: .3})
+        .call(() => { G.bar.style.opacity = 0; G.noT.style.opacity = 0; });
+    }
+    tl.call(() => scan('var(--k)', 'TEST GATE'));
+    if (Kit.calm || fast) tl.timeScale(fast ? 12 : 4);
+  });
+}
+function done() {
+  if (n < SEQ.length) { Kit.$('dig').disabled = false; Kit.$('dig').textContent = `Dig a load (${n + 1}/${SEQ.length})`; return; }
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+Kit.$('dig').addEventListener('click', () => dig());
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#scene', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { fast = true; for (let i = 0; i < SEQ.length; i++) await dig(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

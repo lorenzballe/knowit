@@ -1,0 +1,37 @@
+{
+  "id": "science-delayed-club-jolt",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a golf club feel light after you hit the ball?",
+  "answer": "The hit is a huge jolt at the club head, and it has to travel up the shaft as a wave. Your hand feels it only when it arrives, by which time the ball is already well on its way. What reaches your hand is much smaller than what the ball received.",
+  "move": "A force isn't felt everywhere at once: it travels, like the slinky's message.",
+  "keywords": [
+    "golf club",
+    "club head",
+    "shaft",
+    "slinky",
+    "impact"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A timeline with 'impact' at the start and 'later' at the end. Drag it forward from the hit while watching the golf club's shaft and your hand. Asks why a golf club feels light after you hit the ball."
+  },
+  "source": "Veritasium, “Slinky Drop Answer” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eCMmmEEyOO0&t=110s",
+  "written": "2026-11-03"
+}

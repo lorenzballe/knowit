@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-yakutsk-stilt-houses -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#pic{flex:1;min-height:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;border-radius:2cqh;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BUILT ON ICE</span></div>
+    <h2 class="q">How do Yakutsk's buildings keep from melting the frozen ground?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+    </div>
+    <p class="say" id="say">Drag the house up, off the frozen ground.</p>
+    <div id="why" class="gone"><p class="big">About 1.5 m up</p><p class="body">A heated house touching the ground would warm and thaw its top layer, and the building could sink. Lifted about 1.5 m, its heat stays in the air, while piles driven about 10 m down hold it up.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On permafrost, keep the heat off the ground: build on stilts.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {g: 0};
+let done = false, D = null, drag = null;
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+function build(){
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .9);
+  const gy = H * .40, pb = H * .94, m = (pb - gy) / 10;
+  const hw = Math.min(W * .40, H * .36), hh = H * .13, rh = H * .07, hx = W * .5 - hw / 2;
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+
+  const defs = mk('defs', {});
+  const cp = mk('clipPath', {id: 'gclip'}, defs);
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy}, cp);
+  const cp2 = mk('clipPath', {id: 'all'}, defs);
+  mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .04}, cp2);
+
+  const root = mk('g', {'clip-path': 'url(#all)'});
+  // sky
+  mk('rect', {x: 0, y: 0, width: W, height: gy, fill: '#0f2340'}, root);
+  for (let i = 0; i < 26; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * gy * .9, r: Math.max(.8, Kit.rnd() * 1.6), fill: '#cfe3ff', opacity: .35 + Kit.rnd() * .4}, root);
+  const sky = mk('text', {x: W * .04, y: H * .02 + fs * 1.1, fill: '#ffffff', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  sky.textContent = 'air: down to −63 °C';
+  // ground
+  mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: '#d6eaf5'}, root);
+  for (let i = 0; i < 18; i++) {
+    const x = Kit.rnd() * W, y = gy + H * .03 + Kit.rnd() * (H - gy - H * .05), l = W * (.03 + Kit.rnd() * .05);
+    mk('path', {d: `M${x} ${y} l${l * .5} ${l * .25} l${l * .5} ${-l * .15}`, stroke: '#9cc6dc', 'stroke-width': 1.4, fill: 'none'}, root);
+  }
+  // thaw bulb
+  const thaw = mk('ellipse', {cx: W / 2, cy: gy, rx: hw * .78, ry: 0, fill: '#a8642f', 'clip-path': 'url(#gclip)'}, root);
+  mk('rect', {x: 0, y: gy - 3, width: W, height: 6, fill: '#ffffff'}, root);
+  const pf = mk('text', {x: W * .04, y: gy + fs * 2.1, fill: '#12304a', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  pf.textContent = 'permafrost';
+  // pile depth label
+  const t1 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 1.4, fill: '#12304a', 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, root);
+  t1.textContent = 'piles';
+  const t2 = mk('text', {x: W * .96, y: (gy + pb) / 2 + fs * 3.2, fill: '#12304a', 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
+  t2.textContent = '~10 m';
+  // piles (static, anchored deep)
+  const piles = [];
+  [.12, .5, .88].forEach(p => {
+    piles.push(mk('rect', {x: hx + hw * p - hw * .03, y: gy, width: hw * .06, height: pb - gy, fill: '#7a4a24', stroke: '#4a2a10', 'stroke-width': 1}, root));
+  });
+  // cold air arrows
+  const cold = mk('g', {opacity: 0}, root);
+  const arrow = mk('path', {d: '', stroke: '#8fd3ff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, cold);
+  // house
+  const house = mk('g', {}, root);
+  const heat = mk('g', {opacity: 1}, house);
+  [.25, .5, .75].forEach(p => {
+    const x = hx + hw * p, s = hw * .05;
+    mk('path', {d: `M${x} ${gy + 4} q${s} ${H * .02} 0 ${H * .04} q${-s} ${H * .02} 0 ${H * .04}`, stroke: '#ff7a3d', 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round'}, heat);
+  });
+  mk('rect', {x: hx, y: gy - hh, width: hw, height: hh, fill: '#e9c27a', stroke: '#5a3a14', 'stroke-width': 2}, house);
+  mk('path', {d: `M${hx - hw * .08} ${gy - hh} L${W / 2} ${gy - hh - rh} L${hx + hw * 1.08} ${gy - hh} Z`, fill: '#3b5b7a', stroke: '#1e3248', 'stroke-width': 2}, house);
+  [.18, .62].forEach(p => mk('rect', {x: hx + hw * p, y: gy - hh * .72, width: hw * .2, height: hh * .38, fill: '#ffd65a', stroke: '#5a3a14', 'stroke-width': 1.5}, house));
+  mk('rect', {x: hx + hw * .44, y: gy - hh * .55, width: hw * .13, height: hh * .55, fill: '#7a4a24'}, house);
+  const hint = mk('text', {x: W / 2, y: gy - hh - rh - fs * .5, fill: '#ffffff', 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, house);
+  hint.textContent = '↑ drag';
+  // gap readout
+  const dim = mk('line', {x1: hx - W * .05, x2: hx - W * .05, y1: gy, y2: gy, stroke: '#ffffff', 'stroke-width': 2}, root);
+  const read = mk('text', {x: hx - W * .07, y: gy, fill: '#ffffff', 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, root);
+
+  D = {W, H, gy, m, hw, hh, hx, pb, thaw, house, heat, cold, arrow, dim, read, hint, piles, fs};
+  render();
+}
+
+function render(){
+  if (!D) return;
+  const {W, gy, m, hw, hx, thaw, house, heat, cold, arrow, dim, read, hint, piles, fs} = D;
+  const g = st.g, lift = g * m, t = Math.max(0, 1 - g / 1.5);
+  thaw.setAttribute('ry', t * m * 4.2);
+  thaw.setAttribute('opacity', .25 + .6 * t);
+  house.setAttribute('transform', `translate(0 ${-lift}) rotate(${t * 4} ${W / 2} ${gy - lift})`);
+  piles.forEach(p => { p.setAttribute('y', gy - lift); p.setAttribute('height', D.pb - gy + lift); });
+  heat.setAttribute('opacity', t);
+  hint.setAttribute('opacity', done ? 0 : 1);
+  cold.setAttribute('opacity', Math.min(1, g / .6));
+  const ay = gy - lift / 2, x0 = hx - W * .02, x1 = hx + hw + W * .06;
+  arrow.setAttribute('d', `M${x0} ${ay} L${x1} ${ay} M${x1 - 7} ${ay - 6} L${x1} ${ay} L${x1 - 7} ${ay + 6}`);
+  dim.setAttribute('y2', gy - lift);
+  read.setAttribute('y', gy - lift / 2 + fs * .35);
+  read.textContent = g.toFixed(1) + ' m';
+  if (!done) Kit.$('say').textContent = g < .05 ? 'Drag the house up, off the frozen ground.'
+    : g < 1.45 ? `Gap ${g.toFixed(1)} m: the ground below is still thawing. Higher.` : 'Gap 1.5 m: the ground stays frozen.';
+}
+
+function finish(){
+  if (done) return;
+  done = true; drag = null;
+  Kit.haptic('success');
+  gsap.to(st, {g: 1.5, duration: Kit.calm ? 0 : .35, ease: 'power2.out', onUpdate: render, onComplete: render});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (done) return;
+  drag = {y: e.clientY, g: st.g};
+  try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+  Kit.haptic('selection');
+});
+pic.addEventListener('pointermove', e => {
+  if (!drag || done || !D) return;
+  const per = D.H * .14; // pixels per metre of drag
+  st.g = Math.max(0, Math.min(2, drag.g + (drag.y - e.clientY) / per));
+  render();
+  if (st.g >= 1.45) finish();
+});
+const up = () => { drag = null; };
+pic.addEventListener('pointerup', up);
+pic.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !D) return;
+  gsap.fromTo(D.hint, {opacity: .3}, {opacity: 1, duration: .7, repeat: 3, yoyo: true});
+};
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect(), x = r.left + r.width / 2;
+  const opt = (y) => ({clientX: x, clientY: y, pointerId: 1, bubbles: true});
+  pic.dispatchEvent(new PointerEvent('pointerdown', opt(r.top + r.height * .6)));
+  for (let i = 1; i <= 6; i++) {
+    pic.dispatchEvent(new PointerEvent('pointermove', opt(r.top + r.height * .6 - i * r.height * .06)));
+    await new Promise(res => setTimeout(res, 40));
+  }
+  pic.dispatchEvent(new PointerEvent('pointerup', opt(r.top + r.height * .24)));
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

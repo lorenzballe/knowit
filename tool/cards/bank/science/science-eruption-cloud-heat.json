@@ -1,0 +1,36 @@
+{
+  "id": "science-eruption-cloud-heat",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How hot is it inside a volcano's eruption cloud?",
+  "answer": "The inside of a volcano's eruption cloud runs from about 500 °C at its edge to 1,200 °C in its core. The core is the hottest part. That heat is enough to instantly vaporize most materials the cloud meets.",
+  "move": "An eruption cloud runs from about 500 °C at its edge to 1,200 °C in its core.",
+  "keywords": [
+    "volcano",
+    "eruption cloud",
+    "temperature",
+    "heat"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: How hot is the inside of a volcano's eruption cloud? Three ranges to choose from: about 100 to 300 °C, about 500 to 1,200 °C, and about 2,000 to 3,000 °C. Then a probe crosses a cross-section of the cloud."
+  },
+  "source": "Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7GaeRnYefws",
+  "written": "2026-11-03"
+}

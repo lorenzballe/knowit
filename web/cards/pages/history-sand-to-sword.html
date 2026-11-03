@@ -1,0 +1,206 @@
+<!doctype html>
+<!-- slug: history-sand-to-sword -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · From sand to sword</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Turn the dial · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TRIAL AND ERROR</span></div>
+    <h2 class="q">How did Japanese smiths learn to make such fine swords?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="body">From gathering iron sand to smelting, forging and sharpening, every step was found by trial and error, not scientific theory. Centuries of failed and kept tries gave swords still prized today.</p></div>
+    </div>
+    <p class="say" id="say">Drag across the centuries of tries and watch the sword take shape.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Patient trial and error can build mastery long before theory explains it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 64;
+const STEPS = ['Gather sand', 'Smelt', 'Forge', 'Sharpen'];
+// The tries: most fail, a few are kept, and each kept try improves one step.
+const tries = [];
+const tot = [0, 0, 0, 0];
+for (let i = 0; i < N; i++) {
+  const keep = i > 1 && Kit.rnd() < 0.3;
+  const step = Math.floor(Kit.rnd() * 4);
+  if (keep) tot[step]++;
+  tries.push({keep, step});
+}
+STEPS.forEach((_, s) => { if (!tot[s]) { tries[N - 1 - s].keep = true; tries[N - 1 - s].step = s; tot[s]++; } });
+const totKept = tot.reduce((a, b) => a + b, 0);
+const noise = Array.from({length: 48}, () => Kit.rnd() * 2 - 1);
+
+let P = 0, done = false, G = null;
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+function mix(c1, c2, t) {
+  const h = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+  const a = h(c1), b = h(c2);
+  return 'rgb(' + a.map((v, i) => Math.round(lerp(v, b[i], t))).join(',') + ')';
+}
+
+function draw() {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.85, 12);
+  const rowH = Math.max(fs * 1.55, H * 0.062);
+  const barsH = rowH * 5;
+  const stripY = H - fs * 2.6;
+  const bladeTop = barsH + fs * 0.6, bladeBot = stripY - fs * 1.8;
+  const labW = Math.min(W * 0.34, fs * 7.2);
+  const g = {W, H, fs, rowH, stripY, labW, bladeTop, bladeBot, bars: [], ticks: []};
+
+  // Five rows: four steps of the craft, and the theory behind them.
+  [...STEPS, 'Written theory'].forEach((name, r) => {
+    const y = r * rowH + rowH * 0.5;
+    Kit.mk('text', {x: 0, y: y + fs * 0.35, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: r === 4 ? 'var(--muted)' : 'var(--k)'}, svg).textContent = name;
+    const bh = Math.min(rowH * 0.5, fs * 0.9);
+    Kit.mk('rect', {x: labW, y: y - bh / 2, width: W - labW, height: bh, rx: bh / 2, fill: 'none', stroke: 'var(--k)', 'stroke-opacity': r === 4 ? .35 : .3, 'stroke-width': 1.5, 'stroke-dasharray': r === 4 ? '4 4' : null}, svg);
+    if (r < 4) g.bars.push(Kit.mk('rect', {x: labW, y: y - bh / 2, width: 0, height: bh, rx: bh / 2, fill: 'var(--k)'}, svg));
+    else Kit.mk('text', {x: labW + (W - labW) / 2, y: y + fs * 0.35, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--hand)', fill: 'var(--muted)'}, svg).textContent = 'none, at any step';
+  });
+
+  // The blade.
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'steel', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  g.st1 = Kit.mk('stop', {offset: 0}, lg); g.st2 = Kit.mk('stop', {offset: 1}, lg);
+  g.handle = Kit.mk('g', {}, svg);
+  g.blade = Kit.mk('path', {fill: 'url(#steel)', stroke: 'var(--k)', 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, svg);
+  g.hamon = Kit.mk('path', {fill: 'none', stroke: '#ffffff', 'stroke-width': 1.6, 'stroke-opacity': 0}, svg);
+  g.cap = Kit.mk('text', {x: W / 2, y: bladeBot + fs * 1.15, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--hand)', fill: 'var(--k)'}, svg);
+
+  // The strip of tries: the dial.
+  Kit.mk('line', {x1: fs * .6, x2: W - fs * .6, y1: stripY, y2: stripY, stroke: 'var(--k)', 'stroke-opacity': .3, 'stroke-width': 2}, svg);
+  const x0 = fs * .6, x1 = W - fs * .6;
+  g.x0 = x0; g.x1 = x1;
+  tries.forEach((t, i) => {
+    const x = lerp(x0, x1, (i + .5) / N);
+    const el = t.keep
+      ? Kit.mk('circle', {cx: x, cy: stripY, r: Math.max(fs * .28, 3), fill: '#e0a526', stroke: 'var(--k)', 'stroke-width': 1}, svg)
+      : Kit.mk('path', {d: `M${x - 3} ${stripY - 3}L${x + 3} ${stripY + 3}M${x + 3} ${stripY - 3}L${x - 3} ${stripY + 3}`, stroke: 'var(--k)', 'stroke-opacity': .55, 'stroke-width': 1.4}, svg);
+    el.style.opacity = 0;
+    g.ticks.push(el);
+  });
+  Kit.mk('text', {x: x0, y: stripY + fs * 1.6, 'font-size': fs, 'font-family': 'var(--body)', fill: 'var(--muted)'}, svg).textContent = 'first tries';
+  Kit.mk('text', {x: W / 2, y: stripY + fs * 1.6, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', fill: 'var(--muted)'}, svg).textContent = '✕ failed · ● kept';
+  Kit.mk('text', {x: x1, y: stripY + fs * 1.6, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', fill: 'var(--muted)'}, svg).textContent = 'centuries on';
+  g.knob = Kit.mk('circle', {cy: stripY, r: Math.max(fs * .7, 10), fill: 'var(--k)', stroke: 'var(--c)', 'stroke-width': 3}, svg);
+  G = g;
+  render(P);
+}
+
+function render(p) {
+  const g = G; if (!g) return;
+  const n = Math.round(p * N);
+  const got = [0, 0, 0, 0];
+  let kept = 0;
+  tries.forEach((t, i) => {
+    const on = i < n;
+    g.ticks[i].style.opacity = on ? 1 : 0;
+    if (on && t.keep) { got[t.step]++; kept++; }
+  });
+  g.bars.forEach((b, s) => b.setAttribute('width', (g.W - g.labW) * got[s] / tot[s]));
+  const q = kept / totKept;
+  g.knob.setAttribute('cx', lerp(g.x0, g.x1, p));
+
+  // From a rough lump of iron to a long, curved, polished blade.
+  const {W, bladeTop, bladeBot, fs} = g;
+  const cy = (bladeTop + bladeBot) / 2 + (bladeBot - bladeTop) * .12;
+  const L = lerp(W * .3, W * .7, q);
+  const hl = W * .2 * q;
+  const xs = (W - L - hl) / 2 + hl;
+  const t = lerp((bladeBot - bladeTop) * .55, Math.max((bladeBot - bladeTop) * .14, 6), q);
+  const sori = (bladeBot - bladeTop) * .28 * q;
+  const amp = (1 - q) * t * .45;
+  const top = [], bot = [];
+  const M = 24;
+  for (let i = 0; i <= M; i++) {
+    const s = i / M;
+    const x = xs + L * s;
+    const ys = cy - sori * Math.sin(Math.PI * s * .5) * s;
+    let w = t * (1 - .35 * s);
+    if (s > .88) w *= lerp(1, q > .5 ? 0.02 : .5, (s - .88) / .12);
+    top.push([x, ys - w * .15 + noise[i] * amp]);
+    bot.push([x - (s > .9 ? (s - .9) * L * .6 * q : 0), ys + w * .85 + noise[(i + 24) % noise.length] * amp]);
+  }
+  const pts = [...top, ...bot.reverse()];
+  g.blade.setAttribute('d', 'M' + pts.map(a => a[0].toFixed(1) + ' ' + a[1].toFixed(1)).join('L') + 'Z');
+  g.st1.setAttribute('stop-color', mix('#5a3a2c', '#f2f4f7', q));
+  g.st2.setAttribute('stop-color', mix('#7a4e33', '#a9b1bc', q));
+  // The temper line appears only on a well-made blade.
+  const hm = [];
+  for (let i = 1; i < M * .86; i++) {
+    const s = i / M, x = xs + L * s, ys = cy - sori * Math.sin(Math.PI * s * .5) * s, w = t * (1 - .35 * s);
+    hm.push([x, ys + w * .42 + Math.sin(i * 1.7) * w * .1]);
+  }
+  g.hamon.setAttribute('d', 'M' + hm.map(a => a[0].toFixed(1) + ' ' + a[1].toFixed(1)).join('L'));
+  g.hamon.setAttribute('stroke-opacity', Math.max(0, (q - .55) / .45) * .9);
+  // Handle and guard once the blade is worth holding.
+  g.handle.innerHTML = '';
+  if (q > .5) {
+    const o = (q - .5) / .5;
+    const hh = t * .75;
+    Kit.mk('rect', {x: xs - hl, y: cy - hh * .45 + t * .2, width: hl, height: hh, rx: hh * .3, fill: 'var(--k)', opacity: o}, g.handle);
+    for (let k = 1; k < 6; k++) Kit.mk('path', {d: `M${xs - hl + hl * k / 6 - hh * .25} ${cy - hh * .45 + t * .2}l${hh * .5} ${hh}`, stroke: 'var(--c)', 'stroke-width': 1.4, opacity: o * .7}, g.handle);
+    Kit.mk('ellipse', {cx: xs, cy: cy + t * .35, rx: Math.max(fs * .3, 4), ry: t * .95, fill: '#e0a526', stroke: 'var(--k)', 'stroke-width': 1.4, opacity: o}, g.handle);
+  }
+  g.cap.textContent = q < .2 ? 'a brittle lump of iron' : q < .5 ? 'better… still cracks' : q < .85 ? 'harder, sharper, curved' : 'a blade prized for centuries';
+}
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let drag = false, lastN = -1;
+function setFrom(e) {
+  const r = Kit.$('pic').getBoundingClientRect();
+  const sx = G.W / r.width;
+  const x = (e.clientX - r.left) * sx;
+  P = Math.max(0, Math.min(1, (x - G.x0) / (G.x1 - G.x0)));
+  const n = Math.round(P * N);
+  if (n !== lastN) { if (n > lastN && n > 0 && tries[n - 1].keep) Kit.haptic('light'); lastN = n; }
+  render(P);
+  if (P > .97) finish();
+}
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => { drag = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {} if (Kit.$('pic').__pulse) Kit.$('pic').__pulse.kill(); setFrom(e); });
+pic.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+pic.addEventListener('pointerup', () => { drag = false; });
+pic.addEventListener('pointercancel', () => { drag = false; });
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+  pic.__pulse = gsap.to(G.knob, {attr: {r: Math.max(G.fs * .95, 13)}, duration: .6, repeat: 5, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect();
+  const y = r.top + r.height * (G.stripY / G.H);
+  const ev = (type, x) => pic.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', r.left + 2);
+  for (let i = 1; i <= 12; i++) { ev('pointermove', r.left + r.width * i / 12); await new Promise(z => setTimeout(z, 30)); }
+  ev('pointermove', r.right + 4);
+  ev('pointerup', r.right + 4);
+  await new Promise(z => setTimeout(z, 700));
+};
+Kit.single();
+</script>
+</html>

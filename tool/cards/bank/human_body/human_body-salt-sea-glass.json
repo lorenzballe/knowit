@@ -1,0 +1,38 @@
+{
+  "id": "human_body-salt-sea-glass",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How much salt is in a 200 ml glass of sea water?",
+  "answer": "Sea water is about 3.5% salt, so it holds 3.5 g of salt in every 100 ml. A 200 ml glass holds double that, about 7 g. The WHO says not to go over 5 g of salt a day, so one glass is more than a whole day's limit.",
+  "move": "One glass of sea water holds more salt than a whole day's limit.",
+  "keywords": [
+    "sea water",
+    "salt",
+    "glass",
+    "who",
+    "daily limit"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Astute free card, SEA WATER, asks how much salt is in a 200 ml glass of sea water. A gram stepper with minus and plus buttons sits at 1 g, with a button reading That's my guess. The card shows a glass of sea water beside a 7 g pile of salt.",
+    "graded": false
+  },
+  "source": "Geopop, “Cosa succede se bevi acqua di mare? Ecco perché causa disidratazione e infezioni batteriche” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WtF2R7J9DUo&t=105s",
+  "written": "2026-11-03"
+}

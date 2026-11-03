@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-period-two-split -->
+<title>Astute · Past R = 3, the population splits in two</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#plot{flex:1;min-height:0;width:100%;display:block}
+#plot .ax{stroke:var(--k);stroke-width:1.5;fill:none}
+#plot .grid{stroke:color-mix(in srgb,var(--k) 14%,transparent);stroke-width:1}
+#plot .ln{stroke:color-mix(in srgb,var(--k) 45%,transparent);stroke-width:2;fill:none;stroke-linejoin:round}
+#plot .pt{fill:var(--k)}
+#plot .pt.lo{fill:var(--c);stroke:var(--k);stroke-width:2}
+#plot .lvl{stroke:var(--k);stroke-width:1.5;stroke-dasharray:5 5;fill:none}
+#plot .tx{fill:var(--k);font-family:var(--body);font-weight:700}
+#plot .mu{fill:color-mix(in srgb,var(--k) 65%,transparent);font-family:var(--body);font-weight:600}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#rv{font:700 max(2.3cqh,15px)/1 var(--mono);color:var(--k);white-space:nowrap;min-width:9ch}
+#rbox{flex:1;display:flex;flex-direction:column;gap:.4cqh}
+#r{width:100%;accent-color:var(--k);height:max(3.4cqh,26px);margin:0}
+#ticks{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1 var(--body);color:var(--muted)}
+#ticks b{color:var(--k)}
+#run{font:700 max(2.2cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4.5cqw;cursor:pointer;white-space:nowrap}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:600 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.say,.q,#why{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Aim and launch · logistic map">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LOGISTIC MAP</span></div>
+    <h2 class="q">What happens to the logistic map when the growth rate R passes 3?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="ctl">
+        <span id="rv">R = 2.80</span>
+        <div id="rbox">
+          <input id="r" type="range" min="2.5" max="3.4" step="0.05" value="2.8" aria-label="growth rate R">
+          <div id="ticks"><span>2.5</span><b>3</b><span>3.4</span></div>
+        </div>
+        <button id="run">Run ▶</button>
+      </div>
+      <div id="why" class="gone"><p class="body">Past R = 3 the population never settles on one value. Year after year it flips between two levels: high, low, high, low.</p></div>
+    </div>
+    <p class="say" id="say">Set R, then tap Run to watch 30 years unfold.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Above R = 3 one equilibrium becomes two, and the population alternates.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 30, svg = Kit.$('plot'), slider = Kit.$('r');
+let R = 2.8, xs = [], tl = null, revealed = false;
+
+function compute(r){
+  const a = [0.2];
+  for (let i = 0; i < N; i++){ const x = a[i]; a.push(r * x * (1 - x)); }
+  let x = 0.2; for (let i = 0; i < 2000; i++) x = r * x * (1 - x);
+  const y = r * x * (1 - x);
+  return {pts: a, lv: Math.abs(x - y) < 0.004 ? [x] : [Math.max(x, y), Math.min(x, y)]};
+}
+let D = compute(R);
+
+function draw(){
+  if (tl){ tl.kill(); tl = null; }
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const fs = Math.max(f * .85, 12), fl = Math.max(f, 13);
+  const ml = fs * 2.6, mr = fl * 5.6, mt = fs * 1.6, mb = fs * 2.2;
+  const X = i => ml + i * (W - ml - mr) / N, Y = v => mt + (1 - v) * (H - mt - mb);
+  [0, .5, 1].forEach(v => {
+    Kit.mk('line', {x1: ml, x2: X(N), y1: Y(v), y2: Y(v), class: 'grid'}, svg);
+    Kit.mk('text', {x: ml - fs * .5, y: Y(v) + fs * .35, 'text-anchor': 'end', class: 'mu', 'font-size': fs}, svg).textContent = v;
+  });
+  Kit.mk('path', {d: `M${ml},${Y(1)}V${Y(0)}H${X(N)}`, class: 'ax'}, svg);
+  Kit.mk('text', {x: ml, y: mt - fs * .55, class: 'mu', 'font-size': fs}, svg).textContent = 'population';
+  Kit.mk('text', {x: X(N), y: Y(0) + fs * 1.6, 'text-anchor': 'end', class: 'mu', 'font-size': fs}, svg).textContent = 'years →';
+  Kit.mk('text', {x: ml, y: Y(0) + fs * 1.6, class: 'mu', 'font-size': fs}, svg).textContent = '0';
+
+  const two = D.lv.length === 2;
+  const lvls = D.lv.map(v => Kit.mk('line', {x1: ml, x2: X(N) + fl * .4, y1: Y(v), y2: Y(v), class: 'lvl'}, svg));
+  const line = Kit.mk('polyline', {points: D.pts.map((v, i) => `${X(i)},${Y(v)}`).join(' '), class: 'ln'}, svg);
+  const r = Math.max(f * .3, 3.2);
+  const mid = two ? (D.lv[0] + D.lv[1]) / 2 : 0;
+  const dots = D.pts.map((v, i) => Kit.mk('circle', {cx: X(i), cy: Y(v), r, class: 'pt' + (two && i > 4 && v < mid ? ' lo' : '')}, svg));
+
+  // labels at the right, pushed apart so they never touch
+  let ys = D.lv.map(v => Y(v));
+  if (two && ys[1] - ys[0] < fl * 1.45){ const c = (ys[0] + ys[1]) / 2; ys = [c - fl * .73, c + fl * .73]; }
+  const names = two ? ['high', 'low'] : ['settles'];
+  const labs = D.lv.map((v, k) => {
+    const t = Kit.mk('text', {x: X(N) + fl * .7, y: ys[k] + fl * .35, class: 'tx', 'font-size': fl}, svg);
+    t.textContent = `${names[k]} ${v.toFixed(2)}`;
+    return t;
+  });
+  return {line, dots, lvls, labs};
+}
+
+function run(animate){
+  D = compute(R);
+  const g = draw();
+  if (animate && !Kit.calm){
+    const len = g.line.getTotalLength ? g.line.getTotalLength() : 2000, dur = 2;
+    g.line.style.strokeDasharray = len;
+    tl = gsap.timeline({onComplete: done});
+    tl.fromTo(g.line, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: dur, ease: 'none'}, 0);
+    tl.from(g.dots, {opacity: 0, scale: 0, transformOrigin: '50% 50%', duration: .25, stagger: dur / N, ease: 'back.out(3)'}, 0);
+    tl.from([...g.lvls, ...g.labs], {opacity: 0, duration: .4, stagger: .1}, dur);
+  } else done();
+}
+
+function done(){
+  const say = Kit.$('say');
+  if (D.lv.length === 2){
+    Kit.haptic('success');
+    if (!revealed){ revealed = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+  } else if (!revealed){
+    say.textContent = R >= 3 ? 'Right at 3 it still creeps to one value. Push R a bit past 3.' : 'It settles on one level. Now push R past 3 and run again.';
+  }
+}
+
+slider.addEventListener('input', () => {
+  R = +slider.value; Kit.$('rv').textContent = `R = ${R.toFixed(2)}`; Kit.haptic('selection');
+});
+Kit.$('run').addEventListener('click', () => { Kit.haptic('light'); run(true); });
+
+Kit.onShow.card = () => { D = compute(R); draw(); };
+Kit.onEnter.card = () => { run(true); };
+Kit.play.card = async () => {
+  slider.value = '3.3'; slider.dispatchEvent(new Event('input', {bubbles: true}));
+  Kit.$('run').click();
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

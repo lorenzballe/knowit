@@ -1,0 +1,170 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-noisy-tit-for-tat -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#g{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;font:500 max(1.8cqh,12px)/1.3 var(--body)}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
+    <h2 class="q">Two Tit for Tats mishear one move. How much long-run score survives?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="g"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Nearly all</button>
+        <button class="opt" data-i="1">About two-thirds</button>
+        <button class="opt" data-i="2">About one-third</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About one-third</p><p class="body">A misreads one friendly move and hits back. Each copies the other's last move, so the hit bounces back and forth. A second misread locks both into defecting for good.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Bet on what's left, then watch one misread play out.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Copying every move turns one mistake into an endless echo.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1;
+const N = 14, NOISE = [3, 8];
+const MA = 'CCCCDCDCDDDDDD', MB = 'CCCCCDCDCDDDDD';
+const RED = '#e0263f';
+let shown = 0, barsDone = false, els = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  runChain();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function draw() {
+  const svg = Kit.$('g');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12);
+  const lm = fs * 1.6, rp = fs * .4;
+  const colW = (W - lm - rp) / N;
+  let r = Math.min(colW * .34, H * .045);
+  const cx = t => lm + colW * (t + .5);
+  const yLab = fs * 1.0;
+  const yA = yLab + fs * .7 + r;
+  const yB = yA + Math.max(r * 2 + fs * 1.8, H * .18);
+  const yLeg = yB + r + fs * 1.6;
+  const bh = Math.max(fs * .8, 8);
+  const yL1 = yLeg + fs * 1.9, yBar1 = yL1 + fs * .45;
+  const yL2 = yBar1 + bh + fs * 1.5, yBar2 = yL2 + fs * .45;
+  const T = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, style: `fill:var(--k);font:700 ${fs}px var(--body)`}, a), svg); e.textContent = s; return e; };
+  const col = m => m === 'D' ? `fill:${RED}` : 'fill:var(--k)';
+
+  T(fs * .3, yA + fs * .35, 'A');
+  T(fs * .3, yB + fs * .35, 'B');
+
+  const lA = [], lB = [], dA = [], dB = [], mis = {};
+  for (let t = 1; t < N; t++) {
+    const pA = NOISE.includes(t - 1) ? 'D' : MB[t - 1];
+    const misread = NOISE.includes(t - 1);
+    lA[t] = Kit.mk('line', {x1: cx(t - 1), y1: yB, x2: cx(t), y2: yA,
+      style: `stroke:${pA === 'D' ? RED : 'var(--k)'};stroke-width:${misread ? 2.4 : 1.4};opacity:${pA === 'D' ? .9 : .28}${misread ? ';stroke-dasharray:4 3' : ''}`}, svg);
+    lB[t] = Kit.mk('line', {x1: cx(t - 1), y1: yA, x2: cx(t), y2: yB,
+      style: `stroke:${MA[t - 1] === 'D' ? RED : 'var(--k)'};stroke-width:1.4;opacity:${MA[t - 1] === 'D' ? .9 : .28}`}, svg);
+  }
+  for (let t = 0; t < N; t++) {
+    Kit.mk('circle', {cx: cx(t), cy: yA, r, style: 'fill:none;stroke:var(--k);stroke-width:1.2;opacity:.2'}, svg);
+    Kit.mk('circle', {cx: cx(t), cy: yB, r, style: 'fill:none;stroke:var(--k);stroke-width:1.2;opacity:.2'}, svg);
+    dA[t] = Kit.mk('circle', {cx: cx(t), cy: yA, r, style: col(MA[t])}, svg);
+    dB[t] = Kit.mk('circle', {cx: cx(t), cy: yB, r, style: col(MB[t])}, svg);
+  }
+  NOISE.forEach(t => {
+    mis[t] = T(cx(t) + colW * .5, yLab, 'misread', {'text-anchor': 'middle', style: `fill:${RED};font:700 ${fs}px var(--body)`});
+  });
+
+  // legend
+  Kit.mk('circle', {cx: lm + fs * .4, cy: yLeg - fs * .32, r: fs * .4, style: 'fill:var(--k)'}, svg);
+  T(lm + fs * 1.1, yLeg, 'cooperate', {style: `fill:var(--k);font:500 ${fs}px var(--body)`});
+  const lx = lm + fs * 7.2;
+  Kit.mk('circle', {cx: lx, cy: yLeg - fs * .32, r: fs * .4, style: `fill:${RED}`}, svg);
+  T(lx + fs * .7, yLeg, 'defect', {style: `fill:var(--k);font:500 ${fs}px var(--body)`});
+
+  // score bars
+  const bw = (W - lm) * .72;
+  T(lm, yL1, 'Perfect world', {style: `fill:var(--k);font:600 ${fs}px var(--body)`});
+  Kit.mk('rect', {x: lm, y: yBar1, width: bw, height: bh, rx: bh / 2, style: 'fill:var(--k);opacity:.85'}, svg);
+  T(lm + bw + fs * .5, yBar1 + bh * .5 + fs * .35, 'all', {style: `fill:var(--k);font:700 ${fs}px var(--body)`});
+  T(lm, yL2, 'With noise', {style: `fill:var(--k);font:600 ${fs}px var(--body)`});
+  Kit.mk('rect', {x: lm, y: yBar2, width: bw, height: bh, rx: bh / 2, style: 'fill:none;stroke:var(--k);stroke-width:1.2;opacity:.3'}, svg);
+  const bar = Kit.mk('rect', {x: lm, y: yBar2, width: barsDone ? bw / 3 : 0, height: bh, rx: bh / 2, style: `fill:${RED}`}, svg);
+  const bLab = T(lm + bw + fs * .5, yBar2 + bh * .5 + fs * .35, barsDone ? '⅓' : '?', {style: `fill:${barsDone ? RED : 'var(--k)'};font:800 ${fs * 1.15}px var(--body)`});
+
+  els = {dA, dB, lA, lB, mis, bar, bLab, bw, lm, fs};
+  for (let t = 0; t < N; t++) setRound(t, t < shown);
+}
+
+function setRound(t, on) {
+  const o = on ? 1 : 0;
+  gsap.set([els.dA[t], els.dB[t]], {opacity: o});
+  if (t > 0) gsap.set([els.lA[t], els.lB[t]], {autoAlpha: o});
+  if (NOISE.includes(t - 1)) gsap.set(els.mis[t - 1], {opacity: o});
+  else if (NOISE.includes(t)) gsap.set(els.mis[t], {opacity: 0});
+}
+
+function animRound(t) {
+  if (!els) return;
+  shown = Math.max(shown, t + 1);
+  const d = [els.dA[t], els.dB[t]];
+  gsap.fromTo(d, {opacity: 0, scale: .2, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .3, ease: 'back.out(2)'});
+  if (t > 0) gsap.fromTo([els.lA[t], els.lB[t]], {autoAlpha: 0}, {autoAlpha: 1, duration: .25});
+  if (NOISE.includes(t - 1)) {
+    gsap.fromTo(els.mis[t - 1], {opacity: 0, y: -4}, {opacity: 1, y: 0, duration: .3});
+    Kit.haptic('light');
+  }
+}
+
+function showBars() {
+  barsDone = true;
+  if (!els) return;
+  const w = els.bw / 3;
+  els.bLab.textContent = '⅓';
+  els.bLab.style.fill = RED;
+  gsap.to(els.bar, {attr: {width: w}, duration: 1, ease: 'power2.out'});
+}
+
+function runChain() {
+  if (Kit.calm) { shown = N; barsDone = true; draw(); return; }
+  const start = shown;
+  for (let t = start; t < N; t++) gsap.delayedCall((t - start) * .28 + (t > 3 ? .35 : 0) + (t > 8 ? .35 : 0), () => animRound(t));
+  gsap.delayedCall((N - start) * .28 + 1, showBars);
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) { shown = 3; draw(); return; }
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  for (let t = 0; t < 3; t++) gsap.delayedCall(.3 + t * .3, () => { if (shown <= t) animRound(t); });
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 5800));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-ultrasound-repellents -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:700 max(2.8cqh,18px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.lanebg{fill:var(--k);fill-opacity:.07}
+.ink{fill:var(--k)}
+.soft{fill:var(--k);fill-opacity:.18}
+.wing{fill:var(--k);fill-opacity:.28}
+.line{stroke:var(--k);fill:none;stroke-linecap:round}
+.eye{stroke:var(--c);fill:none;stroke-linecap:round}
+.cdot{fill:var(--c)}
+.tt{fill:var(--k);font-family:var(--body);font-weight:800}
+.sub{fill:var(--k);fill-opacity:.7;font-family:var(--body);font-weight:600}
+.cnt{fill:var(--k);font-family:var(--display);font-weight:800}
+.wave{fill:none;stroke:var(--k);stroke-dasharray:6 5}
+.flash{fill:#e0413a}
+.huh{fill:#e0413a;font-family:var(--display);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ULTRASOUND</span></div>
+    <h2 class="q">Do ultrasonic devices actually keep mosquitoes away?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="art"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The ultrasound room gets fewer bites</button>
+        <button class="opt" data-i="1">No difference</button>
+        <button class="opt" data-i="2">The ultrasound room gets more bites</button>
+      </div>
+      <div id="why" class="gone"><p class="big">No difference</p><p class="body">Ultrasound is sound above 20,000 Hz. None of the ultrasonic devices really seems to work: the mosquitoes fly right through it. A dog, though, may be bothered by it.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess which room gets fewer bites tonight, then race the night.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ultrasonic repellents don't stop mosquitoes, and they can bother dogs.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, N = 9, svg = Kit.$('art');
+let pick = -1, phase = 'idle', lanes = [], tw = [];
+// Same flight plan for both rooms: the device changes nothing.
+const plan = [];
+for (let k = 0; k < N; k++) plan.push({ax: Kit.rnd(), ay: [Kit.rnd(), Kit.rnd()], j: [Kit.rnd(), Kit.rnd()], ex: Kit.rnd(), ey: Kit.rnd(), b: Kit.rnd()});
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const T = (el, s) => { el.textContent = s; return el; };
+
+function drawLane(i, top, W, lh, fs, pad, defs) {
+  const g = mk('g', {}, svg);
+  const cp = mk('clipPath', {id: 'cl' + i}, defs);
+  mk('rect', {x: 0, y: top, width: W, height: lh, rx: pad}, cp);
+  mk('rect', {x: 0, y: top, width: W, height: lh, rx: pad, class: 'lanebg'}, g);
+  T(mk('text', {x: pad, y: top + pad + fs, class: 'tt', 'font-size': fs}, g), i ? 'Ultrasonic device' : 'No device');
+  const sub = T(mk('text', {x: pad, y: top + pad + fs * 2.35, class: 'sub', 'font-size': fs * .85}, g), i ? 'switched off' : 'nothing on');
+  const count = T(mk('text', {x: W - pad, y: top + pad + fs * 1.5, class: 'cnt', 'font-size': fs * 1.6, 'text-anchor': 'end'}, g), '0 bites');
+  // sleeper
+  const tx = W * .74, ty = top + lh * .64, r = Math.min(lh * .1, W * .06);
+  mk('ellipse', {cx: tx + r * .2, cy: ty + r * .75, rx: r * 1.7, ry: r * .45, class: 'soft'}, g);
+  mk('rect', {x: tx + r * .7, y: ty - r * .45, width: Math.max(r, W - pad * .7 - (tx + r * .7)), height: r * 1.5, rx: r * .5, class: 'soft'}, g);
+  mk('circle', {cx: tx, cy: ty, r, class: 'ink'}, g);
+  const flash = mk('circle', {cx: tx, cy: ty, r: r * 1.05, class: 'flash', opacity: 0}, g);
+  mk('path', {d: `M${tx - r * .55} ${ty - r * .1} q${r * .22} ${r * .22} ${r * .44} 0`, class: 'eye', 'stroke-width': Math.max(1.5, r * .1)}, g);
+  const L = {i, top, lh, tx, ty, r, sub, count, flash, ms: [], waves: []};
+  if (i) {
+    const sx = pad + W * .02, sy = top + lh * .64, s = r * .8;
+    const cx = sx + s, sw = Math.max(1.5, s * .12);
+    const R = Math.max(s, Math.min((Math.min(sy - top, top + lh - sy) - sw) / Math.sin(Math.PI / 6), W - cx - pad));
+    const ax = R * Math.cos(Math.PI / 6), ay = R * Math.sin(Math.PI / 6);
+    for (let w = 0; w < 4; w++) L.waves.push(mk('path', {d: `M${cx + ax} ${sy - ay} A${R} ${R} 0 0 1 ${cx + ax} ${sy + ay}`, class: 'wave', 'stroke-width': sw, 'vector-effect': 'non-scaling-stroke', opacity: 0, transform: `translate(${cx} ${sy}) scale(.01) translate(${-cx} ${-sy})`, 'clip-path': 'url(#cl1)'}, g));
+    mk('rect', {x: sx - s * .3, y: sy - s * .5, width: s * .6, height: s, rx: s * .1, class: 'ink'}, g);
+    mk('path', {d: `M${sx + s * .25} ${sy - s * .45} L${sx + s * 1.1} ${sy - s * 1.1} L${sx + s * 1.1} ${sy + s * 1.1} L${sx + s * .25} ${sy + s * .45}Z`, class: 'ink'}, g);
+    L.sx = cx; L.sy = sy;
+    // dog
+    const d = Math.min(lh * .12, W * .075), dx = W * .46, by = top + lh - pad * .7;
+    const dg = mk('g', {}, g);
+    mk('path', {d: `M${dx - d * 1.1} ${by - d * .9} q${-d * .7} ${-d * .3} ${-d * .6} ${-d * 1}`, class: 'line', 'stroke-width': d * .22}, dg);
+    for (const lx of [-.8, -.4, .4, .8]) mk('rect', {x: dx + lx * d - d * .12, y: by - d * .8, width: d * .24, height: d * .8, rx: d * .1, class: 'ink'}, dg);
+    mk('ellipse', {cx: dx, cy: by - d * .95, rx: d * 1.25, ry: d * .55, class: 'ink'}, dg);
+    const hx = dx + d * 1.15, hy = by - d * 1.55;
+    const head = mk('g', {}, dg);
+    mk('circle', {cx: hx, cy: hy, r: d * .55, class: 'ink'}, head);
+    mk('ellipse', {cx: hx + d * .6, cy: hy + d * .15, rx: d * .4, ry: d * .26, class: 'ink'}, head);
+    mk('circle', {cx: hx + d * .95, cy: hy + d * .08, r: d * .1, class: 'cdot'}, head);
+    mk('circle', {cx: hx + d * .2, cy: hy - d * .12, r: d * .09, class: 'cdot'}, head);
+    const earL = mk('ellipse', {cx: hx - d * .35, cy: hy + d * .1, rx: d * .18, ry: d * .45, class: 'ink', transform: `rotate(20 ${hx - d * .35} ${hy - d * .3})`}, head);
+    L.head = head; L.hx = hx; L.hy = hy; L.ear = earL;
+    L.huh = T(mk('text', {x: hx + d * .3, y: hy - d * 1, class: 'huh', 'font-size': fs * 1.2, opacity: 0}, g), '?!');
+  }
+  // mosquitoes
+  const ms = Math.max(r * .32, 5);
+  plan.forEach((p, k) => {
+    const x0 = W * (.2 + p.ax * .3), y0 = top + lh * (.4 + p.ay[i] * .3);
+    const o = mk('g', {transform: `translate(${x0},${y0})`}, g), n = mk('g', {}, o);
+    mk('ellipse', {cx: -ms * .15, cy: -ms * .55, rx: ms * .6, ry: ms * .28, class: 'wing'}, n);
+    mk('ellipse', {cx: ms * .2, cy: -ms * .5, rx: ms * .5, ry: ms * .24, class: 'wing'}, n);
+    for (const lx of [-.4, 0, .4]) mk('line', {x1: lx * ms, y1: 0, x2: lx * ms - ms * .25, y2: ms * .7, class: 'line', 'stroke-width': Math.max(1, ms * .08)}, n);
+    mk('ellipse', {cx: 0, cy: 0, rx: ms, ry: ms * .3, class: 'ink'}, n);
+    mk('circle', {cx: ms * .95, cy: -ms * .05, r: ms * .28, class: 'ink'}, n);
+    mk('line', {x1: ms * 1.1, y1: 0, x2: ms * 1.85, y2: ms * .25, class: 'line', 'stroke-width': Math.max(1, ms * .1)}, n);
+    const ex = tx - r * (1.3 + p.ex * .6), ey = ty - r * (1.2 - p.ey * 2.2);
+    L.ms.push({o, n, x0, y0, ex, ey, ms});
+  });
+  return L;
+}
+
+function bob(L) {
+  if (Kit.calm) return;
+  L.ms.forEach((m, k) => tw.push(gsap.to(m.n, {y: -m.ms * .8, duration: .25 + plan[k].b * .25, repeat: -1, yoyo: true, ease: 'sine.inOut'})));
+}
+function deviceOn(L) {
+  T(L.sub, 'on · above 20,000 Hz');
+  L.huh.setAttribute('opacity', 1);
+  const so = `${L.sx} ${L.sy}`;
+  if (Kit.calm) { L.waves.forEach((w, k) => { const sc = (k + 1) / 4; w.setAttribute('transform', `translate(${L.sx} ${L.sy}) scale(${sc}) translate(${-L.sx} ${-L.sy})`); w.setAttribute('opacity', .5); }); return; }
+  L.waves.forEach((w, k) => tw.push(gsap.fromTo(w, {scale: .02, svgOrigin: so, opacity: .9}, {scale: 1, svgOrigin: so, opacity: 0, duration: 2.4, ease: 'none', repeat: -1, delay: k * .6})));
+  tw.push(gsap.to(L.head, {rotation: 14, svgOrigin: `${L.hx} ${L.hy + 10}`, duration: .09, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+  tw.push(gsap.fromTo(L.huh, {scale: .8, svgOrigin: `${L.hx} ${L.hy}`}, {scale: 1.15, duration: .3, repeat: -1, yoyo: true}));
+}
+function finalState() {
+  lanes.forEach(L => {
+    T(L.count, `${N} bites`);
+    L.ms.forEach(m => m.o.setAttribute('transform', `translate(${m.ex},${m.ey})`));
+    if (L.i) deviceOn(L);
+  });
+}
+
+Kit.onShow.card = () => {
+  tw.forEach(t => t.kill()); tw = [];
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, W / 24));
+  const gap = H * .035, lh = (H - gap) / 2, pad = Math.min(W, lh) * .06;
+  const defs = mk('defs', {}, svg);
+  lanes = [0, 1].map(i => drawLane(i, i * (lh + gap), W, lh, fs, pad, defs));
+  lanes.forEach(bob);
+  if (phase !== 'idle') finalState();
+};
+
+function race() {
+  return new Promise(res => {
+    phase = 'run';
+    if (Kit.calm) { finalState(); phase = 'done'; return setTimeout(res, 300); }
+    deviceOn(lanes[1]);
+    lanes.forEach(L => {
+      let c = 0;
+      L.ms.forEach((m, k) => {
+        const st = {p: 0}, ph = plan[k].ax * 6;
+        tw.push(gsap.to(st, {p: 1, duration: 1.3, delay: .3 + k * .36 + plan[k].j[L.i] * .2, ease: 'sine.inOut',
+          onUpdate: () => {
+            const p = st.p, x = m.x0 + (m.ex - m.x0) * p, y = m.y0 + (m.ey - m.y0) * p + Math.sin(p * Math.PI * 4 + ph) * L.lh * .07 * (1 - p);
+            m.o.setAttribute('transform', `translate(${x},${y})`);
+          },
+          onComplete: () => {
+            c++; T(L.count, `${c} bite${c > 1 ? 's' : ''}`);
+            gsap.fromTo(L.flash, {opacity: .9}, {opacity: 0, duration: .45});
+            if (L.i === 0) Kit.haptic('light');
+          }}));
+      });
+    });
+    setTimeout(() => { phase = 'done'; res(); }, 4800);
+  });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', async pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say');
+  await race();
+  Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#art', {opacity: 0, y: 8, duration: .5, ease: 'power3.out'}); gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 5600)); };
+Kit.single();
+</script>
+</html>

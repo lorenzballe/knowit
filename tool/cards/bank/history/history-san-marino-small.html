@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-san-marino-small -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.done{box-shadow:inset 0 0 0 .35cqh var(--k)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Try both · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NAPOLEON'S OFFER</span></div>
+    <h2 class="q">Why did San Marino turn down Napoleon's offer of more land?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="map"></svg></div>
+      <div id="opts">
+        <button class="opt" data-a="big">Take the land</button>
+        <button class="opt" data-a="small">Stay small</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Small is safe</p>
+        <p class="body">In the late 1700s Napoleon offered San Marino more land. It said no: a bigger state gets noticed, and noticed states get attacked. Bothering no one and staying almost invisible kept it free.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Try both answers and watch who comes for it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sometimes the safest size is the one nobody notices.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {s: 0, a: 0};
+let mode = 'none', tried = new Set(), finished = false;
+let G = null; // drawn elements and sizes
+const INK = 'var(--k)', BG = 'var(--c)';
+const ANG = [-150, -95, -35, 20, 85, 150];
+
+function blob(r, wob) {
+  let d = '';
+  for (let i = 0; i <= 60; i++) {
+    const a = i / 60 * Math.PI * 2;
+    const rr = r * (1 + wob * (0.6 * Math.sin(3 * a + .4) + 0.4 * Math.sin(5 * a + 1.3)));
+    d += (i ? 'L' : 'M') + (rr * Math.cos(a)).toFixed(1) + ',' + (rr * Math.sin(a)).toFixed(1);
+  }
+  return d + 'Z';
+}
+
+function caption() {
+  if (mode === 'big') return 'Bigger: noticed, coveted, attacked';
+  if (mode === 'small') return 'Small: almost invisible, left alone';
+  return 'Napoleon offers the land all around';
+}
+
+function render() {
+  if (!G) return;
+  const {cx, cy, r0, r1, len, hs} = G;
+  const R = r0 + (r1 - r0) * st.s;
+  G.terr.setAttribute('transform', `translate(${cx},${cy}) scale(${R / r1})`);
+  G.offer.style.opacity = 0.9 - 0.7 * st.s;
+  G.offerLab.style.opacity = 1 - st.s;
+  G.arrows.forEach((g, i) => {
+    const rT = R * 1.1 + (1 - st.a) * len * 1.6;
+    g.setAttribute('transform', `translate(${cx},${cy}) rotate(${ANG[i]})`);
+    g.style.opacity = st.a;
+    g.line.setAttribute('x1', rT + hs * .8); g.line.setAttribute('x2', rT + len);
+    g.head.setAttribute('points', `${rT},0 ${rT + hs},${-hs * .6} ${rT + hs},${hs * .6}`);
+  });
+  G.cap.textContent = caption();
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('map');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12);
+  const top = fs * 3.2, bot = fs * 2.2;
+  const cx = W / 2, cy = top + (H - top - bot) / 2;
+  const r1 = Math.max(30, Math.min(W * .3, (H - top - bot) * .34));
+  const r0 = r1 * .3, len = r1 * .4, hs = Math.max(6, r1 * .1);
+
+  // Napoleon's hat, top left
+  const hw = fs * 3.2;
+  const hat = Kit.mk('g', {transform: `translate(${fs * .4},${fs * .5})`}, svg);
+  Kit.mk('path', {d: `M0,${hw * .42} Q${hw * .5},${-hw * .25} ${hw},${hw * .42} Q${hw * .5},${hw * .22} 0,${hw * .42}Z`, style: `fill:${INK}`}, hat);
+  Kit.mk('circle', {cx: hw * .5, cy: hw * .2, r: hw * .07, style: `fill:${BG}`}, hat);
+  const nl = Kit.mk('text', {x: fs * .4 + hw + fs * .5, y: fs * .5 + hw * .32, style: `fill:${INK};font:700 ${fs}px var(--body)`}, svg);
+  nl.textContent = 'Napoleon, late 1700s';
+
+  // offered land (dashed)
+  const offer = Kit.mk('path', {d: blob(r1, .09), transform: `translate(${cx},${cy})`, style: `fill:none;stroke:${INK};stroke-width:${Math.max(1.5, fs * .14)};stroke-dasharray:${fs * .5} ${fs * .4}`}, svg);
+  const offerLab = Kit.mk('text', {x: cx, y: cy - r1 * 1.12 - fs * .3, 'text-anchor': 'middle', style: `fill:${INK};font:600 ${fs}px var(--body)`}, svg);
+  offerLab.textContent = 'land on offer';
+
+  // territory that grows
+  const terr = Kit.mk('path', {d: blob(r1, .09), style: `fill:color-mix(in srgb,${INK} 28%,transparent)`}, svg);
+
+  // San Marino today
+  const sm = Kit.mk('g', {transform: `translate(${cx},${cy})`}, svg);
+  Kit.mk('path', {d: blob(r0, .07), style: `fill:${INK}`}, sm);
+  [-1, 0, 1].forEach(k => {
+    const tw = r0 * .2, th = r0 * (k ? .55 : .75), x = k * r0 * .42 - tw / 2, yb = r0 * .35;
+    Kit.mk('rect', {x, y: yb - th, width: tw, height: th, style: `fill:${BG}`}, sm);
+    Kit.mk('path', {d: `M${x - tw * .15},${yb - th} L${x + tw / 2},${yb - th - tw * .9} L${x + tw * 1.15},${yb - th}Z`, style: `fill:${BG}`}, sm);
+  });
+  const smLab = Kit.mk('text', {x: cx, y: cy + r0 + fs * 1.2, 'text-anchor': 'middle', style: `fill:${INK};font:800 ${fs}px var(--body)`}, svg);
+  smLab.textContent = 'San Marino';
+
+  // arrows: those who would come for a bigger state
+  const arrows = ANG.map(() => {
+    const g = Kit.mk('g', {}, svg);
+    g.line = Kit.mk('line', {y1: 0, y2: 0, style: `stroke:${INK};stroke-width:${Math.max(2, fs * .2)};stroke-linecap:round`}, g);
+    g.head = Kit.mk('polygon', {style: `fill:${INK}`}, g);
+    return g;
+  });
+
+  const cap = Kit.mk('text', {x: cx, y: H - fs * .5, 'text-anchor': 'middle', style: `fill:${INK};font:700 ${fs}px var(--body)`}, svg);
+  G = {cx, cy, r0, r1, len, hs, terr, offer, offerLab, arrows, cap};
+  render();
+};
+
+function act(a, b) {
+  if (finished) return;
+  mode = a; tried.add(a);
+  document.querySelectorAll('.opt').forEach(o => o.classList.toggle('on', o === b));
+  b.classList.add('done');
+  Kit.haptic('selection');
+  const to = a === 'big' ? {s: 1, a: 1} : {s: 0, a: 0};
+  gsap.killTweensOf(st);
+  if (Kit.calm) { Object.assign(st, to); render(); }
+  else if (a === 'big') {
+    gsap.timeline({onUpdate: render})
+      .to(st, {s: 1, duration: .9, ease: 'power2.out', onUpdate: render})
+      .to(st, {a: 1, duration: .7, ease: 'power3.in', onUpdate: render}, '-=.2');
+  } else {
+    gsap.timeline()
+      .to(st, {a: 0, duration: .5, ease: 'power2.out', onUpdate: render})
+      .to(st, {s: 0, duration: .8, ease: 'power2.inOut', onUpdate: render}, '-=.2');
+  }
+  render();
+  if (tried.size === 2 && a === 'small') {
+    finished = true;
+    setTimeout(() => {
+      Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+      if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+    }, Kit.calm ? 50 : 1000);
+  }
+}
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  act(b.dataset.a, b);
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from([G.offer, G.offerLab], {opacity: 0, duration: .8, ease: 'power2.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[0].click(); await w(1800);
+  Kit.$('opts').children[1].click(); await w(1800);
+};
+Kit.single();
+</script>
+</html>

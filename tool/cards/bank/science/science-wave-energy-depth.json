@@ -1,0 +1,37 @@
+{
+  "id": "science-wave-energy-depth",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What happens to a wave's energy as it goes deeper?",
+  "answer": "At the surface, a wave is a shape. Below the surface, it becomes water moving in circles. The deeper you go, the smaller those circles get, because the wave's energy disperses on the way down.",
+  "move": "A wave's energy fades with depth: its circles get smaller.",
+  "keywords": [
+    "ocean waves",
+    "wave energy",
+    "seabed",
+    "water depth"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Ocean Waves card. It asks what happens to a wave's energy as it goes deeper, with a top circle above a seabed. The reader drags from the top circle down to the seabed to draw how wide the water swirls.",
+    "graded": false
+  },
+  "source": "Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=eJwBf76MMBs&t=124s",
+  "written": "2026-11-03"
+}

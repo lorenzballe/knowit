@@ -1,0 +1,148 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-pompeii-flow-density -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#city{flex:1;min-height:0;width:100%;display:block}
+#reads{display:flex;justify-content:space-between;gap:3cqw}
+.rd{display:flex;flex-direction:column;gap:.3cqh}
+.rd b{font:800 max(3.6cqh,20px)/1 var(--display);color:var(--k)}
+.rd span{font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+.rd.r{text-align:right}
+#dial{width:100%;height:max(4cqh,28px);accent-color:var(--k);margin:0;cursor:pointer}
+#ends{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Turn a dial · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POMPEII</span></div>
+    <h2 class="q">How did the pyroclastic flow fill the spaces of Pompeii?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="city" aria-label="Cross-section of a Roman street with two houses"></svg>
+      <div id="reads">
+        <div class="rd"><b id="fillN">0%</b><span>spaces filled</span></div>
+        <div class="rd r"><b id="airN">100%</b><span>air left inside</span></div>
+      </div>
+      <input type="range" id="dial" min="0" max="100" value="8" aria-label="Density of the cloud">
+      <div id="ends"><span>thin cloud</span><span>very dense flow</span></div>
+    </div>
+    <p class="say" id="say">Slide the cloud from thin to dense and watch where it gets in.</p>
+    <div id="why" class="gone"><p class="body">The burning clouds that hit Pompeii, at 500–600 °C, were very dense. They did not pass over the town: they flooded it, filling every street, room and upper floor, from the ground to the rooftops.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A dense flow doesn't pass over a city: it fills every space in it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const FLOW = '#3b302b', GLOW = '#ff7a2f';
+// Spaces in unit coordinates: x0,x1,y0,y1; t = how hard the flow finds it to get in.
+const SP = [
+  {x0:.05,x1:.21,y0:.63,y1:.90,t:.30},
+  {x0:.21,x1:.40,y0:.63,y1:.90,t:.42},
+  {x0:.05,x1:.40,y0:.40,y1:.63,t:.58},
+  {x0:.05,x1:.40,y0:.28,y1:.40,t:.78, roof:[[.03,.40],[.225,.27],[.42,.40]]},
+  {x0:.57,x1:.66,y0:.56,y1:.90,t:.38, body:true},
+  {x0:.66,x1:.80,y0:.56,y1:.90,t:.10, open:true},
+  {x0:.80,x1:.95,y0:.56,y1:.90,t:.48},
+  {x0:.80,x1:.95,y0:.37,y1:.56,t:.62},
+  {x0:.80,x1:.95,y0:.29,y1:.37,t:.82, roof:[[.785,.37],[.875,.28],[.965,.37]]}
+];
+let d = .08, done = false, G = null;
+const fr = (t, v) => Math.max(0, Math.min(1, (v - t) / (1 - t)));
+
+function build(){
+  const svg = Kit.$('city'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const p = W * .02, X = u => p + u * (W - 2*p), Y = v => v * H;
+  const mk = (t, a, par = svg) => Kit.mk(t, a, par);
+  const defs = mk('defs', {});
+  const gr = mk('linearGradient', {id:'fg', x1:0, y1:0, x2:0, y2:1}, defs);
+  mk('stop', {offset:0, 'stop-color':'#7a4a32'}, gr); mk('stop', {offset:.25, 'stop-color':FLOW}, gr); mk('stop', {offset:1, 'stop-color':'#221b18'}, gr);
+  // cloud above
+  const cloud = mk('g', {});
+  for (let i = 0; i < 9; i++) mk('circle', {cx:X(i/8), cy:Y(.09 + (i%2)*.03), r:Math.min(W,H)*.09, fill:FLOW, opacity:.92}, cloud);
+  mk('rect', {x:0, y:0, width:W, height:Y(.09), fill:FLOW, opacity:.92}, cloud);
+  const fs = Math.max(f * .9, 12);
+  const lab = mk('text', {x:X(.02), y:Y(.07), fill:'#ffd8bf', 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}, svg);
+  lab.textContent = 'burning cloud · 500–600 °C';
+  // outside flow (behind the houses)
+  const out = mk('rect', {x:0, width:W, fill:'url(#fg)'});
+  const outLine = mk('line', {x1:0, x2:W, stroke:GLOW, 'stroke-width':Math.max(2, H*.006)});
+  const els = SP.map((s, i) => {
+    const x = X(s.x0), w = X(s.x1) - x, y0 = Y(s.y0), h = Y(s.y1) - y0;
+    let par = svg;
+    if (s.roof){
+      const cp = mk('clipPath', {id:'c'+i}, defs);
+      mk('polygon', {points:s.roof.map(q => X(q[0])+','+Y(q[1])).join(' ')}, cp);
+      par = mk('g', {'clip-path':`url(#c${i})`});
+    }
+    mk('rect', {x, y:y0, width:w, height:h, fill:'color-mix(in srgb, var(--c) 70%, white)'}, par);
+    if (s.body){
+      const by = Y(s.y1) - H*.02, bx = x + w*.5, L = w*.36;
+      const g = mk('g', {fill:'var(--k)', opacity:.8}, par);
+      mk('ellipse', {cx:bx, cy:by, rx:L, ry:H*.014}, g);
+      mk('circle', {cx:bx - L - H*.012, cy:by - H*.006, r:H*.016}, g);
+    }
+    const fl = mk('rect', {x, width:w, fill:'url(#fg)', opacity:.94}, par);
+    const ln = mk('line', {x1:x, x2:x+w, stroke:GLOW, 'stroke-width':Math.max(2, H*.006)}, par);
+    return {s, fl, ln, top:y0, bot:Y(s.y1)};
+  });
+  // walls and roofs on top
+  const sw = Math.max(2.5, W*.008);
+  const wall = {fill:'none', stroke:'var(--k)', 'stroke-width':sw, 'stroke-linejoin':'round'};
+  SP.forEach(s => {
+    if (s.roof) mk('polygon', Object.assign({points:s.roof.map(q => X(q[0])+','+Y(q[1])).join(' ')}, wall));
+    else if (s.open) { mk('line', Object.assign({x1:X(s.x0), y1:Y(s.y1), x2:X(s.x0), y2:Y(s.y0)}, wall)); }
+    else mk('rect', Object.assign({x:X(s.x0), y:Y(s.y0), width:X(s.x1)-X(s.x0), height:Y(s.y1)-Y(s.y0)}, wall));
+  });
+  mk('polyline', Object.assign({points:[[.555,.56],[.615,.50],[.675,.56]].map(q => X(q[0])+','+Y(q[1])).join(' ')}, wall));
+  mk('line', {x1:0, x2:W, y1:Y(.9), y2:Y(.9), stroke:'var(--k)', 'stroke-width':sw*1.4});
+  const st = mk('text', {x:X(.48), y:Y(.86), 'text-anchor':'middle', fill:'var(--k)', 'font-family':'var(--body)', 'font-weight':700, 'font-size':fs}, svg);
+  st.textContent = 'street';
+  G = {out, outLine, els, Y, cloud, st};
+  if (!Kit.calm) gsap.to(cloud, {x:W*.03, duration:3, yoyo:true, repeat:-1, ease:'sine.inOut'});
+}
+
+function update(anim){
+  if (!G) return;
+  const dur = anim && !Kit.calm ? .5 : 0;
+  const oy = G.Y(.9 - d * .66);
+  gsap.to(G.out, {attr:{y:oy, height:G.Y(.9) - oy + 2}, duration:dur, ease:'power2.out'});
+  gsap.to(G.outLine, {attr:{y1:oy, y2:oy}, duration:dur, ease:'power2.out'});
+  gsap.to(G.st, {opacity: oy < G.Y(.84) ? 0 : 1, duration:dur});
+  let tot = 0, fil = 0;
+  G.els.forEach(e => {
+    const k = fr(e.s.t, d), h = (e.bot - e.top) * k, y = e.bot - h;
+    gsap.to(e.fl, {attr:{y, height:h}, duration:dur, ease:'power2.out'});
+    gsap.to(e.ln, {attr:{y1:y, y2:y}, opacity:k > 0 && k < 1 ? 1 : 0, duration:dur});
+    const a = (e.s.x1 - e.s.x0) * (e.s.y1 - e.s.y0) * (e.s.roof ? .5 : 1);
+    tot += a; fil += a * k;
+  });
+  const pf = Math.round(100 * fil / tot);
+  Kit.$('fillN').textContent = pf + '%';
+  Kit.$('airN').textContent = (100 - pf) + '%';
+  if (!done && d >= .97){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+
+let last = 8;
+Kit.$('dial').addEventListener('input', e => {
+  const v = +e.target.value; d = v / 100;
+  if (Math.abs(v - last) >= 10){ Kit.haptic('selection'); last = v; }
+  update(true);
+});
+Kit.onShow.card = () => { build(); update(false); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#city', {opacity:0, y:12, duration:.5, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const s = Kit.$('dial'); s.value = 100; s.dispatchEvent(new Event('input', {bubbles:true}));
+  await new Promise(r => setTimeout(r, 800));
+};
+Kit.single();
+</script>
+</html>

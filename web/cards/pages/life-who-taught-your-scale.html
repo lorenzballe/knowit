@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who taught your scale</title>
+<!-- First a bet: how many times looser is a kitchen scale (+/-1 g) than the national kilogram
+     (+/-0.02 mg)? x50, x5,000 or x50,000 (right: 50,000), then how sure. Then the chain of weights from
+     the definition of the kilogram down to the kitchen scale, climbed one "who taught it?" at a time
+     from the reader's own scale. Each link shows how far off it may be,
+     and that much printer paper (80 g/m2): 1 g = an 11 cm square, 50 mg = 2.5 cm, 0.5 mg = 2.5 mm,
+     0.02 mg = 0.5 mm.
+     Figures: kitchen scales read in 1 g steps; OIML R 111 maximum permissible errors at 1 kg: class M1
+     50 mg, class E1 0.5 mg; the kilogram's consensus value carries +/-20 ug (NIST); Kibble balances and
+     28Si spheres (XRCD) are the two primary realisations; the Planck constant fixed exactly since
+     20 May 2019 (BIPM). 1 g / 0.02 mg = 50,000.
+     Inspired by Veritasium, "World's Heaviest Weight" (NIST's mass chain from K20) and
+     "World's Roundest Object!". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;min-height:0}
+#chainbox{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+#chain{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:.5cqh;margin:0;padding:0;list-style:none}
+#bet{display:flex;flex-direction:column;gap:1.1cqh}
+#betq{font:700 max(1.85cqh,13px)/1.3 var(--body);margin:0}
+#opts{display:flex;gap:2.2cqw}
+.opt{flex:1;font:800 max(2.4cqh,15px)/1 var(--display);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 0 1.2cqh;cursor:pointer;font-variant-numeric:lining-nums}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#rope{position:absolute;z-index:0;pointer-events:none;left:calc(2.2cqw + max(1.9cqh,14px));width:0;border-left:.3cqh dashed var(--k);opacity:.45;top:0;height:0}
+.row{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:3cqw;padding:.75cqh 2.2cqw;border-radius:1.8cqh;transition:background-color .3s}
+.row.on{background:color-mix(in srgb,var(--k) 9%,transparent)}
+.ic{width:max(3.8cqh,28px);height:max(3.8cqh,28px);border-radius:50%;background:var(--c);display:grid;place-items:center;position:relative;z-index:1;box-shadow:inset 0 0 0 .25cqh var(--k)}
+.ic svg{width:66%;height:66%;overflow:visible}
+.tx{display:flex;flex-direction:column;gap:.25cqh;min-width:0}
+.tx b{font:800 max(1.95cqh,13px)/1.15 var(--body)}
+.tx span{font:600 max(1.55cqh,11.5px)/1.2 var(--body);opacity:.68}
+.val{display:flex;flex-direction:column;align-items:flex-end;gap:.35cqh}
+.val b{font:800 max(2.4cqh,15px)/1 var(--display);white-space:nowrap;font-variant-numeric:lining-nums}
+.val span{display:flex;align-items:center;gap:1.4cqw;opacity:.75;white-space:nowrap}
+.val small{font:600 max(1.55cqh,11.5px)/1 var(--body)}
+.val i{display:inline-block;background:#fffdf8;box-shadow:0 .2cqh .5cqh rgba(16,16,12,.22);transform:rotate(-6deg);flex:none}
+.q-mark{font:800 max(2.2cqh,14px)/1 var(--display);opacity:.35}
+.row.hid .tx,.row.hid .val{display:none}
+.row:not(.hid) .q-mark{display:none}
+.row.hid .ic{opacity:.4}
+.row.top .val b{font-style:italic}
+#legend{font:700 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:.6;display:flex;justify-content:space-between;padding:0 2.2cqw .8cqh}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:540px){
+  .tx span,.val span,#legend{display:none}
+  .answered .row.top .tx span{display:block}
+  .ic{width:23px;height:23px}
+  .row{padding:.35cqh 2cqw;gap:2.4cqw}
+  #chain{gap:.15cqh}
+  .tx b{font-size:13px}
+  .val b{font-size:14.5px}
+  #rope{left:calc(2cqw + 11.5px)}
+  .answered .keep{padding:1.4cqh 5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="life" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WHO TAUGHT IT?</span></div>
+    <h2 class="q">How does your kitchen scale know what a kilogram is?</h2>
+    <div class="stagebox" id="stage">
+      <div id="legend"><span>Taught by the one above</span><span>May be off by</span></div>
+      <div id="chainbox"><ul id="chain">
+        <li class="row top hid" data-l="4"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="18" text-anchor="middle" font-family="Fraunces" font-style="italic" font-weight="800" font-size="19" fill="currentColor">h</text></svg></div><span class="q-mark">?</span>
+          <div class="tx"><b>The Planck constant</b><span>a number, fixed in 2019</span></div>
+          <div class="val"><b>exact</b><span><small>no object at all</small></span></div></li>
+        <li class="row hid" data-l="3"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M5 20V11a7 7 0 0 1 14 0v9"/><path d="M3 20h18"/><path d="M9.5 20v-5.5h5V20"/><path d="M9.5 14.5c0-.8 5-.8 5 0"/></svg></div><span class="q-mark">?</span>
+          <div class="tx"><b>The national kilogram</b><span>set by Kibble balances and silicon spheres</span></div>
+          <div class="val"><b>±0.02 mg</b><span><i data-mg=".02"></i><small>0.5 mm</small></span></div></li>
+        <li class="row hid" data-l="2"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="5.5" r="2.3"/><path d="M10.6 7.6v2.4h2.8V7.6"/><rect x="6.5" y="10" width="11" height="10" rx="2"/></svg></div><span class="q-mark">?</span>
+          <div class="tx"><b>A lab's reference weight</b><span>class E1</span></div>
+          <div class="val"><b>±0.5 mg</b><span><i data-mg=".5"></i><small>2.5 mm</small></span></div></li>
+        <li class="row hid" data-l="1"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M9 10V8a3 3 0 0 1 6 0v2"/><path d="M6.5 10h11l2 10h-15z"/></svg></div><span class="q-mark">?</span>
+          <div class="tx"><b>The factory's test weight</b><span>class M1</span></div>
+          <div class="val"><b>±50 mg</b><span><i data-mg="50"></i><small>2.5 cm</small></span></div></li>
+        <li class="row on" data-l="0"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M5 12.5a7 3.6 0 0 0 14 0z"/><rect x="3" y="15.5" width="18" height="5" rx="1.6"/><path d="M9.5 18h5"/></svg></div><span class="q-mark">?</span>
+          <div class="tx"><b>Your kitchen scale</b><span>reads whole grams</span></div>
+          <div class="val"><b>±1 g</b><span><i data-mg="1000"></i><small>11 cm</small></span></div></li>
+      </ul><div id="rope"></div></div>
+      <div id="bet"><p id="betq">Bet first: how many times looser is your ±1 g scale than the national kilogram?</p>
+        <div id="opts"><button class="opt" data-i="0">×50</button><button class="opt" data-i="1">×5,000</button><button class="opt" data-i="2">×50,000</button></div></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say gone" id="say">Your scale reads to the gram: ±1 g, as much as an 11 cm square of printer paper. At the factory, a test weight taught it what a kilogram is.</p>
+    <button class="btn gone" id="go">Who taught it?</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Every kilogram is a copy of a copy: from the national kilogram to your kitchen, doubt grows 50,000-fold.</div>
+    <div class="foot"><span class="src">Source · BIPM, mise en pratique of the kilogram (2019); OIML R 111-1; NIST</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const SAY = [
+    null,
+    'That test weight may be off by up to <b>50 mg</b>, a 2.5 cm square of paper. A better weight taught it.',
+    'That reference weight is good to <b>0.5 mg</b>, a 2.5 mm fleck of paper. It was checked against the national kilogram.',
+    'The national kilogram is known to <b>0.02 mg</b>, a speck of paper like a full stop: <b>50,000 times</b> tighter than your scale.',
+    'At the top, no object at all: since 2019 the kilogram is defined by a number, <b>the Planck constant</b>.'
+  ];
+  const rows = [...document.querySelectorAll('#chain .row')], rope = Kit.$('rope'), go = Kit.$('go'), say = Kit.$('say');
+  let level = 0;
+  const row = l => rows.find(r => +r.dataset.l === l);
+
+  // Each scrap of printer paper (80 g per square metre) weighs what the link may be off by: its side grows
+  // as the square root of the mass, so the 1 g square sets the scale for the rest.
+  function scraps() {
+    const big = innerHeight < 540 ? 17 : Math.max(18, Math.min(innerHeight * .045, 30));
+    document.querySelectorAll('.val i').forEach(i => { const side = Math.max(2, big * Math.sqrt(+i.dataset.mg / 1000)); i.style.width = i.style.height = side + 'px'; });
+  }
+  // The dashed rope from your scale up to the highest link reached.
+  function place() {
+    const box = Kit.$('chainbox').getBoundingClientRect();
+    const mid = r => { const b = r.querySelector('.ic').getBoundingClientRect(); return b.top + b.height / 2 - box.top; };
+    const lo = mid(row(0)), hi = mid(row(level));
+    rope.style.top = hi + 'px'; rope.style.height = Math.max(0, lo - hi) + 'px';
+  }
+  function draw() { scraps(); place(); }
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { if (typeof gsap !== 'undefined') gsap.killTweensOf(rope); place(); }).observe(Kit.$('chainbox'));
+
+  function next() {
+    if (level >= 4) return;
+    const from = level;
+    level++;
+    const r = row(level);
+    r.classList.remove('hid');
+    rows.forEach(x => x.classList.toggle('on', +x.dataset.l === level));
+    say.innerHTML = SAY[level];
+    draw();
+    if (!Kit.calm) {
+      gsap.from(r.querySelectorAll('.tx, .val'), {opacity: 0, x: 10, duration: .45, stagger: .08, ease: 'power2.out'});
+      gsap.from(r.querySelector('.ic'), {scale: .7, duration: .4, ease: 'back.out(2)'});
+      const b = Kit.$('chainbox').getBoundingClientRect(), m = x => { const q = x.querySelector('.ic').getBoundingClientRect(); return q.top + q.height / 2 - b.top; };
+      const was = m(row(from));
+      gsap.from(rope, {top: was, height: m(row(0)) - was, duration: .45, ease: 'power2.out'});
+      gsap.from(say, {opacity: 0, y: 6, duration: .4, ease: 'power2.out'});
+    }
+    Kit.haptic(level === 4 ? 'success' : 'light');
+    if (level === 4) {
+      go.classList.add('gone');
+      say.classList.add('gone');
+      Kit.$('card').classList.add('answered');
+      Kit.show('keep');
+      requestAnimationFrame(() => { if (typeof gsap !== 'undefined') gsap.killTweensOf(rope); draw(); });
+    }
+  }
+  go.addEventListener('click', next);
+
+  // The bet, before the climb: the national kilogram's 0.02 mg is still hidden in the chain.
+  const SAID = ['×50', '×5,000', '×50,000'], RIGHT = 2;
+  let pick = -1;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = SAID[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('bet');
+    sure.grade(ok, pct, ok ? '×50,000, right' : `${said}, wrong: it is ×50,000`);
+    Kit.show('say'); Kit.show('go');
+    requestAnimationFrame(draw);
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(rows, {opacity: 0, y: 8, stagger: .05, duration: .4, ease: 'power3.out'}); };
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 30 : ms));
+    Kit.$('opts').children[1].click(); await wait(120);
+    Kit.$('sure').querySelector('[data-v="70"]').click(); await wait(500);
+    for (let i = 0; i < 4; i++) { next(); await wait(650); }
+  };
+})();
+Kit.single();
+</script>
+</html>

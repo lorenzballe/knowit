@@ -1,0 +1,188 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-water-kidney-stones -->
+<title>Does drinking water cause kidney stones?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#glass{cursor:grab}
+#glass.drag{cursor:grabbing}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Drag · see what happens">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KIDNEY STONES</span></div>
+    <h2 class="q">Does drinking water cause kidney stones?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A kidney with a stone, and a glass of water to drag onto it"></svg>
+      <div id="why" class="gone">
+        <p class="big">No. It's the opposite.</p>
+        <p class="body">One of the very first causes of kidney stones is dehydration: drinking too little water. So drink water.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the glass of water onto the kidney.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Stones come from too little water, not from drinking it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const GOAL = 3;
+let drunk = 0, busy = false;
+const st = {t: 0};          // 0 dehydrated .. 1 hydrated, animated
+let G = null;               // geometry and nodes of the current drawing
+
+const DARK = '#b8780a', CLEAR = '#d9eef7';
+const KID = [['M',0,-1],['C',.7,-1.05,.88,-.4,.82,.1],['C',.76,.7,.36,1.05,-.05,.95],['C',-.42,.88,-.56,.6,-.4,.3],['C',-.3,.1,-.3,-.1,-.4,-.3],['C',-.56,-.62,-.4,-.95,0,-1],['Z']];
+function kidPath(cx, cy, R, k) {
+  return KID.map(c => c[0] + ' ' + c.slice(1).reduce((a, v, i) => a + (i % 2 ? (cy + v * R * k) : (cx + v * R * k)) + (i % 2 ? ' ' : ','), '')).join(' ');
+}
+
+function draw() {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const R = Math.min(W * .3, H * .3);
+  const cx = W * .62, cy = H * .5;
+  const ink = 'var(--k)';
+
+  // status
+  const status = Kit.mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', fill: ink,
+    style: `font:800 ${fs * 1.25}px var(--display);letter-spacing:.06em`}, svg);
+
+  // ureter
+  Kit.mk('path', {d: `M${cx - .38 * R},${cy + .05 * R} C${cx - .75 * R},${cy + .35 * R} ${cx - .2 * R},${cy + .95 * R} ${cx - .32 * R},${Math.min(cy + 1.35 * R, H - 2)}`,
+    fill: 'none', stroke: '#8f2f45', 'stroke-width': Math.max(R * .09, 4), 'stroke-linecap': 'round'}, svg);
+  // kidney
+  Kit.mk('path', {d: kidPath(cx, cy, R, 1), fill: '#c4516a', stroke: ink, 'stroke-width': Math.max(R * .025, 2)}, svg);
+  const fluid = Kit.mk('path', {d: kidPath(cx + R * .06, cy, R, .7), fill: DARK, stroke: '#8f2f45', 'stroke-width': Math.max(R * .015, 1.5)}, svg);
+
+  // crystals
+  const rnd = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
+  const crystals = [];
+  for (let i = 0; i < 9; i++) {
+    const a = rnd() * 6.28, r = R * (.15 + rnd() * .3), s = R * (.03 + rnd() * .03);
+    const x = cx + R * .12 + Math.cos(a) * r * .8, y = cy + Math.sin(a) * r * 1.2;
+    crystals.push(Kit.mk('path', {d: `M${x},${y - s} L${x + s},${y} L${x},${y + s} L${x - s},${y} Z`, fill: '#fff6d6', stroke: '#7a4d00', 'stroke-width': 1}, svg));
+  }
+  // stone
+  const stone = Kit.mk('g', {}, svg);
+  const sx = cx + R * .2, sy = cy + R * .18;
+  const pts = [];
+  for (let i = 0; i < 9; i++) { const a = i / 9 * 6.28, r = R * (.13 + rnd() * .06); pts.push(`${sx + Math.cos(a) * r},${sy + Math.sin(a) * r}`); }
+  Kit.mk('polygon', {points: pts.join(' '), fill: '#efe2b8', stroke: '#5c3d00', 'stroke-width': Math.max(R * .02, 2), 'stroke-linejoin': 'round'}, stone);
+  Kit.mk('circle', {cx: sx - R * .04, cy: sy - R * .04, r: R * .03, fill: '#c9b27a'}, stone);
+  Kit.mk('circle', {cx: sx + R * .06, cy: sy + R * .05, r: R * .022, fill: '#c9b27a'}, stone);
+  const stoneLab = Kit.mk('text', {x: sx, y: cy + R * 1.18, 'text-anchor': 'middle', fill: ink,
+    style: `font:700 ${fs}px var(--body)`}, svg);
+  stoneLab.textContent = 'stone';
+  const stoneLine = Kit.mk('line', {x1: sx, y1: sy + R * .2, x2: sx, y2: cy + R * 1.18 - fs, stroke: ink, 'stroke-width': 1.5}, svg);
+
+  // glass
+  const gw = Math.min(W * .16, H * .14), gh = gw * 1.35;
+  const home = {x: W * .17, y: H * .62};
+  const glass = Kit.mk('g', {id: 'glass'}, svg);
+  const tilt = Kit.mk('g', {}, glass);
+  const water = Kit.mk('polygon', {points: `${-gw * .42},${-gh * .15} ${gw * .42},${-gh * .15} ${gw * .33},${gh * .5} ${-gw * .33},${gh * .5}`, fill: '#3fa9e6'}, tilt);
+  Kit.mk('polygon', {points: `${-gw / 2},${-gh / 2} ${gw / 2},${-gh / 2} ${gw * .36},${gh / 2} ${-gw * .36},${gh / 2}`, fill: 'rgba(255,255,255,.25)', stroke: ink, 'stroke-width': Math.max(gw * .05, 2.5), 'stroke-linejoin': 'round'}, tilt);
+  Kit.mk('rect', {x: -gw * .7, y: -gh * .75, width: gw * 1.4, height: gh * 1.5, fill: 'transparent'}, glass);
+  const glassLab = Kit.mk('text', {x: home.x, y: home.y + gh / 2 + fs * 1.5, 'text-anchor': 'middle', fill: ink,
+    style: `font:700 ${fs}px var(--body)`}, svg);
+
+  G = {svg, W, H, R, cx, cy, fluid, crystals, stone, sx, sy, glass, tilt, water, home, status, glassLab, stoneLab, stoneLine};
+  gsap.set(glass, {x: home.x, y: home.y});
+  if (drunk >= GOAL) { gsap.set(water, {opacity: 0}); glass.style.opacity = .35; }
+  paint();
+  hookDrag();
+}
+
+function paint() {
+  if (!G) return;
+  const t = st.t;
+  G.fluid.setAttribute('fill', gsap.utils.interpolate(DARK, CLEAR, t));
+  G.crystals.forEach((c, i) => c.setAttribute('opacity', Math.max(0, 1 - t * 1.4 + i * .02)));
+  const s = Math.max(0, 1 - t);
+  G.stone.setAttribute('transform', `translate(${G.sx},${G.sy}) scale(${s}) translate(${-G.sx},${-G.sy})`);
+  G.stoneLab.setAttribute('opacity', s > .05 ? 1 : 0);
+  G.stoneLine.setAttribute('opacity', s > .05 ? 1 : 0);
+  G.status.textContent = t > .97 ? 'HYDRATED · CLEAR' : drunk === 0 ? 'DEHYDRATED' : 'DRINKING…';
+  G.glassLab.textContent = drunk >= GOAL ? '' : drunk === 0 ? 'drag me' : 'again';
+}
+
+function toSvg(e) {
+  const p = G.svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+  return p.matrixTransform(G.svg.getScreenCTM().inverse());
+}
+
+function hookDrag() {
+  const g = G.glass;
+  let off = null, moved = false;
+  g.addEventListener('pointerdown', e => {
+    if (busy || drunk >= GOAL) return;
+    const p = toSvg(e);
+    off = {x: p.x - gsap.getProperty(g, 'x'), y: p.y - gsap.getProperty(g, 'y')};
+    moved = false; g.classList.add('drag'); g.setPointerCapture(e.pointerId);
+    Kit.haptic('selection');
+  });
+  g.addEventListener('pointermove', e => {
+    if (!off) return;
+    const p = toSvg(e); moved = true;
+    gsap.set(g, {x: p.x - off.x, y: p.y - off.y});
+  });
+  const end = () => {
+    if (!off) return;
+    off = null; g.classList.remove('drag');
+    const x = gsap.getProperty(g, 'x'), y = gsap.getProperty(g, 'y');
+    const near = Math.hypot(x - G.cx, y - G.cy) < G.R * 1.15;
+    if (near || !moved) drink(); else gsap.to(g, {x: G.home.x, y: G.home.y, duration: .4, ease: 'back.out(1.6)'});
+  };
+  g.addEventListener('pointerup', end);
+  g.addEventListener('pointercancel', end);
+}
+
+function drink() {
+  if (busy || drunk >= GOAL) return Promise.resolve();
+  busy = true;
+  const g = G.glass;
+  return new Promise(res => {
+    const tl = gsap.timeline({onComplete: () => { busy = false; res(); }});
+    tl.to(g, {x: G.cx - G.R * .55, y: G.cy - G.R * 1.05, duration: .35, ease: 'power2.out'})
+      .to(G.tilt, {rotation: 55, svgOrigin: '0 0', duration: .3, ease: 'power2.in'})
+      .to(G.water, {opacity: 0, duration: .35})
+      .add(() => {
+        drunk++; Kit.haptic(drunk >= GOAL ? 'success' : 'light');
+        gsap.to(st, {t: drunk / GOAL, duration: .9, ease: 'power2.out', onUpdate: paint});
+        paint();
+        Kit.$('say').textContent = drunk >= GOAL ? '' : `Good. ${GOAL - drunk} more glass${GOAL - drunk > 1 ? 'es' : ''}.`;
+      })
+      .to(G.tilt, {rotation: 0, svgOrigin: '0 0', duration: .25})
+      .to(g, {x: G.home.x, y: G.home.y, duration: .4, ease: 'power2.inOut'});
+    if (drunk + 1 < GOAL) tl.to(G.water, {opacity: 1, duration: .3});
+    else tl.to(g, {opacity: .35, duration: .3}).add(finish, '+=.5');
+  });
+}
+
+function finish() {
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .45, ease: 'power3.out'});
+  requestAnimationFrame(() => { if (G) draw(); });
+}
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.stone, {opacity: 0, duration: .6, delay: .2});
+  gsap.fromTo(G.glass, {rotation: -8}, {rotation: 8, duration: .35, yoyo: true, repeat: 3, ease: 'sine.inOut', delay: .6, onComplete: () => gsap.set(G.glass, {rotation: 0})});
+};
+Kit.play.card = async () => {
+  for (let i = 0; i < GOAL; i++) { await drink(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 1300));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "history-pompeii-pyroclastic-flow",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What volcanic event actually buried Pompeii?",
+  "answer": "Pompeii was buried by a pyroclastic flow: a burning cloud of ash, pumice and gas. In 79 AD, Vesuvius sent it racing down the slope at incredible speed, destroying everything. The material it carried then settled little by little until the whole city was covered.",
+  "move": "The cloud destroyed Pompeii; what it carried buried it.",
+  "keywords": [
+    "vesuvius",
+    "pompeii",
+    "pyroclastic_flow",
+    "volcanic_ash",
+    "79_ad"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking what volcanic event actually buried Pompeii. Three options: a slow river of lava, a racing scorching cloud of ash, pumice and gas, or the ground cracking open and swallowing the city. A prompt below says to pick one, then watch Vesuvius in 79 AD.",
+    "graded": false
+  },
+  "source": "Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=z_mawLbnXNQ&t=454s",
+  "written": "2026-11-03"
+}

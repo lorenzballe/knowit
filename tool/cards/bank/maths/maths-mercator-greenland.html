@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-mercator-greenland -->
+<title>Astute free card · Greenland on Mercator</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#mapbox{position:relative;flex:1;min-height:0}
+#map{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+#map.drag{cursor:grabbing}
+#read{display:flex;align-items:baseline;gap:2.5cqw;flex-wrap:wrap}
+#read .n{font:800 max(4.2cqh,22px)/1 var(--display);color:var(--k);font-variant-numeric:tabular-nums}
+#read .t{font:600 max(1.9cqh,13px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag · see it shrink">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MAP LIES</span></div>
+    <h2 class="q">Why does Greenland look so huge on the usual world map?</h2>
+    <div class="stagebox" id="stage">
+      <div id="mapbox"><canvas id="map" aria-label="A Mercator map grid with Greenland you can drag toward the equator"></canvas></div>
+      <div id="read"><span class="n" id="fac">×14</span><span class="t" id="txt">its real size, as drawn up here</span></div>
+      <div id="why" class="gone">
+        <p class="body">Mercator’s map stretches everything more the farther it sits from the equator, wider and taller at once. Up by the Arctic Circle, Greenland gets blown up many times over. Slid to the equator, its real 2.16 million km² shows.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag Greenland down to the equator.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On a Mercator map, the nearer a pole, the bigger it lies.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const D = Math.PI / 180, HOME = 72, LON0 = -42, KM = 111.32, EARTH = 6371;
+const RAW = [[-44,59.8],[-48,61],[-50.5,64],[-53,66.5],[-54,69],[-51,70.5],[-55,72],[-58,75.5],[-66,76.5],[-73,78],[-67,80],[-60,81.8],[-45,82.5],[-32,83.6],[-20,82],[-12,81.5],[-18,78],[-19,75],[-22,72],[-22,70],[-26,68.5],[-33,68],[-38,65.5],[-41,63],[-43,60.5]];
+// Greenland's outline in true kilometres around its middle: the same land wherever it is placed.
+const PTS = RAW.map(([lo, la]) => [(lo - LON0) * KM * Math.cos(la * D), (la - HOME) * KM]);
+const shoe = p => { let a = 0; for (let i = 0; i < p.length; i++) { const [x1, y1] = p[i], [x2, y2] = p[(i + 1) % p.length]; a += x1 * y2 - x2 * y1; } return Math.abs(a) / 2; };
+const TRUE_KM2 = shoe(PTS);
+const merc = la => Math.log(Math.tan(Math.PI / 4 + la * D / 2));
+const inv = m => (2 * Math.atan(Math.exp(m)) - Math.PI / 2) / D;
+const LMIN = -22, LMAX = 85, MTOP = merc(LMAX), MBOT = merc(LMIN);
+
+const st = {c: HOME, touched: false, done: false};
+let g = null, V = {};
+const cv = Kit.$('map');
+
+function proj(c) {
+  return PTS.map(([dx, dy]) => {
+    const la = c + dy / KM, lo = dx / (KM * Math.cos(la * D));
+    return [V.cx + lo * D * V.R, V.top + (MTOP - merc(la)) * V.R];
+  });
+}
+function draw() {
+  if (!g) return;
+  const {x, W, H} = g, cs = getComputedStyle(Kit.$('card'));
+  const ink = cs.getPropertyValue('--k').trim() || '#111', bg = cs.getPropertyValue('--c').trim() || '#fff';
+  const body = cs.getPropertyValue('--body').trim() || 'sans-serif';
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, Math.min(15, H * .034));
+  x.font = `600 ${fs}px ${body}`; x.textBaseline = 'bottom';
+  const Y = la => V.top + (MTOP - merc(la)) * V.R;
+  // meridians
+  x.strokeStyle = ink; x.lineWidth = 1;
+  x.globalAlpha = .12;
+  for (let k = -9; k <= 9; k++) { const px = V.cx + k * 20 * D * V.R; if (px < 0 || px > W) continue; x.beginPath(); x.moveTo(px, Y(LMAX)); x.lineTo(px, Y(LMIN)); x.stroke(); }
+  // parallels
+  [-20, 0, 20, 40, 60, 80].forEach(la => {
+    x.globalAlpha = la === 0 ? .55 : .18; x.lineWidth = la === 0 ? 2 : 1;
+    x.beginPath(); x.moveTo(0, Y(la)); x.lineTo(W, Y(la)); x.stroke();
+    if (la > -20) { x.globalAlpha = .7; x.fillStyle = ink; x.fillText(la === 0 ? 'Equator 0°' : la + '°N', 4, Y(la) - 3); }
+  });
+  // Arctic Circle
+  x.globalAlpha = .5; x.setLineDash([5, 4]); x.lineWidth = 1.4;
+  x.beginPath(); x.moveTo(0, Y(66.5)); x.lineTo(W, Y(66.5)); x.stroke(); x.setLineDash([]);
+  x.globalAlpha = .75; x.fillText('Arctic Circle', 4, Y(66.5) - 3);
+  // ghost at home
+  if (st.c < HOME - 1) {
+    const h = proj(HOME); x.globalAlpha = .45; x.setLineDash([6, 5]); x.lineWidth = 1.6;
+    x.beginPath(); h.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath(); x.stroke(); x.setLineDash([]);
+  }
+  // Greenland
+  const p = proj(st.c);
+  x.globalAlpha = 1; x.fillStyle = ink; x.strokeStyle = bg; x.lineWidth = 2;
+  x.beginPath(); p.forEach(([a, b], i) => i ? x.lineTo(a, b) : x.moveTo(a, b)); x.closePath(); x.fill(); x.stroke();
+  V.box = p.reduce((b, [a, c]) => [Math.min(b[0], a), Math.min(b[1], c), Math.max(b[2], a), Math.max(b[3], c)], [1e9, 1e9, -1e9, -1e9]);
+  // how inflated: drawn area vs the true area at equator scale
+  const ratio = shoe(p) / (TRUE_KM2 * (V.R / EARTH) ** 2);
+  Kit.$('fac').textContent = '×' + (ratio < 3 ? ratio.toFixed(1) : Math.round(ratio));
+  Kit.$('txt').textContent = ratio < 1.15 ? 'its real size: 2.16 million km²' : `its real size, drawn at ${Math.round(st.c)}°N`;
+}
+function layout() {
+  g = Kit.fitCanvas(cv);
+  const span = MTOP - MBOT;
+  V.R = Math.min(g.H / span, .62 * g.W / (61 * D));
+  V.top = (g.H - span * V.R) / 2; V.cx = g.W * .55;
+  draw();
+}
+Kit.onShow.card = layout;
+
+function latAt(py) { return inv(MTOP - (py - V.top) / V.R); }
+let grab = null;
+cv.addEventListener('pointerdown', e => {
+  const r = cv.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top, b = V.box;
+  if (!b || px < b[0] - 24 || px > b[2] + 24 || py < b[1] - 24 || py > b[3] + 24) return;
+  gsap.killTweensOf(st); st.touched = true;
+  grab = latAt(py) - st.c; cv.classList.add('drag'); Kit.haptic('selection');
+});
+window.addEventListener('pointermove', e => {
+  if (grab === null) return;
+  const r = cv.getBoundingClientRect();
+  st.c = Math.max(0, Math.min(HOME, latAt(e.clientY - r.top) - grab));
+  draw();
+  if (!st.done && st.c < 10) finish();
+});
+window.addEventListener('pointerup', () => { grab = null; cv.classList.remove('drag'); });
+function finish() {
+  st.done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(layout);
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+Kit.onEnter.card = () => {
+  if (Kit.calm || st.touched) return;
+  gsap.to(st, {c: 64, duration: .6, yoyo: true, repeat: 1, delay: .4, ease: 'sine.inOut', onUpdate: draw});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = cv.getBoundingClientRect(), b = V.box;
+  const x0 = r.left + (b[0] + b[2]) / 2, y0 = r.top + (b[1] + b[3]) / 2;
+  const fire = (t, y) => cv.dispatchEvent(new PointerEvent(t, {clientX: x0, clientY: y, bubbles: true, pointerId: 1}));
+  fire('pointerdown', y0);
+  const y1 = r.top + V.top + MTOP * V.R + 4;
+  for (let i = 1; i <= 12; i++) { fire('pointermove', y0 + (y1 - y0) * i / 12); await wait(30); }
+  fire('pointerup', y1); await wait(700);
+};
+Kit.single();
+</script>
+</html>

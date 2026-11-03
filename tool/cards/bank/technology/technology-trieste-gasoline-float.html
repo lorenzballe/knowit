@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-trieste-gasoline-float -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#read{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k)}
+#lit{font:700 max(2.6cqh,16px)/1 var(--mono)}
+#st{font:800 max(1.8cqh,12px)/1 var(--body);letter-spacing:.08em;padding:.7cqh 2.6cqw;border-radius:99px;background:#ff7a6b;color:#1a0b08}
+#st.up{background:#f2b134;color:#1a1204}
+#fill{width:100%;margin:0;height:max(5cqh,40px);accent-color:#f2b134;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.q,.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Scrub · see it float">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BUOYANCY</span></div>
+    <h2 class="q">Why did the Trieste carry 85,000 litres of gasoline just to float?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="The bathyscaphe Trieste: a long float with air tanks at both sides and a big gasoline tank in the middle, and a steel crew sphere below"></svg>
+      <div id="read"><span><span id="lit">0 L</span> gasoline</span><span id="st">SINKS</span></div>
+      <input id="fill" type="range" min="0" max="85000" step="500" value="0" aria-label="Litres of gasoline in the float">
+      <div id="why" class="gone"><p class="body">Gasoline is lighter than seawater, litre for litre. Swap 85,000 L of water for it, plus the two air tanks, and the float pushes up harder than the steel pulls down.</p></div>
+    </div>
+    <p class="say" id="say">Drag to swap seawater for gasoline in the float, and watch.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Anything lighter than water, held in a tank, lifts what it’s tied to.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Scendere a 10.900 m di profondità nella Fossa delle Marianne: l’impresa del Batiscafo Trieste” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 85000, TH = 0.72;
+let t = 0, up = { v: 0 }, floating = false, done = false, G = null, tw = null;
+const NS = 'http://www.w3.org/2000/svg';
+
+function arrowPts(x, y1, y2, w) {
+  const d = y2 > y1 ? 1 : -1, hl = Math.min(Math.abs(y2 - y1), w * 2.2);
+  return { line: [x, y1, x, y2 - d * hl * 0.6], head: `${x - w},${y2 - d * hl} ${x + w},${y2 - d * hl} ${x},${y2}` };
+}
+
+function place() {
+  if (!G) return;
+  const y = G.floorTop + (G.surfTop - G.floorTop) * up.v;
+  G.craft.setAttribute('transform', `translate(${G.cx},${y})`);
+}
+
+function paint() {
+  Kit.$('lit').textContent = Math.round(t * MAX).toLocaleString('en-US') + ' L';
+  const st = Kit.$('st'); st.textContent = floating ? 'FLOATS' : 'SINKS'; st.classList.toggle('up', floating);
+  if (!G) return;
+  G.gas.setAttribute('height', Math.max(0, G.ih * t));
+  const L = G.L * 1.3 * t, a = arrowPts(G.liftX, 0, -L, G.aw);
+  G.liftLine.setAttribute('x1', a.line[0]); G.liftLine.setAttribute('y1', a.line[1]);
+  G.liftLine.setAttribute('x2', a.line[2]); G.liftLine.setAttribute('y2', a.line[3]);
+  G.liftHead.setAttribute('points', a.head);
+  const vis = t > 0.04 ? 1 : 0;
+  G.liftLine.style.opacity = G.liftHead.style.opacity = vis;
+  G.liftLab.style.opacity = vis;
+  G.liftLab.setAttribute('y', -L / 2 + G.fs * 0.35);
+  G.gasLab.setAttribute('fill', t > 0.5 ? '#1a1204' : '#ffffff');
+}
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const { W, H, f } = Kit.fitSvg(svg), fs = Math.max(f, 12);
+  const sY = H * 0.24, floorY = H * 0.95;
+  const cw = Math.min(W * 0.86, H * 1.1), hh = Math.max(H * 0.12, 40), r = hh * 0.62;
+  const ch = hh + r * 1.95, L = Math.min(H * 0.11, r * 1.8);
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', { id: 'sea', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+  Kit.mk('stop', { offset: 0, 'stop-color': '#1d5d93' }, lg);
+  Kit.mk('stop', { offset: 1, 'stop-color': '#061a30' }, lg);
+  Kit.mk('rect', { x: 0, y: sY, width: W, height: Math.max(0, H - sY), rx: Math.min(14, W * 0.03), fill: 'url(#sea)' }, svg);
+  Kit.mk('rect', { x: 0, y: floorY, width: W, height: Math.max(0, H - floorY), fill: '#5b4a35' }, svg);
+  let wave = `M0 ${sY}`; const n = 10;
+  for (let i = 0; i < n; i++) { const x0 = W * i / n, x1 = W * (i + 1) / n; wave += ` Q${(x0 + x1) / 2} ${sY - 5} ${x1} ${sY}`; }
+  Kit.mk('path', { d: wave, fill: 'none', stroke: '#bfe3ff', 'stroke-width': 2.5 }, svg);
+  Kit.mk('text', { x: W - 6, y: sY - 8, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: 'var(--k)', opacity: .7 }, svg).textContent = 'sea surface';
+
+  const craft = Kit.mk('g', {}, svg), p = hh * 0.14, ih = Math.max(0, hh - 2 * p);
+  const fitsV = ih >= fs * 1.1, cwid = fs * 0.66;
+  // strut + sphere
+  Kit.mk('rect', { x: -r * 0.25, y: hh - 2, width: r * 0.5, height: r * 0.4, fill: '#7d8791' }, craft);
+  const sc = hh + r * 0.95;
+  Kit.mk('circle', { cx: 0, cy: sc, r, fill: '#9aa3ad', stroke: '#111', 'stroke-width': 2 }, craft);
+  Kit.mk('circle', { cx: r * 0.35, cy: sc + r * 0.1, r: r * 0.2, fill: '#ffe9a8', stroke: '#111', 'stroke-width': 1.5 }, craft);
+  Kit.mk('text', { x: r + 8, y: sc + fs * 0.35, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700, fill: '#e8f4ff' }, craft).textContent = 'steel sphere';
+  // hull
+  Kit.mk('rect', { x: -cw / 2, y: 0, width: Math.max(0, cw), height: hh, rx: hh / 2, fill: '#d5d9de', stroke: '#111', 'stroke-width': 2 }, craft);
+  const aw = Math.max(0, cw * 0.2 - p * 1.5);
+  const airTxt = fitsV && aw >= 3 * cwid + 6 ? 'AIR' : '';
+  [[-cw / 2 + p, 1], [cw / 2 - p - aw, 1]].forEach(([x]) => {
+    Kit.mk('rect', { x, y: p, width: aw, height: ih, rx: Math.min(ih / 2, aw / 2), fill: '#eaf6ff', stroke: '#456', 'stroke-width': 1.2 }, craft);
+    Kit.mk('text', { x: x + aw / 2, y: p + ih / 2 + fs * 0.35, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#1c3550' }, craft).textContent = airTxt;
+  });
+  const mx = -cw * 0.3, mw = Math.max(0, cw * 0.6);
+  Kit.mk('rect', { x: mx, y: p, width: mw, height: ih, rx: 4, fill: '#1f5f99', stroke: '#456', 'stroke-width': 1.2 }, craft);
+  const gas = Kit.mk('rect', { x: mx, y: p, width: mw, height: 0, rx: 4, fill: '#f2b134' }, craft);
+  const gasLab = Kit.mk('text', { x: 0, y: p + ih / 2 + fs * 0.35, 'text-anchor': 'middle', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#fff' }, craft);
+  gasLab.textContent = fitsV ? (['GASOLINE TANK', 'GASOLINE', 'GAS'].find(s => s.length * cwid + 10 <= mw) || '') : '';
+  // weight arrow (constant), from hull bottom on the left
+  const wx = -cw / 2 + cw * 0.1, aW = Math.max(6, fs * 0.45);
+  const wa = arrowPts(wx, hh, hh + L, aW);
+  Kit.mk('line', { x1: wa.line[0], y1: wa.line[1], x2: wa.line[2], y2: wa.line[3], stroke: '#ff7a6b', 'stroke-width': 4, 'stroke-linecap': 'round' }, craft);
+  Kit.mk('polygon', { points: wa.head, fill: '#ff7a6b' }, craft);
+  Kit.mk('text', { x: wx - aW - 4, y: hh + L / 2 + fs * 0.35, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#ff9a8e' }, craft).textContent = cw / 2 - cw * 0.1 > fs * 4 ? 'weight' : '';
+  // lift arrow, grows with gasoline, from hull top on the right
+  const liftX = cw / 2 - cw * 0.1;
+  const liftLine = Kit.mk('line', { stroke: '#f2b134', 'stroke-width': 4, 'stroke-linecap': 'round' }, craft);
+  const liftHead = Kit.mk('polygon', { fill: '#f2b134' }, craft);
+  const liftLab = Kit.mk('text', { x: liftX - aW - 4, y: 0, 'text-anchor': 'end', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, fill: '#f2b134', stroke: '#061a30', 'stroke-width': 3, 'paint-order': 'stroke' }, craft);
+  liftLab.textContent = 'lift';
+  G = { craft, gas, gasLab, ih, liftLine, liftHead, liftLab, liftX, aw: aW, L, fs, cx: W / 2,
+        surfTop: sY - hh * 0.25, floorTop: floorY - ch };
+  place(); paint();
+}
+
+function setT(v) {
+  t = v / MAX;
+  const now = t >= TH;
+  if (now !== floating) {
+    floating = now; Kit.haptic(now ? 'success' : 'light');
+    if (tw) tw.kill();
+    tw = Kit.calm ? (up.v = now ? 1 : 0, place(), null)
+      : gsap.to(up, { v: now ? 1 : 0, duration: now ? 1.6 : 1.3, ease: now ? 'power2.out' : 'power2.in', onUpdate: place });
+  }
+  paint();
+  if (!done && v >= MAX) {
+    done = true;
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => Kit.onShow.card());
+  }
+}
+Kit.$('fill').addEventListener('input', e => setT(+e.target.value));
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', { opacity: 0, y: 12, duration: .5, ease: 'power3.out' }); };
+Kit.play.card = async () => {
+  const s = Kit.$('fill');
+  for (const v of [20000, 50000, 70000, 85000]) { s.value = v; s.dispatchEvent(new Event('input', { bubbles: true })); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

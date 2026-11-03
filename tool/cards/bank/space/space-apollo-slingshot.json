@@ -1,0 +1,37 @@
+{
+  "id": "space-apollo-slingshot",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Apollo 13 swing around the Moon to get home?",
+  "answer": "The Moon did the turning. Turning straight back would have needed the rocket's strong third-stage engines, which the explosion may have damaged. The LEM's weak thrusters could only nudge the aim, so the Moon's gravity swung the ship around and sped it home.",
+  "move": "Can't turn around? A small nudge lets the Moon's gravity swing you home.",
+  "keywords": [
+    "apollo 13",
+    "moon",
+    "lem",
+    "gravity assist"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive diagram of Apollo 13's path around the Moon. An orange dot can be dragged to fire the lunar module's thrusters, then released, to show how a small nudge lets the Moon's gravity swing the ship home.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “Come si sono salvati gli astronauti durante la missione Apollo 13? La ricostruzione dell'incidente” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=TSsregL8H2o&t=465s",
+  "written": "2026-11-03"
+}

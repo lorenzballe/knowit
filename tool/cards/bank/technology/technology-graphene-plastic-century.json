@@ -1,0 +1,37 @@
+{
+  "id": "technology-graphene-plastic-century",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.hype_cycles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How should we think about the future of graphene?",
+  "answer": "Asked what graphene can do, Nobel laureate Andre Geim said \"I don't know.\" Graphene is like handing a piece of plastic to someone from a century ago: you can make a bit of everything. Because it is at an early stage, most of its uses are still unknown.",
+  "move": "Graphene is at an early stage: most of its uses are still unknown.",
+  "keywords": [
+    "graphene",
+    "andre_geim",
+    "plastic",
+    "future",
+    "nobel_prize"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Split-screen slide with a slider to move forward a century on both sides, from today to +100 years. It asks how to think about the future of graphene. One side shows a person from 1919 holding a piece of plastic, the other a person from 2019 holding a graphene sheet."
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=298s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "science-quakes-rising-ground",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When do earthquakes strike as the Campi Flegrei ground breathes?",
+  "answer": "At Campi Flegrei, earthquakes come only while the ground rises, a phase called positive bradyseism. While the ground sinks, there are none. Flip the switch to make the ground rise, then sink, to see this for yourself.",
+  "move": "Campi Flegrei shakes on the way up, never on the way down.",
+  "keywords": [
+    "campi_flegrei",
+    "bradyseism",
+    "earthquakes",
+    "volcanoes"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A switch sets the ground at Campi Flegrei to rise or sink. Two counters show earthquakes in each phase, with rising at 0 and sinking at 0. The question asks when earthquakes strike as the ground breathes."
+  },
+  "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=D3ftPHDNXPg&t=816s",
+  "written": "2026-11-03"
+}

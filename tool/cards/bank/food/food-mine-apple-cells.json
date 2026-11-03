@@ -1,0 +1,37 @@
+{
+  "id": "food-mine-apple-cells",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.food_waste",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where do the underground apple-storage cells inside the mountain come from?",
+  "answer": "The underground apple-storage cells are voids left by a mine. They are quarry cavities of a mine that is still working, about 600 m up inside a mountain. Some 35,000 m² of empty rock was recovered and converted to keep apples.",
+  "move": "The apple cellars are a working mine's leftover holes, put to new use.",
+  "keywords": [
+    "apples",
+    "mine",
+    "mountain",
+    "quarry void",
+    "apple storage"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A before-and-after picture of a mine tunnel inside a mountain turned into an apple store. A slider runs between them. The prompt asks the reader to drag the slider to turn the mine's empty void into a store."
+  },
+  "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=YEMGl9gG9Zk&t=157s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,187 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-vapor-lava-bubbles -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{display:block;width:100%;flex:1;min-height:0;border-radius:2cqh;cursor:pointer;touch-action:manipulation;background:#140c0a}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · see it happen">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LAVA & WATER</span></div>
+    <h2 class="q">What happens to the vapor the water makes inside lava?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of a lava flow. Tap to drop water on it."></svg>
+      <div id="why" class="gone">
+        <p class="big">It swells into bubbles</p>
+        <p class="body">Water touching molten rock turns to vapor at once. The vapor expands inside the lava, making bubbles that push the rock up, so the lava seems to breathe. Enough of it and the lava bursts open.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the lava to drop water on it: 3 drops.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water in lava becomes vapor that expands, and expanding vapor can blow lava apart.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let W = 300, H = 300, f = 14, SY = 100;
+let lavaP, crustP, bubG, fxG, cap;
+const bubbles = [];
+let taps = 0, busy = false, finished = false;
+
+function surfY(x){
+  let y = SY;
+  for (const b of bubbles){
+    const amp = b.r * H * 1.3 * (1.25 - b.v);
+    y -= amp * Math.exp(-Math.pow((x - b.u*W)/(W*0.17), 2));
+  }
+  return y;
+}
+function render(){
+  if (!lavaP) return;
+  let d = `M0,${H} L0,${surfY(0).toFixed(1)}`, c = `M0,${surfY(0).toFixed(1)}`;
+  for (let i = 1; i <= 40; i++){
+    const x = W*i/40, y = surfY(x).toFixed(1);
+    d += ` L${x.toFixed(1)},${y}`; c += ` L${x.toFixed(1)},${y}`;
+  }
+  d += ` L${W},${H} Z`;
+  lavaP.setAttribute('d', d); crustP.setAttribute('d', c);
+  for (const b of bubbles){
+    if (!b.el) continue;
+    b.el.setAttribute('cx', b.u*W);
+    b.el.setAttribute('cy', SY + (H - SY)*b.v);
+    b.el.setAttribute('r', Math.max(0, b.r*H));
+  }
+}
+function setCap(t){
+  if (!cap) return;
+  if (Kit.calm){ cap.textContent = t; return; }
+  gsap.to(cap, {opacity: 0, duration: .15, onComplete: () => { cap.textContent = t; gsap.to(cap, {opacity: 1, duration: .25}); }});
+}
+
+Kit.onShow.card = () => {
+  const r = Kit.fitSvg(svg); W = r.W; H = r.H; f = Math.max(13, r.f);
+  SY = H*0.34;
+  svg.innerHTML = '';
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'lavaG', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  [['0','#ffd23a'],['.35','#ff7a00'],['1','#a01800']].forEach(([o,c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
+  const bg = Kit.mk('radialGradient', {id: 'bubG', cx: '.38', cy: '.35', r: '.7'}, defs);
+  [['0','#fffdf5','.95'],['.6','#ffe9c8','.55'],['1','#fff0d8','.25']].forEach(([o,c,a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, bg));
+  const sky = Kit.mk('linearGradient', {id: 'skyG', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  [['0','#120a10'],['1','#3a1a10']].forEach(([o,c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, sky));
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#skyG)'}, svg);
+  lavaP = Kit.mk('path', {fill: 'url(#lavaG)'}, svg);
+  crustP = Kit.mk('path', {fill: 'none', stroke: '#2b1a14', 'stroke-width': Math.max(6, H*0.035), 'stroke-linejoin': 'round'}, svg);
+  bubG = Kit.mk('g', {}, svg);
+  fxG = Kit.mk('g', {}, svg);
+  Kit.mk('text', {x: W*0.03, y: H - f*0.9, fill: '#3a0c00', 'font-size': f*0.85, 'font-family': 'var(--mono)', 'font-weight': 700, opacity: .7}, svg).textContent = 'MOLTEN ROCK';
+  cap = Kit.mk('text', {x: W/2, y: f*1.8, fill: '#fff3e0', 'font-size': f*1.1, 'font-family': 'var(--body)', 'font-weight': 800, 'text-anchor': 'middle'}, svg);
+  cap.textContent = finished ? 'Too much vapor: it bursts' : (taps ? cap.textContent || 'Rock pushed up: lava breathes' : 'Tap the lava ↓');
+  for (const b of bubbles){
+    b.el = Kit.mk('circle', {fill: 'url(#bubG)', stroke: '#fff8e8', 'stroke-width': Math.max(1.5, H*0.006)}, bubG);
+  }
+  render();
+};
+
+function steam(x, y){
+  for (let i = 0; i < 4; i++){
+    const p = Kit.mk('circle', {cx: x + (Kit.rnd()-.5)*W*0.06, cy: y, r: H*0.018, fill: '#ffffff', opacity: .85}, fxG);
+    gsap.to(p, {attr: {cy: y - H*(0.12 + Kit.rnd()*0.08), r: H*0.04}, opacity: 0, duration: Kit.calm ? .01 : 1 + Kit.rnd()*.5, ease: 'power1.out', onComplete: () => p.remove()});
+  }
+}
+
+function drop(x){
+  busy = true; taps++;
+  Kit.haptic('light');
+  const left = 3 - taps;
+  Kit.$('say').textContent = left ? `Watch the bubble. ${left} drop${left > 1 ? 's' : ''} left: tap again.` : 'Watch the last one…';
+  const u = Math.min(.82, Math.max(.18, x / W));
+  const d = Kit.mk('circle', {cx: u*W, cy: H*0.1, r: H*0.022, fill: '#4fc3ff', stroke: '#d8f3ff', 'stroke-width': 1.5}, fxG);
+  const tl = gsap.timeline();
+  tl.to(d, {attr: {cy: surfY(u*W)}, duration: .55, ease: 'power2.in', onComplete: () => {
+    d.remove(); steam(u*W, surfY(u*W)); setCap('Water flashes to vapor');
+    const b = {u, v: .6, r: 0};
+    b.el = Kit.mk('circle', {fill: 'url(#bubG)', stroke: '#fff8e8', 'stroke-width': Math.max(1.5, H*0.006)}, bubG);
+    bubbles.push(b);
+    const g = gsap.timeline();
+    g.to(b, {r: .07, duration: 1.3, ease: 'back.out(2.2)', onStart: () => setTimeout(() => setCap('Vapor swells: a bubble'), Kit.calm ? 0 : 450)});
+    g.add(() => {
+      if (taps < 3){
+        setCap('Rock pushed up: lava breathes');
+        b.breath = gsap.to(b, {r: .082, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: -1});
+        busy = false;
+      } else burst();
+    });
+    if (Kit.calm) g.progress(1);
+  }});
+  if (Kit.calm) tl.progress(1);
+}
+
+function burst(){
+  setCap('Too much vapor: it bursts');
+  bubbles.forEach(b => b.breath && b.breath.kill());
+  const mu = bubbles.reduce((s, b) => s + b.u, 0) / bubbles.length;
+  const tl = gsap.timeline({onComplete: finish});
+  bubbles.forEach(b => tl.to(b, {u: mu, v: .14, r: .12, duration: 1, ease: 'power2.in'}, 0));
+  tl.add(() => {
+    Kit.haptic('success');
+    const cx = mu*W, cy = surfY(cx);
+    bubbles.forEach(b => { b.r = 0; });
+    for (let i = 0; i < 28; i++){
+      const p = Kit.mk('circle', {cx, cy, r: H*(0.008 + Kit.rnd()*0.014), fill: Kit.rnd() < .5 ? '#ffb020' : '#ff5a00'}, fxG);
+      const dx = (Kit.rnd()-.5)*W*0.8, up = H*(0.12 + Kit.rnd()*0.22), t = .5 + Kit.rnd()*.4;
+      gsap.to(p, {attr: {cx: cx + dx}, duration: t*2, ease: 'none'});
+      gsap.to(p, {attr: {cy: cy - up}, duration: t, ease: 'power2.out', onComplete: () =>
+        gsap.to(p, {attr: {cy: SY + H*0.02}, duration: t, ease: 'power2.in', onComplete: () => gsap.to(p, {opacity: 0, duration: .4, onComplete: () => p.remove()})})});
+    }
+    steam(cx, cy);
+  });
+  tl.to({}, {duration: 1.2});
+  if (Kit.calm) tl.progress(1);
+}
+
+function finish(){
+  if (finished) return; finished = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.onShow.card();
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4});
+}
+
+svg.addEventListener('pointerdown', e => {
+  if (busy || taps >= 3) return;
+  const r = svg.getBoundingClientRect();
+  drop((e.clientX - r.left) / r.width * W);
+});
+
+gsap.ticker.add(render);
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !cap) return;
+  gsap.fromTo(cap, {opacity: 0}, {opacity: 1, duration: .5, repeat: 3, yoyo: true});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const tap = fx => {
+    const r = svg.getBoundingClientRect();
+    svg.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, clientX: r.left + r.width*fx, clientY: r.top + r.height*0.5}));
+  };
+  for (const fx of [.3, .7, .5]){
+    for (let k = 0; k < 40 && busy; k++) await wait(100);
+    tap(fx); await wait(200);
+  }
+  for (let k = 0; k < 60 && !finished; k++) await wait(100);
+  await wait(800);
+};
+
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "technology-flip-vertical-stability",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does FLIP stay steady standing upright in the ocean?",
+  "answer": "Standing upright, FLIP's center of gravity sits deep in the submerged part. Its weight hangs low, like a pendulum's bob, so waves can barely rock it. If the center of gravity were at the surface or above, waves would push it around far more.",
+  "move": "Weight hung low under the water keeps a floating thing steady.",
+  "keywords": [
+    "flip-platform",
+    "ocean-waves",
+    "center-of-gravity",
+    "pendulum"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking why the FLIP platform stays steady when standing upright in the ocean. A hold-to-tip button shows FLIP upright, with a red dot marking where its center of gravity ends up, deep in the submerged part."
+  },
+  "source": "Geopop, “Come funziona la manovra della FLIP, la \"nave\" che si immergeva in verticale sul mare” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=zAFFxBWjct0&t=256s",
+  "written": "2026-11-03"
+}

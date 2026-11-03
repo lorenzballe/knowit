@@ -1,0 +1,196 @@
+<!doctype html>
+<!-- slug: psychology-spinning-tube-trick -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · The spinning tube trick</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#tb{flex:1 1 0;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex-shrink:0}
+#why{display:flex;flex-direction:column;gap:1cqh;flex-shrink:0}
+#why .big{margin:0}
+#why .body{margin:0;font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#again{text-align:center;align-self:flex-start;padding:1.2cqh 5cqw}
+@media (max-height:700px){
+  #stage{gap:1cqh}
+  #opts,#why{gap:.8cqh}
+  .opt{padding:1cqh 4cqw}
+  #why .body{font-size:max(1.8cqh,12px)}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEEING</span></div>
+    <h2 class="q">Spin a tube marked X and O, pressing the O. What do you see?</h2>
+    <div class="stagebox" id="stage">
+      <div id="tb"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Only O's</button>
+        <button class="opt" data-i="1">X and O, flickering in turn</button>
+        <button class="opt" data-i="2">Only X's</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big" id="bigline">Only O's</p>
+        <p class="body">The spinning tube is a series of images, and your brain stitches them into one continuous picture. The side you press is the one you're looking at, so that's the image your brain shows you.</p>
+        <button class="opt" id="again">Now press the X</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Make your bet, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What you see in motion is a stream of images your brain stitches into one.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Spinning Tube Trick” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1;
+let x = null, W = 0, H = 0, INK = '#111';
+const st = {mode: 'idle', L: 'O', th: 0, fill: 0, stitch: 0};
+
+function rr(x0, y0, w, h, r) {
+  x.beginPath(); x.moveTo(x0 + r, y0); x.arcTo(x0 + w, y0, x0 + w, y0 + h, r); x.arcTo(x0 + w, y0 + h, x0, y0 + h, r);
+  x.arcTo(x0, y0 + h, x0, y0, r); x.arcTo(x0, y0, x0 + w, y0, r); x.closePath();
+}
+
+function draw() {
+  if (!x || !W) return;
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, H * 0.05);
+  const tH = H * 0.58;
+  const r = Math.min(tH * 0.3, W * 0.15);
+  const L = Math.min(W * 0.6, r * 4.4);
+  const cx = W / 2, cy = tH * 0.58;
+  const spin = st.mode === 'spin';
+
+  // left end (only its outer half shows)
+  x.fillStyle = '#d9bd8c'; x.strokeStyle = '#3a2a18'; x.lineWidth = Math.max(1.5, r * 0.04);
+  x.beginPath(); x.ellipse(cx - L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.fill(); x.stroke();
+  // body
+  const g = x.createLinearGradient(0, cy - r, 0, cy + r);
+  g.addColorStop(0, '#b8925c'); g.addColorStop(.45, '#f6e8c8'); g.addColorStop(1, '#a8834f');
+  x.fillStyle = g; x.fillRect(cx - L / 2, cy - r, L, 2 * r);
+  x.beginPath(); x.moveTo(cx - L / 2, cy - r); x.lineTo(cx + L / 2, cy - r); x.moveTo(cx - L / 2, cy + r); x.lineTo(cx + L / 2, cy + r); x.stroke();
+
+  // surface
+  x.save(); x.beginPath(); x.rect(cx - L / 2, cy - r, L, 2 * r); x.clip();
+  if (spin) {
+    for (let k = 0; k < 7; k++) {
+      const a = st.th * 1.3 + k * 0.9, c = Math.cos(a);
+      if (c <= 0) continue;
+      x.strokeStyle = `rgba(58,42,24,${0.12 + 0.18 * c})`; x.lineWidth = r * 0.05;
+      x.beginPath(); x.moveTo(cx - L / 2, cy + r * Math.sin(a)); x.lineTo(cx + L / 2, cy + r * Math.sin(a)); x.stroke();
+    }
+    x.globalAlpha = 0.85 + 0.15 * Math.sin(st.th * 3);
+    x.fillStyle = '#1a1208'; x.font = `900 ${r * 1.15}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+    x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(st.L, cx - L * 0.08, cy);
+    x.globalAlpha = 1;
+  } else {
+    [['X', 0], ['O', Math.PI]].forEach(([ch, ph]) => {
+      const a = ph + st.th, c = Math.cos(a);
+      if (c <= 0.02) return;
+      x.save(); x.translate(cx - L * 0.08, cy + r * Math.sin(a)); x.scale(1, c);
+      x.globalAlpha = 0.35 + 0.65 * c; x.fillStyle = '#1a1208';
+      x.font = `900 ${r * 1.15}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.fillText(ch, 0, 0); x.restore();
+    });
+  }
+  x.restore();
+
+  // right end, open
+  x.fillStyle = '#e6cfa3'; x.strokeStyle = '#3a2a18'; x.lineWidth = Math.max(1.5, r * 0.04);
+  x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.3, r, 0, 0, Math.PI * 2); x.fill(); x.stroke();
+  x.fillStyle = '#3a2a18'; x.beginPath(); x.ellipse(cx + L / 2, cy, r * 0.22, r * 0.82, 0, 0, Math.PI * 2); x.fill();
+
+  x.fillStyle = INK; x.textBaseline = 'alphabetic';
+  x.font = `700 ${fs}px sans-serif`;
+  if (spin) {
+    // finger pressing the front side
+    const fx = cx + L * 0.24, fw = r * 0.42, top = Math.max(0, cy - r * 2.2);
+    x.fillStyle = '#efc19c'; x.strokeStyle = '#7a4a2a'; x.lineWidth = Math.max(1.5, r * 0.035);
+    rr(fx - fw / 2, top, fw, cy + r * 0.15 - top, fw / 2); x.fill(); x.stroke();
+    x.fillStyle = '#fbe3d0'; rr(fx - fw * 0.3, cy - r * 0.35, fw * 0.6, r * 0.42, fw * 0.25); x.fill();
+    x.fillStyle = INK; x.textAlign = 'right';
+    x.fillText(`finger on the ${st.L}`, fx - fw * 0.8, cy - r - fs * 0.6);
+    // spin arrow around the left end
+    x.strokeStyle = INK; x.lineWidth = Math.max(2, r * 0.06);
+    const ax = cx - L / 2 - r * 0.55;
+    x.beginPath(); x.ellipse(ax, cy, r * 0.16, r * 0.9, 0, -Math.PI * 0.45, Math.PI * 0.45); x.stroke();
+    const ey = cy + r * 0.9 * Math.sin(Math.PI * 0.45), ex = ax + r * 0.16 * Math.cos(Math.PI * 0.45);
+    x.fillStyle = INK; x.beginPath(); x.moveTo(ex - r * 0.14, ey - r * 0.05); x.lineTo(ex + r * 0.1, ey - r * 0.05); x.lineTo(ex - r * 0.05, ey + r * 0.18); x.closePath(); x.fill();
+  } else {
+    x.textAlign = 'center';
+    x.fillText('X on one side, O on the other', cx, Math.max(fs, cy - r - fs * 0.6));
+  }
+
+  // snapshots strip
+  const n = 6, gap = W * 0.02;
+  const s = Math.min((W * 0.9 - gap * (n - 1)) / n, H * 0.15);
+  const rowW = n * s + (n - 1) * gap, x0 = (W - rowW) / 2;
+  const tY = tH + fs * 1.3, rowY = tY + fs * 0.5;
+  x.fillStyle = INK; x.textAlign = 'center'; x.font = `700 ${fs}px sans-serif`;
+  x.fillText(spin ? 'Snapshots your eyes catch' : 'Snapshots: make your bet first', W / 2, tY);
+  for (let i = 0; i < n; i++) {
+    const fx = x0 + i * (s + gap);
+    x.strokeStyle = INK; x.lineWidth = Math.max(1.5, s * 0.04); x.globalAlpha = 0.5;
+    rr(fx, rowY, s, s, s * 0.15); x.stroke(); x.globalAlpha = 1;
+    const a = spin ? Math.max(0, Math.min(1, st.fill - i)) : 0;
+    if (a > 0) {
+      x.globalAlpha = a; x.fillStyle = '#f6e8c8'; rr(fx, rowY, s, s, s * 0.15); x.fill();
+      x.fillStyle = '#1a1208'; x.font = `900 ${s * 0.62}px sans-serif`; x.textBaseline = 'middle';
+      x.fillText(st.L, fx + s / 2, rowY + s / 2); x.textBaseline = 'alphabetic'; x.globalAlpha = 1;
+    } else if (!spin) {
+      x.globalAlpha = 0.45; x.fillStyle = INK; x.font = `700 ${s * 0.45}px sans-serif`; x.textBaseline = 'middle';
+      x.fillText('?', fx + s / 2, rowY + s / 2); x.textBaseline = 'alphabetic'; x.globalAlpha = 1;
+    }
+  }
+  if (spin && st.stitch > 0) {
+    x.globalAlpha = st.stitch; x.fillStyle = INK; x.font = `700 ${fs}px sans-serif`;
+    x.fillText(`Brain stitches them: one steady ${st.L}`, W / 2, Math.min(H - fs * 0.3, rowY + s + fs * 1.4));
+    x.globalAlpha = 1;
+  }
+}
+
+function startSpin(L) {
+  gsap.killTweensOf(st);
+  st.mode = 'spin'; st.L = L; st.fill = 0; st.stitch = 0;
+  Kit.$('bigline').textContent = `Only ${L}'s`;
+  Kit.$('again').textContent = `Now press the ${L === 'O' ? 'X' : 'O'}`;
+  if (Kit.calm) { st.fill = 6; st.stitch = 1; return; }
+  gsap.timeline().to(st, {fill: 6, duration: 2.2, ease: 'none'}).to(st, {stitch: 1, duration: .5});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  startSpin('O');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('again').addEventListener('click', () => { Kit.haptic('light'); startSpin(st.L === 'O' ? 'X' : 'O'); });
+
+Kit.onShow.card = () => {
+  const c = Kit.fitCanvas(Kit.$('cv'));
+  x = c.x; W = c.W; H = c.H;
+  INK = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  draw();
+};
+gsap.ticker.add(() => {
+  st.th += st.mode === 'spin' ? (Kit.calm ? 0 : 0.55) : (Kit.calm ? 0 : 0.025);
+  draw();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#opts .opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3200)); };
+Kit.single();
+</script>
+</html>

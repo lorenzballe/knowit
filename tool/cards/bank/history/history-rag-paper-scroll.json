@@ -1,0 +1,36 @@
+{
+  "id": "history-rag-paper-scroll",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the oldest known example of recycled paper?",
+  "answer": "The oldest known recycled paper is a Chinese parchment from 150 AD, made from old rags. Paper was one of the very first materials to be recycled. Making it from old rags lasted until 1844, the year modern paper was invented.",
+  "move": "Recycled paper began with old rags, in China, in 150 AD.",
+  "keywords": [
+    "paper",
+    "rags",
+    "china",
+    "recycling"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline with a draggable dot. Dragging the dot shows old rags turning into paper, from the 150 AD Chinese parchment onward. The page asks: what is the oldest known example of recycled paper?"
+  },
+  "source": "Geopop, “Il processo di riciclo della carta” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=AFEMHZioqJU&t=383s",
+  "written": "2026-11-03"
+}

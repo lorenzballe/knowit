@@ -1,0 +1,131 @@
+<!doctype html>
+<!-- slug: history-korean-auschwitz -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · The Korean Auschwitz</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12.5px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOUTH KOREA</span></div>
+    <h2 class="q">What was the infamous nickname of South Korea's Brothers Home facility?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="The walls of Brothers Home"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The House of No Return</button>
+        <button class="opt" data-i="1">The Korean Auschwitz</button>
+        <button class="opt" data-i="2">The Real Squid Game</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">The Korean Auschwitz</p>
+        <p class="body">To save money, the director made the most violent prisoners into guards. They formed paramilitary squads, and beatings, forced labor and abuse were daily. 657 people died.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the nickname, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The name came afterwards, earned by brutality and 657 dead.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, N = 657, RED = '#c8102e';
+let pick = -1, state = 0;
+const NS = 'http://www.w3.org/2000/svg';
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const mx = W * .05, ww = W - 2 * mx;
+  // sign
+  const signH = fs * 2;
+  const sw = Math.min(ww * .7, fs * 13);
+  Kit.mk('rect', {x: (W - sw) / 2, y: 2, width: sw, height: signH, rx: fs * .3, fill: 'currentColor'}, svg);
+  const st = Kit.mk('text', {x: W / 2, y: 2 + signH * .66, 'text-anchor': 'middle', fill: 'var(--c)', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs, 'letter-spacing': fs * .12}, svg);
+  st.textContent = 'BROTHERS HOME';
+  // walls
+  const y0 = signH + fs * 1.4, capH = fs * 2;
+  const y1 = H - capH, wh = Math.max(y1 - y0, 0);
+  Kit.mk('rect', {x: mx, y: y0, width: ww, height: Math.max(wh, 1), rx: fs * .2, fill: 'color-mix(in srgb,currentColor 7%,transparent)', stroke: 'currentColor', 'stroke-width': Math.max(fs * .22, 2.5)}, svg);
+  // barbed wire
+  const step = fs * .7; let d = `M${mx} ${y0 - fs * .45}`;
+  for (let x = mx, i = 0; x <= mx + ww; x += step, i++) d += ` L${x} ${y0 - fs * (i % 2 ? .75 : .2)}`;
+  Kit.mk('path', {d, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.5, opacity: .7}, svg);
+  for (let x = mx + step; x < mx + ww; x += step * 3) Kit.mk('path', {d: `M${x - 4} ${y0 - fs * .7} L${x + 4} ${y0 - fs * .25} M${x + 4} ${y0 - fs * .7} L${x - 4} ${y0 - fs * .25}`, stroke: 'currentColor', 'stroke-width': 1.5, opacity: .7}, svg);
+
+  const cap = Kit.mk('text', {x: W / 2, y: H - fs * .55, 'text-anchor': 'middle', fill: 'currentColor', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+  const g = Kit.mk('g', {id: 'dots'}, svg);
+  if (state === 0){
+    const qfs = Math.min(wh * .6, ww * .4);
+    if (qfs >= 6){
+      const q = Kit.mk('text', {x: W / 2, y: y0 + wh / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: 'currentColor', opacity: .25, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': qfs}, svg);
+      q.textContent = '?';
+    }
+    cap.textContent = 'Later, people gave this place a name…';
+    return;
+  }
+  // 657 dots, one per victim
+  const pad = fs * .6, iw = ww - 2 * pad, ih = Math.max(wh - 2 * pad, 4);
+  let cell = Math.sqrt(iw * ih / N), cols, rows;
+  for (let k = 0; k < 200; k++){ cols = Math.floor(iw / cell); rows = Math.ceil(N / cols); if (rows * cell <= ih) break; cell *= .98; }
+  const ox = mx + pad + (iw - cols * cell) / 2 + cell / 2, oy = y0 + pad + (ih - rows * cell) / 2 + cell / 2;
+  for (let i = 0; i < N; i++){
+    Kit.mk('circle', {cx: ox + (i % cols) * cell, cy: oy + Math.floor(i / cols) * cell, r: Math.max(cell * .33, .8), fill: 'currentColor', opacity: .78}, g);
+  }
+  cap.textContent = '657 victims · one dot each';
+  // stamp
+  const sg = Kit.mk('g', {id: 'stamp'}, svg);
+  const sfs = Math.max(Math.min(ww * .82 / 10.5, wh * .2), 12);
+  const t = Kit.mk('text', {x: W / 2, y: y0 + wh / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: RED, 'font-family': 'var(--display)', 'font-weight': 900, 'font-size': sfs, 'letter-spacing': sfs * .04}, sg);
+  t.textContent = 'KOREAN AUSCHWITZ';
+  let b; try { b = t.getBBox(); } catch(e){ b = {x: W / 2 - sfs * 5, y: y0 + wh / 2 - sfs * .6, width: sfs * 10, height: sfs * 1.2}; }
+  const p = sfs * .3;
+  const rw = b.width + 2 * p, rh = b.height + 1.2 * p;
+  const r = Kit.mk('rect', {x: b.x - p, y: b.y - p * .6, width: rw, height: rh, rx: sfs * .15, fill: 'var(--c)', 'fill-opacity': .9, stroke: RED, 'stroke-width': Math.max(sfs * .12, 2.5)}, sg);
+  sg.insertBefore(r, t);
+  // fit the rotated stamp inside the walls
+  const a = 8 * Math.PI / 180, sw2 = Math.max(sfs * .12, 2.5);
+  const boxW = (rw + sw2) * Math.cos(a) + (rh + sw2) * Math.sin(a);
+  const boxH = (rw + sw2) * Math.sin(a) + (rh + sw2) * Math.cos(a);
+  const s = Math.max(Math.min(1, wh * .9 / boxH, ww * .95 / boxW), .05);
+  const cx = W / 2, cy = y0 + wh / 2;
+  sg.setAttribute('transform', `translate(${cx} ${cy}) rotate(-8) scale(${s}) translate(${-cx} ${-cy})`);
+}
+
+function reveal(){
+  state = 1; draw();
+  if (Kit.calm) return;
+  gsap.from('#dots circle', {opacity: 0, scale: 0, transformOrigin: 'center', duration: .3, stagger: {amount: 1.8}, ease: 'power2.out'});
+  gsap.from('#stamp', {opacity: 0, scale: 1.6, transformOrigin: '50% 50%', duration: .45, delay: 1.9, ease: 'back.out(2)', onStart: () => Kit.haptic('light')});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(reveal);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2800)); };
+Kit.single();
+</script>
+</html>

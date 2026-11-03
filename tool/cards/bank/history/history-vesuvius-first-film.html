@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-vesuvius-first-film -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#steps{display:flex;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+.opt{flex:1;font:700 max(1.75cqh,12px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 2.6cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt:disabled{opacity:.35;cursor:default}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none;opacity:1}
+.opt.next{box-shadow:inset 0 0 0 .4cqh var(--k)}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body)}
+.src{display:block;max-width:calc(100% - 112px);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VESUVIUS 1944</span></div>
+    <h2 class="q">What made the 1944 eruption unique in Vesuvius's historical record?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="steps">
+        <button class="opt next" data-s="1">1 · Sketch an eruption</button>
+        <button class="opt" data-s="2" disabled>2 · Troops reach Naples</button>
+        <button class="opt" data-s="3" disabled>3 · Film 18 March 1944</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">The first eruption ever caught on camera</p>
+        <p class="body">It began at 16:30 on 18 March 1944. American and British troops had just reached Naples, freed from Nazi occupation, and their cameras made it the first Vesuvius eruption ever photographed and filmed.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the three steps in order and watch the record change.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>1944: Vesuvius's last eruption, and its first on film.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Eruzione del Vesuvio del 1944: la ricostruzione dell'ultimo evento eruttivo” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0;
+const svg = Kit.$('pic');
+const SEPIA = '#6b4a2b', PAPER = '#f1e6cc';
+const M = [[0,.95],[.16,.8],[.3,.6],[.38,.48],[.43,.5],[.5,.45],[.57,.49],[.64,.58],[.78,.74],[1,.93]];
+let E = {};
+
+function mpath(a, j) {
+  return 'M' + M.map(([u,v]) => [(a.x+u*a.w+(Kit.rnd()-.5)*j).toFixed(1),(a.y+v*a.h+(Kit.rnd()-.5)*j).toFixed(1)].join(',')).join('L');
+}
+function text(p, x, y, s, fs, attrs) {
+  const t = Kit.mk('text', Object.assign({x, y, 'font-size': fs}, attrs), p); t.textContent = s; return t;
+}
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85), gap = Math.max(8, H * .035), ph = (H - gap) / 2, r = Math.max(8, W * .03);
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#bdbdbd'}, lg); Kit.mk('stop', {offset: 1, 'stop-color': '#6f6f6f'}, lg);
+
+  /* PANEL 1 — paper sketch */
+  const p1 = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: ph, rx: r, fill: PAPER}, p1);
+  text(p1, r, fs * 1.5, 'BEFORE 1944 · DRAWN BY HAND', fs, {fill: SEPIA, 'font-family': 'var(--mono)', 'font-weight': 700});
+  const a1 = {x: W * .08, y: fs * 2.2, w: W * .84, h: ph - fs * 2.2 - r * .4};
+  E.wait1 = text(p1, W / 2, ph * .62, 'only pens and brushes…', fs, {fill: SEPIA, 'text-anchor': 'middle', 'font-family': 'var(--hand)', opacity: .6});
+  E.ink = Kit.mk('g', {fill: 'none', stroke: SEPIA, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, p1);
+  for (let k = 0; k < 3; k++) Kit.mk('path', {d: mpath(a1, a1.w * .012), 'stroke-width': k ? 1.2 : 2.2, opacity: k ? .55 : 1}, E.ink);
+  // hatching on the slope
+  for (let i = 0; i < 9; i++) {
+    const u = .2 + i * .05, x = a1.x + u * a1.w, y = a1.y + (.78 - i * .02) * a1.h;
+    Kit.mk('path', {d: `M${x},${y}l${a1.w * .03},${a1.h * .1}`, 'stroke-width': 1, opacity: .6}, E.ink);
+  }
+  // scribbled plume
+  const cx = a1.x + .5 * a1.w, cy = a1.y + .45 * a1.h, top = a1.y + a1.h * .02;
+  let d = '', N = 140;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N, th = i * .55, rr = a1.w * (.015 + t * .1);
+    const x = cx + Math.cos(th) * rr + t * a1.w * .08, y = cy - t * (cy - top - rr * .5) + Math.sin(th) * rr * .45;
+    d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+  }
+  Kit.mk('path', {d, 'stroke-width': 1.3, opacity: .85}, E.ink);
+
+  /* PANEL 2 — film strip */
+  const y2 = ph + gap, p2 = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: 0, y: y2, width: W, height: ph, rx: r, fill: '#121212'}, p2);
+  const s = Math.max(6, W * .022), band = s * 2.4;
+  for (let x = s; x < W - s * 1.5; x += s * 2.6) {
+    Kit.mk('rect', {x, y: y2 + s * .7, width: s * 1.3, height: s, rx: s * .25, fill: '#e9e9e9'}, p2);
+    Kit.mk('rect', {x, y: y2 + ph - s * 1.7, width: s * 1.3, height: s, rx: s * .25, fill: '#e9e9e9'}, p2);
+  }
+  const fr = {x: s, y: y2 + band, w: W - 2 * s, h: ph - 2 * band};
+  Kit.mk('rect', {x: fr.x, y: fr.y, width: fr.w, height: fr.h, fill: '#262626'}, p2);
+  E.wait2 = text(p2, W / 2, fr.y + fr.h * .55, 'no camera on the volcano yet', fs, {fill: '#9a9a9a', 'text-anchor': 'middle', 'font-family': 'var(--body)'});
+
+  // camera (step 2)
+  E.cam = Kit.mk('g', {opacity: 0}, p2);
+  const cw = Math.min(fr.w * .3, fr.h * .55), ch = cw * .62, kx = W / 2 - cw / 2, ky = fr.y + fr.h * .45 - ch / 2 - fs * .6;
+  Kit.mk('rect', {x: kx, y: ky, width: cw, height: ch, rx: cw * .1, fill: 'none', stroke: '#fff', 'stroke-width': 2.5}, E.cam);
+  Kit.mk('rect', {x: kx + cw * .14, y: ky - ch * .18, width: cw * .26, height: ch * .18, rx: 3, fill: '#fff'}, E.cam);
+  Kit.mk('circle', {cx: kx + cw / 2, cy: ky + ch / 2, r: ch * .3, fill: 'none', stroke: '#ffd23f', 'stroke-width': 3}, E.cam);
+  text(E.cam, W / 2, ky + ch + fs * 1.6, 'US & British troops, cameras in hand', fs, {fill: '#fff', 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 700});
+
+  // photo (step 3)
+  E.photo = Kit.mk('g', {opacity: 0}, p2);
+  Kit.mk('rect', {x: fr.x, y: fr.y, width: fr.w, height: fr.h, fill: 'url(#sky)'}, E.photo);
+  const a2 = {x: fr.x + fr.w * .06, y: fr.y + fs * .4, w: fr.w * .88, h: fr.h - fs * .4};
+  const pcx = a2.x + .5 * a2.w, pcy = a2.y + .45 * a2.h;
+  E.plume = Kit.mk('g', {}, E.photo);
+  for (let i = 0; i < 12; i++) {
+    const t = i / 11;
+    Kit.mk('circle', {cx: pcx + t * a2.w * .1 + (Kit.rnd() - .5) * a2.w * .05, cy: pcy - t * (pcy - fr.y - a2.h * .08),
+      r: a2.w * (.03 + t * .07), fill: ['#3a3a3a', '#555', '#6a6a6a', '#808080'][i % 4], opacity: .95}, E.plume);
+  }
+  Kit.mk('path', {d: mpath(a2, 0) + `L${a2.x + a2.w},${fr.y + fr.h}L${a2.x},${fr.y + fr.h}Z`, fill: '#151515'}, E.photo);
+  E.grain = Kit.mk('g', {}, E.photo);
+  for (let i = 0; i < 40; i++) Kit.mk('rect', {x: fr.x + Kit.rnd() * fr.w, y: fr.y + Kit.rnd() * fr.h, width: 1.5, height: 1 + Kit.rnd() * fr.h * .08, fill: '#fff', opacity: .25}, E.grain);
+  const lab = {fill: '#fff', stroke: '#000', 'stroke-width': 3, 'paint-order': 'stroke', 'font-family': 'var(--mono)', 'font-weight': 700};
+  text(E.photo, fr.x + fs * .5, fr.y + fs * 1.3, '1944 · ON FILM', fs, lab);
+  text(E.photo, fr.x + fr.w - fs * .5, fr.y + fr.h - fs * .5, '18 MAR 1944 · 16:30', fs, Object.assign({'text-anchor': 'end'}, lab));
+  E.flash = Kit.mk('rect', {x: fr.x, y: fr.y, width: fr.w, height: fr.h, fill: '#fff', opacity: 0}, p2);
+
+  apply(false);
+}
+
+function apply(anim) {
+  const calm = !anim || Kit.calm;
+  const set = (el, o) => calm ? gsap.set(el, {opacity: o}) : gsap.to(el, {opacity: o, duration: .5});
+  set(E.wait1, step >= 1 ? 0 : .6);
+  set(E.wait2, step >= 2 ? 0 : 1);
+  set(E.cam, step === 2 ? 1 : 0);
+  E.ink.querySelectorAll('path').forEach(p => {
+    const L = p.getTotalLength(); p.style.strokeDasharray = L;
+    if (step < 1) p.style.strokeDashoffset = L;
+    else if (calm || step > 1) p.style.strokeDashoffset = 0;
+    else gsap.fromTo(p, {strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.4, ease: 'power1.inOut'});
+  });
+  if (step >= 3) {
+    if (calm) gsap.set(E.photo, {opacity: 1});
+    else {
+      gsap.fromTo(E.flash, {opacity: .9}, {opacity: 0, duration: .6});
+      gsap.to(E.photo, {opacity: 1, duration: .3});
+      gsap.from(E.plume.children, {scale: 0, transformOrigin: '50% 100%', stagger: .08, duration: .8, ease: 'power2.out'});
+    }
+    if (!Kit.calm) {
+      gsap.to(E.grain, {opacity: .3, duration: .07, repeat: -1, yoyo: true, ease: 'steps(1)'});
+      gsap.to(E.plume, {y: -3, duration: 1.6, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    }
+  } else gsap.set(E.photo, {opacity: 0});
+}
+
+Kit.$('steps').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || b.disabled) return;
+  const s = +b.dataset.s; if (s !== step + 1) return;
+  step = s; b.classList.remove('next'); b.classList.add('on'); Kit.haptic(s === 3 ? 'success' : 'light');
+  const n = Kit.$('steps').children[s];
+  if (n) { n.disabled = false; n.classList.add('next'); }
+  apply(true);
+  if (s === 3) setTimeout(() => { Kit.hide('steps'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }, Kit.calm ? 0 : 900);
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic, .opt', {opacity: 0, y: 10, stagger: .07, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) { Kit.$('steps').children[i].click(); await w(300); }
+  await w(1200);
+};
+Kit.single();
+</script>
+</html>

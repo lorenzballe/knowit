@@ -1,0 +1,36 @@
+{
+  "id": "science-blue-aerogel",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.how_eyes_see_colour",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is aerogel blue, yet yellowish when you look through it?",
+  "answer": "Aerogel is glass foamed up to 99.8% air, with pores tens of nanometres wide, far smaller than a wave of light. Its sky-blue look comes from scattered light, and looking through it shows the yellowish light that is left, as at sunset. Drag your eye round the page to look through it.",
+  "move": "Sky blue is scattered light; sunset orange is what is left.",
+  "keywords": [
+    "aerogel",
+    "rayleigh",
+    "sunset",
+    "glass"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A pocket sunset: why aerogel looks blue but yellowish when seen through. Aerogel is glass foamed up to 99.8% air, with pores far smaller than light waves. A draggable eye lets the reader look through a sample. The key point: sky blue is scattered light, and sunset orange is what is left."
+  },
+  "source": "Veritasium, “World's Lightest Solid!” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=AeJ9q45PfD0",
+  "written": "2026-11-03"
+}

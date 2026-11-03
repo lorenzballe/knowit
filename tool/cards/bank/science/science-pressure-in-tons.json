@@ -1,0 +1,36 @@
+{
+  "id": "science-pressure-in-tons",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much weight presses on one square metre at 3,500 metres deep?",
+  "answer": "At 3,500 metres the sea presses with 350 atmospheres. That is 3,500 tons on every square metre. It is about the weight of 2,000 cars stacked on a patch the size of a small table.",
+  "move": "At Titan's depth, each square metre carries about 2,000 cars.",
+  "keywords": [
+    "titan_submersible",
+    "deep_sea",
+    "ocean_depth",
+    "atmospheric_pressure"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A depth dial runs from 0 to 3,500 metres beside readouts for depth, pressure in atmospheres, and load in tons per square metre. Dragging it down shows cars piling onto one square metre, reaching about 2,000 cars at 3,500 metres."
+  },
+  "source": "Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=2wC4fyRA6cM&t=204s",
+  "written": "2026-11-03"
+}

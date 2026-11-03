@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-twin-tunnel-links -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#tun{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.tube{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2.5}
+.rail{stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.5;stroke-dasharray:6 6;fill:none}
+.rung{fill:color-mix(in srgb,var(--k) 10%,transparent);stroke:var(--k);stroke-width:2}
+.rung.on{fill:var(--k)}
+.lab{fill:var(--k);font-family:var(--body);font-weight:700}
+.mut{fill:var(--k);opacity:.7;font-family:var(--body);font-weight:600}
+.ruler{stroke:var(--k);stroke-width:2;fill:none}
+.walk{stroke:var(--k);stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.train{fill:var(--k)}
+.win{fill:var(--c)}
+.big2{fill:var(--k);font-family:var(--display);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · explore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BASE TUNNEL</span></div>
+    <h2 class="q">What's inside the Turin–Lyon base tunnel, and how often are its tubes linked?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="tun" aria-label="Top view of two parallel single-track tunnels joined by cross-passages"></svg>
+    </div>
+    <p class="say" id="say">A train stops in trouble. Drag it along its tunnel and find the way out.</p>
+    <div id="why" class="gone"><p class="body">The tunnel is really two single-track tubes side by side, joined every 333 m by cross-passages. Wherever a train stops, the other tube is never more than about 170 m away: a safe exit, and a link for ventilation.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two tubes, one track each, linked every 333 m.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SPAN = 1000, RUNGS = [167, 500, 833];
+let m = 620, travelled = 0, done = false, G = null, dash = null;
+const svg = Kit.$('tun');
+
+function y(mm){ return G.top + mm / SPAN * (G.bot - G.top); }
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const tw = Math.max(26, Math.min(W * .13, 56));
+  const xA = W * .44, xB = W * .74;
+  G = {W, H, f, tw, xA, xB, top: f * 3.2, bot: H - f * 3.6, el: {}};
+  // tube labels
+  [[xA, 'Tube 1'], [xB, 'Tube 2']].forEach(([x, t]) => {
+    Kit.mk('text', {x, y: f * 1.2, 'text-anchor': 'middle', class: 'lab', 'font-size': f}, svg).textContent = t;
+    Kit.mk('text', {x, y: f * 2.5, 'text-anchor': 'middle', class: 'mut', 'font-size': Math.max(12, f * .78)}, svg).textContent = 'one track';
+  });
+  // rungs (under tubes)
+  G.el.rungs = RUNGS.map(r => Kit.mk('rect', {x: xA, y: y(r) - tw * .22, width: xB - xA, height: tw * .44, class: 'rung'}, svg));
+  // tubes
+  [xA, xB].forEach(x => {
+    Kit.mk('rect', {x: x - tw / 2, y: G.top - tw * .3, width: tw, height: G.bot - G.top + tw * .6, rx: tw / 2, class: 'tube'}, svg);
+    Kit.mk('line', {x1: x, y1: G.top, x2: x, y2: G.bot, class: 'rail'}, svg);
+  });
+  // cover the rung ends inside tubes so passages look open
+  // ruler on the left between two rungs
+  const rx = xA - tw / 2 - Math.max(10, W * .04), y1 = y(RUNGS[0]), y2 = y(RUNGS[1]);
+  Kit.mk('path', {d: `M${rx - 6},${y1}H${rx}V${y2}H${rx - 6}`, class: 'ruler'}, svg);
+  Kit.mk('text', {x: rx - 10, y: (y1 + y2) / 2 + f * .35, 'text-anchor': 'end', class: 'big2', 'font-size': f * 1.25}, svg).textContent = '333 m';
+  Kit.mk('text', {x: rx - 10, y: (y1 + y2) / 2 + f * 1.7, 'text-anchor': 'end', class: 'mut', 'font-size': Math.max(12, f * .78)}, svg).textContent = 'link to link';
+  // walk path
+  G.el.walk = Kit.mk('path', {class: 'walk', 'stroke-dasharray': '2 9'}, svg);
+  // train
+  const th = (G.bot - G.top) * .11, trw = tw * .56;
+  G.th = th;
+  G.el.train = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: -trw / 2, y: -th / 2, width: trw, height: th, rx: trw * .4, class: 'train'}, G.el.train);
+  for (let i = 0; i < 3; i++) Kit.mk('rect', {x: -trw * .25, y: -th / 2 + th * (.15 + i * .26), width: trw * .5, height: th * .14, rx: 2, class: 'win'}, G.el.train);
+  // safe tag
+  G.el.safe = Kit.mk('text', {x: xB + tw / 2 + 8, class: 'lab', 'font-size': Math.max(12, f * .85)}, svg);
+  G.el.safe.textContent = 'safe';
+  // readout
+  G.el.read = Kit.mk('text', {x: W / 2, y: H - f * 1.9, 'text-anchor': 'middle', class: 'big2', 'font-size': f * 1.35}, svg);
+  G.el.sub = Kit.mk('text', {x: W / 2, y: H - f * .5, 'text-anchor': 'middle', class: 'mut', 'font-size': Math.max(12, f * .8)}, svg);
+  G.el.sub.textContent = 'longest possible walk: about 170 m';
+  if (dash) dash.kill();
+  dash = Kit.calm ? null : gsap.to(G.el.walk, {attr: {'stroke-dashoffset': -22}, duration: .6, repeat: -1, ease: 'none'});
+  setTrain(m, true);
+}
+
+function setTrain(v, quiet){
+  v = Math.max(50, Math.min(SPAN - 50, v));
+  if (!quiet) travelled += Math.abs(v - m);
+  m = v;
+  if (!G) return;
+  let best = 0;
+  RUNGS.forEach((r, i) => { if (Math.abs(r - m) < Math.abs(RUNGS[best] - m)) best = i; });
+  const r = RUNGS[best], yt = y(m), yr = y(r);
+  G.el.train.setAttribute('transform', `translate(${G.xA},${yt})`);
+  G.el.rungs.forEach((e, i) => e.classList.toggle('on', i === best));
+  G.el.walk.setAttribute('d', `M${G.xA},${yt}V${yr}H${G.xB}`);
+  G.el.safe.setAttribute('y', yr + G.f * .35);
+  G.el.read.textContent = `Walk to the other tube: ${Math.round(Math.abs(r - m))} m`;
+  if (!done && travelled > 450) finish();
+}
+
+function finish(){
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+}
+
+function toM(e){
+  const b = svg.getBoundingClientRect();
+  return (e.clientY - b.top - G.top) / (G.bot - G.top) * SPAN;
+}
+let drag = false;
+svg.addEventListener('pointerdown', e => { drag = true; svg.setPointerCapture?.(e.pointerId); Kit.haptic('light'); setTrain(toM(e)); });
+svg.addEventListener('pointermove', e => { if (drag) setTrain(toM(e)); });
+svg.addEventListener('pointerup', () => drag = false);
+svg.addEventListener('pointercancel', () => drag = false);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const s = {v: m};
+  gsap.fromTo(s, {v: 720}, {v: 620, duration: 1.2, ease: 'power2.inOut', onUpdate: () => setTrain(s.v, true)});
+};
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect(), x = b.left + G.xA;
+  const at = mm => b.top + G.top + mm / SPAN * (G.bot - G.top);
+  const ev = (t, mm) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: at(mm), bubbles: true, pointerId: 1}));
+  ev('pointerdown', 600);
+  for (let v = 600; v >= 300; v -= 25) { ev('pointermove', v); await new Promise(r => setTimeout(r, 16)); }
+  for (let v = 300; v <= 420; v += 20) { ev('pointermove', v); await new Promise(r => setTimeout(r, 16)); }
+  ev('pointerup', 420);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

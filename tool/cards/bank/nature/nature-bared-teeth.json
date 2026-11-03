@@ -1,0 +1,36 @@
+{
+  "id": "nature-bared-teeth",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.animal_minds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we bare our teeth when we’re happy?",
+  "answer": "The page compares one bared-teeth face across four species: rhesus, Tonkean, chimp and human. Its reveal is that our smile likely began as \"don't hurt me\". Tolerant societies turned it into \"we're friends\".",
+  "move": "Our smile likely began as “don’t hurt me”. Tolerant societies made it “we’re friends”.",
+  "keywords": [
+    "smile",
+    "chimpanzees",
+    "rhesus macaques",
+    "tonkean macaques"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asking why we bare our teeth when happy, with one bared-teeth face shown across four species: rhesus, Tonkean, chimp and human. Labels read Reward, Bonding and Dominance. A box says what to keep, followed by sources."
+  },
+  "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=ztJI8JOLJmY",
+  "written": "2026-11-03"
+}

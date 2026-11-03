@@ -1,0 +1,37 @@
+{
+  "id": "psychology-spinning-tube-trick-1",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Flick a spinning tube labelled X and O. Why do you see only one?",
+  "answer": "The spinning tube is a series of images, and your brain stitches them together into one continuous image. The side you press is the one you keep looking at, so that is the only image your brain shows you.",
+  "move": "What you “see” is your brain stitching quick images into one picture.",
+  "keywords": [
+    "spinning tube",
+    "persistence of vision",
+    "brain",
+    "veritasium",
+    "optical illusion"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card showing a spinning tube labelled X and O. The reader presses either the O side or the X side, then flicks the tube, and sees only the side they pressed."
+  },
+  "source": "Veritasium, “Spinning Tube Trick” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=wQTVcaA3PQw&t=18s",
+  "written": "2026-11-03"
+}

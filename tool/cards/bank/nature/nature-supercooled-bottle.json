@@ -1,0 +1,37 @@
+{
+  "id": "nature-supercooled-bottle",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can water stay liquid at −10 °C, then freeze the moment you tap it?",
+  "answer": "Purified water can stay liquid below 0 °C, as the bottle at −10 °C does, and it freezes when tapped. Freezing gives off heat, so only part of the water turns to ice, about 1/80 per degree, and the rest sits at 0 °C.",
+  "move": "Freezing gives off heat, so supercooled water turns only part to ice, about 1/80 per degree, then sits at 0 °C.",
+  "keywords": [
+    "supercooled water",
+    "freezing",
+    "ice",
+    "freezer",
+    "latent heat"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A bottle of water at −10 °C, with a scale from −15 to −5 °C and a state key for none, liquid and ice. Tapping the bottle asks why water stays liquid below freezing, then freezes at once."
+  },
+  "source": "Veritasium, “Supercooled Water - Explained!” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=ph8xusY3GTM",
+  "written": "2026-11-03"
+}

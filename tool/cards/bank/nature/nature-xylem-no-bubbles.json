@@ -1,0 +1,37 @@
+{
+  "id": "nature-xylem-no-bubbles",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must a tree's water tubes be completely free of air bubbles?",
+  "answer": "Pulled water stays liquid only while nothing gives boiling a place to start. A single air bubble is that place: it grows and the water column snaps. Xylem tubes are water-filled from the start, so no air gets in.",
+  "move": "Pulled water stays liquid only while no bubble gives boiling a start.",
+  "keywords": [
+    "xylem",
+    "cavitation",
+    "water column",
+    "tree",
+    "bubble"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive drawing of two water tubes inside a tree. The reader drags up on the picture to pull water up both tubes. The card asks why the tubes must be completely free of air bubbles, and explains that one bubble is enough to break the column."
+  },
+  "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=BickMFHAZR0&t=228s",
+  "written": "2026-11-03"
+}

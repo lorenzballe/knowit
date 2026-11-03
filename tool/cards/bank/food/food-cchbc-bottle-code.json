@@ -1,0 +1,38 @@
+{
+  "id": "food-cchbc-bottle-code",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.labels",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What does the code CCHBC 70 on a Coca-Cola bottle mean?",
+  "answer": "CCHBC is Coca-Cola HBC, the company that bottles the drink. The number after it gives the bottle's size, and 70 is the 2-litre bottle.",
+  "move": "CCHBC names the bottler; the number names the size: 70 is 2 litres.",
+  "keywords": [
+    "coca-cola",
+    "cchbc",
+    "bottle code",
+    "bottle size",
+    "product label"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A close-up of a Coca-Cola bottle label showing the code CCHBC 70. The question asks what the code means, and the reader drags a marker to guess how big the bottle is.",
+    "graded": false
+  },
+  "source": "Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=x3aSdfmYbZM",
+  "written": "2026-11-03"
+}

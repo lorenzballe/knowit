@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- slug: science-mass-cancels-falling -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#figbox{flex:1;min-height:0;position:relative}
+#fig{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+.eq{margin:0;font:700 max(2cqh,13px)/1.3 var(--mono);color:var(--k)}
+.eq s{text-decoration-thickness:.3cqh;opacity:.6}
+.ctl{display:flex;align-items:center;gap:3cqw}
+.ctl span{font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k);white-space:nowrap}
+#mass{flex:1;min-width:0;accent-color:var(--k);height:max(3cqh,22px)}
+#drop{font:700 max(1.9cqh,13px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.4cqh;padding:1.2cqh 4cqw;cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FALLING</span></div>
+    <h2 class="q">Drop a medicine ball and a small ball together. Which lands first?</h2>
+    <div class="stagebox" id="stage">
+      <div id="figbox"><svg id="fig"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">The heavy medicine ball</button>
+        <button class="opt" data-i="1">Both at the same time</button>
+        <button class="opt" data-i="2">The light small ball</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Same time.</p>
+        <p class="body">More pull, but just as much more inertia.</p>
+        <p class="eq">a = F ÷ m = <s>m</s>·g ÷ <s>m</s> = g</p>
+        <div class="ctl"><span>Mass</span><input type="range" id="mass" min="1" max="10" step="1" value="6"><button id="drop">Drop</button></div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one. The picture will drop them.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More mass means more pull and more inertia; they cancel.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Misconceptions About Falling Objects” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, k = 6, tl = null, geo = null, balls = [], arrows = [];
+
+function draw(){
+  if (tl) { tl.kill(); tl = null; }
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f);
+  const avail = Math.max(0, H - fs * 3.8);
+  const rl = Math.max(4, Math.min(W * .05, H * .045, avail * .085));
+  const rOf = m => rl * (1 + .42 * Math.pow(m - 1, .62));
+  const rMax = rOf(10);
+  const yTop = fs * 1.9 + 2 * rMax, yF = Math.max(yTop, H - fs * 1.9);
+  const span = yF - yTop;
+  const base = span * .07;
+  geo = {yTop, yF};
+  const ink = 'var(--k)';
+  // floor
+  Kit.mk('line', {x1: W * .06, x2: W * .94, y1: yF, y2: yF, stroke: ink, 'stroke-width': Math.max(2, fs * .2), 'stroke-linecap': 'round'}, svg);
+  const cols = [{x: W * .27, m: 1, name: 'small ball'}, {x: W * .67, m: k, name: 'medicine ball'}];
+  balls = []; arrows = [];
+  cols.forEach((c, i) => {
+    const r = rOf(c.m);
+    const nm = Kit.mk('text', {x: c.x, y: yTop - 2 * rMax - fs * .6, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs}, svg);
+    nm.textContent = c.name;
+    const ml = Kit.mk('text', {x: c.x, y: yF + fs * 1.35, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, svg);
+    ml.textContent = 'mass ×' + c.m;
+    // pull arrow
+    const L = base * c.m, ag = Kit.mk('g', {}, svg);
+    const hw = Math.max(5, fs * .38);
+    Kit.mk('line', {x1: c.x, x2: c.x, y1: yTop + 2, y2: yTop + L - hw * .9, stroke: ink, 'stroke-width': Math.max(2.5, fs * .22), 'stroke-linecap': 'round'}, ag);
+    Kit.mk('polygon', {points: `${c.x - hw},${yTop + L - hw * 1.3} ${c.x + hw},${yTop + L - hw * 1.3} ${c.x},${yTop + L + 1}`, fill: ink}, ag);
+    if (span >= fs * 1.9) {
+      const ay = Math.min(yTop + Math.max(L, fs * 1.1), yF - fs * .8);
+      const al = Kit.mk('text', {x: c.x + hw + 6, y: ay, 'dominant-baseline': 'middle', fill: ink, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs}, ag);
+      al.textContent = 'pull ×' + c.m;
+    }
+    arrows.push(ag);
+    // ball
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('circle', {cx: c.x, cy: yTop - r, r, fill: i ? ink : 'var(--c)', stroke: ink, 'stroke-width': Math.max(2, fs * .18)}, g);
+    if (i) Kit.mk('path', {d: `M${c.x - r * .7},${yTop - r} Q${c.x},${yTop - r * 1.5} ${c.x + r * .7},${yTop - r}`, fill: 'none', stroke: 'var(--c)', 'stroke-width': Math.max(1.5, r * .08), opacity: .6}, g);
+    balls.push(g);
+  });
+}
+
+function dropBalls(){
+  if (!geo) return;
+  if (tl) tl.kill();
+  gsap.set(balls, {y: 0}); gsap.set(arrows, {opacity: 1});
+  const d = geo.yF - geo.yTop;
+  if (Kit.calm) { gsap.set(arrows, {opacity: 0}); gsap.set(balls, {y: d}); return; }
+  tl = gsap.timeline();
+  tl.to(arrows, {opacity: 0, duration: .25})
+    .to(balls, {y: d, duration: .95, ease: 'power2.in'})
+    .add(() => Kit.haptic('light'))
+    .to(balls, {y: d - Math.min(14, d * .05), duration: .14, ease: 'power2.out', yoyo: true, repeat: 1});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('why');
+  Kit.$('say').textContent = 'Drag the mass, then drop again.';
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  draw(); dropBalls();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('mass').addEventListener('input', e => { k = +e.target.value; draw(); Kit.haptic('selection'); });
+Kit.$('drop').addEventListener('click', () => { Kit.haptic('selection'); dropBalls(); });
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from(balls, {y: -12, opacity: 0, stagger: .12, duration: .5, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1700));
+};
+Kit.single();
+</script>
+</html>

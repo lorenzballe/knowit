@@ -1,0 +1,37 @@
+{
+  "id": "life-inch-of-pay",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.choosing_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does every inch of height add to your pay?",
+  "answer": "Four big US and UK studies found each inch of height was worth about $789 a year, so a 6′0″ person averages about $5,523 more a year than a 5′5″ colleague. Others rate tall people higher, across 45 studies. For men, height at 16 seems to predict adult pay, not later growth.",
+  "move": "For men, the inches that pay may be those you had at 16, not now.",
+  "keywords": [
+    "height",
+    "pay",
+    "wages",
+    "teenagers",
+    "first impressions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card asking whether each inch of height adds to pay. It compares a 6′0″ person with a 5′5″ colleague, showing about $5,523 a year more on average and $166,000 over 30 years. A draggable pencil marks height on a door frame."
+  },
+  "source": "Diventare Strong, “Come apparire Dominanti, Sicuri di sé stessi, Determinati, Alpha, Tosti e Produttivi” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=ztJI8JOLJmY",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "science-why-drill-kola",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why drill the world's deepest hole on Russia's Kola Peninsula?",
+  "answer": "Under Kola, the younger rock layer is very thin, so the drill reaches Proterozoic crust almost at once. The crust only gets older the deeper you go. That is why Kola was chosen: Earth's oldest crust sits close to the surface there, unlike most places, where rock over 2 billion years old lies buried deep.",
+  "move": "Kola was picked for science: Earth's oldest crust sits close to the surface.",
+  "keywords": [
+    "kola peninsula",
+    "russia",
+    "deepest hole",
+    "proterozoic",
+    "geology"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A depth view of the crust under the Kola Peninsula, with a draggable line. The reader drags it to show where ancient rock begins beneath the thin layer of younger rock.",
+    "graded": false
+  },
+  "source": "Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=88ZLlziYdZg&t=83s",
+  "written": "2026-11-03"
+}

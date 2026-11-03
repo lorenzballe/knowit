@@ -1,0 +1,38 @@
+{
+  "id": "technology-damper-mass-fraction",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What share of a skyscraper's weight must its tuned mass damper be?",
+  "answer": "The damper is a pendulum near the top, tuned to the building's rhythm, with friction to soak up energy. A light one can't push back hard enough, so it must weigh at least 1–5% of the whole building. The tower has 100 blocks; load the damper one 1% block at a time, then lock in.",
+  "move": "A sway damper only works if it's heavy: 1–5% of the building.",
+  "keywords": [
+    "skyscraper",
+    "tuned_mass_damper",
+    "pendulum",
+    "wind_sway",
+    "citicorp_center"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tower of 100 blocks with a damper of 1% blocks to load one at a time. The question asks what share of a skyscraper's weight its tuned mass damper must be, with a Lock in button and the answer 'At least 1% to 5%'.",
+    "graded": false
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=531s",
+  "written": "2026-11-03"
+}

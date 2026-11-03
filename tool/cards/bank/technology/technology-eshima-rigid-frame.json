@@ -1,0 +1,36 @@
+{
+  "id": "technology-eshima-rigid-frame",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long and tall is Eshima Ohashi, and why is it special?",
+  "answer": "The deck is 1.7 km long and rises about 45 m. Spread over that length, the rise is a gentle slope, so the steep look is an illusion. The deck and piers form one rigid frame, the largest in Japan, so the load spreads evenly with no moving parts.",
+  "move": "Long and low keeps it gentle; one rigid frame shares the load.",
+  "keywords": [
+    "eshima-ohashi",
+    "japan",
+    "rigid-frame-bridge",
+    "bridge-engineering"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks how long and tall the Eshima Ohashi bridge is and why that is special. Shows a bridge that builds one piece at a time when the reader taps a button."
+  },
+  "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aU4aGIzz1W4&t=321s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-s-waves-vanish -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#box{flex:1;min-height:0;position:relative}
+#box svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt:disabled{opacity:.6}
+.opt i{font-style:normal;display:inline-block;width:1.4cqh;height:1.4cqh;min-width:10px;min-height:10px;border-radius:50%;margin-right:1.5cqw;vertical-align:middle}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Compare · two waves">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTH'S CORE</span></div>
+    <h2 class="q">Why do S-waves vanish 2,900 km below our feet?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><svg id="pic"></svg></div>
+      <div id="ctl">
+        <button class="opt" data-c="0"><i style="background:#3fd6c6"></i>Send S-wave</button>
+        <button class="opt" data-c="1"><i style="background:#ffd166"></i>Send P-wave</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Below 2,900 km, it's liquid.</p><p class="body">S-waves can't travel through liquids. Since they vanish at 2,900 km, a liquid layer must begin there: the outer core. That liquid is also why P-waves suddenly slow down.</p></div>
+    </div>
+    <p class="say" id="say">Send each wave down from a quake and watch what happens at 2,900 km.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Where S-waves stop, the layer below is liquid.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA STRUTTURA INTERNA DELLA TERRA” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const COL = ['#3fd6c6', '#ffd166'];
+const st = [{front:-1, amp:1, run:false, done:false, tw:null}, {front:-1, amp:1, run:false, done:false, tw:null}];
+let G = null, revealed = false;
+
+function txt(s, attrs, parent){ const t = Kit.mk('text', attrs, parent); t.textContent = s; return t; }
+
+function pill(parent, x, y, s, f, fg, bg){
+  const g = Kit.mk('g', {opacity: 0}, parent);
+  const w = s.length * f * .58 + f * 1.2, h = f * 1.5;
+  Kit.mk('rect', {x: x - w/2, y: y - h/2, width: w, height: h, rx: h/2, fill: bg}, g);
+  txt(s, {x, y: y + f*.35, 'text-anchor':'middle', fill: fg, style:`font:800 ${f}px var(--body)`}, g);
+  return g;
+}
+
+function build(){
+  st.forEach(s => { if (s.tw) { s.tw.kill(); s.tw = null; } if (s.run) { s.run = false; s.done = true; } s.front = -1; s.amp = 1; });
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H * .045));
+  const y0 = f * 2.4, bot = H - 2, yB = y0 + (bot - y0) * .62;
+  const ax = W * .25;
+  const cx = [ax + (W - ax) * .27, ax + (W - ax) * .76];
+  G = {W, H, f, y0, bot, yB, cx, L: (yB - y0) * .22, dots: [[], []]};
+  G.lam = G.L / 1.5;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id:'liq', x1:0, y1:0, x2:0, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#f08a3c'}, lg);
+  Kit.mk('stop', {offset:1, 'stop-color':'#ffb347'}, lg);
+  const mg = Kit.mk('linearGradient', {id:'man', x1:0, y1:0, x2:0, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#4a2e22'}, mg);
+  Kit.mk('stop', {offset:1, 'stop-color':'#6b3b22'}, mg);
+  const cp = Kit.mk('clipPath', {id:'clip'}, defs);
+  Kit.mk('rect', {x:0, y:y0, width:W, height:bot - y0, rx:f*.8}, cp);
+  const body = Kit.mk('g', {'clip-path':'url(#clip)'}, svg);
+  Kit.mk('rect', {x:0, y:y0, width:W, height:yB - y0, fill:'url(#man)'}, body);
+  G.core = Kit.mk('rect', {x:0, y:yB, width:W, height:bot - yB, fill:'url(#liq)'}, body);
+  Kit.mk('line', {x1:ax*.15, x2:W, y1:yB, y2:yB, stroke:'#fff7ec', 'stroke-width':Math.max(1.5, f*.12), 'stroke-dasharray':`${f*.5} ${f*.35}`}, svg);
+  // axis labels
+  txt('0 km', {x:f*.6, y:y0 + f*1.4, fill:'#fbe9d7', style:`font:700 ${f*.9}px var(--mono)`}, svg);
+  txt('MANTLE', {x:f*.6, y:(y0 + yB)/2 + f*.35, fill:'#fbe9d7', opacity:.75, style:`font:800 ${Math.max(12, f*.8)}px var(--body);letter-spacing:.08em`}, svg);
+  txt('2,900 km', {x:f*.6, y:yB - f*.5, fill:'#fff', style:`font:800 ${f*.9}px var(--mono)`}, svg);
+  G.coreLab = txt(revealed ? 'LIQUID' : '?', {x:f*.6, y:(yB + bot)/2 + f*.35, fill:'#3a1405', style:`font:900 ${revealed ? Math.max(12, f*.85) : f*1.6}px var(--body);letter-spacing:.06em`}, svg);
+  // titles + quake mark
+  ['S-waves', 'P-waves'].forEach((s, c) => {
+    txt(s, {x:cx[c], y:f*1.3, 'text-anchor':'middle', style:`font:800 ${f*1.05}px var(--display);fill:var(--k)`}, svg);
+    Kit.mk('circle', {cx:cx[c] - s.length*f*.33, cy:f*.95, r:f*.28, fill:COL[c]}, svg);
+  });
+  // particles
+  const sp = Math.max(9, (bot - y0) / 30), r = Math.max(1.6, sp * .2);
+  const across = 5, gap = Math.min((W - ax) * .07, sp * 1.3);
+  G.r = r;
+  for (let c = 0; c < 2; c++) for (let y = y0 + sp*.7; y < bot - sp*.3; y += sp) for (let i = 0; i < across; i++) {
+    const bx = cx[c] + (i - (across - 1)/2) * gap, liquid = y > yB;
+    const base = liquid ? '#5a2208' : '#f3dcc4';
+    const el = Kit.mk('circle', {cx:bx, cy:y, r, fill:base, opacity:liquid ? .55 : .6}, body);
+    G.dots[c].push({el, bx, by:y, base, liquid});
+  }
+  G.ring = [0, 1].map(c => Kit.mk('circle', {cx:cx[c], cy:y0, r:0, fill:'none', stroke:COL[c], 'stroke-width':2, opacity:0}, svg));
+  G.lab = [
+    pill(svg, cx[0], yB + f*1.6, '✕ stops here', f*.85, '#fff', '#2a0f04'),
+    pill(svg, cx[1], yB + f*1.6, 'slows down', f*.85, '#2a0f04', '#fff3df')
+  ];
+  st.forEach((s, c) => { if (s.done) G.lab[c].setAttribute('opacity', 1); render(c); });
+}
+
+function render(c){
+  if (!G) return;
+  const s = st[c], A = c ? G.r * 4.2 : G.W * .045;
+  for (const d of G.dots[c]) {
+    let off = 0;
+    const dist = s.front - d.by;
+    if (s.front > 0 && dist > 0 && dist < G.L && !(c === 0 && d.liquid)) {
+      const lam = (c === 1 && d.liquid) ? G.lam * .6 : G.lam;
+      off = A * s.amp * Math.sin(Math.PI * dist / G.L) * Math.sin(2 * Math.PI * dist / lam);
+    }
+    if (c === 0) d.el.setAttribute('cx', d.bx + off); else d.el.setAttribute('cy', d.by + off);
+    const hot = Math.abs(off) > A * .12;
+    d.el.setAttribute('fill', hot ? COL[c] : d.base);
+    d.el.setAttribute('opacity', hot ? 1 : (d.liquid ? .55 : .6));
+  }
+}
+
+function send(c, btn){
+  const s = st[c]; if (s.run || !G) return;
+  s.run = true; btn.disabled = true; Kit.haptic('light');
+  G.lab[c].setAttribute('opacity', 0);
+  const finish = () => {
+    s.run = false; s.done = true; s.tw = null; s.front = -1; render(c);
+    btn.disabled = false; btn.classList.add('on'); Kit.haptic('selection');
+    if (st[0].done && st[1].done && !revealed) reveal();
+  };
+  if (Kit.calm) { G.lab[c].setAttribute('opacity', 1); finish(); return; }
+  gsap.fromTo(G.ring[c], {attr:{r:0}, opacity:1}, {attr:{r:G.f*2.2}, opacity:0, duration:.7, ease:'power2.out'});
+  s.front = G.y0; s.amp = 1;
+  const T1 = 1.8, up = () => render(c);
+  const tl = gsap.timeline({onComplete: finish});
+  tl.to(s, {front: G.yB, duration: T1, ease:'none', onUpdate: up});
+  if (c === 0) {
+    tl.add(() => { gsap.to(G.lab[0], {attr:{opacity:1}, duration:.3}); Kit.haptic('light'); });
+    tl.to(s, {front: G.yB + G.L, amp: 0, duration: .9, ease:'power1.out', onUpdate: up});
+  } else {
+    const rest = G.bot - G.yB + G.L;
+    tl.add(() => gsap.to(G.lab[1], {attr:{opacity:1}, duration:.3}));
+    tl.to(s, {front: G.yB + rest, duration: T1 * rest / (G.yB - G.y0) / .5, ease:'none', onUpdate: up});
+  }
+  s.tw = tl;
+}
+
+function reveal(){
+  revealed = true;
+  G.coreLab.textContent = 'LIQUID';
+  G.coreLab.setAttribute('style', `font:900 ${Math.max(12, G.f*.85)}px var(--body);letter-spacing:.06em`);
+  if (!Kit.calm) gsap.from(G.coreLab, {opacity:0, duration:.5});
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity:0, y:8, stagger:.1, duration:.45, ease:'power3.out'});
+}
+
+Kit.$('ctl').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  send(+b.dataset.c, b);
+});
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const bs = Kit.$('ctl').querySelectorAll('.opt');
+  bs[0].click(); bs[1].click();
+  await new Promise(r => setTimeout(r, 6200));
+};
+Kit.single();
+</script>
+</html>

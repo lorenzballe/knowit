@@ -1,0 +1,121 @@
+<!doctype html>
+<!-- slug: history-russia-warhead-share -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.foot .src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR ARSENALS</span></div>
+    <h2 class="q">Russia has 4,489 warheads. Is a bigger share ready than America's?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Yes: Russia has a bigger share ready</button>
+        <button class="opt" data-i="1">No: the USA has a bigger share ready</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">No. Bigger pile, smaller ready slice.</p>
+        <p class="body">Of America's 3,708 warheads, 1,770 are ready to use and 1,938 sit "in the closet", needing work before use. Russia has more in total, 4,489, but a lower share of them is ready.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">The circles show each total. Pick who keeps more of theirs ready.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>More warheads is not more ready: count the ready slice, not the pile.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const st = {p: 0, g: 1};
+const svg = Kit.$('pic');
+
+function wedge(cx, cy, r, frac) {
+  if (frac <= 0) return '';
+  if (frac >= 0.999) return `M${cx},${cy - r}A${r},${r} 0 1 1 ${cx - 0.01},${cy - r}Z`;
+  const a = -Math.PI / 2 + frac * 2 * Math.PI;
+  const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+  return `M${cx},${cy}L${cx},${cy - r}A${r},${r} 0 ${frac > 0.5 ? 1 : 0} 1 ${x},${y}Z`;
+}
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, Math.min(f, H * 0.065));
+  const top = fs * 2.2, bottom = fs * 3.4;
+  const rR = Math.max(10, Math.min(W * 0.21, (H - top - bottom) / 2));
+  const rU = rR * Math.sqrt(3708 / 4489);
+  const cy = top + rR + (H - top - bottom - 2 * rR) / 2;
+  const share = 1770 / 3708;
+  const data = [
+    {cx: W * 0.27, r: rU, name: 'USA', total: '3,708 warheads', l2: '1,770 ready · 48%', us: true},
+    {cx: W * 0.73, r: rR, name: 'RUSSIA', total: '4,489 warheads', l2: 'ready: under 48%', us: false}
+  ];
+  const sc = st.g;
+  data.forEach(d => {
+    const r = d.r * sc;
+    Kit.mk('circle', {cx: d.cx, cy, r, style: 'fill:color-mix(in srgb,var(--k) 16%,transparent);stroke:var(--k);stroke-width:2'}, svg);
+    if (st.p > 0) {
+      if (d.us) {
+        Kit.mk('path', {d: wedge(d.cx, cy, r, share * st.p), style: 'fill:var(--k)'}, svg);
+      } else {
+        Kit.mk('path', {d: wedge(d.cx, cy, r, share * st.p), style: `fill:color-mix(in srgb,var(--k) 12%,transparent);stroke:var(--k);stroke-width:2;stroke-dasharray:5 5;opacity:${st.p}`}, svg);
+        const t = Kit.mk('text', {x: d.cx - r * 0.3, y: cy + fs * 0.35, 'text-anchor': 'middle', style: `font:800 ${fs * 1.4}px var(--display);fill:var(--k);opacity:${st.p}`}, svg);
+        t.textContent = '<';
+      }
+    }
+    const n = Kit.mk('text', {x: d.cx, y: cy - rR - fs * 0.8, 'text-anchor': 'middle', style: `font:800 ${fs * 1.05}px var(--display);fill:var(--k);letter-spacing:.06em`}, svg);
+    n.textContent = d.name;
+    const tt = Kit.mk('text', {x: d.cx, y: cy + rR + fs * 1.4, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+    tt.textContent = d.total;
+    if (st.p > 0) {
+      const t2 = Kit.mk('text', {x: d.cx, y: cy + rR + fs * 2.85, 'text-anchor': 'middle', style: `font:600 ${Math.max(12, fs * 0.9)}px var(--body);fill:var(--k);opacity:${Math.min(1, st.p * 1.5)}`}, svg);
+      t2.textContent = d.l2;
+    }
+  });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: the USA keeps a bigger share ready`);
+  Kit.show('keep');
+  if (Kit.calm) { st.p = 1; draw(); }
+  else gsap.to(st, {p: 1, duration: 1.4, ease: 'power2.inOut', onUpdate: draw});
+  Kit.haptic(ok ? 'success' : 'light');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  st.g = 0; draw();
+  gsap.to(st, {g: 1, duration: 0.9, ease: 'back.out(1.6)', onUpdate: draw});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1700));
+};
+Kit.single();
+</script>
+</html>

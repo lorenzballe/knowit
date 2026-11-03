@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-dry-plastic-fizz -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#g{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;color:var(--k)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BOTTLES</span></div>
+    <h2 class="q">Why is the plastic dried before it's melted into Coke bottles?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="g" aria-label="Graph: humidity in the plastic against CO2 the bottle keeps"></svg>
+      <div id="why" class="gone"><p class="big">Wetter plastic, less fizz</p><p class="body">Water in the melt makes the plastic runnier: its viscosity drops. A bottle from runnier plastic holds less CO₂, and a fizzy drink needs its CO₂ kept in. So the plastic is dried first.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the right-hand dot: how much CO₂ stays in a bottle made from humid plastic?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Dry plastic melts thicker, and thicker plastic keeps the CO₂ in.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const DRY = .85;
+const tru = u => DRY - .65 * (.55 * u + .45 * u * u);
+let g = DRY, phase = 0;           // 0 untouched, 1 guessed, 2 revealed
+const T = {t: 0, lab: 0};
+const BUB = [];
+for (let i = 0; i < 70; i++) BUB.push({u: .04 + .92 * Kit.rnd(), v: .03 + .92 * Kit.rnd(), r: .3 + .45 * Kit.rnd()});
+let P = null, E = {};
+const curve = u => { const lin = DRY + (g - DRY) * u; return lin + (tru(u) - lin) * T.t; };
+
+function draw() {
+  const svg = Kit.$('g');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const L = Math.max(fs * 2.4, 34), R = fs * 1.4, Tp = fs * 1.9, Bm = fs * 3.8;
+  P = {x0: L, x1: W - R, y0: Tp, y1: H - Bm, fs};
+  const yOf = v => P.y1 - v * (P.y1 - P.y0);
+  P.yOf = yOf; P.xOf = u => P.x0 + u * (P.x1 - P.x0);
+  const txt = (x, y, s, a, o = {}) => { const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': a, fill: 'currentColor', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, o), svg); t.textContent = s; return t; };
+  // bubbles = the CO2 the bottle holds
+  E.b = BUB.map(b => Kit.mk('circle', {cx: P.xOf(b.u), cy: yOf(b.v), r: b.r * fs, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(1.2, fs * .1), opacity: .08}, svg));
+  // axes
+  Kit.mk('path', {d: `M${P.x0} ${P.y0 - fs * .6}V${P.y1}H${P.x1 + fs * .6}`, fill: 'none', stroke: 'currentColor', 'stroke-width': 2, opacity: .7}, svg);
+  const yl = txt(0, 0, 'CO₂ the bottle keeps →', 'middle', {transform: `translate(${L * .42},${(P.y0 + P.y1) / 2}) rotate(-90)`, opacity: .8});
+  yl.setAttribute('dominant-baseline', 'middle');
+  const r1 = P.y1 + fs * 1.45, r2 = P.y1 + fs * 2.95;
+  txt(P.x0, r1, 'dry', 'start');
+  txt((P.x0 + P.x1) / 2, r1, 'humidity →', 'middle', {opacity: .7, 'font-weight': 500});
+  txt(P.x1, r1, 'humid', 'end');
+  E.l1 = txt(P.x0, r2, 'thick melt', 'start', {'font-family': 'var(--hand)', opacity: T.lab});
+  E.l2 = txt(P.x1, r2, 'runny melt', 'end', {'font-family': 'var(--hand)', opacity: T.lab});
+  // lines
+  E.gl = Kit.mk('path', {fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-dasharray': '5 5', opacity: phase === 2 ? .45 : 0}, svg);
+  E.line = Kit.mk('path', {fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(3, fs * .28), 'stroke-linecap': 'round'}, svg);
+  E.leg = txt(P.x1, P.y0 - fs * .55, phase === 2 ? 'dashed: your guess' : '', 'end', {'font-weight': 500, opacity: .7});
+  Kit.mk('circle', {cx: P.x0, cy: yOf(DRY), r: fs * .55, fill: 'currentColor'}, svg);
+  E.hint = txt(P.x1 - fs * 1.4, yOf(g) + fs * .35, 'drag ↕', 'end', {'font-family': 'var(--hand)', opacity: phase ? 0 : 1});
+  E.m = Kit.mk('circle', {cx: P.x1, cy: yOf(g), r: fs * .85, fill: 'currentColor', stroke: 'var(--c)', 'stroke-width': 3}, svg);
+  render();
+}
+function render() {
+  if (!P) return;
+  let d = '';
+  for (let i = 0; i <= 40; i++) { const u = i / 40; d += (i ? 'L' : 'M') + P.xOf(u).toFixed(1) + ' ' + P.yOf(curve(u)).toFixed(1); }
+  E.line.setAttribute('d', d);
+  E.gl.setAttribute('d', `M${P.xOf(0)} ${P.yOf(DRY)}L${P.xOf(1)} ${P.yOf(g)}`);
+  E.m.setAttribute('cy', P.yOf(phase === 2 ? curve(1) : g));
+  if (phase < 2) E.hint.setAttribute('y', P.yOf(g) + P.fs * .35);
+  BUB.forEach((b, i) => E.b[i].setAttribute('opacity', b.v < curve(b.u) ? .6 : .07));
+  E.l1.setAttribute('opacity', T.lab); E.l2.setAttribute('opacity', T.lab);
+}
+let drag = false;
+const setFrom = e => { const r = Kit.$('g').getBoundingClientRect(); const y = e.clientY - r.top; g = Math.max(.02, Math.min(.98, (P.y1 - y) / (P.y1 - P.y0))); render(); };
+const svgEl = Kit.$('g');
+svgEl.addEventListener('pointerdown', e => { if (phase === 2 || !P) return; drag = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(E.m); setFrom(e); });
+svgEl.addEventListener('pointermove', e => { if (drag) setFrom(e); });
+const up = () => {
+  if (!drag) return; drag = false;
+  if (phase === 0) { phase = 1; E.hint.setAttribute('opacity', 0); Kit.haptic('selection'); sure.on(); Kit.$('say').textContent = 'Happy with it? Say how sure you are.'; }
+};
+svgEl.addEventListener('pointerup', up); svgEl.addEventListener('pointercancel', up);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = g < DRY - .2;
+  const said = g < DRY - .2 ? 'less CO₂ when humid' : g > DRY + .05 ? 'more CO₂ when humid' : 'about the same CO₂';
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  phase = 2;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  draw();
+  if (Kit.calm) { T.t = 1; T.lab = 1; render(); }
+  else { gsap.to(T, {t: 1, duration: 1.4, ease: 'power2.inOut', onUpdate: render}); gsap.to(T, {lab: 1, duration: .6, delay: 1, onUpdate: render}); }
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || phase || !E.m) return;
+  gsap.fromTo(E.m, {attr: {r: P.fs * .85}}, {attr: {r: P.fs * 1.15}, duration: .6, yoyo: true, repeat: 5, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svgEl.getBoundingClientRect(), x = r.left + P.x1;
+  const ev = (t, y) => svgEl.dispatchEvent(new PointerEvent(t, {bubbles: true, clientX: x, clientY: r.top + y, pointerId: 1, pointerType: 'touch'}));
+  ev('pointerdown', P.yOf(DRY)); await wait(50);
+  ev('pointermove', P.yOf(.5)); await wait(50);
+  ev('pointermove', P.yOf(.3)); await wait(50);
+  ev('pointerup', P.yOf(.3)); await wait(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1900);
+};
+Kit.single();
+</script>
+</html>

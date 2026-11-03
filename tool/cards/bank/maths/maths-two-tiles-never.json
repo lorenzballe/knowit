@@ -1,0 +1,37 @@
+{
+  "id": "maths-two-tiles-never",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Can just two tiles be forced never to repeat?",
+  "answer": "Yes, with just 2 tiles. Bumps and notches, or matching colours, say which edges may touch. Copy-and-shift always breaks a rule, so the only way to keep going is a pattern that never repeats, all the way to infinity.",
+  "move": "Simple rules on the edges can force a pattern that never repeats.",
+  "keywords": [
+    "penrose tiles",
+    "aperiodic tiling",
+    "roger penrose",
+    "tessellation",
+    "edge matching"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two odd-shaped tiles with bumps, notches and colour-matched edges, under the question: can just two tiles be forced never to repeat? Four answer choices are listed. The reader picks one, then rates how sure they are."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=514s",
+  "written": "2026-11-03"
+}

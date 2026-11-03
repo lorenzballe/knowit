@@ -1,0 +1,37 @@
+{
+  "id": "maths-collatz-peak",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How high does the Collatz sequence for 27 climb before descending?",
+  "answer": "Starting from 27, the sequence climbs to a peak of 9,232 m before it falls to 1. Odd numbers are tripled plus one, which makes them grow by about half, so the sequence keeps climbing past Everest. The halvings of even numbers eventually win and bring it down.",
+  "move": "Two simple rules lift little 27 to 9,232 before it falls to 1.",
+  "keywords": [
+    "collatz",
+    "collatz conjecture",
+    "27",
+    "odd numbers",
+    "sequence"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card titled Guess the Peak asks how high the Collatz sequence for 27 climbs before descending. It gives the rules: odd numbers are tripled plus one, even numbers are halved. A draggable slider lets the reader guess the peak, and a Launch button reveals 9,232 m."
+  },
+  "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg",
+  "written": "2026-11-03"
+}

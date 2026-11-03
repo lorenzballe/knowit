@@ -1,0 +1,170 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Run or breathe</title>
+<!-- The reader is furious and picks what cools anger more: a hard run (or a punching bag), slow
+     breathing (or relaxing the muscles), or "about the same"; then says how sure. Two thermometers
+     answer: after breathing the anger comes down, after a run it stays where it was. Only then do
+     the heart traces start (flat dashes before the answer, so they give nothing away): racing on the
+     run, slowing on the breath, with a dot riding each trace. That is the why: anger rides on arousal.
+     Kjærvik & Bushman, "A meta-analytic review of anger management activities that increase or
+     decrease arousal: What fuels or douses rage?", Clinical Psychology Review 109:102414 (2024),
+     PMID 38518585: 154 studies, 184 samples, 10,189 people. Arousal-decreasing activities (deep
+     breathing, mindfulness, meditation, muscle relaxation, slow yoga, time-out) decreased anger and
+     aggression, g = -0.63 [-0.82, -0.43]; arousal-increasing ones (hitting a bag, jogging, cycling,
+     swimming) were ineffective overall, g = -0.02 [-0.13, 0.09], and heterogeneous. That jogging
+     tended to make anger worse is the authors' own reading (Ohio State release, March 2024; the
+     authors in The Conversation), not the abstract: hence the release in the footer, and the small
+     up-arrow on the run tile. "2 in 3" and "1 in 2" are the common-language effect size of those
+     g's, Phi(g / sqrt 2) = .67 and .51 (McGraw & Wong 1992): the chance that a random person who did
+     it ends up calmer than a random person who did nothing. The thermometers drop in proportion to
+     g; the starting level is a picture, not data. Not the bank's punching-bag card (Bushman 2002,
+     venting vs sitting still): this one is the 2024 review of what does and does not cool anger.
+     Inspired by Diventare Strong (Alex Onofri), "Ti OFFEDONO? Rispondi così agli STRONZI".
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#tiles{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr);align-items:stretch;gap:2.6cqw}
+.tile{position:relative;display:flex;flex-direction:column;min-height:0;height:100%;box-sizing:border-box;text-align:left;color:var(--k);background:#fff;border:0;border-radius:2.2cqh;padding:1.2cqh 3cqw 1.3cqh;cursor:pointer;box-shadow:0 .5cqh 0 color-mix(in srgb,var(--k) 14%,transparent),inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 16%,transparent);transition:box-shadow .2s}
+.tile svg{flex:1 1 0;height:0;min-height:0;width:100%;display:block;overflow:visible}
+.tile b{display:block;font:800 max(2cqh,13.5px)/1.15 var(--body);margin-top:.6cqh}
+.tile .sub{display:block;font:600 max(1.55cqh,11.5px)/1.25 var(--body);opacity:.68}
+.tile.on{box-shadow:0 .5cqh 0 var(--k),inset 0 0 0 .5cqh var(--k)}
+#same{font:800 max(1.9cqh,13px)/1 var(--body);color:var(--k);background:transparent;border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:99px;padding:1.4cqh 4cqw;cursor:pointer;align-self:stretch}
+#same.on{background:var(--k);color:var(--c);box-shadow:none}
+.up{display:inline-block;width:0;height:0;border-left:.34em solid transparent;border-right:.34em solid transparent;border-bottom:.6em solid #E5442B;margin:0 .32em 0 .05em;vertical-align:.04em}
+.answered .q{font-size:max(2.5cqh,15px)}
+.answered .tile{cursor:default}
+@container (max-height:500px){
+  .answered .keep{padding:max(1.4cqh,9px) max(4.5cqw,14px)}
+  .answered .keep b{display:inline;margin:0 1.6cqw 0 0}
+  .answered .tile .sub{display:none}
+}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">Furious? What cools you down more: a hard run, or slow breathing?</h2>
+    <div class="stagebox" id="stage">
+      <div id="tiles">
+        <button class="tile" data-i="0"><svg aria-hidden="true"></svg><b>A hard run</b><span class="sub">or a punching bag</span></button>
+        <button class="tile" data-i="1"><svg aria-hidden="true"></svg><b>Slow breathing</b><span class="sub">or relaxing your muscles</span></button>
+      </div>
+      <button id="same" data-i="2">About the same</button>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Anger rides on a racing body. Slow the body down; don’t rev it up.</div>
+    <div class="foot"><span class="src">Source · Kjærvik &amp; Bushman, Clinical Psychology Review 109:102414 (2024); Ohio State release, 2024</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 1, NAMES = ['A hard run', 'Slow breathing', 'About the same'];
+  const INK = '#10100c', RED = '#E5442B', GLASS = '#ffffff';
+  // Pooled effects on anger and aggression (Hedges g), and the chance they mean in plain words.
+  const G = [-0.02, -0.63], CHANCE = ['1 in 2', '2 in 3'], CAP = [['no better', 'than nothing'], ['beats doing', 'nothing']];
+  const START = .8, SCALE = .55;           // the picture: both start hot; each drops by SCALE x |g| of the tube
+  const lv = [START, START], tiles = [...document.querySelectorAll('.tile')], same = Kit.$('same'), card = Kit.$('card'), say = Kit.$('say');
+  let pick = -1, answered = false, shown = [0, 0];
+  const parts = [{}, {}];
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const text = (svg, x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 700, fill: INK}, a), svg); e.textContent = s; return e; };
+
+  // One tile: a thermometer and, beside it, the heart's trace over the result. Before the answer the
+  // trace is a flat line of dashes and the result a "?"; each row gives way when there is no room.
+  function drawTile(i) {
+    const svg = tiles[i].querySelector('svg'); svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const tw = Math.max(9, Math.min(W * .1, H * .1)), cx = Math.max(tw * 1.6, W * .2), br = tw * 1.05;
+    const t0 = tw * .7, t1 = H - br * 2 - 1, by = H - br - 1;
+    Kit.mk('rect', {x: cx - tw / 2, y: t0 - tw / 2, width: tw, height: t1 - t0 + tw, rx: tw / 2, fill: GLASS, stroke: INK, 'stroke-width': 2}, svg);
+    for (let k = 0; k <= 4; k++) { const y = t0 + (t1 - t0) * k / 4; Kit.mk('line', {x1: cx + tw * .85, x2: cx + tw * (k % 2 ? 1.25 : 1.6), y1: y, y2: y, stroke: INK, 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: .55}, svg); }
+    // Where the anger started, pale: what drains away shows as the pale part above the mercury.
+    const g0 = t0 + (t1 - t0) * (1 - START);
+    Kit.mk('rect', {x: cx - tw * .22, y: g0, width: tw * .44, height: t1 + tw - g0, rx: tw * .22, fill: RED, opacity: .22}, svg);
+    const merc = Kit.mk('rect', {x: cx - tw * .22, width: tw * .44, rx: tw * .22, fill: RED}, svg);
+    Kit.mk('circle', {cx, cy: by, r: br, fill: RED, stroke: INK, 'stroke-width': 2}, svg);
+    Kit.mk('circle', {cx, cy: by, r: br * .55, fill: RED}, svg);
+    parts[i] = {merc, t0, t1, tw, cx};
+    const x0 = cx + tw * 2.3, x1 = W - 2, colW = x1 - x0, fsS = Math.max(11, Math.min(13, colW / 8.5));
+    const fsB = Math.max(18, Math.min(H * .26, colW / 3.1, 34));
+    // The result at the foot of the column: the chance, then two short lines.
+    const yC2 = H - 3, yC1 = yC2 - fsS * 1.28, yB = yC1 - fsS * 1.02 - fsB * .34, resTop = yB - fsB * .8;
+    const hA = Math.max(16, Math.min(H * .28, 40)), pyA = hA / 2;
+    const roomPulse = hA < resTop - 4, roomLabel = hA + fsS * 1.35 < resTop - 4;
+    if (!answered) {
+      Kit.mk('line', {x1: x0, x2: x1, y1: pyA, y2: pyA, stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '3 4', 'stroke-linecap': 'round', opacity: .3}, svg);
+      text(svg, x0, yB, '?', {'font-size': fsB * 1.2, 'font-family': 'Fraunces', 'font-weight': 900, opacity: .13});
+    } else {
+      if (roomPulse) {
+        // Racing: five quick beats. Slowing: three, each gap wider than the last, each beat lower.
+        const beats = i === 0 ? [.03, .23, .43, .63, .83].map(f => [f, 1]) : [[.05, 1], [.3, .82], [.75, .62]];
+        const w = colW * (i === 0 ? .16 : .2), pts = [[x0, pyA]];
+        for (const [f, a] of beats) { const bx = x0 + colW * f, amp = (hA / 2) * .95 * a; pts.push([bx + w * .38, pyA], [bx + w * .46, pyA - amp], [bx + w * .54, pyA + amp * .45], [bx + w * .62, pyA]); }
+        pts.push([x1, pyA]);
+        Kit.mk('path', {d: 'M' + pts.map(p => p.join(',')).join(' L'), fill: 'none', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: .8}, svg);
+        // A bright dot runs along the trace like a monitor's: quick on the run, slow on the breath.
+        const dot = Kit.mk('circle', {cx: x0, cy: pyA, r: Math.max(2.4, hA * .09), fill: RED}, svg);
+        const yAt = x => { for (let k = 1; k < pts.length; k++) if (x <= pts[k][0]) { const [ax, ay] = pts[k - 1], [bx2, by2] = pts[k]; return ay + (by2 - ay) * ((x - ax) / Math.max(.001, bx2 - ax)); } return pyA; };
+        if (Kit.calm) dot.setAttribute('opacity', 0);
+        else { const u = {v: 0}; gsap.to(u, {v: 1, duration: i === 0 ? 1.1 : 2.8, ease: 'none', repeat: -1, onUpdate: () => { const x = x0 + u.v * colW; dot.setAttribute('cx', x); dot.setAttribute('cy', yAt(x)); }}); parts[i].dotTween = u; }
+        if (roomLabel) text(svg, x0, hA + fsS * 1.05, i === 0 ? 'heart racing' : 'heart slowing', {'font-size': fsS, opacity: .62});
+      }
+      const big = text(svg, x0, yB, CHANCE[i], {'font-size': fsB, 'font-family': 'Fraunces', 'font-weight': 900, fill: i === 1 ? RED : INK});
+      const c1 = text(svg, x0, yC1, CAP[i][0], {'font-size': fsS, 'font-weight': 600}), c2 = text(svg, x0, yC2, CAP[i][1], {'font-size': fsS, 'font-weight': 600});
+      const extra = [big, c1, c2];
+      // On the run: jogging tended to push anger up (the authors' reading).
+      if (i === 0) { const ay = t0 + (t1 - t0) * (1 - lv[0]), ax = cx - tw * 1.35, s = tw * .45; extra.push(Kit.mk('path', {d: `M${ax},${ay - s * 1.6} L${ax + s},${ay - s * .2} L${ax + s * .35},${ay - s * .2} L${ax + s * .35},${ay + s * 1.1} L${ax - s * .35},${ay + s * 1.1} L${ax - s * .35},${ay - s * .2} L${ax - s},${ay - s * .2}Z`, fill: RED}, svg)); }
+      parts[i].extra = extra;
+      extra.forEach((e, k) => e.setAttribute('opacity', shown[i] * (k === 1 || k === 2 ? .75 : 1)));
+    }
+    level(i);
+  }
+  function level(i) { const p = parts[i]; if (!p.merc) return; const top = p.t0 + (p.t1 - p.t0) * (1 - lv[i]); p.merc.setAttribute('y', top); p.merc.setAttribute('height', Math.max(0, p.t1 + p.tw - top)); }
+  const draw = () => { tiles.forEach((t, i) => { if (parts[i].dotTween) gsap.killTweensOf(parts[i].dotTween); drawTile(i); }); };
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT;
+    Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
+    sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+    reveal();
+  });
+
+  function choose(i) {
+    if (answered) return;
+    pick = i;
+    tiles.forEach((t, k) => t.classList.toggle('on', k === i));
+    same.classList.toggle('on', i === 2);
+    Kit.haptic('selection'); sure.on();
+  }
+  tiles.forEach((t, i) => t.addEventListener('click', () => choose(i)));
+  same.addEventListener('click', () => choose(2));
+
+  function reveal() {
+    answered = true;
+    card.classList.add('answered');
+    Kit.hide('same');
+    say.innerHTML = 'Pick one person who did it and one who did nothing: the chance the first ends up calmer, pooled from <b>154 studies</b>. <i class="up"></i>Jogging even tended to make anger worse.';
+    Kit.show('keep');
+    requestAnimationFrame(() => {
+      draw();
+      const to = [START + SCALE * G[0], START + SCALE * G[1]];
+      if (Kit.calm) { lv[0] = to[0]; lv[1] = to[1]; shown = [1, 1]; draw(); return; }
+      const st = {a: lv[0], b: lv[1], s: 0};
+      gsap.to(st, {a: to[0], b: to[1], duration: 1.4, ease: 'power2.inOut', delay: .2, onUpdate: () => { lv[0] = st.a; lv[1] = st.b; level(0); level(1); }});
+      gsap.to(st, {s: 1, duration: .5, delay: 1.2, onUpdate: () => { shown = [st.s, st.s]; parts.forEach(p => (p.extra || []).forEach((e, k) => e.setAttribute('opacity', st.s * (k === 1 || k === 2 ? .75 : 1)))); }});
+    });
+  }
+
+  Kit.onShow.card = draw;
+  if (typeof ResizeObserver !== 'undefined') { const seen = new Map(); const ro = new ResizeObserver(es => { let again = false; for (const e of es) { const k = e.target, {width, height} = e.contentRect, o = seen.get(k) || [0, 0]; if (Math.abs(width - o[0]) > .5 || Math.abs(height - o[1]) > .5) { seen.set(k, [width, height]); again = true; } } if (again && Kit.ready) draw(); }); tiles.forEach(t => ro.observe(t.querySelector('svg'))); }
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from([...tiles, same], {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out', clearProps: 'transform,opacity'}); };
+  // Plays the card through for the checker: the popular pick, fairly sure.
+  Kit.play.card = async () => { tiles[0].click(); await wait(120); Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(Kit.calm ? 100 : 2200); };
+})();
+Kit.single();
+</script>
+</html>

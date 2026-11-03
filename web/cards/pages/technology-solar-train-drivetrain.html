@@ -1,0 +1,220 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-solar-train-drivetrain -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#why{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;gap:1cqh}
+#why .body{font:600 max(2cqh,13px)/1.35 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+.ink{stroke:var(--k)}
+.tx{fill:var(--k);font-family:var(--body);font-weight:700}
+.part{cursor:grab}
+.d1{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · build it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOLAR TRAIN</span></div>
+    <h2 class="q">What replaced the diesel engine in the Byron Bay Solar Train?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="body">One diesel engine came out. A lithium‑ion battery pack, power inverters and electric traction motors went in, so the train runs on electricity alone. The second diesel stayed, partly to balance the weight.</p></div>
+    </div>
+    <p class="say" id="say">Tap or drag the first diesel engine out of the train.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Battery, inverters and traction motors together do the diesel's job, electrically.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il primo treno solare” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const C={bat:'#1fa45c',inv:'#f0a51f',mot:'#2f6fe8'};
+const PAPER='#fdfaf2', STEEL='#7b818a';
+const ORDER=['bat','inv','mot'];
+const NAMES={bat:'Battery pack',inv:'Inverters',mot:'Traction motors'};
+let st={out:false,placed:{},done:false};
+let tw=[], parts={}, slots={}, geo=null, d1=null, drag=null, cables=null, wheelsG=[], sleepers=null;
+const mk=(t,a,p)=>Kit.mk(t,a,p);
+const rect=(p,x,y,w,h,rx,cls,fill,sw)=>mk('rect',{x,y,width:w,height:h,rx:rx||0,class:cls||'',fill:fill||'none','stroke-width':sw||0},p);
+
+function drawBat(g,w,h){
+  rect(g,-w*.3,-h/2-h*.07,w*.12,h*.08,1,'ink','#444',1.5);
+  rect(g,w*.18,-h/2-h*.07,w*.12,h*.08,1,'ink','#444',1.5);
+  rect(g,-w/2,-h/2,w,h,h*.08,'ink',PAPER,2.5);
+  const n=4,pad=w*.08,gap=w*.04,cw=(w-2*pad-gap*(n-1))/n;
+  for(let i=0;i<n;i++) rect(g,-w/2+pad+i*(cw+gap),-h/2+h*.14,cw,h*.72,2,'',C.bat);
+  mk('path',{d:`M${w*.04},${-h*.22} L${-w*.07},${h*.03} L${w*.01},${h*.03} L${-w*.04},${h*.24} L${w*.08},${-h*.04} L${0},${-h*.04} Z`,fill:'#fff'},g);
+}
+function drawInv(g,w,h){
+  rect(g,-w/2,-h/2,w,h,h*.08,'ink',PAPER,2.5);
+  rect(g,-w/2,-h/2,w,h*.22,h*.08,'',C.inv);
+  for(let i=1;i<=3;i++) mk('line',{x1:-w*.36,x2:w*.36,y1:-h/2+h*.22+i*h*.1,y2:-h/2+h*.22+i*h*.1,class:'ink','stroke-width':1.5},g);
+  let d='';for(let i=0;i<=24;i++){const x=-w*.36+i*w*.72/24,y=h*.25-Math.sin(i/24*Math.PI*2)*h*.12;d+=(i?'L':'M')+x+','+y;}
+  mk('path',{d,fill:'none',stroke:C.inv,'stroke-width':3,'stroke-linecap':'round'},g);
+}
+function drawMot(g,w,h){
+  rect(g,w*.3,-h*.1,w*.2,h*.2,2,'ink','#555',1.5);
+  rect(g,-w/2,-h/2,w*.82,h,h*.25,'ink',C.mot,2.5);
+  for(let i=1;i<6;i++) mk('line',{x1:-w/2+i*w*.82/6,x2:-w/2+i*w*.82/6,y1:-h*.36,y2:h*.36,stroke:'#fff','stroke-width':1.6,opacity:.75},g);
+  mk('ellipse',{cx:w*.32,cy:0,rx:w*.06,ry:h*.5,class:'ink',fill:'#1d4fb3','stroke-width':2},g);
+}
+function drawDiesel(g,w,h,label,fs){
+  for(let i=0;i<4;i++) rect(g,-w*.38+i*w*.2,-h/2-h*.1,w*.14,h*.12,2,'ink','#5d636b',1.5);
+  rect(g,-w/2,-h/2,w,h,h*.08,'ink',STEEL,2.5);
+  rect(g,w*.32,-h/2-h*.28,w*.07,h*.2,1,'ink','#444',1.5);
+  const t=mk('text',{x:0,y:fs*.35,'text-anchor':'middle',fill:'#fff','font-family':'var(--body)','font-weight':700,'font-size':Math.max(12,Math.min(fs,w/8.6))},g);
+  t.textContent=label;
+}
+function setT(k){const P=parts[k];P.g.setAttribute('transform',`translate(${P.pos.x},${P.pos.y}) scale(${P.pos.s})`);}
+
+function fitWhy(){
+  const w=Kit.$('why'),b=w.querySelector('.body');
+  b.style.fontSize='';
+  let fs=parseFloat(getComputedStyle(b).fontSize);
+  while(b.offsetHeight>w.clientHeight&&fs>9){fs-=.5;b.style.fontSize=fs+'px';}
+}
+
+function draw(){
+  tw.forEach(t=>t.kill());tw=[];
+  const svg=Kit.$('pic');const {W,H,f}=Kit.fitSvg(svg);svg.innerHTML='';
+  const fs=Math.max(12,Math.min(f,W*.042));
+  const by=H*.1,bh=H*.34,it=by+H*.06,ib=by+bh-H*.035;
+  const r=Math.min(H*.05,W*.055),wy=by+bh+r*1.25,rail=wy+r;
+  geo={W,H,fs,it,ib,wy,r};
+  // solar panels on the roof
+  const pn=6,px0=W*.08,pw=(W*.84)/pn;
+  for(let i=0;i<pn;i++){const x=px0+i*pw,y=by-H*.04,hh=H*.03;
+    mk('path',{d:`M${x+pw*.12},${y} L${x+pw*.92},${y} L${x+pw*.84},${y+hh} L${x+pw*.04},${y+hh} Z`,fill:'#1d2b4f',class:'ink','stroke-width':1.2},svg);
+    mk('line',{x1:x+pw*.48,y1:y,x2:x+pw*.44,y2:y+hh,stroke:'#6f86c9','stroke-width':1},svg);}
+  // body
+  rect(svg,W*.03,by,W*.94,bh,bh*.14,'ink',PAPER,2.5).setAttribute('fill-opacity','.6');
+  mk('line',{x1:W*.03,x2:W*.97,y1:ib+H*.015,y2:ib+H*.015,class:'ink','stroke-width':2},svg);
+  mk('line',{x1:W*.475,x2:W*.475,y1:by+H*.02,y2:ib,class:'ink','stroke-width':1.5,'stroke-dasharray':'4 5',opacity:.5},svg);
+  // diesel 2, kept
+  drawDiesel(mk('g',{transform:`translate(${W*.255},${(it+ib)/2})`},svg),W*.36,ib-it,'Diesel engine 2',fs);
+  // rail and sleepers
+  sleepers=mk('line',{x1:0,x2:W,y1:rail+r*.3,y2:rail+r*.3,class:'ink','stroke-width':r*.32,'stroke-dasharray':`${r*.28} ${r*.8}`,opacity:.55},svg);
+  mk('line',{x1:0,x2:W,y1:rail,y2:rail,class:'ink','stroke-width':3},svg);
+  // bogies and wheels
+  wheelsG=[];
+  [[.14,.4],[.58,.88]].forEach(([a,b])=>{
+    mk('line',{x1:W*a,x2:W*b,y1:wy,y2:wy,class:'ink','stroke-width':4},svg);
+    mk('line',{x1:W*(a+b)/2,x2:W*(a+b)/2,y1:wy,y2:by+bh,class:'ink','stroke-width':3},svg);
+    [a,b].forEach(x=>{const cx=W*x;
+      mk('circle',{cx,cy:wy,r,class:'ink',fill:PAPER,'stroke-width':2.5},svg);
+      const sp=mk('g',{},svg);
+      for(let i=0;i<3;i++){const an=i*Math.PI/3;mk('line',{x1:cx-Math.cos(an)*r*.8,y1:wy-Math.sin(an)*r*.8,x2:cx+Math.cos(an)*r*.8,y2:wy+Math.sin(an)*r*.8,class:'ink','stroke-width':2},sp);}
+      mk('circle',{cx,cy:wy,r:r*.18,class:'ink',fill:'#444','stroke-width':1.5},svg);
+      wheelsG.push({g:sp,cx,cy:wy});});
+  });
+  slots={bat:{x:W*.635,y:(it+ib)/2,w:W*.23,h:ib-it},inv:{x:W*.85,y:(it+ib)/2,w:W*.13,h:(ib-it)*.75},mot:{x:W*.73,y:wy,w:W*.15,h:r*1.5}};
+  cables=mk('g',{},svg);
+  // slot outlines
+  const slotEls={};
+  ORDER.forEach(k=>{const s=slots[k];
+    slotEls[k]=rect(svg,s.x-s.w/2,s.y-s.h/2,s.w,s.h,6,'',C[k]+'22',0);
+    slotEls[k].setAttribute('stroke',C[k]);slotEls[k].setAttribute('stroke-width',2.5);slotEls[k].setAttribute('stroke-dasharray','6 5');
+    slotEls[k].setAttribute('opacity',st.out&&!st.placed[k]?1:0);});
+  // tray parts
+  parts={};
+  ORDER.forEach((k,i)=>{const s=slots[k];
+    const hx=W*(1+2*i)/6, hy=H*.72;
+    const sc=Math.min(1,(W/3*.78)/s.w,(H*.16)/s.h);
+    const g=mk('g',{class:'part'},svg);
+    ({bat:drawBat,inv:drawInv,mot:drawMot})[k](g,s.w,s.h);
+    const lab=mk('text',{x:hx,y:hy+s.h*sc/2+fs*1.45,'text-anchor':'middle',class:'tx','font-size':fs},svg);
+    lab.textContent=NAMES[k];
+    const placed=!!st.placed[k];
+    const P={g,lab,slotEl:slotEls[k],home:{x:hx,y:hy,s:sc},pos:placed?{x:s.x,y:s.y,s:1}:{x:hx,y:hy,s:sc}};
+    parts[k]=P;setT(k);
+    const vis=st.out?1:0;g.setAttribute('opacity',vis);lab.setAttribute('opacity',st.out&&!placed?1:0);
+    wire(k,svg);
+  });
+  // diesel 1, to be removed
+  d1=null;
+  if(!st.out){
+    d1=mk('g',{class:'d1'},svg);
+    drawDiesel(mk('g',{transform:`translate(${W*.72},${(it+ib)/2})`},d1),W*.41,ib-it,'Diesel engine 1',fs);
+    d1.addEventListener('pointerdown',e=>{e.preventDefault();removeDiesel();});
+  }
+  Kit.$('why').style.top=(rail+r*.6+H*.03)+'px';
+  if(st.done){flow();fitWhy();}
+}
+
+function pt(e){const b=Kit.$('pic').getBoundingClientRect();return {x:e.clientX-b.left,y:e.clientY-b.top};}
+function wire(k,svg){
+  const P=parts[k],g=P.g;
+  g.addEventListener('pointerdown',e=>{
+    if(!st.out||st.placed[k])return;e.preventDefault();
+    try{g.setPointerCapture(e.pointerId);}catch(_){}
+    const p=pt(e);drag={k,ox:p.x-P.pos.x,oy:p.y-P.pos.y,sx:p.x,sy:p.y,moved:false};
+    gsap.killTweensOf(P.pos);g.parentNode.appendChild(g);Kit.haptic('light');
+  });
+  g.addEventListener('pointermove',e=>{
+    if(!drag||drag.k!==k)return;const p=pt(e);
+    if(Math.hypot(p.x-drag.sx,p.y-drag.sy)>6)drag.moved=true;
+    P.pos.x=p.x-drag.ox;P.pos.y=p.y-drag.oy;setT(k);
+  });
+  const up=()=>{
+    if(!drag||drag.k!==k)return;const s=slots[k];
+    const d=Math.hypot(P.pos.x-s.x,P.pos.y-s.y);
+    if(!drag.moved||d<Math.max(geo.W*.2,70))place(k);
+    else gsap.to(P.pos,{...P.home,duration:.4,ease:'power3.out',onUpdate:()=>setT(k)});
+    drag=null;
+  };
+  g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up);
+}
+
+function removeDiesel(){
+  if(st.out||!d1)return;st.out=true;Kit.haptic('selection');
+  gsap.killTweensOf(d1);
+  gsap.to(d1,{y:-geo.H*.6,opacity:0,duration:Kit.calm?.2:.6,ease:'power2.in',onComplete:()=>{d1&&d1.remove();d1=null;}});
+  ORDER.forEach((k,i)=>{const P=parts[k];
+    gsap.to([P.g,P.lab],{opacity:1,duration:.4,delay:.35+i*.08});
+    gsap.to(P.slotEl,{opacity:1,duration:.4,delay:.35});});
+  Kit.$('say').textContent='Now drag the three electric parts into the empty bay.';
+}
+
+function place(k){
+  if(st.placed[k])return;st.placed[k]=true;const P=parts[k],s=slots[k];
+  Kit.haptic('selection');
+  gsap.to(P.pos,{x:s.x,y:s.y,s:1,duration:Kit.calm?.2:.5,ease:'back.out(1.5)',onUpdate:()=>setT(k)});
+  gsap.to(P.lab,{opacity:0,duration:.3});gsap.to(P.slotEl,{opacity:0,duration:.3});
+  if(ORDER.every(q=>st.placed[q]))setTimeout(finish,550);
+}
+
+function finish(){
+  if(st.done)return;st.done=true;Kit.haptic('success');flow();
+  Kit.hide('say');Kit.show('why');Kit.show('keep');
+  fitWhy();
+  if(!Kit.calm)gsap.from('#why .body',{opacity:0,y:8,duration:.5});
+}
+
+function flow(){
+  const b=slots.bat,i=slots.inv,m=slots.mot,{r}=geo;
+  cables.innerHTML='';
+  const yb=b.y+b.h*.1;
+  const d=`M${b.x+b.w/2},${yb} L${i.x-i.w/2},${yb} M${i.x},${i.y+i.h/2} L${i.x},${m.y-r*1.55} L${m.x},${m.y-r*1.55} L${m.x},${m.y-m.h/2}`;
+  mk('path',{d,fill:'none',class:'ink','stroke-width':7,'stroke-linecap':'round','stroke-linejoin':'round'},cables);
+  const live=mk('path',{d,fill:'none',stroke:'#ffd23f','stroke-width':3.5,'stroke-linecap':'round','stroke-dasharray':'7 7'},cables);
+  if(Kit.calm)return;
+  tw.push(gsap.to(live,{attr:{'stroke-dashoffset':-28},duration:.6,repeat:-1,ease:'none'}));
+  wheelsG.forEach(w=>tw.push(gsap.to(w.g,{rotation:360,svgOrigin:`${w.cx} ${w.cy}`,duration:1.4,repeat:-1,ease:'none'})));
+  const per=r*1.08;
+  tw.push(gsap.fromTo(sleepers,{attr:{'stroke-dashoffset':0}},{attr:{'stroke-dashoffset':per},duration:.5,repeat:-1,ease:'none'}));
+}
+
+Kit.onShow.card=()=>draw();
+Kit.onEnter.card=()=>{if(!Kit.calm&&d1)gsap.fromTo(d1,{y:0},{y:-4,duration:.5,yoyo:true,repeat:5,ease:'sine.inOut'});};
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function poke(el){const b=el.getBoundingClientRect(),o={bubbles:true,cancelable:true,clientX:b.left+b.width/2,clientY:b.top+b.height/2,pointerId:7,isPrimary:true};
+  el.dispatchEvent(new PointerEvent('pointerdown',o));el.dispatchEvent(new PointerEvent('pointerup',o));}
+Kit.play.card=async()=>{
+  if(d1)poke(d1);await wait(800);
+  for(const k of ORDER){poke(parts[k].g);await wait(450);}
+  await wait(1000);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,303 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: Turing's halting problem. The reader builds H+ around a would-be halting predictor H,
+     feeds H+ its own code, then tries both of H's answers and watches each one come out wrong. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.1cqh}
+#cap{margin:0;font:600 max(2.1cqh,14px)/1.3 var(--body);color:var(--k);min-height:2.6em;overflow-wrap:break-word}
+#fig{position:relative;flex:1;min-height:0}
+#pic{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#ctl{display:grid;grid-template-columns:1fr 1fr;gap:1.2cqh 3cqw}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer;overflow-wrap:break-word;-webkit-tap-highlight-color:transparent}
+.opt.go{grid-column:1/-1;background:var(--k);color:var(--c);box-shadow:none}
+.opt.tried{opacity:.5;text-decoration:line-through}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why p{margin:0}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic text.disp{font-family:var(--display)}
+#pic text.inv{fill:var(--c)}
+#pic .ln{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+#pic .fk{fill:var(--k)}
+#pic .fc{fill:var(--c)}
+#pic .tint{fill:var(--k);fill-opacity:.09}
+#pic .faint{opacity:.35}
+#pic .ghost{cursor:pointer;pointer-events:all}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HALTING PROBLEM</span></div>
+    <h2 class="q">Why can’t we predict if a program will halt on a given input?</h2>
+    <div class="stagebox" id="stage">
+      <p id="cap">Suppose a program H can tell whether any program halts on its input.</p>
+      <div id="fig"><svg id="pic" role="img" aria-label="A would-be halting predictor H, and the program H+ built around it"></svg></div>
+      <div id="ctl">
+        <button class="opt go" id="b0">Add a twist: do the opposite</button>
+        <button class="opt go gone" id="b1">Feed H+ its own code</button>
+        <button class="opt gone" id="bh">Halts</button>
+        <button class="opt gone" id="bn">Never halts</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Either way, H is wrong.</p><p class="body">Whatever H predicts, H+ does the opposite. So no program like H can exist.</p></div>
+    </div>
+    <p class="say" id="say">Build H+ in two taps, then test H.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No program can predict, for every program, whether it will halt.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Math's Fundamental Flaw” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg', svg = Kit.$('pic');
+const st = {step: 0, last: null, tried: {halts: false, never: false}, end: false};
+let busy = false, fast = false, shown = false, pend = null, tws = [], P = {}, lastWH = '';
+const still = () => Kit.calm || fast;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const CAP = ['Suppose a program H can tell whether any program halts on its input.',
+  'Turing’s twist: H+ asks H about a program, then does the opposite.',
+  'Now H+ reads its own code. What does H predict about H+?'];
+const OUT = {halts: 'H predicts “halts”, so H+ loops forever. H was wrong.',
+  never: 'H predicts “never halts”, so H+ halts. H was wrong.'};
+const say = s => { Kit.$('say').textContent = s; };
+const cap = s => { Kit.$('cap').textContent = s; };
+const vis = (id, on) => Kit.$(id).classList.toggle('gone', !on);
+
+function el(tag, at, par) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at) e.setAttribute(k, at[k]);
+  (par || svg).appendChild(e);
+  return e;
+}
+function tx(par, x, y, s, size, cls, anchor) {
+  const t = el('text', {x: x, y: y, 'font-size': size, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'central'}, par);
+  if (cls) t.setAttribute('class', cls);
+  t.textContent = s;
+  return t;
+}
+function wid(t) {
+  let w = 0;
+  try { w = t.getComputedTextLength(); } catch (e) {}
+  return w || t.textContent.length * parseFloat(t.getAttribute('font-size')) * .56;
+}
+function drawIn(list, tl, at, dur) {
+  [...list].forEach(e => {
+    let L = 0;
+    try { L = e.getTotalLength(); } catch (x) {}
+    if (L) tl.fromTo(e, {strokeDasharray: L + ' ' + L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: dur, ease: 'power2.inOut'}, at);
+  });
+}
+
+// The whole picture for the current state, at the real size. Runs again on every resize.
+function draw() {
+  tws.forEach(t => t.kill()); tws = [];
+  if (pend) { const f = pend; pend = null; f(); }
+  busy = false;
+  svg.removeAttribute('width'); svg.removeAttribute('height'); svg.style.width = ''; svg.style.height = '';
+  const fit = Kit.fitSvg(svg) || {}, W = fit.W, H = fit.H;
+  svg.textContent = '';
+  const rb = svg.getBoundingClientRect(); lastWH = Math.round(rb.width) + 'x' + Math.round(rb.height);
+  if (!(W > 60 && H > 60)) return;
+  let fs = clamp(Math.round(Math.min(fit.f || 14, W / 21)), 13, 22);
+  const cx = W / 2, padY = Math.max(6, H * .025), A = H - 2 * padY, iconR0 = clamp(A * .05, 10, 20);
+  // rows top to bottom: key, min, share of height, cap, weight of any spare height
+  const rows = [['sheet', 24, .11, 46, .06], ['g1', 12, .075, 36, .14], ['hb', 38, .15, 76, .14], ['cg', 10, .045, 22, .1],
+    ['chip', Math.max(fs * 1.8, 26), 0, 0, 0], ['cross', fs * 1.6 + 14, .2, 140, .46], ['icon', 2 * iconR0, 0, 0, 0],
+    ['lg', 5, 0, 0, .03], ['lab', fs * 1.3, 0, 0, 0], ['fp', 6, .03, 18, .07]];
+  const R = {}; let tot = 0;
+  rows.forEach(([k, mn, fr, mx]) => { R[k] = Math.max(mn, Math.min(mx, A * fr)); tot += R[k]; });
+  if (tot > A) {
+    let flex = 0; rows.forEach(([k, mn]) => { flex += R[k] - mn; });
+    const cut = Math.min(1, (tot - A) / (flex || 1)); tot = 0;
+    rows.forEach(([k, mn]) => { R[k] -= (R[k] - mn) * cut; tot += R[k]; });
+    if (tot > A) { const k = A / tot; for (const key in R) R[key] *= k; fs = Math.max(12, Math.floor(fs * Math.max(k, .86))); }
+  } else { const spare = A - tot; rows.forEach(r => { R[r[0]] += spare * r[4]; }); }
+  const chipH = R.chip, pillH = Math.min(fs * 1.6, R.cross - 6), iconR = R.icon / 2, sw = Math.max(2, fs * .15);
+  const fw = Math.min(W - 8, 470), fx0 = cx - fw / 2, d = Math.min(fw * .26, 130), xl = cx - d, xr = cx + d;
+  let y = padY;
+  const sTop = y, sCY = y + R.sheet / 2; y += R.sheet;
+  const fTop = y + R.g1 * .42; y += R.g1;
+  const hTop = y; y += R.hb; const hBot = y;
+  y += R.cg; const cTop = y, cCY = y + chipH / 2; y += chipH; const cBot = y;
+  const xTop = y; y += R.cross; const xBot = y, xMid = (xTop + xBot) / 2;
+  const iCY = y + iconR; y += R.icon + R.lg;
+  const lCY = y + R.lab / 2; y += R.lab;
+  const fBot = y + R.fp * .8;
+  const tabH = fs * 1.6, tfs = Math.round(fs * 1.05);
+  const tmp = tx(svg, 0, -50, 'H+', tfs, 'disp'), tabW = wid(tmp) + fs * 1.2; tmp.remove();
+  const hbW = Math.max(2 * (d + 16), Math.min(fw * .66, 280, 2 * (cx - fx0 - 20 - tabW)));
+
+  // the frame of H+ (before the twist: a dashed slot for it)
+  if (st.step >= 1) {
+    el('rect', {x: fx0, y: fTop, width: fw, height: fBot - fTop, rx: 16, class: 'ln L1 drawin', 'stroke-width': sw});
+    const tg = el('g', {class: 'L1'});
+    el('rect', {x: fx0 + 12, y: fTop - tabH / 2, width: tabW, height: tabH, rx: tabH / 2, class: 'fk'}, tg);
+    tx(tg, fx0 + 12 + tabW / 2, fTop, 'H+', tfs, 'inv disp');
+  } else {
+    const gx0 = Math.max(fx0 + 6, xl - 48), gx1 = Math.min(fx0 + fw - 6, xr + 48), gy0 = xTop + 4, gy1 = lCY + R.lab / 2;
+    const gg = el('g', {class: 'ghost'}), gc = (gy0 + gy1) / 2, gr = Math.min(13, (gy1 - gy0) * .22);
+    el('rect', {x: gx0, y: gy0, width: gx1 - gx0, height: gy1 - gy0, rx: 14, class: 'ln faint', 'stroke-width': sw, 'stroke-dasharray': (sw * 3) + ' ' + (sw * 3)}, gg);
+    el('path', {d: `M${cx - gr} ${gc}H${cx + gr}M${cx} ${gc - gr}V${gc + gr}`, class: 'ln faint', 'stroke-width': sw * 1.5}, gg);
+  }
+  // the input: a sheet of code
+  const sW = R.sheet * .78, sx = cx - sW / 2, fold = sW * .34;
+  const sg = el('g', {class: 'sheet'});
+  el('path', {d: `M${sx} ${sTop}H${sx + sW - fold}L${sx + sW} ${sTop + fold}V${sTop + R.sheet}H${sx}Z`, class: 'ln fc', 'stroke-width': sw}, sg);
+  el('path', {d: `M${sx + sW - fold} ${sTop}V${sTop + fold}H${sx + sW}`, class: 'ln', 'stroke-width': sw * .8}, sg);
+  [.5, .66, .82].forEach((q, i) => el('path', {d: `M${sx + sW * .24} ${sTop + R.sheet * q}H${sx + sW * (i === 2 ? .52 : .76)}`, class: 'ln', 'stroke-width': Math.max(1.4, sw * .7)}, sg));
+  tx(svg, sx + sW + 9, sCY, st.step >= 2 ? 'H+’s own code' : 'any program', fs, st.step >= 2 ? 'L2' : '', 'start');
+  if (st.step >= 2) {
+    const x0 = fx0 + 12 + tabW / 2, y0 = fTop - tabH / 2 - 3, x1 = sx - 7, y1 = sCY;
+    el('path', {d: `M${x0} ${y0}C${x0} ${y1} ${x0 + (x1 - x0) * .35} ${y1} ${x1} ${y1}`, class: 'ln L2', 'stroke-width': sw, 'stroke-dasharray': (sw * 2.2) + ' ' + (sw * 2.2)});
+    el('path', {d: `M${x1 - 6} ${y1 - 5}L${x1} ${y1}L${x1 - 6} ${y1 + 5}`, class: 'ln L2', 'stroke-width': sw});
+  }
+  const a0 = sTop + R.sheet + 3, a1 = hTop - 3;
+  if (a1 - a0 > 3) {
+    const ah = Math.min(5, (a1 - a0) * .7);
+    el('path', {d: `M${cx} ${a0}V${a1}M${cx - ah} ${a1 - ah}L${cx} ${a1}L${cx + ah} ${a1 - ah}`, class: 'ln', 'stroke-width': sw});
+  }
+  // H, the would-be predictor (dashed at the end: it cannot exist)
+  const box = el('rect', {x: cx - hbW / 2, y: hTop, width: hbW, height: R.hb, rx: Math.min(14, R.hb * .3), class: 'ln tint', 'stroke-width': sw * 1.3});
+  if (st.end) box.setAttribute('stroke-dasharray', (sw * 3) + ' ' + (sw * 2.4));
+  const hc = hTop + R.hb / 2, tH = tx(svg, 0, hc, 'H', Math.round(clamp(R.hb * .62, 22, 46)), 'disp'), tQ = tx(svg, 0, hc, 'will it halt?', fs, '', 'start');
+  const wH = wid(tH), gp = fs * .7, gw = wH + gp + wid(tQ);
+  tH.setAttribute('x', cx - gw / 2 + wH / 2); tQ.setAttribute('x', cx - gw / 2 + wH + gp);
+  // its two possible answers
+  const lr = Math.max(4, sw * 2.1), sides = [['halts', xl, 'halts'], ['never', xr, 'never halts']];
+  sides.forEach(([v, x]) => {
+    const on = st.last === v;
+    el('path', {d: `M${x} ${hBot + lr}V${cTop}`, id: 'stub-' + v, class: 'ln', 'stroke-width': on ? sw * 1.9 : sw});
+    el('circle', {cx: x, cy: hBot, r: lr, id: 'lt-' + v, class: 'ln ' + (on ? 'fk' : 'fc'), 'stroke-width': sw});
+  });
+  // the twist: the wires cross, so each answer leads to its opposite
+  if (st.step >= 1) {
+    const wd = (a, b) => `M${a} ${cBot}C${a} ${xMid} ${b} ${xMid} ${b} ${xBot}`;
+    (st.last === 'halts' ? ['never', 'halts'] : ['halts', 'never']).forEach(v => {
+      const on = st.last === v;
+      el('path', {d: v === 'halts' ? wd(xl, xr) : wd(xr, xl), id: 'w-' + v, class: 'ln L1 drawin', 'stroke-width': on ? sw * 1.9 : sw, opacity: st.last && !on ? .4 : 1});
+    });
+    const pg = el('g', {class: 'L1'});
+    const pr = el('rect', {y: xMid - pillH / 2, height: pillH, rx: pillH / 2, class: 'ln fc', 'stroke-width': sw}, pg);
+    const pw = wid(tx(pg, cx, xMid, 'opposite', fs)) + fs * 1.3;
+    pr.setAttribute('x', cx - pw / 2); pr.setAttribute('width', pw);
+  }
+  P = {frame: {x: fx0, y: fTop, w: fw, h: fBot - fTop}, sheet: {x: sx, y: sTop, w: sW, h: R.sheet}, sw: sw, chips: {}};
+  sides.forEach(([v, x, s]) => {
+    const g = el('g', {id: 'chip-' + v});
+    const r = el('rect', {y: cTop, height: chipH, rx: chipH / 2, class: 'ln fc', 'stroke-width': sw}, g);
+    const t = tx(g, x, cCY, s, fs), w = wid(t) + fs * 1.6;
+    r.setAttribute('x', x - w / 2); r.setAttribute('width', w);
+    P.chips[v] = {g: g, r: r, t: t, x0: x - w / 2, x1: x + w / 2};
+  });
+  // what H+ then does
+  if (st.step >= 1) {
+    const onH = st.last === 'never', hs = iconR * 1.55;
+    const gH = el('g', {id: 'e-never', class: 'L1'});
+    el('rect', {x: xl - hs / 2, y: iCY - hs / 2, width: hs, height: hs, rx: hs * .2, class: 'ln ' + (onH ? 'fk' : 'fc'), 'stroke-width': onH ? sw * 1.6 : sw}, gH);
+    tx(svg, xl, lCY, 'halt', fs, 'L1');
+    const onL = st.last === 'halts', rr = iconR * .8, lw = onL ? sw * 1.7 : sw;
+    const gL = el('g', {id: 'e-halts', class: 'L1'}), gS = el('g', {}, gL);
+    const an0 = -Math.PI * .36, an1 = an0 + Math.PI * 1.62;
+    const p0x = xr + rr * Math.cos(an0), p0y = iCY + rr * Math.sin(an0), p1x = xr + rr * Math.cos(an1), p1y = iCY + rr * Math.sin(an1);
+    el('path', {d: `M${p0x} ${p0y}A${rr} ${rr} 0 1 1 ${p1x} ${p1y}`, class: 'ln', 'stroke-width': lw}, gS);
+    const ah = Math.max(4, rr * .6), tX = -Math.sin(an1), tY = Math.cos(an1), nX = Math.cos(an1), nY = Math.sin(an1);
+    el('path', {d: `M${p1x - tX * ah + nX * ah * .75} ${p1y - tY * ah + nY * ah * .75}L${p1x} ${p1y}L${p1x - tX * ah - nX * ah * .75} ${p1y - tY * ah - nY * ah * .75}`, class: 'ln', 'stroke-width': lw}, gS);
+    tx(svg, xr, lCY, 'loop forever', fs, 'L1');
+    if (onL && !still()) tws.push(gsap.to(gS, {rotation: 360, svgOrigin: xr + ' ' + iCY, duration: 1.5, ease: 'none', repeat: -1}));
+  }
+  // every answer H has given, struck out
+  ['halts', 'never'].forEach(v => {
+    if (!st.tried[v]) return;
+    const c = P.chips[v], e = 4;
+    el('path', {d: `M${c.x0 - e} ${cTop - e}L${c.x1 + e} ${cBot + e}M${c.x0 - e} ${cBot + e}L${c.x1 + e} ${cTop - e}`, id: 'x-' + v, class: 'ln', 'stroke-width': sw * 1.5});
+  });
+}
+
+function twist() {
+  if (busy || st.step !== 0) return;
+  st.step = 1; Kit.haptic('light');
+  vis('b0', false); vis('b1', true); cap(CAP[1]);
+  draw();
+  if (still()) return;
+  busy = true;
+  const tl = gsap.timeline({onComplete: () => { busy = false; }});
+  drawIn(svg.querySelectorAll('.drawin'), tl, 0, .6);
+  tl.from(svg.querySelectorAll('.L1:not(.drawin)'), {opacity: 0, y: 6, duration: .35, stagger: .05, ease: 'power3.out'}, .25);
+  tws.push(tl);
+}
+function feed() {
+  if (busy || st.step !== 1) return;
+  st.step = 2; Kit.haptic('light');
+  vis('b1', false); vis('bh', true); vis('bn', true);
+  cap(CAP[2]); say('Pick what H predicts. Try both.');
+  draw();
+  if (still()) return;
+  busy = true;
+  const F = P.frame, S = P.sheet;
+  const gh = el('rect', {x: F.x, y: F.y, width: F.w, height: F.h, rx: 16, class: 'ln', 'stroke-width': P.sw * 1.4});
+  const tl = gsap.timeline({onComplete: () => { busy = false; gh.remove(); }});
+  tl.to(gh, {attr: {x: S.x, y: S.y, width: S.w, height: S.h, rx: 3}, duration: .7, ease: 'power3.inOut'}, 0)
+    .to(gh, {opacity: 0, duration: .2}, .62)
+    .from(svg.querySelectorAll('.L2'), {opacity: 0, duration: .35, stagger: .08}, .55)
+    .fromTo(svg.querySelector('.sheet'), {scale: 1.3}, {scale: 1, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)', immediateRender: false}, .62);
+  tws.push(tl);
+}
+function reveal() {
+  st.end = true;
+  Kit.hide('ctl'); Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+}
+function verdict(v) {
+  if (busy || st.step < 2 || st.end) return;
+  st.last = v; st.tried[v] = true; Kit.haptic('selection');
+  Kit.$(v === 'halts' ? 'bh' : 'bn').classList.add('tried');
+  cap(OUT[v]);
+  const both = st.tried.halts && st.tried.never;
+  if (!both) say('Now try the other answer.');
+  draw();
+  if (both) pend = reveal;
+  if (still()) { if (pend) draw(); return; }
+  busy = true;
+  const c = P.chips[v], q = s => svg.querySelector(s);
+  const tl = gsap.timeline({onComplete: () => { busy = false; if (pend) draw(); }});
+  tl.fromTo(q('#lt-' + v), {scale: 0}, {scale: 1, transformOrigin: '50% 50%', duration: .25, ease: 'back.out(3)'}, 0);
+  drawIn([q('#stub-' + v)], tl, 0, .15);
+  tl.call(() => { c.r.setAttribute('class', 'ln fk'); c.t.setAttribute('class', 'inv'); }, null, .15);
+  tl.fromTo(c.g, {scale: .86}, {scale: 1, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(3)', immediateRender: false}, .15);
+  drawIn([q('#w-' + v)], tl, .35, .55);
+  tl.fromTo(q('#e-' + v), {opacity: .3, scale: .6}, {opacity: 1, scale: 1, transformOrigin: '50% 50%', duration: .3, ease: 'back.out(2.5)'}, .85);
+  tl.call(() => { c.r.setAttribute('class', 'ln fc'); c.t.removeAttribute('class'); }, null, 1.25);
+  drawIn([q('#x-' + v)], tl, 1.25, .3);
+  if (both) tl.to({}, {duration: .7});
+  tws.push(tl);
+}
+
+Kit.$('b0').addEventListener('click', twist);
+Kit.$('b1').addEventListener('click', feed);
+Kit.$('bh').addEventListener('click', () => verdict('halts'));
+Kit.$('bn').addEventListener('click', () => verdict('never'));
+svg.addEventListener('click', e => { if (e.target.closest && e.target.closest('.ghost')) twist(); });
+if (window.ResizeObserver) new ResizeObserver(() => {
+  if (!shown) return;
+  const r = svg.getBoundingClientRect();
+  if (Math.round(r.width) + 'x' + Math.round(r.height) !== lastWH) draw();
+}).observe(Kit.$('fig'));
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => { shown = true; draw(); };
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from([...svg.children], {opacity: 0, y: 10, duration: .5, stagger: .05, ease: 'power3.out'});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  fast = true;
+  Kit.$('b0').click(); await w(150);
+  Kit.$('b1').click(); await w(150);
+  Kit.$('bh').click(); await w(150);
+  Kit.$('bn').click(); await w(700);
+  fast = false;
+};
+Kit.single();
+</script>
+</html>

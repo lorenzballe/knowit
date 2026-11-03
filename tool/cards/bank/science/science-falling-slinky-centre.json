@@ -1,0 +1,36 @@
+{
+  "id": "science-falling-slinky-centre",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Drop a hanging slinky. When does its centre of mass start falling?",
+  "answer": "The instant it's let go. Gravity is the only outside force on the slinky, and it was pulling all along; the hand was cancelling it. Let go and the red centre of mass drops on a curve at once, even while the bottom hangs still.",
+  "move": "For the centre of mass, only outside forces count; inside ones cancel.",
+  "keywords": [
+    "slinky",
+    "centre of mass",
+    "gravity",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A hanging slinky with a red dot marking its centre of mass. The question asks when the centre of mass starts falling, with three answer choices: the instant it is let go, only when the bottom starts to fall, or after a short delay as tension eases."
+  },
+  "source": "Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=uiyMuHuCFo4&t=242s",
+  "written": "2026-11-03"
+}

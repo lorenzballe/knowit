@@ -1,0 +1,35 @@
+{
+  "id": "thinking-nice-strategies-win",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Axelrod's first tournament: what kind of strategy took the top eight places?",
+  "answer": "Axelrod's first tournament had 15 entries: 8 nice and 7 nasty. The nice strategies took the top eight places, and even the worst nice one far outscored the best nasty one. Experts who tried to be tricky were shocked.",
+  "move": "Never striking first pays off in the long run.",
+  "keywords": [
+    "axelrod",
+    "nice strategies",
+    "nasty strategies",
+    "tournament",
+    "game theory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quiz asking which kind of strategy took the top eight places in Axelrod's first tournament. Options include Nice, Nasty, A mix, and Experts' hunch. A board of the 15 entries follows, to watch after picking an answer."
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=630s",
+  "written": "2026-11-03"
+}

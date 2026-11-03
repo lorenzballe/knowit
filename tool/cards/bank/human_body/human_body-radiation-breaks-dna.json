@@ -1,0 +1,37 @@
+{
+  "id": "human_body-radiation-breaks-dna",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does radiation actually do to the cells in your body?",
+  "answer": "Radiation strikes DNA, snapping its strands or changing its letters. A changed letter is a mutation: the cell now follows altered instructions. Enough damage ruins tissue and can lead to cancer.",
+  "move": "Radiation harms the body by damaging DNA, and its mutations can lead to cancer.",
+  "keywords": [
+    "dna",
+    "radiation",
+    "mutation",
+    "cancer",
+    "cell"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive DNA strand. Press and hold to send radiation into it. Each hit snaps a strand or changes a letter. Counters track hits, strand breaks and changed letters, out of 8 hits."
+  },
+  "source": "Veritasium, “How Damaging is Radiation?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=wQmnztyXwVA&t=34s",
+  "written": "2026-11-03"
+}

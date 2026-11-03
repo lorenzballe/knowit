@@ -1,0 +1,35 @@
+{
+  "id": "thinking-effort-body-signs",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When your mind works hard, what does your body show?",
+  "answer": "Add Three makes System 2 work hard, and the body answers: the heart beats faster, sweat rises and the pupils widen. Going back to rest lets them settle.",
+  "move": "Hard thinking is physical: it shows in the pupils, the pulse and the sweat.",
+  "keywords": [
+    "system 2",
+    "pupil dilation",
+    "heart rate",
+    "sweat",
+    "mental effort"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Shows a body with an eye, skin and heart, with two buttons, Rest and Add Three. Choosing Add Three makes the heart beat faster, sweat rise and pupils widen; Rest makes them settle."
+  },
+  "source": "Veritasium, “The Science of Thinking” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=UBVV8pch1dM&t=380s",
+  "written": "2026-11-03"
+}

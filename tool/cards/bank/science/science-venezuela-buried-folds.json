@@ -1,0 +1,37 @@
+{
+  "id": "science-venezuela-buried-folds",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which tectonic plates built the buried mountains that trap Venezuela's oil?",
+  "answer": "The Caribbean plate, moving east, scraped against the South American plate and folded the crust into a mountain chain. Part of that chain is now buried, and its folds hold a lot of oil.",
+  "move": "Venezuela's oil sits in the folds of a buried mountain chain.",
+  "keywords": [
+    "venezuela",
+    "caribbean_plate",
+    "south_america",
+    "oil",
+    "buried_mountains"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive cross-section of the crust showing the Caribbean plate and the South American plate. Drag the Caribbean plate east and watch the crust below fold into mountains. The page asks which tectonic plates built the buried mountains that trap Venezuela's oil."
+  },
+  "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=96s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "medicine-first-drop-risk",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "According to the WHO, what is the safest amount of alcohol to drink?",
+  "answer": "The WHO says no level of drinking is safe for health, just like cigarette smoke. Whatever the drink, the risk begins with the first drop, and the more you drink, the more it grows.",
+  "move": "There is no safe dose of alcohol: the risk starts at the first drop.",
+  "keywords": [
+    "alcohol",
+    "world health organization",
+    "wine",
+    "risk",
+    "dose"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz asking which amount of alcohol the WHO calls safest, with four choices: one small glass a day, a glass of wine with meals, none at all, or no amount is safe. The reader picks an answer, then rates how sure they are."
+  },
+  "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=611s",
+  "written": "2026-11-03"
+}

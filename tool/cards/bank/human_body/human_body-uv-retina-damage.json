@@ -1,0 +1,36 @@
+{
+  "id": "human_body-uv-retina-damage",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.sun_and_skin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do the sun's UV rays damage the cells in your retina?",
+  "answer": "The sun doesn't literally burn the retina. UV rays trigger photochemical reactions inside photoreceptors, the retina's cells that turn light into images, which alter their structure and damage them, sometimes for good.",
+  "move": "The sun doesn't literally burn the retina: its UV light chemically breaks the cells that see.",
+  "keywords": [
+    "retina",
+    "photoreceptors",
+    "uv rays",
+    "sun"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A sun with a button labeled to send UV rays. Each ray travels to the retina and hits photoreceptor cells, which visibly change as the rays break them chemically. The question asks how the sun's UV rays damage the cells in the retina."
+  },
+  "source": "Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=7CUTjOwAU4w&t=49s",
+  "written": "2026-11-03"
+}

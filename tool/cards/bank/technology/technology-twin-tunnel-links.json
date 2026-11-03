@@ -1,0 +1,37 @@
+{
+  "id": "technology-twin-tunnel-links",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What's inside the Turin–Lyon base tunnel, and how often are its tubes linked?",
+  "answer": "The base tunnel is really two single-track tubes side by side, joined every 333 m by cross-passages. Wherever a train stops, the other tube is never more than about 170 m away, which gives a safe exit and a link for ventilation.",
+  "move": "Two tubes, one track each, linked every 333 m.",
+  "keywords": [
+    "turin-lyon",
+    "base tunnel",
+    "cross-passages",
+    "rail tunnels",
+    "ventilation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Drag a stopped train along a cross-section of the Turin–Lyon base tunnel to find the nearest way out. The page shows two single-track tubes linked by cross-passages every 333 m."
+  },
+  "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Jo7Sd0wxNE0&t=156s",
+  "written": "2026-11-03"
+}

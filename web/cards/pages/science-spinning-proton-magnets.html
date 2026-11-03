@@ -1,0 +1,186 @@
+<!doctype html>
+<!-- slug: science-spinning-proton-magnets -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Protons as tiny spinning magnets</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex;flex-direction:column}
+#cv{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:grab}
+#cv:active{cursor:grabbing}
+.chain{font:600 max(1.7cqh,12px)/1.3 var(--body);color:var(--muted);margin:0 0 .6cqh;text-align:center;overflow-wrap:anywhere}
+.chain b{color:var(--k)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TINY MAGNETS</span></div>
+    <h2 class="q">Why do the hydrogen protons in your body act like magnets in an MRI?</h2>
+    <div class="stagebox" id="stage">
+      <p class="chain">You are mostly <b>water</b> · H₂O · every <b>hydrogen</b> nucleus holds <b>1 proton</b></p>
+      <canvas id="cv"></canvas>
+    </div>
+    <p class="say" id="say">Drag the magnet around the proton and watch it turn.</p>
+    <div id="why" class="gone">
+      <p class="body">The proton in each hydrogen nucleus spins on its own axis and behaves like a tiny magnet, with a north and a south end.</p>
+      <p class="body">So an outside magnetic field can grab it and turn it, and that is what an MRI machine works with.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Each hydrogen proton is a spinning mini‑magnet, so magnetic fields can steer it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), card = Kit.$('card');
+let G = null, ink = '#111', paper = '#fff';
+let a = -Math.PI / 2;          // proton's north direction
+let mang = Math.PI * 0.2;      // magnet angle around the proton
+let spin = 0, flow = 0, drag = false, travel = 0, done = false, live = false;
+const wrap = d => { while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; };
+
+function geo() {
+  const W = G.W, H = G.H, m = Math.min(W, H);
+  return {W, H, m, cx: W / 2, cy: H / 2, R: m * 0.1, D: m * 0.36, len: m * 0.26, wid: m * 0.1};
+}
+
+function label(x, txt, X, Y, fs, fill, col) {
+  x.font = `800 ${fs}px ${getComputedStyle(card).getPropertyValue('--body') || 'sans-serif'}`;
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  if (fill) { x.beginPath(); x.arc(X, Y, fs * 0.85, 0, 7); x.fillStyle = fill; x.fill(); }
+  x.fillStyle = col; x.fillText(txt, X, Y);
+}
+
+function draw() {
+  if (!G) return;
+  const x = G.x, g = geo(), {cx, cy, R} = g;
+  const fs = Math.max(13, g.m * 0.05);
+  x.clearRect(0, 0, g.W, g.H);
+
+  // dipole field lines of the proton
+  x.save(); x.translate(cx, cy); x.rotate(a);
+  x.strokeStyle = ink; x.lineWidth = Math.max(1.4, R * 0.04);
+  x.setLineDash([R * 0.18, R * 0.16]); x.lineDashOffset = -flow;
+  [1.6, 2.3, 3.1, 4.2].forEach((L, i) => {
+    x.globalAlpha = 0.6 - i * 0.11;
+    [1, -1].forEach(side => {
+      x.beginPath();
+      for (let k = 0; k <= 60; k++) {
+        const th = 0.12 + (Math.PI - 0.24) * k / 60, r = L * R * Math.sin(th) ** 2;
+        const px = r * Math.cos(th), py = side * r * Math.sin(th);
+        k ? x.lineTo(px, py) : x.moveTo(px, py);
+      }
+      x.stroke();
+    });
+  });
+  x.setLineDash([]); x.globalAlpha = 1;
+
+  // axis
+  x.strokeStyle = ink; x.lineWidth = Math.max(2, R * 0.06);
+  x.beginPath(); x.moveTo(-1.55 * R, 0); x.lineTo(1.5 * R, 0); x.stroke();
+  x.beginPath(); x.moveTo(1.62 * R, 0); x.lineTo(1.38 * R, -0.13 * R); x.lineTo(1.38 * R, 0.13 * R); x.closePath();
+  x.fillStyle = ink; x.fill();
+
+  // spin ring around the axis (back half)
+  const rc = 1.2 * R, rx = 0.15 * R, ry = 0.55 * R;
+  x.lineWidth = Math.max(1.5, R * 0.035); x.globalAlpha = 0.45;
+  x.beginPath(); x.ellipse(rc, 0, rx, ry, 0, Math.PI / 2, Math.PI * 1.5); x.stroke(); x.globalAlpha = 1;
+
+  // proton sphere
+  const gr = x.createRadialGradient(-0.35 * R, -0.35 * R, R * 0.1, 0, 0, R);
+  gr.addColorStop(0, '#ffc09a'); gr.addColorStop(0.55, '#e4572e'); gr.addColorStop(1, '#8f2410');
+  x.beginPath(); x.arc(0, 0, R, 0, 7); x.fillStyle = gr; x.fill();
+  // spinning meridians (axis along x)
+  x.save(); x.beginPath(); x.arc(0, 0, R, 0, 7); x.clip();
+  x.strokeStyle = '#fff'; x.lineWidth = Math.max(1.2, R * 0.035);
+  for (let k = 0; k < 6; k++) {
+    const ph = spin + k * Math.PI / 6, s0 = Math.sin(ph) > 0 ? 0 : Math.PI;
+    x.globalAlpha = 0.25 + 0.45 * Math.abs(Math.sin(ph));
+    x.beginPath();
+    for (let j = 0; j <= 30; j++) {
+      const s = s0 + Math.PI * j / 30;
+      const px = R * Math.cos(s), py = R * Math.sin(s) * Math.cos(ph);
+      j ? x.lineTo(px, py) : x.moveTo(px, py);
+    }
+    x.stroke();
+  }
+  x.restore(); x.globalAlpha = 1;
+
+  // spin ring (front half) and moving dot
+  x.strokeStyle = ink; x.lineWidth = Math.max(1.8, R * 0.045);
+  x.beginPath(); x.ellipse(rc, 0, rx, ry, 0, -Math.PI / 2, Math.PI / 2); x.stroke();
+  const dx = rc + rx * Math.cos(spin), dy = ry * Math.sin(spin);
+  x.beginPath(); x.arc(dx, dy, R * 0.09, 0, 7); x.fillStyle = '#e4572e'; x.fill();
+  x.restore();
+
+  // N / S of the proton
+  label(x, 'N', cx + Math.cos(a) * 2.05 * R, cy + Math.sin(a) * 2.05 * R, fs, ink, paper);
+  label(x, 'S', cx - Math.cos(a) * 2.0 * R, cy - Math.sin(a) * 2.0 * R, fs, paper, ink);
+
+  // the outside magnet
+  const mx = cx + Math.cos(mang) * g.D, my = cy + Math.sin(mang) * g.D;
+  x.save(); x.translate(mx, my); x.rotate(mang);
+  x.shadowColor = 'rgba(0,0,0,.25)'; x.shadowBlur = R * 0.3; x.shadowOffsetY = R * 0.08;
+  const rr = g.wid * 0.22;
+  x.beginPath(); x.roundRect(-g.len / 2, -g.wid / 2, g.len, g.wid, rr); x.fillStyle = '#2e6fdb'; x.fill();
+  x.shadowColor = 'transparent';
+  x.beginPath(); x.roundRect(0, -g.wid / 2, g.len / 2, g.wid, [0, rr, rr, 0]); x.fillStyle = '#d7263d'; x.fill();
+  x.lineWidth = 2; x.strokeStyle = ink; x.beginPath(); x.roundRect(-g.len / 2, -g.wid / 2, g.len, g.wid, rr); x.stroke();
+  x.restore();
+  const up = Math.cos(mang) < 0; // keep letters readable
+  label(x, 'S', mx - Math.cos(mang) * g.len / 4, my - Math.sin(mang) * g.len / 4, fs, null, '#fff');
+  label(x, 'N', mx + Math.cos(mang) * g.len / 4, my + Math.sin(mang) * g.len / 4, fs, null, '#fff');
+  void up;
+}
+
+gsap.ticker.add((t, dt) => {
+  if (!G) return;
+  const target = mang;
+  if (live) a += wrap(target - a) * (Kit.calm ? 1 : Math.min(1, dt * 0.006));
+  if (!Kit.calm) { spin += dt * 0.006; flow += dt * 0.03; }
+  draw();
+});
+
+function reveal() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+function move(e) {
+  const r = cv.getBoundingClientRect(), g = geo();
+  const ang = Math.atan2(e.clientY - r.top - g.cy, e.clientX - r.left - g.cx);
+  travel += Math.abs(wrap(ang - mang)); mang = ang; live = true;
+}
+cv.addEventListener('pointerdown', e => {
+  drag = true; Kit.haptic('selection');
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  move(e);
+});
+cv.addEventListener('pointermove', e => { if (drag) move(e); });
+const up = () => { if (!drag) return; drag = false; if (travel > 1.2) reveal(); };
+cv.addEventListener('pointerup', up); window.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => {
+  G = Kit.fitCanvas(cv);
+  const cs = getComputedStyle(card);
+  ink = cs.getPropertyValue('--k').trim() || '#111';
+  paper = cs.getPropertyValue('--c').trim() || '#fff';
+  draw();
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) { live = true; return; }
+  gsap.delayedCall(0.5, () => { live = true; });
+};
+Kit.play.card = async () => {
+  const r = cv.getBoundingClientRect(), g = geo();
+  const ev = (type, ang) => cv.dispatchEvent(new PointerEvent(type, {bubbles: true, pointerId: 1, clientX: r.left + g.cx + Math.cos(ang) * g.D, clientY: r.top + g.cy + Math.sin(ang) * g.D}));
+  let ang = mang; ev('pointerdown', ang);
+  for (let i = 0; i < 24; i++) { ang += 0.12; ev('pointermove', ang); await new Promise(res => setTimeout(res, 16)); }
+  ev('pointerup', ang);
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

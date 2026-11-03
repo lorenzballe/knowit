@@ -1,0 +1,37 @@
+{
+  "id": "science-flame-shape-gravity",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do flames on Earth have that teardrop shape?",
+  "answer": "Hot combustion gas is less dense than the cool air around it, so its buoyant force is greater than its weight and it rises. As it rises, it pulls fresh oxygen in from below and stretches the flame upward. With no gravity there is no buoyancy, so the flame stays a ball.",
+  "move": "A flame's teardrop is gravity at work: hot gas rises, fresh air flows in.",
+  "keywords": [
+    "flame",
+    "gravity",
+    "buoyancy",
+    "combustion",
+    "zero-g"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A flame shown under three gravity settings: zero-g, 1 g and hyper-g. The page asks why flames on Earth have a teardrop shape. Switch gravity to watch the flame change from a ball to a teardrop."
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=224s",
+  "written": "2026-11-03"
+}

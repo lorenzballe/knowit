@@ -1,0 +1,158 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-nice-strategies-win -->
+<title>Astute free card: nice strategies win</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#lg{display:flex;align-items:center;flex-wrap:wrap;gap:.6cqh 2.4cqw;font:700 max(1.7cqh,12px)/1.25 var(--body);color:var(--k)}
+#ttl{font:800 max(1.9cqh,13px)/1.2 var(--display);letter-spacing:.02em;margin-right:auto;text-transform:uppercase}
+.sw{display:inline-block;width:max(2.4cqh,14px);height:max(1.3cqh,8px);border-radius:.4cqh;vertical-align:middle;margin-right:1cqw}
+.sw.n{background:var(--k)}
+.sw.x{background:color-mix(in srgb,var(--k) 25%,transparent);box-shadow:inset 0 0 0 1.5px var(--k)}
+#board{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font-size:max(2.6cqh,17px)}
+#why .body{font-size:max(1.75cqh,12px);line-height:1.3}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#board .bn{fill:var(--k)}
+#board .bx{fill:color-mix(in srgb,var(--k) 25%,transparent);stroke:var(--k);stroke-width:1.5}
+#board.hunch .bar{opacity:.45;stroke:var(--k);stroke-width:1.5;stroke-dasharray:4 3}
+#board text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#board .tft{fill:var(--c)}
+#board .ln{stroke:var(--k);stroke-width:2;fill:none}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
+    <h2 class="q">Axelrod's first tournament: what kind of strategy took the top eight places?</h2>
+    <div class="stagebox" id="stage">
+      <div id="lg"><span id="ttl">Experts' hunch</span><span><span class="sw n"></span>Nice</span><span><span class="sw x"></span>Nasty</span></div>
+      <svg id="board" class="hunch"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Nasty ones</button>
+        <button class="opt" data-i="1">A mix</button>
+        <button class="opt" data-i="2">Nice ones</button>
+      </div>
+      <div id="why" class="gone"><p class="big">All eight were nice</p><p class="body">A nice strategy never defects first. Of 15 entries, 8 were nice and 7 nasty: the nice ones took every top spot, and even the worst nice one far outscored the best nasty one. Experts who tried to be tricky were shocked.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick who took the top eight, then watch the board.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Never striking first pays off in the long run.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, rev = false, Gm = null, els = null;
+// 7 nasty, 8 nice. h = slot in the experts' hunch, r = real slot.
+const S = [];
+for (let i = 0; i < 7; i++) S.push({t: 'x', h: i, r: 8 + i});
+for (let j = 0; j < 8; j++) S.push({t: 'n', h: j === 0 ? 14 : 6 + j, r: j, tft: j === 0});
+
+function geo() {
+  const svg = Kit.$('board'); const {W, H, f} = Kit.fitSvg(svg);
+  const u = H / 16.2;
+  const rf = Math.max(12, Math.min(f * .85, u * .8));
+  const lw = rf * 2.8, bw = W - lw - 4;
+  return {svg, W, H, f, u, rf, lw, bw};
+}
+const yOf = (s, r) => Gm.u * (s + (r ? (s >= 8 ? 1.2 : 0) : .6)) + Gm.u * .15;
+const bh = () => Gm.u * .7;
+const lenOf = (o, r) => r ? (o.t === 'n' ? .95 - .025 * o.r : .42 - .035 * (o.r - 8)) : .78 - .03 * o.h;
+
+function draw() {
+  Gm = geo(); const {svg, W, H, u, rf, lw, bw} = Gm;
+  svg.innerHTML = ''; svg.classList.toggle('hunch', !rev);
+  const g = Kit.mk('g', {}, svg);
+  els = S.map(o => {
+    const s = rev ? o.r : o.h;
+    const rect = Kit.mk('rect', {class: 'bar ' + (o.t === 'n' ? 'bn' : 'bx'), x: lw, y: yOf(s, rev), width: bw * lenOf(o, rev), height: bh(), rx: Math.min(4, bh() / 3)}, g);
+    return rect;
+  });
+  // Tit for Tat label
+  const tf = S.find(o => o.tft);
+  const tft = Kit.mk('text', {class: 'tft', x: lw + 8, y: yOf(0, true) + bh() / 2, 'dominant-baseline': 'central', 'font-size': Math.max(12, Math.min(rf * .9, bh() * 1.1)), opacity: rev ? 1 : 0}, svg);
+  tft.textContent = 'Tit for Tat';
+  // rank labels (skip any that would collide when the board is short)
+  const lab = (s, t) => { const e = Kit.mk('text', {x: lw - 6, y: yOf(s, rev) + bh() / 2, 'text-anchor': 'end', 'dominant-baseline': 'central', 'font-size': rf}, svg); e.textContent = t; e.dataset.s = s; return e; };
+  const gap = rf * 1.2;
+  const ranks = [lab(0, '1st')];
+  if (u * 7 >= gap) ranks.push(lab(7, '8th'));
+  if (u * 14 >= gap) ranks.push(lab(14, '15th'));
+  // annotations
+  const ann = Kit.mk('g', {opacity: rev ? 1 : 0}, svg);
+  const xWorstNice = lw + bw * (.95 - .025 * 7), xBestNasty = lw + bw * .42;
+  const yN = yOf(7, true), yX = yOf(8, true);
+  Kit.mk('line', {class: 'ln', x1: xWorstNice, y1: yN, x2: xWorstNice, y2: yX + bh(), 'stroke-dasharray': '3 3'}, ann);
+  const ay = yX + bh() / 2;
+  Kit.mk('line', {class: 'ln', x1: xBestNasty + 4, y1: ay, x2: xWorstNice - 8, y2: ay}, ann);
+  Kit.mk('path', {d: `M${xWorstNice - 2},${ay} l-8,-5 v10 z`, style: 'fill:var(--k)'}, ann);
+  const rs = lw + bw * .46, top = yX + bh() + u * .4, bot = H - 2;
+  const af = Math.max(12, Math.min(Gm.f, (W - rs - 4) / 9));
+  const span = bot - top;
+  const textH = af * 2.6;
+  let es = Math.min(span * .32, af * 2.4, (span - textH) / 1.15);
+  if (es < 14) es = 0;
+  const blockH = (es ? es * 1.15 : 0) + textH;
+  const y0 = top + Math.max(0, (span - blockH) / 2);
+  let emo = null;
+  if (es) {
+    emo = Kit.mk('text', {x: (rs + W) / 2, y: y0 + es * .5, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': es}, ann);
+    emo.textContent = '😲';
+  }
+  const ty = y0 + (es ? es * 1.15 : 0) + af * .95;
+  const t1 = Kit.mk('text', {x: rs, y: ty, 'font-size': af}, ann); t1.textContent = 'Every nice one';
+  const t2 = Kit.mk('text', {x: rs, y: ty + af * 1.35, 'font-size': af}, ann); t2.textContent = 'beat every nasty';
+  return {tft, ranks, ann, emo};
+}
+
+let parts = null;
+function reveal() {
+  rev = true; Kit.$('ttl').textContent = 'Actual result';
+  const svg = Kit.$('board');
+  if (Kit.calm) { parts = draw(); return; }
+  svg.classList.remove('hunch');
+  els.forEach((r, i) => {
+    const o = S[i];
+    gsap.to(r, {attr: {y: yOf(o.r, true), width: Gm.bw * lenOf(o, true)}, duration: .9, delay: .05 * i, ease: 'power3.inOut'});
+  });
+  parts.ranks.forEach(e => gsap.to(e, {attr: {y: yOf(+e.dataset.s, true) + bh() / 2}, duration: .9, ease: 'power3.inOut'}));
+  gsap.to(parts.tft, {opacity: 1, delay: 1.2, duration: .4});
+  gsap.to(parts.ann, {opacity: 1, delay: 1.4, duration: .4});
+  if (parts.emo) gsap.from(parts.emo, {scale: 0, transformOrigin: '50% 50%', delay: 1.4, duration: .6, ease: 'back.out(3)', onStart: () => Kit.haptic('success')});
+  else gsap.delayedCall(1.4, () => Kit.haptic('success'));
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  parts = draw();
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { parts = draw(); reveal(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { parts = draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || rev) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (els) gsap.from(els, {attr: {width: 0}, stagger: .03, duration: .5, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

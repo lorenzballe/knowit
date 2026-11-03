@@ -1,0 +1,216 @@
+<!doctype html>
+<!-- slug: food-onion-tear-gas -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;position:relative}
+#art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#gog{align-self:flex-start;text-align:center;padding:1.1cqh 4cqw}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ONION TEARS</span></div>
+    <h2 class="q">Why do onion vapors go straight for your eyes when you cut one?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Juice sprays out of the onion and splashes into your eye</button>
+        <button class="opt" data-i="1">A molecule evaporates, floats up through the air and lands on your eye</button>
+        <button class="opt" data-i="2">Your nose smells the onion and tells your eyes to cry</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">It's a gas that flies.</p>
+        <p class="body">Cutting starts a reaction that makes propanethial S-oxide, the “tear factor”. It is volatile: it evaporates and drifts up to your eyes, which sting and water. Goggles stop it as a physical wall.</p>
+        <button class="opt" id="gog">Put on goggles</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick how the tears reach you. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Onion tears travel by air: block the air, keep dry eyes.</div>
+    <div class="foot"><span class="src">Source · Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, running = false, goggles = false, irr = 0, hits = 0;
+let S = null, loops = [];
+const svg = Kit.$('pic');
+const ink = () => (getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111');
+const MOL = '#a6dd3f';
+
+function killAll(){ loops.forEach(t => t && t.kill && t.kill()); loops = []; }
+
+function draw(){
+  killAll();
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const K = ink();
+  const m = Math.min(W, H);
+  const r = Math.min(W * 0.2, H * 0.24);
+  const ox = W * 0.28, oy = H - r * 1.05;
+  const rw = Math.min(W * 0.17, H * 0.2);
+  const ex = W * 0.74, ey = Math.max(rw * 1.1, H * 0.24);
+  const fs = Math.max(f * 0.85, 12);
+  S = {W, H, r, ox, oy, rw, ex, ey, K, m};
+
+  // legend
+  const lg = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx: fs * 0.6, cy: fs * 0.9, r: fs * 0.38, fill: MOL, stroke: K, 'stroke-width': 1.5}, lg);
+  const tx = Kit.mk('text', {x: fs * 1.4, y: fs * 1.25, fill: K, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, lg);
+  tx.textContent = 'tear factor';
+
+  // board
+  Kit.mk('rect', {x: ox - r * 1.4, y: oy + r * 0.62, width: r * 3.3, height: r * 0.28, rx: r * 0.1, fill: '#c99a5b', stroke: K, 'stroke-width': 2}, svg);
+  // onion cut face
+  const on = Kit.mk('g', {}, svg);
+  Kit.mk('ellipse', {cx: ox, cy: oy, rx: r, ry: r * 0.72, fill: '#f8eed9', stroke: '#9b5aa8', 'stroke-width': Math.max(3, r * 0.08)}, on);
+  for (let i = 1; i <= 4; i++) Kit.mk('ellipse', {cx: ox, cy: oy + i * r * 0.03, rx: r * (1 - i * 0.19), ry: r * 0.72 * (1 - i * 0.19), fill: 'none', stroke: '#d6bfe0', 'stroke-width': Math.max(1.5, r * 0.035)}, on);
+  S.onionG = on;
+
+  // knife
+  const kn = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: `M0,0 L${r*1.5},${-r*0.05} L${r*1.5},${-r*0.38} Q${r*0.5},${-r*0.42} 0,0 Z`, fill: '#dfe4ea', stroke: K, 'stroke-width': 2}, kn);
+  Kit.mk('rect', {x: r * 1.5, y: -r * 0.36, width: r * 0.8, height: r * 0.26, rx: r * 0.08, fill: '#3b2a20', stroke: K, 'stroke-width': 2}, kn);
+  kn.setAttribute('transform', `translate(${ox + r * 0.35},${oy - r * 0.95}) rotate(-12)`);
+  S.knife = kn;
+
+  // eye
+  const eg = Kit.mk('g', {}, svg);
+  const al = `M${ex - rw},${ey} Q${ex},${ey - rw * 0.8} ${ex + rw},${ey} Q${ex},${ey + rw * 0.8} ${ex - rw},${ey} Z`;
+  const cp = Kit.mk('clipPath', {id: 'eyeclip'}, svg);
+  Kit.mk('path', {d: al}, cp);
+  S.white = Kit.mk('path', {d: al, fill: gsap.utils.interpolate('#ffffff', '#ff9e9e', irr)}, eg);
+  const ir = Kit.mk('g', {'clip-path': 'url(#eyeclip)'}, eg);
+  Kit.mk('circle', {cx: ex, cy: ey, r: rw * 0.36, fill: '#4f79b0'}, ir);
+  Kit.mk('circle', {cx: ex, cy: ey, r: rw * 0.16, fill: '#111'}, ir);
+  Kit.mk('circle', {cx: ex + rw * 0.1, cy: ey - rw * 0.1, r: rw * 0.06, fill: '#fff'}, ir);
+  Kit.mk('path', {d: al, fill: 'none', stroke: K, 'stroke-width': Math.max(2.5, rw * 0.05)}, eg);
+  Kit.mk('path', {d: `M${ex - rw * 0.95},${ey - rw * 0.62} Q${ex},${ey - rw * 1.05} ${ex + rw * 0.95},${ey - rw * 0.7}`, fill: 'none', stroke: K, 'stroke-width': Math.max(3, rw * 0.09), 'stroke-linecap': 'round'}, eg);
+  S.eyeG = eg;
+  S.tears = Kit.mk('g', {}, svg);
+
+  // goggles
+  const gg = Kit.mk('g', {opacity: goggles ? 1 : 0}, svg);
+  Kit.mk('line', {x1: ex - rw * 1.3, y1: ey - rw * 0.1, x2: W, y2: ey - rw * 0.25, stroke: K, 'stroke-width': Math.max(3, rw * 0.1)}, gg);
+  S.lens = Kit.mk('rect', {x: ex - rw * 1.25, y: ey - rw * 0.85, width: rw * 2.5, height: rw * 1.65, rx: rw * 0.5, fill: 'rgba(170,215,255,.35)', stroke: K, 'stroke-width': Math.max(3, rw * 0.08)}, gg);
+  S.gogG = gg;
+
+  S.mols = Kit.mk('g', {}, svg);
+  if (running) start(false);
+}
+
+function setIrr(v){
+  irr = Math.max(0, Math.min(1, v));
+  if (S && S.white) S.white.setAttribute('fill', gsap.utils.interpolate('#ffffff', '#ff9e9e', irr));
+}
+
+function tear(){
+  const {ex, ey, rw, H} = S;
+  const x = ex - rw * 0.85, y = ey + rw * 0.15, s = rw * 0.13;
+  const d = Kit.mk('path', {d: `M0,${-s*1.6} Q${s},0 0,${s} Q${-s},0 0,${-s*1.6} Z`, fill: '#6fc3ff', stroke: S.K, 'stroke-width': 1.2, transform: `translate(${x},${y})`}, S.tears);
+  const o = {y: y};
+  loops.push(gsap.to(o, {y: Math.min(H, y + rw * 1.8), duration: 1.2, ease: 'power1.in', onUpdate: () => d.setAttribute('transform', `translate(${x},${o.y})`), onComplete: () => d.remove()}));
+}
+
+function pathPt(p, t){
+  const u = 1 - t;
+  return [u*u*p.x0 + 2*u*t*p.cx + t*t*p.x1, u*u*p.y0 + 2*u*t*p.cy + t*t*p.y1];
+}
+
+function newPath(){
+  const {ox, oy, r, ex, ey, rw} = S;
+  return {x0: ox + (Kit.rnd() - 0.5) * r * 1.2, y0: oy - r * 0.3, cx: ox + (Kit.rnd() - 0.2) * r * 1.2, cy: ey + (oy - ey) * 0.15,
+          x1: ex + (Kit.rnd() - 0.5) * rw, y1: ey + (Kit.rnd() - 0.5) * rw * 0.3, ph: Kit.rnd() * 6};
+}
+
+function spawn(){
+  if (!running || !S) return;
+  const {r, ex, ey, rw, K} = S;
+  const p = newPath();
+  const c = Kit.mk('circle', {cx: p.x0, cy: p.y0, r: Math.max(4, r * 0.075), fill: MOL, stroke: K, 'stroke-width': 1.5}, S.mols);
+  const o = {t: 0};
+  const tw = gsap.to(o, {t: 1, duration: 2 + Kit.rnd() * 0.9, ease: 'none',
+    onUpdate: () => {
+      let [x, y] = pathPt(p, o.t);
+      x += Math.sin(o.t * 12 + p.ph) * r * 0.1 * (1 - o.t);
+      c.setAttribute('cx', x); c.setAttribute('cy', y);
+      if (goggles && x > ex - rw * 1.3 && y < ey + rw * 0.9 && x < ex + rw * 1.3) {
+        tw.kill();
+        gsap.fromTo(S.lens, {attr: {'stroke-width': Math.max(5, rw * 0.13)}}, {attr: {'stroke-width': Math.max(3, rw * 0.08)}, duration: .3});
+        loops.push(gsap.to(c, {attr: {cx: x - rw * (0.5 + Kit.rnd() * 0.6), cy: y + rw * (0.2 + Kit.rnd() * 0.5)}, opacity: 0, duration: .8, ease: 'power2.out', onComplete: () => c.remove()}));
+      }
+    },
+    onComplete: () => {
+      c.remove(); hits++; setIrr(irr + 0.07);
+      if (hits % 3 === 0) tear();
+    }});
+  loops.push(tw);
+  loops.push(gsap.delayedCall(0.16 + Kit.rnd() * 0.12, spawn));
+}
+
+function staticScene(){
+  const {r, K} = S;
+  for (let i = 0; i < 12; i++) {
+    const p = newPath(), t = (i + 0.5) / 12;
+    let [x, y] = pathPt(p, goggles ? t * 0.7 : t);
+    Kit.mk('circle', {cx: x, cy: y, r: Math.max(4, r * 0.075), fill: MOL, stroke: K, 'stroke-width': 1.5}, S.mols);
+  }
+  setIrr(goggles ? 0 : 0.8);
+}
+
+function start(chop){
+  running = true;
+  if (Kit.calm) { staticScene(); return; }
+  if (chop) {
+    const {ox, oy, r} = S;
+    const base = `translate(${ox + r * 0.35},${oy - r * 0.95}) rotate(-12)`;
+    const o = {d: 0};
+    loops.push(gsap.to(o, {d: 1, duration: .22, yoyo: true, repeat: 3, ease: 'power2.in',
+      onUpdate: () => S.knife.setAttribute('transform', `translate(${ox + r * 0.35},${oy - r * 0.95 + o.d * r * 0.55}) rotate(${-12 + o.d * 10})`),
+      onComplete: () => S.knife.setAttribute('transform', base)}));
+    loops.push(gsap.delayedCall(.3, spawn));
+  } else spawn();
+  loops.push(gsap.to({}, {duration: .5, repeat: -1, onRepeat: () => { if (goggles) setIrr(irr - 0.08); }}));
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, ok ? 'Right: it travels as a vapour' : 'Wrong: it travels as a vapour');
+  Kit.show('keep');
+  draw();
+  start(true);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('gog').addEventListener('click', () => {
+  goggles = !goggles; Kit.haptic('light');
+  Kit.$('gog').textContent = goggles ? 'Take goggles off' : 'Put on goggles';
+  if (Kit.calm) { draw(); return; }
+  gsap.to(S.gogG, {opacity: goggles ? 1 : 0, duration: .3});
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

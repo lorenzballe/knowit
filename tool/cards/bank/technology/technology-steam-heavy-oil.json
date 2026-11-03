@@ -1,0 +1,37 @@
+{
+  "id": "technology-steam-heavy-oil",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Venezuela's extra-heavy oil need steam to come out of the ground?",
+  "answer": "Venezuela's extra-heavy oil is so thick that it cannot move to the well on its own. High-pressure steam or solvents make it more fluid, so it flows and can be pumped. That costs huge energy, constant maintenance and big investment, and much of the oil still stays put.",
+  "move": "Lots of oil underground isn't oil you can get: if it can't flow, it stays.",
+  "keywords": [
+    "venezuela",
+    "orinoco",
+    "heavy oil",
+    "steam injection",
+    "sagd"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Heavy Oil asking why Venezuela's extra-heavy oil needs steam to come out of the ground. A pump is shown running with nothing coming up, and a slider lets the reader move the steam from OFF to on."
+  },
+  "source": "Geopop, “La questione \"Petrolio Venezuela\" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=pp21fmWKe48&t=398s",
+  "written": "2026-11-03"
+}

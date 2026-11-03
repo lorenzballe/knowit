@@ -1,0 +1,37 @@
+{
+  "id": "medicine-laser-eye-monitor",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the laser stay safe while it works inside the eye?",
+  "answer": "A computer built into the instrument keeps monitoring the eye's parameters the whole time. The laser is adjusted to what that computer reads. This keeps the operation inside its safety limits.",
+  "move": "A built-in computer watches the eye non-stop, so the laser stays safe.",
+  "keywords": [
+    "cataract",
+    "laser",
+    "eye",
+    "surgical monitoring",
+    "safety limits"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A switch labelled Computer off and Computer on. Flipping it shows a laser and a chart that respond to the eye's readings. The question asked: how does the laser stay safe while it works inside the eye?"
+  },
+  "source": "Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Y3b8egQvI0A&t=353s",
+  "written": "2026-11-03"
+}

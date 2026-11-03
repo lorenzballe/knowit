@@ -1,0 +1,213 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-tunnel-fault-step -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1 1 0;min-height:0;border-radius:2cqh;overflow:hidden}
+#hold{font:800 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}
+#hold.down{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{overflow-wrap:anywhere}
+#why .body{font-size:max(1.9cqh,13px);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FAULT LINES</span></div>
+    <h2 class="q">A fault jumps 4 metres. What happens to a tunnel crossing it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Cross-section of rock layers cut by a fault, with a tunnel crossing it"></svg>
+      <button id="hold">Hold to make the fault slip</button>
+      <div id="why" class="gone">
+        <p class="big">Cut like by a knife</p>
+        <p class="body">In 1908 the Messina fault opened a step of two to four metres. A tunnel crossing it would be sliced: one half drops, the other stays. A bridge can absorb such a step far more easily.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Press and hold the button. Watch the tunnel where it meets the red line.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Where a tunnel crosses an active fault, the fault can shear it in two.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {d: 0, done: false, holding: false};
+const MAX = 4;
+let G = null;
+const tween = gsap.to(S, {d: MAX, duration: 3.4, ease: 'none', paused: true, onUpdate: () => render(true), onComplete: finish});
+
+function crackPath(x0, y0, dir, len, rnd, W) {
+  const lo = 2, hi = W * 0.94;
+  const cx = v => Math.min(hi, Math.max(lo, v));
+  let x = x0, y = y0, p = `M${cx(x).toFixed(1)},${y.toFixed(1)}`;
+  for (let i = 0; i < 5; i++) {
+    x += dir * len / 5 * (0.7 + rnd() * 0.6);
+    y += (rnd() - 0.5) * len * 0.22;
+    p += ` L${cx(x).toFixed(1)},${y.toFixed(1)}`;
+  }
+  return p;
+}
+
+function build() {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const gy = Math.max(H * 0.16, fs * 2.6);
+  const t = 0.34;
+  const xf = y => W * 0.52 + (y - (gy + H) / 2) * t;
+  let th = Math.min((H - gy) * 0.3, W * 0.3);
+  th = Math.max(th, fs * 2.6);
+  const ty = gy + (H - gy) * 0.56;
+  const pxm = th * 0.11;
+  const mk = Kit.mk;
+
+  const defs = mk('defs', {}, svg);
+  const cl = mk('clipPath', {id: 'cl'}, defs);
+  mk('polygon', {points: `${-20},${gy} ${xf(gy)},${gy} ${xf(3 * H)},${3 * H} ${-20},${3 * H}`}, cl);
+  const cr = mk('clipPath', {id: 'cr'}, defs);
+  mk('polygon', {points: `${xf(gy)},${gy} ${3 * W},${gy} ${3 * W},${3 * H} ${xf(3 * H)},${3 * H}`}, cr);
+
+  const root = mk('g', {}, svg);
+  const cols = ['#7a5434', '#5e3f27', '#8f6a3f', '#4c3322', '#6d4a2d', '#3e2a1c', '#80603a', '#523826'];
+  const rnd = Kit.rnd;
+
+  function block(parent, side) {
+    const g = mk('g', {'clip-path': `url(#${side})`}, parent);
+    const items = [], lights = [];
+    const R = (y0, h0, fill) => {
+      if (y0 >= H) return;
+      const e = mk('rect', {x: 0, y: y0, width: W, height: Math.min(h0, H - y0), fill}, g);
+      items.push({e, y0, h0});
+    };
+    const band = (H - gy) / 6.5;
+    for (let i = 0; i < 14; i++) R(gy + i * band, band + 1, cols[i % cols.length]);
+    R(gy, Math.max(4, H * 0.012), '#6f9a3a');
+    R(ty - th / 2, th, '#c9c3b6');
+    R(ty - th * 0.31, th * 0.62, '#16151a');
+    const lr = Math.max(2, th * 0.035), lcy = ty - th * 0.22;
+    for (let x = th * 0.4; x + lr < W; x += th * 0.9) lights.push({e: mk('circle', {cx: x, cy: lcy, r: lr, fill: '#ffd34d'}, g), cx: x});
+    const ly = ty + th * 0.24;
+    const line = mk('line', {x1: 0, y1: ly, x2: W, y2: ly, stroke: '#77706a', 'stroke-width': Math.max(2, th * 0.03), 'stroke-dasharray': `${th * 0.12} ${th * 0.08}`}, g);
+    const cg = mk('g', {opacity: 0, stroke: '#141218', 'stroke-width': Math.max(1.6, th * 0.025), fill: 'none', 'stroke-linecap': 'round'}, g);
+    const dir = side === 'cl' ? -1 : 1;
+    [[-0.47, -0.36], [0.36, 0.47]].forEach(([a, b]) => {
+      for (let k = 0; k < 3; k++) {
+        const y = ty + th * (a + (b - a) * (k + 0.5) / 3);
+        mk('path', {d: crackPath(xf(y), y, dir, th * (0.5 + rnd() * 0.6), rnd, W)}, cg);
+      }
+    });
+    return {cg, items, lights, lr, lcy, line, ly};
+  }
+  const BL = block(root, 'cl');
+  const BR = block(root, 'cr');
+
+  let fx2 = xf(H), fy2 = H;
+  if (fx2 > W) { fx2 = W; fy2 = (gy + H) / 2 + (W - W * 0.52) / t; }
+  const fault = mk('line', {x1: xf(gy), y1: gy, x2: fx2, y2: fy2, stroke: '#ff3b30', 'stroke-width': 2.5, 'stroke-linecap': 'butt'}, root);
+
+  const tx = (x, y, s, a, fill, w) => {
+    const e = mk('text', {x, y, 'text-anchor': a, fill, 'font-size': s, 'font-family': 'var(--body)', 'font-weight': w || 700}, root);
+    e.textContent = '';
+    return e;
+  };
+  const fy = gy + (H - gy) * 0.2;
+  const fl = tx(xf(fy) - 8, fy, fs, 'end', '#ffd7cf');
+  fl.textContent = 'fault';
+  const tl = tx(Math.max(10, W * 0.04), ty + fs * 0.35, fs, 'start', '#ffffff');
+  tl.textContent = 'tunnel';
+  const st = tx(xf(gy) + 10, gy - fs * 0.7, fs * 1.25, 'start', 'var(--k)', 800);
+  if (xf(gy) + 10 + fs * 7 > W) st.setAttribute('text-anchor', 'end'), st.setAttribute('x', xf(gy) - 10);
+
+  G = {root, BR, crL: BL.cg, crR: BR.cg, fault, st, pxm, t, th, W, H};
+  render(false);
+}
+
+function shiftBlock(B, dx, dy) {
+  const {W, H} = G;
+  B.items.forEach(({e, y0, h0}) => {
+    const y = y0 + dy;
+    e.setAttribute('y', y.toFixed(2));
+    e.setAttribute('height', Math.max(0, Math.min(h0, H - y)).toFixed(2));
+  });
+  const cy = B.lcy + dy;
+  B.lights.forEach(({e, cx}) => {
+    const x = cx + dx;
+    e.setAttribute('cx', x.toFixed(2));
+    e.setAttribute('cy', cy.toFixed(2));
+    if (x + B.lr > W || cy + B.lr > H) e.setAttribute('display', 'none');
+    else e.removeAttribute('display');
+  });
+  const ly = B.ly + dy;
+  B.line.setAttribute('y1', ly.toFixed(2));
+  B.line.setAttribute('y2', ly.toFixed(2));
+  B.line.setAttribute('stroke-dashoffset', (-dx).toFixed(2));
+  B.cg.setAttribute('transform', `translate(${dx.toFixed(2)},${dy.toFixed(2)})`);
+}
+
+function render(live) {
+  if (!G) return;
+  const dy = S.d * G.pxm, dx = dy * G.t;
+  shiftBlock(G.BR, dx, dy);
+  const o = Math.min(1, Math.max(0, (S.d - 0.6) / 2.2));
+  G.crL.setAttribute('opacity', o);
+  G.crR.setAttribute('opacity', o);
+  G.fault.setAttribute('stroke-width', 2.5 + S.d * 0.9);
+  G.st.textContent = `Step ${S.d.toFixed(1)} m`;
+  if (live && S.holding && !Kit.calm && !S.done) {
+    const j = 1 + S.d * 0.6;
+    G.root.setAttribute('transform', `translate(${((Math.random() - .5) * j).toFixed(2)},${((Math.random() - .5) * j).toFixed(2)})`);
+  } else G.root.removeAttribute('transform');
+}
+
+function finish() {
+  if (S.done) return;
+  S.done = true; S.holding = false;
+  render(false);
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say');
+  Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) {
+    gsap.fromTo('#pic', {x: -6}, {x: 0, duration: .5, ease: 'elastic.out(1.2,0.25)'});
+    gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+  }
+}
+
+const btn = Kit.$('hold');
+let tick = 0;
+const down = e => {
+  if (S.done) return;
+  if (e && e.preventDefault) e.preventDefault();
+  S.holding = true; btn.classList.add('down');
+  Kit.haptic('light');
+  tween.play();
+  clearInterval(tick);
+  tick = setInterval(() => { if (S.holding && !S.done) Kit.haptic('selection'); else clearInterval(tick); }, 450);
+};
+const up = () => {
+  S.holding = false; btn.classList.remove('down');
+  if (!S.done) tween.pause();
+  render(false);
+};
+btn.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, up));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+  gsap.from('#hold', {opacity: 0, y: 8, duration: .4, delay: .15, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 300));
+  tween.progress(1);
+  finish();
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 800));
+};
+Kit.single();
+</script>
+</html>

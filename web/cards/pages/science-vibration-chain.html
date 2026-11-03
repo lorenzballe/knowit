@@ -1,0 +1,184 @@
+<!doctype html>
+<!-- slug: science-vibration-chain -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#cvw{position:relative;flex:1;min-height:0;cursor:pointer;touch-action:manipulation}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+#ctl input{flex:1;min-width:0;height:max(4.4cqh,30px);accent-color:var(--k);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · tune">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOUND</span></div>
+    <h2 class="q">How does your voice's energy reach a wine glass?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cvw"><canvas id="cv"></canvas></div>
+      <div id="ctl" class="gone"><span>low</span><input id="pitch" type="range" min="0" max="1000" value="150" aria-label="Pitch of your voice"><span>high</span></div>
+      <div id="why" class="gone">
+        <p class="big">Cords → air → glass</p>
+        <p class="body">Your vocal cords vibrate and shake the air. The air then shakes the glass. It shakes most when you sing the glass's own note.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the glass to make it ring.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sound is a vibration handed on: from cords, to air, to glass.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Si può rompere un calice di vetro solo con la voce?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TV = .62;                       // where the glass's note sits on the slider
+const cyc = u => 3 + 7 * u;           // waves shown in the band for a pitch
+let S = null, step = 0, ringT = -99, v = .15, E = 0, hold = 0, done = false, near = false, last = performance.now();
+const TAU = Math.PI * 2;
+
+function fit() {
+  const r = Kit.fitCanvas(Kit.$('cv'));
+  const cs = getComputedStyle(Kit.$('card'));
+  S = {x: r.x, W: r.W, H: r.H, ink: cs.getPropertyValue('--k').trim() || '#111'};
+}
+Kit.onShow.card = fit;
+if (window.ResizeObserver) new ResizeObserver(() => { if (S) fit(); }).observe(Kit.$('cvw'));
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+function arrow(x, x1, x2, y, a, ink, lw) {
+  x.globalAlpha = a; x.strokeStyle = ink; x.lineWidth = lw;
+  x.beginPath(); x.moveTo(x1, y); x.lineTo(x2, y); x.moveTo(x2 - lw * 2.2, y - lw * 2); x.lineTo(x2, y); x.lineTo(x2 - lw * 2.2, y + lw * 2); x.stroke();
+}
+
+function draw(t, gAmp, singing) {
+  const {x, W, H, ink} = S;
+  x.clearRect(0, 0, W, H);
+  x.strokeStyle = ink; x.fillStyle = ink; x.lineCap = 'round'; x.lineJoin = 'round'; x.setLineDash([]);
+  const f = Math.max(12, Math.min(H * .055, W * .042));
+  const topH = H * .6, cy = topH * .54, s = Math.min(W * .12, topH * .36);
+  const cx = W * .15, gx = W * .83;
+  const vw = cyc(v), gw = cyc(TV);
+
+  // vocal cords (seen from above, inside the throat)
+  x.globalAlpha = .25; x.lineWidth = Math.max(2, s * .05);
+  x.beginPath(); x.ellipse(cx, cy, s * .75, s, 0, 0, TAU); x.stroke();
+  const ph = singing ? Math.sin(t * TAU * vw * .6) * .5 + .5 : 0;
+  const open = singing ? s * (.04 + .14 * ph) : s * .02;
+  x.globalAlpha = 1; x.lineWidth = Math.max(3, s * .13);
+  for (const sg of [-1, 1]) {
+    x.beginPath(); x.moveTo(cx + sg * s * .04, cy - s * .66);
+    x.quadraticCurveTo(cx + sg * open, cy, cx + sg * (s * .2 + open * .6), cy + s * .62); x.stroke();
+  }
+
+  // air: dots pushed back and forth by the voice
+  const x0 = cx + s * 1.05, x1 = gx - s * 1.05, L = x1 - x0, cols = 12, rows = 5;
+  const dr = Math.max(2, s * .06);
+  for (let r = 0; r < rows; r++) for (let i = 0; i < cols; i++) {
+    const bx = x0 + L * (i + .5) / cols;
+    const d = singing ? s * .13 * Math.sin(TAU * (i / cols) * vw * .35 - t * TAU * vw * .6) : 0;
+    const by = cy + (r - 2) * s * .34;
+    x.globalAlpha = singing ? .55 + .4 * Math.abs(Math.sin(TAU * (i / cols) * vw * .35 - t * TAU * vw * .6 + 1.57)) : .3;
+    x.beginPath(); x.arc(bx + d, by, dr, 0, TAU); x.fill();
+  }
+
+  // glass, rim squashing at its own note
+  const w = Math.sin(t * TAU * gw * .6) * gAmp;
+  const rimY = cy - s * .85, rw = s * .72, rx = rw * (1 + w), ry = rw * .24 * (1 - w * 1.5);
+  x.lineWidth = Math.max(2, s * .06);
+  x.beginPath(); x.moveTo(gx - rx, rimY);
+  x.bezierCurveTo(gx - rx, rimY + s * .9, gx - s * .12, cy + s * .15, gx, cy + s * .25);
+  x.bezierCurveTo(gx + s * .12, cy + s * .15, gx + rx, rimY + s * .9, gx + rx, rimY);
+  x.closePath(); x.globalAlpha = .1; x.fill(); x.globalAlpha = 1; x.stroke();
+  x.beginPath(); x.ellipse(gx, rimY, rx, Math.max(1, ry), 0, 0, TAU); x.stroke();
+  x.beginPath(); x.moveTo(gx, cy + s * .25); x.lineTo(gx, cy + s * .95); x.stroke();
+  x.beginPath(); x.ellipse(gx, cy + s * .95, s * .45, s * .1, 0, 0, TAU); x.stroke();
+  if (gAmp > .04) {
+    x.globalAlpha = Math.min(1, (gAmp - .04) * 9); x.lineWidth = Math.max(2, s * .045);
+    for (let k = 1; k <= 2; k++) for (const sg of [-1, 1]) {
+      x.beginPath(); x.arc(gx, rimY + s * .2, rw * (1.1 + k * .22), sg < 0 ? Math.PI - .45 : -.45, sg < 0 ? Math.PI + .45 : .45); x.stroke();
+    }
+  }
+  if (step === 0) {
+    x.globalAlpha = .25 + .25 * Math.sin(t * 4); x.lineWidth = Math.max(2, s * .04);
+    x.beginPath(); x.arc(gx, cy - s * .1, s * 1.15, 0, TAU); x.stroke();
+  }
+
+  // labels and arrows
+  const ly = topH + f * 1.1, mid = (x0 + x1) / 2;
+  x.globalAlpha = 1; x.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText('Vocal cords', cx, ly); x.fillText('Air', mid, ly); x.fillText('Glass', gx, ly);
+  const lw = Math.max(2, f * .14);
+  const a1 = (cx + mid) / 2 + f * .6, a2 = (mid + gx) / 2;
+  arrow(x, a1 - f * .7, a1 + f * .7, ly, singing ? 1 : .25, ink, lw);
+  arrow(x, a2 - f * .7, a2 + f * .7, ly, singing ? .35 + .65 * E : (gAmp > .03 ? .6 : .25), ink, lw);
+
+  // the two notes, one over the other
+  const bt = topH + f * 2.5, bb = H - f * .3, Bx0 = W * .04, Bx1 = W * .96;
+  const cyB = (bt + f * .9 + bb) / 2, amp = Math.max(4, (bb - bt - f * .9) * .42);
+  x.globalAlpha = .12; x.lineWidth = 1;
+  x.beginPath(); x.moveTo(Bx0, cyB); x.lineTo(Bx1, cyB); x.stroke();
+  const wave = (c, a) => { x.beginPath(); for (let i = 0; i <= 160; i++) { const u = i / 160; const yy = cyB - a * Math.sin(TAU * c * u - t * 3); i ? x.lineTo(Bx0 + u * (Bx1 - Bx0), yy) : x.moveTo(Bx0 + u * (Bx1 - Bx0), yy); } x.stroke(); };
+  x.font = `700 ${Math.max(12, f * .85)}px sans-serif`; x.textBaseline = 'middle';
+  if (step >= 1) {
+    const ga = step === 1 ? Math.min(1, gAmp / .12) : 1;
+    x.globalAlpha = .75; x.lineWidth = Math.max(2, f * .14); x.setLineDash([f * .45, f * .35]);
+    wave(gw, amp * Math.max(.15, ga));
+    x.beginPath(); x.moveTo(Bx0, bt); x.lineTo(Bx0 + f * 1.4, bt); x.stroke(); x.setLineDash([]);
+    x.globalAlpha = 1; x.textAlign = 'left'; x.fillText("glass's note", Bx0 + f * 1.8, bt);
+  }
+  if (step === 2) {
+    x.globalAlpha = 1; x.lineWidth = Math.max(2.5, f * .2);
+    wave(vw, amp);
+    x.beginPath(); x.moveTo(Bx1 - f * 1.4, bt); x.lineTo(Bx1, bt); x.stroke();
+    x.textAlign = 'right'; x.fillText('your voice', Bx1 - f * 1.8, bt);
+  }
+  x.globalAlpha = 1;
+}
+
+function tick() {
+  const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
+  const t = now / 1000;
+  let gAmp = 0; const singing = step === 2;
+  const rt = t - ringT; if (rt < 4) gAmp = .12 * Math.exp(-rt * 1.2);
+  if (singing) {
+    const d = v - TV, A = 1 / (1 + (d / .04) ** 2);
+    E += (A - E) * Math.min(1, dt * 2.5);
+    gAmp = Math.max(gAmp, .012 + .14 * E);
+    const isNear = Math.abs(d) < .035;
+    if (isNear && !near) Kit.haptic('selection'); near = isNear;
+    if (!done) { if (isNear) { hold += dt; if (hold > .7) finish(); } else hold = 0; }
+  }
+  if (S && S.W > 0) draw(t, gAmp, singing);
+}
+gsap.ticker.add(tick);
+
+Kit.$('cvw').addEventListener('click', () => {
+  if (step !== 0) { if (!done) ringT = performance.now() / 1000; return; }
+  step = 1; ringT = performance.now() / 1000; Kit.haptic('light');
+  Kit.$('say').textContent = 'That shake is the glass’s own note.';
+  setTimeout(() => {
+    step = 2; Kit.show('ctl');
+    Kit.$('say').textContent = 'Now sing: slide your voice until it matches the glass’s note.';
+    if (!Kit.calm) gsap.from('#ctl', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
+  }, 1100);
+});
+Kit.$('pitch').addEventListener('input', e => { v = +e.target.value / 1000; });
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cvw', {opacity: 0, scale: .96, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('cvw').click();
+  await new Promise(r => setTimeout(r, 1300));
+  const p = Kit.$('pitch'); p.value = 620; p.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 1600));
+};
+Kit.single();
+</script>
+</html>

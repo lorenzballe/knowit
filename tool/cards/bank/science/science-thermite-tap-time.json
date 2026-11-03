@@ -1,0 +1,38 @@
+{
+  "id": "science-thermite-tap-time",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is a thermite 'tap time', and why does it matter so much?",
+  "answer": "Tap time is how long after the reaction starts the metal flows out the bottom. If you tap too soon, the metal hasn't fully separated from the slag. If you tap too late, it dissolves silica from the crucible walls and comes out colder.",
+  "move": "Waiting cleans the metal, but waiting too long cools and taints it.",
+  "keywords": [
+    "thermite",
+    "crucible",
+    "slag",
+    "silica",
+    "molten metal"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A thermite crucible with a dial to choose the tap time and a countdown timer. Slide the dial to pick when to open the bottom and pour the molten metal.",
+    "ground": "#16120f"
+  },
+  "source": "Veritasium, “People said this experiment was impossible, so we tested it” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=cUBz04LlLVk&t=1424s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- slug: economics-plastic-glass-weight -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why is plastic cheaper than glass?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:.8cqh}
+#cap{font:700 max(2.1cqh,13px)/1.25 var(--body);color:var(--k);margin:0;text-align:center}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#scrub{display:flex;flex-direction:column;gap:.6cqh}
+#t{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
+#ticks{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--k);opacity:.75}
+#ticks span{flex:1;text-align:center}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{margin:0;font:500 max(1.85cqh,13px)/1.3 var(--body)}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Scrub · step through">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PRICE TAGS</span></div>
+    <h2 class="q">Why is plastic cheaper than glass to produce?</h2>
+    <div class="stagebox" id="stage">
+      <p id="cap">Step 1 · Make one bottle of each</p>
+      <svg id="pic"></svg>
+      <div id="scrub">
+        <input id="t" type="range" min="0" max="300" value="0" aria-label="Timeline">
+        <div id="ticks"><span>MAKE</span><span>WEIGH</span><span>SHIP</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider: follow one bottle from factory to shop.</p>
+    <div id="why" class="gone"><p class="body">Making a plastic bottle saves only about one cent. The real saving is on the road: plastic is far lighter, so moving it costs less, and pollutes a bit less too.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Plastic's price edge is its light weight, not its making.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic'), slider = Kit.$('t');
+const S = {t: 0}; let E = null, done = false;
+const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const sm = v => { v = cl(v); return v * v * (3 - 2 * v); };
+const INK = 'var(--k)', CARD = 'var(--c)';
+const GLASS = 'color-mix(in srgb, var(--k) 70%, transparent)';
+const PLAS = 'color-mix(in srgb, var(--k) 10%, transparent)';
+
+function bottleD(x, b, h) {
+  const w = h * .4, n = w * .36;
+  return `M${x-w/2},${b} L${x-w/2},${b-h*.58} Q${x-w/2},${b-h*.72} ${x-n/2},${b-h*.78} L${x-n/2},${b-h} L${x+n/2},${b-h} L${x+n/2},${b-h*.78} Q${x+w/2},${b-h*.72} ${x+w/2},${b-h*.58} L${x+w/2},${b} Z`;
+}
+function bottle(parent, x, b, h, glass, sw) {
+  return Kit.mk('path', {d: bottleD(x, b, h), style: `fill:${glass ? GLASS : PLAS};stroke:${INK};stroke-width:${glass ? sw * 1.6 : sw * .7}px;stroke-linejoin:round`}, parent);
+}
+function txt(parent, x, y, s, size, extra = {}) {
+  const e = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', style: `fill:${INK};font:700 ${size}px var(--body)`}, extra), parent);
+  e.textContent = s; return e;
+}
+
+function draw() {
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H * .07));
+  svg.innerHTML = '';
+  const sw = Math.max(1.5, Math.min(W, H) * .008);
+  E = {W, H, f, sw};
+
+  // A · make
+  const A = E.A = Kit.mk('g', {}, svg);
+  const bh = Math.min(H * .5, W * .42), base = H * .8;
+  const xg = W * .3, xp = W * .7;
+  bottle(A, xg, base, bh, true, sw); bottle(A, xp, base, bh, false, sw);
+  txt(A, xg, base + f * 1.5, 'GLASS', f); txt(A, xp, base + f * 1.5, 'PLASTIC', f);
+  const cr = Math.max(f * 1.1, bh * .12);
+  E.coin = Kit.mk('g', {}, A);
+  Kit.mk('circle', {cx: 0, cy: 0, r: cr, style: `fill:#f2b632;stroke:${INK};stroke-width:${sw}px`}, E.coin);
+  txt(E.coin, 0, f * .36, '1¢', f);
+  E.coinX = xg + bh * .32 + cr; E.coinY1 = base - bh - cr * .2; E.cr = cr;
+  E.tagA = txt(A, W * .5, Math.max(f * 1.2, base - bh - cr * 2.4), '', f * .95);
+  E.tagA.textContent = 'glass costs ≈ 1 cent more to make';
+
+  // B · weigh
+  const B = E.B = Kit.mk('g', {}, svg);
+  E.cx = W / 2; E.by = H * .3; E.L = W * .33;
+  Kit.mk('path', {d: `M${E.cx},${E.by} L${E.cx-W*.09},${H*.94} L${E.cx+W*.09},${H*.94} Z`, style: `fill:${PLAS};stroke:${INK};stroke-width:${sw}px;stroke-linejoin:round`}, B);
+  E.beam = Kit.mk('line', {style: `stroke:${INK};stroke-width:${sw*2.4}px;stroke-linecap:round`}, B);
+  Kit.mk('circle', {cx: E.cx, cy: E.by, r: sw * 3, style: `fill:${INK}`}, B);
+  E.pans = [0, 1].map(i => {
+    const g = Kit.mk('g', {}, B);
+    const hang = H * .2, pw = W * .26, sbh = Math.min(H * .26, W * .24);
+    Kit.mk('path', {d: `M0,0 L${-pw*.42},${hang} M0,0 L${pw*.42},${hang}`, style: `stroke:${INK};stroke-width:${sw*.6}px`}, g);
+    Kit.mk('path', {d: `M${-pw/2},${hang} Q0,${hang+H*.06} ${pw/2},${hang} Z`, style: `fill:${INK}`}, g);
+    bottle(g, 0, hang - sw, sbh, i === 0, sw);
+    txt(g, 0, hang + H * .06 + f * 1.4, i === 0 ? 'GLASS · heavy' : 'PLASTIC · light', f * .95);
+    return g;
+  });
+
+  // C · ship
+  const C = E.C = Kit.mk('g', {}, svg);
+  const lanes = [[H * .02, true], [H * .52, false]], L = H * .46;
+  E.trucks = []; E.fuel = [];
+  const tw = Math.min(W * .4, L * 1.25), th = tw * .45;
+  E.tw = tw; E.tx0 = W * .03; E.tx1 = W * .97 - tw;
+  lanes.forEach(([top, glass]) => {
+    txt(C, W * .03, top + f, glass ? 'GLASS LOAD' : 'PLASTIC LOAD', f * .9, {'text-anchor': 'start'});
+    const road = top + L * .66;
+    Kit.mk('line', {x1: 0, x2: W, y1: road + th * .14, y2: road + th * .14, style: `stroke:${INK};stroke-width:${sw}px;stroke-dasharray:${sw*4} ${sw*3};opacity:.5`}, C);
+    const g = Kit.mk('g', {}, C), sag = glass ? th * .05 : 0;
+    const bx = Kit.mk('g', {transform: `translate(0,${sag})`}, g);
+    Kit.mk('rect', {x: 0, y: -th, width: tw * .7, height: th * .82, rx: sw * 2, style: `fill:${glass ? INK : PLAS};stroke:${INK};stroke-width:${sw}px`}, bx);
+    for (let k = 0; k < 5; k++) Kit.mk('path', {d: bottleD(tw * (.09 + k * .13), -th * .27, th * .55), style: `fill:${glass ? GLASS : CARD};stroke:${glass ? CARD : INK};stroke-width:${sw*.7}px`}, bx);
+    Kit.mk('path', {d: `M${tw*.72},${-th*.18} L${tw*.72},${-th*.66} L${tw*.88},${-th*.66} L${tw},${-th*.4} L${tw},${-th*.18} Z`, style: `fill:${CARD};stroke:${INK};stroke-width:${sw}px;stroke-linejoin:round`}, bx);
+    [.14, .52, .86].forEach(u => Kit.mk('ellipse', {cx: tw * u, cy: 0, rx: th * .14, ry: glass ? th * .1 : th * .14, style: `fill:${INK};stroke:${CARD};stroke-width:${sw*.6}px`}, g));
+    E.trucks.push({g, road});
+    const fy = top + L * .88, fx = W * .2, fw = W * .62, fh = Math.max(sw * 3, L * .08);
+    txt(C, W * .97, fy + fh * .5 + f * .35, 'fuel', f * .9, {'text-anchor': 'end'});
+    Kit.mk('rect', {x: fx, y: fy, width: fw, height: fh, rx: fh / 2, style: `fill:none;stroke:${INK};stroke-width:${sw*.7}px`}, C);
+    const bar = Kit.mk('rect', {x: fx, y: fy, width: 0, height: fh, rx: fh / 2, style: `fill:${glass ? INK : GLASS}`}, C);
+    E.fuel.push({bar, fw: fw * (glass ? 1 : .38)});
+  });
+  update();
+}
+
+function update() {
+  const t = S.t; if (!E) return;
+  const p0 = cl(t), p1 = cl(t - 1), p2 = cl(t - 2);
+  const oA = 1 - sm((t - .85) / .3), oC = sm((t - 1.85) / .3), oB = sm((t - .85) / .3) * (1 - oC);
+  E.A.setAttribute('opacity', oA); E.B.setAttribute('opacity', oB); E.C.setAttribute('opacity', oC);
+  E.A.style.display = oA < .01 ? 'none' : ''; E.B.style.display = oB < .01 ? 'none' : ''; E.C.style.display = oC < .01 ? 'none' : '';
+  const d = sm(p0 / .7), cy = -E.cr * 2 + (E.coinY1 + E.cr * 2) * d;
+  E.coin.setAttribute('transform', `translate(${E.coinX},${cy})`);
+  E.tagA.setAttribute('opacity', sm((p0 - .6) / .3));
+  const a = 15 * Math.PI / 180 * sm(p1 / .8), ca = Math.cos(a), sa = Math.sin(a);
+  const lx = E.cx - E.L * ca, ly = E.by + E.L * sa, rx = E.cx + E.L * ca, ry = E.by - E.L * sa;
+  E.beam.setAttribute('x1', lx); E.beam.setAttribute('y1', ly); E.beam.setAttribute('x2', rx); E.beam.setAttribute('y2', ry);
+  E.pans[0].setAttribute('transform', `translate(${lx},${ly})`); E.pans[1].setAttribute('transform', `translate(${rx},${ry})`);
+  const x = E.tx0 + (E.tx1 - E.tx0) * sm(p2 / .9);
+  E.trucks.forEach(tr => tr.g.setAttribute('transform', `translate(${x},${tr.road})`));
+  E.fuel.forEach(fu => fu.bar.setAttribute('width', fu.fw * sm(p2 / .9)));
+  Kit.$('cap').textContent = t < .9 ? 'Step 1 · Make one bottle of each' : t < 1.9 ? 'Step 2 · Put them on a scale' : 'Step 3 · Ship a truckload of each';
+  if (t >= 2.9 && !done) { done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+}
+
+let lastStep = 0;
+slider.addEventListener('input', () => {
+  gsap.killTweensOf(S); S.t = slider.value / 100;
+  const st = Math.floor(S.t * .999); if (st !== lastStep) { lastStep = st; Kit.haptic('selection'); }
+  update();
+});
+new ResizeObserver(() => { if (E) draw(); }).observe(svg);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) { S.t = .95; slider.value = 95; update(); return; }
+  gsap.to(S, {t: .95, duration: 1.6, ease: 'power2.inOut', delay: .3, onUpdate: () => { slider.value = S.t * 100; update(); }});
+};
+Kit.play.card = async () => {
+  gsap.killTweensOf(S);
+  for (let v = 0; v <= 300; v += 25) { slider.value = v; slider.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 40)); }
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

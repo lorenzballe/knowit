@@ -1,0 +1,37 @@
+{
+  "id": "nature-spider-alarm-line",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.seeing_like_an_animal",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Why does this spider string one thread from the web's center to its hideout?",
+  "answer": "The thread is an alarm line. The spider hides in a corner, and when prey hits the web, the thread vibrates like a fishing line, telling the spider that something is trapped.",
+  "move": "The spider doesn't watch its web: it feels it, through one thread.",
+  "keywords": [
+    "spider",
+    "spider web",
+    "alarm line",
+    "prey",
+    "vibration"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question asking why a spider strings one thread from the web's center to its hideout. Options: to hold the web up, to feel when prey is caught, to escape quickly, or it's an alarm line. The reader picks one and then rates how sure they are. Shows a web with a thin line running to the center."
+  },
+  "source": "Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=_Uch42IMwbM&t=107s",
+  "written": "2026-11-03"
+}

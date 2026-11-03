@@ -1,0 +1,38 @@
+{
+  "id": "human_body-hangover-headache-dehydration",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does less vasopressin give you the morning-after headache?",
+  "answer": "Alcohol cuts vasopressin, the hormone that holds water in, so the body dries out. Vital organs pull fluid from everywhere, including the brain, so its tissue shrinks and the fluid between brain and skull thins. The membranes holding the brain get pulled, and that hurts.",
+  "move": "The hangover headache is mostly dehydration tugging on the brain's lining.",
+  "keywords": [
+    "hangover",
+    "vasopressin",
+    "alcohol",
+    "dehydration",
+    "brain",
+    "headache"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled HANGOVER asks how less vasopressin causes the morning-after headache. It explains that alcohol lowers vasopressin, the body dries out, and the brain shrinks, pulling on its painful membranes."
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=406s",
+  "written": "2026-11-03"
+}

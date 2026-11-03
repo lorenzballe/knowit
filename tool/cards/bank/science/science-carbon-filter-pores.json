@@ -1,0 +1,37 @@
+{
+  "id": "science-carbon-filter-pores",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a carbon filter look like under a microscope?",
+  "answer": "Under a microscope, activated carbon is super-porous, with channels and holes branching through every grain. Smelly molecules wander in, touch the walls and stay stuck, so the air that comes out no longer smells.",
+  "move": "Activated carbon cleans air by trapping smells in a maze of tiny pores.",
+  "keywords": [
+    "activated carbon",
+    "carbon filter",
+    "microscope",
+    "pores",
+    "smell"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Drag to aim a puff of smelly air, then release to fire it at a magnified grain of activated carbon. The grain is full of branching pores that trap the smell molecules."
+  },
+  "source": "Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=vmwPachp1SE&t=212s",
+  "written": "2026-11-03"
+}

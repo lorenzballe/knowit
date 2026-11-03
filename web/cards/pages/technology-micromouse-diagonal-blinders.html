@@ -1,0 +1,193 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-micromouse-diagonal-blinders -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#cap{font:500 max(1.85cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:calc(3 * 1.3em);overflow-wrap:break-word}
+#cap.why{font-weight:600}
+#steps{display:flex;gap:2cqw}
+.step{flex:1;min-width:0;font:700 max(1.85cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 1.5cqw;cursor:pointer;overflow-wrap:break-word}
+.step .n{display:block;font:600 max(1.4cqh,12px)/1.2 var(--mono);opacity:.7}
+.step.on{background:var(--k);color:var(--c);box-shadow:none}
+.step.seen:not(.on){box-shadow:inset 0 0 0 .3cqh var(--k)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap · watch the sensors">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MICROMOUSE</span></div>
+    <h2 class="q">How does a robot mouse drive down a diagonal?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <p id="cap">Two infrared sensors on its nose measure how far the walls are on the left and on the right.</p>
+      <div id="steps">
+        <button class="step" data-i="0"><span class="n">1</span>Straight</button>
+        <button class="step" data-i="1"><span class="n">2</span>Diagonal</button>
+        <button class="step" data-i="2"><span class="n">3</span>Blinders</button>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the three runs in order and watch the red sensor beams.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A diagonal has no wall to follow, so it needs its own rule: blinders on.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SC = {
+  straight:{cells:[[2,0],[2,1],[2,2],[2,3],[2,4]],prev:[2,-1],next:[2,5],P0:[2.5,0.25],P1:[2.5,4.6]},
+  diag:{cells:[[0,0],[1,0],[1,1],[2,1],[2,2],[3,2],[3,3],[4,3],[4,4]],prev:[0,-1],next:[4,5],P0:[0.75,0.25],P1:[4.35,3.85]}
+};
+const CAPS = [
+  "Along a straight wall, each sensor sees wall the whole time. The mouse steers by the difference between its left and right readings.",
+  "Same rule on a diagonal: no wall, just corners flashing past. The readings jump, so the mouse wobbles and hits a post.",
+  "A new algorithm: the mouse is guided as if it had blinders on, along a line down the middle, ignoring the flicker."
+];
+const WHY = "Following a wall works because you can see it all the time. A diagonal is only a staircase of corners, so the left–right rule breaks. Racing mice switch to a separate algorithm that steers them as if wearing blinders.";
+const MAXR = 1.1;
+let st = {mode:0, u:0}, seen = new Set(), tw = null, fast = false, done = false;
+let L = {}, E = {};
+const svg = Kit.$('svg');
+
+const sc = () => st.mode === 0 ? SC.straight : SC.diag;
+function off(u, m = st.mode){
+  if (m === 0) return 0.09*Math.exp(-3*u)*Math.cos(9*u);
+  if (m === 1) return 0.05*Math.sin(14*u)*(1+6*u);
+  return 0;
+}
+let UC = 1; for (let u = 0; u <= 1; u += 0.001){ if (Math.abs(off(u,1)) >= 0.23){ UC = u; break; } }
+function pos(u){
+  const s = sc(), [x0,y0] = s.P0, [x1,y1] = s.P1, len = Math.hypot(x1-x0,y1-y0);
+  const dx = (x1-x0)/len, dy = (y1-y0)/len, o = off(u);
+  return [x0+(x1-x0)*u - dy*o, y0+(y1-y0)*u + dx*o];
+}
+function walls(s){
+  const segs = [], path = s.cells;
+  path.forEach(([x,y],i) => {
+    const pr = i ? path[i-1] : s.prev, nx = i < path.length-1 ? path[i+1] : s.next;
+    const open = (a,b) => (pr[0]===a&&pr[1]===b)||(nx[0]===a&&nx[1]===b);
+    if (!open(x-1,y)) segs.push([x,y,x,y+1]);
+    if (!open(x+1,y)) segs.push([x+1,y,x+1,y+1]);
+    if (!open(x,y-1)) segs.push([x,y,x+1,y]);
+    if (!open(x,y+1)) segs.push([x,y+1,x+1,y+1]);
+  });
+  return segs;
+}
+function cast(px,py,dx,dy,segs){
+  let best = MAXR;
+  for (const [ax,ay,bx,by] of segs){
+    const ex = bx-ax, ey = by-ay, den = dx*ey-dy*ex;
+    if (Math.abs(den) < 1e-9) continue;
+    const rx = ax-px, ry = ay-py, t = (rx*ey-ex*ry)/den, q = (dy*rx-dx*ry)/den;
+    if (t > 0 && t < best && q >= -0.001 && q <= 1.001) best = t;
+  }
+  return best;
+}
+const X = x => L.ox + x*L.s, Y = y => L.oy + (5-y)*L.s;
+
+function build(){
+  svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg);
+  const s = Math.min((W-6)/5.25, (H-6)/5.25);
+  L = {W,H,s,ox:(W-5*s)/2,oy:(H-5*s)/2,fs:Math.max(12,Math.min(f,s*0.24))};
+  L.segs = walls(sc());
+  const m = (t,a,p=svg) => Kit.mk(t,a,p);
+  m('rect',{x:L.ox-.12*s,y:L.oy-.12*s,width:5.24*s,height:5.24*s,rx:.18*s,fill:'#14161c'});
+  for (let i=0;i<=5;i++) for (let j=0;j<=5;j++) m('rect',{x:X(i)-.035*s,y:Y(j)-.035*s,width:.07*s,height:.07*s,fill:'#3a3f4b'});
+  const wg = m('g',{});
+  L.segs.forEach(([a,b,c,d]) => {
+    m('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:'#eef0f3','stroke-width':.075*s,'stroke-linecap':'square'},wg);
+    m('line',{x1:X(a),y1:Y(b),x2:X(c),y2:Y(d),stroke:'#e63946','stroke-width':.028*s,'stroke-linecap':'square'},wg);
+  });
+  const S = sc();
+  E.guide = m('line',{x1:X(S.P0[0]),y1:Y(S.P0[1]),x2:X(S.P1[0]),y2:Y(S.P1[1]),stroke:'#39d0ff','stroke-width':Math.max(2,.035*s),'stroke-dasharray':`${.12*s} ${.08*s}`,'stroke-linecap':'round',opacity:0});
+  E.trail = m('polyline',{fill:'none',stroke:'#ffd23f','stroke-width':Math.max(2,.03*s),'stroke-linecap':'round','stroke-linejoin':'round',opacity:.55});
+  E.beams = [0,1].map(() => ({
+    l: m('line',{stroke:'#ff4d6d','stroke-width':Math.max(2,.026*s),'stroke-linecap':'round'}),
+    d: m('circle',{r:Math.max(3,.045*s),fill:'#ff4d6d'})
+  }));
+  const g = E.mouse = m('g',{});
+  const bl = .36*s, bw = .26*s;
+  [[-.1, -.5],[-.1,.5]].forEach(([fx,sy]) => m('rect',{x:fx*s-.06*s,y:sy*bw-(sy<0?.06*s:0)-(sy<0?0:0),width:.12*s,height:.06*s,rx:.02*s,fill:'#0b0b0b'},g));
+  m('rect',{x:-bl/2,y:-bw/2,width:bl,height:bw,rx:.07*s,fill:'#ffd23f'},g);
+  m('rect',{x:bl/2-.07*s,y:-bw/2+.03*s,width:.05*s,height:bw-.06*s,rx:.02*s,fill:'#14161c'},g);
+  E.blind = m('g',{opacity:0},g);
+  [-1,1].forEach(sg => m('line',{x1:bl/2-.02*s,y1:sg*bw/2,x2:bl/2+.2*s,y2:sg*(bw/2+.07*s),stroke:'#0b0b0b','stroke-width':.06*s,'stroke-linecap':'round'},E.blind));
+  E.burst = m('circle',{r:.22*s,fill:'none',stroke:'#ff4d6d','stroke-width':Math.max(2.5,.04*s),opacity:0});
+  const hx = L.ox+.12*s, hy = L.oy+.2*s, fs = L.fs, bwid = Math.max(30, 1.85*s - 3.6*fs);
+  E.hud = m('g',{});
+  E.bars = ['LEFT','RIGHT'].map((t,i) => {
+    const y = hy + i*fs*1.7;
+    m('text',{x:hx,y:y+fs*.8,fill:'#eef0f3','font-family':'var(--mono)','font-size':fs,'font-weight':700},E.hud).textContent = t;
+    const x0 = hx + 3.5*fs;
+    m('rect',{x:x0,y:y+fs*.1,width:bwid,height:fs*.8,rx:fs*.2,fill:'#2b2f3a'},E.hud);
+    return m('rect',{x:x0,y:y+fs*.1,width:0,height:fs*.8,rx:fs*.2,fill:'#ff4d6d'},E.hud);
+  });
+  L.bwid = bwid;
+}
+function render(){
+  const s = L.s, u = st.u, p = pos(u), q = pos(Math.min(1,u+0.003)), r0 = pos(Math.max(0,u-0.003));
+  const th = Math.atan2(q[1]-r0[1], q[0]-r0[0]);
+  const fx = Math.cos(th), fy = Math.sin(th), lx = -fy, ly = fx;
+  E.mouse.setAttribute('transform',`translate(${X(p[0])},${Y(p[1])}) rotate(${-th*180/Math.PI})`);
+  const pts = []; for (let k=0;k<=80;k++){ const a = pos(u*k/80); pts.push(X(a[0]).toFixed(1)+','+Y(a[1]).toFixed(1)); }
+  E.trail.setAttribute('points', pts.join(' '));
+  const blind = st.mode === 2, ang = (blind ? 14 : 50)*Math.PI/180;
+  const reads = [1,-1].map((sg,i) => {
+    const sx = p[0]+fx*.16+lx*.1*sg, sy = p[1]+fy*.16+ly*.1*sg;
+    const a = th + sg*ang, dx = Math.cos(a), dy = Math.sin(a);
+    const t = cast(sx,sy,dx,dy,L.segs), hit = t < MAXR;
+    const B = E.beams[i];
+    Kit.mk && B.l.setAttribute('x1',X(sx)); B.l.setAttribute('y1',Y(sy));
+    B.l.setAttribute('x2',X(sx+dx*t)); B.l.setAttribute('y2',Y(sy+dy*t));
+    B.l.setAttribute('opacity', blind ? .3 : (hit ? 1 : .35));
+    B.l.setAttribute('stroke-dasharray', hit ? '' : `${.05*s} ${.06*s}`);
+    B.d.setAttribute('cx',X(sx+dx*t)); B.d.setAttribute('cy',Y(sy+dy*t));
+    B.d.setAttribute('opacity', hit && !blind ? 1 : 0);
+    return hit ? Math.max(0, 1 - t/MAXR) : 0;
+  });
+  E.bars.forEach((b,i) => b.setAttribute('width', Math.max(0, L.bwid*Math.min(1, reads[i]*1.6))));
+  E.hud.setAttribute('opacity', blind ? .35 : 1);
+  E.guide.setAttribute('opacity', blind ? 1 : 0);
+  E.blind.setAttribute('opacity', blind ? 1 : 0);
+  const crashed = st.mode === 1 && u >= UC - 1e-6;
+  E.burst.setAttribute('cx', X(p[0]+fx*.12)); E.burst.setAttribute('cy', Y(p[1]+fy*.12));
+  E.burst.setAttribute('opacity', crashed ? 1 : 0);
+}
+function finish(){
+  render();
+  if (st.mode === 1){
+    Kit.haptic('light');
+    if (!Kit.calm) gsap.fromTo(E.burst,{attr:{r:.05*L.s}},{attr:{r:.26*L.s},duration:.45,ease:'back.out(3)'});
+  }
+  if (seen.size === 3){
+    if (!done){ done = true; Kit.hide('say'); Kit.show('keep'); Kit.haptic('success'); }
+    const c = Kit.$('cap'); c.textContent = WHY; c.classList.add('why');
+  }
+}
+function run(i){
+  if (tw) tw.kill();
+  st.mode = i; st.u = 0; seen.add(i);
+  document.querySelectorAll('.step').forEach(b => {
+    b.classList.toggle('on', +b.dataset.i === i);
+    if (seen.has(+b.dataset.i)) b.classList.add('seen');
+  });
+  const c = Kit.$('cap'); c.textContent = CAPS[i]; c.classList.remove('why');
+  build(); render(); Kit.haptic('selection');
+  const end = i === 1 ? UC : 1;
+  if (Kit.calm){ st.u = end; finish(); return; }
+  tw = gsap.to(st,{u:end,duration:fast ? .3 : (i === 1 ? 3.6 : 3.4),ease:i === 1 ? 'none' : 'sine.inOut',onUpdate:render,onComplete:finish});
+}
+Kit.$('steps').addEventListener('click', e => { const b = e.target.closest('.step'); if (b) run(+b.dataset.i); });
+Kit.onShow.card = () => { build(); render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.step',{opacity:0,y:10,stagger:.07,duration:.4,ease:'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const i of [0,1,2]){ document.querySelector(`.step[data-i="${i}"]`).click(); await w(700); }
+};
+Kit.single();
+</script>
+</html>

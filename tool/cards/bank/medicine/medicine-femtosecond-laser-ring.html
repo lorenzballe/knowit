@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-femtosecond-laser-ring -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#eye{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EYE SURGERY</span></div>
+    <h2 class="q">What does the femtosecond laser do in the first phase of cataract surgery?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="eye" aria-label="Close-up of the eye: iris, pupil and cloudy lens"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Melts the cloudy lens away in one go</button>
+        <button class="opt" data-i="1">Cuts a ring in the lens's bag, then breaks up the lens</button>
+        <button class="opt" data-i="2">Polishes the cornea so light gets through</button>
+      </div>
+      <div id="why" class="gone"><p class="big">A perfect ring, then pieces</p><p class="body">The lens sits in a thin bag called the capsule. The laser first cuts a neat circle in it, then cuts the cloudy lens into fragments so it can be taken out.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the laser work.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Phase one: the laser opens the capsule in a circle and breaks up the lens.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervento alla cataratta: vi spieghiamo cosa succede con delle animazioni 3D” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, tl = null, E = {};
+const NS = 'http://www.w3.org/2000/svg';
+
+function draw(){
+  const svg = Kit.$('eye'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const top = fs * 1.9, bot = fs * 1.9;
+  const cx = W / 2, cy = top + (H - top - bot) / 2;
+  const R = Math.max(20, Math.min(W * 0.46, (H - top - bot) / 2));
+  const defs = Kit.mk('defs', {}, svg);
+  const g1 = Kit.mk('radialGradient', {id: 'iris'}, defs);
+  Kit.mk('stop', {offset: '55%', 'stop-color': '#2f6f8f'}, g1);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#173b4f'}, g1);
+  const g2 = Kit.mk('radialGradient', {id: 'cloud', cx: '42%', cy: '40%'}, defs);
+  Kit.mk('stop', {offset: '0%', 'stop-color': '#f4ecd2', 'stop-opacity': '.95'}, g2);
+  Kit.mk('stop', {offset: '100%', 'stop-color': '#bfb48e', 'stop-opacity': '.75'}, g2);
+  const glow = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: R * 0.025}, glow);
+  // iris and pupil
+  Kit.mk('circle', {cx, cy, r: R, fill: 'url(#iris)', stroke: 'var(--k)', 'stroke-width': Math.max(2, R * 0.015)}, svg);
+  for (let i = 0; i < 36; i++) {
+    const a = i / 36 * Math.PI * 2;
+    Kit.mk('line', {x1: cx + Math.cos(a) * R * 0.66, y1: cy + Math.sin(a) * R * 0.66, x2: cx + Math.cos(a) * R * 0.95, y2: cy + Math.sin(a) * R * 0.95, stroke: '#7fb6cf', 'stroke-opacity': .35, 'stroke-width': Math.max(1, R * 0.01)}, svg);
+  }
+  Kit.mk('circle', {cx, cy, r: R * 0.64, fill: '#0d0d10'}, svg);
+  // the cloudy lens, in pieces we can move later
+  const lr = R * 0.6, n = 6;
+  E.pieces = [];
+  const lensG = Kit.mk('g', {}, svg);
+  for (let i = 0; i < n; i++) {
+    const a0 = i / n * Math.PI * 2 - Math.PI / 2, a1 = (i + 1) / n * Math.PI * 2 - Math.PI / 2;
+    const p = Kit.mk('path', {d: `M${cx},${cy} L${cx + Math.cos(a0) * lr},${cy + Math.sin(a0) * lr} A${lr},${lr} 0 0 1 ${cx + Math.cos(a1) * lr},${cy + Math.sin(a1) * lr} Z`, fill: 'url(#cloud)'}, lensG);
+    p._a = (a0 + a1) / 2; E.pieces.push(p);
+  }
+  // capsule outline
+  Kit.mk('circle', {cx, cy, r: lr, fill: 'none', stroke: '#e9dfbd', 'stroke-opacity': .6, 'stroke-width': Math.max(1.5, R * 0.012), 'stroke-dasharray': `${R * 0.03} ${R * 0.03}`}, svg);
+  // laser ring cut
+  const rr = R * 0.42, circ = 2 * Math.PI * rr;
+  E.ringGlow = Kit.mk('circle', {cx, cy, r: rr, fill: 'none', stroke: '#ff2d55', 'stroke-width': R * 0.05, filter: 'url(#glow)', 'stroke-dasharray': circ, 'stroke-dashoffset': circ, transform: `rotate(-90 ${cx} ${cy})`}, svg);
+  E.ring = Kit.mk('circle', {cx, cy, r: rr, fill: 'none', stroke: '#ff5a76', 'stroke-width': Math.max(2.5, R * 0.022), 'stroke-dasharray': circ, 'stroke-dashoffset': circ, 'stroke-linecap': 'round', transform: `rotate(-90 ${cx} ${cy})`}, svg);
+  E.circ = circ;
+  // fragmentation cuts
+  E.cuts = [];
+  for (let i = 0; i < 3; i++) {
+    const a = i / 3 * Math.PI - Math.PI / 2, L = lr * 0.92;
+    const ln = Kit.mk('line', {x1: cx - Math.cos(a) * L, y1: cy - Math.sin(a) * L, x2: cx + Math.cos(a) * L, y2: cy + Math.sin(a) * L, stroke: '#ffd23f', 'stroke-width': Math.max(2, R * 0.018), 'stroke-linecap': 'round', 'stroke-dasharray': 2 * L, 'stroke-dashoffset': 2 * L}, svg);
+    E.cuts.push(ln); ln._L = 2 * L;
+  }
+  // laser spot
+  E.dot = Kit.mk('g', {opacity: 0}, svg);
+  Kit.mk('circle', {r: R * 0.07, fill: '#ff2d55', opacity: .55, filter: 'url(#glow)'}, E.dot);
+  Kit.mk('circle', {r: R * 0.025, fill: '#fff'}, E.dot);
+  E.cx = cx; E.cy = cy; E.rr = rr; E.R = R;
+  placeDot(-Math.PI / 2, rr);
+  // labels
+  E.l1 = Kit.mk('text', {x: 4, y: fs * 1.15, fill: 'var(--k)', opacity: 0, style: `font:800 ${fs}px var(--body)`}, svg);
+  E.l1.textContent = '1 · Ring cut in the capsule';
+  E.l2 = Kit.mk('text', {x: W - 4, y: H - fs * 0.45, 'text-anchor': 'end', fill: 'var(--k)', opacity: 0, style: `font:800 ${fs}px var(--body)`}, svg);
+  E.l2.textContent = '2 · Lens cut into pieces';
+  if (done) run(true);
+}
+function placeDot(a, r){ E.dot.setAttribute('transform', `translate(${E.cx + Math.cos(a) * r},${E.cy + Math.sin(a) * r})`); }
+
+function run(instant){
+  if (tl) tl.kill();
+  const st = {p: 0};
+  tl = gsap.timeline();
+  tl.to(E.dot, {opacity: 1, duration: .25})
+    .to(st, {p: 1, duration: 1.6, ease: 'none', onUpdate: () => {
+      E.ring.setAttribute('stroke-dashoffset', E.circ * (1 - st.p));
+      E.ringGlow.setAttribute('stroke-dashoffset', E.circ * (1 - st.p));
+      placeDot(-Math.PI / 2 + st.p * Math.PI * 2, E.rr);
+    }})
+    .to(E.l1, {opacity: 1, duration: .3}, '-=.2')
+    .to(E.ringGlow, {opacity: .35, duration: .4});
+  E.cuts.forEach((ln, i) => {
+    tl.to(ln, {attr: {'stroke-dashoffset': 0}, duration: .45, ease: 'power1.inOut'}, i ? '>-0.1' : '>');
+  });
+  tl.to(E.dot, {opacity: 0, duration: .2})
+    .to(E.pieces, {x: i => Math.cos(E.pieces[i]._a) * E.R * 0.035, y: i => Math.sin(E.pieces[i]._a) * E.R * 0.035, duration: .5, ease: 'power2.out'}, '<')
+    .to(E.l2, {opacity: 1, duration: .3}, '<');
+  if (instant || Kit.calm) tl.progress(1);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  done = true; run(window.__fast); Kit.haptic('success');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#eye', {opacity: 0, scale: .94, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'}); gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => { window.__fast = true; Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

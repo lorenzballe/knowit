@@ -1,0 +1,211 @@
+<!doctype html>
+<!-- slug: science-venezuela-buried-folds -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#sv{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#sv:active{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex:none}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.lab{font-family:var(--body);font-weight:800;letter-spacing:.06em;fill:var(--k);paint-order:stroke;stroke:var(--c);stroke-width:3px;stroke-linejoin:round}
+.car{fill:color-mix(in srgb,var(--k) 20%,var(--c))}
+.sa{fill:color-mix(in srgb,var(--k) 8%,var(--c))}
+.tick{stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-width:2;stroke-linecap:round}
+.bnd{stroke:var(--k);stroke-width:2.5;fill:none}
+.mts{fill:color-mix(in srgb,var(--k) 55%,var(--c))}
+.track{stroke:color-mix(in srgb,var(--k) 40%,transparent);stroke-width:2;stroke-dasharray:4 5;fill:none}
+.trackhead{fill:color-mix(in srgb,var(--k) 40%,transparent)}
+.knob{fill:var(--k)}
+.knobarrow{stroke:var(--c);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.b0{fill:color-mix(in srgb,var(--k) 32%,var(--c))}
+.b1{fill:color-mix(in srgb,var(--k) 12%,var(--c))}
+.b2{fill:color-mix(in srgb,var(--k) 44%,var(--c))}
+.b3{fill:color-mix(in srgb,var(--k) 60%,var(--c))}
+.lines{stroke:color-mix(in srgb,var(--k) 70%,transparent);stroke-width:1;fill:none}
+.surf{stroke:var(--k);stroke-width:2;fill:none}
+.burial{fill:url(#dots);stroke:var(--k);stroke-width:1.6;stroke-dasharray:5 4}
+.oil{fill:#120e0c;stroke:var(--c);stroke-width:1.2}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · watch it form">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">Which tectonic plates built the buried mountains that trap Venezuela's oil?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv" aria-label="Map of the two plates above, a cut through the crust below"></svg>
+      <div id="why" class="gone"><p class="big">The Caribbean plate scraping the South American plate</p><p class="body">Moving east, the Caribbean plate scraped against South America and folded the crust into a mountain chain. Part of that chain is now buried, and its folds hold a lot of oil.</p></div>
+    </div>
+    <p class="say" id="say">Drag the Caribbean plate east and watch the crust below.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Venezuela's oil sits in the folds of a buried mountain chain.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La questione "Petrolio Venezuela" spiegata dal punto di vista geologico e industriale” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {p: 0, b: 0, o: 0};
+let done = false, G = null, E = {}, drag = null, hint = null, halfBuzz = false;
+const CK = [.14, .33, .56, .73, .89], AK = [1, .8, .5, .42, .38];
+const svg = Kit.$('sv');
+const P = pts => 'M' + pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L') + 'Z';
+const L = pts => 'M' + pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L');
+
+function layout() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H * .055));
+  const r = Math.max(12, H * .04);
+  const cBot = fs * 1.3 + 2 * r + 12;
+  const sBot = cBot + r * .9 + 10 + fs * 1.3;
+  const sTop = sBot + fs * 1.5;
+  const secH = H - sTop;
+  const y0 = sTop + .42 * secH, A = .30 * secH, t = (H - y0) / 4.3, w = .07 * W;
+  const hy = 6 + fs * 1.3 + r, hx0 = 16 + r, D = W - 32 - 2 * r;
+  G = {W, H, fs, r, cBot, sBot, sTop, secH, y0, A, t, w, hy, hx0, D};
+  const mk = (tag, a, p = svg) => Kit.mk(tag, a, p);
+  const defs = mk('defs', {});
+  const pat = mk('pattern', {id: 'dots', width: 7, height: 7, patternUnits: 'userSpaceOnUse'}, defs);
+  mk('rect', {width: 7, height: 7, fill: 'color-mix(in srgb,var(--c) 82%,white)'}, pat);
+  mk('circle', {cx: 3.5, cy: 3.5, r: 1.1, fill: 'color-mix(in srgb,var(--k) 45%,transparent)'}, pat);
+  // map strip
+  mk('rect', {x: 0, y: 0, width: W, height: cBot, class: 'car', rx: 8});
+  mk('rect', {x: 0, y: cBot, width: W, height: sBot - cBot, class: 'sa'});
+  E.ticks = mk('path', {class: 'tick'});
+  E.mts = mk('path', {class: 'mts'});
+  mk('line', {x1: 0, x2: W, y1: cBot, y2: cBot, class: 'bnd'});
+  mk('text', {x: 8, y: 4 + fs, class: 'lab', 'font-size': fs}).textContent = 'CARIBBEAN PLATE';
+  const saLab = mk('text', {x: 8, y: sBot - 6, class: 'lab', 'font-size': fs});
+  saLab.textContent = 'SOUTH AMERICAN PLATE';
+  mk('line', {x1: hx0, x2: hx0 + D - 4, y1: hy, y2: hy, class: 'track'});
+  mk('path', {d: `M${hx0 + D + 4},${hy}l-9,-6v12z`, class: 'trackhead'});
+  E.knob = mk('g', {});
+  mk('circle', {r: r, class: 'knob'}, E.knob);
+  mk('path', {d: `M${-r * .45},0H${r * .45}M${r * .1},${-r * .35}L${r * .45},0L${r * .1},${r * .35}`, class: 'knobarrow'}, E.knob);
+  // section
+  E.bands = [0, 1, 2, 3].map(i => mk('path', {class: 'b' + i}));
+  E.lines = mk('path', {class: 'lines'});
+  E.oil = [2, 3, 4].map(() => mk('path', {class: 'oil'}));
+  E.surf = mk('path', {class: 'surf'});
+  E.bur = mk('path', {class: 'burial'});
+  E.mlab = mk('text', {x: 8, y: sTop + fs * .9, class: 'lab', 'font-size': fs});
+  E.mlab.textContent = 'MOUNTAINS';
+  E.head = mk('text', {x: W - 8, y: sTop + fs * .9, class: 'lab', 'font-size': fs, 'text-anchor': 'end'});
+  const oy = H - fs * .45;
+  E.olab = mk('text', {x: .72 * W, y: oy, class: 'lab', 'font-size': fs, 'text-anchor': 'middle'});
+  E.olab.textContent = 'OIL IN THE FOLDS';
+  // keep the oil label clear of the South American plate label when space is tight
+  if (oy - fs < sBot + 2) {
+    let saW = 0, oW = 0;
+    try { saW = saLab.getComputedTextLength(); oW = E.olab.getComputedTextLength(); } catch (_) {}
+    if (!saW) saW = fs * .72 * 20;
+    if (!oW) oW = fs * .72 * 16;
+    const avail = W - 8 - (8 + saW + 10);
+    E.olab.setAttribute('x', W - 8);
+    E.olab.setAttribute('text-anchor', 'end');
+    if (oW > avail) {
+      if (avail > 0) {
+        E.olab.setAttribute('font-size', (fs * avail / oW).toFixed(2));
+      } else {
+        E.olab.setAttribute('y', Math.max(sBot + fs + 4, oy));
+      }
+    }
+  }
+  update();
+}
+
+function fold(x) {
+  const {W, A, w} = G; let s = 0;
+  for (let k = 0; k < 5; k++) { const d = (x - CK[k] * W) / w; s += AK[k] * A * st.p * Math.exp(-d * d); }
+  return s;
+}
+const bd = (i, x) => i >= 4 ? G.H : G.y0 + i * G.t - fold(x) * (1 - .15 * i);
+
+function update() {
+  if (!G) return;
+  const {W, H, fs, r, cBot, y0, secH, w, hy, hx0, D} = G, p = st.p;
+  const xs = []; for (let i = 0; i <= 90; i++) xs.push(W * i / 90);
+  // map: plate motion and mountains along the boundary
+  let d = ''; const sp = 22, off = (p * W * .55) % sp;
+  for (let x = -sp + off; x < W + sp; x += sp) d += `M${x.toFixed(1)},${cBot - r * .7}l6,${r * .55}`;
+  E.ticks.setAttribute('d', d);
+  let m = ''; const ms = r * 1.3;
+  for (let x = 8; x + ms < W - 4; x += ms) m += `M${x.toFixed(1)},${cBot}l${ms / 2},${(p * r * .9).toFixed(1)}l${ms / 2},${-(p * r * .9).toFixed(1)}z`;
+  E.mts.setAttribute('d', m);
+  E.knob.setAttribute('transform', `translate(${hx0 + p * D},${hy})`);
+  // crust layers
+  for (let i = 0; i < 4; i++) {
+    const top = xs.map(x => [x, bd(i, x)]), bot = xs.map(x => [x, bd(i + 1, x)]).reverse();
+    E.bands[i].setAttribute('d', P(top.concat(bot)));
+  }
+  let ld = ''; for (let i = 1; i < 4; i++) ld += L(xs.map(x => [x, bd(i, x)]));
+  E.lines.setAttribute('d', ld);
+  const surf = xs.map(x => [x, bd(0, x)]);
+  E.surf.setAttribute('d', L(surf));
+  // burial: sediment filling over the eastern folds
+  const lvl = y0 - st.b * .21 * secH;
+  const bx = xs.filter(x => x >= .3 * W);
+  const topB = bx.map(x => { const tt = lvl + Math.max(0, .5 * W - x) * 1.1; return [x, Math.min(tt, bd(0, x))]; });
+  E.bur.setAttribute('d', st.b > 0 ? P(topB.concat(bx.map(x => [x, bd(0, x)]).reverse())) : '');
+  // oil in fold crests of the light reservoir layer
+  [2, 3, 4].forEach((k, j) => {
+    if (st.o <= 0) { E.oil[j].setAttribute('d', ''); return; }
+    const c = CK[k] * W, cap = bd(1, c) + st.o * .6 * G.t, pts = [], back = [];
+    for (let i = 0; i <= 24; i++) {
+      const x = c - .75 * w + 1.5 * w * i / 24, tp = bd(1, x), bt = Math.min(bd(2, x), cap);
+      pts.push([x, tp]); back.push([x, Math.max(tp, bt)]);
+    }
+    E.oil[j].setAttribute('d', P(pts.concat(back.reverse())));
+  });
+  E.mlab.setAttribute('opacity', Math.min(1, p * 1.6).toFixed(2));
+  E.head.textContent = st.b > 0 ? 'BURIED PART OF THE CHAIN' : 'CRUST, CUT OPEN';
+  E.olab.setAttribute('opacity', st.o.toFixed(2));
+}
+
+function finish() {
+  done = true; drag = null; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => {
+    layout();
+    if (Kit.calm) { st.b = 1; st.o = 1; update(); return; }
+    gsap.timeline()
+      .to(st, {b: 1, duration: 1.2, ease: 'power2.inOut', onUpdate: update})
+      .to(st, {o: 1, duration: 1, ease: 'power2.out', onUpdate: update});
+  });
+}
+
+svg.addEventListener('pointerdown', e => {
+  if (done) return;
+  if (hint) { hint.kill(); hint = null; }
+  drag = {x: e.clientX, p: st.p};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || done) return;
+  st.p = Math.max(0, Math.min(1, drag.p + (e.clientX - drag.x) / G.D));
+  if (st.p > .5 && !halfBuzz) { halfBuzz = true; Kit.haptic('light'); }
+  update();
+  if (st.p >= 1) finish();
+});
+const end = () => { drag = null; };
+svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+Kit.onShow.card = () => layout();
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  hint = gsap.to(st, {p: .14, duration: .55, yoyo: true, repeat: 1, ease: 'sine.inOut', delay: .5, onUpdate: update});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rc = svg.getBoundingClientRect(), y = rc.top + 30, x0 = rc.left + 30;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', x0);
+  for (let i = 1; i <= 12; i++) { ev('pointermove', x0 + i * rc.width / 9); await wait(30); }
+  ev('pointerup', x0 + rc.width);
+  await wait(2700);
+};
+Kit.single();
+</script>
+</html>

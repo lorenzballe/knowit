@@ -1,0 +1,37 @@
+{
+  "id": "psychology-confidence-trap",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.overconfidence",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "What happens to students' confidence after a clear, standard explanation video?",
+  "answer": "Confidence goes up. Students called the video clear, concise and easy to understand, and felt surer of their answers than they did on the pretest. That feeling rises even when the correct idea never got in.",
+  "move": "Feeling sure after a clear explanation is not proof you learned it.",
+  "keywords": [
+    "confidence",
+    "students",
+    "explanation videos",
+    "pretest",
+    "khan academy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question asking what happens to students' confidence after a clear explanation video, with options: goes up, stays the same, goes down. The reader guesses, then presses play on a student's video."
+  },
+  "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=205s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "space-graphene-space-elevator",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.cost_of_space",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is a potential application of graphene in space?",
+  "answer": "A space elevator made of graphene could connect Earth to a satellite in orbit, lifting platforms without fuel. Platforms and instruments would ride the cable up into space like a pulley. The idea is futuristic, but graphene's strength may make it feasible.",
+  "move": "A graphene cable to an orbiting satellite could lift loads to space with zero fuel.",
+  "keywords": [
+    "graphene",
+    "space elevator",
+    "satellite",
+    "orbit",
+    "fuel"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A space elevator scene asks what a potential application of graphene in space is. Hold the lift button to send a platform up a graphene cable while watching the fuel gauge.",
+    "ground": "#05070f"
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=225s",
+  "written": "2026-11-03"
+}

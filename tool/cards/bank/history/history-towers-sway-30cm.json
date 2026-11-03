@@ -1,0 +1,38 @@
+{
+  "id": "history-towers-sway-30cm",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How far did the towers move when the planes hit?",
+  "answer": "The NIST found the towers swayed only about 30 cm at impact. The hit itself didn't weaken them; it was the spark that set off a chain of other causes that did.",
+  "move": "The impact barely moved the towers; what it set off brought them down.",
+  "keywords": [
+    "twin towers",
+    "nist",
+    "world trade center",
+    "9/11",
+    "structural collapse"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A slider for guessing how far the top of the Twin Towers swayed sideways when the planes hit, from 10 cm to 30 m. The reveal says the answer is about 30 cm, and that the impact itself did not bring the towers down.",
+    "graded": false
+  },
+  "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=PvhMUg70Jtc&t=462s",
+  "written": "2026-11-03"
+}

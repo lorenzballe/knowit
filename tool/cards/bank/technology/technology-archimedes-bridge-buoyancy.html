@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- slug: technology-archimedes-bridge-buoyancy -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;background:#0f2133;border-radius:2cqh;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see the forces">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BUOYANCY</span></div>
+    <h2 class="q">How does the Archimedes bridge let the sea carry its weight?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A tunnel resting on pillars; drag the sea up around it"></svg>
+    </div>
+    <p class="say" id="say">Drag the sea up until the tunnel is fully underwater.</p>
+    <div id="why" class="gone"><p class="big">The sea pushes back</p><p class="body">Underwater, the tunnel pushes water aside. That water pushes up with a force equal to its own weight, so the pillars only carry what is left.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Anything underwater is pushed up by the weight of the water it moves aside.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ponte sullo Stretto di Messina: il progetto costruttivo ufficiale e le altre alternative” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const RED = '#ff6b4a', BLUE = '#5cc8ff', INK = '#ffffff', CALM = '#8fa3b8';
+const K = 0.8;              // share of the tunnel's weight the fully submerged tunnel gets back as push
+let lev = 0, done = false, G = null, hint = null;
+
+function arrow(parent, color, w) {
+  const g = Kit.mk('g', {}, parent);
+  const l = Kit.mk('line', {stroke: color, 'stroke-width': w, 'stroke-linecap': 'round'}, g);
+  const h = Kit.mk('polygon', {fill: color}, g);
+  return {g, l, h, w};
+}
+function setArrow(a, x, y1, y2) {
+  const len = Math.abs(y2 - y1), dir = y2 > y1 ? 1 : -1;
+  if (len < 4) { a.g.setAttribute('opacity', 0); return; }
+  a.g.setAttribute('opacity', 1);
+  const hs = Math.min(a.w * 2.6, len * .6);
+  a.l.setAttribute('x1', x); a.l.setAttribute('x2', x);
+  a.l.setAttribute('y1', y1); a.l.setAttribute('y2', y2 - dir * hs * .8);
+  a.h.setAttribute('points', `${x - hs * .8},${y2 - dir * hs} ${x + hs * .8},${y2 - dir * hs} ${x},${y2}`);
+}
+
+function draw() {
+  const svg = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const fs = Math.max(f * .95, 12), pad = fs * .9;
+  const rowY = i => pad + fs * .9 + i * fs * 1.7;
+  let sceneTop = rowY(2) + fs * 1.4, seabed = H - fs * 1.3;
+  const compact = (seabed - sceneTop) < fs * 7;
+  if (compact) { sceneTop = pad * .5; seabed = H - fs * .6; }
+  const sh = Math.max(seabed - sceneTop, 1);
+  seabed = sceneTop + sh;
+  const yc = sceneTop + sh * .5, th = sh * .16, tTop = yc - th / 2, tBot = yc + th / 2;
+  const yHigh = sceneTop + sh * .12, yLow = tBot + sh * .12;
+  const L0 = sh * .3, x0 = W * .07, x1 = W * .93;
+  const g = {W, H, fs, yc, th, tTop, tBot, yHigh, yLow, L0, seabed};
+
+  // bars: the balance of forces
+  const bx = W * .42, bw = W * .51, bh = fs * .8;
+  const rows = [['Tunnel weight', RED], ["Water's push", BLUE], ['On pillars', RED]];
+  g.bars = compact ? null : rows.map(([t, c], i) => {
+    const y = rowY(i);
+    const tx = Kit.mk('text', {x: W * .05, y: y + fs * .35, fill: INK, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 700}, svg);
+    tx.textContent = t;
+    Kit.mk('rect', {x: bx, y: y - bh / 2, width: bw, height: bh, rx: bh / 2, fill: '#ffffff', opacity: .1}, svg);
+    return Kit.mk('rect', {x: bx, y: y - bh / 2, width: bw, height: bh, rx: bh / 2, fill: c}, svg);
+  });
+
+  // seabed, pillars, tunnel
+  Kit.mk('rect', {x: 0, y: seabed, width: W, height: Math.max(0, H - seabed), fill: '#c9a46a'}, svg);
+  g.pillars = [.27, .73].map(p => Kit.mk('rect', {x: W * p - W * .03, y: tBot - 2, width: W * .06, height: Math.max(0, seabed - tBot + 2), fill: RED}, svg));
+  Kit.mk('rect', {x: x0, y: tTop, width: x1 - x0, height: th, rx: th / 2, fill: '#e9edf2', stroke: '#ffffff', 'stroke-width': 2}, svg);
+  if (th > 8) for (let i = 1; i < 9; i++) { const x = x0 + (x1 - x0) * i / 9; Kit.mk('line', {x1: x, x2: x, y1: tTop + 3, y2: tBot - 3, stroke: '#9fb0c2', 'stroke-width': 1.5}, svg); }
+
+  // water in front, translucent
+  g.water = Kit.mk('rect', {x: 0, width: W, fill: '#2b7fd4', opacity: .55}, svg);
+  g.surf = Kit.mk('path', {fill: 'none', stroke: '#bfe6ff', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+  g.handle = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {r: fs * 1.05, fill: '#bfe6ff'}, g.handle);
+  Kit.mk('path', {d: `M${-fs * .45},${-fs * .2} L0,${-fs * .65} L${fs * .45},${-fs * .2} M${-fs * .45},${fs * .2} L0,${fs * .65} L${fs * .45},${fs * .2}`, fill: 'none', stroke: '#0f2133', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g.handle);
+
+  // forces
+  const aw = Math.max(fs * .35, 4);
+  g.wA = arrow(svg, RED, aw); g.bA = arrow(svg, BLUE, aw);
+  g.wT = Kit.mk('text', {fill: RED, 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, 'text-anchor': 'end'}, svg); g.wT.textContent = 'weight';
+  g.bT = Kit.mk('text', {fill: '#ffffff', 'font-size': fs, 'font-family': 'var(--body)', 'font-weight': 800, 'text-anchor': 'start'}, svg); g.bT.textContent = 'push up';
+  g.bx = bx; g.bw = bw;
+  G = g; update();
+}
+
+function update() {
+  if (!G) return;
+  const g = G, yS = g.yLow + (g.yHigh - g.yLow) * lev;
+  const sub = Math.max(0, Math.min(1, (g.tBot - yS) / g.th));
+  const push = K * sub, left = 1 - push;
+  g.water.setAttribute('y', yS); g.water.setAttribute('height', Math.max(0, g.seabed - yS));
+  let d = ''; const n = 24;
+  for (let i = 0; i <= n; i++) { const x = g.W * i / n, y = yS + Math.sin(i * .9 + lev * 6) * g.fs * .18; d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
+  g.surf.setAttribute('d', d);
+  g.handle.setAttribute('transform', `translate(${g.W * .88},${yS})`);
+  const xw = g.W * .4, xb = g.W * .6;
+  setArrow(g.wA, xw, g.yc, g.yc + g.L0);
+  g.wT.setAttribute('x', xw - g.fs * .6); g.wT.setAttribute('y', g.yc + g.L0 - g.fs * .1);
+  const tip = g.yc - g.L0 * push;
+  setArrow(g.bA, xb, g.yc, tip);
+  g.bT.setAttribute('x', xb + g.fs * .6); g.bT.setAttribute('y', tip + g.fs * .9);
+  g.bT.setAttribute('opacity', push > .15 ? 1 : 0);
+  const col = gsap.utils.interpolate(RED, CALM, push / K);
+  if (g.bars) {
+    g.bars[0].setAttribute('width', g.bw);
+    g.bars[1].setAttribute('width', Math.max(.001, g.bw * push));
+    g.bars[2].setAttribute('width', g.bw * left);
+    g.bars[2].setAttribute('fill', col);
+  }
+  g.pillars.forEach(p => p.setAttribute('fill', col));
+  if (sub >= 1 && !done) finish();
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  requestAnimationFrame(() => requestAnimationFrame(draw));
+}
+
+// drag the sea level
+const svgEl = Kit.$('pic'); let dragging = false;
+function setFromY(cy) {
+  if (!G) return;
+  const r = svgEl.getBoundingClientRect(), y = cy - r.top;
+  lev = Math.max(0, Math.min(1, (G.yLow - y) / (G.yLow - G.yHigh)));
+  update();
+}
+svgEl.addEventListener('pointerdown', e => {
+  dragging = true; if (hint) { hint.kill(); hint = null; }
+  try { svgEl.setPointerCapture(e.pointerId); } catch (_) {}
+  Kit.haptic('selection'); setFromY(e.clientY);
+});
+svgEl.addEventListener('pointermove', e => { if (dragging) setFromY(e.clientY); });
+const stop = () => { dragging = false; };
+svgEl.addEventListener('pointerup', stop); svgEl.addEventListener('pointercancel', stop);
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  const o = {v: 0};
+  hint = gsap.to(o, {v: .16, duration: .9, ease: 'sine.inOut', yoyo: true, repeat: 3, delay: .4,
+    onUpdate: () => { if (!dragging) { lev = o.v; update(); } }, onComplete: () => { hint = null; }});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  if (hint) { hint.kill(); hint = null; }
+  const r = svgEl.getBoundingClientRect(), x = r.left + r.width * .5;
+  const ev = (t, y) => svgEl.dispatchEvent(new PointerEvent(t, {bubbles: true, clientX: x, clientY: y, pointerId: 1, isPrimary: true}));
+  const y0 = r.top + G.yLow, y1 = r.top + G.yHigh - 10;
+  ev('pointerdown', y0);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', y0 + (y1 - y0) * i / 10); await wait(30); }
+  ev('pointerup', y1);
+  await wait(800);
+};
+Kit.single();
+</script>
+</html>

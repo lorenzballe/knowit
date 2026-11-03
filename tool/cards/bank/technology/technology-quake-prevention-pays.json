@@ -1,0 +1,37 @@
+{
+  "id": "technology-quake-prevention-pays",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Japan gets big earthquakes all the time. Why is damage so low?",
+  "answer": "Japan spends a lot on earthquake prevention, and it spends that money efficiently. Its buildings are designed to flex rather than break. So a magnitude 6, 7 or 8 quake still does damage, but far less than it would elsewhere.",
+  "move": "Money spent before a quake buys far smaller losses after it.",
+  "keywords": [
+    "japan",
+    "earthquake",
+    "magnitude",
+    "building_design",
+    "prevention"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute card titled Earthquakes. A magnitude slider set to M 6.0 sits above two city panels. The question asks why Japan gets big earthquakes all the time yet damage stays low. Drag the magnitude up to 8 and watch both cities."
+  },
+  "source": "Geopop, “Terremoti in Giappone - come prevenire i disastri del rischio sismico con l'ingegneria” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=JfRkNO3rUw4&t=260s",
+  "written": "2026-11-03"
+}

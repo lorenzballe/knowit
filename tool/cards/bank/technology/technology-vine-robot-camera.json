@@ -1,0 +1,37 @@
+{
+  "id": "technology-vine-robot-camera",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A vine robot grows from its tip. How does its camera stay on?",
+  "answer": "The camera sits on an outer frame whose wheels interlock with an inner frame inside the pressurized body, like a roller coaster's wheels around its track. Because the two frames lock together, the camera cannot fall off as the robot grows.",
+  "move": "Grip the skin from both sides and you ride the growing tip.",
+  "keywords": [
+    "vine robot",
+    "camera",
+    "roller coaster",
+    "veritasium",
+    "growing robot"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled Vine Robot asks how a growing robot's camera is held at the tip: glued to the skin, locked to a frame inside the tube, pulled by a cable from the base, or two frames locked through the skin. The reader picks one, then rates how sure they are."
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=320s",
+  "written": "2026-11-03"
+}

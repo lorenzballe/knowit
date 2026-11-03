@@ -1,0 +1,37 @@
+{
+  "id": "technology-brenner-freight-time",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much faster will freight trains cross the Brenner through the new tunnel?",
+  "answer": "Through the Brenner Base Tunnel, freight trains would cross in 35 minutes instead of 105, saving 70 minutes, which is two-thirds of the trip and cuts costs. The tunnel links Fortezza in Italy with Innsbruck in Austria. Passengers would drop from 80 to 25 minutes.",
+  "move": "Through the base tunnel, freight does the trip in a third of the time.",
+  "keywords": [
+    "brenner",
+    "freight trains",
+    "tunnel",
+    "innsbruck",
+    "fortezza"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two clock faces compare freight train crossing time: 105 minutes now, 35 minutes through the Brenner Base Tunnel. A draggable slider from 0 to 105 minutes asks how much faster freight trains cross the Brenner."
+  },
+  "source": "Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aw3SGAwrWIo&t=71s",
+  "written": "2026-11-03"
+}

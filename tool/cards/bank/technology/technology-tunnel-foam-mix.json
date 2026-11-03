@@ -1,0 +1,36 @@
+{
+  "id": "technology-tunnel-foam-mix",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a tunnel's fire system turn plain water into foam?",
+  "answer": "Water reaches the room of the hit sector through special pipes. In that room it is mixed with 3% fire foam, then rises into the tunnel and is sprayed. The tunnel has 61 such rooms, about one every 127 m.",
+  "move": "Water comes by pipe, the room adds 3% foam, the tunnel gets the spray.",
+  "keywords": [
+    "tunnels",
+    "fire-foam",
+    "motorway-safety",
+    "fire-suppression"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drag-and-drop task on a cross-section of a motorway tunnel with side rooms and pipes. The reader drags the 3% foam into the room under the fire, then sees water mixed there and sprayed into the tunnel."
+  },
+  "source": "Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=ZH5nAfBRtjQ&t=285s",
+  "written": "2026-11-03"
+}

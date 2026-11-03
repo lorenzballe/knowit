@@ -1,0 +1,36 @@
+{
+  "id": "science-weather-attribution-method",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.correlation_or_cause",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does World Weather Attribution tell what the climate crisis did?",
+  "answer": "World Weather Attribution starts from a real extreme event and uses climate models to rebuild it in a world without the climate crisis. The gap between the two worlds is the answer: Europe's record heatwave would have been 3.5° cooler, and rarer too. A slider moves the model from our world to one with no climate crisis.",
+  "move": "Attribution compares our world with a modelled one without the warming.",
+  "keywords": [
+    "world weather attribution",
+    "climate models",
+    "european heatwave",
+    "climate crisis"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram of the attribution method: a real event, then climate models, then attribution. A slider moves a model world from our world to one with no climate crisis, asking what the gap between the two shows."
+  },
+  "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=TU196LhDGT4&t=137s",
+  "written": "2026-11-03"
+}

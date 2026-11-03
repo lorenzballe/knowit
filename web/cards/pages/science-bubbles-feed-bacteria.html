@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- slug: science-bubbles-feed-bacteria -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why the tank bubbles</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#tank{flex:1;min-height:0;width:100%;display:block}
+#legend{display:flex;flex-wrap:wrap;gap:.6cqh 3.5cqw;justify-content:center;font:600 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
+#legend span{display:inline-flex;align-items:center;gap:1.4cqw}
+#legend i{display:inline-block;width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:50%}
+#meter{display:flex;align-items:center;gap:3cqw;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+#bar{flex:1;height:max(1.2cqh,8px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
+#fill{height:100%;width:0;background:#3fb86a;border-radius:1cqh}
+#num{font-family:var(--mono);min-width:5ch;text-align:right}
+#air{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer;align-self:center;max-width:80%}
+#air:active{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WASTEWATER</span></div>
+    <h2 class="q">Why does a sewage treatment tank bubble like a hot tub?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="tank" aria-label="Cross-section of an aeration tank"></svg>
+      <div id="legend"><span><i style="background:#7be08a"></i>aerobic bacteria</span><span><i style="background:#c98a45"></i>organic matter</span><span><i style="background:#c48cff"></i>nitrogen compounds</span></div>
+      <div id="meter"><span>Oxidized</span><div id="bar"><div id="fill"></div></div><span id="num">0/24</span></div>
+      <button id="air">Blow air in from the base</button>
+      <div id="why" class="gone"><p class="big">Air for the bacteria</p><p class="body">The bubbles are air, blown in from the bottom of the tank. Some of the bacteria living there are aerobic: they need oxygen to stay alive. With that oxygen they oxidize the organic and nitrogen-rich matter in the sewage.</p></div>
+    </div>
+    <p class="say" id="say">Tap to pump air into the tank and watch the bacteria.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The bubbles are oxygen delivery for bacteria that clean the water.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove finisce la cacca quando tiriamo lo sciacquone? Dentro a un depuratore di acque reflue” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 24, PER = 4;
+const DIFF = [.14, .32, .5, .68, .86];
+const parts = [], bugs = [];
+for (let i = 0; i < N; i++) parts.push({u: .08 + Kit.rnd() * .84, v: .14 + Kit.rnd() * .7, type: i % 3 === 2 ? 'n' : 'o', eaten: false, el: null});
+// order in which they get eaten
+const order = parts.map((p, i) => i).sort(() => Kit.rnd() - .5);
+for (let i = 0; i < 8; i++) bugs.push({u: .1 + (i + .5) / 8 * .8 + (Kit.rnd() - .5) * .06, v: .25 + Kit.rnd() * .5, rot: Kit.rnd() * 180, el: null, body: null});
+let eaten = 0, taps = 0, done = false;
+let G = null; // geometry
+
+function P(u, v) { return [G.x0 + u * G.w, G.y0 + v * G.h]; }
+
+function draw() {
+  const svg = Kit.$('tank');
+  gsap.killTweensOf('#tank *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const pad = Math.max(W * .03, 6);
+  G = {x0: pad, y0: fs * 2.2, w: W - 2 * pad, h: H - fs * 2.2 - fs * 2.4, fs, W, H};
+  G.r = Math.max(Math.min(G.w, G.h) * .022, 4);
+  const air = taps > 0;
+  // status label above tank
+  G.status = Kit.mk('text', {x: W / 2, y: fs * 1.3, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  G.status.textContent = air ? (done ? 'Clean water: matter oxidized' : 'Oxygen in: bacteria at work') : 'No oxygen: aerobic bacteria idle';
+  // tank
+  Kit.mk('rect', {x: G.x0, y: G.y0, width: G.w, height: G.h, rx: G.r * 1.5, fill: '#0e3445'}, svg);
+  G.murk = Kit.mk('rect', {x: G.x0, y: G.y0, width: G.w, height: G.h, rx: G.r * 1.5, fill: '#6b4a22', opacity: .55 * (1 - eaten / N)}, svg);
+  Kit.mk('rect', {x: G.x0, y: G.y0, width: G.w, height: G.h, rx: G.r * 1.5, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': Math.max(G.r * .6, 2.5)}, svg);
+  // pipe + diffusers
+  const yb = G.y0 + G.h - G.r * 1.2;
+  Kit.mk('line', {x1: P(DIFF[0], 0)[0], x2: P(DIFF[4], 0)[0], y1: yb, y2: yb, stroke: '#9fb7c2', 'stroke-width': G.r * .7, 'stroke-linecap': 'round'}, svg);
+  DIFF.forEach(u => Kit.mk('rect', {x: P(u, 0)[0] - G.r * 1.6, y: yb - G.r * .7, width: G.r * 3.2, height: G.r * 1.1, rx: G.r * .5, fill: '#dfe8ec'}, svg));
+  Kit.mk('text', {x: W / 2, y: G.y0 + G.h + fs * 1.6, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg).textContent = '↑ air blown in from the base ↑';
+  // particles
+  G.pl = Kit.mk('g', {}, svg);
+  parts.forEach(p => {
+    p.el = null; if (p.eaten) return;
+    const [x, y] = P(p.u, p.v);
+    p.el = p.type === 'o'
+      ? Kit.mk('circle', {cx: x, cy: y, r: G.r * 1.05, fill: '#c98a45'}, G.pl)
+      : Kit.mk('circle', {cx: x, cy: y, r: G.r * .8, fill: '#c48cff'}, G.pl);
+  });
+  // bacteria
+  bugs.forEach(b => {
+    const [x, y] = P(b.u, b.v);
+    b.el = Kit.mk('g', {transform: `translate(${x},${y}) rotate(${b.rot})`}, svg);
+    b.body = Kit.mk('rect', {x: -G.r * 2.2, y: -G.r * 1.05, width: G.r * 4.4, height: G.r * 2.1, rx: G.r * 1.05, fill: air ? '#7be08a' : '#6f7f86', stroke: air ? '#1f7a3e' : '#3a464b', 'stroke-width': G.r * .35}, b.el);
+  });
+  G.bub = Kit.mk('g', {}, svg);
+  setMeter();
+}
+
+function setMeter() {
+  Kit.$('num').textContent = `${eaten}/${N}`;
+  Kit.$('fill').style.width = (eaten / N * 100) + '%';
+}
+
+function bubbles() {
+  if (Kit.calm) return;
+  const yb = G.y0 + G.h - G.r * 1.6;
+  DIFF.forEach((u, i) => {
+    for (let k = 0; k < 4; k++) {
+      const x = P(u, 0)[0] + (Kit.rnd() - .5) * G.r * 2;
+      const c = Kit.mk('circle', {cx: x, cy: yb, r: G.r * (.5 + Kit.rnd() * .6), fill: 'rgba(255,255,255,.25)', stroke: '#ffffff', 'stroke-width': 1.5}, G.bub);
+      gsap.to(c, {attr: {cy: G.y0 + G.r * 1.5, cx: x + (Kit.rnd() - .5) * G.r * 4}, duration: 1.3 + Kit.rnd() * .5, delay: k * .14 + i * .03, ease: 'sine.in', onComplete: () => c.remove()});
+    }
+  });
+}
+
+function tap() {
+  if (done) return;
+  Kit.haptic('light');
+  taps++;
+  bubbles();
+  const batch = order.filter(i => !parts[i].eaten).slice(0, PER);
+  batch.forEach(i => parts[i].eaten = true);
+  eaten += batch.length;
+  if (eaten >= N) done = true;
+  const dl = Kit.calm ? 0 : .6;
+  // wake bacteria
+  bugs.forEach((b, j) => {
+    gsap.to(b.body, {attr: {fill: '#7be08a', stroke: '#1f7a3e'}, duration: Kit.calm ? 0 : .4, delay: dl});
+    if (!Kit.calm) gsap.fromTo(b.body, {scale: 1}, {scale: 1.3, yoyo: true, repeat: 1, duration: .2, delay: dl + .1 + j * .03, transformOrigin: '50% 50%'});
+  });
+  G.status.textContent = done ? 'Clean water: matter oxidized' : 'Oxygen in: bacteria at work';
+  // feed
+  batch.forEach((i, k) => {
+    const p = parts[i]; if (!p.el) return;
+    let best = bugs[0], bd = 1e9;
+    bugs.forEach(b => { const d = (b.u - p.u) ** 2 + (b.v - p.v) ** 2; if (d < bd) { bd = d; best = b; } });
+    const [bx, by] = P(best.u, best.v); const el = p.el;
+    if (Kit.calm) { el.remove(); return; }
+    gsap.to(el, {attr: {cx: bx, cy: by}, duration: .6, delay: dl + .2 + k * .12, ease: 'power2.in'});
+    gsap.to(el, {attr: {r: 0}, duration: .25, delay: dl + .75 + k * .12, onComplete: () => el.remove()});
+  });
+  gsap.to(G.murk, {attr: {opacity: .55 * (1 - eaten / N)}, duration: Kit.calm ? 0 : 1, delay: dl});
+  setMeter();
+  if (done) setTimeout(finish, Kit.calm ? 0 : 1600);
+}
+
+function finish() {
+  Kit.hide('air'); Kit.hide('say'); Kit.hide('legend');
+  Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('air').addEventListener('click', tap);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#air', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 6; i++) { Kit.$('air').click(); await new Promise(r => setTimeout(r, 300)); }
+  await new Promise(r => setTimeout(r, 2400));
+};
+Kit.single();
+</script>
+</html>

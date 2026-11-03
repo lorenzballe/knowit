@@ -1,0 +1,151 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-towers-sway-30cm -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.8cqh}
+#gv{font:700 max(2.3cqh,14px)/1.2 var(--body);color:var(--k)}
+#gv b{font-family:var(--mono)}
+#rng{width:100%;appearance:none;-webkit-appearance:none;height:max(1cqh,8px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent);outline:none;margin:1cqh 0}
+#rng::-webkit-slider-thumb{-webkit-appearance:none;width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);cursor:pointer;border:0}
+#rng::-moz-range-thumb{width:max(3.6cqh,26px);height:max(3.6cqh,26px);border-radius:50%;background:var(--k);cursor:pointer;border:0}
+.ends{display:flex;justify-content:space-between;font:600 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">9/11 TOWERS</span></div>
+    <h2 class="q">How far did the towers move when the planes hit?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="ctl">
+        <div id="gv">Your guess: <b id="gtxt">?</b> of sideways sway</div>
+        <input id="rng" type="range" min="0" max="100" step="1" value="50" aria-label="Your guess of the sway">
+        <div class="ends"><span>10 cm</span><span>30 m</span></div>
+      </div>
+      <div id="why" class="gone"><p class="big">About 30 cm</p><p class="body">The NIST found the towers swayed only about 30 cm at impact. The hit itself didn't weaken them: it was the spark that set off a chain of other causes that did.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Slide to guess how far the top swayed. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The impact barely moved the towers; what it set off brought them down.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {m: 0, g: null, done: false, plane: false, px: 0, fl: 0, flo: 0};
+let G = null;
+const toM = v => 0.1 * Math.pow(300, v / 100);
+const fmt = m => m < 1 ? Math.round(m * 100) + ' cm' : m.toFixed(1) + ' m';
+const NS = 'http://www.w3.org/2000/svg';
+
+function render() {
+  if (!G) return;
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = G;
+  const ink = 'var(--k)', red = '#e0402a';
+  const rY = f * 2.2, top = rY + f * 2.8, gy = H - f * 0.8;
+  const tw = Math.min(W * 0.12, (gy - top) * 0.2), x1 = W * 0.16, x2 = x1 + tw * 1.75;
+  const k = (W - (x2 + tw) - f) / 30;
+  // ground
+  Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, stroke: ink, 'stroke-width': Math.max(2, f * .15)}, svg);
+  const tower = (x, d, attrs) => Kit.mk('path', Object.assign({d: `M${x},${gy}L${x + tw},${gy}L${x + tw + d},${top}L${x + d},${top}Z`}, attrs), svg);
+  // ghost of guess
+  if (st.g != null) {
+    const d = st.g * k;
+    [x1, x2].forEach(x => tower(x, d, {fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, f * .1), 'stroke-dasharray': `${f * .4} ${f * .3}`, opacity: .55}));
+  }
+  // real towers
+  const d = st.m * k;
+  [x1, x2].forEach(x => {
+    tower(x, d, {fill: ink});
+    for (let i = 1; i < 5; i++) {
+      const a = x + tw * i / 5;
+      Kit.mk('line', {x1: a, y1: gy, x2: a + d, y2: top, stroke: 'var(--c)', 'stroke-width': Math.max(1, tw * .03), opacity: .35}, svg);
+    }
+  });
+  // ruler
+  const rx0 = x1, rx1 = x1 + 30 * k;
+  Kit.mk('line', {x1: rx0, x2: rx1, y1: rY, y2: rY, stroke: ink, 'stroke-width': Math.max(1.5, f * .1)}, svg);
+  for (let i = 0; i <= 3; i++) Kit.mk('line', {x1: rx0 + i * 10 * k, x2: rx0 + i * 10 * k, y1: rY - f * .35, y2: rY + f * .35, stroke: ink, 'stroke-width': Math.max(1.5, f * .1)}, svg);
+  const tx = (s, x, y, anchor, fill, wt) => { const t = Kit.mk('text', {x, y, 'text-anchor': anchor, fill, 'font-size': Math.max(12, f * .85), 'font-weight': wt || 700, 'font-family': 'var(--body)'}, svg); t.textContent = s; return t; };
+  tx('30 m', rx1, rY - f * .7, 'end', ink);
+  tx('sway at the top', W / 2 > rx1 ? rx1 : rx0, rY - f * 1.8 > f ? rY - f * 1.8 : -999, 'start', 'var(--muted)', 600);
+  if (st.done) {
+    const x = rx0 + 0.3 * k;
+    Kit.mk('line', {x1: x, x2: x, y1: rY - f * .7, y2: rY + f * .7, stroke: red, 'stroke-width': Math.max(3, f * .22)}, svg);
+    tx('real: ~30 cm', rx0, rY - f * .7, 'start', red);
+  }
+  if (st.g != null) {
+    let x = rx0 + st.g * k;
+    Kit.mk('circle', {cx: x, cy: rY, r: f * .32, fill: ink}, svg);
+    const lx = Math.min(Math.max(x, rx0 + f * 2.4), W - f * 2.6);
+    tx('your guess', lx, rY + f * 1.5, 'middle', ink);
+  }
+  // plane + flash
+  const py = top + (gy - top) * .18;
+  if (st.plane) {
+    const p = st.px, s = f * 1.1;
+    Kit.mk('path', {d: `M${p},${py}L${p - s * 2.2},${py - s * .3}L${p - s * 2.2},${py + s * .3}Z M${p - s * 1.2},${py}L${p - s * 1.6},${py - s * .9}L${p - s * 1.9},${py - s * .9}L${p - s * 1.7},${py}Z M${p - s * 1.2},${py}L${p - s * 1.6},${py + s * .9}L${p - s * 1.9},${py + s * .9}L${p - s * 1.7},${py}Z`, fill: red}, svg);
+  }
+  if (st.flo > 0) Kit.mk('circle', {cx: x1 + d * (1 - (py - top) / (gy - top)), cy: py, r: st.fl, fill: '#ffb020', opacity: st.flo}, svg);
+  st._x1 = x1;
+}
+
+function reveal() {
+  const {f} = G;
+  const go = () => {
+    st.done = true; st.m = 0.3; st.plane = false; st.flo = 0; render();
+  };
+  if (Kit.calm) { go(); return; }
+  st.plane = true; st.px = -f * 2;
+  const tl = gsap.timeline({onUpdate: render, onComplete: go});
+  tl.to(st, {px: st._x1, duration: .9, ease: 'power1.in'})
+    .add(() => { st.plane = false; st.flo = 1; st.fl = 0; Kit.haptic('light'); })
+    .to(st, {fl: f * 2.2, flo: 0, duration: .6, ease: 'power2.out'})
+    .to(st, {m: 0.3, duration: .25, ease: 'sine.out'}, '<')
+    .to(st, {m: -0.2, duration: .5, ease: 'sine.inOut'})
+    .to(st, {m: 0.15, duration: .5, ease: 'sine.inOut'})
+    .to(st, {m: 0.3, duration: .4, ease: 'sine.inOut'});
+}
+
+let picked = false;
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = st.g <= 1, said = fmt(st.g);
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.$('rng').disabled = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'close' : 'far too much'}`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { Kit.onShow.card(); reveal(); });
+});
+Kit.$('rng').addEventListener('input', e => {
+  if (st.done) return;
+  st.g = toM(+e.target.value);
+  Kit.$('gtxt').textContent = fmt(st.g);
+  if (!picked) { picked = true; sure.on(); }
+  Kit.haptic('selection');
+  render();
+});
+Kit.onShow.card = () => { const svg = Kit.$('pic'); svg.innerHTML = ''; G = Kit.fitSvg(svg); render(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  gsap.from('#ctl', {opacity: 0, y: 10, duration: .4, delay: .15, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('rng'); r.value = 70; r.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(res => setTimeout(res, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(res => setTimeout(res, 3600));
+};
+Kit.single();
+</script>
+</html>

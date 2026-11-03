@@ -1,0 +1,39 @@
+{
+  "id": "history-straight-ramp-waste",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why couldn't the Egyptians just use one long, straight ramp?",
+  "answer": "A straight ramp has to climb all the way to the top of the pyramid, so it becomes a giant wedge of its own. That wedge ends up taking more stone than the pyramid itself. The best guess is that the Egyptians used a ramp wrapped around the pyramid instead.",
+  "move": "A straight ramp to the top outgrows the pyramid it serves.",
+  "keywords": [
+    "pyramids",
+    "ramp",
+    "egyptians",
+    "stone",
+    "construction",
+    "wedge"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of a pyramid with a straight ramp climbing to its top, drawn as a large wedge that looks bigger than the pyramid. A draggable bar asks how much stone that straight ramp would need.",
+    "graded": false
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=249s",
+  "written": "2026-11-03"
+}

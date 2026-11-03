@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-fully-developed-sea -->
+<title>Astute free card · When do waves stop growing?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:stretch;overflow-wrap:anywhere}
+#go:active{transform:scale(.98)}
+.say{overflow-wrap:anywhere}
+.water{fill:var(--k);opacity:.92}
+.foam{fill:var(--c)}
+.eddy{fill:none;stroke:var(--c);stroke-width:1.4}
+.wind{stroke:var(--k);stroke-width:2;stroke-linecap:round;fill:none}
+.ghost{stroke:var(--k);stroke-width:1.4;stroke-dasharray:4 5;opacity:.45}
+.beam{stroke:var(--k);stroke-width:4;stroke-linecap:round}
+.str{stroke:var(--k);stroke-width:1.4;opacity:.7}
+.plate{stroke:var(--k);stroke-width:3;stroke-linecap:round}
+.post{stroke:var(--k);stroke-width:3;stroke-linecap:round}
+.inb{fill:var(--k)}
+.outb{fill:color-mix(in srgb,var(--k) 35%,transparent);stroke:var(--k);stroke-width:1.6;stroke-dasharray:3 3}
+.lab{fill:var(--k);font-family:var(--body);font-weight:800;letter-spacing:.06em}
+.eq{fill:var(--k);font-family:var(--display);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to build">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN WAVES</span></div>
+    <h2 class="q">When do wind waves reach their maximum size?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="go">Let the wind blow ›</button>
+      <div id="why" class="gone">
+        <p class="big">When breaking loses energy as fast as the wind adds it.</p>
+        <p class="body">The wind pours energy in at a steady rate. The bigger the waves get, the more they break, turning their energy into swirling eddies and heat. When the losses match the input, the waves stop growing: a fully developed sea.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to let the wind blow, one gust at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Waves stop growing when energy out equals energy in.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// D[n]: share of the wind's energy lost to breaking after n gusts.
+const D = [0, .15, .4, .62, .8, .93, 1, 1];
+const LAST = D.length - 1;
+const tot = [0]; for (let n = 1; n <= LAST; n++) tot[n] = tot[n - 1] + (1 - D[n - 1]);
+const TMAX = tot[LAST];
+const SAY = [
+  'Tap to let the wind blow, one gust at a time.',
+  'The wind pushes energy in. The waves rise.',
+  'They grow and mix into many wavelengths.',
+  'Crests start to break. Some energy leaks out.',
+  'Breaking turns energy into eddies and heat.',
+  'Losses almost match the wind. Growth slows.',
+  'In equals out. The waves stop growing.',
+  'Still blowing, still the same size.'
+];
+let n = 0, done = false;
+const st = {a: 0, d: 0, mix: 0, wind: 0, prev: 0};
+let G = null, t0 = performance.now();
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const seaH = H * .55, mean = seaH * .64, Amax = seaH * .42;
+  const g = {W, H, f, seaH, mean, Amax};
+  g.winds = [0, 1, 2, 3].map(() => Kit.mk('line', {class: 'wind'}, svg));
+  g.ghost = Kit.mk('line', {class: 'ghost', x1: 0, x2: W}, svg);
+  g.water = Kit.mk('path', {class: 'water'}, svg);
+  g.foam = []; g.eddy = [];
+  for (let i = 0; i < 8; i++) {
+    g.foam.push(Kit.mk('ellipse', {class: 'foam'}, svg));
+    g.eddy.push(Kit.mk('circle', {class: 'eddy'}, svg));
+    g.eddy.push(Kit.mk('circle', {class: 'eddy'}, svg));
+  }
+  // balance
+  const low = H - seaH;
+  g.cx = W / 2; g.cy = seaH + low * .3; g.L = Math.min(W * .32, 170);
+  g.hh = low * .26; g.pw = Math.min(W * .2, 90);
+  g.labY = H - f * .35;
+  Kit.mk('line', {class: 'post', x1: g.cx, x2: g.cx, y1: g.cy, y2: g.labY - f * 1.6}, svg);
+  Kit.mk('line', {class: 'post', x1: g.cx - f * 1.4, x2: g.cx + f * 1.4, y1: g.labY - f * 1.6, y2: g.labY - f * 1.6}, svg);
+  g.beam = Kit.mk('line', {class: 'beam'}, svg);
+  Kit.mk('circle', {cx: g.cx, cy: g.cy, r: 5, class: 'inb'}, svg);
+  g.eq = Kit.mk('text', {class: 'eq', x: g.cx, y: g.cy - f * .9, 'text-anchor': 'middle', 'font-size': f * 1.05}, svg);
+  g.eq.textContent = 'IN = OUT';
+  g.side = [-1, 1].map(s => ({
+    s1: Kit.mk('line', {class: 'str'}, svg), s2: Kit.mk('line', {class: 'str'}, svg),
+    blk: Kit.mk('rect', {class: s < 0 ? 'inb' : 'outb', rx: 3}, svg),
+    plate: Kit.mk('line', {class: 'plate'}, svg)
+  }));
+  const fl = Math.max(12, f * .78);
+  [['WIND IN', -1], ['BREAKING OUT', 1]].forEach(([t, s]) => {
+    const el = Kit.mk('text', {class: 'lab', x: g.cx + s * g.L, y: g.labY, 'text-anchor': 'middle', 'font-size': fl}, svg);
+    el.textContent = t;
+  });
+  G = g; render();
+}
+
+function render() {
+  if (!G) return;
+  const g = G, t = Kit.calm ? 0 : (performance.now() - t0) / 1000;
+  const {W, seaH, mean, Amax} = g;
+  const A = Amax * st.a, mix = st.mix;
+  const k1 = 2 * Math.PI / (W * .55), norm = .7 + mix * .45;
+  const pts = [];
+  for (let x = -4; x <= W + 4; x += 4) {
+    let v = .7 * Math.sin(k1 * x - 1.6 * t)
+      + mix * (.28 * Math.sin(k1 * 2.3 * x - 2.5 * t + 1) + .17 * Math.sin(k1 * .6 * x - 1.1 * t + 2.2));
+    v /= norm;
+    v = v + .18 * v * Math.abs(v); // sharper crests
+    pts.push([x, mean - A * v / 1.18]);
+  }
+  let d = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + `L${W + 4} ${seaH}L-4 ${seaH}Z`;
+  g.water.setAttribute('d', d);
+  // crests: local tops of the surface
+  const crests = [];
+  for (let i = 1; i < pts.length - 1; i++)
+    if (pts[i][1] < pts[i - 1][1] && pts[i][1] <= pts[i + 1][1] && pts[i][1] < mean - A * .45) crests.push(pts[i]);
+  const br = Math.max(0, (st.d - .15) / .85);
+  g.foam.forEach((e, i) => {
+    const c = crests[i];
+    if (!c || br <= 0) { e.setAttribute('opacity', 0); g.eddy[2 * i].setAttribute('opacity', 0); g.eddy[2 * i + 1].setAttribute('opacity', 0); return; }
+    e.setAttribute('cx', c[0] + 6); e.setAttribute('cy', c[1] + 2);
+    e.setAttribute('rx', 6 + 16 * br); e.setAttribute('ry', 2.5 + 3 * br); e.setAttribute('opacity', .95 * br);
+    [0, 1].forEach(j => {
+      const r = 3 + 5 * br * (1 + .4 * Math.sin(t * 3 + i + j));
+      const ed = g.eddy[2 * i + j];
+      ed.setAttribute('cx', c[0] - 4 + j * 14); ed.setAttribute('cy', c[1] + 10 + j * 8 + 4 * br);
+      ed.setAttribute('r', r); ed.setAttribute('opacity', .8 * br);
+    });
+  });
+  // wind streaks
+  g.winds.forEach((l, i) => {
+    const y = seaH * (.1 + .09 * i), len = W * .12, sp = W * (.35 + .1 * i);
+    const x = ((t * sp + i * W * .31) % (W + len)) - len;
+    l.setAttribute('x1', x); l.setAttribute('x2', x + len); l.setAttribute('y1', y); l.setAttribute('y2', y);
+    l.setAttribute('opacity', .55 * st.wind);
+  });
+  // ghost: last crest height
+  const gy = mean - Amax * st.prev;
+  g.ghost.setAttribute('y1', gy); g.ghost.setAttribute('y2', gy);
+  g.ghost.setAttribute('opacity', st.prev > 0 ? .45 : 0);
+  // balance
+  const ang = -(st.wind - st.d) * 13 * Math.PI / 180;
+  const ca = Math.cos(ang), sa = Math.sin(ang);
+  const ends = [[g.cx - g.L * ca, g.cy - g.L * sa], [g.cx + g.L * ca, g.cy + g.L * sa]];
+  g.beam.setAttribute('x1', ends[0][0]); g.beam.setAttribute('y1', ends[0][1]);
+  g.beam.setAttribute('x2', ends[1][0]); g.beam.setAttribute('y2', ends[1][1]);
+  const amt = [st.wind, st.d];
+  g.side.forEach((s, i) => {
+    const [ex, ey] = ends[i], py = ey + g.hh, hw = g.pw / 2;
+    s.s1.setAttribute('x1', ex); s.s1.setAttribute('y1', ey); s.s1.setAttribute('x2', ex - hw); s.s1.setAttribute('y2', py);
+    s.s2.setAttribute('x1', ex); s.s2.setAttribute('y1', ey); s.s2.setAttribute('x2', ex + hw); s.s2.setAttribute('y2', py);
+    s.plate.setAttribute('x1', ex - hw); s.plate.setAttribute('x2', ex + hw); s.plate.setAttribute('y1', py); s.plate.setAttribute('y2', py);
+    const bh = g.hh * .6 * amt[i], bw = g.pw * .42;
+    s.blk.setAttribute('x', ex - bw / 2); s.blk.setAttribute('width', bw);
+    s.blk.setAttribute('y', py - 1.5 - bh); s.blk.setAttribute('height', Math.max(0, bh));
+    s.blk.setAttribute('opacity', amt[i] > .01 ? 1 : 0);
+  });
+  g.eq.setAttribute('opacity', st.wind > .5 && st.d > .97 ? 1 : 0);
+}
+
+function finish() {
+  done = true;
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  build();
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+function step() {
+  if (done || n >= LAST) return;
+  st.prev = tot[n] / TMAX;
+  n++;
+  Kit.haptic('light');
+  Kit.$('say').textContent = SAY[n];
+  Kit.$('go').textContent = n < LAST ? `Let the wind blow › (gust ${n + 1})` : 'Blow';
+  const to = {a: tot[n] / TMAX, d: D[n], mix: n / LAST, wind: 1};
+  if (Kit.calm) { Object.assign(st, to); render(); }
+  else gsap.to(st, {...to, duration: 1.1, ease: 'power2.out'});
+  if (n === LAST) setTimeout(finish, Kit.calm ? 400 : 1300);
+}
+
+Kit.$('go').addEventListener('click', step);
+Kit.$('pic').addEventListener('click', step);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(render);
+  gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (let i = 0; i < LAST; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "nature-1976-impossible-heatwave",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much more likely is this heatwave today than 50 years ago?",
+  "answer": "In 1976 a summer this hot lay beyond anything the climate could produce. Since then greenhouse gases have trapped an enormous amount of energy, pushing every summer hotter, so the same extreme now sits inside the normal range.",
+  "move": "Warming moves yesterday’s impossible extreme into today’s normal summer.",
+  "keywords": [
+    "heatwave",
+    "greenhouse gases",
+    "summer 1976",
+    "climate"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Titled 'The 1976 impossibility', the page asks how much more likely a heatwave as hot as 1976's is today than 50 years ago. Press play to see 50 summers in each world, one dot per summer, with red dots marking summers as hot as this heatwave, as the dots move from impossible to normal."
+  },
+  "source": "Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=TU196LhDGT4",
+  "written": "2026-11-03"
+}

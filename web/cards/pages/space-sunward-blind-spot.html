@@ -1,0 +1,229 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The sunward blind spot</title>
+<!-- Seen from above: the Sun far to the left, Earth, and a rock on a ring round Earth. The reader
+     drags the rock; a telescope's view in the corner shows what someone on the ground would see in
+     that direction. On the night side the rock shows its sunlit face against a dark sky; towards the
+     Sun it hangs in the daytime sky and turns its unlit side to us (phase angle = 180 deg minus the
+     elongation). Then infrared: a dark rock soaks up sunlight and glows warm, and NEO Surveyor, from
+     space, looks down to 45 deg from the Sun (the two wedges drawn, 45-120 deg).
+     Facts: Chelyabinsk came from the direction of the Sun, its Earth-facing side in its own shadow
+     and in the glare (Jenniskens, KQED 2013; Science News 2013; Univ. of Western Ontario meteor
+     group). NEO albedos: 25% in a very dark group peaking at 3%, the rest near 17% (Wright, Mainzer
+     et al., Astronomical Journal 152, 79, 2016). Thermal flux depends only weakly on albedo: dark rocks absorb
+     more and emit more heat (Mainzer et al., Asteroids IV, 2015, arXiv 1506.00150). NEO Surveyor:
+     50 cm infrared telescope at Sun-Earth L1, sunshade lets it observe down to 45 deg elongation
+     (Mainzer et al., Planetary Science Journal 4, 224, 2023, arXiv 2310.12918; Masiero et al., PSJ
+     2024); launch no earlier than September 2027 (NASA, NEO Surveyor blog, 5 May 2026; NASA launch
+     contract, Feb 2025). Ground limits are drawn as soft zones, not exact angles.
+     Inspired by Veritasium, "These are the asteroids to worry about" (2020). Touch: drags. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{border-radius:2.6cqh;overflow:hidden;background:#071140;box-shadow:inset 0 0 0 .2cqh #ffffff14}
+#sky{touch-action:none;cursor:grab;display:block}
+#sky.drag{cursor:grabbing}
+#ir{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@keyframes pulse{0%{opacity:.85;transform:scale(1)}100%{opacity:0;transform:scale(2.3)}}
+.hint{transform-box:fill-box;transform-origin:center;animation:pulse 1.6s ease-out infinite}
+@container (max-height:520px){.answered .in{gap:1.3cqh}}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag the rock · the blind side">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE ROCK</span></div>
+    <h2 class="q">Why do some asteroids hit Earth before any telescope has seen them coming?</h2>
+    <div class="stagebox" id="stage"><svg id="sky" class="full" role="img" aria-label="Seen from above: the Sun at the left, Earth with its day side and night side, and an asteroid you can drag on a ring round Earth. A circle in the corner shows the view through a telescope on the ground."></svg></div>
+    <p class="say" id="say">Drag the rock round Earth. The circle shows what a telescope on the ground sees.</p>
+    <button class="btn gone" id="ir">Switch to infrared</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Sun’s side of the sky is our blind spot.</div>
+    <div class="foot"><span class="src">Source · Mainzer et al., Planetary Science Journal, 2023 · Wright et al., Astronomical Journal, 2016 · NASA, 2026</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('sky'), say = Kit.$('say'), card = Kit.$('card'), irBtn = Kit.$('ir');
+  const D = Math.PI / 180, SUN = Math.PI;
+  // The rock's direction from Earth, as a screen angle (y grows down): the Sun is at angle pi.
+  let th = SUN + 160 * D, ir = false, sawGlare = false, moved = false, over = false, G = null, last = '';
+  const T = {
+    night: '<b>Night sky.</b> Its sunlit face looks our way, like a full Moon. A telescope can catch it, if it is not too small.',
+    dusk: '<b>Twilight.</b> Low in a pale sky, and only half lit. Much harder to catch.',
+    glare: '<b>In the Sun’s glare.</b> It sits in the daytime sky and turns its dark side to us. Chelyabinsk came from this side in 2013, unseen.',
+    irIn: '<b>From space there is no daytime sky:</b> NEO Surveyor can look as close as 45° to the Sun. And in infrared a rock glows with its own heat, however dark: many reflect only 3% of sunlight.',
+    irOut: '<b>Still too close to the Sun,</b> even for NEO Surveyor. Drag it a little farther out.'
+  };
+  const wrap = a => Math.atan2(Math.sin(a), Math.cos(a));
+  const elong = () => Math.abs(wrap(th - SUN)) / D;               // 0 = in front of the Sun, 180 = opposite
+  const zone = e => e >= 110 ? 'night' : e >= 65 ? 'dusk' : 'glare';
+  const mix = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const txt = (x, y, s, a, parent) => { const e = Kit.mk('text', Object.assign({x, y, fill: '#fff', 'font-family': 'Figtree', 'font-weight': 700}, a), parent); e.textContent = s; return e; };
+  const wedge = (cx, cy, r, a0, a1) => { const p0 = [cx + r * Math.cos(a0), cy + r * Math.sin(a0)], p1 = [cx + r * Math.cos(a1), cy + r * Math.sin(a1)]; return `M${cx},${cy} L${p0} A${r},${r} 0 ${Math.abs(a1 - a0) > Math.PI ? 1 : 0} 1 ${p1} Z`; };
+  // The lit part of a disc seen at phase angle al, light coming from the left.
+  const phase = (cx, cy, r, al) => { const c = Math.cos(al), rx = Math.max(.01, Math.abs(c) * r); return `M${cx},${cy - r} A${r},${r} 0 0 0 ${cx},${cy + r} A${rx},${r} 0 0 ${c > 0 ? 0 : 1} ${cx},${cy - r} Z`; };
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), m = Math.min(W, H);
+    const fs = Math.max(11, Math.min(13.5, m * .046));
+    const E = {x: W * .44, y: H * .6}, R = Math.min(W * .33, H * .34), rE = Math.max(8, m * .045), a = Math.max(6.5, m * .034);
+    const ri = Math.min(W * .16, H * .2), I = {x: W - ri - 10, y: 12 + fs * 1.3 + ri};
+    G = {W, H, E, R, rE, a, ri, I, fs};
+    const defs = Kit.mk('defs', {}, svg);
+    // The Sun's glow, far to the left.
+    const sg = Kit.mk('radialGradient', {id: 'sg', cx: -.08, cy: E.y / H, r: .95, gradientUnits: 'objectBoundingBox'}, defs);
+    [[0, '#fff6d8', .95], [.18, '#ffd76a', .7], [.45, '#ff9d3c', .22], [1, '#ff9d3c', 0]].forEach(([o, c, op]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': op}, sg));
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#071140'}, svg);
+    // Stars, only where the sky is dark.
+    const stars = Kit.mk('g', {}, svg); let s = 11; const r1 = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < 46; i++) { const x = r1() * W, y = r1() * H; if (x < W * .3) continue; Kit.mk('circle', {cx: x, cy: y, r: .5 + r1() * 1, fill: '#fff', opacity: .25 + r1() * .5}, stars); }
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#sg)'}, svg);
+    // The Sun itself, half off the edge.
+    { const sr = m * .15, sx = -m * .05, h = Math.sqrt(sr * sr - sx * sx); Kit.mk('path', {d: `M0,${E.y - h} A${sr},${sr} 0 0 1 0,${E.y + h} Z`, fill: '#fff3c4'}, svg); }
+    txt(m * .03, E.y - m * .15 - fs * .6, 'Sun', {'font-size': fs, fill: '#fff3c4'}, svg);
+    // The sky as seen from Earth: every direction on the Sun's side of the line is daytime.
+    const zones = Kit.mk('g', {}, svg), Rz = R + a * 2.2;
+    const dg = Kit.mk('linearGradient', {id: 'dg', x1: E.x - Rz, x2: E.x, y1: 0, y2: 0, gradientUnits: 'userSpaceOnUse'}, defs);
+    [[0, .3], [.7, .12], [1, .03]].forEach(([o, op]) => Kit.mk('stop', {offset: o, 'stop-color': '#ffd76a', 'stop-opacity': op}, dg));
+    Kit.mk('path', {d: `M${E.x},${E.y - Rz} A${Rz},${Rz} 0 0 0 ${E.x},${E.y + Rz} Z`, fill: 'url(#dg)'}, zones);
+    Kit.mk('line', {x1: E.x, y1: E.y - Rz, x2: E.x, y2: E.y + Rz, stroke: '#fff', 'stroke-opacity': .28, 'stroke-width': 1.2, 'stroke-dasharray': '6 5'}, zones);
+    txt(E.x - R * .58, E.y + R * .62, 'day sky', {'font-size': fs, 'text-anchor': 'middle', fill: '#ffe7a6'}, zones);
+    txt(E.x + R * .58, E.y + R * .62, 'night sky', {'font-size': fs, 'text-anchor': 'middle', opacity: .85}, zones);
+    // NEO Surveyor's two wedges, 45 to 120 degrees from the Sun, shown in infrared.
+    const neo = Kit.mk('g', {opacity: ir ? 1 : 0}, svg); G.neo = neo;
+    for (const sg2 of [1, -1]) Kit.mk('path', {d: wedge(E.x, E.y, R + a * 2.2, SUN + sg2 * 45 * D, SUN + sg2 * 120 * D).replace(/A([^ ]+) 0 0 1/, sg2 > 0 ? 'A$1 0 0 1' : 'A$1 0 0 0'), fill: '#ff7a3d', opacity: .16, stroke: '#ffb27a', 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, neo);
+    const ra = R * .42;
+    Kit.mk('path', {d: `M${E.x - ra},${E.y} A${ra},${ra} 0 0 1 ${E.x + ra * Math.cos(SUN + 45 * D)},${E.y + ra * Math.sin(SUN + 45 * D)}`, fill: 'none', stroke: '#ffb27a', 'stroke-width': 1.6}, neo);
+    txt(E.x - ra - fs * .35, E.y - ra * .42, '45°', {'font-size': fs, 'text-anchor': 'end', fill: '#ffcfa8'}, neo);
+    txt(10, 12 + fs * .95, 'NEO Surveyor', {'font-size': fs, fill: '#ffcfa8'}, neo);
+    txt(10, 12 + fs * 2.15, 'launch due 2027', {'font-size': Math.max(11, fs * .9), fill: '#ffcfa8', 'font-weight': 600, opacity: .9}, neo);
+    // The ring the rock is dragged along, and Earth.
+    Kit.mk('circle', {cx: E.x, cy: E.y, r: R, fill: 'none', stroke: '#fff', 'stroke-opacity': .35, 'stroke-width': 1.3, 'stroke-dasharray': '3 5'}, svg);
+    G.sight = Kit.mk('line', {stroke: '#fff', 'stroke-opacity': .55, 'stroke-width': 1.2, 'stroke-dasharray': '2 3'}, svg);
+    Kit.mk('circle', {cx: E.x, cy: E.y, r: rE, fill: '#14285e'}, svg);
+    Kit.mk('path', {d: `M${E.x},${E.y - rE} A${rE},${rE} 0 0 0 ${E.x},${E.y + rE} Z`, fill: '#7cc8ff'}, svg);
+    txt(E.x, E.y - rE - fs * .5, 'Earth', {'font-size': fs * .92, 'text-anchor': 'middle', opacity: .9}, svg);
+    // The rock: lumpy, dark, lit from the left.
+    const rock = Kit.mk('g', {}, svg); G.rock = rock;
+    G.hint = Kit.mk('circle', {r: a * 1.25, fill: 'none', stroke: '#fff', 'stroke-width': 1.5, class: moved || Kit.calm ? '' : 'hint', opacity: moved ? 0 : .8}, rock);
+    let pts = [], q = 5; const r2 = () => (q = (q * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < 9; i++) { const t = i / 9 * 2 * Math.PI, rr = a * (.8 + r2() * .35); pts.push([rr * Math.cos(t), rr * .86 * Math.sin(t)]); }
+    const poly = pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ');
+    const cp = Kit.mk('clipPath', {id: 'rk'}, defs); Kit.mk('polygon', {points: poly}, cp);
+    Kit.mk('polygon', {points: poly, fill: '#2b2d38', stroke: '#ffffff55', 'stroke-width': .8}, rock);
+    Kit.mk('rect', {x: -a * 2, y: -a * 2, width: a * 2, height: a * 4, fill: '#8d8a86', 'clip-path': 'url(#rk)'}, rock);
+    Kit.mk('circle', {r: Math.max(22, a * 2.6), fill: 'transparent'}, rock);
+    // The telescope's view.
+    const tv = Kit.mk('g', {}, svg);
+    if (ir) txt(W - 6, 12 + fs * .95, 'NEO Surveyor’s view', {'font-size': Math.max(11, fs * .9), 'text-anchor': 'end', fill: '#ffcfa8'}, tv);
+    else txt(I.x, 12 + fs * .95, 'telescope’s view', {'font-size': Math.max(11, fs * .9), 'text-anchor': 'middle', opacity: .85}, tv);
+    const cc = Kit.mk('clipPath', {id: 'tvc'}, defs); Kit.mk('circle', {cx: I.x, cy: I.y, r: ri}, cc);
+    const inner = Kit.mk('g', {'clip-path': 'url(#tvc)'}, tv);
+    G.bg = Kit.mk('circle', {cx: I.x, cy: I.y, r: ri, fill: '#060814'}, inner);
+    G.tstars = Kit.mk('g', {}, inner);
+    for (let i = 0; i < 9; i++) Kit.mk('circle', {cx: I.x + (r1() - .5) * ri * 1.7, cy: I.y + (r1() - .5) * ri * 1.7, r: .7, fill: '#fff', opacity: .7}, G.tstars);
+    const glow = Kit.mk('filter', {id: 'hot', x: '-80%', y: '-80%', width: '260%', height: '260%'}, defs);
+    Kit.mk('feGaussianBlur', {stdDeviation: ri * .09}, glow);
+    G.ar = ri * .34;
+    G.heat = Kit.mk('circle', {cx: I.x, cy: I.y, r: G.ar * 1.15, fill: '#ff7a2f', filter: 'url(#hot)', opacity: 0}, inner);
+    G.disc = Kit.mk('circle', {cx: I.x, cy: I.y, r: G.ar, fill: '#151722'}, inner);
+    G.lit = Kit.mk('path', {fill: '#cfc8bd'}, inner);
+    G.ghost = Kit.mk('circle', {cx: I.x, cy: I.y - ri * .08, r: G.ar * 1.12, fill: 'none', stroke: '#4a5a86', 'stroke-width': 1.4, 'stroke-dasharray': '3 3', opacity: 0}, inner);
+    G.word = txt(I.x, I.y + ri * .6, '', {'font-size': Math.max(11, Math.min(fs * .82, ri * .3)), 'text-anchor': 'middle', 'font-weight': 800, 'letter-spacing': '.06em'}, inner);
+    Kit.mk('circle', {cx: I.x, cy: I.y, r: ri, fill: 'none', stroke: '#fff', 'stroke-opacity': .75, 'stroke-width': 1.6}, tv);
+    place();
+  }
+
+  // Put the rock where th says and update the telescope's view.
+  function place() {
+    if (!G) return;
+    const {E, R, rE, I, ri, ar} = G, e = elong();
+    const x = E.x + R * Math.cos(th), y = E.y + R * Math.sin(th);
+    G.rock.setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)})`);
+    G.sight.setAttribute('x1', E.x + rE * 1.3 * Math.cos(th)); G.sight.setAttribute('y1', E.y + rE * 1.3 * Math.sin(th));
+    G.sight.setAttribute('x2', x - G.a * 1.4 * Math.cos(th)); G.sight.setAttribute('y2', y - G.a * 1.4 * Math.sin(th));
+    const al = (180 - e) * D;
+    G.lit.setAttribute('d', phase(I.x, I.y - ri * .08, ar, al));
+    G.disc.setAttribute('cy', I.y - ri * .08); G.heat.setAttribute('cy', I.y - ri * .08);
+    if (ir) {
+      const sees = e >= 45;
+      G.bg.setAttribute('fill', sees ? '#1a0a10' : '#e9eefc');
+      G.tstars.setAttribute('opacity', 0);
+      G.disc.setAttribute('fill', sees ? '#c2410c' : '#dfe6f7');
+      G.lit.setAttribute('fill', sees ? '#ffc078' : '#e4eaf8');
+      G.heat.setAttribute('opacity', sees ? .95 : 0);
+      G.word.textContent = sees ? 'GLOWS' : 'LOST';
+      G.ghost.setAttribute('opacity', sees ? 0 : .9);
+      G.word.setAttribute('fill', sees ? '#ffd2a8' : '#5a6a90');
+    } else {
+      // How bright the sky is in that direction: dark beyond 110 degrees, glaring near the Sun.
+      const sk = clamp((110 - e) / 80);
+      const bg = mix('#060814', '#c6dcff', sk);
+      G.bg.setAttribute('fill', bg);
+      G.tstars.setAttribute('opacity', 1 - clamp(sk * 3));
+      G.disc.setAttribute('fill', mix('#151722', bg, clamp(sk * 1.05)));
+      G.lit.setAttribute('fill', mix('#d3ccc0', bg, clamp(sk * .92)));
+      G.heat.setAttribute('opacity', 0);
+      const z = zone(e);
+      G.word.textContent = z === 'night' ? 'SEEN' : z === 'dusk' ? 'FAINT' : 'LOST';
+      G.ghost.setAttribute('opacity', clamp((sk - .55) * 2.5) * .9);
+      G.word.setAttribute('fill', z === 'glare' ? '#5a6a90' : '#ffffff');
+    }
+  }
+
+  // What the words say about where the rock is.
+  function tell() {
+    const e = elong(), z = zone(e);
+    if (z === 'glare' && !sawGlare) { sawGlare = true; Kit.haptic('light'); if (!ir) { Kit.show('ir'); requestAnimationFrame(draw); } }
+    const key = ir ? (e >= 45 ? 'irIn' : 'irOut') : z;
+    if (key === last) return; last = key;
+    say.innerHTML = T[key];
+  }
+
+  function setTh(a) { th = a; place(); if (moved) tell(); }
+  function fromPointer(ev) {
+    const b = svg.getBoundingClientRect();
+    const x = ev.clientX - b.left, y = ev.clientY - b.top;
+    if (Math.hypot(x - G.E.x, y - G.E.y) < G.rE * .8) return;
+    if (!moved) { moved = true; G.hint.setAttribute('opacity', 0); G.hint.classList.remove('hint'); }
+    setTh(Math.atan2(y - G.E.y, x - G.E.x));
+  }
+  let dragging = false;
+  svg.addEventListener('pointerdown', ev => { if (over) return; dragging = true; svg.classList.add('drag'); svg.setPointerCapture?.(ev.pointerId); fromPointer(ev); ev.preventDefault(); });
+  svg.addEventListener('pointermove', ev => { if (dragging) fromPointer(ev); });
+  const stop = () => { dragging = false; svg.classList.remove('drag'); };
+  svg.addEventListener('pointerup', stop); svg.addEventListener('pointercancel', stop);
+
+  irBtn.addEventListener('click', () => {
+    if (ir) return;
+    ir = true; over = true; last = '';
+    Kit.hide('ir'); Kit.show('keep'); card.classList.add('answered'); Kit.haptic('success');
+    requestAnimationFrame(() => {
+      draw();
+      // Into NEO Surveyor's wedge, where the ground is blind and infrared is not.
+      const to = SUN + Math.sign(wrap(th - SUN) || 1) * 62 * D, from = SUN + Math.sign(wrap(th - SUN) || 1) * Math.abs(wrap(th - SUN));
+      const go = () => { tell(); over = false; };
+      if (Kit.calm || typeof gsap === 'undefined') { setTh(to); go(); }
+      else { const o = {a: from}; gsap.to(o, {a: to, duration: .9, ease: 'power2.inOut', onUpdate: () => { th = o.a; place(); }, onComplete: go}); }
+      tell();
+    });
+  });
+
+  Kit.onShow.card = draw;
+  // The stage changes height as the words below it change: draw again at its new size.
+  let seen = '';
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const b = svg.getBoundingClientRect(), k = Math.round(b.width) + 'x' + Math.round(b.height); if (k !== seen && G) { seen = k; draw(); } }).observe(Kit.$('stage'));
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 30 : ms));
+    moved = true; if (G) { G.hint.setAttribute('opacity', 0); G.hint.classList.remove('hint'); }
+    for (const e of [150, 125, 95, 70, 45, 25]) { setTh(SUN + e * D); await wait(260); }
+    await wait(200);
+    irBtn.click();
+    await wait(1200);
+  };
+})();
+Kit.single();
+</script>
+</html>

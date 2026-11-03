@@ -1,0 +1,37 @@
+{
+  "id": "psychology-room-you-hear",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a huge room with no echoes sound as small as a box?",
+  "answer": "A huge room with no echoes can sound as small as a box. Your ears size a room by its echoes, so when the echoes are taken away, the room seems to shrink. The source is Kolarik et al., Perception (2021), a test of 15 blindfolded listeners in virtual rooms.",
+  "move": "Your ears size a room by its echoes. Take them away and the room shrinks.",
+  "keywords": [
+    "echoes",
+    "clapping",
+    "stone hall",
+    "room size",
+    "blindfolded listeners"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A big stone hall with a TAP TO CLAP prompt. Tap a lining (bare stone, curtains, or foam wedges) to hear or see how long a clap rings in the room, and compare how big the room seems."
+  },
+  "source": "Veritasium, “Testing if 60 minutes of silence drives you crazy” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=mXVGIb3bzHI",
+  "written": "2026-11-03"
+}

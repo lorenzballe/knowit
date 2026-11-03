@@ -1,0 +1,38 @@
+{
+  "id": "nature-everest-trench-flip",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Flip Everest into the Mariana Trench: how much water is left above its peak?",
+  "answer": "Turned upside down and pushed into the Mariana Trench, Everest's peak still stops about 2,000 m short of the bottom. The trench's deepest point is 10,994 m below sea level, and Everest is 8,848 m tall. The ocean's deepest point is therefore deeper than Everest is tall, by about 2 km.",
+  "move": "The ocean's deepest point is deeper than Everest is tall, by about 2 km.",
+  "keywords": [
+    "mariana trench",
+    "mount everest",
+    "ocean depth",
+    "sea level"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A drawing of Mount Everest flipped upside down and sunk into the Mariana Trench, with the empty water left above its peak. A draggable line asks the reader where Everest's peak will stop, then how sure they are.",
+    "graded": false,
+    "ground": "#0b2346"
+  },
+  "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=6rdDnFsCYSo",
+  "written": "2026-11-03"
+}

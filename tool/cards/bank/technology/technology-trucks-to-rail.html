@@ -1,0 +1,223 @@
+<!doctype html>
+<!-- slug: technology-trucks-to-rail -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · 1 million trucks off the Alps</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+#pic{width:100%;flex:1;min-height:0;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#pic text{font-family:var(--body);fill:var(--k)}
+#pic .lab{font-weight:700;letter-spacing:.06em;fill:var(--muted)}
+#pic .num{font-family:var(--display);font-weight:800}
+#pic .ink{fill:var(--k)}
+#pic .bgf{fill:var(--c)}
+#pic .mt{fill:color-mix(in srgb,var(--k) 10%,transparent)}
+#pic .road{fill:color-mix(in srgb,var(--k) 16%,transparent)}
+#pic .dash{stroke:var(--c);stroke-opacity:.9;fill:none}
+#pic .rail{stroke:var(--k);fill:none}
+#pic .slot{fill:var(--k);fill-opacity:0;stroke:var(--k);stroke-opacity:.4}
+#pic .slot.full{fill-opacity:1;stroke-opacity:1}
+#pic .trk{stroke:color-mix(in srgb,var(--k) 20%,transparent);fill:none;stroke-linecap:round}
+#pic .prog{stroke:var(--k);fill:none;stroke-linecap:round}
+#pic .knob{fill:var(--k);stroke:var(--c)}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FREIGHT SHIFT</span></div>
+    <h2 class="q">What changes when Alpine freight moves from trucks to the Turin–Lyon rail line?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Trucks on an Alpine road and a freight train; drag to move loads from road to rail"></svg>
+    </div>
+    <div id="why" class="gone"><p class="body">Each load that rides the new line is a heavy truck that no longer climbs the Alpine roads: about 1 million of them. Fewer trucks burning diesel means roughly 3 million tonnes less CO₂ every year.</p></div>
+    <p class="say" id="say">Drag the switch from ROAD to RAIL to move the freight.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Freight on rail: ~1 million fewer trucks on Alpine roads, ~3 million t less CO₂ a year.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 20;              // 20 loads, each standing for 50,000 trucks
+let n = 0, p = 0, done = false, drag = false;
+let G = null;              // geometry and element refs of the current drawing
+const svg = Kit.$('pic');
+const fmt = v => v.toLocaleString('en-US');
+
+function counters() {
+  if (!G) return;
+  if (done && n === N) {
+    G.n1.textContent = '≈ 1 million';
+    G.n2.textContent = '≈ 3 million t';
+  } else {
+    G.n1.textContent = fmt(n * 50000);
+    G.n2.textContent = fmt(n * 150000) + ' t';
+  }
+}
+
+function placeKnob() {
+  if (!G) return;
+  const x = G.x0 + (G.x1 - G.x0) * p;
+  G.knob.setAttribute('cx', x);
+  G.prog.setAttribute('x2', x);
+}
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, Math.min(f, H * 0.036, 16));
+  const pad = Math.max(10, W * 0.04);
+  const mk = (t, a, par) => Kit.mk(t, a, par || svg);
+
+  // counters
+  const ly = fs * 1.1, ny = ly + fs * 2.3, nsz = Math.max(16, Math.min(fs * 2, W * 0.07));
+  mk('text', {x: pad, y: ly, class: 'lab', 'font-size': fs}).textContent = 'TRUCKS OFF THE ROAD';
+  mk('text', {x: W - pad, y: ly, class: 'lab', 'font-size': fs, 'text-anchor': 'end'}).textContent = 'CO₂ CUT A YEAR';
+  const n1 = mk('text', {x: pad, y: ny, class: 'num', 'font-size': nsz});
+  const n2 = mk('text', {x: W - pad, y: ny, class: 'num', 'font-size': nsz, 'text-anchor': 'end'});
+
+  // slider
+  const kr = Math.max(11, fs * 0.95);
+  const trackY = H - kr - 4;
+  const x0 = pad + kr, x1 = W - pad - kr;
+  const sly = trackY - kr - fs * 0.5;
+  const m0 = ny + fs * 1.2;
+  const tight = (sly - fs * 1.4 - m0) < 60;
+  if (!tight) {
+    mk('text', {x: pad, y: sly, class: 'lab', 'font-size': fs}).textContent = 'ROAD';
+    mk('text', {x: W - pad, y: sly, class: 'lab', 'font-size': fs, 'text-anchor': 'end'}).textContent = 'RAIL';
+  }
+
+  // middle region
+  const m1 = tight ? trackY - kr - fs * 0.4 : sly - fs * 1.4, h = Math.max(60, m1 - m0);
+  const roadY = m0 + 0.3 * h, lh = 0.15 * h;
+  // mountains
+  const peaks = [0, .55, .12, .2, .3, .05, .45, .35, .6, 0, .72, .25, .85, .1, 1, .4];
+  let pts = `0,${roadY + 1} `;
+  for (let i = 0; i < peaks.length; i += 2) pts += `${peaks[i] * W},${m0 + peaks[i + 1] * (roadY - m0)} `;
+  pts += `${W},${roadY + 1}`;
+  mk('polygon', {points: pts, class: 'mt'});
+  mk('text', {x: pad, y: roadY - fs * 0.45, class: 'lab', 'font-size': fs}).textContent = 'ALPINE ROAD';
+  mk('rect', {x: 0, y: roadY, width: W, height: lh * 2, class: 'road'});
+  mk('line', {x1: 0, x2: W, y1: roadY + lh, y2: roadY + lh, class: 'dash', 'stroke-width': Math.max(1.5, lh * .05), 'stroke-dasharray': `${lh * .5} ${lh * .4}`});
+
+  // trucks
+  const sp = (W - 2 * pad) / 10;
+  const th = lh * 0.7, tw = Math.min(sp * 0.86, th * 2.2);
+  const bw = tw * 0.68, cw = tw * 0.27, bh = th * 0.74;
+  const off = pad * 0.5;
+  const trucks = [];
+  for (let i = 0; i < N; i++) {
+    const lane = i % 2, col = Math.floor(i / 2);
+    const x = pad + (9 - col) * sp + (sp - tw) / 2, y = roadY + lane * lh + lh * 0.13;
+    const g = mk('g', {});
+    mk('rect', {x, y, width: bw, height: bh, rx: th * .06, class: 'ink'}, g);
+    mk('rect', {x: x + bw + tw * .05, y: y + th * .3, width: cw, height: bh - th * .3, rx: th * .08, class: 'ink'}, g);
+    const wr = th * .13;
+    [x + bw * .22, x + bw * .8, x + bw + tw * .05 + cw * .55].forEach(cx => mk('circle', {cx, cy: y + bh + wr * .4, r: wr, class: 'ink'}, g));
+    if (i < n) gsap.set(g, {autoAlpha: 0, x: off});
+    trucks.push({g, bx: x, by: y});
+  }
+
+  // train
+  const railY = m0 + 0.95 * h;
+  mk('line', {x1: 0, x2: W, y1: railY, y2: railY, class: 'rail', 'stroke-width': Math.max(2, h * .012)});
+  const ww = (W - 2 * pad) / 11.6, wr = h * .02, wh = h * .045;
+  const ch = Math.min(h * .1, bh * 1.05), cwid = ww * 0.43;
+  const locoX = W - pad - ww * 1.3, baseY = railY - wr * 2;
+  // loco
+  mk('rect', {x: locoX, y: baseY - wh - ch * 1.1, width: ww * 1.3, height: wh + ch * 1.1, rx: ww * .12, class: 'ink'});
+  mk('rect', {x: locoX + ww * .75, y: baseY - wh - ch * .95, width: ww * .38, height: ch * .45, rx: 2, class: 'bgf'});
+  [locoX + ww * .3, locoX + ww]. forEach(cx => mk('circle', {cx, cy: railY - wr, r: wr, class: 'ink'}));
+  const slots = [];
+  for (let j = 0; j < 10; j++) {
+    const wx = locoX - (j + 1) * ww;
+    mk('rect', {x: wx + ww * .05, y: baseY - wh, width: ww * .9, height: wh, rx: 2, class: 'ink'});
+    mk('line', {x1: wx, x2: wx + ww * .05, y1: baseY - wh / 2, y2: baseY - wh / 2, class: 'rail', 'stroke-width': 2});
+    [wx + ww * .25, wx + ww * .75].forEach(cx => mk('circle', {cx, cy: railY - wr, r: wr, class: 'ink'}));
+    for (let s = 0; s < 2; s++) {
+      const sx = wx + ww * (s ? .52 : .07), sy = baseY - wh - ch - 1;
+      const r = mk('rect', {x: sx, y: sy, width: cwid, height: ch, rx: 1.5, class: 'slot' + (j * 2 + s < n ? ' full' : ''), 'stroke-width': 1.2, 'stroke-dasharray': '3 2'});
+      slots.push({r, x: sx, y: sy});
+    }
+  }
+  const contTop = baseY - wh - ch * 1.1;
+  mk('text', {x: pad, y: contTop - fs * 0.5, class: 'lab', 'font-size': fs}).textContent = 'TURIN–LYON RAIL';
+
+  // slider drawn last, on top
+  mk('line', {x1: x0, x2: x1, y1: trackY, y2: trackY, class: 'trk', 'stroke-width': kr * .7});
+  const prog = mk('line', {x1: x0, x2: x0, y1: trackY, y2: trackY, class: 'prog', 'stroke-width': kr * .7});
+  const knob = mk('circle', {cx: x0, cy: trackY, r: kr, class: 'knob', 'stroke-width': 3});
+
+  G = {W, H, x0, x1, trackY, trucks, slots, n1, n2, knob, prog, bw, bh, cwid, ch, sp, off};
+  counters(); placeKnob();
+}
+
+function step(newN) {
+  if (newN === n || !G) return;
+  const calm = Kit.calm;
+  while (n < newN) {
+    const i = n++, t = G.trucks[i], s = G.slots[i];
+    if (calm) { gsap.set(t.g, {autoAlpha: 0, x: G.off}); s.r.classList.add('full'); continue; }
+    gsap.to(t.g, {autoAlpha: 0, x: G.off, duration: .35, ease: 'power2.in'});
+    const fly = Kit.mk('rect', {x: t.bx, y: t.by, width: G.bw, height: G.bh, rx: 2, class: 'ink'}, svg);
+    gsap.to(fly, {attr: {x: s.x, y: s.y, width: G.cwid, height: G.ch}, duration: .5, ease: 'power2.inOut',
+      onComplete: () => { fly.remove(); s.r.classList.add('full'); }});
+  }
+  while (n > newN) {
+    const i = --n, t = G.trucks[i], s = G.slots[i];
+    s.r.classList.remove('full');
+    gsap.killTweensOf(t.g);
+    if (calm) gsap.set(t.g, {autoAlpha: 1, x: 0}); else gsap.to(t.g, {autoAlpha: 1, x: 0, duration: .3, ease: 'power2.out'});
+  }
+  Kit.haptic('selection');
+  counters();
+}
+
+function setFrom(clientX) {
+  const r = svg.getBoundingClientRect();
+  const x = (clientX - r.left) * G.W / r.width;
+  p = Math.max(0, Math.min(1, (x - G.x0) / (G.x1 - G.x0)));
+  placeKnob();
+  step(Math.min(N, Math.floor(p * N + 1e-6)));
+}
+
+function finish() {
+  if (done) return;
+  done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  counters();
+  requestAnimationFrame(() => requestAnimationFrame(draw));
+}
+
+svg.addEventListener('pointerdown', e => { if (!G) return; drag = true; setFrom(e.clientX); e.preventDefault(); });
+window.addEventListener('pointermove', e => { if (drag) setFrom(e.clientX); });
+window.addEventListener('pointerup', () => {
+  if (!drag) return; drag = false;
+  if (p > 0.95) { p = 1; placeKnob(); step(N); }
+  if (n === N) finish();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.trucks.map(t => t.g), {x: -G.W * .25, opacity: 0, stagger: .03, duration: .5, ease: 'power3.out'});
+  gsap.fromTo(G.knob, {attr: {r: +G.knob.getAttribute('r')}}, {attr: {r: +G.knob.getAttribute('r') * 1.25}, yoyo: true, repeat: 3, duration: .35, delay: .7});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect(), k = r.width / G.W;
+  const y = r.top + G.trackY * k;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', r.left + G.x0 * k);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', r.left + (G.x0 + (G.x1 - G.x0) * i / 10) * k); await wait(60); }
+  ev('pointerup', r.left + G.x1 * k);
+  await wait(900);
+};
+Kit.single();
+</script>
+</html>

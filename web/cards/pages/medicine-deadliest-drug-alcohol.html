@@ -1,0 +1,99 @@
+<!doctype html>
+<!-- slug: medicine-deadliest-drug-alcohol -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#fig{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;gap:2.4cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 2cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.cap{font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEADLY DRUGS</span></div>
+    <h2 class="q">Which drug kills the most people in the world?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fig" aria-label="Twenty figures, each one a death somewhere in the world"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Heroin</button>
+        <button class="opt" data-i="1">Cocaine</button>
+        <button class="opt" data-i="2">Alcohol</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Alcohol: 2.6 million deaths a year</p>
+        <p class="body">That is about 1 death in every 20 on Earth. It beats heroin and cocaine because so many people drink it, it is legal and accepted, and its harm to health is massive.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">These are 20 deaths. Pick the drug behind the most.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The deadliest drug is the legal one almost everyone drinks.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2, HIT = 12, RED = '#d7263d';
+let pick = -1, done = false, inner = [], cap = null;
+
+function draw(){
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const top = f * 2.4, cols = 5, rows = 4;
+  const cw = W / cols, ch = (H - top) / rows;
+  const s = Math.min(cw, ch) * 0.44;
+  cap = Kit.mk('text', {x: W / 2, y: f * 1.3, 'text-anchor': 'middle', 'dominant-baseline': 'middle', class: 'cap',
+    style: `font-size:${Math.max(f, 13)}px;fill:${done ? RED : 'var(--k)'}`}, svg);
+  cap.textContent = done ? '1 in 20 deaths: alcohol' : '20 deaths, anywhere';
+  inner = [];
+  for (let i = 0; i < 20; i++){
+    const c = i % cols, r = Math.floor(i / cols);
+    const g = Kit.mk('g', {transform: `translate(${cw * (c + .5)},${top + ch * (r + .5)})`}, svg);
+    const hit = done && i === HIT;
+    const col = hit ? RED : 'var(--k)';
+    const op = done ? (hit ? 1 : .16) : .4;
+    const n = Kit.mk('g', {style: `opacity:${op}`}, g);
+    Kit.mk('circle', {cx: 0, cy: -s * .55, r: s * .3, style: `fill:${col}`}, n);
+    Kit.mk('rect', {x: -s * .55, y: -s * .15, width: s * 1.1, height: s * 1.05, rx: s * .45, style: `fill:${col}`}, n);
+    inner.push(n);
+  }
+}
+
+function reveal(){
+  done = true; draw();
+  if (Kit.calm) return;
+  gsap.from(inner.filter((_, i) => i !== HIT), {opacity: .4, duration: .8, stagger: .02, ease: 'power2.out'});
+  gsap.from(inner[HIT], {scale: .4, transformOrigin: '50% 50%', duration: .7, delay: .3, ease: 'back.out(2.5)'});
+  gsap.from(cap, {opacity: 0, y: -6, duration: .5, delay: .5});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(inner, {opacity: 0, y: 8, stagger: .03, duration: .4, ease: 'power3.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, delay: .3, ease: 'power3.out'});
+};
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1400)); };
+Kit.single();
+</script>
+</html>

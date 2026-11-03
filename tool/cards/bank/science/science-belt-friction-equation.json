@@ -1,0 +1,37 @@
+{
+  "id": "science-belt-friction-equation",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What equation gives the tension a coiled rope or string can hold?",
+  "answer": "The belt friction equation gives the tension a coiled rope can hold: T ship = T you · e^(μθ), with θ the angle wrapped. Each extra turn around the post multiplies the grip, so the hold grows exponentially with wrap angle. A few turns can hold a ship.",
+  "move": "Wrap angle multiplies grip: a few turns of rope can hold a ship.",
+  "keywords": [
+    "rope",
+    "bollard",
+    "yo-yo",
+    "friction",
+    "veritasium"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled Belt Friction Equation asks what equation gives the tension a coiled rope can hold. It shows T ship = T you times e to the μθ, with μ = 0.3, a rope wrapped around a bollard, a ship pulling 10,000 and a slider that adds turns."
+  },
+  "source": "Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)",
+  "reference": "https://www.youtube.com/watch?v=-i0InwW0V9k&t=172s",
+  "written": "2026-11-03"
+}

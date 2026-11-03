@@ -1,0 +1,37 @@
+{
+  "id": "nature-mosquito-winter-basement",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.pests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the common mosquito go in winter?",
+  "answer": "The common mosquito does not die in winter. Adult Culex pipiens survive the cold by hiding in sheltered spots such as basements, where the temperature stays steady while it freezes outside.",
+  "move": "Common mosquitoes overwinter as adults, hidden in sheltered, steady-temperature places.",
+  "keywords": [
+    "common mosquito",
+    "culex pipiens",
+    "basements",
+    "winter",
+    "overwintering"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A page asking where the common mosquito goes in winter, with a hold-to-reveal button. Holding it shows a mosquito moving into a sheltered spot as it gets cold. The reveal says adults survive winter hidden in places like basements, where the temperature stays steady."
+  },
+  "source": "Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=W4at5XxD9y0&t=1s",
+  "written": "2026-11-03"
+}

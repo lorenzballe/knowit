@@ -1,0 +1,37 @@
+{
+  "id": "history-borgia-alberoni-occupations",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which two men occupied San Marino, and how long did they last?",
+  "answer": "Cesare Borgia occupied San Marino in 1503, and Cardinal Giulio Alberoni occupied it in 1739–1740. Both occupations lasted only a few months. Each time, San Marino soon regained its freedom.",
+  "move": "San Marino was taken twice, and both times only for months.",
+  "keywords": [
+    "san marino",
+    "cesare borgia",
+    "giulio alberoni",
+    "republic",
+    "occupation"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute free card titled Two brief occupations of San Marino. It asks which two men occupied San Marino and how long they lasted. Two swords labeled Cesare Borgia strike 1503 and Cardinal Alberoni strike 1739–1740 are tapped to attack a small castle."
+  },
+  "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=KniHBbR_Nv4&t=340s",
+  "written": "2026-11-03"
+}

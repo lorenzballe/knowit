@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-predictable-safing -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SAFE DESIGN</span></div>
+    <h2 class="q">Why must a nuclear weapon's safing mechanism be perfectly predictable?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A missile in a silo and a close-up of its safing mechanism"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It has to react within a split second</button>
+        <button class="opt" data-i="1">It may sit unused for decades, then must work exactly as designed</button>
+        <button class="opt" data-i="2">It gets checked and adjusted every few weeks</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It waits for decades</p><p class="body">It may sit unused in a silo for decades. Then, only if all the proper inputs are given, the hole must line up with the laser beam. No surprises, ever.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the reason. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A device that waits for decades must still behave exactly as designed.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false, tl = null, idle = null;
+const R = {};
+const pic = Kit.$('pic');
+
+function draw(){
+  if (tl) { tl.kill(); tl = null; }
+  if (idle) { idle.kill(); idle = null; }
+  pic.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(pic);
+  const fs = Math.max(12, f * .85);
+  const ns = 'currentColor';
+  const red = '#ff3b30';
+  const g0 = H * .3;
+  // ground
+  Kit.mk('line', {x1: 0, y1: g0, x2: W * .38, y2: g0, stroke: ns, 'stroke-width': Math.max(2, W * .006)}, pic);
+  for (let x = 4; x < W * .38; x += W * .03) {
+    if (x > W * .07 && x < W * .29) continue;
+    Kit.mk('line', {x1: x, y1: g0 + 2, x2: x - W * .02, y2: g0 + W * .025, stroke: ns, 'stroke-width': 1.2, opacity: .45}, pic);
+  }
+  // silo
+  const sx = W * .08, sw = W * .2, sb = H * .95;
+  Kit.mk('rect', {x: sx, y: g0, width: sw, height: sb - g0, fill: ns, 'fill-opacity': .07, stroke: ns, 'stroke-width': Math.max(2, W * .006)}, pic);
+  // missile
+  const mx = sx + sw / 2, mw = W * .07;
+  const top = H * .38, nose = H * .45, bot = H * .9;
+  Kit.mk('path', {d: `M${mx - mw / 2},${nose} L${mx},${top} L${mx + mw / 2},${nose} L${mx + mw / 2},${bot} L${mx - mw / 2},${bot}Z`, fill: ns, 'fill-opacity': .85}, pic);
+  Kit.mk('path', {d: `M${mx - mw / 2},${bot - H * .08} L${mx - mw},${bot} L${mx - mw / 2},${bot}Z M${mx + mw / 2},${bot - H * .08} L${mx + mw},${bot} L${mx + mw / 2},${bot}Z`, fill: ns, 'fill-opacity': .85}, pic);
+  // year counter
+  R.year = Kit.mk('text', {x: mx, y: g0 - fs * .9, 'text-anchor': 'middle', fill: ns, style: `font:700 ${fs}px var(--mono)`}, pic);
+  R.year.textContent = 'YEAR 0';
+  // close-up
+  const cx = W * .68, cy = H * .55, r = Math.min(W * .27, H * .31);
+  const my = H * .64, rs = Math.max(8, W * .035);
+  Kit.mk('circle', {cx: mx, cy: my, r: rs, fill: 'none', stroke: red, 'stroke-width': 2}, pic);
+  const a = .9;
+  Kit.mk('line', {x1: mx + rs * .3, y1: my - rs, x2: cx - r * Math.cos(a), y2: cy - r * Math.sin(a), stroke: red, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, pic);
+  Kit.mk('line', {x1: mx + rs * .3, y1: my + rs, x2: cx - r * Math.cos(a), y2: cy + r * Math.sin(a), stroke: red, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, pic);
+  const defs = Kit.mk('defs', {}, pic);
+  const cp = Kit.mk('clipPath', {id: 'zoomclip'}, defs);
+  Kit.mk('circle', {cx, cy, r}, cp);
+  Kit.mk('circle', {cx, cy, r, fill: 'var(--c)'}, pic);
+  Kit.mk('circle', {cx, cy, r, fill: ns, 'fill-opacity': .06}, pic);
+  const z = Kit.mk('g', {'clip-path': 'url(#zoomclip)'}, pic);
+  const bw = Math.max(3, r * .05);
+  // emitter
+  Kit.mk('rect', {x: cx - r * .8, y: cy - r * .12, width: r * .22, height: r * .24, rx: r * .03, fill: ns}, z);
+  R.beam1 = Kit.mk('line', {x1: cx - r * .58, y1: cy, x2: cx - r * .07, y2: cy, stroke: red, 'stroke-width': bw, 'stroke-linecap': 'round'}, z);
+  R.beam2 = Kit.mk('line', {x1: cx + r * .07, y1: cy, x2: cx + r * .55, y2: cy, stroke: red, 'stroke-width': bw, 'stroke-linecap': 'round', opacity: 0}, z);
+  // detector
+  R.det = Kit.mk('rect', {x: cx + r * .55, y: cy - r * .14, width: r * .16, height: r * .28, rx: r * .03, fill: 'none', stroke: ns, 'stroke-width': Math.max(2, r * .03)}, z);
+  // sliding plate with a hole
+  const px = cx - r * .07, pw = r * .14, pt = cy - r * .62, pb = cy + r * .22, hy = cy - r * .4, hr = r * .065;
+  R.shift = cy - hy;
+  R.plate = Kit.mk('g', {}, z);
+  Kit.mk('path', {d: `M${px},${pt} h${pw} V${pb} h${-pw}Z M${cx + hr},${hy} a${hr},${hr} 0 1,0 ${-2 * hr},0 a${hr},${hr} 0 1,0 ${2 * hr},0Z`, 'fill-rule': 'evenodd', fill: ns, 'fill-opacity': .9}, R.plate);
+  Kit.mk('line', {x1: cx, y1: pb, x2: cx, y2: cy + r * 1.2, stroke: ns, 'stroke-width': Math.max(2, r * .025), opacity: .5}, R.plate);
+  Kit.mk('circle', {cx, cy, r, fill: 'none', stroke: ns, 'stroke-width': Math.max(2, W * .006)}, pic);
+  // inputs
+  const iy = cy + r + fs * 1.3;
+  const il = Kit.mk('text', {x: cx - r * .1, y: iy + fs * .35, 'text-anchor': 'end', fill: ns, style: `font:700 ${fs}px var(--mono)`}, pic);
+  il.textContent = 'INPUTS';
+  R.dots = [0, 1, 2].map(i => Kit.mk('circle', {cx: cx + r * .1 + i * fs * 1.3, cy: iy, r: fs * .4, fill: ns, 'fill-opacity': .12, stroke: ns, 'stroke-width': 1.5}, pic));
+  // badge
+  R.badge = Kit.mk('g', {opacity: 0}, pic);
+  const bt = Kit.mk('text', {x: 0, y: 0, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: 'var(--c)', style: `font:800 ${fs}px var(--body)`}, R.badge);
+  bt.textContent = 'DECADES OF RELIABILITY';
+  const tw = bt.getComputedTextLength ? bt.getComputedTextLength() : fs * 12;
+  const bwid = tw + fs * 1.6, bh = fs * 1.9;
+  const bx = Math.min(W - bwid / 2 - 4, Math.max(bwid / 2 + 4, cx));
+  const by = Math.max(bh / 2 + 2, cy - r - bh * .75);
+  Kit.mk('rect', {x: -bwid / 2, y: -bh / 2, width: bwid, height: bh, rx: bh / 2, fill: red}, R.badge).parentNode.insertBefore(R.badge.lastChild, bt);
+  R.badge.setAttribute('transform', `translate(${bx},${by})`);
+  R.bx = bx; R.by = by;
+  if (done) setEnd();
+  else if (!Kit.calm) idle = gsap.to(R.beam1, {opacity: .55, duration: .7, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+}
+
+function setEnd(){
+  R.year.textContent = 'DECADES LATER';
+  R.dots.forEach(d => d.setAttribute('fill-opacity', 1));
+  gsap.set(R.plate, {y: R.shift});
+  gsap.set(R.beam1, {opacity: 1});
+  gsap.set(R.beam2, {opacity: 1});
+  R.det.setAttribute('fill', '#ff3b30');
+  gsap.set(R.badge, {opacity: 1});
+}
+
+function run(){
+  done = true;
+  if (idle) { idle.kill(); idle = null; gsap.set(R.beam1, {opacity: 1}); }
+  if (Kit.calm) { setEnd(); return; }
+  const yr = {v: 0};
+  tl = gsap.timeline();
+  tl.to(yr, {v: 30, duration: 2, ease: 'power1.in', onUpdate: () => { R.year.textContent = 'YEAR ' + Math.round(yr.v); }})
+    .add(() => { R.year.textContent = 'DECADES LATER'; });
+  R.dots.forEach((d, i) => tl.to(d, {attr: {'fill-opacity': 1}, duration: .2, onStart: () => Kit.haptic('light')}, i ? '+=.15' : '+=.3'));
+  tl.to(R.plate, {y: R.shift, duration: .7, ease: 'power2.inOut'}, '+=.2')
+    .to(R.beam2, {opacity: 1, duration: .15})
+    .add(() => { R.det.setAttribute('fill', '#ff3b30'); Kit.haptic('success'); })
+    .fromTo(R.badge, {opacity: 0}, {opacity: 1, duration: .4, ease: 'power2.out'}, '+=.2');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: ${said}`);
+  Kit.show('keep');
+  run();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 200));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "technology-tunnel-ground-freezing",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How do you dig a tunnel under a river without it flooding?",
+  "answer": "Liquid nitrogen at −196 °C freezes the water-soaked soil into a solid shell, and brine then keeps it below −10 °C. Both fluids stay inside the pipes, so the soil and groundwater are untouched. The frozen ground becomes a wall that can be dug inside without flooding.",
+  "move": "Freeze the water in wet ground and it becomes a wall you can dig inside.",
+  "keywords": [
+    "tunnel",
+    "liquid nitrogen",
+    "ground freezing",
+    "isarco river",
+    "brenner tunnel"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A sequence diagram of ground freezing for tunnel digging: drill, nitrogen injection, frozen ground, brine circulation. A draggable marker on a temperature scale asks how cold the liquid pumped into the ground is.",
+    "graded": false
+  },
+  "source": "Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aw3SGAwrWIo&t=155s",
+  "written": "2026-11-03"
+}

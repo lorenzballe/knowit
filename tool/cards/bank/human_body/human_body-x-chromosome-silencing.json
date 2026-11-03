@@ -1,0 +1,36 @@
+{
+  "id": "human_body-x-chromosome-silencing",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is one X chromosome silenced in early female embryos?",
+  "answer": "Around day 4, each cell has one X from Mom and one from Dad, and which one wins is random. The losing X is packed tightly, marked on its histone tails, bound by proteins, and tagged with methyl groups, so the cell shuts it down. The result is that each cell keeps one X active and packs the other away.",
+  "move": "Around day 4, each cell randomly packs away one X and keeps the other on.",
+  "keywords": [
+    "x chromosome",
+    "embryo",
+    "methyl groups",
+    "histone tails"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A 100-cell embryo where each cell has two X chromosomes, one glowing (active) and one dim (inactivated). The page asks how one X is silenced in early female embryos and offers a button to start the battle."
+  },
+  "source": "Veritasium, “Why Women Are Stripey” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=BD6h-wDj7bw&t=77s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "food-shark-fin-soup",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.meat",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much can a bowl of shark-fin soup cost in Asia?",
+  "answer": "A single bowl of shark-fin soup can fetch up to $300 in Asia. That luxury price puts a value on the shark fins in the bowl, which drives a lucrative illegal fin trade.",
+  "move": "A luxury price on a bowl puts a price on every shark's fin.",
+  "keywords": [
+    "shark-fin soup",
+    "shark fins",
+    "illegal fin trade",
+    "asia",
+    "luxury food"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Illustration of a soup bowl with rising steam and a price tag, with glowing dots over the soup, the steam and the price tag. Asks how much a bowl of shark-fin soup can cost in Asia. Tap each dot to reveal part of the story.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q2DWcy6skUs&t=643s",
+  "written": "2026-11-03"
+}

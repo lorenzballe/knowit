@@ -1,0 +1,195 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-san-marino-appeals -->
+<title>Astute free card · San Marino in court</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#cap{font:700 max(2.1cqh,14px)/1.25 var(--body);color:var(--k);text-align:center;margin:0;min-height:2.6em;display:flex;align-items:center;justify-content:center;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#rng{width:100%;margin:0;height:max(4.2cqh,30px);accent-color:var(--k);cursor:pointer;touch-action:none}
+.ends{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1 var(--mono);color:var(--muted);letter-spacing:.04em}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Slide · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LEGAL TRICK</span></div>
+    <h2 class="q">How did tiny San Marino dodge taxes from neighbouring feudal lords?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A courtroom scale: a feudal lord's tax claim against the flag of San Marino, backed by higher authorities"></svg>
+      <p id="cap">A neighbouring lord sends a tax bill: “this land is under my control.”</p>
+      <div id="why" class="gone">
+        <p class="body">Lords used taxes as a way to say San Marino's land was theirs, so paying meant giving in. Instead the Sammarinese took each dispute to the court of a third power: even the Pope, and then the Holy Roman Empire. They won their autonomy in court, not on the battlefield.</p>
+      </div>
+      <input id="rng" type="range" min="0" max="3" step="0.01" value="0" aria-label="Take the case higher">
+      <div class="ends" id="ends"><span>LOCAL LORD</span><span>HIGHER COURTS</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider to take the case to ever higher judges.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>San Marino out-ranked its neighbours in court instead of fighting them.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ANG = [-16, -5, 9, 18];
+const CAPS = [
+  'A neighbouring lord sends a tax bill: “this land is under my control.”',
+  'San Marino takes the dispute to the court of a third power.',
+  'It even calls in the Papal States and the Pope himself.',
+  'Then it appeals to the Holy Roman Empire too.'
+];
+const S = {a: ANG[0], lit: [0, 0, 0]};
+let E = null, step = 0, done = false;
+const NS = 'http://www.w3.org/2000/svg';
+const mk = (t, a, p) => Kit.mk(t, a, p);
+
+function colors() {
+  const cs = getComputedStyle(Kit.$('card'));
+  return {k: cs.getPropertyValue('--k').trim() || '#111', c: cs.getPropertyValue('--c').trim() || '#fff', gold: '#e0a91f', blue: '#5eb6e4'};
+}
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const C = colors(), fs = Math.max(12, f * .9);
+  const r = Math.min(W / 9, H * .075);
+  const sy = r + 3;
+  const benchBottom = sy + r + fs * 2.9;
+  const py = benchBottom + (H - benchBottom) * .1;
+  const L = Math.min(W * .36, (H - py) * .7);
+  const s = (H - py) * .36;
+  const pw = L * .9;
+  const e = {W, H, fs, r, py, L, s, pw, C, benchBottom, cx: W / 2, seals: [], lines: []};
+
+  // dashed backing lines (behind everything)
+  const xs = [W / 6, W / 2, W * 5 / 6];
+  xs.forEach(() => e.lines.push(mk('line', {stroke: C.gold, 'stroke-width': Math.max(2, r * .09), 'stroke-dasharray': `${r * .25} ${r * .2}`, 'stroke-linecap': 'round', opacity: 0}, svg)));
+
+  // the bench of authorities
+  const names = [['A third', 'power\u2019s court'], ['The Pope'], ['Holy Roman', 'Empire']];
+  xs.forEach((x, i) => {
+    const g = mk('g', {transform: `translate(${x},${sy})`}, svg);
+    const disc = mk('circle', {r, fill: C.gold, 'fill-opacity': 0, stroke: C.k, 'stroke-width': Math.max(1.5, r * .07), 'stroke-opacity': .35}, g);
+    const ic = mk('g', {stroke: C.k, fill: 'none', 'stroke-width': Math.max(1.5, r * .09), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .4}, g);
+    if (i === 0) { // gavel
+      mk('rect', {x: -r * .45, y: -r * .5, width: r * .5, height: r * .28, rx: r * .05, transform: 'rotate(-35)'}, ic);
+      mk('line', {x1: -r * .05, y1: -r * .2, x2: r * .4, y2: r * .4}, ic);
+      mk('line', {x1: -r * .5, y1: r * .5, x2: r * .1, y2: r * .5}, ic);
+    } else if (i === 1) { // crossed keys
+      mk('line', {x1: -r * .4, y1: -r * .4, x2: r * .45, y2: r * .45}, ic);
+      mk('line', {x1: r * .4, y1: -r * .4, x2: -r * .45, y2: r * .45}, ic);
+      mk('circle', {cx: -r * .45, cy: -r * .45, r: r * .17}, ic);
+      mk('circle', {cx: r * .45, cy: -r * .45, r: r * .17}, ic);
+      mk('line', {x1: r * .3, y1: r * .3, x2: r * .48, y2: r * .18}, ic);
+      mk('line', {x1: -r * .3, y1: r * .3, x2: -r * .48, y2: r * .18}, ic);
+    } else { // crown
+      mk('path', {d: `M${-r * .5},${r * .3}L${-r * .5},${-r * .3}L${-r * .25},${0}L0,${-r * .45}L${r * .25},0L${r * .5},${-r * .3}L${r * .5},${r * .3}Z`}, ic);
+      mk('line', {x1: -r * .5, y1: r * .45, x2: r * .5, y2: r * .45}, ic);
+    }
+    const lab = mk('text', {y: r + fs * 1.2, 'text-anchor': 'middle', fill: C.k, opacity: .45, style: `font:700 ${fs}px var(--body)`}, g);
+    names[i].forEach((t, j) => { const ts = mk('tspan', {x: 0, dy: j ? fs * 1.25 : 0}, lab); ts.textContent = t; });
+    e.seals.push({g, disc, ic, lab, x});
+  });
+
+  // stand
+  mk('line', {x1: e.cx, y1: py, x2: e.cx, y2: H - 3, stroke: C.k, 'stroke-width': Math.max(3, L * .035), 'stroke-linecap': 'round'}, svg);
+  mk('path', {d: `M${e.cx - L * .35},${H - 3}Q${e.cx},${H - L * .14} ${e.cx + L * .35},${H - 3}Z`, fill: C.k}, svg);
+
+  const sw = Math.max(2, L * .02);
+  e.strL = mk('path', {fill: 'none', stroke: C.k, 'stroke-width': sw * .7, opacity: .7}, svg);
+  e.strR = mk('path', {fill: 'none', stroke: C.k, 'stroke-width': sw * .7, opacity: .7}, svg);
+  e.beam = mk('line', {stroke: C.k, 'stroke-width': Math.max(4, L * .045), 'stroke-linecap': 'round'}, svg);
+  mk('circle', {cx: e.cx, cy: py, r: Math.max(5, L * .055), fill: C.gold, stroke: C.k, 'stroke-width': sw}, svg);
+
+  // left pan: the lord's claim
+  e.panL = mk('g', {}, svg);
+  const bowl = () => `M${-pw / 2},0Q0,${pw * .32} ${pw / 2},0Z`;
+  mk('path', {d: bowl(), fill: C.k}, e.panL);
+  const tw = pw * .22, th = s * .5, tx = -pw * .3;
+  mk('path', {d: `M${tx},0V${-th}h${tw / 5}v${th * .12}h${tw / 5}v${-th * .12}h${tw / 5}v${th * .12}h${tw / 5}v${-th * .12}h${tw / 5}V0Z`, fill: C.c, stroke: C.k, 'stroke-width': sw}, e.panL);
+  mk('rect', {x: tx + tw * .35, y: -th * .35, width: tw * .3, height: th * .35, fill: C.k}, e.panL);
+  const br = Math.max(fs * 1.25, pw * .15);
+  mk('circle', {cx: pw * .17, cy: -br, r: br, fill: C.k}, e.panL);
+  mk('path', {d: `M${pw * .17 - br * .4},${-br * 2.05}L${pw * .17},${-br * 1.75}L${pw * .17 + br * .4},${-br * 2.05}`, fill: 'none', stroke: C.k, 'stroke-width': sw * 1.5, 'stroke-linejoin': 'round'}, e.panL);
+  const tt = mk('text', {x: pw * .17, y: -br + fs * .35, 'text-anchor': 'middle', fill: C.c, style: `font:800 ${Math.max(12, fs * .85)}px var(--body)`}, e.panL); tt.textContent = 'TAX';
+  e.labL = mk('text', {'text-anchor': 'middle', fill: C.k, style: `font:700 ${fs}px var(--body)`}, svg); e.labL.textContent = 'Feudal lord';
+
+  // right pan: San Marino
+  e.panR = mk('g', {}, svg);
+  mk('path', {d: bowl(), fill: C.k}, e.panR);
+  const ph = s * .72, fw = pw * .42, fh = s * .32;
+  e.flag = mk('g', {}, e.panR);
+  mk('line', {x1: -fw * .45, y1: 0, x2: -fw * .45, y2: -ph, stroke: C.k, 'stroke-width': sw * 1.3, 'stroke-linecap': 'round'}, e.flag);
+  mk('rect', {x: -fw * .45, y: -ph, width: fw, height: fh / 2, fill: '#fff'}, e.flag);
+  mk('rect', {x: -fw * .45, y: -ph + fh / 2, width: fw, height: fh / 2, fill: C.blue}, e.flag);
+  mk('rect', {x: -fw * .45, y: -ph, width: fw, height: fh, fill: 'none', stroke: C.k, 'stroke-width': sw}, e.flag);
+  for (let i = 0; i < 3; i++) mk('rect', {x: -fw * .45 + fw * (.22 + i * .22) - fw * .04, y: -ph + fh * (i === 1 ? .28 : .36), width: fw * .08, height: fh * (i === 1 ? .44 : .32), fill: C.gold}, e.flag);
+  e.flagTop = ph;
+  e.labR = mk('text', {'text-anchor': 'middle', fill: C.k, style: `font:700 ${fs}px var(--body)`}, svg); e.labR.textContent = 'San Marino';
+  E = e; draw();
+}
+
+function draw() {
+  if (!E) return;
+  const e = E, t = S.a * Math.PI / 180, cs = Math.cos(t), sn = Math.sin(t);
+  const lx = e.cx - e.L * cs, ly = e.py - e.L * sn, rx = e.cx + e.L * cs, ry = e.py + e.L * sn;
+  e.beam.setAttribute('x1', lx); e.beam.setAttribute('y1', ly); e.beam.setAttribute('x2', rx); e.beam.setAttribute('y2', ry);
+  const pyL = ly + e.s, pyR = ry + e.s, h = e.pw / 2;
+  e.strL.setAttribute('d', `M${lx - h},${pyL}L${lx},${ly}L${lx + h},${pyL}`);
+  e.strR.setAttribute('d', `M${rx - h},${pyR}L${rx},${ry}L${rx + h},${pyR}`);
+  e.panL.setAttribute('transform', `translate(${lx},${pyL})`);
+  e.panR.setAttribute('transform', `translate(${rx},${pyR})`);
+  const ld = e.pw * .16 + e.fs * 1.3;
+  e.labL.setAttribute('x', lx); e.labL.setAttribute('y', pyL + ld);
+  e.labR.setAttribute('x', rx); e.labR.setAttribute('y', pyR + ld);
+  e.seals.forEach((sl, i) => {
+    const v = S.lit[i];
+    sl.disc.setAttribute('fill-opacity', v); sl.disc.setAttribute('stroke-opacity', .35 + .65 * v);
+    sl.ic.setAttribute('opacity', .4 + .6 * v); sl.lab.setAttribute('opacity', .45 + .55 * v);
+    sl.g.setAttribute('transform', `translate(${sl.x},${e.r + 3}) scale(${1 + .08 * v})`);
+    const ln = e.lines[i];
+    ln.setAttribute('x1', sl.x); ln.setAttribute('y1', e.benchBottom);
+    ln.setAttribute('x2', rx - e.pw * .06); ln.setAttribute('y2', pyR - e.flagTop - 2);
+    ln.setAttribute('opacity', v * .9);
+  });
+}
+
+function setV(v) {
+  for (let i = 0; i < 3; i++) S.lit[i] = Math.max(0, Math.min(1, v - i));
+  const k = Math.min(2, Math.floor(v)), fr = v - k;
+  const target = ANG[k] + (ANG[k + 1] - ANG[k]) * fr;
+  gsap.to(S, {a: target, duration: Kit.calm ? .01 : .7, ease: 'elastic.out(1,0.45)', overwrite: true, onUpdate: draw});
+  draw();
+  const st = Math.round(v);
+  if (st !== step) {
+    step = st; Kit.$('cap').textContent = CAPS[st]; Kit.haptic('selection');
+    if (!Kit.calm) gsap.fromTo('#cap', {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .3});
+  }
+  if (v >= 2.95 && !done) finish();
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('cap'); Kit.hide('say'); Kit.hide('ends'); Kit.show('why'); Kit.show('keep');
+  if (E && !Kit.calm) gsap.fromTo(E.flag, {scale: 1}, {scale: 1.12, yoyo: true, repeat: 1, duration: .25, transformOrigin: '50% 100%'});
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+Kit.$('rng').addEventListener('input', e => setV(+e.target.value));
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const a0 = S.a; S.a = 0; draw();
+  gsap.to(S, {a: a0, duration: 1.2, delay: .2, ease: 'elastic.out(1,0.4)', onUpdate: draw});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('rng');
+  for (const v of [1, 2, 3]) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(res => setTimeout(res, 250)); }
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

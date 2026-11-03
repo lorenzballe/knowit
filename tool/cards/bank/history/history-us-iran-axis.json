@@ -1,0 +1,37 @@
+{
+  "id": "history-us-iran-axis",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the US's primary strategic objective in Iran?",
+  "answer": "The US's most strategic aim in Iran is to weaken the Russia–China axis, which matters more than its strikes on Hezbollah, Hamas, the Houthis and militias in Iraq and Syria. Russia uses Iranian drones and China buys Iranian oil. Cutting both supply lines weakens the axis, so each supply line leaving Iran is a target.",
+  "move": "Iran is a supplier: hit it, and Russia and China feel it too.",
+  "keywords": [
+    "iran",
+    "russia",
+    "china",
+    "drones",
+    "iranian oil"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Venn diagram with Russia and China overlapping, and a red X through the centre. The question asks: what is the US's primary strategic objective in Iran?"
+  },
+  "source": "Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=WZuXvvDRTgg&t=876s",
+  "written": "2026-11-03"
+}

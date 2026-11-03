@@ -1,0 +1,38 @@
+{
+  "id": "history-alcatraz-vent-duct",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.myths_about_the_past",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Escaping Alcatraz: where in the cell did the prisoners dig their hole?",
+  "answer": "The prisoners did not dig into the bare wall, which would have been hard to hide. They chipped away at the grille of the ventilation duct, which already ran through the wall, and widened it. The opening led to an unguarded service corridor, from which they could reach the roof.",
+  "move": "They didn't break the wall: they widened the duct already through it.",
+  "keywords": [
+    "alcatraz",
+    "ventilation duct",
+    "prisoner escape",
+    "service corridor",
+    "prison cell"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Cross-section of an Alcatraz prison cell showing a ventilation duct grille in the wall. The question asks where the prisoners dug their escape hole. The reader taps the spot on the cell where they would dig.",
+    "graded": false
+  },
+  "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=309s",
+  "written": "2026-11-03"
+}

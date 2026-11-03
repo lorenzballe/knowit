@@ -1,0 +1,38 @@
+{
+  "id": "space-corona-outshone",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do solar prominences and the corona become visible during an eclipse?",
+  "answer": "The Sun's blazing disc drowns out its faint outer glow, so the corona and pink solar prominences are always there, just outshone. Once the Moon covers the disc, the corona and pink prominences become visible. An eclipse doesn't switch the corona on; it switches the glare off.",
+  "move": "An eclipse doesn't switch the corona on; it switches the glare off.",
+  "keywords": [
+    "sun",
+    "moon",
+    "corona",
+    "solar prominences",
+    "total solar eclipse"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive diagram: a Sun disc with a draggable Moon. Drag the Moon over the Sun to reveal the faint corona and pink solar prominences around its edge once the disc is covered.",
+    "ground": "#04050b"
+  },
+  "source": "Veritasium, “What it’s like to watch a Total Solar Eclipse” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=G10m2ZZRH4U",
+  "written": "2026-11-03"
+}

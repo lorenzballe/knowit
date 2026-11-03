@@ -1,0 +1,37 @@
+{
+  "id": "history-soviet-bomb-isotopes",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.hindsight_in_history",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did air samples prove a secret Soviet nuclear explosion?",
+  "answer": "On 3 September 1949, air and rain samples contained Cerium-141 and Yttrium-91, which fade within a month or two. Because they were still present, the blast had to be recent. The US had done no tests that year, so the bomb was Soviet.",
+  "move": "A trace that fades fast is a clock: it proves something happened recently.",
+  "keywords": [
+    "cerium-141",
+    "yttrium-91",
+    "soviet-union",
+    "nuclear-test",
+    "fallout"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A timeline with a draggable nuclear blast marker. Decay curves for Cerium-141 and Yttrium-91 fall toward zero over about one to two months. Drag the blast along the timeline to see when its traces reach the air and rain sample."
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=34s",
+  "written": "2026-11-03"
+}

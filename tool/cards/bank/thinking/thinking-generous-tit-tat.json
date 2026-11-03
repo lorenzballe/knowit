@@ -1,0 +1,36 @@
+{
+  "id": "thinking-generous-tit-tat",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How does Generous Tit for Tat stop endless revenge loops?",
+  "answer": "Generous Tit for Tat hits back only about 9 times out of 10 after a defection. Skipping about 10% of retaliations breaks the echo of two players punishing each other in turn. It still retaliates often enough that it is not exploited.",
+  "move": "A little forgiveness stops one mistake from becoming endless revenge.",
+  "keywords": [
+    "generous tit for tat",
+    "tit for tat",
+    "retaliation",
+    "forgiveness",
+    "game theory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz page asking how Generous Tit for Tat breaks an endless revenge loop caused by one misread cooperation. Choices: it hits back about 9 times in 10, it hits back twice as hard, it never hits back, or it forgives about 1 time in 10. The reader picks one and rates their confidence.",
+    "graded": false
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=1279s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-chernobyl-lingering-cesium",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can we still detect radiation at Chernobyl today?",
+  "answer": "The short-lived atoms burned out fast. Cesium-137 and strontium-90 last for decades and are still in the soil, so the Geiger counter still clicks. Take them out and it goes quiet.",
+  "move": "Contamination lasts as long as its longest-lived atoms.",
+  "keywords": [
+    "chernobyl",
+    "cesium-137",
+    "strontium-90",
+    "radiation",
+    "geiger-counter"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A year slider from 1986 to 2020 sits over a Geiger counter reading at Chernobyl. Dragging the years shows the counter clicking until the long-lived cesium and strontium are removed, then going quiet."
+  },
+  "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=9DWnjcSo9J0&t=25s",
+  "written": "2026-11-03"
+}

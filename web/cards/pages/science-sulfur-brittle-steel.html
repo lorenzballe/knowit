@@ -1,0 +1,165 @@
+<!doctype html>
+<!-- slug: science-sulfur-brittle-steel -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why Titanic's steel cracked</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#scope{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#hit{align-self:center;font:700 max(2.2cqh,14px)/1.2 var(--body);background:var(--k);color:var(--c);border:0;border-radius:99px;padding:1.5cqh 7cqw;cursor:pointer;touch-action:manipulation}
+#hit:active{transform:scale(.96)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.q,.say,.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRITTLE STEEL</span></div>
+    <h2 class="q">Why did the Titanic's steel hull crack so quickly?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scope" role="img" aria-label="Two steel samples under a microscope: today's steel and Titanic's sulfur-rich steel"></svg>
+      <button id="hit">Hit both plates · 0</button>
+      <div id="why" class="gone">
+        <p class="big">Too much sulfur.</p>
+        <p class="body">Tests on a piece of the wreck's hull found steel very rich in sulfur. Sulfur and iron form ferrous sulfide crystals, and under stress they seed micro‑cracks that join up. So under the impact, in cold water, the stiff hull cracked instead of bending.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to hit both steel plates with the same blow. Watch each one.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Sulfur makes steel stiff: hit hard, it cracks instead of bending.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Titanic, la ricostruzione del naufragio della nave "inaffondabile" il cui relitto giace nell'Oceano” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('scope'), btn = Kit.$('hit');
+const PROG = [0, .14, .38, .62, .85, 1], LAST = 5;
+let hits = 0, broken = false, S = {};
+const mk = (t, a, p) => Kit.mk(t, a, p);
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const plen = p => p.reduce((s, q, i) => i ? s + Math.hypot(q[0]-p[i-1][0], q[1]-p[i-1][1]) : 0, 0);
+const pd = p => 'M' + p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L');
+
+function statusL(){ return hits ? 'Flexes, springs back' : 'Clean grains'; }
+function statusR(){ return broken ? 'Cracked through!' : hits ? 'Micro‑cracks spreading' : 'Yellow: ferrous sulfide'; }
+
+function draw(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13), fs2 = Math.max(f * .82, 12);
+  const pad = Math.max(W * .035, 8), pw = (W - 3 * pad) / 2;
+  const tY = fs * 1.05, sY = tY + Math.max(fs2 * 1.35, fs * 1.3);
+  const y0 = sY + fs * .7, ph = H - y0 - fs2 * 2.1;
+  if (ph < 40 || pw < 40) return;
+  S = {pw, ph};
+  const defs = mk('defs', {}, svg);
+  const cr = mk('clipPath', {id: 'cr'}, defs);
+  mk('rect', {x: 0, y: 0, width: pw, height: ph, rx: Math.min(14, pw * .06)}, cr);
+
+  function grains(g, R){
+    const n = Math.max(30, Math.round(pw * ph / 1000)), pts = [];
+    for (let i = 0; i < n; i++) pts.push([R() * pw, R() * ph]);
+    const v = d3.Delaunay.from(pts).voronoi([0, 0, pw, ph]);
+    for (let i = 0; i < n; i++) mk('path', {d: v.renderCell(i), fill: `hsl(210,${8 + R() * 8}%,${60 + R() * 16}%)`, stroke: '#4a545f', 'stroke-width': 1.1}, g);
+  }
+  const outline = g => mk('rect', {x: 0, y: 0, width: pw, height: ph, rx: Math.min(14, pw * .06), fill: 'none', stroke: '#1d232a', 'stroke-width': 2.5}, g);
+
+  // Left: today's steel
+  const L = mk('g', {transform: `translate(${pad},${y0})`}, svg);
+  S.lMove = mk('g', {}, L);
+  grains(mk('g', {'clip-path': 'url(#cr)'}, S.lMove), rng(7));
+  outline(S.lMove);
+  S.flL = mk('rect', {x: 0, y: 0, width: pw, height: ph, rx: Math.min(14, pw * .06), fill: '#fff', opacity: 0}, S.lMove);
+
+  // Right: Titanic's steel (content in defs, shown as two halves)
+  const rc = mk('g', {id: 'rc'}, defs);
+  const rin = mk('g', {'clip-path': 'url(#cr)'}, rc);
+  grains(rin, rng(11));
+  const R2 = rng(23), n = 5, k = [[0, ph * (.42 + R2() * .16)]];
+  for (let i = 0; i < n; i++) k.push([pw * (i + .5) / n + (R2() - .5) * pw / n * .3, ph * (.5 + (R2() - .5) * .34)]);
+  k.push([pw, ph * (.42 + R2() * .16)]);
+  const line = [k[0]], ki = [0], jit = Math.max(2, pw * .014);
+  for (let i = 1; i < k.length; i++){
+    const a = k[i-1], b = k[i], steps = Math.max(3, Math.round(Math.hypot(b[0]-a[0], b[1]-a[1]) / 7));
+    for (let s = 1; s < steps; s++){ const t = s / steps; line.push([a[0] + (b[0]-a[0]) * t + (R2()-.5) * jit, a[1] + (b[1]-a[1]) * t + (R2()-.5) * jit * 2]); }
+    line.push(b); ki.push(line.length - 1);
+  }
+  const cs = Math.max(3, pw * .028);
+  const crystal = (x, y, R) => { const p = []; for (let j = 0; j < 6; j++){ const a = j / 6 * Math.PI * 2 + R(), r = cs * (.7 + R() * .6); p.push([x + Math.cos(a) * r, y + Math.sin(a) * r]); } mk('path', {d: pd(p) + 'Z', fill: '#f2b81c', stroke: '#5c4100', 'stroke-width': 1.2}, rin); };
+  // scattered crystals away from the main line
+  const R3 = rng(41), scat = [];
+  for (let tries = 0; scat.length < 8 && tries < 200; tries++){
+    const x = cs * 2 + R3() * (pw - cs * 4), y = cs * 2 + R3() * (ph - cs * 4);
+    if (line.some(q => Math.hypot(q[0]-x, q[1]-y) < ph * .12)) continue;
+    if (scat.some(q => Math.hypot(q[0]-x, q[1]-y) < cs * 6)) continue;
+    scat.push([x, y]);
+  }
+  scat.forEach(q => crystal(q[0], q[1], R3));
+  for (let i = 1; i <= n; i++) crystal(k[i][0], k[i][1], R3);
+  S.cracks = [];
+  const crackG = mk('g', {fill: 'none', stroke: '#0d1014', 'stroke-width': Math.max(1.8, pw * .012), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, rin);
+  const addCrack = (pts, mul) => { const Lh = plen(pts); const el = mk('path', {d: pd(pts), 'stroke-dasharray': Lh + ' ' + (Lh + 2), 'stroke-dashoffset': Lh * (1 - Math.min(1, PROG[hits] * mul))}, crackG); S.cracks.push({el, L: Lh, mul}); };
+  for (let i = 1; i <= n; i++){
+    const j = ki[i], lt = i === 1 ? 0 : Math.round((ki[i-1] + j) / 2), rt = i === n ? line.length - 1 : Math.round((j + ki[i+1]) / 2);
+    addCrack(line.slice(lt, j + 1).reverse(), 1);
+    addCrack(line.slice(j, rt + 1), 1);
+  }
+  scat.forEach(q => { for (let t = 0; t < 2; t++){ const a = R3() * Math.PI * 2, len = cs * (2 + R3() * 2), p = [[q[0], q[1]]]; for (let s = 1; s <= 3; s++) p.push([q[0] + Math.cos(a) * len * s / 3 + (R3()-.5) * 2, q[1] + Math.sin(a) * len * s / 3 + (R3()-.5) * 2]); addCrack(p, 1.8); } });
+  outline(rc);
+
+  const ct = mk('clipPath', {id: 'ct'}, defs), cb = mk('clipPath', {id: 'cb'}, defs);
+  const ext = [[-6, line[0][1]], ...line, [pw + 6, line[line.length-1][1]]];
+  mk('path', {d: pd([...ext, [pw + 6, -6], [-6, -6]]) + 'Z'}, ct);
+  mk('path', {d: pd([...ext, [pw + 6, ph + 6], [-6, ph + 6]]) + 'Z'}, cb);
+  const Rg = mk('g', {transform: `translate(${2 * pad + pw},${y0})`}, svg);
+  S.rMove = mk('g', {}, Rg);
+  S.top = mk('g', {}, S.rMove); mk('use', {href: '#rc'}, mk('g', {'clip-path': 'url(#ct)'}, S.top));
+  S.bot = mk('g', {}, S.rMove); mk('use', {href: '#rc'}, mk('g', {'clip-path': 'url(#cb)'}, S.bot));
+  S.flR = mk('rect', {x: 0, y: 0, width: pw, height: ph, rx: Math.min(14, pw * .06), fill: '#fff', opacity: 0}, S.rMove);
+  if (broken){ gsap.set(S.top, splitTop()); gsap.set(S.bot, splitBot()); }
+
+  // Labels
+  const txt = (x, y, s, size, w, muted) => { const t = mk('text', {x, y, 'text-anchor': 'middle', style: `font:${w} ${size}px var(--body);fill:var(--k);${muted ? 'opacity:.62' : ''}`}, svg); t.textContent = s; return t; };
+  const cxL = pad + pw / 2, cxR = 2 * pad + pw * 1.5;
+  txt(cxL, tY, "Today's steel", fs, 800); txt(cxR, tY, "Titanic's steel", fs, 800);
+  txt(cxL, sY, 'little sulfur', fs2, 600, true); txt(cxR, sY, 'rich in sulfur', fs2, 600, true);
+  const stY = y0 + ph + fs2 * 1.45;
+  S.stL = txt(cxL, stY, statusL(), fs2, 700); S.stR = txt(cxR, stY, statusR(), fs2, 700);
+}
+const splitTop = () => ({x: -S.pw * .03, y: -S.ph * .07, rotation: -4, svgOrigin: `${S.pw / 2} ${S.ph / 2}`});
+const splitBot = () => ({x: S.pw * .02, y: S.ph * .07, rotation: 3, svgOrigin: `${S.pw / 2} ${S.ph / 2}`});
+
+function hit(){
+  if (broken || !S.cracks) return;
+  hits++; btn.textContent = `Hit both plates · ${hits}`; Kit.haptic('light');
+  const d = Kit.calm ? 0 : .5;
+  S.cracks.forEach(c => gsap.to(c.el, {attr: {'stroke-dashoffset': c.L * (1 - Math.min(1, PROG[hits] * c.mul))}, duration: d, ease: 'power2.out'}));
+  if (!Kit.calm){
+    gsap.fromTo([S.flL, S.flR], {opacity: .55}, {opacity: 0, duration: .35});
+    gsap.fromTo(S.lMove, {y: S.ph * .05, scaleY: .96, svgOrigin: `${S.pw / 2} ${S.ph}`}, {y: 0, scaleY: 1, duration: .8, ease: 'elastic.out(1,.3)'});
+    gsap.fromTo(S.rMove, {x: -3}, {x: 0, duration: .25, ease: 'rough({strength:2,points:8,randomize:false})'});
+  }
+  S.stL.textContent = statusL();
+  if (hits >= LAST){ broken = true; setTimeout(breakIt, Kit.calm ? 0 : 500); }
+  else S.stR.textContent = statusR();
+}
+function breakIt(){
+  S.stR.textContent = statusR(); Kit.haptic('success');
+  const d = Kit.calm ? 0 : .7;
+  gsap.to(S.top, {...splitTop(), duration: d, ease: 'power3.out'});
+  gsap.to(S.bot, {...splitBot(), duration: d, ease: 'power3.out'});
+  setTimeout(() => { Kit.hide('hit'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }, Kit.calm ? 0 : 1000);
+}
+btn.addEventListener('click', hit);
+svg.addEventListener('click', hit);
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }).observe(svg);
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#scope', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { for (let i = 0; i < LAST; i++){ btn.click(); await new Promise(r => setTimeout(r, 650)); } await new Promise(r => setTimeout(r, 1400)); };
+Kit.single();
+</script>
+</html>

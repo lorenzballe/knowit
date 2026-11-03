@@ -1,0 +1,132 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-seismic-time-axis -->
+<title>Astute · Seismic data is in time</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#sec{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.7cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOPHYSICS</span></div>
+    <h2 class="q">What does the vertical axis of a raw seismic section measure?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sec" aria-label="A seismic section: distance across, an unknown quantity down"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Depth (m)</button>
+        <button class="opt" data-i="1">Time (s)</button>
+        <button class="opt" data-i="2">Rock density</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Time, not depth</p><p class="body">Each wiggle is a wave that went down, bounced off a layer and came back up to be recorded. The section shows how long that took. Depths come later, through a time-to-depth conversion.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what the “?” axis shows, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Seismic sections are in seconds of travel time, not metres.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, answered = false, G = null;
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  answered = true;
+  draw(); fire();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+// Reflectors: fraction of the plot height, dip per unit width, amplitude
+const REF = [[.18,.05,1],[.36,-.04,-.8],[.55,.09,1],[.72,.03,.7],[.88,-.06,-.9]];
+function draw(){
+  const svg = Kit.$('sec'); svg.innerHTML = '';
+  const {W,H,f} = Kit.fitSvg(svg), fs = Math.max(f*.85,12);
+  const L = fs*3.9, T = fs*3.2, R = fs*.6, B = fs*2.2;
+  const pw = W-L-R, ph = H-T-B;
+  const ink = 'var(--k)';
+  const g = Kit.mk('g',{},svg);
+  // plot frame
+  Kit.mk('rect',{x:L,y:T,width:pw,height:ph,fill:'none',style:`stroke:${ink};stroke-opacity:.35`,'stroke-width':1},g);
+  const yr = (r,x) => T + (r[0] + r[1]*((x-L)/pw - .5))*ph;
+  // wiggle traces
+  const N = Math.max(22, Math.min(46, Math.floor(pw/(fs*1.1)))), dx = pw/N, w = ph*.022;
+  for (let i=0;i<N;i++){
+    const x0 = L + dx*(i+.5);
+    let line = '', fill = `M${x0},${T}`;
+    for (let y=T; y<=T+ph; y+=2){
+      let a = 0;
+      for (const r of REF){ const u=(y-yr(r,x0))/w; a += r[2]*(1-2*u*u)*Math.exp(-u*u); }
+      a += (Kit.rnd()-.5)*.12;
+      const x = x0 + a*dx*.85;
+      line += (line?'L':'M')+x.toFixed(1)+','+y;
+      fill += 'L'+(x0+Math.max(0,a)*dx*.85).toFixed(1)+','+y;
+    }
+    fill += `L${x0},${T+ph}Z`;
+    Kit.mk('path',{d:fill,style:`fill:${ink};fill-opacity:.75`},g);
+    Kit.mk('path',{d:line,fill:'none',style:`stroke:${ink};stroke-opacity:.55`,'stroke-width':.8},g);
+  }
+  // axes labels
+  const xl = Kit.mk('text',{x:L+pw/2,y:H-fs*.5,'text-anchor':'middle','font-size':fs,style:`fill:${ink};font-family:var(--body);font-weight:700`},g);
+  xl.textContent = 'Distance →';
+  const yl = Kit.mk('text',{x:0,y:0,'text-anchor':'middle','font-size':fs*(answered?1:1.4),transform:`translate(${fs*1},${T+ph/2}) rotate(-90)`,style:`fill:${answered?'var(--k)':'var(--k)'};font-family:var(--body);font-weight:800`},g);
+  yl.textContent = answered ? 'Two-way time (s) ↓' : '?';
+  // ticks 0..2 s
+  for (let k=0;k<=4;k++){
+    const y = T + ph*k/4;
+    Kit.mk('line',{x1:L-fs*.35,x2:L,y1:y,y2:y,style:`stroke:${ink}`},g);
+    if (answered && ph/4 > fs*1.3){
+      const t = Kit.mk('text',{x:L-fs*.5,y:y+fs*.35,'text-anchor':'end','font-size':fs*.85,style:`fill:${ink};font-family:var(--mono)`},g);
+      t.textContent = (k*.5).toFixed(1);
+    }
+  }
+  // source and receiver on the surface
+  const sx = L+pw*.2, rx = L+pw*.5, r = REF[2], mx = (sx+rx)/2, my = yr(r,mx);
+  Kit.mk('circle',{cx:sx,cy:T,r:fs*.4,style:`fill:${ink}`},g);
+  Kit.mk('path',{d:`M${rx-fs*.45},${T-fs*.8}L${rx+fs*.45},${T-fs*.8}L${rx},${T}Z`,style:`fill:${ink}`},g);
+  const sl = Kit.mk('text',{x:sx,y:T-fs*1.3,'text-anchor':'middle','font-size':fs*.85,style:`fill:${ink};font-family:var(--body);font-weight:700`},g); sl.textContent='source';
+  const rl = Kit.mk('text',{x:rx,y:T-fs*1.3,'text-anchor':'middle','font-size':fs*.85,style:`fill:${ink};font-family:var(--body);font-weight:700`},g); rl.textContent='receiver';
+  // the ray (hidden until answered)
+  const ray = Kit.mk('path',{d:`M${sx},${T}L${mx},${my}L${rx},${T}`,fill:'none',style:'stroke:var(--c);stroke-width:'+(fs*.5)+';stroke-linejoin:round;opacity:0'},g);
+  const ray2 = Kit.mk('path',{d:`M${sx},${T}L${mx},${my}L${rx},${T}`,fill:'none',style:`stroke:${ink};stroke-width:${fs*.22};stroke-linejoin:round;opacity:0`},g);
+  const dot = Kit.mk('circle',{cx:sx,cy:T,r:fs*.45,style:`fill:var(--c);stroke:${ink};stroke-width:2;opacity:0`},g);
+  const clock = Kit.mk('text',{x:L+pw-fs*.2,y:T-fs*1.3,'text-anchor':'end','font-size':fs*1.05,style:`fill:${ink};font-family:var(--mono);font-weight:800;opacity:${answered?1:0}`},g);
+  const tEcho = 2*(my-T)/ph; // seconds on the 0–2 s scale (reflector time at midpoint)
+  clock.textContent = 't = 0.00 s';
+  G = {ray, ray2, dot, clock, sx, rx, mx, my, T, tEcho, len: ray2.getTotalLength()};
+  if (answered){ [ray,ray2].forEach(p=>p.style.opacity=1); clock.textContent = `t = ${tEcho.toFixed(2)} s`; }
+}
+function fire(){
+  if (!G) return;
+  const {ray,ray2,dot,clock,len,tEcho} = G;
+  if (Kit.calm){ clock.textContent = `t = ${tEcho.toFixed(2)} s`; return; }
+  [ray,ray2].forEach(p=>{ p.style.opacity=1; p.style.strokeDasharray=len; p.style.strokeDashoffset=len; });
+  const st = {p:0};
+  gsap.to(st,{p:1,duration:2.2,ease:'none',onUpdate(){
+    const d = st.p*len, pt = ray2.getPointAtLength(d);
+    [ray,ray2].forEach(p=>p.style.strokeDashoffset = len-d);
+    dot.setAttribute('cx',pt.x); dot.setAttribute('cy',pt.y); dot.style.opacity = st.p<1?1:0;
+    clock.textContent = `t = ${(st.p*tEcho).toFixed(2)} s`;
+  },onComplete(){ Kit.haptic('light'); }});
+}
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2600)); };
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "human_body-humidity-traps-sweat",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.senses_fooled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does high humidity prevent sweat from cooling us?",
+  "answer": "Sweat cools you only when it evaporates, and how easily it evaporates depends on how much vapor is already in the air. In muggy air, sweat stays liquid on the skin and the body traps its heat. The same temperature therefore feels worse when humidity is high.",
+  "move": "Same temperature, more humidity: less sweat evaporates, so you suffer more.",
+  "keywords": [
+    "sweat",
+    "humidity",
+    "evaporation",
+    "body heat",
+    "muggy air"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled 'Astute free card SWEAT' asks how high humidity stops sweat from cooling us. A humidity dial runs from Dry (40%) to Muggy, showing sweat evaporating in dry air and sweat staying liquid on skin in muggy air, with heat trapped in the body."
+  },
+  "source": "Geopop, “Perché quando c'è più umidità sentiamo più caldo e cos'è la temperatura percepita?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=AIVEax2_yEA&t=43s",
+  "written": "2026-11-03"
+}

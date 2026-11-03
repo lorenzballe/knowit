@@ -1,0 +1,214 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The glass that fell</title>
+<!-- A piece of trinitite, the green glass of the first atomic bomb test (Trinity, New Mexico, 16 July
+     1945), cut through. The reader drags a magnifier over it and finds four clues: a smooth glassy top,
+     bubbles all through, a rough underside crusted with sand, glass beads and dumbbells on the ground.
+     Together they say the glass did not melt where it lay: the fireball drew the sand up, melted it and
+     rained it back as liquid glass (Hermes & Strickfaden, Los Alamos, 2005; Eby et al., Geology Today
+     26, 181, 2010).
+     Figures: pieces 1-3 cm thick, smooth upper surface, rough lower surface with fused sand; vesicular;
+     beads and dumbbell-shaped particles; melt at no less than about 1,470 C (other estimates higher),
+     superheated for an estimated 2-3 s; bottle green (Eby); mildly radioactive; removing it from the site
+     is now illegal (national historic landmark; most was bulldozed and buried in 1952-53).
+     Inspired by Veritasium, "The Most Radioactive Places on Earth". Touch: drags. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+#pic.held{cursor:grabbing}
+#clues{display:flex;gap:1.6cqw;flex-wrap:nowrap}
+#clues span{flex:1;text-align:center;font:700 max(1.55cqh,11.5px)/1.1 var(--body);padding:.8cqh 0;border-radius:99px;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);opacity:.75;white-space:nowrap;transition:background-color .3s,color .3s,opacity .3s}
+#clues span.on{background:var(--k);color:var(--c);box-shadow:none;opacity:1}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:540px){
+  .answered #stage{gap:.8cqh}
+  .answered .keep{padding:1.4cqh 5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag the lens · four clues">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">READ THE ROCK</span></div>
+    <h2 class="q">The first atomic bomb turned desert sand into green glass. Where did the sand melt?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A piece of green trinitite glass cut in half, lying on sand, with a magnifying glass to drag over it." data-drag></svg>
+      <div id="clues"><span data-k="top">smooth top</span><span data-k="bubbles">bubbles</span><span data-k="under">sandy base</span><span data-k="beads">beads</span></div>
+    </div>
+    <p class="say" id="say">A piece of trinitite from the 1945 Trinity test, cut in half. Drag the lens over it: four clues tell where it melted.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Before trusting the obvious story, read both faces: smooth where it set in air, rough where it landed.</div>
+    <div class="foot"><span class="src">Source · Eby et al., “Trinitite: the atomic rock”, Geology Today 26 (2010); Hermes &amp; Strickfaden, Los Alamos (2005)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say');
+  const INK = '#10100c', ZOOM = 2.3;
+  const CLUE = {
+    top: '<b>Smooth, glassy top</b>: it was liquid, and set facing the sky.',
+    bubbles: '<b>Bubbles all through</b>: gas caught as the molten glass froze.',
+    under: '<b>A rough base crusted with sand</b>: it landed on the desert still molten.',
+    beads: '<b>Glass beads and dumbbells</b> on the sand: drops that froze as they fell.'
+  };
+  const found = new Set();
+  let G = null, lens = {x: 0, y: 0, r: 0, fx: .8, fy: .22}, finished = false;
+
+  // Seeded noise, so the rock is the same on every phone.
+  const rnd = (() => { let s = 11; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+  const BUB = Array.from({length: 26}, () => ({u: .08 + rnd() * .84, v: .2 + rnd() * .55, r: .25 + rnd() * .75}));
+  const GRAIN = Array.from({length: 70}, () => ({u: rnd(), v: rnd(), r: .4 + rnd() * .6, c: rnd()}));
+  const JAG = Array.from({length: 40}, () => rnd());
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(11, Math.min(13, H / 15));
+    const ground = H * .78, x0 = W * .05, x1 = W * .7, w = x1 - x0;
+    const top = x => H * .4 + Math.sin((x - x0) / w * Math.PI * 1.5) * H * .025 - Math.sin((x - x0) / w * Math.PI) * H * .04;
+    const bot = x => { const k = Math.min(JAG.length - 1, Math.max(0, Math.floor((x - x0) / w * (JAG.length - 1)))); return ground - H * .01 + (JAG[k] - .5) * H * .035; };
+    const bx = W * .83, by = ground - Math.max(3, H * .02);
+    G = {W, H, ground, x0, x1, w, top, bot, bx, by};
+
+    const defs = Kit.mk('defs', {}, svg);
+    const glass = Kit.mk('linearGradient', {id: 'glass', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [['0', '#b5d99a'], ['.45', '#86b46f'], ['1', '#4f7a45']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, glass));
+    const sand = Kit.mk('linearGradient', {id: 'sand', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [['0', '#f3dcaa'], ['1', '#e2bf7f']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, sand));
+    // The magnified view is a pattern: the scene again, scaled about the lens's centre.
+    const mag = Kit.mk('pattern', {id: 'mag', patternUnits: 'userSpaceOnUse', x: -W, y: -H, width: W * 3, height: H * 3, viewBox: `${-W} ${-H} ${W * 3} ${H * 3}`}, defs);
+    Kit.mk('use', {href: '#rock'}, mag);
+
+    // The scene, once: the magnifier shows the same scene, larger.
+    const rock = Kit.mk('g', {id: 'rock'}, svg);
+    // Once the clues are read: the fireball's glow above, and drops of molten sand falling onto the piece.
+    if (finished) {
+      const fire = Kit.mk('radialGradient', {id: 'fire', cx: '50%', cy: '50%', r: '50%'}, defs);
+      [['0', '#fff7d6', .9], ['.5', '#ffe08a', .45], ['1', '#ffe08a', 0]].forEach(([o, c, a]) => Kit.mk('stop', {offset: o, 'stop-color': c, 'stop-opacity': a}, fire));
+      Kit.mk('rect', {x: W * .04, y: 0, width: W * .7, height: H * .42, fill: 'url(#fire)'}, rock);
+    }
+    Kit.mk('rect', {x: 0, y: ground, width: W, height: H - ground, rx: Math.min(10, H * .03), fill: 'url(#sand)'}, rock);
+    for (const g of GRAIN) Kit.mk('circle', {cx: 3 + g.u * (W - 6), cy: ground + 3 + g.v * (H - ground - 6), r: Math.max(.8, g.r * H * .008), fill: g.c < .5 ? '#c99b55' : '#fff4d8', opacity: .8}, rock);
+    // the piece, cut through: smooth top, jagged base
+    const N = 60; let d = '';
+    for (let i = 0; i <= N; i++) { const x = x0 + w * i / N; d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + top(x).toFixed(1); }
+    d += ` Q${x1 + W * .03} ${(top(x1) + bot(x1)) / 2} ${x1} ${bot(x1)}`;
+    for (let i = N; i >= 0; i--) { const x = x0 + w * i / N; d += 'L' + x.toFixed(1) + ' ' + bot(x).toFixed(1); }
+    d += ` Q${x0 - W * .03} ${(top(x0) + bot(x0)) / 2} ${x0} ${top(x0)}Z`;
+    Kit.mk('path', {d, fill: 'url(#glass)', stroke: '#3d6036', 'stroke-width': 1.2, 'stroke-linejoin': 'round'}, rock);
+    // bubbles inside
+    for (const b of BUB) {
+      const x = x0 + w * b.u, t0 = top(x), t1 = bot(x), y = t0 + (t1 - t0) * b.v, r = Math.max(1.2, b.r * H * .022);
+      Kit.mk('circle', {cx: x, cy: y, r, fill: '#d7ecc7', stroke: '#456c3d', 'stroke-width': .9, opacity: .95}, rock);
+      Kit.mk('circle', {cx: x - r * .35, cy: y - r * .35, r: r * .3, fill: '#fff', opacity: .7}, rock);
+    }
+    // the glassy skin on top
+    let hl = ''; for (let i = 2; i <= N - 2; i++) { const x = x0 + w * i / N; hl += (i > 2 ? 'L' : 'M') + x.toFixed(1) + ' ' + (top(x) + 2.2).toFixed(1); }
+    Kit.mk('path', {d: hl, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.6, opacity: .75, 'stroke-linecap': 'round'}, rock);
+    // sand stuck to the base
+    for (let i = 0; i < 46; i++) { const x = x0 + w * (i + .5) / 46, y = bot(x) - 1 + (JAG[i % JAG.length] - .5) * 3, r = Math.max(1.4, H * (.008 + JAG[(i * 7) % JAG.length] * .008)); Kit.mk('circle', {cx: x, cy: y, r, fill: JAG[(i * 3) % JAG.length] < .5 ? '#d8b06a' : '#f0d398', stroke: '#a8834a', 'stroke-width': .6}, rock); }
+    // beads and a dumbbell on the sand
+    const bead = (x, y, r) => { Kit.mk('circle', {cx: x, cy: y, r, fill: '#7fae69', stroke: '#3d6036', 'stroke-width': .9}, rock); Kit.mk('circle', {cx: x - r * .35, cy: y - r * .35, r: r * .32, fill: '#fff', opacity: .75}, rock); };
+    const u = Math.max(2.2, H * .018);
+    bead(bx - u * 3.2, by - u * .2, u * 1.1); bead(bx + u * 2.6, by - u * .4, u * .9); bead(bx + u * .2, by - u * 2.3, u * .7);
+    Kit.mk('rect', {x: bx - u * 1.2, y: by - u * .55, width: u * 2.4, height: u * 1.1, rx: u * .5, fill: '#7fae69', stroke: '#3d6036', 'stroke-width': .9}, rock);
+    bead(bx - u * 1.3, by, u); bead(bx + u * 1.3, by, u);
+    Kit.mk('text', {x: 0, y: fs * 1.1, fill: INK, 'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs, opacity: .75}, rock).textContent = 'Trinitite, cut in half · 1–3 cm thick';
+    if (finished) {
+      const dr = Math.max(2, H * .016);
+      // the drops fall between the caption and the piece, and only where there is room for them
+      const from = fs * 1.5 + dr * 4.8;
+      [[.12, .5], [.27, .3], [.41, .62], [.55, .4], [.68, .7], [.83, .48], [.94, .66]].forEach(([fu, fv]) => {
+        const x = x0 + w * fu, yTop = top(x), room = yTop - from - dr * 2.5;
+        if (room < dr * 1.5) return;
+        const y = from + room * fv;
+        Kit.mk('line', {x1: x, y1: y - dr * 4.5, x2: x, y2: y - dr * 1.4, stroke: '#5f8f55', 'stroke-width': dr * .45, opacity: .3, 'stroke-linecap': 'round'}, rock);
+        Kit.mk('ellipse', {cx: x, cy: y, rx: dr * .8, ry: dr * 1.05, fill: '#7fae69', stroke: '#3d6036', 'stroke-width': .8}, rock);
+      });
+    }
+
+    // The magnifier.
+    const L = Kit.mk('g', {id: 'lens'}, svg);
+    lens.r = Math.max(26, Math.min(W * .17, H * .24));
+    lens.handle = Kit.mk('line', {stroke: INK, 'stroke-width': Math.max(5, lens.r * .2), 'stroke-linecap': 'round'}, L);
+    lens.bg = Kit.mk('circle', {r: lens.r, fill: '#ffc340'}, L);
+    lens.view = Kit.mk('circle', {r: lens.r - 1, fill: 'url(#mag)'}, L);
+    lens.mag = mag;
+    lens.ring = Kit.mk('circle', {r: lens.r, fill: 'none', stroke: INK, 'stroke-width': Math.max(2.5, lens.r * .1)}, L);
+    lens.glint = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: .7, 'stroke-linecap': 'round'}, L);
+    move(lens.fx * W, lens.fy * H, false);
+  }
+
+  function move(x, y, check = true) {
+    const {W, H} = G, r = lens.r;
+    x = Math.max(r + 3, Math.min(W - r - 3, x)); y = Math.max(r + 3, Math.min(H - r - 3, y));
+    lens.x = x; lens.y = y; lens.fx = x / W; lens.fy = y / H;
+    lens.mag.setAttribute('patternTransform', `translate(${x} ${y}) scale(${ZOOM}) translate(${-x} ${-y})`);
+    for (const c of [lens.bg, lens.view, lens.ring]) { c.setAttribute('cx', x); c.setAttribute('cy', y); }
+    // the handle always points into the stage, so it never leaves it
+    const hx = x > W / 2 ? -1 : 1, hy = y > H * .55 ? -1 : 1, k = Math.SQRT1_2;
+    lens.handle.setAttribute('x1', x + hx * r * k); lens.handle.setAttribute('y1', y + hy * r * k); lens.handle.setAttribute('x2', x + hx * r * 1.75 * k); lens.handle.setAttribute('y2', y + hy * r * 1.75 * k);
+    lens.glint.setAttribute('d', `M${x - r * .62} ${y - r * .2} A${r * .66} ${r * .66} 0 0 1 ${x - r * .2} ${y - r * .62}`);
+    if (check) look();
+  }
+
+  // Which clue is under the lens.
+  function look() {
+    const {top, bot, x0, x1, bx, by} = G, x = lens.x, y = lens.y;
+    let k = null;
+    if (x > x0 + 6 && x < x1 - 6) {
+      const t0 = top(x), t1 = bot(x), t = t1 - t0;
+      if (Math.abs(y - t0) < t * .2) k = 'top';
+      else if (Math.abs(y - t1) < t * .22) k = 'under';
+      else if (y > t0 + t * .2 && y < t1 - t * .22) k = 'bubbles';
+    }
+    if (Math.hypot(x - bx, y - by) < lens.r * .9) k = 'beads';
+    if (!k || found.has(k) || finished) return;
+    found.add(k);
+    document.querySelector(`#clues [data-k="${k}"]`).classList.add('on');
+    say.innerHTML = CLUE[k] + (found.size < 4 ? ` <span style="opacity:.6">${found.size} of 4.</span>` : '');
+    if (!Kit.calm) gsap.from(say, {opacity: 0, y: 5, duration: .35, ease: 'power2.out'});
+    Kit.haptic(found.size === 4 ? 'success' : 'light');
+    if (found.size === 4) setTimeout(finish, Kit.calm ? 0 : 900);
+  }
+
+  function finish() {
+    if (finished) return;
+    finished = true;
+    say.innerHTML = '<b>In the air.</b> The fireball drew up sand, melted it at well over 1,400&nbsp;°C for a few seconds and rained it down as liquid glass, still faintly radioactive today.';
+    Kit.$('card').classList.add('answered');
+    Kit.show('keep');
+    requestAnimationFrame(() => { draw(); rain(); });
+  }
+  // The rain of molten glass, once, onto the piece.
+  function rain() {
+    if (Kit.calm || typeof gsap === 'undefined') return;
+    const {W, H, x0, w, top} = G, drops = Kit.mk('g', {}, svg);
+    for (let i = 0; i < 16; i++) {
+      const x = x0 + w * (.05 + .9 * ((i * 7) % 16) / 16), y = top(x), dr = Math.max(2, H * .016);
+      const e = Kit.mk('ellipse', {cx: x, cy: y - 2, rx: dr * .8, ry: dr, fill: '#7fae69', stroke: '#3d6036', 'stroke-width': .8}, drops);
+      gsap.fromTo(e, {attr: {cy: -10}, opacity: 1}, {attr: {cy: y - 2}, duration: .55, delay: i * .06, ease: 'power2.in', onComplete: () => gsap.to(e, {opacity: 0, duration: .4})});
+    }
+    setTimeout(() => drops.remove(), 2400);
+  }
+
+  // Dragging the lens: a finger holds it a little above the touch, so the eye can see what is under it.
+  let held = null;
+  const at = e => { const b = svg.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top - (e.pointerType === 'touch' ? lens.r * .9 : 0)]; };
+  svg.addEventListener('pointerdown', e => { held = e.pointerId; svg.setPointerCapture(e.pointerId); svg.classList.add('held'); const [x, y] = at(e); move(x, y); });
+  svg.addEventListener('pointermove', e => { if (held !== e.pointerId) return; const [x, y] = at(e); move(x, y); });
+  const up = e => { if (held !== e.pointerId) return; held = null; svg.classList.remove('held'); };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#lens', {opacity: 0, scale: .8, svgOrigin: `${lens.x} ${lens.y}`, duration: .5, ease: 'back.out(1.8)', delay: .2}); };
+  Kit.play.card = async () => {
+    const {x0, w, top, bot, bx, by} = G, wait = ms => new Promise(r => setTimeout(r, Kit.calm ? 20 : ms));
+    const path = [[x0 + w * .3, top(x0 + w * .3) + 3], [x0 + w * .5, (top(x0 + w * .5) + bot(x0 + w * .5)) / 2], [x0 + w * .72, bot(x0 + w * .72) - 2], [bx, by - 4]];
+    for (const [x, y] of path) { move(x, y); await wait(450); }
+    await wait(1800);
+  };
+})();
+Kit.single();
+</script>
+</html>

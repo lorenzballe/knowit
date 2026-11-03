@@ -1,0 +1,314 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The shade balls</title>
+<!-- The Los Angeles Reservoir from above, open to the sun, with red specks forming in the water. The
+     card opens on the common story (to stop evaporation in the drought); the reader sweeps a finger
+     over the water to pour the balls, they pack edge to edge, the water goes dark and the specks
+     stop. Only then are the specks named: bromate, made by sunlight from the water's natural bromide
+     and its disinfecting chlorine. Then "why black?": a white ball lets some light through and the
+     sun weakens it within months; carbon black blocks the light and shields the plastic for about
+     ten years. The specks and the bar are a picture of "no light, no reaction", not measurements.
+     Inspired by Veritasium, "Why Are 96,000,000 Black Balls on This Reservoir?" (2019).
+     Facts: LADWP statement on Silver Lake and Elysian, 14 Dec 2007; LADWP release on Ivanhoe,
+     9 Jun 2008; AP, 12 Jun 2008; National Geographic and NBC News, Aug 2015 (also for the drought
+     framing of the news); Plastics Technology (ptonline.com) on the white balls' eight months and
+     the black ones' ten years; Macalady et al., Science 195 (1977), sunlight-induced bromate in
+     chlorinated water.
+     Touch: drags, on the reservoir only, until it is covered; a tap there pours too. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+.res{position:relative;flex:1;min-height:0;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+.res.done{touch-action:auto;cursor:default}
+.res canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.res .tl,.res .bl{position:absolute;left:0;font:800 max(1.5cqh,11.5px)/1 var(--body);letter-spacing:.06em;pointer-events:none;white-space:nowrap}
+.res .tl{top:0}
+.res .bl{bottom:0;display:flex;align-items:center;gap:2.2cqw;text-transform:uppercase;letter-spacing:.12em}
+#track{display:block;width:21cqw;height:max(1.1cqh,7px);border-radius:99px;background:color-mix(in srgb,var(--k) 16%,transparent);overflow:hidden}
+#fill{display:block;height:100%;width:100%;background:#e8322b;border-radius:99px;transform-origin:left center}
+.cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:800 max(1.9cqh,13px)/1 var(--body);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.45);pointer-events:none;white-space:nowrap;transition:opacity .4s}
+.cap.off{opacity:0}
+.cap .hint{display:block;margin:1.3cqh auto 0;width:max(1.5cqh,10px);height:max(1.5cqh,10px);border-radius:50%;background:#fff;box-shadow:0 0 0 .55cqh rgba(255,255,255,.28);animation:sweep 1.9s ease-in-out infinite}
+@keyframes sweep{0%,100%{transform:translateX(-9cqw)}50%{transform:translateX(9cqw)}}
+.say .sun{background:#fff1a6;border-radius:.6cqh;padding:0 .8cqw;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.say .bro{color:#b3140c}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:700px){.answered .in{gap:1.5cqh}.answered .keep{padding-block:1.5cqh}}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Sweep to pour · the reservoir from above">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">POUR THE BALLS</span></div>
+    <h2 class="q">Why did Los Angeles pour 96 million black balls onto its drinking water?</h2>
+    <div class="stagebox res" id="res" data-drag>
+      <canvas id="cv" role="img" aria-label="The Los Angeles Reservoir seen from above under the sun, with red specks of bromate forming in the open water. Sweep across the water to pour black balls over it."></canvas>
+      <div class="tl num" id="count">0 balls</div>
+      <div class="bl"><span id="mlab">Red specks</span><i id="track"><b id="fill"></b></i></div>
+      <div class="cap" id="cap">Sweep to pour<i class="hint"></i></div>
+    </div>
+    <p class="say" id="say">News reports in 2015 said: to stop evaporation in the drought. Sweep to pour the balls, and watch the red specks.</p>
+    <button class="btn gone" id="go">Why black?</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The balls shade the water so a carcinogen can’t form. Saving water came second.</div>
+    <div class="foot"><span class="src">Source · LADWP on bromate, 2007 and 2008; National Geographic, Aug 2015</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const res = Kit.$('res'), cv = Kit.$('cv'), say = Kit.$('say'), go = Kit.$('go'), cap = Kit.$('cap');
+  const count = Kit.$('count'), fill = Kit.$('fill'), card = Kit.$('card'), mlab = Kit.$('mlab');
+  // 96 million balls on the Los Angeles Reservoir, the last ones in August 2015 (National Geographic;
+  // NBC News). TARGET is how many are drawn when the water is covered, each one standing for many.
+  const TOTAL = 96e6, TARGET = 300;
+  const BIRTH = 26;   // specks a second on open water: a picture, not a measurement
+  const SEE = .55;    // how much a white ball lets through, in the picture
+  const LIFE = 2300;
+  let ctx = null, W = 1, H = 1, g = null, spr = null;
+  let slots = [], balls = [], specks = [], rings = [], glints = [], probes = [], still = [], grid = new Map();
+  let used = 0, landed = 0, phase = 'pour', milky = 0, open = 1, shown = 1, acc = 0, raf = 0, prev = 0, quietSince = 0;
+  let down = false, px = 0, py = 0, run = 0, lastPour = 0, started = false;
+  const now = () => performance.now();
+  const R1 = Kit.rnd;
+
+  // The basin: an irregular oval, as the reservoir looks from the air.
+  const bump = t => 1 + .05 * Math.sin(2 * t + .7) + .035 * Math.cos(3 * t - .5) + .018 * Math.sin(5 * t + 1.3);
+  function geometry() {
+    const fs = parseFloat(getComputedStyle(count).fontSize) || 12;
+    const top = fs * 1.75, bot = fs * 1.75, rim = Math.max(4, Math.min(W, H) * .028);
+    const cx = W / 2, cy = top + (H - top - bot) / 2;
+    const a = (W / 2 - rim - 2) / 1.09, b = ((H - top - bot) / 2 - rim) / 1.09;
+    const R = t => { const c = Math.cos(t), s = Math.sin(t); return bump(t) * a * b / Math.hypot(b * c, a * s); };
+    const ring = extra => { const p = []; for (let i = 0; i < 200; i++) { const t = i / 200 * Math.PI * 2, r = R(t) + extra; p.push([cx + r * Math.cos(t), cy + r * Math.sin(t)]); } return p; };
+    const pts = ring(0);
+    let area = 0; for (let i = 0; i < pts.length; i++) { const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % pts.length]; area += x1 * y2 - x2 * y1; }
+    area = Math.abs(area) / 2;
+    // Balls packed edge to edge cover pi / (2 sqrt 3), about 91% of a surface.
+    const r = Math.sqrt(.9069 * area / (Math.PI * TARGET));
+    const inside = (x, y, m = 0) => { const dx = x - cx, dy = y - cy; return Math.hypot(dx, dy) <= R(Math.atan2(dy, dx)) - m; };
+    // Contour lines of the hills around it, each a little more irregular than the last.
+    const hills = [1, 2, 3, 4].map(k => { const p = []; for (let i = 0; i < 200; i++) { const t = i / 200 * Math.PI * 2, w = 1 + .022 * k * Math.sin(3 * t + 1.7) + .014 * k * Math.cos(5 * t - .4); const rr = (R(t) + rim) * (1 + .13 * k) * w; p.push([cx + rr * Math.cos(t), cy + rr * Math.sin(t)]); } return p; });
+    return {cx, cy, a, b, R, ring, pts, outer: ring(rim), hills, area, r, rim, inside, top, bot};
+  }
+
+  function makeSprite(kind) {
+    const r = g.r, s = Math.ceil(r * 2 + 8), d = devicePixelRatio || 1, c = document.createElement('canvas');
+    c.width = c.height = Math.ceil(s * d); const x = c.getContext('2d'); x.scale(d, d); const o = s / 2;
+    if (kind === 'black') { x.fillStyle = 'rgba(0,18,40,.32)'; x.beginPath(); x.arc(o - r * .16, o + r * .2, r * 1.02, 0, 7); x.fill(); }
+    const gr = x.createRadialGradient(o + r * .32, o - r * .38, r * .08, o, o, r);
+    if (kind === 'black') { gr.addColorStop(0, '#6a6f75'); gr.addColorStop(.42, '#24272a'); gr.addColorStop(1, '#050606'); }
+    else { gr.addColorStop(0, 'rgba(255,255,255,.92)'); gr.addColorStop(.55, 'rgba(240,244,242,.62)'); gr.addColorStop(1, 'rgba(214,224,222,.5)'); }
+    x.fillStyle = gr; x.beginPath(); x.arc(o, o, r, 0, 7); x.fill();
+    x.fillStyle = kind === 'black' ? 'rgba(255,255,255,.7)' : 'rgba(255,255,255,.95)';
+    x.beginPath(); x.ellipse(o + r * .36, o - r * .4, r * .2, r * .12, -.7, 0, 7); x.fill();
+    return {c, s};
+  }
+
+  function build() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const keepShare = phase !== 'pour' ? 1 : slots.length ? landed / slots.length : 0;
+    g = geometry(); spr = {black: makeSprite('black'), milky: makeSprite('milky')};
+    // Places for the balls: a close-packed (hexagonal) layer over the water.
+    slots = []; grid = new Map();
+    const r = g.r, dy = r * Math.sqrt(3);
+    for (let j = -80; j <= 80; j++) { const y = g.cy + j * dy; if (y < 0 || y > H) continue;
+      for (let i = -120; i <= 120; i++) { const x = g.cx + i * 2 * r + (j & 1 ? r : 0); if (x < 0 || x > W) continue;
+        if (g.inside(x, y, r * .8)) slots.push({x, y, used: false, on: false}); } }
+    // Against the bank the lattice leaves a ring of water: balls pushed up to the edge fill it.
+    for (let k = 0; k < 900; k++) {
+      const t = k / 900 * Math.PI * 2, rr = g.R(t) - r * .9, x = g.cx + rr * Math.cos(t), y = g.cy + rr * Math.sin(t);
+      if (slots.every(s => Math.hypot(s.x - x, s.y - y) >= r * 1.7)) slots.push({x, y, used: false, on: false});
+    }
+    slots.forEach((s, i) => { const k = Math.floor(s.x / (2 * r)) + ',' + Math.floor(s.y / (2 * r)); if (!grid.has(k)) grid.set(k, []); grid.get(k).push(i); });
+    // Points that sample the water, to tell how much of it is still in the sun.
+    probes = []; const step = Math.sqrt(g.area / 320);
+    for (let y = g.cy - g.b * 1.2; y < g.cy + g.b * 1.2; y += step) for (let x = g.cx - g.a * 1.2; x < g.cx + g.a * 1.2; x += step) if (g.inside(x, y, g.r * .45)) probes.push({x, y});
+    glints = []; for (let i = 0; i < 60; i++) { const p = randomIn(); glints.push({x: p.x, y: p.y, ph: R1() * 6.28, w: 1 + R1() * 1.8}); }
+    still = []; for (let i = 0; i < 46; i++) still.push(randomIn());
+    // A resize keeps the share of water already covered.
+    balls = []; used = landed = 0; specks = []; rings = [];
+    if (keepShare > 0) { const n = Math.round(keepShare * slots.length); order(g.cx, g.cy).slice(0, n).forEach(i => { slots[i].used = slots[i].on = true; used++; landed++; }); }
+    measure(); paint(now());
+    if (phase === 'spreading') covered();
+    if (!Kit.calm && !raf) loop();
+  }
+  function randomIn() { for (let k = 0; k < 400; k++) { const x = g.cx + (R1() * 2 - 1) * g.a * 1.12, y = g.cy + (R1() * 2 - 1) * g.b * 1.12; if (g.inside(x, y, g.r * .45)) return {x, y}; } return {x: g.cx, y: g.cy}; }
+  const order = (x, y) => slots.map((s, i) => i).sort((p, q) => Math.hypot(slots[p].x - x, slots[p].y - y) - Math.hypot(slots[q].x - x, slots[q].y - y));
+  // Is this point of the water shaded by a ball (the cusps between packed balls are in their shadow)?
+  function shaded(x, y) {
+    const r = g.r, cx = Math.floor(x / (2 * r)), cy = Math.floor(y / (2 * r));
+    for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) for (const i of grid.get((cx + a) + ',' + (cy + b)) || []) { const s = slots[i]; if (s.on && Math.hypot(s.x - x, s.y - y) < r * 1.13) return true; }
+    return false;
+  }
+  function measure() {
+    let lit = 0; for (const p of probes) if (!shaded(p.x, p.y)) lit++;
+    open = probes.length ? lit / probes.length : 1;
+    const n = Math.round(TOTAL * landed / Math.max(1, slots.length) / 1e4) * 1e4;
+    count.textContent = (landed >= slots.length ? TOTAL : n).toLocaleString('en-US') + ' balls';
+  }
+  // Once the cover is whole, the last slivers of water by the bank are in the shade of the bank and the balls.
+  const full = () => slots.length && landed >= slots.length;
+  const openNow = () => full() ? 0 : open;
+  const lightNow = () => openNow() + SEE * milky * (1 - openNow());
+
+  function pour(x, y, k, drop) {
+    const t = now();
+    for (let n = 0; n < k && used < slots.length; n++) {
+      let best = -1, bd = 1e12;
+      for (let i = 0; i < slots.length; i++) if (!slots[i].used) { const d = (slots[i].x - x) ** 2 + (slots[i].y - y) ** 2; if (d < bd) { bd = d; best = i; } }
+      if (best < 0) break;
+      const s = slots[best]; s.used = true; used++;
+      if (Kit.calm) { s.on = true; landed++; continue; }
+      const jx = (R1() - .5) * g.r * 2, jy = (R1() - .5) * g.r * 2;
+      balls.push(drop ? {s, x0: s.x, y0: s.y, t0: t + drop * n, dur: 260, drop: true} : {s, x0: x + jx, y0: y + jy, t0: t + n * 16, dur: 220 + Math.sqrt(bd) * 2.2});
+    }
+    if (!Kit.calm && !drop) rings.push({x, y, t});
+    if (Kit.calm) { measure(); paint(now()); if (landed >= slots.length) covered(); }
+    if (!started) { started = true; cap.classList.add('off'); }
+    if (phase === 'pour' && used >= slots.length * .72) finish(x, y);
+  }
+  // Once most of the water is covered the rest of the balls spread over it by themselves.
+  function finish(x, y) {
+    if (phase !== 'pour') return;
+    phase = 'spreading';
+    const rest = order(x, y).filter(i => !slots[i].used);
+    if (Kit.calm) { rest.forEach(i => { slots[i].used = slots[i].on = true; used++; landed++; }); measure(); paint(now()); covered(); return; }
+    const t = now();
+    rest.forEach((i, n) => { const s = slots[i]; s.used = true; used++; balls.push({s, x0: s.x, y0: s.y, t0: t + 120 + n * (900 / rest.length), dur: 260, drop: true}); });
+  }
+  function covered() {
+    if (phase === 'covered' || phase === 'milky' || phase === 'black') return;
+    phase = 'covered'; down = false;
+    res.classList.add('done'); res.setAttribute('data-drag', 'off');
+    Kit.haptic('success');
+    say.innerHTML = 'The red was <b class="bro">bromate</b>, a suspected carcinogen: <span class="sun">sunlight</span> makes it from the water’s natural bromide and its chlorine. Shade stops it.';
+    mlab.textContent = 'Bromate: stopped';
+    go.textContent = 'Why black?'; Kit.show('go');
+  }
+
+  function tween(to, dur) {
+    if (Kit.calm || typeof gsap === 'undefined') { milky = to; paint(now()); return; }
+    const o = {v: milky}; gsap.to(o, {v: to, duration: dur, ease: 'power2.inOut', onUpdate: () => { milky = o.v; }});
+    if (!raf) loop();
+  }
+  go.addEventListener('click', () => {
+    if (phase === 'covered') {
+      phase = 'milky'; tween(1, .8); Kit.haptic('light');
+      say.innerHTML = 'A white ball lets some <span class="sun">light</span> through, and the sun weakens it: in tests, white balls lost strength within eight months.';
+      mlab.textContent = 'Bromate forming';
+      go.textContent = 'Make them black';
+    } else if (phase === 'milky') {
+      phase = 'black'; tween(0, .8); Kit.haptic('success');
+      say.innerHTML = 'Carbon black stops the light and shields the plastic from UV: a black ball should last about ten years.';
+      mlab.textContent = 'Bromate: stopped';
+      Kit.hide('go'); card.classList.add('answered'); Kit.show('keep');
+    }
+  });
+
+  // ---------- drawing ----------
+  function path(p) { ctx.beginPath(); p.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); }
+  function paint(t) {
+    if (!ctx) return;
+    const x = ctx, r = g.r; x.clearRect(0, 0, W, H);
+    // the hills round the basin, as contour lines on a map
+    x.lineWidth = 1; x.strokeStyle = 'rgba(16,16,12,.13)';
+    for (const ring of g.hills) { path(ring); x.stroke(); }
+    // the bank, then the water
+    path(g.outer); x.fillStyle = '#eef8f2'; x.fill(); x.lineWidth = 1.4; x.strokeStyle = '#10100c'; x.stroke();
+    path(g.pts); const wg = x.createLinearGradient(0, g.cy - g.b, 0, g.cy + g.b); wg.addColorStop(0, '#1a78b4'); wg.addColorStop(1, '#0b4c78'); x.fillStyle = wg; x.fill();
+    x.save(); path(g.pts); x.clip();
+    // sun glitter on open water
+    x.lineCap = 'round'; x.strokeStyle = '#ffffff';
+    for (const q of glints) { const a = Kit.calm ? .4 : .18 + .4 * (.5 + .5 * Math.sin(t / 420 + q.ph)); x.globalAlpha = a; x.lineWidth = 1.3; x.beginPath(); x.moveTo(q.x - q.w, q.y + q.w * .45); x.lineTo(q.x + q.w, q.y - q.w * .45); x.stroke(); }
+    x.globalAlpha = 1;
+    // bromate specks
+    const rs = Math.max(2.2, r * .46);
+    const dot = (px, py, k) => { x.globalAlpha = k; x.fillStyle = '#ff4234'; x.beginPath(); x.arc(px, py, rs, 0, 7); x.fill(); x.globalAlpha = k * .9; x.fillStyle = '#ffd2cc'; x.beginPath(); x.arc(px - rs * .3, py - rs * .3, rs * .34, 0, 7); x.fill(); };
+    if (Kit.calm) { for (const p of still) { const sh = full() || shaded(p.x, p.y); if (!sh || milky > .5) dot(p.x, p.y, sh ? .75 : 1); } }
+    else for (const s of specks) { const age = t - s.t, grow = Math.min(1, age / 260), fade = Math.min(1, (LIFE - age) / 700); if (fade > 0) { x.save(); x.translate(s.x, s.y); x.scale(grow, grow); x.translate(-s.x, -s.y); dot(s.x, s.y, fade); x.restore(); } }
+    x.globalAlpha = 1;
+    // splash rings where the balls go in
+    for (const q of rings) { const k = (t - q.t) / 600; if (k < 0 || k > 1) continue; x.globalAlpha = (1 - k) * .7; x.strokeStyle = '#ffffff'; x.lineWidth = 1.4; x.beginPath(); x.arc(q.x, q.y, r * (1 + k * 3), 0, 7); x.stroke(); }
+    x.globalAlpha = 1;
+    // the balls that have landed
+    const B = spr.black, M = spr.milky, h = B.s / 2;
+    for (const s of slots) if (s.on) {
+      if (milky < 1) { x.globalAlpha = 1 - milky * .999; x.drawImage(B.c, s.x - h, s.y - h, B.s, B.s); }
+      if (milky > 0) { x.globalAlpha = milky; x.drawImage(M.c, s.x - h, s.y - h, M.s, M.s); }
+    }
+    x.globalAlpha = 1;
+    // the ones still rolling or dropping in
+    for (const b of balls) {
+      const k = (t - b.t0) / b.dur; if (k < 0) continue;
+      const e = 1 - Math.pow(1 - Math.min(1, k), 3);
+      const bx = b.x0 + (b.s.x - b.x0) * e, by = b.y0 + (b.s.y - b.y0) * e, sc = b.drop ? 1.5 - .5 * e : 1.18 - .18 * e;
+      x.globalAlpha = b.drop ? Math.min(1, k * 2.5) : 1;
+      x.drawImage(B.c, bx - h * sc, by - h * sc, B.s * sc, B.s * sc);
+    }
+    x.globalAlpha = 1; x.restore();
+    // the inner lip of the bank, over the edge of the balls pressed against it
+    path(g.pts); x.lineWidth = r * .7; x.strokeStyle = '#eef8f2'; x.stroke();
+    path(g.ring(-r * .35)); x.lineWidth = 1; x.strokeStyle = 'rgba(16,16,12,.3)'; x.stroke();
+    // the sun, top right
+    const sr = Math.max(9, Math.min(H * .085, W * .05)), sx = W - sr * 1.9, sy = sr * 1.55;
+    x.strokeStyle = '#10100c'; x.lineWidth = 1.6; x.lineCap = 'round';
+    for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2 + (Kit.calm ? 0 : t / 9000); x.beginPath(); x.moveTo(sx + Math.cos(a) * sr * 1.28, sy + Math.sin(a) * sr * 1.28); x.lineTo(sx + Math.cos(a) * sr * 1.72, sy + Math.sin(a) * sr * 1.72); x.stroke(); }
+    x.fillStyle = '#ffe866'; x.beginPath(); x.arc(sx, sy, sr, 0, 7); x.fill(); x.stroke();
+    // the meter
+    if (Kit.calm) shown = lightNow();
+    fill.style.transform = `scaleX(${Math.max(0, Math.min(1, shown)).toFixed(3)})`;
+  }
+
+  function loop() {
+    raf = requestAnimationFrame(loop);
+    const t = now(), dt = Math.min(.05, (t - (prev || t)) / 1000); prev = t;
+    // pour while the finger is held still
+    if (down && phase === 'pour' && t - lastPour > 70) { lastPour = t; pour(px, py, 1); }
+    // balls that arrive
+    let changed = false;
+    balls = balls.filter(b => { if (t >= b.t0 + b.dur) { b.s.on = true; landed++; changed = true; return false; } return true; });
+    if (changed) { measure(); if (landed >= slots.length && phase === 'spreading') covered(); }
+    rings = rings.filter(q => t - q.t < 600);
+    // new bromate where light reaches the water
+    acc += BIRTH * dt;
+    while (acc >= 1) { acc -= 1; const p = randomIn(), sh = full() || shaded(p.x, p.y); if (!sh || R1() < SEE * milky) specks.push({x: p.x, y: p.y, t}); }
+    specks = specks.filter(s => t - s.t < LIFE);
+    shown += (lightNow() - shown) * (1 - Math.exp(-dt / .45));
+    paint(t);
+    // at the end, once all is still, stop
+    const quiet = phase === 'black' && milky < .001 && !specks.length && !balls.length && Math.abs(shown - lightNow()) < .002;
+    if (!quiet) quietSince = 0; else if (!quietSince) quietSince = t; else if (t - quietSince > 400) { cancelAnimationFrame(raf); raf = 0; prev = 0; }
+  }
+
+  // ---------- the finger ----------
+  const at = e => { const b = cv.getBoundingClientRect(); return {x: e.clientX - b.left, y: e.clientY - b.top}; };
+  res.addEventListener('pointerdown', e => {
+    if (phase !== 'pour') return;
+    const p = at(e); if (!g.inside(p.x, p.y, -g.rim * 2)) return;
+    down = true; res.setPointerCapture?.(e.pointerId); px = p.x; py = p.y; run = 0; lastPour = now();
+    pour(px, py, 6); e.preventDefault();
+  });
+  res.addEventListener('pointermove', e => {
+    if (!down || phase !== 'pour') return;
+    const p = at(e); run += Math.hypot(p.x - px, p.y - py); px = p.x; py = p.y;
+    while (run > g.r * 1.05 && phase === 'pour') { run -= g.r * 1.05; pour(px, py, 3); lastPour = now(); }
+  });
+  const up = () => { down = false; };
+  res.addEventListener('pointerup', up); res.addEventListener('pointercancel', up);
+
+  if (typeof ResizeObserver !== 'undefined') { let w0 = 0, h0 = 0; new ResizeObserver(() => { const b = res.getBoundingClientRect(); if (Math.abs(b.width - w0) < 1 && Math.abs(b.height - h0) < 1) return; w0 = b.width; h0 = b.height; if (ctx) build(); }).observe(res); }
+  Kit.onShow.card = build;
+  // Played through: a sweep across the water, the rest spreads, then why black and back.
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    if (phase === 'pour') {
+      for (let i = 0; i <= 12 && phase === 'pour'; i++) { const u = i / 12; pour(g.cx - g.a * .8 + u * g.a * 1.6, g.cy + Math.sin(u * 6) * g.b * .4, 8); }
+      if (phase === 'pour') finish(g.cx, g.cy);
+    }
+    for (let i = 0; i < 40 && phase !== 'covered'; i++) await wait(Kit.calm ? 10 : 100);
+    go.click(); await wait(Kit.calm ? 20 : 900);
+    go.click(); await wait(Kit.calm ? 20 : 300);
+  };
+})();
+Kit.single();
+</script>
+</html>

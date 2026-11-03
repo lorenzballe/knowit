@@ -1,0 +1,38 @@
+{
+  "id": "technology-predictable-safing",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why must a nuclear weapon's safing mechanism be perfectly predictable?",
+  "answer": "A nuclear weapon's safing mechanism may sit unused in a silo for decades. Only when all the proper inputs are given should the hole line up with the laser beam. So the mechanism must work exactly as designed after all that time, with no surprises.",
+  "move": "A device that waits for decades must still behave exactly as designed.",
+  "keywords": [
+    "nuclear weapons",
+    "safing mechanism",
+    "missile silo",
+    "reliability",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card titled Safe Design. It asks why a nuclear weapon's safing mechanism must be perfectly predictable, offers four reasons to pick from, and asks how sure the reader is. A reveal explains the device may sit in a silo for decades. The card shows a silo and a close-up of the mechanism.",
+    "graded": false
+  },
+  "source": "Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=97t7Xj_iBv0&t=668s",
+  "written": "2026-11-03"
+}

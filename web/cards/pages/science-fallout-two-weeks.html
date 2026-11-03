@@ -1,0 +1,135 @@
+<!doctype html>
+<!-- slug: science-fallout-two-weeks -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#read{font:700 max(2.6cqh,15px)/1.2 var(--mono);color:var(--k);display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;flex-wrap:wrap}
+#read .pc{font:800 max(4.6cqh,22px)/1 var(--display)}
+#read .dy{font:600 max(1.9cqh,13px)/1.2 var(--body);color:var(--muted)}
+#g{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · time">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FALLOUT</span></div>
+    <h2 class="q">What fraction of initial fallout radiation remains after about two weeks?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read"><span class="pc" id="pc">100%</span><span class="dy" id="dy">Day 0 · right after the blast</span></div>
+      <svg id="g" aria-label="Fallout radiation over fourteen days"></svg>
+    </div>
+    <p class="say" id="say">Drag across the chart to move time forward, day by day.</p>
+    <div id="why" class="gone"><p class="big">About 1 % is left</p><p class="body">The fiercest radiation fades first. After about two weeks only about 1 % of the starting level remains: far safer, still not harmless. With food, the video advises staying sheltered about a month.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two weeks of shelter cuts fallout radiation to about 1 %.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const DAYS = 14, K = Math.log(100) / DAYS;
+const pct = d => 100 * Math.exp(-K * d);
+let day = 0, done = false, G = null, down = false;
+
+function fmt(p){ return p >= 10 ? Math.round(p) + '%' : p.toFixed(1) + '%'; }
+
+function update(){
+  if (!G) return;
+  const {X, Y, line, area, dot, vl, end, endT} = G;
+  let pts = [];
+  for (let d = 0; d <= day + 1e-6; d += 0.1) pts.push([X(d), Y(pct(d))]);
+  pts.push([X(day), Y(pct(day))]);
+  const dl = 'M' + pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L');
+  line.setAttribute('d', dl);
+  area.setAttribute('d', dl + `L${X(day)},${Y(0)}L${X(0)},${Y(0)}Z`);
+  dot.setAttribute('cx', X(day)); dot.setAttribute('cy', Y(pct(day)));
+  vl.setAttribute('x1', X(day)); vl.setAttribute('x2', X(day));
+  const p = pct(day);
+  Kit.$('pc').textContent = fmt(p);
+  const dd = Math.round(day);
+  Kit.$('dy').textContent = dd === 0 ? 'Day 0 · right after the blast' : `Day ${dd} · of the first level left`;
+  end.style.opacity = done ? 1 : 0; endT.style.opacity = done ? 1 : 0;
+}
+
+function finish(){
+  if (done) return; done = true; day = DAYS; update();
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  if (!Kit.calm && G) gsap.fromTo(G.dot, {attr: {r: G.f * 1.6}}, {attr: {r: G.f * .7}, duration: .6, ease: 'elastic.out(1,.5)'});
+}
+
+function setFromX(cx){
+  if (!G) return;
+  const r = Kit.$('g').getBoundingClientRect();
+  const x = (cx - r.left) * (G.W / r.width);
+  let d = (x - G.pl) / (G.W - G.pl - G.pr) * DAYS;
+  d = Math.max(0, Math.min(DAYS, d));
+  if (done) return;
+  if (Math.round(d) !== Math.round(day)) Kit.haptic('selection');
+  day = Math.max(day, d);
+  if (day >= DAYS - 0.15) { finish(); return; }
+  update();
+}
+
+const svg = Kit.$('g');
+svg.addEventListener('pointerdown', e => { down = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} setFromX(e.clientX); });
+svg.addEventListener('pointermove', e => { if (down) setFromX(e.clientX); });
+svg.addEventListener('pointerup', () => down = false);
+svg.addEventListener('pointercancel', () => down = false);
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * .85);
+  const pl = fs * 3.4, pr = fs * 1.2, pt = fs * 1.2, pb = fs * 2.2;
+  const X = d => pl + d / DAYS * (W - pl - pr);
+  const Y = p => pt + (1 - p / 100) * (H - pt - pb);
+  const ink = 'var(--k)';
+  // grid + y labels
+  [100, 50, 10].forEach(p => {
+    Kit.mk('line', {x1: pl, x2: W - pr, y1: Y(p), y2: Y(p), stroke: ink, 'stroke-opacity': .15, 'stroke-width': 1}, svg);
+    const t = Kit.mk('text', {x: pl - fs * .5, y: Y(p) + fs * .35, 'text-anchor': 'end', fill: ink, 'fill-opacity': .7, 'font-size': fs, 'font-family': 'var(--mono)'}, svg);
+    t.textContent = p + '%';
+  });
+  // x axis
+  Kit.mk('line', {x1: pl, x2: W - pr, y1: Y(0), y2: Y(0), stroke: ink, 'stroke-width': 2}, svg);
+  Kit.mk('line', {x1: pl, x2: pl, y1: pt, y2: Y(0), stroke: ink, 'stroke-width': 2}, svg);
+  for (let d = 0; d <= DAYS; d++) Kit.mk('line', {x1: X(d), x2: X(d), y1: Y(0), y2: Y(0) + fs * .35, stroke: ink, 'stroke-width': d % 7 ? 1 : 2}, svg);
+  [[0, 'day 0', 'start'], [7, 'day 7', 'middle'], [14, 'day 14', 'end']].forEach(([d, s, a]) => {
+    const t = Kit.mk('text', {x: X(d), y: Y(0) + fs * 1.6, 'text-anchor': a, fill: ink, 'font-size': fs, 'font-family': 'var(--mono)', 'font-weight': 700}, svg);
+    t.textContent = s;
+  });
+  // faint ghost of the whole curve
+  let gp = []; for (let d = 0; d <= DAYS + 1e-6; d += 0.2) gp.push(X(d).toFixed(1) + ',' + Y(pct(d)).toFixed(1));
+  Kit.mk('path', {d: 'M' + gp.join('L'), fill: 'none', stroke: ink, 'stroke-opacity': .18, 'stroke-width': 2, 'stroke-dasharray': '4 6'}, svg);
+  const area = Kit.mk('path', {fill: ink, 'fill-opacity': .14}, svg);
+  const line = Kit.mk('path', {fill: 'none', stroke: ink, 'stroke-width': Math.max(3, f * .28), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  const vl = Kit.mk('line', {y1: pt, y2: Y(0), stroke: ink, 'stroke-opacity': .35, 'stroke-width': 1.5, 'stroke-dasharray': '3 4'}, svg);
+  const end = Kit.mk('line', {x1: pl, x2: W - pr, y1: Y(1), y2: Y(1), stroke: ink, 'stroke-width': 1.5, 'stroke-dasharray': '6 4'}, svg);
+  const endT = Kit.mk('text', {x: W - pr - fs * 1.4, y: Y(1) - fs * 1.4, 'text-anchor': 'end', fill: ink, 'font-size': fs * 1.15, 'font-family': 'var(--display)', 'font-weight': 800}, svg);
+  endT.textContent = '≈ 1 % left';
+  const dot = Kit.mk('circle', {r: f * .7, fill: ink, stroke: 'var(--c)', 'stroke-width': 3}, svg);
+  G = {X, Y, W, H, f, pl, pr, line, area, dot, vl, end, endT};
+  update();
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.dot, {attr: {r: G.f * .7}}, {attr: {r: G.f * 1.1}, duration: .6, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), y = r.top + r.height / 2;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', r.left + 2);
+  for (let i = 1; i <= 20; i++) { ev('pointermove', r.left + r.width * i / 20); await new Promise(z => setTimeout(z, 20)); }
+  ev('pointerup', r.right - 1);
+  await new Promise(z => setTimeout(z, 800));
+};
+Kit.single();
+</script>
+</html>

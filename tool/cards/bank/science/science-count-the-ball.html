@@ -1,0 +1,250 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Counting a silicon ball</title>
+<!-- The Avogadro project's 1 kg ball of silicon-28: the reader guesses how many atoms it holds (a power of
+     ten, then how sure), and the card counts them the way the physicists did, without counting one:
+     light measures the ball (93.7 mm), X-rays measure the crystal's cell (0.543 nm, 8 atoms), then
+     cells across, cubed, trimmed to a ball (52% of its box), times 8.
+     Figures: d = 93.72 mm for 1 kg of 28Si (Andreas et al., PRL 106, 030801, 2011: "about 93.7 mm");
+     a = sqrt(8) * d220 = sqrt(8) * 192.0147 pm = 543.10 pm (INRIM, Massa et al. 2010/2015); 8 atoms per
+     cubic cell; N = 1000 g / 27.977 g/mol * 6.02214076e23 = 2.15e25; XRCD uncertainty 2e-8 (2015),
+     1.2e-8 (Bartl et al., Metrologia 54, 693, 2017); XRCD and Kibble balance: the two primary
+     realisations of the 2019 kilogram (BIPM mise en pratique).
+     Inspired by Veritasium, "World's Roundest Object!". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.6cqh;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#opts{display:flex;gap:2.2cqw}
+.opt{flex:1;font:800 max(2.6cqh,16px)/1 var(--display);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 0 1.3cqh;cursor:pointer;font-variant-numeric:lining-nums}
+.opt sup{font-size:.62em;vertical-align:.62em;line-height:0;margin-left:.04em}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#sum{display:flex;flex-direction:column;gap:.2cqh;margin:0}
+#sum .r{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw;padding:.55cqh 0;border-bottom:.15cqh solid color-mix(in srgb,var(--k) 22%,transparent);opacity:0}
+#sum .r.on{opacity:1}
+#sum .r span{font:600 max(1.6cqh,11.5px)/1.2 var(--body);opacity:.72}
+#sum .r b{font:800 max(1.85cqh,13px)/1.2 var(--body);font-variant-numeric:tabular-nums;white-space:nowrap}
+#sum .r b sup{font-size:max(.72em,9.5px);vertical-align:.5em;line-height:0}
+#sum .r:last-child{border-bottom:0}
+#sum .r i{font-style:normal;box-shadow:inset 0 -.32cqh 0 #e8352b}
+#sum .r:last-child b{font:900 max(2.3cqh,15px)/1.1 var(--display)}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:540px){.answered #say{display:none}}
+@container (max-height:700px){
+  .answered #stage{gap:1cqh}
+  .answered .keep{padding:1.5cqh 5cqw}
+}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT BY MEASURING</span></div>
+    <h2 class="q">Physicists know how many atoms are in this 1 kg silicon ball, without counting one. Roughly how many?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A polished one-kilogram silicon ball on a stand, with a magnifier on its crystal."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">10<sup>15</sup></button>
+        <button class="opt" data-i="1">10<sup>20</sup></button>
+        <button class="opt" data-i="2">10<sup>25</sup></button>
+        <button class="opt" data-i="3">10<sup>30</sup></button>
+      </div>
+      <div id="sum" class="gone">
+        <div class="r"><span><i>93.7 mm</i> ÷ <i>0.543 nm</i></span><b>172.6 million cells across</b></div>
+        <div class="r"><span>cubed: a box round the ball</span><b>5.14 × 10<sup>24</sup> cells</b></div>
+        <div class="r"><span>× 0.52: the ball's share</span><b>2.69 × 10<sup>24</sup> cells</b></div>
+        <div class="r"><span>× 8 atoms in every cell</span><b>2.15 × 10<sup>25</sup> atoms</b></div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a power of ten, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Measure the whole and one repeating piece, then divide: that counts a book's pages, or a ball's atoms.</div>
+    <div class="foot"><span class="src">Source · Andreas et al., Phys. Rev. Lett. 106, 030801 (2011); Bartl et al., Metrologia 54, 693 (2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const RIGHT = 2, SAID = ['10¹⁵', '10²⁰', '10²⁵', '10³⁰'];
+  const svg = Kit.$('pic'), INK = '#10100c', RED = '#e8352b';
+  let pick = -1, phase = 0, building = false;
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const txt = (x, y, s, a, parent = svg) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-weight': 700}, a), parent); e.textContent = s; return e; };
+
+  // The unit cell, drawn as a cube shifted by an eighth of a cell so that exactly its own 8 atoms sit inside.
+  const DIAMOND = (() => {
+    const fcc = [[0, 0, 0], [0, .5, .5], [.5, 0, .5], [.5, .5, 0]], all = [];
+    for (let i = -1; i <= 2; i++) for (let j = -1; j <= 2; j++) for (let k = -1; k <= 2; k++) for (const f of fcc) for (const t of [0, .25]) all.push([i + f[0] + t, j + f[1] + t, k + f[2] + t]);
+    const q = .125, inside = p => p.every(v => v > q - 1e-9 && v < q + 1 - 1e-9);
+    const atoms = all.filter(inside), bonds = [];
+    const key = p => p.map(v => v.toFixed(3)).join();
+    const seen = new Set();
+    for (const a of atoms) for (const b of all) {
+      const d = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+      if (Math.abs(d - Math.sqrt(3) / 4) > 1e-6) continue;
+      if (inside(b)) { const k2 = [key(a), key(b)].sort().join('|'); if (seen.has(k2)) continue; seen.add(k2); bonds.push([a, b, 1]); }
+      else bonds.push([a, b, .42]);
+    }
+    return {atoms, bonds, q};
+  })();
+
+  let last = null;
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(11, Math.min(14, H / 11));
+    // Before the count, the ball alone in the middle; from the first measure on, ball and magnifier side by side.
+    let R, cx, mr = 0, mx = 0, caps;
+    // Room under the ball: the box round it (phase 2) reaches 0.16 R further down and up, then the caption.
+    const fit = withCaps => (H - (withCaps ? fs * 2.4 : 2) - 4) / 2.36;
+    if (phase === 0) {
+      caps = fit(true) >= 30;
+      R = Math.max(16, Math.min(W * .3, fit(caps))); cx = W / 2;
+    } else {
+      caps = Math.min(W * .22, fit(true)) >= 36;
+      R = Math.max(16, Math.min(W * .22, fit(caps)));
+      mr = R * .86; const gap = R * .5;
+      // centre the whole: from the box's left edge (1.19 R left of the ball's centre) to the lens's right edge
+      cx = (W - 4.41 * R) / 2 + 1.19 * R; mx = cx + R + gap + mr;
+    }
+    const need = R * 2.34 + (caps ? fs * 2.4 : 2) + 4, cy = R * 1.17 + 2 + Math.max(0, (H - need) / 2), my = cy;
+    const defs = Kit.mk('defs', {}, svg);
+    const g1 = Kit.mk('radialGradient', {id: 'chrome', cx: '36%', cy: '28%', r: '80%'}, defs);
+    [['0', '#ffffff'], ['.25', '#eef3f2'], ['.52', '#aab7b4'], ['.8', '#55625f'], ['1', '#2b3331']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, g1));
+    const g2 = Kit.mk('linearGradient', {id: 'floor', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+    [['0', '#0c3f30'], ['.55', '#1f7a5d'], ['1', '#5fcaa5']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, g2));
+    const clip = Kit.mk('clipPath', {id: 'ball'}, defs); Kit.mk('circle', {cx, cy, r: R}, clip);
+    const clipM = Kit.mk('clipPath', {id: 'lens'}, defs); Kit.mk('circle', {cx: mx, cy: my, r: Math.max(1, mr - 1.5)}, clipM);
+
+    // The box round the ball (phase 2), behind the ball.
+    const box = Kit.mk('g', {id: 'box', opacity: phase >= 2 ? (phase >= 3 ? .35 : 1) : 0}, svg);
+    const d = R * .5, ddx = d * .766, ddy = -d * .643;
+    const fx = cx - ddx / 2, fy = cy - ddy / 2, bx = cx + ddx / 2, by = cy + ddy / 2;
+    const sq = (x, y) => [[x - R, y - R], [x + R, y - R], [x + R, y + R], [x - R, y + R]];
+    const F = sq(fx, fy), B = sq(bx, by), line = (p, q, dash) => Kit.mk('line', {x1: p[0], y1: p[1], x2: q[0], y2: q[1], stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': dash ? '4 4' : 'none', 'stroke-linecap': 'round'}, box);
+    for (let i = 0; i < 4; i++) { line(B[i], B[(i + 1) % 4], true); line(F[i], B[i], i === 3); }
+    for (let i = 0; i < 4; i++) line(F[i], F[(i + 1) % 4], false);
+
+    // The ball: polished silicon, the green room reflected in its lower half.
+    const ball = Kit.mk('g', {id: 'ballg'}, svg);
+    Kit.mk('ellipse', {cx, cy: cy + R * .98, rx: R * .52, ry: R * .1, fill: 'none', stroke: INK, 'stroke-width': 2, opacity: .55}, ball);
+    Kit.mk('circle', {cx, cy, r: R, fill: 'url(#chrome)'}, ball);
+    const refl = Kit.mk('g', {'clip-path': 'url(#ball)'}, ball);
+    Kit.mk('path', {d: `M${cx - R} ${cy + R * .08} Q${cx} ${cy - R * .1} ${cx + R} ${cy + R * .08} L${cx + R} ${cy + R} L${cx - R} ${cy + R}Z`, fill: 'url(#floor)', opacity: .95}, refl);
+    Kit.mk('ellipse', {cx, cy: cy + R * .62, rx: R * .7, ry: R * .16, fill: '#10100c', opacity: .12}, refl);
+    Kit.mk('rect', {x: cx - R * .62, y: cy - R * .62, width: R * .26, height: R * .34, rx: R * .05, fill: '#fff', opacity: .8, transform: `rotate(-14 ${cx} ${cy})`}, refl);
+    Kit.mk('rect', {x: cx - R * .3, y: cy - R * .7, width: R * .18, height: R * .3, rx: R * .04, fill: '#fff', opacity: .55, transform: `rotate(-6 ${cx} ${cy})`}, refl);
+    Kit.mk('circle', {cx, cy, r: R - .7, fill: 'none', stroke: '#ffffff', 'stroke-opacity': .35, 'stroke-width': 1.4}, ball);
+    Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: INK, 'stroke-opacity': .25, 'stroke-width': 1}, ball);
+    // The ball's share of the box (phase 3).
+    if (phase >= 3) Kit.mk('circle', {id: 'share', cx, cy, r: R + 2.5, fill: 'none', stroke: INK, 'stroke-width': 2.4}, svg);
+
+    // The laser across the ball and the width it reads (phase 1).
+    const laser = Kit.mk('g', {id: 'laser', opacity: phase >= 1 ? 1 : 0}, svg);
+    Kit.mk('line', {x1: cx - R, y1: cy, x2: cx + R, y2: cy, stroke: RED, 'stroke-width': 2, 'stroke-linecap': 'round'}, laser);
+    [cx - R, cx + R].forEach(x => Kit.mk('circle', {cx: x, cy, r: 3, fill: RED}, laser));
+    const dimY = cy + R * 1.17 + fs * .55;
+    if (caps) {
+      Kit.mk('line', {x1: cx - R, y1: dimY, x2: cx + R, y2: dimY, stroke: INK, 'stroke-width': 1.4}, laser);
+      [cx - R, cx + R].forEach(x => Kit.mk('line', {x1: x, y1: dimY - fs * .35, x2: x, y2: dimY + fs * .35, stroke: INK, 'stroke-width': 1.4}, laser));
+      txt(cx, dimY + fs * 1.35, phase >= 1 ? '93.7 mm, by laser' : '1 kg of silicon-28', {'font-size': fs, 'text-anchor': 'middle', id: 'balltxt'});
+    } else if (phase >= 1) {
+      // no room under the drawing: the bare number beside the box, next to the laser's end
+      const t = txt(cx - R * 1.19 - 5, cy + fs * .35, '93.7 mm', {'font-size': fs, 'text-anchor': 'end', id: 'balltxt'}, laser);
+      if (t.getComputedTextLength() > cx - R * 1.19 - 6) t.remove();
+    }
+    last = {cx, cy, R};
+    if (phase === 0) return;
+
+    // The magnifier on the crystal.
+    const lens = Kit.mk('g', {id: 'lens'}, svg);
+    const a0 = -.62, sx = cx + R * Math.cos(a0), sy = cy + R * Math.sin(a0), ss = Math.max(3.5, R * .09);
+    Kit.mk('rect', {x: sx - ss, y: sy - ss, width: ss * 2, height: ss * 2, fill: 'none', stroke: INK, 'stroke-width': 1.4}, lens);
+    [[sx + ss, sy - ss, -1], [sx + ss, sy + ss, 1]].forEach(([x, y, sg]) => { const t = Math.PI + sg * 1.25; Kit.mk('line', {x1: x, y1: y, x2: mx + mr * Math.cos(t), y2: my + mr * Math.sin(t), stroke: INK, 'stroke-width': 1.1, opacity: .55}, lens); });
+    Kit.mk('circle', {cx: mx, cy: my, r: mr, fill: '#fbfbf6', stroke: INK, 'stroke-width': 2.4}, lens);
+    const cell = Kit.mk('g', {'clip-path': 'url(#lens)'}, lens);
+    // One cell of the crystal, seen a little from above and to the side so that all 8 atoms show.
+    const q = DIAMOND.q, c = q + .5, psi = 20 * Math.PI / 180, phi = 18 * Math.PI / 180;
+    const rot = p => { const x = p[0] - c, y = p[1] - c, z = p[2] - c; const x1 = x * Math.cos(psi) - y * Math.sin(psi), y1 = x * Math.sin(psi) + y * Math.cos(psi); return [x1, -(y1 * Math.sin(phi) + z * Math.cos(phi)), -(y1 * Math.cos(phi) - z * Math.sin(phi))]; };
+    const corners = []; for (const x of [q, q + 1]) for (const y of [q, q + 1]) for (const z of [q, q + 1]) corners.push([x, y, z]);
+    const reach = Math.max(...corners.map(k => { const r = rot(k); return Math.hypot(r[0], r[1]); }));
+    const s = mr * .84 / reach;
+    const P = p => { const r = rot(p); return [mx + r[0] * s, my + r[1] * s]; };
+    const far = corners.reduce((a, k) => rot(k)[2] < rot(a)[2] ? k : a, corners[0]);
+    for (const c1 of corners) for (const c2 of corners) {
+      const n = c1.filter((v, i) => Math.abs(v - c2[i]) > .5).length;
+      if (n !== 1 || c1.join() > c2.join()) continue;
+      const hidden = c1.join() === far.join() || c2.join() === far.join();
+      const p1 = P(c1), p2 = P(c2);
+      Kit.mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: INK, 'stroke-width': 1.2, opacity: hidden ? .3 : .55, 'stroke-dasharray': hidden ? '3 3' : 'none'}, cell);
+    }
+    const near = p => rot(p)[2];
+    const items = [...DIAMOND.bonds.map(b => ({z: (near(b[0]) + near(b[1])) / 2 - .01, b})), ...DIAMOND.atoms.map(a => ({z: near(a), a}))].sort((u, v) => u.z - v.z);
+    const ar = Math.max(1.9, s * .075), lit = phase >= 4;
+    for (const it of items) {
+      if (it.b) { const [a, b, f] = it.b, p1 = P(a), p2 = P([a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]); Kit.mk('line', {x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: INK, 'stroke-width': Math.max(1.2, ar * .5), opacity: f < 1 ? .35 : .7, 'stroke-linecap': 'round'}, cell); }
+      else { const p = P(it.a); Kit.mk('circle', {cx: p[0], cy: p[1], r: lit ? ar * 1.12 : ar, fill: lit ? INK : '#8b9296', class: 'atom'}, cell); if (lit) Kit.mk('circle', {cx: p[0] - ar * .32, cy: p[1] - ar * .36, r: ar * .32, fill: '#fff', opacity: .7, class: 'atom'}, cell); }
+    }
+    // the cell's edge, measured by X-rays
+    const front = corners.filter(k => k.join() !== far.join()).sort((u, v) => P(v)[1] - P(u)[1]);
+    const lowest = front[0], nb = corners.filter(k => k.filter((v, i) => Math.abs(v - lowest[i]) > .5).length === 1 && k.join() !== far.join()).sort((u, v) => P(u)[0] - P(v)[0])[0];
+    const e1 = P(lowest), e2 = P(nb);
+    Kit.mk('line', {x1: e1[0], y1: e1[1], x2: e2[0], y2: e2[1], stroke: RED, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, cell);
+    if (caps) {
+      const t = txt(mx, my + mr + fs * 1.3, '', {'font-size': fs, 'text-anchor': 'middle', id: 'celltxt'});
+      Kit.mk('tspan', {x: mx}, t).textContent = '0.543 nm,';
+      Kit.mk('tspan', {x: mx, dy: fs * 1.15}, t).textContent = 'by X-rays';
+    } else {
+      const t = txt(mx + mr + 5, my + fs * .35, '0.543 nm', {'font-size': fs, 'id': 'celltxt'});
+      if (t.getComputedTextLength() > W - mx - mr - 6) t.remove();
+    }
+  }
+
+  // The count, one line of the sum at a time, with the drawing in step.
+  async function build() {
+    building = true;
+    const rows = [...document.querySelectorAll('#sum .r')];
+    for (let i = 0; i < 4; i++) {
+      const was = last;
+      phase = i + 1; draw();
+      if (i === 0 && was && !Kit.calm) gsap.from('#ballg', {x: was.cx - last.cx, y: was.cy - last.cy, scale: was.R / last.R, svgOrigin: `${last.cx} ${last.cy}`, duration: .6, ease: 'power3.inOut'});
+      rows[i].classList.add('on');
+      if (!Kit.calm) {
+        gsap.from(rows[i], {opacity: 0, x: -8, duration: .45, ease: 'power2.out'});
+        const fresh = ['#lens, #celltxt', '#box', '#share', '#lens .atom'][i];
+        gsap.from(fresh, {opacity: 0, duration: .55, ease: 'power2.out', delay: i === 0 ? .45 : 0});
+        if (i === 0) gsap.from('#laser', {scaleX: 0, transformOrigin: '50% 50%', duration: .6, ease: 'power2.out', delay: .45});
+        Kit.haptic('light');
+        await sleep(i === 0 ? 1300 : 950);
+      }
+    }
+    Kit.$('card').classList.add('answered');
+    Kit.$('say').textContent = 'It is right to 1–2 parts in 100 million: give or take a few hundred million billion atoms.';
+    Kit.show('say'); Kit.show('keep');
+    requestAnimationFrame(draw);
+    Kit.haptic('success');
+    building = false;
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = SAID[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    Kit.hide('opts'); Kit.hide('say'); Kit.show('sum');
+    sure.grade(ok, pct, ok ? '10²⁵, right' : `${said}, wrong: it is 10²⁵`);
+    build();
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#pic', {opacity: 0, scale: .96, transformOrigin: '30% 50%', duration: .6, ease: 'power3.out'}); gsap.from('.opt', {opacity: 0, y: 8, stagger: .06, duration: .4, ease: 'power3.out', delay: .15}); } };
+  Kit.play.card = async () => {
+    Kit.$('opts').children[1].click(); await sleep(120);
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await sleep(Kit.calm ? 80 : 4800);
+  };
+})();
+Kit.single();
+</script>
+</html>

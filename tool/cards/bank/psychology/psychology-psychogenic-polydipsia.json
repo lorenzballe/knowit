@@ -1,0 +1,37 @@
+{
+  "id": "psychology-psychogenic-polydipsia",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What psychiatric condition makes a person feel constantly thirsty?",
+  "answer": "The condition is psychogenic polydipsia, a psychiatric disorder that keeps the feeling of thirst switched on, so water never quenches it. The person drinks far more than the body needs, which risks overhydration. It is very rare.",
+  "move": "When thirst comes from the mind, drinking doesn't make it stop.",
+  "keywords": [
+    "thirst",
+    "water",
+    "psychiatric disorder",
+    "overhydration",
+    "glass"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Endless Thirst asks which psychiatric condition makes a person feel constantly thirsty. Tap to hand both people a glass and watch their thought bubbles."
+  },
+  "source": "Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=-ow81G5Nydw&t=327s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "food-vacuum-reactor",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.processed_food",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the plastic reactor run at just 2 mbar?",
+  "answer": "Melting the plastic gives off limonene and benzene, which are harmful. The vacuum pulls these gases out of the melt, so the new bottle stays within legal food-safety limits. That is why the reactor runs at 2 mbar.",
+  "move": "The vacuum is a cleaner: it sucks harmful gases out of melted plastic.",
+  "keywords": [
+    "plastic reactor",
+    "limonene",
+    "benzene",
+    "vacuum",
+    "food safety"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled Astute free card, Food Safety. Asks why the plastic reactor runs at 2 mbar. Shows a draggable vacuum knob that pumps air out, down to 2 mbar."
+  },
+  "source": "Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=x3aSdfmYbZM",
+  "written": "2026-11-03"
+}

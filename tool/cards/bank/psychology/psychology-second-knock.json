@@ -1,0 +1,37 @@
+{
+  "id": "psychology-second-knock",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.reciprocity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does saying yes to a small favour make the big one easier?",
+  "answer": "The page asks whether saying yes to a small favour makes a big one easier, comparing a cold ask for a big lawn sign with a tiny safe-driving sign or a petition first. The reveal is that a small earlier yes can make the big ask easier. Notice the second knock.",
+  "move": "One small yes can become “I’m someone who says yes”.",
+  "keywords": [
+    "foot-in-the-door",
+    "lawn sign",
+    "petition",
+    "safe driving",
+    "small favour"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking whether saying yes to a small favour makes a big one easier. Three choices, A, B and C: just the big ask, a tiny safe-driving sign first, or a petition first. Each option shows a knock on a street. The page ends with a reveal about the 1966 lawn-sign study and a key takeaway."
+  },
+  "source": "Diventare Strong, “Frasi dei Manipolatori: Non Farti Fregare” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=56T0yfszBkk",
+  "written": "2026-11-03"
+}

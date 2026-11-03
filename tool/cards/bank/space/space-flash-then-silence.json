@@ -1,0 +1,39 @@
+{
+  "id": "space-flash-then-silence",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.asteroid_risk",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A meteor bursts 30 km up, brighter than the Sun. How long until its blast hits your window in Chelyabinsk?",
+  "answer": "The card asks how long a meteor's blast takes to reach a window in Chelyabinsk, after the meteor bursts 30 km up, brighter than the Sun. Its keep-note says a flash like that means the blast is still coming, so step back from the glass. Sources: Popova et al., Science, 2013; Borovička et al., A&A, 2016.",
+  "move": "A flash like that means the blast is still coming: step back from the glass.",
+  "keywords": [
+    "meteor",
+    "chelyabinsk",
+    "airburst",
+    "blast",
+    "russia"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled 'Flash, then silence' with a guess-the-wait prompt: a meteor bursts 30 km up, brighter than the Sun. Pick how long until its blast hits a window in Chelyabinsk: under a second, about 10 seconds, about a minute, or 2 to 3 minutes, then rate your confidence.",
+    "graded": false,
+    "ground": "#0d1f66"
+  },
+  "source": "Veritasium, “These are the asteroids to worry about” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=4Wrc4fHSCpw",
+  "written": "2026-11-03"
+}

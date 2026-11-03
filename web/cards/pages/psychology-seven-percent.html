@@ -1,0 +1,283 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Seven percent words</title>
+<!-- The famous 7-38-55 pie, opened up. It was stitched from two 1967 lab tasks: single words said in a
+     tone (Mehrabian & Wiener), and "maybe" in a tone beside photos of faces (Mehrabian & Ferris). In both,
+     listeners judged only how the speaker felt about them; no task ever had words, tone and face at once.
+     The pie comes back at the end and its labels are corrected in place, with Mehrabian's own caveat.
+     Inspired by Diventare Strong (Alex Onofri), "5 Segnali che PIACI ad una Persona". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative}
+#pie{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;user-select:none;-webkit-user-select:none}
+#pie.tap{cursor:pointer}
+#studies{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:1.3cqh}
+.study{background:color-mix(in srgb,var(--k) 11%,transparent);border-radius:2.2cqh;padding:1.4cqh 3.6cqw 1.3cqh;display:flex;flex-direction:column;justify-content:center;gap:1.1cqh;flex:1 1 auto;max-height:30cqh}
+.chips{display:flex;align-items:center;gap:2.2cqw;min-height:5.6cqh}
+.plus{font:700 max(1.9cqh,12px)/1 var(--body);opacity:.55}
+.word{font:italic 700 max(2.5cqh,14px)/1 var(--display);background:var(--k);color:var(--c);border-radius:99px;padding:.9cqh 3cqw 1cqh;white-space:nowrap;transition:opacity .45s}
+.voice,.face{display:flex;align-items:center;gap:1.6cqw;transition:opacity .45s}
+.voice svg{width:12cqw;height:4.6cqh;display:block;overflow:visible}
+.face svg{width:5.8cqh;height:5.8cqh;display:block;flex:none}
+.voice i,.face i{font:600 max(1.5cqh,11.5px)/1.12 var(--body);font-style:normal;opacity:.88;width:min-content}
+.cap{font:600 max(1.6cqh,12px)/1.3 var(--body);margin:0}
+.cap b{font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.9em;margin-right:.45em;opacity:.8}
+.lose{opacity:.32}
+#stitch{display:flex;flex-direction:column;gap:.9cqh;padding:0 1cqw}
+#stitch .bar{display:flex;gap:3px;height:1.5cqh;min-height:8px}
+#stitch .bar i{display:block;border-radius:99px;background:var(--k)}
+#stitch .bar i:nth-child(1){flex:7 1 0;opacity:.36}
+#stitch .bar i:nth-child(2){flex:38 1 0;opacity:.62}
+#stitch .bar i:nth-child(3){flex:55 1 0}
+#go{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (min-height:560px){
+  #studies{gap:1.8cqh}
+  .study{padding:1.8cqh 4.2cqw 1.6cqh;gap:1.3cqh;border-radius:2.6cqh}
+  .chips{gap:2.6cqw;min-height:9cqh}
+  .word{font-size:max(3.1cqh,14px);padding:1.1cqh 3.4cqw 1.2cqh}
+  .plus{font-size:max(2.3cqh,12px)}
+  .voice,.face{flex-direction:column;gap:.7cqh}
+  .voice i,.face i{font-size:max(1.75cqh,11.5px);text-align:center;width:auto;white-space:nowrap}
+  .voice svg{width:15cqw;height:5.6cqh}
+  .face svg{width:7.4cqh;height:7.4cqh}
+  .cap{font-size:max(1.9cqh,12px)}
+  #stitch{gap:1.1cqh}
+  #stitch .bar{height:1.9cqh}
+}
+@container (max-height:520px){
+  .study{padding:1.1cqh 3.4cqw 1cqh;gap:.8cqh}
+  #studies{gap:1cqh}
+  .chips{gap:1.5cqw}
+  .voice svg{width:10cqw}
+  .voice,.face{gap:1.2cqw}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Tap to open · the 7-38-55 rule">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE 7-38-55 RULE</span></div>
+    <h2 class="q">Is 93% of what we say really non-verbal?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pie" class="tap" role="img" aria-label="The famous pie chart: words 7 percent, tone of voice 38 percent, body language 55 percent."></svg>
+      <div id="studies" class="gone">
+        <div class="study" id="st1">
+          <div class="chips"><span class="word" data-to="word">“dear”</span><span class="plus">+</span><span class="voice" data-to="tone"><svg data-wave="cold" aria-hidden="true"></svg><i>said coldly</i></span></div>
+          <p class="cap"><b>Study 1</b><span>single words, in a tone that may clash</span></p>
+        </div>
+        <div class="study" id="st2">
+          <div class="chips"><span class="word">“maybe”</span><span class="plus">+</span><span class="voice"><svg data-wave="warm" aria-hidden="true"></svg><i>said warmly</i></span><span class="plus">+</span><span class="face" data-to="face"><svg data-face aria-hidden="true"></svg><i>a photo</i></span></div>
+          <p class="cap"><b>Study 2</b><span>“maybe” in a tone, beside a face</span></p>
+        </div>
+        <div id="stitch" class="gone">
+          <p class="cap"><b>Combined</b>7 word · 38 tone · 55 face</p>
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+    <p class="say" id="say">You have probably seen this chart: words carry 7% of a message, tone of voice 38%, body language 55%. It comes from two studies in 1967.</p>
+    <button class="btn" id="go">Open the studies</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>7-38-55 is about guessing a feeling from one word when the word, the tone and the face disagree.</div>
+    <div class="foot"><span class="src">Source · Mehrabian &amp; Wiener 1967; Mehrabian &amp; Ferris 1967; A. Mehrabian, Silent Messages (kaaj.com)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pie'), go = Kit.$('go'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#ffffff';
+  // The pie as it is usually drawn, biggest first, clockwise from the top; and what each slice measured.
+  const SLICES = [
+    {k: 'face', v: 55, name: 'body language', real: 'a face photo', op: 1},
+    {k: 'tone', v: 38, name: 'tone of voice', real: 'a tone of voice', op: .62},
+    {k: 'word', v: 7, name: 'words', real: 'one word', op: .36},
+  ];
+  const STEPS = [
+    {btn: 'What did they find?', say: 'No conversations. Listeners got <b>one word at a time</b>, like “dear”, “terrible” or “maybe”, and judged only <b>how the speaker felt</b>: liking or dislike.'},
+    {btn: 'Does it apply to talk?', say: 'When tone and word clashed, people believed the tone; when face and voice clashed, the face. No test ever had all three: Mehrabian combined two results into 7, 38, 55.'},
+    {btn: null, say: 'Mehrabian himself says no: “Unless a communicator is talking about their feelings or attitudes, these equations are not applicable.”'},
+  ];
+  const CAPS = {st1: 'the tone beat the word', st2: 'the face beat the voice, 3 to 2'};
+  let step = 0, busy = false, parts = null;
+  const moving = () => !Kit.calm && typeof gsap !== 'undefined';
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  function slicePath(cx, cy, r0, r1, a0, a1) {
+    const p = (r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)].map(n => n.toFixed(2)).join(',');
+    const big = a1 - a0 > Math.PI ? 1 : 0;
+    return `M${p(r1, a0)}A${r1},${r1} 0 ${big} 1 ${p(r1, a1)}L${p(r0, a1)}A${r0},${r0} 0 ${big} 0 ${p(r0, a0)}Z`;
+  }
+  const txt = (x, y, s, a, parent) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK}, a), parent); e.textContent = s; return e; };
+  // Text that must fit a width: smaller until it does, never under 11px.
+  const fit = (e, w) => { const l = e.getComputedTextLength(); if (l > w) e.setAttribute('font-size', Math.max(11, +e.getAttribute('font-size') * w / l)); };
+
+  // The pie: the famous one at the start, the honest one at the end. While `swapping`, the end draws
+  // both labels of each slice, the famous one to be struck out and the honest one to take its place.
+  let swapping = false;
+  function drawPie() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    if (step === 1 || step === 2) { parts = null; return; }
+    const honest = step === 3, swap = honest && swapping;
+    const ground = getComputedStyle(card).getPropertyValue('--c').trim() || '#9B5CFF';
+    const R = Math.min(H * .47, W * .29), cx = R + 2, cy = H / 2, r0 = R * .6;
+    const fsNum = Math.max(16, Math.min(H * .13, W * .08)), fsLab = Math.max(11.5, fsNum * .55);
+    const slices = [];
+    let a = -Math.PI / 2;
+    for (const s of SLICES) {
+      const a1 = a + s.v / 100 * Math.PI * 2, am = (a + a1) / 2, rm = (r0 + R) / 2;
+      const path = Kit.mk('path', {d: slicePath(cx, cy, r0, R, a, a1), fill: INK, 'fill-opacity': s.op, stroke: ground, 'stroke-width': 2.5, 'stroke-linejoin': 'round'}, svg);
+      slices.push({el: path, k: s.k, x: cx + rm * Math.cos(am), y: cy + rm * Math.sin(am)});
+      a = a1;
+    }
+    // The hole says what the chart is about: what it is famous for, then what it really measured.
+    // The two lines sit as one block in the middle, the small one clear of the big one's descent.
+    const small = Math.max(11, r0 * .21);
+    const centre = (big, sub, scale) => {
+      const g = Kit.mk('g', {}, svg);
+      const top = txt(cx, cy, big, {'font-family': 'Fraunces', 'font-weight': 800, 'font-size': Math.max(18, r0 * .6) * scale, 'text-anchor': 'middle'}, g);
+      fit(top, r0 * 1.6);
+      const bs = +top.getAttribute('font-size'), yb = cy - (bs * 1.3 + small * 1.2) / 2 + bs * .95;
+      top.setAttribute('y', yb);
+      txt(cx, yb + bs * .32 + small * 1.02, sub, {'font-family': 'Figtree', 'font-weight': 600, 'font-size': small, 'text-anchor': 'middle', opacity: .85}, g);
+      return g;
+    };
+    const hole = honest ? centre('feelings', 'only', .72) : centre('93%', 'non-verbal', 1);
+    const holeWas = swap ? centre('93%', 'non-verbal', 1) : null;
+    // The legend, beside it: the number, then what it stands for, each clear of the other.
+    const legend = Kit.mk('g', {}, svg), swaps = [];
+    const x0 = cx + R + Math.max(14, W * .05), rowH = fsNum * 1.22 + fsLab * 1.2, gap = Math.max(5, (Math.min(H, R * 2.1) - rowH * 3) / 2);
+    let y = cy - (rowH * 3 + gap * 2) / 2;
+    for (const s of SLICES) {
+      const sw = Math.max(5, fsLab * .42), tx = x0 + sw * 2 + 7, ly = y + fsNum * 1.22 + fsLab * .95;
+      Kit.mk('circle', {cx: x0 + sw, cy: y + fsNum * .55, r: sw, fill: INK, 'fill-opacity': s.op, stroke: INK, 'stroke-width': s.op < 1 ? 1.2 : 0}, legend);
+      txt(tx, y + fsNum * .9, s.v + '%', {'font-family': 'Fraunces', 'font-weight': 800, 'font-size': fsNum}, legend);
+      const lab = {'font-family': 'Figtree', 'font-weight': 600, 'font-size': fsLab, opacity: .88};
+      const now = txt(tx, ly, honest ? s.real : s.name, lab, legend);
+      fit(now, W - tx - 2);
+      if (swap) {
+        const was = txt(tx, ly, s.name, lab, legend); fit(was, W - tx - 2);
+        const b = was.getBBox(), sy = b.y + b.height * .56;
+        const strike = Kit.mk('line', {x1: b.x - 1, x2: b.x - 1, y1: sy, y2: sy, stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round'}, legend);
+        swaps.push({now, was, strike, x2: b.x + b.width + 1});
+      }
+      y += rowH + gap;
+    }
+    parts = {slices, hole, holeWas, legend, swaps, cx, cy};
+  }
+
+  // A voice as a line: a cold one clipped and jagged, a warm one a soft rise and fall.
+  function drawWave(el) {
+    el.innerHTML = '';
+    const {W, H} = Kit.fitSvg(el), cold = el.dataset.wave === 'cold', n = cold ? 22 : 90;
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, x = t * W;
+      const y = cold ? H / 2 + (i % 2 ? -1 : 1) * (H * .44) * (.35 + .65 * Math.abs(Math.sin(i * 1.9)))
+                     : H / 2 - Math.sin(Math.PI * t) * H * .4 * Math.sin(t * Math.PI * 5);
+      d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, el);
+  }
+  // A small black-and-white photo of a frowning face.
+  function drawFace(el) {
+    el.innerHTML = '';
+    const {W, H} = Kit.fitSvg(el), s = Math.min(W, H), lw = Math.max(1.3, s * .045), dark = '#2b2536';
+    Kit.mk('rect', {x: .75, y: .75, width: s - 1.5, height: s - 1.5, rx: s * .1, fill: '#eceaf1', stroke: INK, 'stroke-width': 1.5}, el);
+    const cx = s / 2, cy = s * .55, r = s * .3;
+    Kit.mk('circle', {cx, cy, r, fill: '#cfcad8', stroke: dark, 'stroke-width': lw}, el);
+    for (const sx of [-1, 1]) {
+      Kit.mk('circle', {cx: cx + sx * r * .38, cy: cy - r * .12, r: Math.max(1.2, s * .035), fill: dark}, el);
+      Kit.mk('path', {d: `M${cx + sx * r * .62},${cy - r * .48}L${cx + sx * r * .16},${cy - r * .3}`, stroke: dark, 'stroke-width': lw, 'stroke-linecap': 'round'}, el);
+    }
+    Kit.mk('path', {d: `M${cx - r * .42},${cy + r * .5}Q${cx},${cy + r * .12} ${cx + r * .42},${cy + r * .5}`, fill: 'none', stroke: dark, 'stroke-width': lw, 'stroke-linecap': 'round'}, el);
+  }
+  function drawChips() {
+    if (Kit.$('studies').classList.contains('gone')) return;
+    document.querySelectorAll('[data-wave]').forEach(drawWave);
+    document.querySelectorAll('[data-face]').forEach(drawFace);
+  }
+  function draw() { drawPie(); drawChips(); }
+
+  function setCaps() {
+    for (const id in CAPS) {
+      const c = Kit.$(id).querySelector('.cap span');
+      if (!moving()) { c.textContent = CAPS[id]; continue; }
+      gsap.to(c, {opacity: 0, duration: .2, onComplete: () => { c.textContent = CAPS[id]; gsap.to(c, {opacity: 1, duration: .3}); }});
+    }
+  }
+  const grow = () => { if (moving() && parts) gsap.from(parts.slices.map(s => s.el), {opacity: 0, scale: .85, svgOrigin: `${parts.cx} ${parts.cy}`, duration: .5, stagger: .12, ease: 'power3.out'}); };
+
+  async function next() {
+    if (busy || step >= 3) return;
+    busy = true;
+    const s = STEPS[step];
+    // The words change first, so what is drawn or aimed at is where the stage keeps it.
+    say.innerHTML = s.say;
+    if (s.btn) go.textContent = s.btn;
+    if (step === 0) {
+      // The pie comes apart: each slice flies to the thing it really measured.
+      const studies = Kit.$('studies');
+      studies.classList.remove('gone');
+      svg.classList.remove('tap');
+      drawChips();
+      if (moving() && parts) {
+        const box = svg.getBoundingClientRect();
+        gsap.set('#studies .study', {opacity: 0, y: 8});
+        const tl = gsap.timeline();
+        tl.to([parts.hole, parts.legend], {opacity: 0, duration: .25});
+        for (const sl of parts.slices) {
+          const t = studies.querySelector(`[data-to="${sl.k}"]`).getBoundingClientRect();
+          tl.to(sl.el, {x: t.left + t.width / 2 - box.left - sl.x, y: t.top + t.height / 2 - box.top - sl.y, scale: .3, svgOrigin: `${sl.x} ${sl.y}`, opacity: 0, duration: .8, ease: 'power2.inOut'}, .15);
+        }
+        tl.to('#studies .study', {opacity: 1, y: 0, duration: .45, stagger: .18, ease: 'power2.out'}, .55);
+        await wait(1100);
+      }
+      step = 1; drawPie();
+    } else if (step === 1) {
+      document.querySelectorAll('#st1 .word, #st2 .word, #st2 .voice').forEach(e => e.classList.add('lose'));
+      setCaps();
+      // The combined bar opens its own room, so the studies above make way for it smoothly.
+      Kit.$('stitch').classList.remove('gone');
+      if (moving()) {
+        gsap.from('#stitch', {height: 0, opacity: 0, duration: .45, ease: 'power2.out', clearProps: 'height,opacity'});
+        gsap.fromTo('#stitch .bar i', {scaleX: 0}, {scaleX: 1, transformOrigin: 'left center', duration: .5, stagger: .15, ease: 'power2.out', delay: .35});
+      }
+      step = 2;
+    } else {
+      // The same pie comes back, labelled with what it really measured.
+      if (moving()) await new Promise(r => gsap.to('#studies', {opacity: 0, y: -6, duration: .3, onComplete: r}));
+      Kit.hide('studies');
+      go.classList.add('gone'); card.classList.add('answered'); Kit.show('keep');
+      step = 3;
+      await new Promise(r => requestAnimationFrame(r));
+      swapping = moving();
+      drawPie();
+      if (swapping) {
+        const {slices, hole, holeWas, swaps, cx, cy} = parts;
+        const tl = gsap.timeline({onComplete: () => { swapping = false; drawPie(); }});
+        gsap.set([hole, ...swaps.map(w => w.now)], {opacity: 0});
+        tl.from(slices.map(sl => sl.el), {opacity: 0, scale: .85, svgOrigin: `${cx} ${cy}`, duration: .5, stagger: .1, ease: 'power3.out'});
+        swaps.forEach((w, i) => {
+          const at = .9 + i * .45;
+          tl.to(w.strike, {attr: {x2: w.x2}, duration: .3, ease: 'power2.out'}, at);
+          tl.to([w.was, w.strike], {opacity: 0, y: -5, duration: .3}, at + .45);
+          tl.fromTo(w.now, {opacity: 0, y: 6}, {opacity: .88, y: 0, duration: .35, ease: 'power2.out'}, at + .55);
+        });
+        const at = .9 + swaps.length * .45 + .2;
+        tl.to(holeWas, {opacity: 0, duration: .3}, at);
+        tl.fromTo(hole, {opacity: 0, scale: .82, svgOrigin: `${cx} ${cy}`}, {opacity: 1, scale: 1, svgOrigin: `${cx} ${cy}`, duration: .5, ease: 'back.out(1.7)'}, at + .2);
+      }
+    }
+    Kit.haptic(step === 3 ? 'success' : 'light');
+    busy = false;
+  }
+  go.addEventListener('click', next);
+  svg.addEventListener('click', () => { if (step === 0) next(); });
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = grow;
+  Kit.play.card = async () => { for (let i = 0; i < 3; i++) { await next(); await wait(Kit.calm ? 60 : 900); } };
+})();
+Kit.single();
+</script>
+</html>

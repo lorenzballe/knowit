@@ -1,0 +1,37 @@
+{
+  "id": "technology-octane-knock-resistance",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a fuel's octane rating actually measure?",
+  "answer": "An octane rating does not measure how good a fuel is. It measures resistance to knocking, which is when a fuel-air mix ignites on its own before the spark. Iso-octane takes far more squeezing than n-heptane, so it was set at 100 and n-heptane at 0.",
+  "move": "Octane measures resistance to knocking, not the quality of the fuel.",
+  "keywords": [
+    "octane",
+    "iso-octane",
+    "n-heptane",
+    "knocking",
+    "engines"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive page shows two fuels, n-heptane (octane 0) and iso-octane (octane 100), with a hold-to-compress button that squeezes a fuel-air mix until it knocks. It asks what an octane rating actually measures."
+  },
+  "source": "Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=IV3dnLzthDA&t=331s",
+  "written": "2026-11-03"
+}

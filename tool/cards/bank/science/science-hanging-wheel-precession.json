@@ -1,0 +1,38 @@
+{
+  "id": "science-hanging-wheel-precession",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A spinning wheel hangs from one end of its axle. Where does it go?",
+  "answer": "The weight's twist points sideways, at right angles to the spin arrow. So the spin arrow swings that way, without growing or dropping. The twist swings with it, so the wheel goes round.",
+  "move": "Twist a spinning wheel at right angles and it swings round, not down.",
+  "keywords": [
+    "gyroscope",
+    "precession",
+    "torque",
+    "spinning-wheel",
+    "axle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A diagram of a spinning wheel hanging from one end of its axle, with a spin arrow and a weight's twist arrow at right angles to it. The reader is asked to drag an arrow to show where the wheel goes once let go.",
+    "graded": false
+  },
+  "source": "Veritasium, “Gyroscopic Precession” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=ty9QSiVC2g0",
+  "written": "2026-11-03"
+}

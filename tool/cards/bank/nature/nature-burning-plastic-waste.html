@@ -1,0 +1,146 @@
+<!doctype html>
+<!-- slug: nature-burning-plastic-waste -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Burning plastic</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#caps{display:grid;grid-template-columns:1fr 1fr;gap:3cqw;min-height:5.4cqh}
+.cap{font:600 max(1.75cqh,12px)/1.25 var(--body);color:var(--k);text-align:center;overflow-wrap:anywhere}
+.cap b{display:block;font:800 max(1.5cqh,12px)/1.2 var(--mono);letter-spacing:.06em;opacity:.7}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#next{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;align-self:center;max-width:80%}
+#next:active{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap through · two paths">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
+    <h2 class="q">Why is burning plastic for energy a mistake?</h2>
+    <div class="stagebox" id="stage">
+      <div id="caps"><div class="cap" id="c0"></div><div class="cap" id="c1"></div></div>
+      <svg id="pic" aria-label="Two stacks of fossil fuel used: one for burning plastic, one for recycling it"></svg>
+      <button id="next">Step 1 · Make a bottle</button>
+      <div id="why" class="gone">
+        <p class="body">Burning plastic gives back some energy, but less than it costs to make new plastic, and its carbon goes up as CO₂.</p>
+        <p class="body">Recycling keeps the plastic as plastic, so no new fossil fuel is spent to replace it.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to take the next step on both paths and watch the oil pile up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Plastic is worth more as plastic than as fuel.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0;
+const BURN = [0, 3, 2, 5];   // blocks of fossil fuel used (illustrative, no real units)
+const REC  = [0, 3, 3, 3];
+const CAPS = [
+  ['', ''],
+  ['<b>1 · MAKE</b>A bottle, made from oil', '<b>1 · MAKE</b>A bottle, made from oil'],
+  ['<b>2 · BURN</b>Some energy back, CO₂ out', '<b>2 · RECYCLE</b>The plastic stays plastic'],
+  ['<b>3 · NEW BOTTLE</b>Made from oil, again', '<b>3 · NEW BOTTLE</b>Made from the old plastic']
+];
+const BTN = ['Step 1 · Make a bottle', 'Step 2 · Throw it away', 'Step 3 · We need a new bottle'];
+const GOLD = '#f2b705';
+
+function draw(animate){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  const cx = [W * 0.27, W * 0.73];
+  const bw = Math.min(W * 0.27, 140);
+  const headY = fs * 1.2;
+  const base = H - fs * 1.9;
+  const cloudTop = headY + fs * 0.8;
+  const cloudH = Math.max(H * 0.17, fs * 3);
+  const bh = Math.min((base - cloudTop - cloudH) / 5.6, bw * 0.45);
+  const fresh = [];
+  const ink = 'var(--k)';
+
+  ['BURN IT', 'RECYCLE IT'].forEach((t, i) => {
+    Kit.mk('text', {x: cx[i], y: headY, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.15}, svg).textContent = t;
+    Kit.mk('line', {x1: cx[i] - bw * 0.75, x2: cx[i] + bw * 0.75, y1: base, y2: base, stroke: ink, 'stroke-width': 2.5, 'stroke-linecap': 'round'}, svg);
+    Kit.mk('text', {x: cx[i], y: base + fs * 1.35, 'text-anchor': 'middle', fill: ink, opacity: .75, 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': fs * 0.85}, svg).textContent = 'fossil fuel used';
+  });
+
+  const block = (i, k, isNew) => {
+    const y = base - (k + 1) * bh;
+    const r = Kit.mk('rect', {x: cx[i] - bw / 2, y: y + 2, width: bw, height: bh - 4, rx: bh * 0.22, fill: ink}, svg);
+    if (isNew) fresh.push(r);
+    return r;
+  };
+
+  // Burn column
+  const nb = BURN[step], prevB = step > 0 ? BURN[step - 1] : 0;
+  for (let k = 0; k < nb; k++) block(0, k, animate && k >= prevB && step !== 2);
+  if (step === 2) {
+    const y = base - 3 * bh;
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: cx[0] - bw / 2, y: y + 2, width: bw, height: bh - 4, rx: bh * 0.22, fill: 'none', stroke: GOLD, 'stroke-width': 3, 'stroke-dasharray': '6 5'}, g);
+    Kit.mk('text', {x: cx[0], y: y + bh / 2 + fs * 0.32, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': Math.max(fs * 0.8, 12)}, g).textContent = 'energy back';
+    if (animate) fresh.push(g);
+  }
+  if (step >= 2) {
+    const g = Kit.mk('g', {}, svg);
+    const cy = cloudTop + cloudH * 0.5, R = Math.min(cloudH * 0.32, bw * 0.28);
+    [[-0.9, 0.2, 0.8], [0, -0.2, 1.05], [0.9, 0.2, 0.8]].forEach(([dx, dy, s]) =>
+      Kit.mk('circle', {cx: cx[0] + dx * R, cy: cy + dy * R, r: R * s, fill: 'color-mix(in srgb,var(--k) 22%,transparent)'}, g));
+    Kit.mk('text', {x: cx[0], y: cy + fs * 0.45, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 1.25}, g).textContent = 'CO₂';
+    if (animate && step === 2) fresh.push(g);
+  }
+
+  // Recycle column
+  const nr = REC[step], prevR = step > 0 ? REC[step - 1] : 0;
+  for (let k = 0; k < nr; k++) block(1, k, animate && k >= prevR);
+  if (step >= 2) {
+    const g = Kit.mk('g', {}, svg);
+    const cy = cloudTop + cloudH * 0.5, R = Math.min(cloudH * 0.32, bw * 0.3);
+    const a0 = -0.3, a1 = 4.9;
+    const p = (a) => [cx[1] + R * Math.cos(a), cy + R * Math.sin(a)];
+    const [x0, y0] = p(a0), [x1, y1] = p(a1);
+    Kit.mk('path', {d: `M${x0},${y0} A${R},${R} 0 1 1 ${x1},${y1}`, fill: 'none', stroke: ink, 'stroke-width': 3.5, 'stroke-linecap': 'round'}, g);
+    const ah = R * 0.45, ang = a1 + Math.PI / 2;
+    Kit.mk('path', {d: `M${x1 + ah * Math.cos(ang - 2.6)},${y1 + ah * Math.sin(ang - 2.6)} L${x1},${y1} L${x1 + ah * Math.cos(ang + 2.6)},${y1 + ah * Math.sin(ang + 2.6)}`, fill: 'none', stroke: ink, 'stroke-width': 3.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    if (animate && step === 2) fresh.push(g);
+    if (animate && step === 3 && !Kit.calm) gsap.fromTo(g, {rotation: 0, transformOrigin: `${cx[1]}px ${cy}px`}, {rotation: 360, duration: .9, ease: 'power2.inOut'});
+  }
+
+  if (animate && fresh.length && !Kit.calm) {
+    gsap.from(fresh, {opacity: 0, y: -bh * 1.2, stagger: .12, duration: .45, ease: 'back.out(1.6)'});
+  }
+}
+
+function setCaps(){
+  Kit.$('c0').innerHTML = CAPS[step][0];
+  Kit.$('c1').innerHTML = CAPS[step][1];
+  if (step && !Kit.calm) gsap.from('.cap', {opacity: 0, y: 6, duration: .35, stagger: .08});
+}
+
+Kit.$('next').addEventListener('click', () => {
+  if (step >= 3) return;
+  step++;
+  Kit.haptic(step === 3 ? 'success' : 'light');
+  setCaps();
+  draw(true);
+  if (step < 3) Kit.$('next').textContent = BTN[step];
+  else {
+    Kit.hide('next'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45});
+  }
+});
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic, #next', {opacity: 0, y: 10, stagger: .1, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 3; i++) { Kit.$('next').click(); await new Promise(r => setTimeout(r, 400)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-flame-splits-field -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:center}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLAME IONS</span></div>
+    <h2 class="q">Why does a candle flame split in two between charged plates?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A candle flame between a negative plate on the left and a positive plate on the right"></svg>
+      <button class="opt" id="flip">Switch on the field</button>
+      <div id="why" class="gone"><p class="body">Burning makes charged bits in the flame: ions. The field pulls positive ions toward the negative plate and negative ions toward the positive plate, so the flame spreads into two wings, like a butterfly.</p></div>
+    </div>
+    <p class="say" id="say">Switch on the field, then tap each half of the flame.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A flame carries electric charges, so an electric field can pull it apart.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What's In A Candle Flame?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const s = {v: 0};
+let on = false, done = false, G = null, T = 0, ticking = false;
+const found = {L: false, R: false};
+const POS = '#ff6b6b', NEG = '#6bc1ff';
+let parts = [];
+
+function txt(parent, x, y, str, size, fill, weight, anchor) {
+  const t = Kit.mk('text', {x, y, 'font-size': size, fill, 'font-weight': weight || 700, 'text-anchor': anchor || 'middle', 'font-family': 'var(--body)', 'dominant-baseline': 'middle'}, parent);
+  t.textContent = str; return t;
+}
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const top = Math.max(H * 0.14, fs * 2.6);
+  G = {W, H, fs, cx: W / 2, by: H * 0.72, fh: Math.min(H * 0.42, W * 0.5), pw: Math.max(W * 0.028, 7), px: [W * 0.08, W * 0.92], top, bot: H * 0.66};
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'fg', x1: 0, y1: 1, x2: 0, y2: 0}, defs);
+  [['0%', '#4a74ff'], ['14%', '#ff8a1e'], ['55%', '#ffcf3d'], ['100%', '#fff7cf']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
+  const fl = Kit.mk('filter', {id: 'blur', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: fs * 0.9}, fl);
+
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: fs, fill: '#141220'}, svg);
+  // plates
+  G.px.forEach((x, i) => {
+    const col = i ? POS : NEG;
+    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: '#c9cbd6'}, svg);
+    Kit.mk('rect', {x: x - G.pw / 2, y: top, width: G.pw, height: G.bot - top, rx: G.pw / 2, fill: col, opacity: 0, class: 'plateglow'}, svg);
+    Kit.mk('circle', {cx: x, cy: top - fs * 1.25, r: fs * 0.95, fill: col}, svg);
+    txt(svg, x, top - fs * 1.2, i ? '+' : '−', fs * 1.4, '#141220', 800);
+  });
+  // candle
+  const ct = G.by + G.fh * 0.09, cw = Math.max(W * 0.11, 26);
+  Kit.mk('rect', {x: G.cx - cw / 2, y: ct, width: cw, height: H - ct + fs, rx: cw * 0.15, fill: '#efe6d6'}, svg);
+  Kit.mk('ellipse', {cx: G.cx, cy: ct, rx: cw / 2, ry: cw * 0.12, fill: '#fbf5ea'}, svg);
+  Kit.mk('line', {x1: G.cx, y1: ct, x2: G.cx, y2: G.by - G.fh * 0.03, stroke: '#2a2420', 'stroke-width': Math.max(fs * 0.18, 2.5), 'stroke-linecap': 'round'}, svg);
+  // flame
+  G.glowL = Kit.mk('path', {fill: '#ff9a2e', opacity: .55, filter: 'url(#blur)'}, svg);
+  G.glowR = Kit.mk('path', {fill: '#ff9a2e', opacity: .55, filter: 'url(#blur)'}, svg);
+  G.L = Kit.mk('path', {fill: 'url(#fg)', opacity: .9, 'data-side': 'L', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
+  G.R = Kit.mk('path', {fill: 'url(#fg)', opacity: .9, 'data-side': 'R', 'stroke-width': Math.max(fs * 0.16, 2), stroke: 'none'}, svg);
+  G.blue = Kit.mk('ellipse', {fill: '#4a74ff', opacity: .7}, svg);
+  // ions
+  G.pg = Kit.mk('g', {}, svg);
+  parts = [];
+  for (let i = 0; i < 30; i++) {
+    const p = {q: i % 2 ? -1 : 1, el: Kit.mk('circle', {r: Math.max(fs * 0.2, 3), fill: i % 2 ? NEG : POS, opacity: 0}, G.pg)};
+    spawn(p, true); parts.push(p);
+  }
+  // labels
+  const ly = top + fs * 1.1;
+  G.labL = Kit.mk('g', {opacity: found.L ? 1 : 0}, svg);
+  txt(G.labL, W * 0.31, ly, 'Positive ions', fs, POS, 800);
+  txt(G.labL, W * 0.31, ly + fs * 1.4, '← to − plate', fs * 0.92, '#f3eee6', 600);
+  G.labR = Kit.mk('g', {opacity: found.R ? 1 : 0}, svg);
+  txt(G.labR, W * 0.69, ly, 'Negative ions', fs, NEG, 800);
+  txt(G.labR, W * 0.69, ly + fs * 1.4, 'to + plate →', fs * 0.92, '#f3eee6', 600);
+  render(0);
+}
+
+function spawn(p, first) {
+  const {cx, by, fh} = G;
+  p.x = cx + (Kit.rnd() - .5) * fh * 0.25;
+  p.y = by - Kit.rnd() * fh * 0.45;
+  p.vx = 0; p.age = first ? Kit.rnd() : 0;
+}
+
+function lobe(dir, sway) {
+  const {cx, by, fh, W} = G, v = s.v;
+  const bx = cx, byy = by;
+  const tx = cx + dir * v * W * 0.32 + sway * (1 - v), ty = by - fh * (1 - 0.58 * v);
+  const dx = tx - bx, dy = ty - byy, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+  const w = fh * 0.24 * (1 - 0.2 * v);
+  const p = (a, b) => `${a.toFixed(1)},${b.toFixed(1)}`;
+  const c1 = p(bx + nx * w * 1.2 + ux * L * .08, byy + ny * w * 1.2 + uy * L * .08);
+  const c2 = p(tx - ux * L * .38 + nx * w * .95, ty - uy * L * .38 + ny * w * .95);
+  const c3 = p(tx - ux * L * .38 - nx * w * .95, ty - uy * L * .38 - ny * w * .95);
+  const c4 = p(bx - nx * w * 1.2 + ux * L * .08, byy - ny * w * 1.2 + uy * L * .08);
+  return `M${p(bx, byy)} C${c1} ${c2} ${p(tx, ty)} C${c3} ${c4} ${p(bx, byy)}Z`;
+}
+
+function render(dt) {
+  if (!G) return;
+  const sway = Kit.calm ? 0 : Math.sin(T * 6.5) * G.fh * 0.025 + Math.sin(T * 11) * G.fh * 0.01;
+  const dl = lobe(-1, sway), dr = lobe(1, sway);
+  G.L.setAttribute('d', dl); G.R.setAttribute('d', dr);
+  G.glowL.setAttribute('d', dl); G.glowR.setAttribute('d', dr);
+  G.L.setAttribute('stroke', found.L ? POS : 'none');
+  G.R.setAttribute('stroke', found.R ? NEG : 'none');
+  const w = G.fh * 0.24;
+  G.blue.setAttribute('cx', G.cx); G.blue.setAttribute('cy', G.by - G.fh * 0.05);
+  G.blue.setAttribute('rx', w * (0.55 + 0.6 * s.v)); G.blue.setAttribute('ry', G.fh * 0.07);
+  document.querySelectorAll('.plateglow').forEach(e => e.setAttribute('opacity', s.v * 0.55));
+  const A = G.W * 1.6, up = G.H * 0.16;
+  parts.forEach(p => {
+    if (dt > 0) {
+      p.age += dt;
+      p.vx += -p.q * A * s.v * dt;
+      p.x += p.vx * dt; p.y -= up * (1 - 0.75 * s.v) * dt;
+      if (p.x < G.px[0] + G.pw || p.x > G.px[1] - G.pw || p.y < G.top * 0.6) spawn(p);
+    }
+    const side = p.q > 0 ? 'L' : 'R';
+    p.el.setAttribute('cx', p.x.toFixed(1)); p.el.setAttribute('cy', p.y.toFixed(1));
+    p.el.setAttribute('opacity', (s.v * Math.min(1, p.age * 3) * (found[side] ? 1 : 0.7)).toFixed(2));
+    p.el.setAttribute('r', Math.max(G.fs * (found[side] ? 0.28 : 0.2), 3));
+  });
+}
+
+function tick(time, dms) {
+  T = time; render(Math.min(dms, 50) / 1000);
+}
+
+function reveal(side) {
+  if (found[side] || done) return;
+  found[side] = true; Kit.haptic('selection');
+  const lab = side === 'L' ? G.labL : G.labR;
+  if (Kit.calm) lab.setAttribute('opacity', 1); else gsap.fromTo(lab, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .45, ease: 'power3.out'});
+  render(0);
+  if (found.L && found.R) finish();
+  else Kit.$('say').textContent = 'Now tap the other half.';
+}
+
+function finish() {
+  done = true;
+  Kit.hide('flip'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+  requestAnimationFrame(() => { build(); });
+}
+
+Kit.$('flip').addEventListener('click', () => {
+  on = !on; Kit.haptic('light');
+  const b = Kit.$('flip');
+  b.textContent = on ? 'Switch off the field' : 'Switch on the field';
+  b.classList.toggle('on', on);
+  if (Kit.calm) { s.v = on ? 1 : 0; render(0); }
+  else gsap.to(s, {v: on ? 1 : 0, duration: 1.1, ease: 'power2.out', overwrite: true});
+  Kit.$('say').textContent = on ? 'The flame splits! Tap each half to see what it is.' : 'Back to one flame. Switch it on again.';
+});
+
+Kit.$('pic').addEventListener('click', e => {
+  const t = e.target.closest('[data-side]');
+  let side = t ? t.dataset.side : null;
+  if (!side) return;
+  if (!on || s.v < 0.5) { Kit.$('say').textContent = 'Still one flame. Switch on the field first.'; return; }
+  reveal(side);
+});
+
+Kit.onShow.card = () => {
+  build();
+  if (!Kit.calm && !ticking) { ticking = true; gsap.ticker.add(tick); }
+};
+Kit.onEnter.card = () => {
+  if (!Kit.calm) gsap.from('#pic', {opacity: 0, scale: .97, transformOrigin: '50% 60%', duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('flip').click(); await wait(1400);
+  s.v = 1; render(0);
+  G.L.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(200);
+  G.R.dispatchEvent(new MouseEvent('click', {bubbles: true})); await wait(700);
+};
+Kit.single();
+</script>
+</html>

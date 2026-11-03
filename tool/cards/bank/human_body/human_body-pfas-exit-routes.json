@@ -1,0 +1,37 @@
+{
+  "id": "human_body-pfas-exit-routes",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do women have lower PFAS levels than men?",
+  "answer": "Both bodies took in the same PFAS, and no approved medical treatment removes it. In women, it leaves through menstrual blood, crosses the placenta to the fetus, and flows into breast milk. Men have no such exit, so their levels stay higher until about 50, when menopause usually starts.",
+  "move": "Periods, birth and breastfeeding let PFAS out of women; men have no exit.",
+  "keywords": [
+    "pfas",
+    "menstrual blood",
+    "placenta",
+    "breast milk",
+    "menopause"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled 'Why do women have lower PFAS levels than men?' with a Hold-to-reveal prompt. The revealed text says both bodies take in the same PFAS, but women lose it through menstrual blood, transfer to the fetus across the placenta, and breast milk. Men have no such route."
+  },
+  "source": "Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=SC2eSujzrUY&t=2971s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-weather-attribution-method -->
+<title>Astute · How weather attribution works</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#steps{display:flex;align-items:center;gap:1.5cqw;justify-content:center}
+.step{font:700 max(1.7cqh,12px)/1.15 var(--body);padding:.8cqh 2.6cqw;border-radius:1.4cqh;color:var(--k);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);opacity:.45;transition:all .3s;text-align:center}
+.step.on{background:var(--k);color:var(--c);box-shadow:none;opacity:1}
+.arr{font:700 max(1.8cqh,12px)/1 var(--body);color:var(--muted)}
+#plot{flex:1;min-height:0;width:100%;display:block}
+#dial{display:flex;flex-direction:column;gap:.4cqh}
+#dial input{width:100%;height:max(4cqh,28px);accent-color:var(--k);margin:0;cursor:pointer}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+svg text{font-family:var(--body);font-weight:700;fill:var(--k)}
+.today{fill:none;stroke:var(--k);stroke-opacity:.45;stroke-dasharray:5 5}
+.model{fill:color-mix(in srgb,var(--k) 16%,transparent);stroke:var(--k)}
+.tail{fill:#d8352a;fill-opacity:.85}
+.ev{stroke:#d8352a}
+.track{fill:color-mix(in srgb,var(--k) 12%,transparent)}
+.barI{fill:var(--k)}
+.barP{fill:#d8352a}
+.muted{fill:var(--muted)!important;font-weight:600!important}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn a dial · two worlds">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CLIMATE</span></div>
+    <h2 class="q">How does World Weather Attribution tell what the climate crisis did?</h2>
+    <div class="stagebox" id="stage">
+      <div id="steps"><span class="step on" id="s0">Event</span><span class="arr">→</span><span class="step" id="s1">Climate models</span><span class="arr">→</span><span class="step" id="s2">Attribution</span></div>
+      <svg id="plot"></svg>
+      <div id="dial">
+        <input id="t" type="range" min="0" max="100" value="0" aria-label="Model world">
+        <div class="ends"><span>Our world</span><span>No climate crisis</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="body">WWA starts from a real event, then uses climate models to rebuild it in a world without the climate crisis.</p>
+        <p class="body">The gap is the answer: Europe's record heatwave would have been 3.5° cooler, and rarer too.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slide the model world from ours to one with no climate crisis.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Attribution compares our world with a modelled one without the warming.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’onda di calore più potente mai registrata in Europa è solo l’inizio: cosa dicono i dati” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SD = 1.6, EV = 3.6, SHIFT = 3.5, X0 = -5, X1 = 6.6;
+let T = 0, G = null, done = false;
+const erf = x => { const s = Math.sign(x); x = Math.abs(x); const t = 1/(1+.3275911*x);
+  const y = 1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x); return s*y; };
+const tail = m => .5*(1-erf((EV-m)/(SD*Math.SQRT2)));
+const pdf = (x,m) => Math.exp(-.5*((x-m)/SD)**2);
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('plot'); svg.innerHTML = '';
+  const {W,H,f:f0} = Kit.fitSvg(svg); const f = Math.max(f0, 12);
+  const pad = f*.4, y0 = 1.6*f, y1 = H - 5.6*f;
+  const sx = v => pad + (v-X0)/(X1-X0)*(W-2*pad);
+  const amp = Math.max(y1 - (y0 + 2.6*f), 20);
+  G = {W,H,f,pad,y0,y1,sx,amp};
+  G.today = Kit.mk('path',{class:'today','stroke-width':Math.max(f*.14,2)},svg);
+  G.model = Kit.mk('path',{class:'model','stroke-width':Math.max(f*.16,2)},svg);
+  G.tail = Kit.mk('path',{class:'tail'},svg);
+  Kit.mk('line',{x1:pad,x2:W-pad,y1:y1,y2:y1,stroke:'currentColor','stroke-opacity':.4,'stroke-width':2},svg);
+  const ex = sx(EV);
+  Kit.mk('line',{class:'ev',x1:ex,x2:ex,y1:y0-.4*f,y2:y1,'stroke-width':Math.max(f*.16,2)},svg);
+  Kit.mk('text',{x:ex-.4*f,y:y0,'text-anchor':'end','font-size':f},svg).textContent = 'the heatwave';
+  G.sl = Kit.mk('line',{x1:ex,x2:ex,y1:y0+1.2*f,y2:y1,stroke:'currentColor','stroke-width':Math.max(f*.14,2),'stroke-dasharray':'3 4'},svg);
+  G.st = Kit.mk('text',{x:ex,y:y0+1.7*f,'text-anchor':'end','font-size':f},svg);
+  const at = Kit.mk('text',{x:W-pad,y:y1+1.3*f,'text-anchor':'end','font-size':f*.85,class:'muted'},svg); at.textContent = 'summer heat →';
+  const bx = pad + 6.6*f, bw = W - pad - bx, bh = .9*f;
+  [['Intensity','barI',y1+2.9*f],['Probability','barP',y1+4.7*f]].forEach(([lab,c,y],i)=>{
+    Kit.mk('text',{x:pad,y:y,'font-size':f*.95},svg).textContent = lab;
+    Kit.mk('rect',{class:'track',x:bx,y:y-bh*.85,width:bw,height:bh,rx:bh/2},svg);
+    G['b'+i] = Kit.mk('rect',{class:c,x:bx,y:y-bh*.85,width:bw,height:bh,rx:bh/2},svg);
+  });
+  G.bx = bx; G.bw = bw; G.bh = bh;
+  update(T);
+};
+
+function curve(m){ const {sx,y1,amp} = G; let d = ''; for (let i=0;i<=120;i++){ const v = X0+(X1-X0)*i/120; d += (i?'L':'M')+sx(v).toFixed(1)+' '+(y1-amp*pdf(v,m)).toFixed(1); } return d; }
+
+function update(t){
+  T = t; if (!G) return;
+  const m = -SHIFT*t, {sx,y1,amp} = G;
+  G.today.setAttribute('d', curve(0));
+  G.model.setAttribute('d', curve(m)+`L${sx(X1)} ${y1}L${sx(X0)} ${y1}Z`);
+  let d = `M${sx(EV)} ${y1}`; for (let i=0;i<=40;i++){ const v = EV+(X1-EV)*i/40; d += `L${sx(v).toFixed(1)} ${(y1-amp*pdf(v,m)).toFixed(1)}`; }
+  G.tail.setAttribute('d', d+`L${sx(X1)} ${y1}Z`);
+  const shx = sx(EV+m);
+  G.sl.setAttribute('x1',shx); G.sl.setAttribute('x2',shx); G.sl.style.opacity = t>.02?1:0;
+  G.st.setAttribute('x', shx-.4*G.f); G.st.textContent = '−'+(SHIFT*t).toFixed(1)+'°'; G.st.style.opacity = t>.02?1:0;
+  const iw = Math.max(G.bh, G.bw*(EV+m-X0)/(EV-X0));
+  const pw = Math.max(G.bh*.6, G.bw*tail(m)/tail(0));
+  G.b0.setAttribute('width', iw); G.b1.setAttribute('width', pw);
+  Kit.$('s1').classList.toggle('on', t>.03);
+  Kit.$('s2').classList.toggle('on', t>.97);
+  if (t>.97 && !done){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why .body,#keep',{opacity:0,y:8,stagger:.12,duration:.45,ease:'power3.out'});
+  }
+}
+
+const sl = Kit.$('t');
+let lastTick = 0;
+sl.addEventListener('input', () => {
+  const t = sl.value/100; update(t);
+  const k = Math.round(t*10); if (k!==lastTick){ lastTick = k; Kit.haptic('selection'); }
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  const o = {t:0};
+  gsap.timeline().to(o,{t:.3,duration:.8,ease:'power2.inOut',onUpdate:()=>{ sl.value=o.t*100; update(o.t); }})
+    .to(o,{t:0,duration:.7,ease:'power2.inOut',onUpdate:()=>{ sl.value=o.t*100; update(o.t); }});
+};
+Kit.play.card = async () => {
+  gsap.globalTimeline.clear();
+  sl.value = 100; sl.dispatchEvent(new Event('input',{bubbles:true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

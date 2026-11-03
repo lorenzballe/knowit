@@ -1,0 +1,187 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Once in a while</title>
+<!-- A pretend child asks for a sweet every day. The reader picks the rule for weeks 1-3 (always yes,
+     once in a while, never); from day 22 it is no for good, and the calendar fills with the days the
+     child still asks. The partial reinforcement extinction effect (Humphreys 1939). The child is a
+     model (it quits once a run of no's would be a 1-in-200 fluke under the rule it learned), an
+     illustration of the published effect, not data.
+     Inspired by Diventare Strong (Alex Onofri), "Come Smettere di Essere Troppo Buoni": "a no is forever".
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#rules{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2cqw}
+.rule{display:flex;flex-direction:column;align-items:flex-start;gap:.7cqh;text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:1.7cqh;padding:1.1cqh 2.6cqw 1.2cqh;cursor:pointer;transition:background-color .25s,color .25s}
+.rule b{font:800 max(1.9cqh,12.5px)/1.1 var(--body);white-space:nowrap}
+.rule .res{display:flex;align-items:baseline;gap:1.2cqw;width:100%}
+.rule .n{font:800 max(3cqh,17px)/1 var(--display);font-variant-numeric:tabular-nums}
+.rule .u{font:700 max(1.5cqh,11.5px)/1 var(--body);opacity:.75}
+.rule .bar{display:block;height:.6cqh;min-height:3px;border-radius:9px;background:color-mix(in srgb,var(--k) 18%,transparent);width:100%;overflow:hidden}
+.rule .bar i{display:block;height:100%;width:0;background:currentColor;border-radius:9px;transition:width .6s cubic-bezier(.23,1,.32,1)}
+.rule.on{background:var(--k);color:var(--c);box-shadow:none}
+.rule.on .bar{background:color-mix(in srgb,var(--c) 22%,transparent)}
+#cal{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+.cap{margin:0;font:600 max(1.5cqh,11.5px)/1.35 var(--body);opacity:.8;text-wrap:pretty}
+.cap b{font-weight:800}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* The smallest phone has no room at the end for everything: the calendar, the chips' tallies, the why
+   and what to keep stay; the line under the calendar gives way (the footer still names the study). */
+@container (max-height:500px){
+  .answered .in{gap:1.4cqh}
+  .answered #stage{gap:1cqh}
+  .answered .cap{display:none}
+  .answered .keep{padding:1.3cqh 4.5cqw}
+  .answered .keep b{display:inline;margin:0 1.6cqw 0 0}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Simulation · pick a rule">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SIMULATION</span></div>
+    <h2 class="q">Why does giving in “just once in a while” make the begging harder to stop?</h2>
+    <div class="stagebox" id="stage">
+      <div id="rules">
+        <button class="rule" data-r="always"><b>Always yes</b><span class="res"><span class="n" data-n>?</span><span class="u">days</span></span><span class="bar"><i></i></span></button>
+        <button class="rule" data-r="some"><b>1 day in 4</b><span class="res"><span class="n" data-n>?</span><span class="u">days</span></span><span class="bar"><i></i></span></button>
+        <button class="rule" data-r="never"><b>Never</b><span class="res"><span class="n" data-n>?</span><span class="u">days</span></span><span class="bar"><i></i></span></button>
+      </div>
+      <svg id="cal" role="img" aria-label="A six-week calendar. Weeks 1 to 3 follow the rule you pick; from day 22 every answer is no. Each day shows a sweet (asked, got a yes), an empty speech bubble (asked, got a no) or nothing (did not ask)."></svg>
+      <p class="cap" id="cap">A pretend child asks for a sweet every day, and quits once a run of no’s is too long to be bad luck. A model, not data.</p>
+    </div>
+    <p class="say" id="say">Pick a rule for weeks 1–3. From day 22 it’s no, for good. Which child keeps asking longest?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Each no that turns into a yes teaches one thing: ask longer.</div>
+    <div class="foot"><span class="src">Source · L. G. Humphreys, Journal of Experimental Psychology 25:141 (1939)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('cal'), say = Kit.$('say'), cap = Kit.$('cap');
+  const INK = '#ffffff', SOFT = 'rgba(255,255,255,.34)', GROUND = '#9B5CFF', SWEET = '#ffd23f';
+  // Weeks 1-3: the rule. "Once in a while" says yes on 5 of 21 days, about 1 in 4.
+  const SOME = new Set([3, 8, 12, 13, 19]);
+  const ANSWER = {always: () => true, some: d => SOME.has(d), never: () => false};
+  // The pretend child: it asks every day until a run of no's would be a 1-in-200 fluke under the
+  // rule it has learned (its yes rate so far, before this run began). 2 = asked, yes; 1 = asked, no;
+  // 0 = did not ask.
+  function simulate(rule) {
+    const days = []; let quit = false, run = 0, yes = 0, asks = 0, hy = 0, ha = 0;
+    for (let d = 1; d <= 42; d++) {
+      if (quit) { days.push(0); continue; }
+      const y = d <= 21 && ANSWER[rule](d);
+      asks++;
+      if (y) { yes++; run = 0; hy = yes; ha = asks; days.push(2); continue; }
+      run++; days.push(1);
+      const p = (hy + 1) / (ha + 2);
+      if (run >= Math.ceil(Math.log(1 / 200) / Math.log(1 - p))) quit = true;
+    }
+    return days;
+  }
+  const RUNS = {}; for (const r in ANSWER) RUNS[r] = simulate(r);
+  const after = r => RUNS[r].slice(21).filter(v => v).length;   // days it still asks from day 22
+  const before = r => RUNS[r].slice(0, 21).filter(v => v).length;
+  const SAY = {
+    always: n => `Every ask got a yes, so the first no is news. After <b>${n}</b>, the child stops.`,
+    some: n => `This child once got a sweet after five no’s in a row, so a long run of no’s still looks like bad luck: <b>${n} more days</b> of asking.`,
+    never: () => `Asking never paid, so it faded within ${before('never')} days. Nothing to unlearn.`
+  };
+  const END = 'It’s the <b>partial reinforcement extinction effect</b>. Humphreys showed it in 1939 with human eye-blinks trained by puffs of air; it turns up in rats, pigeons and people too. The child here is a model, not data.';
+  let cells = [], size = 10, current = null, upto = 0, tl = null;
+  const done = new Set();
+
+  const txt = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': 11.5, 'letter-spacing': '.08em'}, a), svg); e.textContent = s; return e; };
+
+  // One day's mark, drawn around the centre of its cell.
+  function mark(g, v) {
+    g.innerHTML = '';
+    const s = size, inner = Kit.mk('g', {}, g);
+    if (v === 2) {               // asked, got a yes: a lollipop
+      const r = s * .29, cx = -s * .06, cy = -s * .1;
+      Kit.mk('line', {x1: cx + r * .5, y1: cy + r * .6, x2: s * .26, y2: s * .38, stroke: INK, 'stroke-width': Math.max(1.8, s * .075), 'stroke-linecap': 'round'}, inner);
+      Kit.mk('circle', {cx, cy, r, fill: SWEET}, inner);
+      Kit.mk('path', {d: `M${cx - r * .1} ${cy}A${r * .2} ${r * .2} 0 0 1 ${cx + r * .3} ${cy}A${r * .4} ${r * .4} 0 0 1 ${cx - r * .5} ${cy}A${r * .6} ${r * .6} 0 0 1 ${cx + r * .7} ${cy}`, fill: 'none', stroke: GROUND, 'stroke-width': Math.max(1.2, s * .05), 'stroke-linecap': 'round'}, inner);
+    } else if (v === 1) {        // asked, got a no: an empty speech bubble
+      const w = s * .66, h = s * .44, r = h * .42, x0 = -w / 2, y0 = -h / 2 - s * .05;
+      Kit.mk('path', {d: `M${x0 + r} ${y0}H${x0 + w - r}Q${x0 + w} ${y0} ${x0 + w} ${y0 + r}V${y0 + h - r}Q${x0 + w} ${y0 + h} ${x0 + w - r} ${y0 + h}H${x0 + w * .42}L${x0 + w * .2} ${y0 + h + s * .16}L${x0 + w * .24} ${y0 + h}H${x0 + r}Q${x0} ${y0 + h} ${x0} ${y0 + h - r}V${y0 + r}Q${x0} ${y0} ${x0 + r} ${y0}Z`, fill: 'rgba(255,255,255,.12)', stroke: INK, 'stroke-width': Math.max(1.4, s * .055), 'stroke-linejoin': 'round'}, inner);
+    } else {                     // did not ask
+      Kit.mk('circle', {r: Math.max(1.6, s * .045), fill: SOFT}, inner);
+    }
+    return inner;
+  }
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const lab = 19, rowH = (H - 2 * lab) / 6, colW = W / 7;
+    size = Math.max(13, Math.min(colW * .9, rowH * 1.2));
+    const y4 = 2 * lab + 3 * rowH;   // top of week 4
+    // Weeks 4-6, the no for good, on a band of their own.
+    Kit.mk('rect', {x: -2, y: y4 - lab + 3, width: W + 4, height: Math.max(0, H - y4 + lab - 3), rx: 9, fill: 'rgba(16,0,40,.16)'}, svg);
+    txt(0, 13, 'WEEKS 1–3 · YOUR RULE');
+    txt(6, y4 - 5, 'FROM DAY 22 · NO, FOR GOOD');
+    cells = [];
+    for (let d = 0; d < 42; d++) {
+      const r = Math.floor(d / 7), c = d % 7;
+      const cy = (r < 3 ? lab + r * rowH : y4 + (r - 3) * rowH) + rowH / 2, cx = c * colW + colW / 2;
+      cells.push(Kit.mk('g', {transform: `translate(${cx.toFixed(1)} ${cy.toFixed(1)})`}, svg));
+    }
+    const days = current ? RUNS[current] : null;
+    cells.forEach((g, d) => mark(g, days && d < upto ? days[d] : 0));
+  }
+
+  function settle(rule) {
+    const n = after(rule), btn = document.querySelector(`.rule[data-r="${rule}"]`);
+    btn.querySelector('[data-n]').textContent = n;
+    btn.querySelector('.bar i').style.width = (n / 21 * 100) + '%';
+    done.add(rule);
+    say.innerHTML = SAY[rule](n);
+    const finished = done.has('always') && done.has('some');
+    if (finished) {
+      Kit.$('card').classList.add('answered');
+      cap.innerHTML = END;
+      if (Kit.$('keep').classList.contains('gone')) { Kit.show('keep'); Kit.haptic('success'); } else Kit.haptic('light');
+      requestAnimationFrame(draw);
+    } else Kit.haptic('light');
+  }
+
+  function run(rule) {
+    if (tl) { tl.kill(); tl = null; }
+    current = rule; upto = 0;
+    document.querySelectorAll('.rule').forEach(b => b.classList.toggle('on', b.dataset.r === rule));
+    const days = RUNS[rule];
+    if (Kit.calm || typeof gsap === 'undefined') { upto = 42; draw(); settle(rule); return; }
+    draw();
+    say.innerHTML = rule === 'never' ? 'Weeks 1–3: no, every time…' : 'Weeks 1–3: your rule…';
+    tl = gsap.timeline({onComplete: () => { tl = null; settle(rule); }});
+    days.forEach((v, d) => {
+      const at = d < 21 ? d * .045 : 21 * .045 + .35 + (d - 21) * .085;
+      tl.call(() => {
+        upto = d + 1;
+        if (d === 21) say.innerHTML = 'Day 22: from now on, no.';
+        const m = mark(cells[d], v);
+        if (v) gsap.from(m, {scale: .2, opacity: 0, duration: .28, ease: 'back.out(2.2)', transformOrigin: '50% 50%'});
+      }, null, at);
+    });
+  }
+
+  document.getElementById('rules').addEventListener('click', e => {
+    const b = e.target.closest('.rule'); if (!b) return;
+    Kit.haptic('selection'); run(b.dataset.r);
+  });
+  Kit.onShow.card = draw;
+  // The words under the calendar change length as it fills: draw it again at its new size.
+  let lastBox = '';
+  new ResizeObserver(() => { const r = svg.getBoundingClientRect(), k = `${Math.round(r.width)}x${Math.round(r.height)}`; if (k !== lastBox && cells.length) { lastBox = k; draw(); } }).observe(svg);
+  Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.rule', {opacity: 0, y: 8, stagger: .07, duration: .4, ease: 'power3.out', clearProps: 'transform,opacity'}); };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.play.card = async () => {
+    for (const r of ['always', 'never', 'some']) {
+      document.querySelector(`.rule[data-r="${r}"]`).click();
+      await wait(Kit.calm ? 40 : 3900);
+    }
+  };
+})();
+Kit.single();
+</script>
+</html>

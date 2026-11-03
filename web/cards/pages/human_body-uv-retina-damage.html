@@ -1,0 +1,207 @@
+<!doctype html>
+<!-- slug: human_body-uv-retina-damage -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+#fire{align-self:center;font:800 max(2.2cqh,15px)/1.1 var(--body);color:#fff;background:#6b2fd6;border:0;border-radius:99px;padding:1.5cqh 7cqw;cursor:pointer;box-shadow:0 .6cqh 1.6cqh color-mix(in srgb,#6b2fd6 40%,transparent)}
+#fire:active{transform:scale(.97)}
+#fire[disabled]{opacity:.55}
+#pic .lab{font-family:var(--body);font-weight:700;fill:var(--k)}
+#pic .cap{font-family:var(--mono);font-weight:700;fill:var(--k);letter-spacing:.04em}
+#pic .uv{fill:#6b2fd6}
+#pic .half{transition:stroke .5s,fill .5s}
+#pic .half.bad{stroke:var(--muted)!important}
+#pic .half.bad circle{fill:color-mix(in srgb,var(--muted) 35%,transparent)}
+#pic .disc{transition:fill .5s,stroke .5s}
+#pic .disc.hurt{fill:color-mix(in srgb,var(--muted) 18%,transparent);stroke-dasharray:4 4;stroke:var(--muted)}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SUN &amp; RETINA</span></div>
+    <h2 class="q">How do the sun's UV rays damage the cells in your retina?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A photoreceptor cell full of light-sensing molecules, hit by ultraviolet rays"></svg>
+      <button id="fire">Send UV rays ☀</button>
+      <div id="why" class="gone">
+        <p class="big">Chemistry, not fire.</p>
+        <p class="body">Photoreceptors are the retina's cells that turn light into images. UV rays trigger photochemical reactions inside them that alter their structure and damage the cells, sometimes for good.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the button (or the sun) and watch each UV ray hit.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The sun doesn't literally burn the retina: its UV light chemically breaks the cells that see.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Non guardare mai il sole ad occhio nudo, si potrebbero avere danni alla retina, anche permanenti!” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 14, UV = '#6b2fd6', MOL = '#e07b00';
+const broken = new Set();
+let G = null, busy = false, done = false, T = 1;
+
+function draw(){
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('#pic *');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = Math.min(W, H);
+  G = {W, H, f, mol: [], discs: [], svg};
+  const ink = 'var(--k)';
+
+  // retina band
+  const rb = H * 0.9;
+  Kit.mk('rect', {x: 0, y: rb, width: W, height: H - rb, rx: f * .6, fill: 'color-mix(in srgb,var(--k) 10%,transparent)'}, svg);
+  const rt = Kit.mk('text', {x: 6, y: rb + (H - rb) / 2 + f * .35, class: 'cap', 'font-size': Math.max(12, f * .8)}, svg);
+  rt.textContent = 'RETINA · back of the eye';
+
+  // cell
+  const w = Math.min(W * 0.34, H * 0.36), cx = W * 0.64;
+  const y0 = H * 0.2, y1 = H * 0.74, x0 = cx - w / 2;
+  G.cell = {cx, w, y0, y1};
+  Kit.mk('rect', {x: cx - w * .32, y: y1 - 4, width: w * .64, height: rb - y1 + 4, rx: w * .25,
+    fill: 'color-mix(in srgb,var(--k) 6%,#fff)', stroke: ink, 'stroke-width': Math.max(1.5, f * .14)}, svg);
+  Kit.mk('rect', {x: x0, y: y0, width: w, height: y1 - y0, rx: w * .45,
+    fill: 'color-mix(in srgb,var(--k) 4%,#fff)', stroke: ink, 'stroke-width': Math.max(2, f * .18)}, svg);
+
+  const gap = (y1 - y0 - w * .3) / 7, top = y0 + w * .15;
+  const L = w * .32, h = gap * .17;
+  for (let d = 0; d < 7; d++){
+    const yc = top + gap * (d + .5);
+    const disc = Kit.mk('rect', {class: 'disc', x: cx - w * .42, y: yc - gap * .3, width: w * .84, height: gap * .6, rx: gap * .3,
+      fill: 'color-mix(in srgb,#e07b00 12%,#fff)', stroke: 'color-mix(in srgb,var(--k) 45%,transparent)', 'stroke-width': 1.2}, svg);
+    G.discs.push(disc);
+    for (let s = 0; s < 2; s++){
+      const mx = cx + (s ? 1 : -1) * w * .2, my = yc;
+      const g = Kit.mk('g', {transform: `translate(${mx},${my})`}, svg);
+      const pts = [0,1,2,3,4].map(k => [-L / 2 + k * L / 4, (k % 2 ? -h : h)]);
+      const sw = Math.max(2, f * .2);
+      const left = Kit.mk('g', {class: 'half', stroke: MOL, 'stroke-width': sw, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      Kit.mk('polyline', {points: pts.slice(0, 3).map(p => p.join(',')).join(' ')}, left);
+      Kit.mk('circle', {cx: pts[0][0] - h * 1.1, cy: pts[0][1], r: h * 1.1, fill: 'color-mix(in srgb,#e07b00 30%,#fff)'}, left);
+      const right = Kit.mk('g', {class: 'half', stroke: MOL, 'stroke-width': sw, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+      Kit.mk('polyline', {points: pts.slice(2).map(p => p.join(',')).join(' ')}, right);
+      G.mol.push({x: mx, y: my, left, right, L, d});
+    }
+  }
+
+  // sun
+  const sx = W * .13, sy = H * .13, sr = m * .075;
+  G.sun = {x: sx, y: sy, r: sr};
+  const sun = Kit.mk('g', {style: 'cursor:pointer'}, svg);
+  for (let k = 0; k < 12; k++){
+    const a = k * Math.PI / 6;
+    Kit.mk('line', {x1: sx + Math.cos(a) * sr * 1.25, y1: sy + Math.sin(a) * sr * 1.25, x2: sx + Math.cos(a) * sr * 1.6, y2: sy + Math.sin(a) * sr * 1.6,
+      stroke: '#f5a300', 'stroke-width': Math.max(2, f * .18), 'stroke-linecap': 'round'}, sun);
+  }
+  Kit.mk('circle', {cx: sx, cy: sy, r: sr, fill: '#ffc93c', stroke: '#e08a00', 'stroke-width': 2}, sun);
+  sun.addEventListener('click', shoot);
+  const ut = Kit.mk('text', {x: sx, y: sy + sr * 1.6 + f * 1.3, 'text-anchor': 'middle', class: 'cap uv', 'font-size': Math.max(12, f * .85)}, sun);
+  ut.textContent = 'UV RAYS';
+
+  // labels
+  const fs = Math.max(12, f * .85);
+  const lx = x0 - f * .8;
+  const t1 = Kit.mk('text', {x: lx, y: H * .42, 'text-anchor': 'end', class: 'lab', 'font-size': fs}, svg);
+  t1.textContent = 'Photoreceptor';
+  const t1b = Kit.mk('text', {x: lx, y: H * .42 + fs * 1.35, 'text-anchor': 'end', class: 'lab', 'font-size': fs * .9, fill: 'var(--muted)', style: 'fill:var(--muted);font-weight:600'}, svg);
+  t1b.textContent = 'turns light into images';
+  const ly = H * .62;
+  const t2 = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'end', class: 'lab', 'font-size': fs, style: `fill:${MOL}`}, svg);
+  t2.textContent = 'light-sensing';
+  const t3 = Kit.mk('text', {x: lx, y: ly + fs * 1.6, 'text-anchor': 'end', class: 'lab', 'font-size': fs, style: `fill:${MOL}`}, svg);
+  t3.textContent = 'molecules';
+  const tgt = G.mol[10];
+  Kit.mk('line', {x1: lx + f * .3, y1: ly + fs * .3, x2: tgt.x - tgt.L * .75, y2: tgt.y, stroke: MOL, 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, svg);
+
+  // counter
+  G.count = Kit.mk('text', {x: W - 4, y: H * .1, 'text-anchor': 'end', class: 'cap', 'font-size': Math.max(12, f * .85)}, svg);
+  count();
+
+  broken.forEach(i => breakMol(i, false));
+}
+
+function count(){ if (G) G.count.textContent = `ALTERED ${broken.size} / ${N}`; }
+
+function breakMol(i, anim){
+  const mo = G.mol[i]; if (!mo) return;
+  const d = anim ? .7 * T : 0;
+  mo.left.classList.add('bad'); mo.right.classList.add('bad');
+  gsap.to(mo.left, {x: -mo.L * .12, y: -mo.L * .14, rotation: -28, transformOrigin: '100% 50%', duration: d, ease: 'back.out(2)'});
+  gsap.to(mo.right, {x: mo.L * .12, y: mo.L * .14, rotation: 24, transformOrigin: '0% 50%', duration: d, ease: 'back.out(2)'});
+  const disc = G.discs[mo.d];
+  if (broken.has(mo.d * 2) && broken.has(mo.d * 2 + 1)) disc.classList.add('hurt');
+  if (anim){
+    const fl = Kit.mk('circle', {cx: mo.x, cy: mo.y, r: 2, fill: 'none', stroke: UV, 'stroke-width': 3}, G.svg);
+    gsap.to(fl, {attr: {r: mo.L * .7}, opacity: 0, duration: .5 * T, onComplete: () => fl.remove()});
+    gsap.fromTo(disc, {x: -3}, {x: 0, duration: .4 * T, ease: 'elastic.out(1,.3)'});
+  }
+}
+
+function photon(tx, ty){
+  const {x: sx, y: sy, r} = G.sun;
+  const dx = tx - sx, dy = ty - sy, len = Math.hypot(dx, dy);
+  const ux = dx / len, uy = dy / len, nx = -uy, ny = ux;
+  const amp = G.f * .35, wl = G.f * 1.1, start = r * 1.1;
+  let d = '';
+  for (let s = start; s <= len; s += 2){
+    const a = Math.sin((s - start) / wl * Math.PI * 2) * amp;
+    d += (d ? 'L' : 'M') + (sx + ux * s + nx * a).toFixed(1) + ',' + (sy + uy * s + ny * a).toFixed(1);
+  }
+  return Kit.mk('path', {d, fill: 'none', stroke: UV, 'stroke-width': Math.max(2, G.f * .17), 'stroke-linecap': 'round'}, G.svg);
+}
+
+function shoot(){
+  if (busy || done || !G) return;
+  busy = true; Kit.haptic('light');
+  Kit.$('fire').disabled = true;
+  const left = [...Array(N).keys()].filter(i => !broken.has(i));
+  const picks = [];
+  while (picks.length < Math.min(3, left.length)){
+    const i = left.splice(Math.floor(Kit.rnd() * left.length), 1)[0]; picks.push(i);
+  }
+  const tl = gsap.timeline({onComplete: () => {
+    busy = false; Kit.$('fire').disabled = false;
+    if (broken.size >= N) finish();
+  }});
+  picks.forEach((i, j) => {
+    const mo = G.mol[i], p = photon(mo.x, mo.y), len = p.getTotalLength();
+    gsap.set(p, {strokeDasharray: len, strokeDashoffset: len});
+    const sub = gsap.timeline();
+    sub.to(p, {strokeDashoffset: 0, duration: .55 * T, ease: 'none'})
+       .add(() => { broken.add(i); breakMol(i, true); count(); })
+       .to(p, {opacity: 0, duration: .35 * T, onComplete: () => p.remove()});
+    tl.add(sub, j * .18 * T);
+  });
+  tl.to({}, {duration: .6 * T});
+}
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('fire'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+Kit.$('fire').addEventListener('click', shoot);
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) { T = .3; return; }
+  gsap.from('#pic .disc', {opacity: 0, scaleX: .4, transformOrigin: '50% 50%', stagger: .05, duration: .4, ease: 'power3.out'});
+  gsap.from('#pic .half', {opacity: 0, stagger: .015, duration: .3, delay: .2});
+};
+Kit.play.card = async () => {
+  T = .15;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (let k = 0; k < 8 && !done; k++){ shoot(); await wait(400); }
+  await wait(600);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<!-- slug: history-silent-death-penalty -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#pie{flex:1;min-height:0;width:100%;display:block}
+#leg{display:flex;justify-content:center;flex-wrap:wrap;gap:1cqh 6cqw;font:700 max(1.9cqh,12px)/1.25 var(--body);color:var(--k)}
+#leg span.i{display:inline-flex;align-items:center;gap:1.6cqw}
+#leg i{display:inline-block;width:max(1.6cqh,11px);height:max(1.6cqh,11px);border-radius:50%;box-sizing:border-box}
+#leg i.a{background:var(--k)}
+#leg i.p{border:max(.4cqh,3px) solid var(--k)}
+#leg b{font-family:var(--mono)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap to sort · count">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEATH PENALTY</span></div>
+    <h2 class="q">How many countries keep the death penalty but executed no one in 2025?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pie" role="img" aria-label="A ring of 54 countries that keep the death penalty in law"></svg>
+      <div id="leg">
+        <span class="i"><i class="a"></i>executed in 2025: <b id="na">0</b></span>
+        <span class="i"><i class="p"></i>executed no one: <b id="np">0</b></span>
+      </div>
+      <div id="why" class="gone"><p class="body">54 countries still have the death penalty in law, but only 17 actually used it in 2025. The other 37 keep it on the books and carried out no executions: a passive death penalty. Around 2,700 executions were confirmed in 2025, all in those 17.</p></div>
+    </div>
+    <p class="say" id="say">Tap the ring to sort the 54 countries, one step at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>54 keep it in law, 17 use it, 37 executed no one in 2025.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La storia della pena di morte in Italia e nel mondo, dalle origini ai Paesi in cui è in vigore oggi” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 54, ACT = 17, PAS = [0, 0, 12, 24, 37], LAST = 4;
+const CAP = ['keep it in law', 'executed in 2025', 'executed no one', 'executed no one', 'executed no one'];
+let st = 0, dots = [], num, cap, rd = 6, shown = 0;
+
+function kind(i, s) {
+  if (i < ACT) return s >= 1 ? 'a' : 'f';
+  return (i - ACT) < PAS[s] ? 'p' : 'f';
+}
+function look(c, k, anim) {
+  const sty = k === 'a' ? {fill: 'var(--k)', stroke: 'none', o: 1, r: rd}
+            : k === 'p' ? {fill: 'transparent', stroke: 'var(--k)', o: 1, r: rd * .78}
+            : {fill: 'var(--k)', stroke: 'none', o: .16, r: rd * .7};
+  c.style.fill = sty.fill; c.style.stroke = sty.stroke; c.style.strokeWidth = rd * .42;
+  if (anim && !Kit.calm) gsap.fromTo(c, {attr: {r: 0}, opacity: 0}, {attr: {r: sty.r}, opacity: sty.o, duration: .45, ease: 'back.out(2.5)', delay: anim});
+  else { c.setAttribute('r', sty.r); c.style.opacity = sty.o; }
+}
+function centerVal(s) { return s === 0 ? N : s === 1 ? ACT : PAS[s]; }
+
+function draw() {
+  const svg = Kit.$('pie');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cx = W / 2, cy = H / 2;
+  const R = Math.min(W, H) / 2 - Math.max(8, Math.min(W, H) * .05);
+  rd = Math.max(3, R * Math.sin(Math.PI / N) * .82);
+  dots = [];
+  for (let i = 0; i < N; i++) {
+    const a = -Math.PI / 2 + (i + .5) * 2 * Math.PI / N;
+    const c = Kit.mk('circle', {cx: cx + Math.cos(a) * R, cy: cy + Math.sin(a) * R, r: rd}, svg);
+    look(c, kind(i, st), 0);
+    dots.push(c);
+  }
+  const fs = Math.max(12, f);
+  const big = Math.max(28, R * .55);
+  const ny = cy + big * .12;
+  num = Kit.mk('text', {x: cx, y: ny, 'text-anchor': 'middle'}, svg);
+  num.style.cssText = `font:800 ${big}px var(--display);fill:var(--k)`;
+  num.textContent = shown = centerVal(st);
+  cap = Kit.mk('text', {x: cx, y: ny + big * .32 + fs * 1.2, 'text-anchor': 'middle'}, svg);
+  cap.style.cssText = `font:700 ${fs}px var(--body);fill:var(--k);opacity:.75`;
+  cap.textContent = CAP[st];
+}
+
+function count(to) {
+  const o = {v: shown};
+  if (Kit.calm) { num.textContent = shown = to; return; }
+  gsap.to(o, {v: to, duration: .7, ease: 'power2.out', onUpdate: () => { num.textContent = Math.round(o.v); }, onComplete: () => { shown = to; }});
+}
+
+function step() {
+  if (st >= LAST) return;
+  const prev = st; st++;
+  Kit.haptic(st === LAST ? 'success' : 'light');
+  let d = 0;
+  dots.forEach((c, i) => { if (kind(i, st) !== kind(i, prev)) { look(c, kind(i, st), .02 + d); d += .025; } });
+  cap.textContent = CAP[st];
+  count(centerVal(st));
+  Kit.$('na').textContent = st >= 1 ? ACT : 0;
+  Kit.$('np').textContent = PAS[st];
+  if (st === 1) Kit.$('say').textContent = 'Now tap to add the countries that executed no one.';
+  if (st === LAST) {
+    setTimeout(() => {
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      draw();
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+    }, Kit.calm ? 0 : 750);
+  }
+}
+
+Kit.$('stage').addEventListener('click', step);
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(dots, {attr: {r: 0}, duration: .5, stagger: .012, ease: 'back.out(2)'});
+  gsap.from(num, {opacity: 0, duration: .6, delay: .3});
+};
+Kit.play.card = async () => {
+  for (let i = 0; i < LAST; i++) { Kit.$('stage').click(); await new Promise(r => setTimeout(r, 300)); }
+  await new Promise(r => setTimeout(r, 1300));
+};
+Kit.single();
+</script>
+</html>

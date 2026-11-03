@@ -1,0 +1,171 @@
+<!doctype html>
+<!-- slug: medicine-heated-glycerol-aldehydes -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#legend{display:flex;flex-wrap:wrap;gap:.6cqh 3.5cqw;align-items:center;font:700 max(1.8cqh,12px)/1.25 var(--body);color:var(--k)}
+.lg{display:inline-flex;align-items:center;gap:1.5cqw;white-space:nowrap}
+.lg i{display:inline-block;width:max(1.5cqh,10px);height:max(1.5cqh,10px);border-radius:50%;box-shadow:0 0 0 1.5px var(--k)}
+.lg b{font-family:var(--mono)}
+#temp{margin-left:auto;font:800 max(2.6cqh,16px)/1 var(--mono);color:var(--k)}
+#wrap{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#heat{align-self:center;font:800 max(2.3cqh,15px)/1.1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.8cqh 9cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .15s}
+#heat.on{transform:scale(.95)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.5cqh,16px)/1.2 var(--display);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEATED TOBACCO</span></div>
+    <h2 class="q">What does glycerol turn into when heated tobacco reaches 350 °C?</h2>
+    <div class="stagebox" id="stage">
+      <div id="legend">
+        <span class="lg"><i style="background:#f3efe6"></i>glycerol <b id="nG">14</b></span>
+        <span class="lg"><i style="background:#ff5a36"></i>formaldehyde <b id="nF">0</b></span>
+        <span class="lg"><i style="background:#9b5de5"></i>acetaldehyde <b id="nA">0</b></span>
+        <span id="temp">20 °C</span>
+      </div>
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <button id="heat">Hold to heat</button>
+      <div id="why" class="gone">
+        <p class="big">Formaldehyde and acetaldehyde</p>
+        <p class="body">Heated tobacco runs hotter than an e-cig, close to 350 °C. That heat speeds up dehydration: glycerol sheds water and splits into these two aldehydes, both toxic and carcinogenic.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button and watch the glycerol as it heats up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hotter is not cleaner: near 350 °C glycerol breaks into toxic aldehydes.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Apriamo una sigaretta con tabacco riscaldato in laboratorio” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const COL = {F:'#ff5a36', A:'#9b5de5', W:'#3aa0ff', G:'#f3efe6', O:'#e63946'};
+let ctx = null, W = 0, H = 0, ink = '#111';
+let T = 20, heating = false, done = false, broken = 0;
+const mols = [], bits = [];
+// Seeded spread of glycerol molecules in normalized coordinates
+for (let i = 0; i < 14; i++) {
+  mols.push({nx: .08 + .84 * ((i % 4) + .5 + (Kit.rnd() - .5) * .5) / 4, ny: .08 + .84 * (Math.floor(i / 4) + .5 + (Kit.rnd() - .5) * .4) / 4, a: Kit.rnd() * 6.28, ph: Kit.rnd() * 9, alive: true});
+}
+function box() {
+  const fs = Math.max(12, H * .045);
+  const col = Math.max(W * .22, fs * 4.6);
+  return {fs, col, x0: col + fs * .4, x1: W - fs * .5, y0: fs * .6, y1: H - fs * .6};
+}
+function circ(x, y, r, fill) { ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fillStyle = fill; ctx.fill(); ctx.lineWidth = Math.max(1.2, r * .22); ctx.strokeStyle = ink; ctx.stroke(); }
+function bond(x1, y1, x2, y2, r) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineWidth = Math.max(1.5, r * .35); ctx.strokeStyle = ink; ctx.stroke(); }
+// Glycerol: 3 carbons, each with an O (OH group)
+function drawGly(x, y, a, r) {
+  const c = Math.cos(a), s = Math.sin(a), pts = [];
+  for (let k = -1; k <= 1; k++) { const zz = (k === 0 ? -1 : 1) * r * .7; pts.push([x + c * k * r * 1.9 - s * zz, y + s * k * r * 1.9 + c * zz]); }
+  const os = pts.map((p, k) => { const d = (k === 1 ? -1 : 1) * r * 1.7; return [p[0] - s * d, p[1] + c * d]; });
+  pts.forEach((p, k) => { if (k) bond(pts[k - 1][0], pts[k - 1][1], p[0], p[1], r); bond(p[0], p[1], os[k][0], os[k][1], r); });
+  os.forEach(o => circ(o[0], o[1], r * .62, COL.O));
+  pts.forEach(p => circ(p[0], p[1], r * .8, COL.G));
+}
+function drawF(x, y, a, r) { const ox = x + Math.cos(a) * r * 1.6, oy = y + Math.sin(a) * r * 1.6; bond(x, y, ox, oy, r); circ(ox, oy, r * .62, COL.O); circ(x, y, r * .8, COL.F); }
+function drawA(x, y, a, r) {
+  const c = Math.cos(a), s = Math.sin(a), p1 = [x - c * r, y - s * r], p2 = [x + c * r, y + s * r], o = [p2[0] - s * r * 1.5, p2[1] + c * r * 1.5];
+  bond(p1[0], p1[1], p2[0], p2[1], r); bond(p2[0], p2[1], o[0], o[1], r); circ(o[0], o[1], r * .62, COL.O); circ(p1[0], p1[1], r * .8, COL.A); circ(p2[0], p2[1], r * .8, COL.A);
+}
+function draw() {
+  if (!ctx) return;
+  const b = box(), r = Math.max(4, Math.min(W, H) * .027), t = performance.now() / 1000;
+  ctx.clearRect(0, 0, W, H);
+  // panel
+  ctx.fillStyle = 'rgba(0,0,0,.07)';
+  ctx.beginPath(); ctx.roundRect(b.x0 - b.fs * .3, 0, W - b.x0 + b.fs * .3, H, b.fs * .7); ctx.fill();
+  // thermometer
+  const tx = b.fs * 1.1, ty0 = b.fs * 1.2, ty1 = H - b.fs * 2.2, tw = b.fs * .7;
+  const yOf = v => ty1 - (ty1 - ty0) * (v - 20) / 330;
+  ctx.lineWidth = 2; ctx.strokeStyle = ink; ctx.fillStyle = 'rgba(255,255,255,.55)';
+  ctx.beginPath(); ctx.roundRect(tx - tw / 2, ty0 - tw / 2, tw, ty1 - ty0 + tw, tw / 2); ctx.fill(); ctx.stroke();
+  const hot = Math.min(1, (T - 20) / 330);
+  ctx.fillStyle = `rgb(${200 + 55 * hot},${120 - 80 * hot},${60 - 40 * hot})`;
+  ctx.fillRect(tx - tw * .28, yOf(T), tw * .56, ty1 - yOf(T) + tw * .4);
+  ctx.beginPath(); ctx.arc(tx, ty1 + tw * .9, tw * .95, 0, 6.2832); ctx.fill(); ctx.stroke();
+  ctx.font = `700 ${b.fs * .82}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  ctx.textBaseline = 'middle'; ctx.fillStyle = ink;
+  [[350, '350 °C'], [200, 'e-cig']].forEach(([v, s]) => {
+    const y = yOf(v); ctx.beginPath(); ctx.moveTo(tx + tw / 2, y); ctx.lineTo(tx + tw * 1.1, y); ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillText(s, tx + tw * 1.3, y);
+  });
+  ctx.font = `600 ${b.fs * .7}px sans-serif`;
+  ctx.fillText('heated', tx + tw * 1.3, yOf(350) + b.fs * 1.05);
+  ctx.fillText('tobacco', tx + tw * 1.3, yOf(350) + b.fs * 1.9);
+  ctx.fillText('(cooler)', tx + tw * 1.3, yOf(200) + b.fs * 1.05);
+  // molecules
+  const jig = (T - 20) / 330 * r * .9;
+  const X = nx => b.x0 + r * 2.6 + (b.x1 - b.x0 - r * 5.2) * nx, Y = ny => b.y0 + r * 2.6 + (b.y1 - b.y0 - r * 5.2) * ny;
+  mols.forEach(m => { if (m.alive) drawGly(X(m.nx) + Math.sin(t * 13 + m.ph) * jig, Y(m.ny) + Math.cos(t * 11 + m.ph) * jig, m.a + Math.sin(t * 3 + m.ph) * .15 * hot, r); });
+  bits.forEach(p => {
+    const x = X(p.nx) + Math.sin(t * 13 + p.ph) * jig, y = Y(p.ny) + Math.cos(t * 11 + p.ph) * jig;
+    if (p.k === 'F') drawF(x, y, p.a, r); else if (p.k === 'A') drawA(x, y, p.a, r);
+    else { ctx.globalAlpha = Math.max(0, p.life); circ(x, y, r * .55, COL.W); ctx.globalAlpha = 1; }
+  });
+}
+function step(dt) {
+  dt = Math.min(dt, .05);
+  if (!done) T = heating ? Math.min(350, T + 120 * dt) : Math.max(20, T - 40 * dt);
+  const p = .9 * Math.exp((T - 350) / 32);
+  mols.forEach(m => {
+    if (!m.alive || done || Kit.rnd() > p * dt) return;
+    m.alive = false; broken++;
+    const a = Kit.rnd() * 6.28, sp = .12;
+    bits.push({k: 'F', nx: m.nx, ny: m.ny, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, a: Kit.rnd() * 6.28, va: 2, ph: m.ph});
+    bits.push({k: 'A', nx: m.nx, ny: m.ny, vx: -Math.cos(a) * sp, vy: -Math.sin(a) * sp, a: Kit.rnd() * 6.28, va: -2, ph: m.ph + 1});
+    bits.push({k: 'W', nx: m.nx, ny: m.ny, vx: 0, vy: -.25, a: 0, va: 0, ph: 0, life: 1});
+    Kit.haptic('light');
+    if (!Kit.calm) gsap.fromTo('#nF,#nA', {scale: 1.6}, {scale: 1, duration: .3});
+  });
+  for (let i = bits.length - 1; i >= 0; i--) {
+    const q = bits[i];
+    q.nx += q.vx * dt; q.ny += q.vy * dt; q.a += q.va * dt; q.vx *= .985; q.vy *= q.k === 'W' ? 1 : .985;
+    if (q.nx < 0 || q.nx > 1) { q.vx *= -1; q.nx = Math.max(0, Math.min(1, q.nx)); }
+    if (q.k !== 'W' && (q.ny < 0 || q.ny > 1)) { q.vy *= -1; q.ny = Math.max(0, Math.min(1, q.ny)); }
+    if (q.k === 'W') { q.life -= dt * .8; if (q.life <= 0) bits.splice(i, 1); }
+  }
+  Kit.$('nG').textContent = 14 - broken; Kit.$('nF').textContent = broken; Kit.$('nA').textContent = broken;
+  Kit.$('temp').textContent = Math.round(T) + ' °C';
+  if (!done && broken >= 7 && T >= 345) finish();
+  draw();
+}
+let last = performance.now();
+gsap.ticker.add(() => { const n = performance.now(); step((n - last) / 1000); last = n; });
+function finish() {
+  if (done) return; done = true; heating = false;
+  Kit.haptic('success');
+  Kit.hide('heat'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => Kit.onShow.card());
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+const btn = Kit.$('heat');
+const on = e => { if (done) return; e.preventDefault(); heating = true; btn.classList.add('on'); Kit.haptic('selection'); btn.textContent = 'Heating…'; };
+const off = () => { heating = false; btn.classList.remove('on'); if (!done) btn.textContent = 'Hold to heat'; };
+btn.addEventListener('pointerdown', on);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, off));
+btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) on(e); });
+btn.addEventListener('keyup', off);
+btn.addEventListener('contextmenu', e => e.preventDefault());
+Kit.onShow.card = () => {
+  const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; W = r.W; H = r.H;
+  ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#heat', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 5000));
+  btn.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  if (!done) { while (broken < 7) { const m = mols.find(q => q.alive); m.alive = false; broken++; bits.push({k: 'F', nx: m.nx, ny: m.ny, vx: .1, vy: .05, a: 0, va: 2, ph: 0}, {k: 'A', nx: m.nx, ny: m.ny, vx: -.1, vy: -.05, a: 1, va: -2, ph: 1}); } T = 350; finish(); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

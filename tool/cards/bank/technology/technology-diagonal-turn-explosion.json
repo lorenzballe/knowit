@@ -1,0 +1,37 @@
+{
+  "id": "technology-diagonal-turn-explosion",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did diagonals change the maze's complexity?",
+  "answer": "Diagonals add new headings, so every move offers more turns instead of only a few. Each extra move multiplies those turns, so the total number of paths opens up exponentially. The result is more paths to weigh, but runs become one fluid, snaking motion.",
+  "move": "A few extra options per step multiply into an explosion of paths.",
+  "keywords": [
+    "micromouse",
+    "maze",
+    "diagonals",
+    "exponential growth",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card asking how diagonals changed a maze's complexity. A draggable mouse lets the reader give it more moves, up to 6, to show how the number of possible turns grows."
+  },
+  "source": "Veritasium, “The Fastest Maze-Solving Competition On Earth” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=ZMQbHMgK2rw&t=964s",
+  "written": "2026-11-03"
+}

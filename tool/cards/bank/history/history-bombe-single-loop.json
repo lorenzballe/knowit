@@ -1,0 +1,38 @@
+{
+  "id": "history-bombe-single-loop",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How could a simple circuit test a guess about Enigma's plugboard?",
+  "answer": "The Bombe tested a guess about one plugboard wire with a simple circuit. If R was plugged to Z, the rotors turned Z back into Z and the current closed into a single loop. A wrong guess lit many wires at once, which is impossible, so all such guesses were ruled out together.",
+  "move": "Right guess: one loop. Wrong guess: many live wires, a contradiction.",
+  "keywords": [
+    "bombe",
+    "enigma",
+    "turing",
+    "plugboard",
+    "bletchley park"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A circuit diagram of three rotors looping one letter's wire back into itself, with letter wires to tap. Tapping a guess for which letter R is plugged to shows one closed loop if right, or many live wires if wrong. The question asks which letter R is plugged to.",
+    "ground": "#0b1026"
+  },
+  "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=1974s",
+  "written": "2026-11-03"
+}

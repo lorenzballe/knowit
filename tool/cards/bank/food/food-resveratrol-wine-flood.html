@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: food-resveratrol-wine-flood -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#pour{width:100%;height:max(4.5cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
+.ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Drag · pour">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RED WINE</span></div>
+    <h2 class="q">How much red wine a day for a heart-helping dose of resveratrol?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A cartoon person in a tank filling with wine, beside a meter for the heart dose"></svg>
+      <div id="ctl">
+        <input type="range" id="pour" min="0" max="1000" value="0" aria-label="Glasses of red wine per day">
+        <div class="ends"><span>1 glass</span><span>more and more glasses →</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">≈16,000 glasses a day</p>
+        <p class="body">That is about 2,000 litres. Wine holds only milligrams of resveratrol per litre, and the body often breaks much of it down. So the benefit from wine is practically nil.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag to pour more glasses a day until the heart dose is full.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Red wine's resveratrol is far too little to protect your heart.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 16000, LMAX = Math.log10(MAX);
+const st = {t: 0, d: 0, ph: 0};      // t: flood level (log), d: dose fraction (linear)
+let G = 1, done = false, g = null, el = {};
+const fmt = n => n.toLocaleString('en-US');
+const glassesOf = v => Math.max(1, Math.round(Math.pow(10, v / 1000 * LMAX)));
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12), fb = Math.max(f * 1.55, 18);
+  const l1 = fb * 1.05, l2 = l1 + fb * 0.45 + fs * 1.35, l3 = l2 + fs * 1.5;
+  const top = l3 + fs * 2.2, bot = H - 4;
+  const tx = 4, tw = W * 0.7, mx = W * 0.82, mw = Math.max(W * 0.08, 18);
+  g = {W, H, fs, fb, top, bot, tx, tw, mx, mw};
+  const ink = 'var(--k)';
+  // readouts
+  el.n = Kit.mk('text', {x: tx, y: l1, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fb, fill: ink}, svg);
+  el.l = Kit.mk('text', {x: tx, y: l2, 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': fs, fill: ink}, svg);
+  el.p = Kit.mk('text', {x: tx, y: l3, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs, fill: 'var(--muted)'}, svg);
+  // tank
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'tk'}, defs);
+  Kit.mk('rect', {x: tx, y: top, width: tw, height: bot - top, rx: fs * .6}, cp);
+  Kit.mk('rect', {x: tx, y: top, width: tw, height: bot - top, rx: fs * .6, fill: 'color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
+  const inner = Kit.mk('g', {'clip-path': 'url(#tk)'}, svg);
+  // person
+  const ph = (bot - top) * 0.55, cx = tx + tw * 0.5, feet = bot - 2;
+  const hr = ph * 0.12, hy = feet - ph + hr;
+  g.person = {cx, feet, ph, hr, hy};
+  const pg = Kit.mk('g', {stroke: ink, 'stroke-width': Math.max(fs * .28, 3), 'stroke-linecap': 'round', fill: 'none'}, inner);
+  Kit.mk('line', {x1: cx, y1: hy + hr, x2: cx, y2: feet - ph * .4}, pg);
+  Kit.mk('line', {x1: cx, y1: feet - ph * .4, x2: cx - ph * .15, y2: feet}, pg);
+  Kit.mk('line', {x1: cx, y1: feet - ph * .4, x2: cx + ph * .15, y2: feet}, pg);
+  el.armL = Kit.mk('line', {x1: cx, y1: hy + hr * 2, x2: cx - ph * .22, y2: hy + hr * 4}, pg);
+  el.armR = Kit.mk('line', {x1: cx, y1: hy + hr * 2, x2: cx + ph * .22, y2: hy + hr * 4}, pg);
+  Kit.mk('circle', {cx, cy: hy, r: hr, fill: 'var(--c)'}, pg);
+  Kit.mk('circle', {cx: cx - hr * .38, cy: hy - hr * .15, r: hr * .1, fill: ink, stroke: 'none'}, pg);
+  Kit.mk('circle', {cx: cx + hr * .38, cy: hy - hr * .15, r: hr * .1, fill: ink, stroke: 'none'}, pg);
+  el.mouth = Kit.mk('path', {'stroke-width': Math.max(fs * .18, 2)}, pg);
+  // wine
+  el.wine = Kit.mk('path', {fill: '#8e1b3a', opacity: .88}, inner);
+  el.bottles = Kit.mk('g', {}, inner);
+  el.bub = Kit.mk('g', {fill: '#fff', opacity: .7}, inner);
+  Kit.mk('rect', {x: tx, y: top, width: tw, height: bot - top, rx: fs * .6, fill: 'none', stroke: ink, 'stroke-width': Math.max(fs * .18, 2.5)}, svg);
+  // meter
+  Kit.mk('text', {x: mx + mw / 2, y: top - fs * .7, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink}, svg).textContent = '♥ dose';
+  Kit.mk('rect', {x: mx, y: top, width: mw, height: bot - top, rx: mw / 2, fill: 'color-mix(in srgb,var(--k) 8%,transparent)', stroke: ink, 'stroke-width': Math.max(fs * .15, 2)}, svg);
+  el.mfill = Kit.mk('rect', {x: mx + 3, width: mw - 6, rx: (mw - 6) / 2, fill: '#c2185b'}, svg);
+  draw();
+}
+
+function draw() {
+  if (!g) return;
+  const {tx, tw, top, bot, fs, mx, mw} = g, P = g.person;
+  el.n.textContent = `${fmt(G)} glass${G > 1 ? 'es' : ''} a day`;
+  el.n.setAttribute('font-size', g.fb);
+  try { const w = el.n.getComputedTextLength(), room = g.W - tx - 4; if (w > room) el.n.setAttribute('font-size', g.fb * room / w); } catch (e) {}
+  el.l.textContent = `= ${fmt(+(G * 0.125).toFixed(G < 8 ? 3 : 0))} litres of wine`;
+  const pct = G / MAX * 100;
+  el.p.textContent = `heart dose: ${pct < 1 ? pct.toFixed(3) : Math.round(pct)}%`;
+  // wine surface
+  const y = bot - st.t * (bot - top) * 0.93, amp = fs * .25 * Math.min(1, st.t * 4);
+  let d = `M${tx} ${bot + 2} L${tx} ${y}`;
+  for (let i = 0; i <= 24; i++) { const x = tx + tw * i / 24; d += ` L${x.toFixed(1)} ${(y + Math.sin(i * .8 + st.ph) * amp).toFixed(1)}`; }
+  el.wine.setAttribute('d', d + ` L${tx + tw} ${bot + 2}Z`);
+  // floating bottles
+  const nb = Math.floor(st.t * 7); el.bottles.innerHTML = '';
+  for (let i = 0; i < nb; i++) {
+    const bx = tx + tw * (0.1 + 0.8 * ((i * 0.37) % 1)), by = y + Math.sin(i * 2 + st.ph) * amp - fs * .2;
+    const b = Kit.mk('g', {transform: `translate(${bx} ${by}) rotate(${i % 2 ? 70 : -65})`}, el.bottles);
+    Kit.mk('rect', {x: -fs * .35, y: -fs * .3, width: fs * .7, height: fs * 1.4, rx: fs * .2, fill: '#2e5e3a', stroke: 'var(--k)', 'stroke-width': 1.5}, b);
+    Kit.mk('rect', {x: -fs * .14, y: -fs * .8, width: fs * .28, height: fs * .55, fill: '#2e5e3a', stroke: 'var(--k)', 'stroke-width': 1.5}, b);
+  }
+  // person reacts
+  const chest = P.hy + P.hr * 2.5, under = y < P.hy + P.hr * .4;
+  const up = y < chest;
+  el.armL.setAttribute('y2', up ? P.hy - P.hr * 1.6 : P.hy + P.hr * 4);
+  el.armR.setAttribute('y2', up ? P.hy - P.hr * 1.6 : P.hy + P.hr * 4);
+  const my = P.hy + P.hr * .45, mwid = P.hr * .4;
+  el.mouth.setAttribute('d', up ? `M${P.cx - mwid * .5} ${my} a${mwid * .5} ${mwid * .5} 0 1 0 ${mwid} 0 a${mwid * .5} ${mwid * .5} 0 1 0 ${-mwid} 0`
+                                : `M${P.cx - mwid} ${my - 1} Q${P.cx} ${my + mwid * .8} ${P.cx + mwid} ${my - 1}`);
+  el.bub.innerHTML = '';
+  if (under) for (let i = 0; i < 3; i++) Kit.mk('circle', {cx: P.cx + Math.sin(st.ph + i) * fs * .4, cy: P.hy - P.hr - (i + 1) * fs * .8 - ((st.ph * 6) % (fs * .8)), r: fs * (.15 + i * .05)}, el.bub);
+  // meter (linear: almost nothing until the very end)
+  const mh = (bot - top - 6) * st.d;
+  el.mfill.setAttribute('y', bot - 3 - mh); el.mfill.setAttribute('height', Math.max(mh, 0));
+}
+
+function setG(v) {
+  G = glassesOf(v);
+  const t = Math.log10(G) / LMAX, d = G / MAX;
+  if (Kit.calm) { st.t = t; st.d = d; draw(); }
+  else gsap.to(st, {t, d, duration: .45, ease: 'power2.out', overwrite: true, onUpdate: draw});
+  draw();
+  if (G >= MAX && !done) finish();
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+let lastTick = 0;
+Kit.$('pour').addEventListener('input', e => {
+  setG(+e.target.value);
+  const now = Date.now(); if (now - lastTick > 120) { Kit.haptic('selection'); lastTick = now; }
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(() => { if (st.t > 0.01) { st.ph += 0.05; draw(); } });
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('pour');
+  for (const v of [300, 650, 900, 1000]) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(k => setTimeout(k, 150)); }
+  await new Promise(k => setTimeout(k, 700));
+};
+Kit.single();
+</script>
+</html>

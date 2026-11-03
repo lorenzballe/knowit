@@ -1,0 +1,38 @@
+{
+  "id": "human_body-freedive-hardest-depth",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "At what depth does a freedive become the most tiring?",
+  "answer": "The most tiring stretch is on the way up, around 35 to 40 metres. There, water pressure has made the diver's body dense enough to be pulled toward the bottom. Climbing back means beating that pull with energy and oxygen, and hypoxia begins.",
+  "move": "The hardest stretch is climbing back past 35–40 m.",
+  "keywords": [
+    "freediving",
+    "diver",
+    "water pressure",
+    "hypoxia",
+    "depth"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card on freediving. It asks at what depth a breath-hold dive is most tiring, and the reader taps the depth they think is hardest. The reveal: the most tiring stretch is the climb back up, around 35 to 40 metres.",
+    "ground": "#0a2a52"
+  },
+  "source": "Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=gFnFsXjqoHo&t=284s",
+  "written": "2026-11-03"
+}

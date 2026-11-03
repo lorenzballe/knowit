@@ -1,0 +1,37 @@
+{
+  "id": "science-pinhole-sun-image",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How does a tiny hole in paper make a picture of the sun?",
+  "answer": "Light travels in straight lines, so rays from the top of the sun cross the tiny hole and land low on the wall, while rays from the bottom land high. The round spot is therefore a real image of the sun, upside down. Light from the sun's red top edge lands at the bottom of the spot.",
+  "move": "A pinhole spot is an upside-down picture of the sun itself.",
+  "keywords": [
+    "pinhole",
+    "sun",
+    "light",
+    "image",
+    "paper"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A quiz asks how a tiny hole in paper makes a round bright spot that is a picture of the sun. Four choices are offered: the top of the bright spot, the bottom of the bright spot, all over the spot evenly, or the bottom of the spot. It then asks where on the wall light from the sun's red top edge lands."
+  },
+  "source": "Veritasium, “Can You Solve This Shadow Illusion?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=liqF6EamiE4&t=150s",
+  "written": "2026-11-03"
+}

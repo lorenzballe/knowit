@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-magnet-fake-diamonds -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · magnet">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LAB GEMS</span></div>
+    <h2 class="q">Why can a magnet catch some fake diamonds but not real ones?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone"><p class="big">Metal inside</p><p class="body">Many lab diamonds are made by HPHT: high pressure and high temperature, with metals added to make it work. That metal makes the stone magnetic, so it jumps to the magnet. A real diamond stays put.</p></div>
+    </div>
+    <p class="say" id="say">Drag the magnet over the five diamonds.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A diamond that jumps to a magnet was likely made in a lab.</div>
+    <div class="foot"><span class="src">Source · Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 5, MAG = [1, 3];
+const svg = Kit.$('pic');
+const st = {mx: 0, done: false, finishing: false};
+const ob = Array.from({length: N}, () => ({t: 0, tip: -1}));
+const visited = new Set();
+let stuckCount = 0, G = null, els = null, down = false;
+
+function diamond(g, s) {
+  const pts = [[-s*.5,0],[-s*.28,-s*.28],[s*.28,-s*.28],[s*.5,0],[0,s*.55]];
+  Kit.mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill: 'url(#gem)', style: 'stroke:var(--k)', 'stroke-width': Math.max(1.5, s*.04), 'stroke-linejoin': 'round'}, g);
+  const lines = [[-s*.5,0,s*.5,0],[-s*.28,-s*.28,-s*.14,0],[s*.28,-s*.28,s*.14,0],[0,-s*.28,-s*.14,0],[0,-s*.28,s*.14,0],[-s*.14,0,0,s*.55],[s*.14,0,0,s*.55]];
+  lines.forEach(l => Kit.mk('line', {x1:l[0],y1:l[1],x2:l[2],y2:l[3], style:'stroke:var(--k)', 'stroke-width': Math.max(1, s*.022), opacity: .55}, g));
+  Kit.mk('polygon', {points: `${-s*.2},${-s*.24} ${-s*.06},${-s*.24} ${-s*.2},${-s*.06}`, fill: '#fff', opacity: .9}, g);
+}
+
+function draw() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const mw = Math.min(W*.26, H*.3), lw = mw*.28, r = mw/2 - lw/2;
+  const m = mw/2 + 4;
+  const sp = (W - 2*m)/(N - 1);
+  const s = Math.min(mw*.6, sp*.75, H*.14);
+  const fl = Math.max(12, Math.min(f, s*.42));
+  const top = H*.04, cy = top + lw/2 + r, tipY = cy + mw*.3;
+  const rowY = H - .55*s - fl*1.9;
+  const xs = Array.from({length: N}, (_, i) => m + sp*i);
+  G = {W, H, mw, lw, r, m, s, tipY, rowY, xs, fl};
+  if (!st.mx) st.mx = m/W;
+
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'gem', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#ffffff'}, lg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#cfe3f5'}, lg);
+
+  // empty slots
+  xs.forEach(x => Kit.mk('ellipse', {cx: x, cy: rowY + s*.62, rx: s*.45, ry: s*.08, style: 'fill:var(--k)', opacity: .15}, svg));
+
+  // end labels
+  if (st.done) xs.forEach((x, i) => {
+    const lab = MAG.includes(i);
+    const t = Kit.mk('text', {x, y: rowY + .55*s + fl*1.45, 'text-anchor': 'middle', class: 'lbl rev', 'font-size': fl, style: lab ? 'fill:#d8352a' : 'fill:var(--k)'}, svg);
+    t.textContent = lab ? 'lab-made' : 'real';
+  });
+
+  // stones
+  const stones = xs.map((x, i) => {
+    const g = Kit.mk('g', {}, svg);
+    diamond(g, s);
+    if (MAG.includes(i)) {
+      const fg = Kit.mk('g', {class: 'rev', opacity: st.done ? 1 : 0}, g);
+      [[-.12,.12],[.1,.08],[0,.28],[.2,.03],[-.25,.05],[.04,.18]].forEach(([a, b], k) =>
+        Kit.mk('circle', {cx: a*s, cy: b*s, r: Math.max(1.6, s*(k%2 ? .035 : .05)), fill: '#3a3f47'}, fg));
+    }
+    return g;
+  });
+
+  // magnet
+  const mg = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: `M${-r},${tipY} L${-r},${cy} A${r},${r} 0 0 1 ${r},${cy} L${r},${tipY}`, fill: 'none', stroke: '#d8352a', 'stroke-width': lw}, mg);
+  [-r, r].forEach(x => Kit.mk('rect', {x: x - lw/2, y: tipY - lw*.7, width: lw, height: lw*.7, fill: '#c9ced6', style: 'stroke:var(--k)', 'stroke-width': 1.2}, mg));
+  Kit.mk('path', {d: `M${-r},${tipY} L${-r},${cy} A${r},${r} 0 0 1 ${r},${cy} L${r},${tipY}`, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': 1.2, opacity: .0}, mg);
+  els = {stones, mg};
+  apply();
+}
+
+function apply() {
+  if (!G) return;
+  const {W, r, s, tipY, rowY, xs} = G;
+  const mx = st.mx*W;
+  els.mg.setAttribute('transform', `translate(${mx},0)`);
+  ob.forEach((o, i) => {
+    const tx = mx + (o.tip === 1 ? r : -r), ty = tipY + .28*s + 1;
+    const x = xs[i] + (tx - xs[i])*o.t, y = rowY + (ty - rowY)*o.t;
+    els.stones[i].setAttribute('transform', `translate(${x},${y})`);
+  });
+  if (st.done || st.finishing) return;
+  xs.forEach((x, i) => {
+    if (Math.abs(mx - x) < s*.8) {
+      visited.add(i);
+      if (MAG.includes(i) && ob[i].tip < 0) stick(i);
+    }
+  });
+  if (visited.size === N) finish();
+}
+
+function stick(i) {
+  ob[i].tip = stuckCount++;
+  Kit.haptic('light');
+  gsap.to(ob[i], {t: 1, duration: Kit.calm ? .01 : .3, ease: 'power3.in', onUpdate: apply});
+}
+
+function finish() {
+  st.finishing = true;
+  setTimeout(() => {
+    gsap.killTweensOf(st);
+    gsap.to(st, {mx: .5, duration: Kit.calm ? .01 : .6, ease: 'power2.inOut', onUpdate: apply, onComplete: () => {
+      st.done = true;
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.haptic('success');
+      requestAnimationFrame(() => {
+        draw();
+        if (!Kit.calm) gsap.from(svg.querySelectorAll('.rev'), {opacity: 0, duration: .6, stagger: .08});
+      });
+    }});
+  }, 350);
+}
+
+function frac(e) {
+  const b = svg.getBoundingClientRect();
+  const lo = G.m/G.W;
+  return Math.min(1 - lo, Math.max(lo, (e.clientX - b.left)/b.width));
+}
+svg.addEventListener('pointerdown', e => {
+  if (st.done || st.finishing || !G) return;
+  down = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  gsap.killTweensOf(st);
+  gsap.to(st, {mx: frac(e), duration: .3, ease: 'power2.out', onUpdate: apply});
+});
+svg.addEventListener('pointermove', e => {
+  if (!down || st.done || st.finishing) return;
+  gsap.killTweensOf(st); st.mx = frac(e); apply();
+});
+['pointerup', 'pointercancel'].forEach(t => svg.addEventListener(t, () => { down = false; }));
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || st.done || !els) return;
+  gsap.from(els.mg, {opacity: 0, y: -20, duration: .5, ease: 'power3.out'});
+  gsap.fromTo(st, {mx: st.mx}, {mx: st.mx + .04, duration: .35, yoyo: true, repeat: 1, delay: .6, ease: 'sine.inOut', onUpdate: apply});
+};
+Kit.play.card = async () => {
+  const lo = G.m/G.W;
+  for (let k = 0; k <= 30; k++) {
+    if (st.finishing) break;
+    st.mx = lo + (1 - 2*lo)*k/30; apply();
+    await new Promise(r => setTimeout(r, 40));
+  }
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

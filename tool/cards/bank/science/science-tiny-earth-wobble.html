@@ -1,0 +1,204 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* A toy Earth and Moon circling their balance point, the same pull on each; the reader sets Earth's mass. */
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#sky{display:block;flex:1 1 0;min-height:0;width:100%;overflow:visible}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1.2cqh}
+.m-cap{font:600 max(1.45cqh,10px)/1.1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#chips{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw}
+.m-chip{display:flex;flex-direction:column;align-items:center;gap:.6cqh;padding:1cqh 1cqw;border-radius:1.6cqh;box-shadow:inset 0 0 0 .2cqh color-mix(in srgb,var(--k) 28%,transparent)}
+.m-chip span{font:600 max(1.45cqh,10px)/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.m-chip b{display:inline-block;font:700 max(2.6cqh,16px)/1.05 var(--mono);color:var(--k);white-space:nowrap}
+.m-chip.m-res{background:var(--k);box-shadow:none}
+.m-chip.m-res span{color:color-mix(in srgb,var(--c) 80%,transparent)}
+.m-chip.m-res b{color:var(--c)}
+#slide{display:flex;align-items:center;gap:1cqw}
+.m-dot{flex:none;border-radius:50%;background:var(--k)}
+.m-dot.s{width:max(.9cqh,6px);height:max(.9cqh,6px)}
+.m-dot.b{width:max(2.4cqh,16px);height:max(2.4cqh,16px)}
+#track{flex:1;display:flex;align-items:center;height:max(5.6cqh,38px);padding:0 max(2cqh,14px);touch-action:none;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+#rail{position:relative;flex:1;height:max(.6cqh,4px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent)}
+#fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:inherit;background:var(--k)}
+#thumb{position:absolute;left:0;top:50%;width:max(3.6cqh,26px);height:max(3.6cqh,26px);margin:calc(max(3.6cqh,26px) / -2) 0 0 calc(max(3.6cqh,26px) / -2);border-radius:50%;background:var(--k);box-shadow:0 0 0 max(.5cqh,3px) var(--c),0 .5cqh 1.4cqh color-mix(in srgb,var(--k) 30%,transparent)}
+#track:focus-visible #rail{outline:2px solid var(--k);outline-offset:6px}
+#sky .pm{fill:none;stroke:var(--k);stroke-opacity:.4;stroke-dasharray:2 7;stroke-linecap:round}
+#sky .tr{fill:none;stroke:var(--k);stroke-opacity:.13;stroke-linecap:round}
+#sky .ea{fill:color-mix(in srgb,var(--k) 14%,var(--c));stroke:var(--k)}
+#sky .pe{fill:none;stroke:var(--k);stroke-opacity:.85}
+#sky .bc{fill:none;stroke:var(--k);stroke-opacity:.55;stroke-linecap:round}
+#sky .ed,#sky .mo{fill:var(--k)}
+#sky .ar{fill:none;stroke:var(--k);stroke-linecap:round;stroke-linejoin:round}
+#sky .lb{font-family:var(--hand);fill:var(--k);text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:var(--c);stroke-width:4px;stroke-linejoin:round}
+#sky .nt{font-family:var(--hand);fill:var(--muted)}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="science" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INERTIA</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">Earth and Moon pull each other equally hard. Why does Earth barely wobble?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sky" role="img" aria-label="A toy Earth and Moon circling each other, each pulled by an equal arrow"></svg>
+      <div id="ctl">
+        <span class="m-cap">Earth, compared with the Moon</span>
+        <div id="chips">
+          <div class="m-chip"><span>pull</span><b>same</b></div>
+          <div class="m-chip"><span>mass</span><b id="cm">same</b></div>
+          <div class="m-chip m-res"><span>motion</span><b id="cv">same</b></div>
+        </div>
+        <div id="slide">
+          <i class="m-dot s"></i>
+          <div id="track" role="slider" tabindex="0" aria-label="Earth's mass, in Moons" aria-valuemin="1" aria-valuemax="16" aria-valuenow="1"><div id="rail"><div id="fill"></div><div id="thumb"></div></div></div>
+          <i class="m-dot b"></i>
+        </div>
+      </div>
+      <!-- The why takes the controls' place at the end: the card holds it on the smallest phone too. -->
+      <div id="why" class="gone"><p class="big">16× the mass, 1/16 the motion.</p><p class="body">Each feels the same pull, but its effect is the pull divided by the mass. Earth's huge mass gives it huge inertia, so the Moon's pull barely moves it.</p></div>
+    </div>
+    <p class="say" id="say">Drag to make Earth heavier. Watch its wobble.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A tiny effect isn't a tiny force: effect = force ÷ mass.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Best Film on Newton's Third Law. Ever.” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Earth and Moon circle their balance point with the same pull on each. With Earth n times the Moon's
+// mass, Earth's circle is the Moon's divided by n: the same force, divided by n times the mass.
+const NMAX = 16, SPIN = 2 * Math.PI / 6;                 // one turn every 6 s
+const svg = Kit.$('sky'), track = Kit.$('track'), rail = Kit.$('rail'), thumb = Kit.$('thumb'), fill = Kit.$('fill');
+const S = {n: 1, nn: 1, th: -.45, ended: false};          // n: Earth's mass in Moons; nn: the drawn value, eased
+let G = null, E = {}, drag = false, endT = 0;
+const set = (el, a) => { for (const k in a) el.setAttribute(k, a[k]); };
+const r1 = v => Math.round(v * 10) / 10;
+
+function arrow(el, x, y, ux, uy, L) {
+  const tx = x + ux * L, ty = y + uy * L, h = L * .42, c = Math.cos(.55), s = Math.sin(.55);
+  const ax = tx - (ux * c - uy * s) * h, ay = ty - (ux * s + uy * c) * h;
+  const bx = tx - (ux * c + uy * s) * h, by = ty - (uy * c - ux * s) * h;
+  el.setAttribute('d', `M${r1(x)} ${r1(y)}L${r1(tx)} ${r1(ty)}M${r1(ax)} ${r1(ay)}L${r1(tx)} ${r1(ty)}L${r1(bx)} ${r1(by)}`);
+}
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!W || !H) return;
+  svg.textContent = '';
+  const fs = Math.max(13, f * 1.1), font = `font-size:${fs}px`;
+  const le = Kit.mk('text', {class: 'lb', style: font}, svg); le.textContent = 'Earth';
+  const lm = Kit.mk('text', {class: 'lb', style: font}, svg); lm.textContent = 'Moon';
+  const lwE = le.getComputedTextLength() || fs * 2.6, lwM = lm.getComputedTextLength() || fs * 2.4, lh = fs * 1.15;
+  const pad = Math.max(6, Math.min(W, H) * .03), gap = fs * .4, k = .11;
+  const room = Math.min(W / 2 - pad - gap - lwM, H / 2 - pad - gap - lh);
+  const d = Math.max(40, room / (NMAX / (NMAX + 1) + k));
+  const cx = W / 2, cy = H / 2, sw = Math.max(1.4, d * .013);
+  G = {cx, cy, d, rm: k * d, L: .15 * d, gap, lwE, lwM, lh};
+  E.pm = Kit.mk('circle', {class: 'pm', cx, cy, r: 1, 'stroke-width': sw}, svg);
+  E.tr = Kit.mk('path', {class: 'tr', 'stroke-width': G.rm * 1.5}, svg);
+  E.ea = Kit.mk('circle', {class: 'ea', 'stroke-width': Math.max(2, d * .022)}, svg);
+  E.pe = Kit.mk('circle', {class: 'pe', cx, cy, r: 1, 'stroke-width': sw * 1.2}, svg);
+  const c = d * .04;
+  Kit.mk('path', {class: 'bc', d: `M${r1(cx - c)} ${r1(cy)}h${r1(2 * c)}M${r1(cx)} ${r1(cy - c)}v${r1(2 * c)}`, 'stroke-width': sw}, svg);
+  E.ed = Kit.mk('circle', {class: 'ed', r: Math.max(2.2, d * .025)}, svg);
+  E.mo = Kit.mk('circle', {class: 'mo', r: G.rm}, svg);
+  const aw = Math.max(2.4, d * .028);
+  E.ae = Kit.mk('path', {class: 'ar', 'stroke-width': aw}, svg);
+  E.am = Kit.mk('path', {class: 'ar', 'stroke-width': aw}, svg);
+  svg.append(le, lm); E.le = le; E.lm = lm;
+  const nt = Kit.mk('text', {class: 'nt', x: pad, y: H - pad, style: `font-size:${Math.max(11.5, fs * .82)}px`}, svg);
+  nt.textContent = 'toy model · not to scale';
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {cx, cy, d, rm, L, gap, lwE, lwM, lh} = G, n = S.nn, ux = Math.cos(S.th), uy = Math.sin(S.th);
+  const rb = d / (n + 1), rs = d * n / (n + 1), re = rm * Math.sqrt(n), g = d * .025;   // Earth's circle, the Moon's, Earth's size
+  const ex = cx - ux * rb, ey = cy - uy * rb, mx = cx + ux * rs, my = cy + uy * rs;
+  E.pm.setAttribute('r', rs); E.pe.setAttribute('r', rb);
+  set(E.ea, {cx: ex, cy: ey, r: re}); set(E.ed, {cx: ex, cy: ey}); set(E.mo, {cx: mx, cy: my});
+  arrow(E.ae, ex + ux * (re + g), ey + uy * (re + g), ux, uy, L);      // the Moon's pull on Earth
+  arrow(E.am, mx - ux * (rm + g), my - uy * (rm + g), -ux, -uy, L);    // Earth's pull on the Moon: the same
+  const a0 = S.th + 1;
+  E.tr.setAttribute('d', `M${r1(cx + Math.cos(a0) * rs)} ${r1(cy + Math.sin(a0) * rs)}A${r1(rs)} ${r1(rs)} 0 0 0 ${r1(mx)} ${r1(my)}`);
+  const ax = Math.abs(ux), ay = Math.abs(uy);
+  const oe = re + gap + lwE / 2 * ax + lh / 2 * ay, om = rm + gap + lwM / 2 * ax + lh / 2 * ay;
+  set(E.le, {x: ex - ux * oe, y: ey - uy * oe}); set(E.lm, {x: mx + ux * om, y: my + uy * om});
+}
+
+function tick(t, dt) { S.th -= SPIN * Math.min(dt, 64) / 1000; render(); }
+
+function place(p) { thumb.style.left = fill.style.width = p * 100 + '%'; }
+function setN(n) {
+  n = Math.max(1, Math.min(NMAX, n));
+  if (n === S.n) return;
+  S.n = n; Kit.haptic('selection'); clearTimeout(endT);
+  track.setAttribute('aria-valuenow', n);
+  Kit.$('cm').textContent = n === 1 ? 'same' : '×' + n;
+  Kit.$('cv').textContent = n === 1 ? 'same' : '÷' + n;
+  if (Kit.calm) { S.nn = n; render(); return; }
+  gsap.to(S, {nn: n, duration: .5, ease: 'power2.out', overwrite: true, onUpdate: render});
+  gsap.fromTo('#cv', {scale: 1.18}, {scale: 1, duration: .3, ease: 'power2.out', overwrite: true});
+}
+function fromX(x) {
+  const r = rail.getBoundingClientRect(), p = Math.min(1, Math.max(0, (x - r.left) / r.width));
+  place(p); setN(1 + Math.round(p * (NMAX - 1)));
+}
+function maybeEnd() { clearTimeout(endT); if (S.n === NMAX && !S.ended) endT = setTimeout(end, 700); }
+function end() {
+  if (S.ended || S.n !== NMAX) return;
+  S.ended = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from('#why .big, #why .body, #keep', {opacity: 0, y: 10, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+track.addEventListener('pointerdown', e => {
+  drag = true; gsap.killTweensOf(thumb); gsap.set(thumb, {x: 0});
+  try { track.setPointerCapture(e.pointerId); } catch (_) {}
+  fromX(e.clientX);
+});
+track.addEventListener('pointermove', e => { if (drag) fromX(e.clientX); });
+const up = () => { if (!drag) return; drag = false; place((S.n - 1) / (NMAX - 1)); maybeEnd(); };
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => track.addEventListener(t, up));
+track.addEventListener('keydown', e => {
+  const step = {ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1}[e.key];
+  const n = e.key === 'Home' ? 1 : e.key === 'End' ? NMAX : step ? S.n + step : 0;
+  if (!n) return;
+  e.preventDefault(); setN(n); place((S.n - 1) / (NMAX - 1)); maybeEnd();
+});
+place(0);
+
+Kit.onShow.card = draw;
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(tick);
+  gsap.from('.m-chip', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  gsap.to(thumb, {x: () => rail.getBoundingClientRect().width * .08, duration: .45, repeat: 1, yoyo: true, ease: 'sine.inOut', delay: 1});
+};
+// Plays the card through for the checker, which photographs the end too: one drag from light to heavy.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = rail.getBoundingClientRect(), y = r.top + r.height / 2;
+  const ev = (type, x) => track.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true}));
+  ev('pointerdown', r.left + 1);
+  for (let i = 1; i <= 15; i++) { await wait(45); ev('pointermove', r.left + r.width * i / 15); }
+  await wait(300); ev('pointerup', r.right);
+  await wait(1700);
+};
+Kit.single();
+</script>
+</html>

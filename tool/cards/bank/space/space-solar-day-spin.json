@@ -1,0 +1,38 @@
+{
+  "id": "space-solar-day-spin",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.distances",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How far does Earth turn between one noon and the next?",
+  "answer": "Earth turns a little more than one full spin in a 24-hour solar day. While it spins, it also moves along its orbit, so the Sun ends up at a slightly different angle. Earth must turn extra to bring the Sun overhead again.",
+  "move": "A 24-hour solar day is a bit more than one full spin of Earth.",
+  "keywords": [
+    "earth",
+    "sun",
+    "solar day",
+    "orbit",
+    "rotation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Animated globe orbiting the Sun. Hold the button to run one solar day and watch a 'you' marker on the globe turn back toward the Sun, past one full rotation.",
+    "ground": "#1a1200"
+  },
+  "source": "Veritasium, “The SAT Question Everyone Got Wrong” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=FUHkTs-Ipfg&t=744s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,224 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-fukushima-tritium-filter -->
+<title>Why only tritium is left in Fukushima's water</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+#row{display:flex;justify-content:flex-start}
+#go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 5cqw;cursor:pointer;max-width:70%}
+#go:disabled{opacity:.5}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Zoom in · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR WATER</span></div>
+    <h2 class="q">Why is tritium the only radioactive thing left in Fukushima's treated water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Water from a tank, zoomed in to molecules and passed through filters"></svg>
+      <div id="why" class="gone">
+        <p class="big">Tritium is part of the water itself.</p>
+        <p class="body">A first filter takes out cesium-137, then ALPS removes essentially every other radionuclide. Tritium is an isotope of hydrogen, chemically the same, so it sits inside the water molecule and can't be separated chemically.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to zoom in, step by step.</p>
+    <div id="row"><button id="go">Zoom into a drop</button></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Filters catch what's dissolved in water, not what water is made of.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'acqua di Fukushima - tanta disinformazione. Facciamo chiarezza con l'Avvocato dell'Atomo” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const COL = {w:'#7cc0ff', h:'#ffffff', t:'#3cf08f', c:'#ff8a3d', o:'#d77bff', panel:'#0e1a2c', line:'#ffffff'};
+const BTN = ['Zoom into a drop', 'Pour it through the filters', 'Zoom into what got through'];
+const SAY = ['Tap to zoom in, step by step.', 'Inside a drop: water plus dissolved radioactive atoms. Pour it.', 'Only water came out. Zoom into the green ones.'];
+let step = 0, busy = false, G = null, els = null;
+
+// The particles: normalised slots, made once so a redraw keeps the same picture.
+const parts = [];
+(function(){
+  const types = [].concat(Array(14).fill('w'), Array(3).fill('t'), Array(5).fill('c'), Array(5).fill('o'));
+  const cells = [...Array(30).keys()];
+  for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [cells[i], cells[j]] = [cells[j], cells[i]]; }
+  const bcells = [...Array(18).keys()];
+  for (let i = bcells.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [bcells[i], bcells[j]] = [bcells[j], bcells[i]]; }
+  let bi = 0, ci = 0, oi = 0;
+  types.forEach((t, i) => {
+    const p = {type: t, cell: cells[i], ju: Kit.rnd() - .5, jv: Kit.rnd() - .5, rot: Kit.rnd() * 360, d: Kit.rnd()};
+    if (t === 'w' || t === 't') { p.b = bcells[bi++]; p.bju = Kit.rnd() - .5; p.bjv = Kit.rnd() - .5; }
+    if (t === 'c') p.k = ci++;
+    if (t === 'o') p.k = oi++;
+    parts.push(p);
+  });
+})();
+
+function mol(g, type, r) {
+  if (type === 'c' || type === 'o') {
+    Kit.mk('circle', {r: r * .85, fill: COL[type], stroke: '#ffffff', 'stroke-width': Math.max(1, r * .12)}, g);
+    return;
+  }
+  const hr = r * .56;
+  Kit.mk('circle', {cx: r * .88, cy: r * .7, r: type === 't' ? hr * 1.12 : hr, fill: type === 't' ? COL.t : COL.h}, g);
+  Kit.mk('circle', {cx: -r * .88, cy: r * .7, r: hr, fill: COL.h}, g);
+  Kit.mk('circle', {r: r, fill: COL.w}, g);
+}
+function txt(parent, x, y, s, size, attrs) {
+  const t = Kit.mk('text', Object.assign({x, y, fill: '#ffffff', 'font-size': size, 'font-family': 'var(--body)', 'font-weight': 700}, attrs || {}), parent);
+  t.textContent = s; return t;
+}
+
+function topPos(p) {
+  const cols = 6, rows = 5, c = p.cell % cols, rw = Math.floor(p.cell / cols);
+  const x0 = G.f, w = G.W - 2 * G.f, y0 = G.yT0, h = G.yT1 - G.yT0;
+  return {x: x0 + (c + .5 + p.ju * .45) / cols * w, y: y0 + (rw + .5 + p.jv * .4) / rows * h};
+}
+function endPos(p) {
+  if (p.type === 'c' || p.type === 'o') {
+    const x0 = G.f * 1.3, x1 = G.W * .55;
+    return {x: x0 + p.k / 4 * (x1 - x0), y: (p.type === 'c' ? G.f1y : G.f2y) - G.r * .95};
+  }
+  const cols = 6, rows = 3, c = p.b % cols, rw = Math.floor(p.b / cols);
+  const x0 = G.f, w = G.W - 2 * G.f, y0 = G.yB0, h = G.yB1 - G.yB0;
+  return {x: x0 + (c + .5 + p.bju * .4) / cols * w, y: y0 + (rw + .5 + p.bjv * .35) / rows * h};
+}
+
+function build() {
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('*');
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(13, Math.min(f0, W / 22));
+  const fl = Math.max(12, Math.min(f, W / 25));
+  const legH = fl * 3.7;
+  const free = H - legH;
+  const f1y = legH + free * .42, f2y = legH + free * .6;
+  G = {W, H, f, fl, legH, f1y, f2y,
+       yT0: legH + f * .5, yT1: f1y - f * 1.7,
+       yB0: f2y + f * .9, yB1: H - f * 2.1,
+       r: Math.max(5, Math.min(W / 30, free / 42))};
+  els = {};
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f, fill: COL.panel}, svg);
+
+  // Step 0: the everyday scale, a tank.
+  const tank = Kit.mk('g', {}, svg);
+  const tw = Math.min(W * .5, H * .38), th = H * .5, tx = W / 2 - tw / 2, ty = H * .2;
+  Kit.mk('rect', {x: tx, y: ty, width: tw, height: th, fill: '#c9d3e0'}, tank);
+  Kit.mk('rect', {x: tx + tw * .06, y: ty + th * .2, width: tw * .88, height: th * .76, fill: '#2f7fd6'}, tank);
+  Kit.mk('ellipse', {cx: W / 2, cy: ty, rx: tw / 2, ry: tw * .12, fill: '#e8eef6'}, tank);
+  Kit.mk('ellipse', {cx: W / 2, cy: ty + th, rx: tw / 2, ry: tw * .12, fill: '#c9d3e0'}, tank);
+  for (let i = 1; i < 4; i++) Kit.mk('line', {x1: tx, x2: tx + tw, y1: ty + th * i / 4, y2: ty + th * i / 4, stroke: '#8a98ab', 'stroke-width': 2}, tank);
+  const drop = Kit.mk('circle', {cx: W / 2, cy: ty + th * .6, r: tw * .07, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-dasharray': '4 3'}, tank);
+  txt(tank, W / 2, ty + th + tw * .12 + f * 1.8, 'Contaminated water,', f, {'text-anchor': 'middle'});
+  txt(tank, W / 2, ty + th + tw * .12 + f * 3.2, 'stored in tanks', f, {'text-anchor': 'middle'});
+  els.tank = tank; els.dropXY = [W / 2, ty + th * .6];
+
+  // Step 1+: the tiny scale.
+  const scene = Kit.mk('g', {}, svg);
+  const leg = Kit.mk('g', {}, scene);
+  [[['w', 'Water'], ['t', 'Water with tritium']], [['c', 'Cesium-137'], ['o', 'Other radionuclides']]].forEach((row, ri) => {
+    row.forEach(([t, s], ci) => {
+      const x = ci === 0 ? fl * .9 : W * .47, y = fl * (1.35 + ri * 1.55);
+      const g = Kit.mk('g', {transform: `translate(${x + fl * .45},${y - fl * .38})`}, leg);
+      mol(g, t, fl * .38);
+      txt(leg, x + fl * 1.3, y, s, fl, {'font-weight': 600});
+    });
+  });
+  const filt = (y, col, label) => {
+    const g = Kit.mk('g', {}, scene);
+    Kit.mk('rect', {x: 0, y: y - f * .14, width: W, height: f * .28, fill: col, opacity: .35}, g);
+    Kit.mk('line', {x1: 0, x2: W, y1: y, y2: y, stroke: col, 'stroke-width': Math.max(2, f * .16), 'stroke-dasharray': `${f * .5} ${f * .25}`}, g);
+    const l = txt(scene, W - f * .6, y - f * .55, label, f, {'text-anchor': 'end', fill: col});
+    return {g, l};
+  };
+  els.f1 = filt(f1y, COL.c, '1 · Cesium filter');
+  els.f2 = filt(f2y, COL.o, '2 · ALPS');
+  els.out = txt(scene, W / 2, H - f * .75, 'Out: water, with tritium inside it', f, {'text-anchor': 'middle', fill: COL.t});
+  els.parts = parts.map(p => {
+    const g = Kit.mk('g', {}, scene);
+    mol(g, p.type, G.r);
+    return g;
+  });
+  els.scene = scene;
+
+  // Step 3: the magnifier on one tritiated molecule.
+  const mag = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: 0, y: legH, width: W, height: H - legH, fill: COL.panel, opacity: .85}, mag);
+  const R = Math.min(W * .34, (H - legH) * .28), cx = W / 2, cy = legH + (H - legH) * .42;
+  Kit.mk('circle', {cx, cy, r: R, fill: '#13263f', stroke: '#ffffff', 'stroke-width': Math.max(3, f * .25)}, mag);
+  const mr = R * .32, lf = Math.max(13, mr * .75);
+  const hx = mr * 1.05, hy = mr * .85;
+  Kit.mk('line', {x1: cx, y1: cy, x2: cx + hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
+  Kit.mk('line', {x1: cx, y1: cy, x2: cx - hx, y2: cy + hy, stroke: '#ffffff', 'stroke-width': mr * .22}, mag);
+  Kit.mk('circle', {cx: cx + hx, cy: cy + hy, r: mr * .68, fill: COL.t}, mag);
+  Kit.mk('circle', {cx: cx - hx, cy: cy + hy, r: mr * .58, fill: COL.h}, mag);
+  Kit.mk('circle', {cx, cy: cy - mr * .1, r: mr, fill: COL.w}, mag);
+  txt(mag, cx, cy - mr * .1 + lf * .35, 'O', lf, {'text-anchor': 'middle', fill: COL.panel});
+  txt(mag, cx + hx, cy + hy + lf * .35, 'T', lf, {'text-anchor': 'middle', fill: COL.panel});
+  txt(mag, cx - hx, cy + hy + lf * .35, 'H', lf, {'text-anchor': 'middle', fill: COL.panel});
+  txt(mag, cx, cy + R + f * 1.5, 'T is tritium, a kind of hydrogen:', f, {'text-anchor': 'middle'});
+  txt(mag, cx, cy + R + f * 2.9, 'it is the water molecule itself', f, {'text-anchor': 'middle', fill: COL.t});
+  els.mag = mag;
+  render();
+}
+
+function render() {
+  gsap.set(els.tank, {autoAlpha: step === 0 ? 1 : 0, scale: 1, transformOrigin: '50% 50%'});
+  gsap.set(els.scene, {autoAlpha: step >= 1 ? 1 : 0, scale: 1});
+  gsap.set(els.out, {autoAlpha: step === 2 ? 1 : 0});
+  gsap.set([els.f1.l, els.f2.l], {autoAlpha: step === 3 ? 0 : 1});
+  gsap.set(els.mag, {autoAlpha: step === 3 ? 1 : 0});
+  parts.forEach((p, i) => {
+    const q = step >= 2 ? endPos(p) : topPos(p);
+    gsap.set(els.parts[i], {x: q.x, y: q.y, rotation: p.rot, transformOrigin: '50% 50%'});
+  });
+}
+
+function go() {
+  if (busy || step >= 3) return;
+  busy = true; Kit.$('go').disabled = true; Kit.haptic('light');
+  const k = Kit.calm ? 0 : 1, prev = step;
+  step++;
+  let t = .2;
+  if (prev === 0) {
+    const [dx, dy] = els.dropXY;
+    gsap.to(els.tank, {scale: 7, autoAlpha: 0, svgOrigin: `${dx} ${dy}`, duration: .9 * k, ease: 'power2.in'});
+    gsap.fromTo(els.scene, {autoAlpha: 0, scale: .6, svgOrigin: `${G.W / 2} ${G.H / 2}`}, {autoAlpha: 1, scale: 1, duration: .6 * k, delay: .6 * k, ease: 'power2.out'});
+    t = 1.3;
+  } else if (prev === 1) {
+    parts.forEach((p, i) => {
+      const q = endPos(p), caught = p.type === 'c' || p.type === 'o';
+      gsap.to(els.parts[i], {x: q.x, y: q.y, duration: (caught ? 1 : 1.5 + p.d * .4) * k, delay: (p.type === 'o' ? .25 : 0) * k + p.d * .5 * k, ease: caught ? 'power1.in' : 'power1.inOut'});
+    });
+    gsap.fromTo(els.f1.g, {opacity: 1}, {opacity: .4, yoyo: true, repeat: 3, duration: .15 * k, delay: 1.1 * k});
+    gsap.fromTo(els.f2.g, {opacity: 1}, {opacity: .4, yoyo: true, repeat: 3, duration: .15 * k, delay: 1.5 * k});
+    gsap.to(els.out, {autoAlpha: 1, duration: .4 * k, delay: 2.2 * k});
+    t = 2.6;
+  } else {
+    gsap.to([els.f1.l, els.f2.l, els.out], {autoAlpha: 0, duration: .3 * k});
+    gsap.fromTo(els.mag, {autoAlpha: 0, scale: .3, svgOrigin: `${G.W / 2} ${G.H * .6}`}, {autoAlpha: 1, scale: 1, duration: .6 * k, ease: 'back.out(1.6)'});
+    t = .7;
+  }
+  setTimeout(() => {
+    busy = false;
+    if (step < 3) { Kit.$('go').disabled = false; Kit.$('go').textContent = BTN[step]; Kit.$('say').textContent = SAY[step]; }
+    else { Kit.hide('say'); Kit.hide('row'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+  }, t * k * 1000 + 30);
+}
+Kit.$('go').addEventListener('click', go);
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm && step === 0 && els) gsap.from(els.tank, {autoAlpha: 0, y: 20, duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('go').click(); await wait(1600);
+  Kit.$('go').click(); await wait(3000);
+  Kit.$('go').click(); await wait(1100);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "nature-half-mountain-tsunami",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens if half a mountain falls into the sea?",
+  "answer": "A falling mass shoves aside water equal to its own volume. A boulder moves only a little water, but half a mountain pushes a huge mass of water at once, and that water leaves as a system of tsunami waves that can reach distant coasts. How big it would be can't be known, but the risk is real.",
+  "move": "Water pushed aside by a falling mass doesn't vanish: it travels as a tsunami.",
+  "keywords": [
+    "etna",
+    "tsunami",
+    "landslide",
+    "mountain collapse",
+    "displacement"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Illustration of a rock slab plunging into water, with rings of tsunami waves spreading outward. The page asks which falls from Etna's flank, a boulder or half a mountain, and lets the reader flip between the two to watch the far coast."
+  },
+  "source": "Geopop, “▶️ETNA: \"POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI\". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=cwdZkSbbYhw&t=207s",
+  "written": "2026-11-03"
+}

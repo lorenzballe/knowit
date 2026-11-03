@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-soviet-bomb-isotopes -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:.8cqh}
+#read{display:flex;flex-direction:column;gap:.5cqh;flex:none}
+#read .r{display:flex;align-items:center;gap:2.4cqw;font:600 max(1.9cqh,12px)/1.25 var(--body);color:var(--k)}
+#read .r b{margin-left:auto;font:700 max(2.3cqh,14px)/1.1 var(--mono)}
+#read .r small{font:500 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+.sw{flex:none;width:7cqw;height:0;border-top:max(.5cqh,3px) solid var(--k)}
+.sw.y{border-top-style:dashed}
+#verdict{font:700 max(1.9cqh,12px)/1.25 var(--body);color:var(--k);margin:0;min-height:2.5em;overflow-wrap:anywhere}
+#chart{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex:none}
+#why .body{margin:0}
+#stage.done #verdict,#stage.done #read small,#stage.done #read br{display:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · decay clock">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR CLUES</span></div>
+    <h2 class="q">How did air samples prove a secret Soviet nuclear explosion?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">
+        <div class="r"><i class="sw ce"></i><span>Cerium-141 left<br><small>halves in about 1 month</small></span><b id="vce">–</b></div>
+        <div class="r"><i class="sw y"></i><span>Yttrium-91 left<br><small>halves in about 2 months</small></span><b id="vy">–</b></div>
+        <p id="verdict"></p>
+      </div>
+      <svg id="chart"></svg>
+      <div id="why" class="gone"><p class="body">On 3 September 1949, air and rain samples held Cerium-141 and Yttrium-91. These fade within a month or two, so the blast had to be recent. The US had done no tests that year, so the bomb was Soviet.</p></div>
+    </div>
+    <p class="say" id="say">Drag the blast along the timeline and watch what reaches the sample.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A trace that fades fast is a clock: it proves something happened recently.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const M = 12, JAN = 8;           // months before the 3 Sept 1949 sample; 1 Jan 1949 is ~8 months back
+const st = {m: 11};
+let G = null, el = {}, done = false;
+const svg = Kit.$('chart');
+const X = m => G.x1 - (m / M) * (G.x1 - G.x0);
+const S = s => ({style: s});
+
+function fmt(v){
+  const p = v * 100;
+  if (p >= 10) return Math.round(p) + '%';
+  if (p >= 1) return p.toFixed(1) + '%';
+  if (p >= 0.01) return p.toFixed(2) + '%';
+  return '<0.01%';
+}
+
+function draw(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const fs = Math.max(12, f * .85);
+  if (H < fs * 6) { G = null; return; }
+  G = {W, H, f: fs, x0: fs * .6, x1: W - fs * .6, top: fs * 2.4, bot: H - fs * 2.2};
+  const t = (x, y, s, a, c) => { const e = Kit.mk('text', {x, y, 'text-anchor': a || 'middle', style: `font:${c||600} ${s}px var(--body);fill:var(--k)`}, svg); return e; };
+  // 1949 zone: no US tests
+  Kit.mk('rect', {x: X(JAN), y: G.top, width: Math.max(0, X(0) - X(JAN)), height: Math.max(0, G.bot - G.top), ...S('fill:var(--k);fill-opacity:.1')}, svg);
+  t((X(JAN) + X(0)) / 2, G.top - fs * .6, fs, 'middle', 700).textContent = '1949 · no US tests';
+  t((X(M) + X(JAN)) / 2, G.top - fs * .6, fs, 'middle', 500).textContent = '1948';
+  // guides
+  [1, .5].forEach(v => {
+    const y = G.bot - (G.bot - G.top) * v;
+    Kit.mk('line', {x1: G.x0, x2: G.x1, y1: y, y2: y, ...S('stroke:var(--k);stroke-opacity:.18;stroke-width:1;stroke-dasharray:2 4')}, svg);
+  });
+  // axis
+  Kit.mk('line', {x1: G.x0, x2: G.x1, y1: G.bot, y2: G.bot, ...S('stroke:var(--k);stroke-width:2')}, svg);
+  [[M, 'Sep 1948', 'start'], [JAN, 'Jan 1949', 'middle'], [0, 'Sep 3, 1949', 'end']].forEach(([m, s, a]) => {
+    Kit.mk('line', {x1: X(m), x2: X(m), y1: G.bot, y2: G.bot + fs * .35, ...S('stroke:var(--k);stroke-width:2')}, svg);
+    t(X(m), G.bot + fs * 1.4, fs, a, 600).textContent = s;
+  });
+  // sample line
+  Kit.mk('line', {x1: G.x1, x2: G.x1, y1: G.top, y2: G.bot, ...S('stroke:var(--k);stroke-width:2;stroke-dasharray:4 3')}, svg);
+  // curves
+  el.ce = Kit.mk('path', {...S('fill:none;stroke:var(--k);stroke-width:3.5;stroke-linecap:round')}, svg);
+  el.y = Kit.mk('path', {...S('fill:none;stroke:var(--k);stroke-width:3;stroke-dasharray:7 5;stroke-linecap:round')}, svg);
+  el.dce = Kit.mk('circle', {r: fs * .42, ...S('fill:var(--k)')}, svg);
+  el.dy = Kit.mk('circle', {r: fs * .38, ...S('fill:var(--c);stroke:var(--k);stroke-width:3')}, svg);
+  // blast handle
+  el.h = Kit.mk('g', {}, svg);
+  Kit.mk('line', {x1: 0, x2: 0, y1: G.top, y2: G.bot, ...S('stroke:var(--k);stroke-width:2.5')}, el.h);
+  Kit.mk('circle', {cx: 0, cy: G.top, r: fs * .55, ...S('fill:var(--k)')}, el.h);
+  const pw = fs * 5.4, ph = fs * 1.7;
+  el.pill = Kit.mk('rect', {x: -pw / 2, y: G.bot - ph - fs * .3, width: pw, height: ph, rx: ph / 2, ...S('fill:var(--k)')}, el.h);
+  el.pt = Kit.mk('text', {x: 0, y: G.bot - fs * .3 - ph / 2 + fs * .36, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--body);fill:var(--c);letter-spacing:.05em`}, el.h);
+  el.pt.textContent = '◀ BLAST ▶';
+  el.pw = pw;
+  update();
+}
+
+function update(){
+  const m = st.m;
+  const ce = Math.pow(.5, m), yy = Math.pow(.5, m / 2);
+  Kit.$('vce').textContent = fmt(ce);
+  Kit.$('vy').textContent = fmt(yy);
+  const mo = Math.max(1, Math.round(m));
+  Kit.$('verdict').textContent = m < JAN
+    ? `Blast ~${mo} month${mo > 1 ? 's' : ''} ago, in 1949: the US ran no tests then. Someone else did.`
+    : `Blast in 1948 or before: most of the cerium would have faded away.`;
+  if (!G) return;
+  const hgt = G.bot - G.top;
+  const path = h => { let d = ''; for (let i = 0; i <= 48; i++){ const a = m * i / 48; d += (i ? 'L' : 'M') + X(m - a).toFixed(1) + ',' + (G.bot - hgt * Math.pow(.5, a / h)).toFixed(1); } return d; };
+  el.ce.setAttribute('d', path(1));
+  el.y.setAttribute('d', path(2));
+  el.dce.setAttribute('cx', G.x1); el.dce.setAttribute('cy', G.bot - hgt * ce);
+  el.dy.setAttribute('cx', G.x1); el.dy.setAttribute('cy', G.bot - hgt * yy);
+  const bx = X(m), px = Math.min(Math.max(bx, G.x0 + el.pw / 2), G.x1 - el.pw / 2) - bx;
+  el.h.setAttribute('transform', `translate(${bx},0)`);
+  el.pill.setAttribute('x', px - el.pw / 2); el.pt.setAttribute('x', px);
+}
+
+function reveal(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.$('stage').classList.add('done');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  requestAnimationFrame(draw);
+}
+
+function setFromX(cx){
+  if (!G) return;
+  const r = svg.getBoundingClientRect();
+  const px = (cx - r.left) * (G.W / r.width);
+  const m = Math.min(M, Math.max(.1, (G.x1 - px) / (G.x1 - G.x0) * M));
+  const was = st.m >= JAN; st.m = m; update();
+  if (was !== (m >= JAN)) Kit.haptic('selection');
+  if (m < JAN - .5) reveal();
+}
+let drag = false;
+svg.addEventListener('pointerdown', e => { drag = true; try { svg.setPointerCapture(e.pointerId); } catch(_){} gsap.killTweensOf(st); setFromX(e.clientX); });
+svg.addEventListener('pointermove', e => { if (drag) setFromX(e.clientX); });
+['pointerup', 'pointercancel'].forEach(n => svg.addEventListener(n, () => { drag = false; }));
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(st, {m: M, duration: .9, ease: 'power2.out', onUpdate: update});
+  if (el.h && G) gsap.fromTo(el.pill, {opacity: .5}, {opacity: 1, duration: .6, repeat: 3, yoyo: true});
+};
+Kit.play.card = async () => {
+  if (!G) return;
+  const r = svg.getBoundingClientRect(), wait = ms => new Promise(z => setTimeout(z, ms));
+  const W0 = G.W, x0 = G.x0, x1 = G.x1;
+  const at = m => r.left + (x1 - (m / M) * (x1 - x0)) * (r.width / W0), y = r.top + r.height / 2;
+  const ev = (n, m) => svg.dispatchEvent(new PointerEvent(n, {clientX: at(m), clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', 11);
+  for (let m = 11; m >= 3; m -= .5){ if (!G) break; ev('pointermove', m); await wait(20); }
+  ev('pointerup', 3);
+  await wait(700);
+};
+Kit.single();
+</script>
+</html>

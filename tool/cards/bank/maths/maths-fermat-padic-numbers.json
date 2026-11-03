@@ -1,0 +1,36 @@
+{
+  "id": "maths-fermat-padic-numbers",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.fermi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Fermat’s Last Theorem lead to inventing p‑adic numbers?",
+  "answer": "Fermat's \"marvelous proof\" of his theorem never turned up, and the old tools couldn't do it. The proof took 358 years. New numbers had to be invented, the p-adics, which also gave a systematic way to solve other problems in Diophantus' Arithmetica.",
+  "move": "Some problems only fall when we invent new numbers.",
+  "keywords": [
+    "fermat",
+    "diophantus",
+    "p-adic numbers",
+    "arithmetica"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asks how Fermat's Last Theorem led to p-adic numbers, with a flag to drag to your guess of how many years the proof took."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=748s",
+  "written": "2026-11-03"
+}

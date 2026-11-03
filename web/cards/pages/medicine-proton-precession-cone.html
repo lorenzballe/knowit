@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-proton-precession-cone -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{position:relative;flex:1;min-height:0}
+#pic canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#field{display:flex;align-items:center;gap:3cqw;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+#field input{flex:1;accent-color:var(--k);min-width:0;height:max(3cqh,24px)}
+#field span{white-space:nowrap}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MRI</span></div>
+    <h2 class="q">In an MRI field, what do the body's protons actually do?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">They line up and stay still</button>
+        <button class="opt" data-i="1">They trace a cone around the field</button>
+        <button class="opt" data-i="2">They spin off at random</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">They draw a cone</p>
+        <p class="body">Protons line up with the field like compass needles, but they never sit still: each one wobbles around the field direction, tracing a cone. That motion is called precession.</p>
+        <div id="field"><span>Weak field</span><input id="str" type="range" min="0.5" max="3" step="0.05" value="1.4" aria-label="Field strength"><span>Strong</span></div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what a proton does once the field switches on.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Aligned protons precess: they circle the field in a cone, faster when the field is stronger.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const G = {th: 1.05, ph: 0.4, on: 0, str: 1.4, t: 0, spin: 0};
+let C = null, trail = [];
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  fieldOn();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('str').addEventListener('input', e => { G.str = +e.target.value; trail = []; });
+
+function fieldOn(){
+  if (Kit.calm){ G.on = 1; G.th = 0.5; return; }
+  gsap.to(G, {on: 1, duration: 0.9, ease: 'power2.out'});
+  gsap.to(G, {th: 0.5, duration: 1.6, ease: 'power3.out'});
+}
+
+function col(n){ return getComputedStyle(Kit.$('card')).getPropertyValue(n).trim() || '#111'; }
+
+function draw(){
+  if (!C) return;
+  const {x, W, H} = C, k = col('--k');
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, Math.min(18, H * 0.055));
+  const cx = W * 0.5, base = H * 0.82;
+  const L = Math.min(H * 0.62, W * 0.42), r = Math.max(10, L * 0.15), sq = 0.32;
+  x.strokeStyle = k; x.fillStyle = k; x.lineCap = 'round';
+  // field arrows
+  const top = fs * 2.8, n = 5;
+  x.globalAlpha = 0.08 + 0.22 * G.on; x.lineWidth = Math.max(1.5, fs * 0.12);
+  for (let i = 0; i < n; i++){
+    const fx = W * (0.07 + 0.86 * i / (n - 1));
+    if (Math.abs(fx - cx) < W * 0.12) continue;
+    x.beginPath(); x.moveTo(fx, H * 0.97); x.lineTo(fx, top); x.stroke();
+    x.beginPath(); x.moveTo(fx, top - fs * 0.6); x.lineTo(fx - fs * 0.35, top); x.lineTo(fx + fs * 0.35, top); x.closePath(); x.fill();
+  }
+  x.globalAlpha = 1;
+  x.font = `700 ${fs}px ${col('--body') || 'sans-serif'}`; x.textBaseline = 'middle'; x.textAlign = 'left';
+  x.globalAlpha = 0.45 + 0.55 * G.on;
+  x.fillText(G.on > 0.5 ? 'Magnetic field ↑' : 'Field off', W * 0.04, fs * 1.2);
+  x.globalAlpha = 1;
+  const proj = (th, ph) => [cx + L * Math.sin(th) * Math.cos(ph), base - L * Math.cos(th) + L * Math.sin(th) * Math.sin(ph) * sq];
+  // cone
+  if (G.on > 0.01){
+    const ey = base - L * Math.cos(G.th), er = L * Math.sin(G.th);
+    x.globalAlpha = 0.35 * G.on; x.lineWidth = 1.5; x.setLineDash([5, 6]);
+    x.beginPath(); x.ellipse(cx, ey, er, er * sq, 0, 0, Math.PI * 2); x.stroke();
+    x.beginPath(); x.moveTo(cx - er, ey); x.lineTo(cx, base); x.lineTo(cx + er, ey); x.stroke();
+    x.setLineDash([]);
+    x.beginPath(); x.moveTo(cx, base); x.lineTo(cx, ey - er * sq - fs); x.stroke();
+    x.globalAlpha = G.on;
+    x.fillText('Precession', cx + er + fs * 0.6, ey);
+    x.globalAlpha = 1;
+  }
+  // trail
+  for (let i = 1; i < trail.length; i++){
+    const a = proj(trail[i-1][0], trail[i-1][1]), b = proj(trail[i][0], trail[i][1]);
+    x.globalAlpha = 0.85 * i / trail.length; x.lineWidth = Math.max(2.5, fs * 0.25);
+    x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke();
+  }
+  x.globalAlpha = 1;
+  // axis arrow
+  const [tx, ty] = proj(G.th, G.ph), front = Math.sin(G.ph) > 0;
+  const ang = Math.atan2(ty - base, tx - cx), hl = fs * 0.9;
+  const ball = () => {
+    const g = x.createRadialGradient(cx - r * 0.35, base - r * 0.35, r * 0.1, cx, base, r);
+    g.addColorStop(0, col('--c') || '#fff'); g.addColorStop(1, k);
+    x.fillStyle = g; x.beginPath(); x.arc(cx, base, r, 0, Math.PI * 2); x.fill();
+    x.fillStyle = col('--c') || '#fff'; x.textAlign = 'center';
+    x.fillText('+', cx + r * 0.1, base + r * 0.05); x.textAlign = 'left'; x.fillStyle = k;
+  };
+  const arrow = () => {
+    x.lineWidth = Math.max(3, fs * 0.3);
+    x.beginPath(); x.moveTo(cx - (tx - cx) * 0.25, base - (ty - base) * 0.25);
+    x.lineTo(tx - Math.cos(ang) * hl * 0.6, ty - Math.sin(ang) * hl * 0.6); x.stroke();
+    x.beginPath(); x.moveTo(tx, ty);
+    x.lineTo(tx - Math.cos(ang - 0.4) * hl, ty - Math.sin(ang - 0.4) * hl);
+    x.lineTo(tx - Math.cos(ang + 0.4) * hl, ty - Math.sin(ang + 0.4) * hl); x.closePath(); x.fill();
+    // little spin mark around the axis
+    const mx = cx + (tx - cx) * 0.55, my = base + (ty - base) * 0.55;
+    x.lineWidth = 1.8; x.globalAlpha = 0.7;
+    x.beginPath(); x.ellipse(mx, my, r * 0.7, r * 0.22, ang + Math.PI / 2, G.spin, G.spin + 4.2); x.stroke();
+    x.globalAlpha = 1;
+  };
+  if (front){ ball(); arrow(); } else { arrow(); ball(); }
+  x.fillText('Proton', cx + r + fs * 0.5, base + r * 0.9);
+}
+
+gsap.ticker.add((time, dms) => {
+  const dt = Math.min(0.05, dms / 1000);
+  if (!Kit.calm){
+    G.t += dt; G.spin += dt * 9;
+    const wander = 0.5 * Math.sin(G.t * 0.6) + 0.25 * Math.sin(G.t * 1.7);
+    const om = (1 - G.on) * wander + G.on * 1.5 * G.str;
+    G.ph += om * dt;
+    if (G.on < 0.05) G.th = 1.05 + 0.3 * Math.sin(G.t * 0.45);
+    if (G.on > 0.6){ trail.push([G.th, G.ph]); if (trail.length > 70) trail.shift(); }
+  } else if (G.on > 0.5 && !trail.length){
+    for (let i = 0; i <= 60; i++) trail.push([G.th, G.ph - 4.5 + i * 0.075]);
+  }
+  draw();
+});
+
+Kit.onShow.card = () => { C = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1800)); };
+Kit.single();
+</script>
+</html>

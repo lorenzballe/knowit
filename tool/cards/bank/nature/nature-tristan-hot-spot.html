@@ -1,0 +1,158 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-tristan-hot-spot -->
+<title>Why is Tristan da Cunha volcanic?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#box{flex:1;min-height:0;position:relative}
+#box svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#hold{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;position:relative;overflow:hidden}
+#hold .bar{position:absolute;left:0;top:0;bottom:0;width:0;background:#ff8a1f;opacity:.45}
+#hold .lb{position:relative}
+#hold.press{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+.lab{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Race · two seafloors">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HOT SPOT</span></div>
+    <h2 class="q">Why is Tristan da Cunha volcanic?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><svg id="pic"></svg></div>
+      <button id="hold"><span class="bar" id="bar"></span><span class="lb" id="lb">Hold to heat the deep mantle</span></button>
+      <div id="why" class="gone">
+        <p class="big">It sits on a hot spot.</p>
+        <p class="body">Under the island, a plume of hot rock rises from deep in the mantle. It makes magma that pushes up through the crust and piles into a volcano 2062 m tall, still active today.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button: heat both seafloors and see which one grows an island.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No plume, no island: the hot spot below built the volcano above.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {p: 0};
+let R = null, finished = false;
+const svg = Kit.$('pic');
+const clamp = v => Math.max(0, Math.min(1, v));
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const defs = Kit.mk('defs', {}, svg);
+  const g1 = Kit.mk('linearGradient', {id: 'mg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#6b2c16'}, g1);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#c2471a'}, g1);
+  const g2 = Kit.mk('linearGradient', {id: 'pg', x1: 0, y1: 1, x2: 0, y2: 0}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#ffe08a'}, g2);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#ff7a1a'}, g2);
+  const fl = Kit.mk('filter', {id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(2, W * 0.008)}, fl);
+
+  const gap = W * 0.035, pw = (W - gap) / 2;
+  const seaY = H * 0.30, floorY = H * 0.46, crustB = H * 0.54, peakTop = H * 0.15;
+  const panels = [];
+  for (let i = 0; i < 2; i++) {
+    const x0 = i * (pw + gap), cx = x0 + pw / 2;
+    const cp = Kit.mk('clipPath', {id: 'cp' + i}, defs);
+    Kit.mk('rect', {x: x0, y: 0, width: pw, height: H, rx: fs * 0.9}, cp);
+    const g = Kit.mk('g', {'clip-path': `url(#cp${i})`}, svg);
+    Kit.mk('rect', {x: x0, y: 0, width: pw, height: seaY, fill: '#d6ebf7'}, g);
+    Kit.mk('rect', {x: x0, y: seaY, width: pw, height: floorY - seaY, fill: '#2f6fb3'}, g);
+    Kit.mk('rect', {x: x0, y: floorY, width: pw, height: crustB - floorY, fill: '#3b2f29'}, g);
+    Kit.mk('rect', {x: x0, y: crustB, width: pw, height: H - crustB, fill: 'url(#mg)'}, g);
+    const P = {x0, cx, g};
+    if (i === 0) {
+      P.plumeGlow = Kit.mk('path', {fill: '#ffb02e', opacity: .6, filter: 'url(#glow)'}, g);
+      P.plume = Kit.mk('path', {fill: 'url(#pg)'}, g);
+      P.conduit = Kit.mk('line', {stroke: '#ff9a2a', 'stroke-width': Math.max(3, pw * 0.02), 'stroke-linecap': 'round'}, g);
+      P.island = Kit.mk('path', {fill: '#2a221e', stroke: '#14100e', 'stroke-width': 1}, g);
+      P.lava = Kit.mk('circle', {fill: '#ffb02e', filter: 'url(#glow)'}, g);
+      P.sea = Kit.mk('line', {x1: x0, x2: x0 + pw, y1: seaY, y2: seaY, stroke: '#9fd0f0', 'stroke-width': 2, opacity: .8}, g);
+      P.plumeLab = Kit.mk('text', {x: cx + pw * 0.09, y: H * 0.86, 'font-size': fs, fill: '#fff3d6', class: 'lab'}, g);
+      P.plumeLab.textContent = 'plume';
+      P.hLab = Kit.mk('text', {'font-size': fs, fill: '#14324f', class: 'lab'}, g);
+    } else {
+      [['sea', (seaY + floorY) / 2, '#e3f1fb'], ['crust', (crustB + floorY) / 2, '#e8ddd6'], ['mantle', H * 0.70, '#ffe6d6']].forEach(([t, y, c]) => {
+        const e = Kit.mk('text', {x: cx, y: y + fs * 0.35, 'font-size': fs, fill: c, 'text-anchor': 'middle', class: 'lab'}, g);
+        e.textContent = t;
+      });
+      P.none = Kit.mk('text', {x: cx, y: H * 0.86, 'font-size': fs, fill: '#fff', 'text-anchor': 'middle', class: 'lab', opacity: 0}, g);
+      P.none.textContent = 'nothing rises';
+    }
+    const t = Kit.mk('text', {x: cx, y: H * 0.075 + fs * 0.35, 'font-size': fs, fill: '#14324f', 'text-anchor': 'middle', class: 'lab'}, g);
+    t.textContent = i === 0 ? 'Over a hot spot' : 'No hot spot';
+    panels.push(P);
+  }
+  R = {W, H, fs, pw, seaY, floorY, crustB, peakTop, panels};
+  upd(st.p);
+}
+
+function upd(p) {
+  if (!R) return;
+  const {H, pw, seaY, floorY, crustB, peakTop, panels} = R;
+  const L = panels[0], cx = L.cx;
+  const q = clamp(p / 0.4), g = clamp((p - 0.4) / 0.6);
+  const ease = 1 - Math.pow(1 - q, 2);
+  const tw = pw * 0.05, rx = pw * 0.13 * (1 + 0.6 * g), ry = H * 0.045 * (1 - 0.35 * g);
+  const headY = (H + ry) - ease * ((H + ry) - (crustB + ry));
+  const d = `M${cx - tw},${H + 5} L${cx - tw},${headY} A${rx},${ry} 0 1 1 ${cx + tw},${headY} L${cx + tw},${H + 5} Z`;
+  const dd = `M${cx - tw},${H + 5} L${cx - tw},${headY} L${cx - rx},${headY} A${rx},${ry} 0 0 1 ${cx + rx},${headY} L${cx + tw},${headY} L${cx + tw},${H + 5} Z`;
+  L.plume.setAttribute('d', dd); L.plumeGlow.setAttribute('d', dd);
+  L.plumeLab.setAttribute('opacity', headY < H * 0.80 ? 1 : 0);
+  const peakY = floorY - g * (floorY - peakTop);
+  const bw = pw * 0.44 * (0.3 + 0.7 * g);
+  L.island.setAttribute('d', g <= 0 ? '' : `M${cx - bw},${floorY + 1} C${cx - bw * 0.4},${floorY} ${cx - bw * 0.16},${peakY} ${cx - bw * 0.07},${peakY} L${cx + bw * 0.07},${peakY} C${cx + bw * 0.16},${peakY} ${cx + bw * 0.4},${floorY} ${cx + bw},${floorY + 1} Z`);
+  const co = clamp((p - 0.33) / 0.1);
+  L.conduit.setAttribute('x1', cx); L.conduit.setAttribute('x2', cx);
+  L.conduit.setAttribute('y1', headY - ry * 0.5); L.conduit.setAttribute('y2', g > 0 ? peakY + 2 : crustB - co * (crustB - floorY));
+  L.conduit.setAttribute('opacity', co);
+  L.lava.setAttribute('cx', cx); L.lava.setAttribute('cy', peakY); L.lava.setAttribute('r', g > 0 ? pw * 0.025 : 0);
+  const above = peakY < seaY;
+  L.hLab.setAttribute('opacity', above ? 1 : 0);
+  L.hLab.setAttribute('x', cx + bw * 0.22); L.hLab.setAttribute('y', peakY + R.fs * 0.4);
+  const m = Math.round(clamp((seaY - peakY) / (seaY - peakTop)) * 2062);
+  L.hLab.textContent = m + ' m';
+  panels[1].none.setAttribute('opacity', clamp((p - 0.4) / 0.15));
+  Kit.$('bar').style.width = (p * 100) + '%';
+  Kit.$('lb').textContent = p <= 0 ? 'Hold to heat the deep mantle' : p < 0.4 ? 'Hot rock rising…' : above ? 'An island! Keep holding…' : 'Magma piling up…';
+}
+
+function sparks() {
+  if (!R || Kit.calm) return;
+  const L = R.panels[0];
+  for (let i = 0; i < 10; i++) {
+    const c = Kit.mk('circle', {cx: L.cx, cy: R.peakTop, r: R.pw * 0.012, fill: i % 2 ? '#ffd166' : '#ff7a1a'}, L.g);
+    gsap.to(c, {attr: {cx: L.cx + (Kit.rnd() - .5) * R.pw * 0.35, cy: R.peakTop - R.H * (0.03 + Kit.rnd() * 0.07)}, opacity: 0, duration: .9 + Kit.rnd() * .5, ease: 'power2.out', onComplete: () => c.remove()});
+  }
+}
+
+function done() {
+  if (finished) return; finished = true;
+  st.p = 1; upd(1);
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sparks();
+}
+
+const tw = gsap.to(st, {p: 1, duration: 4.5, ease: 'none', paused: true, onUpdate: () => upd(st.p), onComplete: done});
+const btn = Kit.$('hold');
+const start = e => { if (finished) return; e.preventDefault(); btn.classList.add('press'); Kit.haptic('light'); tw.play(); };
+const stop = () => { btn.classList.remove('press'); if (!finished) tw.pause(); };
+btn.addEventListener('pointerdown', start);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, stop));
+svg.addEventListener('pointerdown', start);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => svg.addEventListener(ev, stop));
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#box', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { tw.pause(); done(); await new Promise(r => setTimeout(r, 600)); };
+Kit.single();
+</script>
+</html>

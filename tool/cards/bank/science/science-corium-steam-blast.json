@@ -1,0 +1,37 @@
+{
+  "id": "science-corium-steam-blast",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "What caused the first massive explosion at Chernobyl?",
+  "answer": "Cooling water touched the molten fuel, which had melted into a glowing liquid mass called corium. The water flashed into steam so violently that it blew off the 2,000-tonne reactor lid.",
+  "move": "The first blast was steam: cooling water flashing on molten fuel.",
+  "keywords": [
+    "chernobyl",
+    "corium",
+    "reactor",
+    "steam",
+    "nuclear"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks what caused the first massive explosion at Chernobyl, with four events to tap into time order: cooling water reaches the fuel, pressure bursts the fuel channels, the fuel melts into glowing corium, and the 2,000-tonne lid is blown off."
+  },
+  "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ksyOBogBKvc&t=816s",
+  "written": "2026-11-03"
+}

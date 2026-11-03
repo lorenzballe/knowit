@@ -1,0 +1,35 @@
+{
+  "id": "thinking-vicious-cycle",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 'vicious cycle' in science education?",
+  "answer": "Each time round the loop, a student feels surer of a wrong idea. The surer they feel, the less of the correct explanation gets in, so the next round starts even surer. Confidence in a wrong idea blocks the right one.",
+  "move": "Confidence in a wrong idea blocks the right one, so tackle the misconception first.",
+  "keywords": [
+    "vicious cycle",
+    "misconceptions",
+    "science education",
+    "confidence",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A loop of two arrows labeled Confidence in Wrong Idea and Less Learning. A slider moves a student around the loop; each round, the student feels surer of the wrong idea and less of the correct explanation gets in."
+  },
+  "source": "Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=eVtCO84MDj8&t=398s",
+  "written": "2026-11-03"
+}

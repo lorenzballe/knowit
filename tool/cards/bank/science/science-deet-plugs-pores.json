@@ -1,0 +1,37 @@
+{
+  "id": "science-deet-plugs-pores",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does DEET stop a mosquito from smelling you?",
+  "answer": "A mosquito smells you through tiny pores on its antennae. DEET plugs those pores, so the odours your skin gives off never get in.",
+  "move": "DEET works by blocking the pores mosquitoes smell with.",
+  "keywords": [
+    "deet",
+    "mosquito",
+    "antennae",
+    "skin-odour",
+    "insect-repellent"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking how DEET stops a mosquito from smelling you. A slider reading 'Slide to spray DEET' moves from 'No DEET' to 'Full spray', showing a mosquito antenna's pores being corked."
+  },
+  "source": "Geopop, “Quali antizanzare funzionano meglio? Zampironi, spray: analizziamoli dal punto di vista chimico” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=GOtrvOVaCpk&t=248s",
+  "written": "2026-11-03"
+}

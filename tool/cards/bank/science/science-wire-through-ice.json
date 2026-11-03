@@ -1,0 +1,38 @@
+{
+  "id": "science-wire-through-ice",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A weighted guitar string sinks through ice. What is left behind?",
+  "answer": "Under the thin wire, the pressure turns ice into water, so the wire sinks. Behind the wire the pressure is gone, so the water freezes again and the ice is left as one whole block. This is regelation, and it is why the thinnest string, the high E, was used.",
+  "move": "Pressure can melt ice; remove the pressure and it freezes again.",
+  "keywords": [
+    "regelation",
+    "ice",
+    "pressure",
+    "guitar string",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A weighted guitar string sinks through a block of ice. The page asks what is left behind: two separate halves, or one whole block of ice.",
+    "graded": false
+  },
+  "source": "Veritasium, “Does Pressure Melt Ice?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=gM3zP72-rJE",
+  "written": "2026-11-03"
+}

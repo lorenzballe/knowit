@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-globe-spin-inertia -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#draw{flex:1;min-height:0;position:relative}
+#draw svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.1 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#push{font:800 max(2cqh,14px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;align-self:flex-start;letter-spacing:.02em}
+#push.held{transform:scale(.96);opacity:.85}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">INERTIA</span></div>
+    <h2 class="q">Same push on a globe ten times heavier. How fast does it spin up?</h2>
+    <div class="stagebox" id="stage">
+      <div id="draw"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Just as fast: a push is a push</button>
+        <button class="opt" data-i="1">Ten times slower</button>
+        <button class="opt" data-i="2">Not at all: too heavy to move</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Ten times slower</p>
+        <p class="body">It does move, but its large mass gives it a high rotational inertia. The same push adds spin ten times slower; to keep up, you must push ten times harder.</p>
+        <button id="push">HOLD TO PUSH BOTH</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick an answer, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heavy things aren't hard to move; they're hard to speed up.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Does The Earth Spin?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const ALPHA = 3.2, MAXW = 14;
+const G = [
+  {I: 1, w: 0, p: 0.3, name: 'LIGHT', mass: 'mass ×1'},
+  {I: 10, w: 0, p: 0.3, name: 'HEAVY', mass: 'mass ×10'}
+];
+let pushing = false, built = null;
+
+function arrowPath(x1, y, x2, h) {
+  return `M${x1},${y} L${x2},${y} M${x2 - h},${y - h * .7} L${x2},${y} L${x2 - h},${y + h * .7}`;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg');
+  while (svg.firstChild) svg.firstChild.remove();
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const R = Math.max(10, Math.min(W * 0.17, (H - fs * 6.5) / 2));
+  const cy = fs * 2.6 + R;
+  built = G.map((g, i) => {
+    const cx = W * (i ? 0.73 : 0.27);
+    const heavy = i === 1;
+    // push arrow above the rim
+    const ah = Math.max(5, fs * .45);
+    const arrow = Kit.mk('path', {d: arrowPath(cx - R * .55, cy - R - fs * .9, cx + R * .55, ah),
+      style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(2, fs * .17) + ';stroke-linecap:round;stroke-linejoin:round'}, svg);
+    const pt = Kit.mk('text', {x: cx, y: cy - R - fs * 1.75, 'text-anchor': 'middle',
+      style: `font:700 ${fs * .85}px var(--body);fill:var(--k)`}, svg);
+    pt.textContent = 'PUSH';
+    // axis
+    Kit.mk('line', {x1: cx, y1: cy - R - fs * .25, x2: cx, y2: cy + R + fs * .25,
+      style: 'stroke:var(--k);stroke-width:' + Math.max(1.5, fs * .1) + ';opacity:.5'}, svg);
+    Kit.mk('circle', {cx, cy, r: R, style: `fill:color-mix(in srgb,var(--k) ${heavy ? 26 : 9}%,transparent);stroke:var(--k);stroke-width:${heavy ? Math.max(3, fs * .28) : Math.max(1.5, fs * .12)}`}, svg);
+    Kit.mk('line', {x1: cx - R, y1: cy, x2: cx + R, y2: cy, style: 'stroke:var(--k);stroke-width:1.5;opacity:.6'}, svg);
+    const mer = [];
+    for (let k = 0; k < 6; k++) mer.push(Kit.mk('path', {style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(1.5, fs * .12)}, svg));
+    // labels
+    const t1 = Kit.mk('text', {x: cx, y: cy + R + fs * 1.5, 'text-anchor': 'middle',
+      style: `font:800 ${fs}px var(--display);fill:var(--k)`}, svg);
+    t1.textContent = `${g.name} · ${g.mass}`;
+    // spin bar
+    const bw = Math.min(R * 2.2, W * 0.42), bh = Math.max(6, fs * .5), by = cy + R + fs * 2.4;
+    Kit.mk('rect', {x: cx - bw / 2, y: by, width: bw, height: bh, rx: bh / 2,
+      style: 'fill:color-mix(in srgb,var(--k) 14%,transparent)'}, svg);
+    const bar = Kit.mk('rect', {x: cx - bw / 2, y: by, width: 0, height: bh, rx: bh / 2, style: 'fill:var(--k)'}, svg);
+    const t2 = Kit.mk('text', {x: cx, y: by + bh + fs * 1.3, 'text-anchor': 'middle',
+      style: `font:600 ${fs * .85}px var(--mono);fill:var(--k);opacity:.75`}, svg);
+    return {cx, cy, R, mer, bar, bw, arrow, pt, t2};
+  });
+  render();
+};
+
+function render() {
+  if (!built) return;
+  G.forEach((g, i) => {
+    const b = built[i];
+    b.mer.forEach((m, k) => {
+      const a = g.p + k * Math.PI / 6, s = Math.sin(a), c = Math.cos(a);
+      if (c <= 0) { m.setAttribute('d', ''); return; }
+      const rx = Math.max(.01, b.R * Math.abs(s));
+      m.setAttribute('d', `M${b.cx},${b.cy - b.R} A${rx},${b.R} 0 0 ${s > 0 ? 1 : 0} ${b.cx},${b.cy + b.R}`);
+    });
+    b.bar.setAttribute('width', b.bw * Math.min(1, g.w / MAXW));
+    const op = pushing ? 1 : .22;
+    b.arrow.style.opacity = op; b.pt.style.opacity = op;
+    b.t2.textContent = 'spin ' + g.w.toFixed(1);
+  });
+}
+
+gsap.ticker.add((t, dms) => {
+  const dt = Math.min(dms, 50) / 1000;
+  G.forEach(g => {
+    if (pushing) g.w = Math.min(MAXW, g.w + ALPHA / g.I * dt);
+    g.w *= (1 - 0.04 * dt);
+    g.p += g.w * dt;
+  });
+  render();
+});
+
+function autoPush() {
+  pushing = true;
+  gsap.delayedCall(2.4, () => { pushing = false; });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.onShow.card();
+  autoPush();
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+const pb = Kit.$('push');
+const down = e => { e.preventDefault(); gsap.killTweensOf(autoPush); pushing = true; pb.classList.add('held'); Kit.haptic('light'); };
+const up = () => { pushing = false; pb.classList.remove('held'); };
+pb.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => pb.addEventListener(ev, up));
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2000));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "science-truck-squeezes-water",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "A heavy truck rolls over a cracked, wet road. What does the water do?",
+  "answer": "The water forces the cracks wider. The truck's weight squeezes the soil, but water can't be squeezed, so it pushes on the cracks already there and opens them further.",
+  "move": "Soil gives under weight; trapped water can't, so it pries cracks apart.",
+  "keywords": [
+    "potholes",
+    "road",
+    "truck",
+    "water",
+    "soil",
+    "cracks"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A heavy truck rolls over a cracked, wet road. The question asks what the water does, with four options: gets squeezed smaller like the soil, drains away, pushes the cracks wider open, or forces the cracks wider. Then the reader rates their confidence."
+  },
+  "source": "Geopop, “La \"scienza\" delle buche stradali” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=QgjgV4v8HKY&t=231s",
+  "written": "2026-11-03"
+}

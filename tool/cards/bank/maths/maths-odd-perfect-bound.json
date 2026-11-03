@@ -1,0 +1,37 @@
+{
+  "id": "maths-odd-perfect-bound",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How big must an odd perfect number be, if one exists?",
+  "answer": "The card says that if an odd perfect number exists, it must have more than 2,200 digits, so it exceeds 10^2,200. No computer can check numbers that large one by one, so only a clever proof can settle the question.",
+  "move": "An odd perfect number, if real, exceeds 10 2,200 .",
+  "keywords": [
+    "odd perfect numbers",
+    "number theory",
+    "veritasium",
+    "digits",
+    "proof"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Text card asking how big an odd perfect number must be if one exists. A Raise the bound control steps through results; the reveal says it must exceed 10 to the power 2,200, with more than 2,200 digits."
+  },
+  "source": "Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Zrv1EDIqHkY&t=1368s",
+  "written": "2026-11-03"
+}

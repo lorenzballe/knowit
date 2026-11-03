@@ -1,0 +1,152 @@
+<!doctype html>
+<!-- slug: science-toothpaste-eggshell-bases -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why toothpaste can't dissolve an eggshell</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KITCHEN CHEMISTRY</span></div>
+    <h2 class="q">Why is toothpaste chemically unable to dissolve an eggshell?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="An eggshell and a dollop of toothpaste side by side"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It's an acid, but too weak to bite</button>
+        <button class="opt" data-i="1">Both are bases, so nothing can react</button>
+        <button class="opt" data-i="2">The shell's inner skin shields it</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Base meets base: nothing happens</p>
+        <p class="body">The shell is calcium carbonate, a base. Toothpaste is basic too. Dissolving the shell would need an acid-base reaction, and two bases can't have one, so the viral video is fake.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the reason, then watch the paste meet the shell.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No acid, no acid-base reaction: a base can't eat a base.</div>
+    <div class="foot"><span class="src">Source · Geopop, “È vero o no che il dentifricio può corrodere il guscio d’uovo? #esperimenti #chemistry #science” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false, G = {};
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  const ry = Math.max(12, Math.min(W * 0.17, H * 0.27, (H - 5.6 * fs) / 2));
+  const rx = ry * 0.78;
+  const cy = Math.max(H * 0.5 - 1.3 * fs, 2 * fs + ry);
+  const ex = W * 0.25, px = W * 0.75;
+  const dw = rx * 1.05;
+  const ink = 'var(--k)';
+
+  // eggshell
+  const egg = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: `M ${ex} ${cy-ry} C ${ex+rx*1.05} ${cy-ry} ${ex+rx} ${cy+ry} ${ex} ${cy+ry} C ${ex-rx} ${cy+ry} ${ex-rx*1.05} ${cy-ry} ${ex} ${cy-ry} Z`,
+    style: `fill:#f4e4cc;stroke:${ink};stroke-width:${Math.max(2,fs*.16)}`}, egg);
+  Kit.mk('ellipse', {cx: ex - rx*.35, cy: cy - ry*.45, rx: rx*.16, ry: ry*.12, style: 'fill:#fff;opacity:.7'}, egg);
+
+  // toothpaste dollop
+  const paste = Kit.mk('g', {}, svg);
+  const base = cy + ry*0.72, sw = Math.max(2, fs*.16);
+  const layers = [[base, dw, ry*.28], [base - ry*.42, dw*.78, ry*.24], [base - ry*.8, dw*.52, ry*.2]];
+  layers.forEach(([y, w, h]) => {
+    Kit.mk('ellipse', {cx: px, cy: y, rx: w, ry: h, style: `fill:#ffffff;stroke:${ink};stroke-width:${sw}`}, paste);
+    Kit.mk('path', {d: `M ${px-w*.7} ${y-h*.1} Q ${px} ${y+h*.5} ${px+w*.7} ${y-h*.1}`, style: `fill:none;stroke:#3fb6a8;stroke-width:${sw*1.6};stroke-linecap:round`}, paste);
+  });
+  Kit.mk('path', {d: `M ${px-dw*.3} ${base-ry*.92} Q ${px} ${base-ry*1.35} ${px+dw*.12} ${base-ry*1.12}`, style: `fill:#fff;stroke:${ink};stroke-width:${sw}`}, paste);
+
+  // badges
+  const badge = (x, y, parent) => {
+    const g = Kit.mk('g', {}, parent);
+    const bw = fs*4.2, bh = fs*1.6;
+    Kit.mk('rect', {x: x-bw/2, y: y-bh/2, width: bw, height: bh, rx: bh/2, style: `fill:var(--k)`}, g);
+    const t = Kit.mk('text', {x, y: y + fs*.36, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--mono);fill:var(--c);letter-spacing:.08em`}, g);
+    t.textContent = revealed ? 'BASE' : '?';
+    return {g, t};
+  };
+  const be = badge(ex, cy + ry*.1, egg);
+  const bp = badge(px, base - ry*.42, paste);
+
+  // names under the objects
+  const lab = (x, y, s, w, op) => {
+    const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', style: `font:${w} ${s}px var(--body);fill:var(--k);opacity:${op}`}, svg);
+    return t;
+  };
+  const y1 = cy + ry + 1.5*fs, y2 = y1 + 1.45*fs;
+  lab(ex, y1, fs, 800, 1).textContent = 'Eggshell';
+  lab(ex, y2, fs*.9, 500, .75).textContent = 'calcium carbonate';
+  lab(px, y1, fs, 800, 1).textContent = 'Toothpaste';
+  lab(px, y2, fs*.9, 500, .75).textContent = 'the paste';
+
+  // the verdict in the middle
+  const r = Math.max(fs*1.1, Math.min(W*0.07, ry*.42));
+  const sym = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx: W/2, cy, r, style: `fill:var(--c);stroke:${revealed ? '#d64545' : ink};stroke-width:${Math.max(3,fs*.24)}`}, sym);
+  const q = Kit.mk('text', {x: W/2, y: cy + fs*.45, 'text-anchor': 'middle', style: `font:800 ${fs*1.3}px var(--display);fill:var(--k)`}, sym);
+  q.textContent = '?';
+  const slash = Kit.mk('line', {x1: W/2 - r*.7, y1: cy + r*.7, x2: W/2 + r*.7, y2: cy - r*.7, style: `stroke:#d64545;stroke-width:${Math.max(3,fs*.24)};stroke-linecap:round`}, sym);
+  const verdict = lab(W/2, Math.max(fs*1.1, cy - ry - 0.9*fs), fs*1.05, 800, 1);
+  verdict.textContent = 'NO ACID-BASE REACTION';
+  verdict.style.fill = '#d64545';
+
+  if (revealed) { q.style.opacity = 0; }
+  else { slash.style.opacity = 0; verdict.style.opacity = 0; }
+
+  G = {egg, paste, sym, q, slash, verdict, circle: sym.firstChild, be, bp, dist: (px - dw) - (ex + rx) - 2, ex, cy};
+}
+
+function reveal(){
+  revealed = true;
+  if (Kit.calm) { draw(); return; }
+  const g = G;
+  const tl = gsap.timeline();
+  tl.to(g.sym, {opacity: 0, duration: .2})
+    .to(g.paste, {x: -g.dist, duration: .7, ease: 'power2.in'})
+    .to(g.egg, {rotation: -4, svgOrigin: `${g.ex} ${g.cy}`, duration: .08, yoyo: true, repeat: 3})
+    .add(() => { g.be.t.textContent = 'BASE'; g.bp.t.textContent = 'BASE'; Kit.haptic('light'); })
+    .from([g.be.g, g.bp.g], {scale: 1.5, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(3)'}, '<')
+    .to(g.paste, {x: 0, duration: .8, ease: 'elastic.out(1,.5)'}, '+=.25')
+    .add(() => { g.q.style.opacity = 0; g.circle.style.stroke = '#d64545'; g.slash.style.opacity = 1; }, '<')
+    .to(g.sym, {opacity: 1, duration: .2}, '<')
+    .from(g.sym, {scale: .3, transformOrigin: '50% 50%', duration: .45, ease: 'back.out(2.5)'}, '<')
+    .to(g.verdict, {opacity: 1, duration: .4}, '<.15');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Not quite'}: both are bases`);
+  Kit.show('keep');
+  requestAnimationFrame(() => { draw(); revealed = false; draw(); reveal(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (G.egg) gsap.from([G.egg, G.paste], {opacity: 0, y: 12, stagger: .12, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3200)); };
+Kit.single();
+</script>
+</html>

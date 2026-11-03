@@ -1,0 +1,37 @@
+{
+  "id": "maths-three-adic-squares",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a 3-adic number make x² + x⁴ + x⁸ a perfect square?",
+  "answer": "The 3-adic number …111 equals −1/2, and the formula says that should be a solution. Squaring it gives squares of side 1/2, 1/4 and 1/16, made of 64, 16 and 1 tiles of 1/256. Together that is 81 tiles, which form a square with side 9/16.",
+  "move": "1/4 + 1/16 + 1/256 = 81/256 = (9/16)², a rational answer found through a 3-adic number.",
+  "keywords": [
+    "3-adic numbers",
+    "diophantus",
+    "perfect squares",
+    "sum of squares",
+    "veritasium"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card titled 3-ADIC. Squares of side 1/2, 1/4 and 1/16 are dragged into a frame and their tiles counted: 64, 16 and 1 tiles of 1/256, totalling 81, which forms a square of side 9/16."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=1424s",
+  "written": "2026-11-03"
+}

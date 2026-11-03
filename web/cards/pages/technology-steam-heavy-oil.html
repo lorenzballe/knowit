@@ -1,0 +1,219 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-steam-heavy-oil -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:2cqh}
+#ctrl{display:flex;flex-direction:column;gap:.9cqh;padding-top:1.2cqh}
+.row{display:flex;align-items:center;gap:3cqw}
+.row b{font:700 max(1.9cqh,13px)/1 var(--body);color:var(--k);min-width:12cqw}
+.row .lv{font:700 max(1.7cqh,12px)/1 var(--mono);color:var(--k);min-width:10cqw;text-align:right}
+#steam{flex:1;-webkit-appearance:none;appearance:none;height:max(1.3cqh,8px);border-radius:1cqh;background:linear-gradient(90deg,#5b6b78,#f2a33a 60%,#e2462a);outline:none;margin:0}
+#steam::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#fff;box-shadow:0 0 0 .35cqh var(--k),0 .4cqh 1cqh rgba(0,0,0,.3);cursor:grab}
+#steam::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:#fff;border:.35cqh solid var(--k);cursor:grab}
+#state{font:600 max(1.7cqh,12px)/1.3 var(--mono);color:var(--k);opacity:.85}
+#why{display:flex;flex-direction:column;gap:1cqh;padding-top:1.2cqh}
+#why .big{font:800 max(2.8cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.75cqh,12px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Turn it up · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAVY OIL</span></div>
+    <h2 class="q">Why does Venezuela's extra-heavy oil need steam to come out of the ground?</h2>
+    <div class="stagebox" id="stage"><canvas id="cv"></canvas></div>
+    <div id="ctrl">
+      <div class="row"><b>Steam</b><input id="steam" type="range" min="0" max="100" value="0" aria-label="Steam injection"><span class="lv" id="lv">OFF</span></div>
+      <div id="state">Pump running · oil too thick to move</div>
+    </div>
+    <div id="why" class="gone">
+      <p class="big">Heat makes it flow.</p>
+      <p class="body">Orinoco oil is so thick it can't move to the well on its own. High-pressure steam (or solvents) makes it more fluid, so it flows and can be pumped. That costs huge energy, constant maintenance and big investment, and much of the oil still stays put.</p>
+    </div>
+    <p class="say" id="say">Pump is on, nothing comes up. Slide the steam up.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Lots of oil underground isn't oil you can get: if it can't flow, it stays.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La questione "Petrolio Venezuela" spiegata dal punto di vista geologico e industriale” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv');
+let G = null, steam = 0, heat = 0, collected = 0, done = false, T = 0;
+const SURF = .16, RES0 = .54, RES1 = .9;
+const INJ = {u: .46, v: .68}, PROD = {u: .54, v: .82};
+const P = [], SAND = [], puffs = [], rising = [];
+// oil blobs on a jittered grid inside the reservoir
+(() => {
+  const cols = 22, rows = 9;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const u = .03 + (c + .5) / cols * .94 + (Kit.rnd() - .5) * .03;
+    const v = RES0 + .025 + (r + .5) / rows * (RES1 - RES0 - .05) + (Kit.rnd() - .5) * .02;
+    P.push({u, v, h: 0, s: .7 + Kit.rnd() * .6, taken: false});
+  }
+  for (let i = 0; i < 260; i++) SAND.push({u: Kit.rnd(), v: RES0 + Kit.rnd() * (RES1 - RES0), a: Kit.rnd()});
+})();
+const BANDS = [
+  {v: SURF, a: .006, k: 9, c: '#7a5a3a'},
+  {v: .22, a: .012, k: 5, c: '#b49669'},
+  {v: .32, a: .014, k: 4, c: '#9b7f5e'},
+  {v: .42, a: .01, k: 6, c: '#6e6253'},
+  {v: RES0, a: 0, k: 1, c: '#dcc189'},
+  {v: RES1, a: 0, k: 1, c: '#564d42'}
+];
+function lerpC(a, b, t) {
+  const pa = a.match(/\w\w/g).map(h => parseInt(h, 16)), pb = b.match(/\w\w/g).map(h => parseInt(h, 16));
+  return 'rgb(' + pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(',') + ')';
+}
+function step(dt) {
+  T += dt;
+  heat += (steam - heat) * Math.min(1, dt * .9);
+  if (!G) return;
+  const {W, H} = G, R = Math.max(1, heat * .46 * W);
+  const cx = INJ.u * W, cy = INJ.v * H, tx = PROD.u * W, ty = PROD.v * H;
+  for (const p of P) {
+    if (p.taken) continue;
+    const px = p.u * W, py = p.v * H;
+    const d = Math.hypot(px - cx, py - cy);
+    const h = heat > .03 ? Math.max(0, Math.min(1, 1.15 - d / R)) : 0;
+    p.h += (h - p.h) * Math.min(1, dt * 2);
+    const mob = Math.pow(p.h, 1.6);
+    if (mob > .02) {
+      const dx = tx - px, dy = ty - py, dd = Math.hypot(dx, dy) || 1;
+      const spd = mob * .32 * W;
+      p.u += dx / dd * spd * dt / W;
+      p.v += (dy / dd * spd + mob * 12) * dt / H;
+      p.v = Math.min(RES1 - .01, Math.max(RES0 + .01, p.v));
+      if (dd < 7) { p.taken = true; rising.push({v: PROD.v}); }
+    }
+  }
+  for (let i = rising.length - 1; i >= 0; i--) {
+    rising[i].v -= dt * .7;
+    if (rising[i].v < SURF) { rising.splice(i, 1); collected++; }
+  }
+  if (Math.random() < steam * 40 * dt) {
+    const a = Math.random() * Math.PI * 2;
+    puffs.push({u: INJ.u, v: INJ.v, du: Math.cos(a) * .12, dv: Math.sin(a) * .08 - .03, life: 0, r: .5 + Math.random()});
+  }
+  for (let i = puffs.length - 1; i >= 0; i--) {
+    const q = puffs[i]; q.life += dt; q.u += q.du * dt * heat; q.v += q.dv * dt * heat;
+    if (q.life > 1.3) puffs.splice(i, 1);
+  }
+  if (!done && collected >= 30) finish();
+}
+function band(x, W, H, b) {
+  x.beginPath(); x.moveTo(0, H);
+  for (let i = 0; i <= 40; i++) { const u = i / 40; x.lineTo(u * W, (b.v + b.a * Math.sin(u * b.k + b.v * 20)) * H); }
+  x.lineTo(W, H); x.closePath(); x.fillStyle = b.c; x.fill();
+}
+function draw() {
+  if (!G) return;
+  const {x, W, H} = G, fs = Math.max(12, Math.min(W, H) * .036);
+  x.clearRect(0, 0, W, H);
+  x.save();
+  x.beginPath(); x.roundRect ? x.roundRect(0, 0, W, H, 14) : x.rect(0, 0, W, H); x.clip();
+  const sky = x.createLinearGradient(0, 0, 0, SURF * H); sky.addColorStop(0, '#bfe0f1'); sky.addColorStop(1, '#e8f4f8');
+  x.fillStyle = sky; x.fillRect(0, 0, W, SURF * H + 4);
+  BANDS.forEach(b => band(x, W, H, b));
+  // sand grains
+  x.fillStyle = 'rgba(120,90,40,.35)';
+  for (const s of SAND) { x.beginPath(); x.arc(s.u * W, s.v * H, .8 + s.a * 1.2, 0, 7); x.fill(); }
+  // heated zone
+  x.save(); x.beginPath(); x.rect(0, RES0 * H, W, (RES1 - RES0) * H); x.clip();
+  if (heat > .01) {
+    const R = heat * .5 * W, g = x.createRadialGradient(INJ.u * W, INJ.v * H, 0, INJ.u * W, INJ.v * H, R);
+    g.addColorStop(0, 'rgba(255,110,30,.75)'); g.addColorStop(.55, 'rgba(255,150,50,.35)'); g.addColorStop(1, 'rgba(255,160,60,0)');
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+  }
+  // oil blobs
+  const br = Math.max(3, Math.min(W, H) * .013);
+  for (const p of P) {
+    if (p.taken) continue;
+    x.fillStyle = lerpC('1c140e', '7a3b0c', Math.min(1, p.h * 1.3));
+    x.beginPath(); x.ellipse(p.u * W, p.v * H, br * p.s * (1 + p.h * .3), br * p.s * (1 - p.h * .15), 0, 0, 7); x.fill();
+  }
+  for (const q of puffs) {
+    const a = Math.max(0, .8 - q.life / 1.3 * .8);
+    x.fillStyle = `rgba(255,255,255,${a})`;
+    x.beginPath(); x.arc(q.u * W, q.v * H, br * (1 + q.life * 1.6) * q.r, 0, 7); x.fill();
+  }
+  x.restore();
+  // pipes
+  const pw = Math.max(5, W * .02), sy = SURF * H;
+  x.fillStyle = lerpC('7d8790', 'e2462a', steam);
+  x.fillRect(INJ.u * W - pw / 2, sy - H * .03, pw, INJ.v * H - sy + H * .03);
+  x.fillStyle = '#2f3236';
+  x.fillRect(PROD.u * W - pw / 2, sy - H * .03, pw, PROD.v * H - sy + H * .03);
+  x.fillStyle = '#111';
+  for (const r of rising) { x.beginPath(); x.arc(PROD.u * W, r.v * H, pw * .38, 0, 7); x.fill(); }
+  // steam outlet ring
+  if (steam > .02) { x.strokeStyle = `rgba(255,255,255,${.5 + .4 * Math.sin(T * 8)})`; x.lineWidth = 2; x.beginPath(); x.arc(INJ.u * W, INJ.v * H, pw * 1.2, 0, 7); x.stroke(); }
+  // surface: boiler and tank
+  const bh = H * .095, by = sy - bh - H * .02, bw = W * .2;
+  const bx = INJ.u * W - pw / 2 - bw - W * .03, tx = PROD.u * W + pw / 2 + W * .03;
+  x.fillStyle = lerpC('7d8790', 'c8452b', steam);
+  x.fillRect(bx + bw, by + bh * .4, INJ.u * W - (bx + bw), pw * .8);
+  x.fillStyle = '#2f3236';
+  x.fillRect(PROD.u * W, by + bh * .4, tx - PROD.u * W, pw * .8);
+  x.fillStyle = lerpC('5c6670', 'c8452b', steam); x.fillRect(bx, by, bw, bh);
+  x.fillStyle = '#fff'; x.font = `800 ${fs}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillText('STEAM', bx + bw / 2, by + bh / 2);
+  if (steam > .02) {
+    for (let i = 0; i < 3; i++) {
+      const t = (T * .8 + i / 3) % 1;
+      x.fillStyle = `rgba(255,255,255,${(1 - t) * .8 * steam})`;
+      x.beginPath(); x.arc(bx + bw * .2 + t * 8, by - t * H * .05, 3 + t * 6, 0, 7); x.fill();
+    }
+  }
+  x.fillStyle = '#f6f6f2'; x.fillRect(tx, by, bw, bh);
+  const fill = Math.min(1, collected / 40);
+  x.fillStyle = '#16100b'; x.fillRect(tx, by + bh * (1 - fill), bw, bh * fill);
+  x.strokeStyle = '#2f3236'; x.lineWidth = 2; x.strokeRect(tx, by, bw, bh);
+  x.fillStyle = fill > .55 ? '#fff' : '#2f3236';
+  x.fillText('OIL OUT', tx + bw / 2, by + bh / 2);
+  // labels
+  x.textAlign = 'left'; x.font = `700 ${fs}px sans-serif`;
+  const lab = (t, lx, ly, bg, fg) => {
+    const w = x.measureText(t).width;
+    x.fillStyle = bg; x.beginPath(); x.roundRect ? x.roundRect(lx - 6, ly - fs * .75, w + 12, fs * 1.5, 6) : x.rect(lx - 6, ly - fs * .75, w + 12, fs * 1.5); x.fill();
+    x.fillStyle = fg; x.fillText(t, lx, ly);
+  };
+  lab('Cap rock', W * .04, (.42 + RES0) / 2 * H + H * .01, 'rgba(0,0,0,.35)', '#fff');
+  lab('Extra-heavy oil sands', W * .04, RES1 * H - fs * 1.2, 'rgba(255,248,230,.85)', '#2a1e12');
+  x.restore();
+}
+function tick() { step(Math.min(.05, gsap.ticker.deltaRatio() / 60)); draw(); }
+gsap.ticker.add(tick);
+const lvl = Kit.$('lv'), st = Kit.$('state');
+let lastBand = 0;
+Kit.$('steam').addEventListener('input', e => {
+  steam = e.target.value / 100;
+  const b = steam < .02 ? 0 : steam < .5 ? 1 : 2;
+  lvl.textContent = ['OFF', 'LOW', 'HIGH'][b];
+  if (b !== lastBand) { Kit.haptic('selection'); lastBand = b; }
+});
+setInterval(() => {
+  if (done) return;
+  st.textContent = heat < .05 ? 'Pump running · oil too thick to move'
+    : heat < .35 ? 'Warming up · oil starts to soften'
+    : 'Hot · oil thins out and drains to the well';
+}, 250);
+function finish() {
+  done = true;
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+Kit.onShow.card = () => { G = Kit.fitCanvas(cv); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cv', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const s = Kit.$('steam'); s.value = 100; s.dispatchEvent(new Event('input', {bubbles: true}));
+  for (let i = 0; i < 400 && !done; i++) step(1 / 30);
+  draw();
+  if (!done) finish();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

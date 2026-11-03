@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-flat-earth-challenge -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sv{flex:1;min-height:0;width:100%;display:block;border-radius:2cqh;overflow:hidden;background:#0a0f2c}
+#opts{display:flex;flex-direction:column;gap:.8cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{display:flex;align-items:center;gap:3cqw;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.05cqh 3.5cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt .n{flex:none;display:grid;place-items:center;width:max(3.4cqh,22px);height:max(3.4cqh,22px);border-radius:50%;font:800 max(1.8cqh,12px)/1 var(--mono);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 40%,transparent)}
+.opt.on .n{background:var(--k);color:var(--c);box-shadow:none}
+.opt.ok .n{background:#2e9e5b;color:#fff;box-shadow:none}
+.opt.bad .n{background:#d2513c;color:#fff;box-shadow:none}
+.opt.now{background:var(--k);color:var(--c)}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Put in order · story">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLAT EARTH</span></div>
+    <h2 class="q">How to prove Earth is round to a Flat Earth believer?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sv"></svg>
+      <div id="opts">
+        <button class="opt" data-i="2"><span class="n"></span><span>Reach orbit and let them look out</span></button>
+        <button class="opt" data-i="0"><span class="n"></span><span>Build a big ship: sofas, hot chocolate, Wi‑Fi</span></button>
+        <button class="opt" data-i="3"><span class="n"></span><span>Send them straight on to Mars</span></button>
+        <button class="opt" data-i="1"><span class="n"></span><span>Invite the flat‑Earth believers aboard</span></button>
+      </div>
+      <div id="why" class="gone"><p class="big" id="score">Don't argue. Take them up.</p><p class="body">Geopop's open letter to Elon Musk: build a big comfy ship, invite the flat‑Earthers, and once in orbit they will see the ball for themselves. From the ground the curve is too huge to notice. Then, the joke goes, send them straight on to Mars.</p></div>
+    </div>
+    <p class="say" id="say">Tap the four steps of the plan in the order you'd do them.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Earth looks flat only because you stand so close to it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️TERRA PIATTA, IENE, TERRAPIATTISTI: MESSAGGIO A ELON MUSK |GeologiaPOP🌍” (YouTube, 2018).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CAPS = ['From the ground, it looks flat','Sofas, hot chocolate, Wi‑Fi','Flat‑Earthers, all aboard','From orbit: a ball','Next stop: Mars'];
+const STATES = [
+  {z:0, sx:.56, sy:.80, ss:0,  fl:0, po:0, pt:0, mx:.84, my:.16, mr:.025, mo:.9},
+  {z:0, sx:.56, sy:.80, ss:1,  fl:0, po:0, pt:0, mx:.84, my:.16, mr:.025, mo:.9},
+  {z:0, sx:.56, sy:.80, ss:1,  fl:0, po:0, pt:1, mx:.84, my:.16, mr:.025, mo:.9},
+  {z:1, sx:.66, sy:.42, ss:.8, fl:1, po:0, pt:1, mx:.84, my:.16, mr:.025, mo:.9},
+  {z:1, sx:.56, sy:.30, ss:.7, fl:1, po:0, pt:1, mx:.80, my:.24, mr:.17, mo:1}
+];
+const P = Object.assign({}, STATES[0]);
+let shown = 0, taps = [], tl = null, E = null, dim = null, finished = false;
+
+function circPath(cx, cy, R, W, H, fill, pad){
+  const N = 720; let d = '', pen = false;
+  for (let i = 0; i <= N; i++){
+    const a = i/N*Math.PI*2; let x = cx + R*Math.cos(a), y = cy + R*Math.sin(a);
+    if (fill){
+      x = Math.min(Math.max(x, 0), W); y = Math.min(Math.max(y, 0), H);
+      d += (i ? 'L' : 'M') + x.toFixed(2) + ',' + y.toFixed(2);
+    } else if (x >= pad && x <= W-pad && y >= pad && y <= H-pad){
+      d += (pen ? 'L' : 'M') + x.toFixed(2) + ',' + y.toFixed(2); pen = true;
+    } else pen = false;
+  }
+  if (fill && d) d += 'Z';
+  return d || 'M0,0';
+}
+function draw(){
+  const sv = Kit.$('sv'); sv.innerHTML = '';
+  dim = Kit.fitSvg(sv); const {W,H,f} = dim;
+  const defs = Kit.mk('defs', {}, sv);
+  const eg = Kit.mk('radialGradient', {id:'eg', gradientUnits:'userSpaceOnUse', cx:0, cy:0, r:1}, defs);
+  Kit.mk('stop', {offset:'0%', 'stop-color':'#6fc3ff'}, eg); Kit.mk('stop', {offset:'55%', 'stop-color':'#2a6fd6'}, eg); Kit.mk('stop', {offset:'100%', 'stop-color':'#123a86'}, eg);
+  const mg = Kit.mk('radialGradient', {id:'mg', cx:'35%', cy:'30%', r:'75%'}, defs);
+  Kit.mk('stop', {offset:'0%', 'stop-color':'#ffa070'}, mg); Kit.mk('stop', {offset:'100%', 'stop-color':'#a8341c'}, mg);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'#0a0f2c'}, sv);
+  for (let i = 0; i < 60; i++) Kit.mk('circle', {cx:Kit.rnd()*W, cy:Kit.rnd()*H, r:.5+Kit.rnd()*1.3, fill:'#fff', opacity:.3+Kit.rnd()*.6}, sv);
+  E = {eg};
+  E.mars = Kit.mk('circle', {fill:'url(#mg)'}, sv);
+  E.atm = Kit.mk('path', {fill:'none', stroke:'#8fd3ff', 'stroke-opacity':.35}, sv);
+  E.earth = Kit.mk('path', {fill:'url(#eg)'}, sv);
+  E.people = Kit.mk('g', {}, sv); E.ppl = [];
+  for (let i = 0; i < 3; i++){
+    const g = Kit.mk('g', {}, E.people);
+    Kit.mk('circle', {cx:0, cy:-14, r:3.2, fill:'#ffd36b'}, g);
+    Kit.mk('path', {d:'M0,-10 L0,-3 M-4,-7 L4,-7 M0,-3 L-3,3 M0,-3 L3,3', stroke:'#ffd36b', 'stroke-width':1.8, 'stroke-linecap':'round', fill:'none'}, g);
+    E.ppl.push(g);
+  }
+  E.ship = Kit.mk('g', {}, sv);
+  E.flame = Kit.mk('path', {d:'M-8,18 Q0,44 8,18 Z', fill:'#ffb13b'}, E.ship);
+  Kit.mk('path', {d:'M-14,4 L-24,22 L-12,18 Z M14,4 L24,22 L12,18 Z', fill:'#e8533a'}, E.ship);
+  Kit.mk('path', {d:'M0,-40 C14,-26 16,-6 14,18 L-14,18 C-16,-6 -14,-26 0,-40Z', fill:'#f4f1ea'}, E.ship);
+  Kit.mk('circle', {cx:0, cy:-12, r:7, fill:'#3b8be0', stroke:'#c9d3e0', 'stroke-width':2}, E.ship);
+  Kit.mk('rect', {x:-5, y:-11, width:10, height:4, rx:1.5, fill:'#e8533a'}, E.ship); // sofa in the window
+  for (let i = 1; i <= 3; i++) Kit.mk('path', {d:`M${-5*i},${-48-3*i} Q0,${-54-6*i} ${5*i},${-48-3*i}`, stroke:'#7ff0c0', 'stroke-width':2, fill:'none', 'stroke-linecap':'round'}, E.ship);
+  Kit.mk('circle', {cx:0, cy:-47, r:2, fill:'#7ff0c0'}, E.ship);
+  Kit.mk('rect', {x:20, y:-4, width:9, height:11, rx:2, fill:'#8a5130'}, E.ship); // hot chocolate
+  Kit.mk('path', {d:'M29,-1 q5,3 0,6', stroke:'#8a5130', 'stroke-width':1.8, fill:'none'}, E.ship);
+  Kit.mk('path', {d:'M23,-7 q-2,-4 1,-7 M27,-7 q-2,-4 1,-7', stroke:'#fff', 'stroke-opacity':.7, 'stroke-width':1.3, fill:'none'}, E.ship);
+  E.cap = Kit.mk('text', {x:W/2, y:Math.max(f*1.6, 20), 'text-anchor':'middle', fill:'#fff', 'font-family':'var(--display)', 'font-weight':800, 'font-size':Math.max(f*1.1, 14)}, sv);
+  apply();
+}
+function apply(){
+  if (!E) return;
+  const {W,H} = dim, m = Math.min(W,H), z = P.z;
+  const R = m*Math.exp(Math.log(8)*(1-z) + Math.log(.28)*z);
+  const top = (.80*H)*(1-z) + (.74*H - .28*m)*z;
+  const cx = .5*W*(1-z) + .30*W*z, cy = top+R;
+  E.eg.setAttribute('cx', cx - R + .7*R); E.eg.setAttribute('cy', cy - R + .6*R); E.eg.setAttribute('r', 1.5*R);
+  E.earth.setAttribute('d', circPath(cx, cy, R, W, H, true, 0));
+  E.atm.setAttribute('d', circPath(cx, cy, R+3, W, H, false, 3)); E.atm.setAttribute('stroke-width', 6);
+  E.mars.setAttribute('cx', P.mx*W); E.mars.setAttribute('cy', P.my*H); E.mars.setAttribute('r', Math.max(P.mr*m, 3)); E.mars.setAttribute('opacity', P.mo);
+  const k = m/270*P.ss, sx = P.sx*W, sy = P.sy*H - 22*k;
+  E.ship.setAttribute('transform', `translate(${sx},${sy}) scale(${k})`);
+  E.ship.setAttribute('opacity', P.ss > 0 ? 1 : 0);
+  E.flame.setAttribute('opacity', P.fl);
+  const pk = m/270;
+  E.ppl.forEach((g,i) => {
+    const x = sx + (-(m*.30) - i*18*pk)*(1-P.pt) + (P.pt*0), y = .80*H;
+    g.setAttribute('transform', `translate(${x},${y}) scale(${pk*1.1})`);
+  });
+  E.people.setAttribute('opacity', P.po);
+  E.cap.textContent = CAPS[shown];
+}
+function finish(){
+  if (finished) return; finished = true;
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+}
+function story(){
+  const btns = [...Kit.$('opts').children].sort((a,b) => a.dataset.i - b.dataset.i);
+  if (Kit.calm){ shown = 4; Object.assign(P, STATES[4]); apply(); finish(); return; }
+  tl = gsap.timeline({onComplete: () => setTimeout(finish, 900)});
+  for (let s = 1; s <= 4; s++){
+    tl.call(() => { shown = s; btns.forEach(b => b.classList.toggle('now', +b.dataset.i === s-1)); Kit.haptic('light'); apply(); });
+    if (s === 2){
+      tl.to(P, {po:1, duration:.2, onUpdate:apply});
+      tl.fromTo(P, {pt:0}, {pt:1, duration:1, ease:'none', onUpdate:apply});
+      tl.to(P, {po:0, duration:.2, onUpdate:apply});
+    } else {
+      const t = Object.assign({}, STATES[s]); delete t.pt; delete t.po;
+      tl.to(P, Object.assign(t, {duration: s === 1 ? .6 : 1.4, ease: s === 1 ? 'back.out(2)' : 'power2.inOut', onUpdate:apply}));
+    }
+    tl.to({}, {duration:.5});
+  }
+  tl.call(() => btns.forEach(b => b.classList.remove('now')));
+}
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || b.classList.contains('on') || taps.length >= 4) return;
+  taps.push(+b.dataset.i); b.classList.add('on'); b.querySelector('.n').textContent = taps.length; Kit.haptic('selection');
+  if (taps.length < 4) return;
+  const right = taps.filter((v,i) => v === i).length, ok = right === 4;
+  Kit.answer({choice: taps.map(v => v+1).join('-'), correct: ok});
+  Kit.$('score').textContent = ok ? 'Right order. Don\u2019t argue: take them up.' : `${right} of 4 in place. Don\u2019t argue: take them up.`;
+  const box = Kit.$('opts'), btns = [...box.children];
+  btns.forEach(x => { const i = +x.dataset.i, pos = taps.indexOf(i); x.classList.remove('on'); x.classList.add(pos === i ? 'ok' : 'bad'); x.querySelector('.n').textContent = i+1; });
+  btns.sort((a,c) => a.dataset.i - c.dataset.i).forEach(x => box.appendChild(x));
+  Kit.$('say').textContent = 'The real plan, step by step:';
+  if (!Kit.calm) gsap.from(btns, {opacity:0, x:-12, stagger:.06, duration:.35});
+  setTimeout(story, 500);
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const i of [0,1,2,3]) { Kit.$('opts').querySelector(`[data-i="${i}"]`).click(); await w(60); }
+  await w(Kit.calm ? 300 : 9000);
+  if (!finished){ if (tl) tl.progress(1); shown = 4; Object.assign(P, STATES[4]); apply(); finish(); }
+  await w(300);
+};
+Kit.single();
+</script>
+</html>

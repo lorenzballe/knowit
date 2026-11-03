@@ -1,0 +1,188 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-kgb-pistolero-walk -->
+<title>The KGB Pistol Draw</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#scene{flex:1;min-height:0;width:100%;display:block}
+.go{font:800 max(2.6cqh,16px)/1 var(--display);letter-spacing:.05em;color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 0;width:100%;cursor:pointer;flex:none}
+.go:disabled{opacity:.45;cursor:default}
+#why{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#scene .ink{stroke:var(--k);fill:none;stroke-linecap:round;stroke-linejoin:round}
+#scene .far{opacity:.42}
+#scene .inkf{fill:var(--k)}
+#scene .gun{fill:#d8342a;stroke:var(--k)}
+#scene .hol{fill:var(--k)}
+#scene .dash{stroke:#d8342a;fill:none;stroke-linecap:round}
+#scene .lbl{fill:var(--k);font-family:var(--mono);font-weight:700;letter-spacing:.04em}
+#scene .res{fill:var(--k);font-family:var(--body);font-weight:800}
+#scene .win{fill:#d8342a}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Try it · draw race">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">KGB DRILL</span></div>
+    <h2 class="q">What is the primary tactical purpose of the 'Pistolero Walk'?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scene" aria-label="Two men walking side by side: one with an ordinary walk, one with the pistolero walk"></svg>
+      <button class="go" id="go">DRAW!</button>
+    </div>
+    <p class="say" id="say">Watch them walk. Tap DRAW! at any moment: who gets the pistol out first?</p>
+    <p class="gone" id="why">It comes from the KGB training manual; Putin learned it in Cold War Dresden, East Germany. The stiff right arm never leaves the holster's side, so the pistol comes out as fast as possible.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The stiff right arm is a gun hand kept parked by the holster.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SLOW = 0.45, AIM = 0.28;
+let S = null, ph = 0, mode = 'walk', clock = 0, holdT = 0, plan = null, done = false, tries = 0;
+
+const P = (x, y) => ({x, y});
+const lerp = (a, b, k) => P(a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k);
+const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+const pl = pts => 'M' + pts.map(p => p.x.toFixed(1) + ',' + p.y.toFixed(1)).join('L');
+
+function build() {
+  const svg = Kit.$('scene'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.85, 12), pw = W / 2;
+  const groundY = H - 2.3 * fs;
+  const u = Math.max(4, Math.min((groundY - 2.9 * fs) / 8.4, pw / 5.2));
+  S = {W, H, fs, u, groundY, men: [], grounds: []};
+  Kit.mk('line', {x1: pw, y1: .3 * fs, x2: pw, y2: H - .3 * fs, class: 'ink', 'stroke-width': 1.5, opacity: .25}, svg);
+  for (let i = 0; i < 2; i++) {
+    const cx = i * pw, hx = cx + pw * 0.36;
+    const t = Kit.mk('text', {x: cx + pw / 2, y: 1.4 * fs, 'text-anchor': 'middle', class: 'lbl', 'font-size': fs}, svg);
+    t.textContent = i ? 'PISTOLERO WALK' : 'ORDINARY WALK';
+    S.grounds.push(Kit.mk('line', {x1: cx + pw * .06, y1: groundY, x2: cx + pw * .94, y2: groundY, class: 'ink', 'stroke-width': u * .14, 'stroke-dasharray': `${u * .55} ${u * .4}`}, svg));
+    const lw = u * .34;
+    const m = {pist: !!i, hx, cx, pw};
+    m.farArm = Kit.mk('path', {class: 'ink far', 'stroke-width': lw}, svg);
+    m.farLeg = Kit.mk('path', {class: 'ink far', 'stroke-width': lw}, svg);
+    m.torso = Kit.mk('line', {class: 'ink', 'stroke-width': u * .5}, svg);
+    m.nearLeg = Kit.mk('path', {class: 'ink', 'stroke-width': lw}, svg);
+    m.head = Kit.mk('circle', {class: 'inkf', r: u * .55}, svg);
+    m.gun = Kit.mk('g', {}, svg);
+    Kit.mk('path', {class: 'gun', 'stroke-width': u * .06, d:
+      `M${-.12*u},${-.16*u}h${.9*u}v${.2*u}h${-.66*u}l${-.06*u},${.42*u}h${-.24*u}l${.04*u},${-.42*u}z`}, m.gun);
+    m.hol = Kit.mk('rect', {class: 'hol', rx: u * .08}, svg);
+    m.nearArm = Kit.mk('path', {class: 'ink', 'stroke-width': lw}, svg);
+    m.dash = Kit.mk('line', {class: 'dash', 'stroke-width': u * .12, 'stroke-dasharray': `${u * .14} ${u * .16}`}, svg);
+    m.res = Kit.mk('text', {x: cx + pw / 2, y: H - .7 * fs, 'text-anchor': 'middle', class: 'res', 'font-size': Math.max(fs * 1.05, 12)}, svg);
+    m.res.textContent = m.lastRes || '';
+    S.men.push(m);
+  }
+  if (S.lastWin != null) S.men[S.lastWin].res.classList.add('win');
+  render();
+}
+
+function arm(Sh, t1, t2, u) {
+  const E = P(Sh.x + 1.35 * u * Math.sin(t1), Sh.y + 1.35 * u * Math.cos(t1));
+  return [Sh, E, P(E.x + 1.25 * u * Math.sin(t2), E.y + 1.25 * u * Math.cos(t2))];
+}
+function ik(Sh, T, u) {
+  const a = 1.35 * u, b = 1.25 * u;
+  const d = Math.min(Math.max(dist(Sh, T), .2 * u), a + b - .01);
+  const base = Math.atan2(T.y - Sh.y, T.x - Sh.x);
+  const al = Math.acos(Math.max(-1, Math.min(1, (a * a + d * d - b * b) / (2 * a * d))));
+  const e1 = P(Sh.x + a * Math.cos(base + al), Sh.y + a * Math.sin(base + al));
+  const e2 = P(Sh.x + a * Math.cos(base - al), Sh.y + a * Math.sin(base - al));
+  const E = (e1.y - e1.x) > (e2.y - e2.x) ? e1 : e2;
+  return [Sh, E, T];
+}
+
+function pose(m) {
+  const u = S.u, s = Math.sin(ph), tL = .45 * s;
+  const hy = S.groundY - 4 * u * Math.cos(Math.abs(tL)) - .1 * u;
+  const hip = P(m.hx, hy), Sh = P(m.hx + .05 * u, hy - 2.8 * u);
+  const leg = th => { const ft = P(m.hx + 4 * u * Math.sin(th), hy + 4 * u * Math.cos(th));
+    const kn = P((hip.x + ft.x) / 2 + .18 * u, (hip.y + ft.y) / 2); return [hip, kn, ft, P(ft.x + .45 * u, ft.y)]; };
+  let near, far;
+  if (m.pist) { const a = .03 + .04 * s; near = arm(Sh, a, a + .06, u); const b = .7 * s; far = arm(Sh, b, b * 1.3 + .25, u); }
+  else { const a = -.6 * s; near = arm(Sh, a, a * 1.3 + .25, u); const b = .6 * s; far = arm(Sh, b, b * 1.3 + .25, u); }
+  return {hip, Sh, head: P(m.hx + .15 * u, hy - 3.65 * u), G: P(m.hx + .28 * u, hy + .02 * u),
+    near, far, nl: leg(tL), fl: leg(-tL), aimPt: P(Sh.x + 2.45 * u, Sh.y + .1 * u)};
+}
+
+function render() {
+  if (!S) return;
+  const u = S.u;
+  S.grounds.forEach(g => g.setAttribute('stroke-dashoffset', ph * 1.1 * u));
+  S.men.forEach((m, i) => {
+    const p = pose(m);
+    let armPts = p.near, gunPos = p.G, rot = 90, showDash = mode === 'walk';
+    if (mode !== 'walk' && plan) {
+      const q = plan[i], t = clock;
+      if (t < q.reach) { armPts = ik(p.Sh, lerp(q.start, p.G, ease(t / q.reach)), u); }
+      else { const e = ease(Math.min(1, (t - q.reach) / AIM)); const h = lerp(p.G, p.aimPt, e);
+        armPts = ik(p.Sh, h, u); gunPos = h; rot = 90 * (1 - e); }
+    }
+    m.nearArm.setAttribute('d', pl(armPts));
+    m.farArm.setAttribute('d', pl(p.far));
+    m.nearLeg.setAttribute('d', pl(p.nl));
+    m.farLeg.setAttribute('d', pl(p.fl));
+    Object.entries({x1: p.hip.x, y1: p.hip.y, x2: p.Sh.x, y2: p.Sh.y}).forEach(([k, v]) => m.torso.setAttribute(k, v));
+    m.head.setAttribute('cx', p.head.x); m.head.setAttribute('cy', p.head.y);
+    m.gun.setAttribute('transform', `translate(${gunPos.x},${gunPos.y}) rotate(${rot})`);
+    Object.entries({x: p.G.x - .12 * u, y: p.G.y + .08 * u, width: .4 * u, height: .87 * u}).forEach(([k, v]) => m.hol.setAttribute(k, v));
+    const h = armPts[2];
+    Object.entries({x1: h.x, y1: h.y, x2: p.G.x, y2: p.G.y}).forEach(([k, v]) => m.dash.setAttribute(k, v));
+    m.dash.setAttribute('opacity', showDash ? .9 : 0);
+  });
+}
+
+function draw() {
+  if (mode !== 'walk' || !S) return;
+  Kit.haptic('light');
+  plan = S.men.map(m => { const p = pose(m); const start = p.near[2];
+    const reach = .1 + dist(start, p.G) / (5 * S.u); return {start, reach, end: reach + AIM}; });
+  S.men.forEach(m => { m.res.textContent = ''; m.lastRes = ''; m.res.classList.remove('win'); });
+  S.lastWin = null;
+  mode = 'draw'; clock = 0; holdT = 0; done = false;
+  Kit.$('go').disabled = true; Kit.$('go').textContent = 'DRAWING…';
+}
+
+function finish() {
+  tries++;
+  const gap = plan[0].end - plan[1].end;
+  const win = gap > 0 ? 1 : 0;
+  if (Math.abs(gap) < .05) {
+    S.men.forEach(m => { m.res.textContent = m.lastRes = 'NECK AND NECK'; });
+    Kit.$('say').textContent = 'Close: his swinging hand was passing his hip. Tap again at the end of a swing.';
+  } else {
+    S.men[win].res.textContent = S.men[win].lastRes = '1ST OUT ✓';
+    S.men[1 - win].res.textContent = S.men[1 - win].lastRes = '2ND OUT';
+    S.men[win].res.classList.add('win'); S.lastWin = win;
+    Kit.$('say').textContent = 'His swinging hand was far from the gun. The stiff one never is. Try another moment.';
+  }
+  Kit.haptic('success');
+  if (tries === 1) { Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'}); }
+}
+
+gsap.ticker.add(() => {
+  const dt = Math.min(.05, gsap.ticker.deltaRatio(60) / 60);
+  if (mode === 'walk') ph += dt * Math.PI * 2 * .85 * (Kit.calm ? .5 : 1);
+  else if (mode === 'draw') {
+    clock = Math.min(clock + dt * SLOW, Math.max(plan[0].end, plan[1].end));
+    if (!done && clock >= Math.max(plan[0].end, plan[1].end)) { done = true; finish(); }
+    if (done) { holdT += dt; if (holdT > 2.6) mode = 'back'; }
+  } else if (mode === 'back') {
+    clock -= dt * 1.4;
+    if (clock <= 0) { clock = 0; mode = 'walk'; Kit.$('go').disabled = false; Kit.$('go').textContent = 'DRAW!'; }
+  }
+  render();
+});
+
+Kit.$('go').addEventListener('click', draw);
+Kit.onShow.card = () => build();
+if (window.ResizeObserver) { let w = 0, h = 0; new ResizeObserver(en => { const r = en[0].contentRect;
+  if (S && (Math.abs(r.width - w) > 1 || Math.abs(r.height - h) > 1)) { w = r.width; h = r.height; build(); } }).observe(Kit.$('scene')); }
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#scene, #go', {opacity: 0, y: 10, stagger: .1, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { ph = 1.4; Kit.$('go').click(); await new Promise(r => setTimeout(r, 2000)); };
+Kit.single();
+</script>
+</html>

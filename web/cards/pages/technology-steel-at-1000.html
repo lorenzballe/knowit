@@ -1,0 +1,150 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-steel-at-1000 -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.fl{transform-box:fill-box;transform-origin:50% 100%;animation:fl .45s ease-in-out infinite alternate}
+.fl:nth-child(2n){animation-duration:.6s}
+.calm .fl{animation:none}
+@keyframes fl{to{transform:scaleY(.82) scaleX(1.1)}}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STEEL &amp; FIRE</span></div>
+    <h2 class="q">Why did the steel columns lose their support at 1,000°C?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone">
+        <p class="big">The heat took the steel's strength.</p>
+        <p class="body">Air rushing in through the broken windows fed the fire. Where the steel had been stripped of its insulation, NIST simulations found peaks of 1,000°C. At that heat the steel could no longer carry the load.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag across the picture to feed the fire with air. Watch the bare steel.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Bare steel at 1,000°C loses its load-bearing capacity, and the floors above lose their support.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let t = 0, done = false, G = null, lastX = null;
+const svg = Kit.$('pic');
+const lerp = (a, b, k) => a + (b - a) * k;
+function heat(k) {
+  const s = [[107,114,128],[196,48,24],[255,176,64]];
+  let c;
+  if (k < .6) { const q = k / .6; c = s[0].map((v, i) => lerp(v, s[1][i], q)); }
+  else { const q = (k - .6) / .4; c = s[1].map((v, i) => lerp(v, s[2][i], q)); }
+  return `rgb(${c.map(Math.round).join(',')})`;
+}
+function txt(x, y, s, anchor, size, weight, fill, parent) {
+  const e = Kit.mk('text', {x, y, 'text-anchor': anchor, style: `font:${weight} ${size}px var(--body);fill:${fill}`}, parent || svg);
+  e.textContent = s; return e;
+}
+function draw() {
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H * .06));
+  const gy = H * .8, sy = H * .32, th = H * .035, ftop = H * .1;
+  const xi = W * .5, xb = W * .8, x0 = W * .32, x1 = W * .95;
+  const thx = Math.max(W * .1, 30), r = Math.max(9, Math.min(W, H) * .04), thTop = H * .1;
+  const cw = Math.max(W * .035, 10);
+  G = {W, H, f, gy, sy, th, xi, xb, thx, r, thTop, cw};
+  const ink = 'var(--k)';
+  // flames
+  G.fire = Kit.mk('g', {}, svg);
+  const inner = Kit.mk('g', {}, G.fire);
+  const n = 7;
+  for (let i = 0; i < n; i++) {
+    const cx = lerp(x0 + W * .03, x1 - W * .03, i / (n - 1)), w = W * .1, h = (gy - sy) * (.55 + .35 * ((i * 37) % 10) / 10);
+    const pth = `M${cx - w / 2},${gy} Q${cx - w / 2},${gy - h * .5} ${cx},${gy - h} Q${cx + w / 2},${gy - h * .5} ${cx + w / 2},${gy} Z`;
+    Kit.mk('path', {d: pth, class: 'fl', fill: i % 2 ? '#ff8a1e' : '#ffb63a', opacity: .75}, inner);
+  }
+  // air arrows from broken window
+  G.air = Kit.mk('g', {}, svg);
+  for (const yy of [H * .5, H * .62]) {
+    Kit.mk('path', {d: `M${W - 3},${yy} L${W * .88},${yy} M${W * .88 + 7},${yy - 6} L${W * .88},${yy} L${W * .88 + 7},${yy + 6}`, stroke: '#4aa8ff', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round'}, G.air);
+  }
+  txt(W - 3, H * .5 - f * .8, 'air', 'end', f, 700, '#4aa8ff', G.air);
+  // ground
+  Kit.mk('line', {x1: x0 - W * .02, y1: gy, x2: x1, y2: gy, stroke: ink, 'stroke-width': 3}, svg);
+  // insulated column
+  Kit.mk('rect', {x: xi - cw * 1.1, y: sy + th, width: cw * 2.2, height: gy - sy - th, rx: cw * .4, fill: '#eadfc4', stroke: '#b9a77c', 'stroke-width': 1.5, 'stroke-dasharray': '4 3'}, svg);
+  G.inCol = Kit.mk('rect', {x: xi - cw / 2, y: sy + th, width: cw, height: gy - sy - th, fill: heat(0)}, svg);
+  // bare column
+  G.glow = Kit.mk('path', {fill: 'none', stroke: '#ff9a30', 'stroke-width': cw * 2.4, opacity: 0, 'stroke-linecap': 'round'}, svg);
+  G.bare = Kit.mk('path', {fill: 'none', stroke: heat(0), 'stroke-width': cw}, svg);
+  // slab + floors above
+  G.top = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: x0, y: ftop, width: x1 - x0, height: sy - ftop, fill: 'color-mix(in srgb,var(--k) 14%,transparent)', stroke: ink, 'stroke-width': 1.5}, G.top);
+  for (let k = 1; k < 3; k++) { const yy = lerp(ftop, sy, k / 3); Kit.mk('line', {x1: x0, y1: yy, x2: x1, y2: yy, stroke: ink, 'stroke-width': 1, opacity: .4}, G.top); }
+  Kit.mk('rect', {x: x0, y: sy, width: x1 - x0, height: th, fill: '#5b6270'}, G.top);
+  txt((x0 + x1) / 2, (ftop + sy) / 2 + f * .35, 'floors above', 'middle', f, 700, ink, G.top);
+  // labels
+  txt(xi, gy + f * 1.5, 'insulated', 'middle', f, 700, ink);
+  txt(xb, gy + f * 1.5, 'bare steel', 'middle', f, 700, ink);
+  // thermometer
+  Kit.mk('rect', {x: thx - r * .45, y: thTop - r * .45, width: r * .9, height: gy - thTop + r * .45, rx: r * .45, fill: 'color-mix(in srgb,var(--k) 10%,transparent)', stroke: ink, 'stroke-width': 1.5}, svg);
+  G.fill = Kit.mk('rect', {x: thx - r * .25, width: r * .5, rx: r * .25, fill: '#e2401c'}, svg);
+  G.bulb = Kit.mk('circle', {cx: thx, cy: gy, r, fill: '#e2401c', stroke: ink, 'stroke-width': 1.5}, svg);
+  Kit.mk('line', {x1: thx + r * .45, y1: thTop, x2: thx + r * .9, y2: thTop, stroke: ink, 'stroke-width': 2}, svg);
+  txt(thx + r, thTop + f * .35, '1,000°C', 'start', f, 800, ink);
+  G.read = txt(thx, gy + r + f * 1.3, '20°C', 'middle', f, 800, ink);
+  update();
+}
+function update() {
+  if (!G) return;
+  const {W, H, gy, sy, th, xi, xb, thx, thTop, cw} = G;
+  const e = t < .45 ? 0 : Math.pow((t - .45) / .55, 2);
+  const drop = H * .07 * e, bend = -W * .07 * e;
+  const yT = sy + th + drop;
+  const d = `M${xb},${yT} Q${xb + bend * 2},${(yT + gy) / 2} ${xb},${gy}`;
+  G.bare.setAttribute('d', d); G.glow.setAttribute('d', d);
+  G.bare.setAttribute('stroke', heat(t));
+  G.glow.setAttribute('opacity', (t * .35).toFixed(2));
+  G.inCol.setAttribute('fill', heat(t * .3));
+  const ang = Math.atan2(drop, xb - xi) * 180 / Math.PI;
+  G.top.setAttribute('transform', `rotate(${ang},${xi},${sy})`);
+  const fy = lerp(gy, thTop, t);
+  G.fill.setAttribute('y', fy); G.fill.setAttribute('height', Math.max(0, gy - fy));
+  const temp = t >= 1 ? 1000 : Math.round((20 + 980 * t) / 10) * 10;
+  G.read.textContent = `${temp.toLocaleString('en')}°C`;
+  G.fire.setAttribute('transform', `translate(0,${gy}) scale(1,${(.08 + .92 * t).toFixed(3)}) translate(0,${-gy})`);
+  G.air.setAttribute('opacity', Math.min(1, t * 3).toFixed(2));
+}
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4}); });
+}
+svg.addEventListener('pointerdown', e => { if (done) return; lastX = e.clientX; try { svg.setPointerCapture(e.pointerId); } catch (_) {} });
+svg.addEventListener('pointermove', e => {
+  if (lastX === null || done || !G) return;
+  const dx = e.clientX - lastX; lastX = e.clientX;
+  const before = t;
+  t = Math.min(1, Math.max(0, t + Math.abs(dx) / (G.W * .7)));
+  if (Math.floor(before * 10) !== Math.floor(t * 10)) Kit.haptic('light');
+  update();
+  if (t >= 1) { lastX = null; finish(); }
+});
+const up = () => { lastX = null; };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+Kit.onShow.card = () => { if (Kit.calm) Kit.$('card').classList.add('calm'); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.fromTo(G.bulb, {attr: {r: G.r}}, {attr: {r: G.r * 1.35}, duration: .5, yoyo: true, repeat: 3, ease: 'sine.inOut'}); };
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect(), y = b.top + b.height / 2;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', b.left + 5);
+  for (let i = 1; i <= 25; i++) { ev('pointermove', b.left + 5 + i * b.width * .04); await new Promise(r => setTimeout(r, 15)); }
+  ev('pointerup', b.right - 5);
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

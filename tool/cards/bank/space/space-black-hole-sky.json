@@ -1,0 +1,38 @@
+{
+  "id": "space-black-hole-sky",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.what_we_can_see",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would we see of the outside world from inside a black hole?",
+  "answer": "Inside a black hole, the outside world would look distorted. The black hole's huge mass and density bend space-time, so light from the Milky Way is bent by that gravity and every image reaches you stretched and warped. As you slide toward the black hole, the sky itself looks bent.",
+  "move": "Extreme gravity bends light, so the sky itself looks bent.",
+  "keywords": [
+    "black hole",
+    "milky way",
+    "gravity",
+    "light",
+    "space-time"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A view of the night sky in which the Milky Way is bent, stretched and warped into curves. The page asks what the outside world would look like from inside a black hole. Slide to fall toward the black hole and watch the sky bend.",
+    "ground": "#04050c"
+  },
+  "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=364s",
+  "written": "2026-11-03"
+}

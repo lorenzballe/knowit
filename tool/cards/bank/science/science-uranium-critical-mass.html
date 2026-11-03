@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-uranium-critical-mass -->
+<title>Astute · Critical mass of uranium-235</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#picbox{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt span{font-weight:500;opacity:.75}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.opt.on span{opacity:.85}
+#pic text{font-family:var(--body);font-weight:700;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CRITICAL MASS</span></div>
+    <h2 class="q">How much uranium‑235 does a bomb need to go supercritical?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">About 1 kg <span>· a golf‑ball size</span></button>
+        <button class="opt" data-i="1">About 52 kg <span>· a 17 cm ball</span></button>
+        <button class="opt" data-i="2">About 1,000 kg <span>· a 46 cm ball</span></button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">About 52 kg: a ball 17 cm wide</p>
+        <p class="body">Each split nucleus throws out neutrons. In a smaller lump too many fly out before hitting another nucleus; at about 52 kg enough stay in for the chain to grow. Plutonium‑239 needs only about 10 kg, a 10 cm ball.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap a size to see the ball. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A bomb's core is small: 52 kg of U‑235 fits in a 17 cm ball.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+const OPTS = [{cm:4.3, kg:'≈1 kg'}, {cm:17, kg:'52 kg'}, {cm:46, kg:'≈1,000 kg'}];
+let pick = -1, cur = 0, revealed = false, g = null, count = 0;
+
+function geo(){
+  const svg = Kit.$('pic');
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(Math.min(f, H*0.07), 12);
+  const top = fs*3, bot = fs*2.4;
+  const avail = Math.max(H - top - bot, 40);
+  const k = Math.min(W*0.9, avail)/46;
+  return {svg, W, H, fs, k, cy: top + avail/2, top};
+}
+
+function draw(){
+  g = geo();
+  const {svg,W,fs,k,cy} = g;
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const defs = Kit.mk('defs', {}, svg);
+  const rg = Kit.mk('radialGradient', {id:'u', cx:'35%', cy:'30%', r:'75%'}, defs);
+  Kit.mk('stop', {offset:'0%', 'stop-color':'#e9ece4'}, rg);
+  Kit.mk('stop', {offset:'45%', 'stop-color':'#8e978a'}, rg);
+  Kit.mk('stop', {offset:'100%', 'stop-color':'#2c312b'}, rg);
+  const rp = Kit.mk('radialGradient', {id:'p', cx:'35%', cy:'30%', r:'75%'}, defs);
+  Kit.mk('stop', {offset:'0%', 'stop-color':'#f4e3d6'}, rp);
+  Kit.mk('stop', {offset:'45%', 'stop-color':'#a88a78'}, rp);
+  Kit.mk('stop', {offset:'100%', 'stop-color':'#3a2a22'}, rp);
+
+  // scale bar, top-left
+  const sb = Kit.mk('g', {}, svg);
+  const y0 = fs*1.1;
+  Kit.mk('line', {x1:8, y1:y0, x2:8+10*k, y2:y0, stroke:'currentColor', 'stroke-width':2, style:'color:var(--k)'}, sb);
+  Kit.mk('line', {x1:8, y1:y0-5, x2:8, y2:y0+5, stroke:'currentColor', 'stroke-width':2, style:'color:var(--k)'}, sb);
+  Kit.mk('line', {x1:8+10*k, y1:y0-5, x2:8+10*k, y2:y0+5, stroke:'currentColor', 'stroke-width':2, style:'color:var(--k)'}, sb);
+  const st = Kit.mk('text', {x:14+10*k, y:y0+fs*0.35, 'font-size':fs*0.85}, sb); st.textContent = '10 cm';
+
+  const ux = revealed ? W*0.36 : W*0.5;
+  g.ux = ux;
+  g.q = Kit.mk('text', {x:ux, y:cy+fs*0.9, 'text-anchor':'middle', 'font-size':fs*2.6, opacity: cur ? 0 : .35}, svg);
+  g.q.textContent = '?';
+  g.ghost = Kit.mk('circle', {cx:ux, cy, r:Math.min(W*0.9, 46*k)/2*0.6, fill:'none', stroke:'var(--k)', 'stroke-dasharray':'6 6', 'stroke-width':1.5, opacity: cur ? 0 : .3}, svg);
+  g.parts = Kit.mk('g', {}, svg);
+  g.ball = Kit.mk('circle', {cx:ux, cy, r: cur*k/2, fill:'url(#u)'}, svg);
+  g.kg = Kit.mk('text', {x:ux, y:cy - cur*k/2 - fs*0.6, 'text-anchor':'middle', 'font-size':fs, opacity: cur ? 1 : 0}, svg);
+  g.cmT = Kit.mk('text', {x:ux, y:cy + cur*k/2 + fs*1.4, 'text-anchor':'middle', 'font-size':fs, opacity: cur ? 1 : 0}, svg);
+  g.over = Kit.mk('g', {}, svg);
+  setLabels();
+  // plutonium, after the answer
+  const px = W*0.79, pr = 10*k/2;
+  g.pu = Kit.mk('g', {opacity: revealed ? 1 : 0}, svg);
+  Kit.mk('circle', {cx:px, cy, r:pr, fill:'url(#p)'}, g.pu);
+  const t1 = Kit.mk('text', {x:px, y:cy - pr - fs*0.6, 'text-anchor':'middle', 'font-size':fs*0.9}, g.pu); t1.textContent = '10 kg Pu‑239';
+  const t2 = Kit.mk('text', {x:px, y:cy + pr + fs*1.4, 'text-anchor':'middle', 'font-size':fs*0.9}, g.pu); t2.textContent = '10 cm';
+}
+
+function setLabels(){
+  const o = OPTS.find(o => o.cm === cur);
+  if (!o) return;
+  g.kg.textContent = o.kg + ' U‑235';
+  g.cmT.textContent = (o.cm === 4.3 ? '≈4' : o.cm) + ' cm wide';
+}
+
+function sizeTo(cm, x){
+  cur = cm; setLabels();
+  const r = cm*g.k/2, d = Kit.calm ? 0 : .6, e = 'power3.out';
+  const tx = x == null ? g.ux : x; g.ux = tx;
+  gsap.to(g.ball, {attr:{r, cx:tx}, duration:d, ease:e});
+  gsap.to(g.kg, {attr:{y:g.cy - r - g.fs*0.6, x:tx}, opacity:1, duration:d, ease:e});
+  gsap.to(g.cmT, {attr:{y:g.cy + r + g.fs*1.4, x:tx}, opacity:1, duration:d, ease:e});
+  gsap.to([g.q, g.ghost], {opacity:0, duration:d*0.5});
+}
+
+function neutron(x, y, gen){
+  if (count > 170 || !g) return;
+  count++;
+  const r = 17*g.k/2, a = Kit.rnd()*Math.PI*2, L = (0.3 + Kit.rnd()*1.4)*r;
+  const ex = x + Math.cos(a)*L, ey = y + Math.sin(a)*L;
+  const dot = Kit.mk('circle', {cx:x, cy:y, r:Math.max(2, g.fs*0.16), fill:'#ffd23a'}, g.parts);
+  gsap.to(dot, {attr:{cx:ex, cy:ey}, duration:.35, ease:'none', onComplete(){
+    const inside = Math.hypot(ex - g.ux, ey - g.cy) < r;
+    if (inside && gen < 5){
+      const fl = Kit.mk('circle', {cx:ex, cy:ey, r:2, fill:'#fff3b0', opacity:.95}, g.over);
+      gsap.to(fl, {attr:{r:g.fs*0.7}, opacity:0, duration:.45, onComplete:() => fl.remove()});
+      dot.remove();
+      for (let i = 0; i < 3; i++) neutron(ex, ey, gen + 1);
+    } else {
+      gsap.to(dot, {opacity:0, duration:.3, onComplete:() => dot.remove()});
+    }
+  }});
+}
+
+function reveal(){
+  revealed = true;
+  sizeTo(17, g.W*0.36);
+  gsap.to(g.pu, {opacity:1, duration: Kit.calm ? 0 : .6, delay: Kit.calm ? 0 : .5});
+  if (!Kit.calm) setTimeout(() => { count = 0; for (let i = 0; i < 3; i++) neutron(g.ux, g.cy, 0); }, 650);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent.replace(/\s+/g,' ').trim();
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  reveal();
+});
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || revealed) return;
+  const first = pick < 0;
+  [...Kit.$('opts').children].forEach(c => c.classList.remove('on'));
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection');
+  sizeTo(OPTS[pick].cm);
+  if (first) sure.on();
+});
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 300));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1400));
+};
+Kit.single();
+</script>
+</html>

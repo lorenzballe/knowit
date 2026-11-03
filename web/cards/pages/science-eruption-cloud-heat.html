@@ -1,0 +1,108 @@
+<!doctype html>
+<!-- slug: science-eruption-cloud-heat -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How hot is an eruption cloud?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pl{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.q,.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">How hot is it inside a volcano's eruption cloud?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pl" aria-label="Cross-section of an eruption cloud"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">About 100 to 300 °C</button>
+        <button class="opt" data-i="1">About 500 to 1,200 °C</button>
+        <button class="opt" data-i="2">About 2,000 to 3,000 °C</button>
+      </div>
+      <div id="why" class="gone"><p class="big">500 °C to 1,200 °C</p><p class="body">Cooler at the edges, hottest in the core. That is hot enough to instantly vaporize most materials the cloud meets.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a range, then watch the probe cross the cloud.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An eruption cloud runs from about 500 °C at its edge to 1,200 °C in its core.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA SPIEGAZIONE DI TUTTI I TIPI DI ERUZIONE - Parte-2” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false, G = null;
+
+function draw(){
+  const svg = Kit.$('pl');
+  gsap.killTweensOf('*');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f), cx = W/2, s = Math.min(W, H*1.15);
+  const defs = Kit.mk('defs', {}, svg);
+  const heads = [[0,.30,.15],[-.15,.32,.11],[.15,.32,.11],[-.08,.19,.11],[.09,.18,.10],[-.21,.37,.08],[.21,.37,.08],[0,.40,.12]];
+  const hw = .29*s, py = H*.31;
+  const lg = Kit.mk('linearGradient', {id:'heat', gradientUnits:'userSpaceOnUse', x1:cx-hw, x2:cx+hw, y1:0, y2:0}, defs);
+  [[0,'#9e1f14'],[.22,'#ff5a14'],[.5,'#fff7cf'],[.78,'#ff5a14'],[1,'#9e1f14']].forEach(([o,c]) => Kit.mk('stop', {offset:o, 'stop-color':c}, lg));
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:Math.max(10,H*.04), fill:'#15110e'}, svg);
+  const y0 = H*.76;
+  const shape = (g, fill) => {
+    Kit.mk('polygon', {points:`${cx-.045*s},${y0} ${cx-.15*s},${H*.36} ${cx+.15*s},${H*.36} ${cx+.045*s},${y0}`, fill}, g);
+    return heads.map(([x,y,r]) => Kit.mk('circle', {cx:cx+x*s, cy:H*y, r:r*s, fill}, g));
+  };
+  const ash = Kit.mk('g', {}, svg); const ashC = shape(ash, '#5d5650');
+  const heat = Kit.mk('g', {opacity:0}, svg); shape(heat, 'url(#heat)');
+  Kit.mk('polygon', {points:`${cx-.48*W},${H} ${cx-.06*s},${y0} ${cx+.06*s},${y0} ${cx+.48*W},${H}`, fill:'#2e2520'}, svg);
+  const halo = {fill:'#fff', stroke:'#000', 'stroke-width':Math.max(3,fs*.25), 'paint-order':'stroke', 'stroke-linejoin':'round', 'font-family':'var(--body)'};
+  const probe = Kit.mk('g', {opacity:0}, svg);
+  Kit.mk('line', {x1:cx-hw, x2:cx, y1:py, y2:py, stroke:'#fff', 'stroke-width':2, 'stroke-dasharray':'5 5'}, probe);
+  const edgeT = Kit.mk('text', Object.assign({x:cx-hw, y:py+fs*1.6, 'font-size':fs*.95, 'font-weight':700}, halo), probe);
+  edgeT.textContent = 'edge ≈ 500 °C';
+  const dot = Kit.mk('circle', {cx:cx-hw, cy:py, r:Math.max(5,fs*.45), fill:'#fff', stroke:'#000', 'stroke-width':2}, probe);
+  const rd = Kit.mk('text', Object.assign({x:cx-hw, y:py-fs*.9, 'font-size':fs*1.35, 'font-weight':800, 'text-anchor':'start'}, halo), probe);
+  rd.textContent = '500 °C';
+  G = {heat, probe, dot, rd, cx, hw, ashC};
+  if (revealed) final();
+  else if (!Kit.calm) ashC.forEach((c,i) => gsap.to(c, {attr:{r:+c.getAttribute('r')*1.06}, duration:1.6+i*.17, yoyo:true, repeat:-1, ease:'sine.inOut'}));
+}
+function setProbe(t){
+  const x = G.cx - G.hw*(1-t), v = Math.round(500 + 700*t);
+  G.dot.setAttribute('cx', x);
+  G.rd.setAttribute('x', x); G.rd.setAttribute('text-anchor', t < .15 ? 'start' : 'middle');
+  G.rd.textContent = (t >= 1 ? 'core ' : '') + v.toLocaleString('en-US') + ' °C';
+}
+function final(){ G.heat.setAttribute('opacity',1); G.probe.setAttribute('opacity',1); setProbe(1); }
+function reveal(){
+  revealed = true;
+  if (Kit.calm) { final(); return; }
+  const o = {t:0};
+  gsap.timeline()
+    .to(G.heat, {attr:{opacity:1}, duration:1.1, ease:'power2.out'})
+    .to(G.probe, {attr:{opacity:1}, duration:.3})
+    .to(o, {t:1, duration:1.8, ease:'power1.inOut', onUpdate:() => setProbe(o.t), onComplete:() => Kit.haptic('success')});
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3600)); };
+Kit.single();
+</script>
+</html>

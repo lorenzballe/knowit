@@ -1,0 +1,37 @@
+{
+  "id": "maths-mercator-stretch",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do Mercator maps make countries near the poles look so huge?",
+  "answer": "Mercator keeps every angle true, so wherever it widens a place east–west it must stretch it north–south just as much. Near the poles the latitude lines spread apart, so both stretches grow and the same land is drawn far bigger. That is why Russia looks larger than Africa, though it is really smaller.",
+  "move": "On a Mercator map, the farther from the equator, the more a country is blown up.",
+  "keywords": [
+    "mercator",
+    "russia",
+    "africa",
+    "wyoming",
+    "greenland"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive map card: drag Wyoming north toward the pole and watch the latitude lines spread apart on a Mercator map. It asks why countries near the poles look so huge."
+  },
+  "source": "Geopop, “Quanto sono grandi i paesi del mondo per davvero?” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=cKRRHQStYH0&t=55s",
+  "written": "2026-11-03"
+}

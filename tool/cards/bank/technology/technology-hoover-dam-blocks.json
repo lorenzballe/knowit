@@ -1,0 +1,36 @@
+{
+  "id": "technology-hoover-dam-blocks",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the Hoover Dam poured as many separate blocks?",
+  "answer": "Setting concrete makes its own heat. In one giant pour the outside cools and shrinks while the core stays hot, and that thermal stress cracks it. Blocks of limited length and width let the inside cool too.",
+  "move": "Big concrete cools from the outside in: cut it small so the inside cools too.",
+  "keywords": [
+    "hoover dam",
+    "concrete",
+    "thermal stress",
+    "curing heat"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Concrete pour options for the Hoover Dam: one pour, or 4, 16 or 64 blocks. Pick a pouring method and watch the heat escape from the concrete, then try another way."
+  },
+  "source": "Geopop, “Come è stata costruita la diga di Hoover” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=aye7SUnEHDc&t=264s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,162 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-caps-bottles-sorting -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0}
+.fl{cursor:grab}
+.fl.drag{cursor:grabbing}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
+    <h2 class="q">Why are caps and bottles sorted apart if they're the same plastic?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Drag the cap flake into the bottle bin.</p>
+    <div id="why" class="gone"><p class="body">A cap and a bottle can be the same polymer, PET, yet the cap may hide additives such as aluminium or glass fillers. Mixed in, they would contaminate the recycled bottle plastic, so plants sort by product: caps with caps, bottles with bottles.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Same plastic isn't the same recipe: additives decide what melts together.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come viene riciclata la plastica? Il ciclo di vita dei rifiuti: raccolta, smaltimento e riuso” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const RED = '#d0453a', FLAKE = '#cfeaf9', ALU = '#7d838d';
+const SHAPE = [[-1,-.55],[.25,-.95],[1,-.35],[.85,.65],[-.15,.95],[-.95,.45]];
+const SPECKS = [[-.5,-.2,'a'],[.3,-.45,'g'],[.5,.3,'a'],[-.2,.45,'g'],[.05,0,'a'],[-.62,.22,'a'],[.65,-.05,'g']];
+let phase = 'idle', E = {}, L = {};
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const pts = (s, cx = 0, cy = 0, r = 1) => SHAPE.map(([x, y]) => `${cx + x * s * r},${cy + y * s * r * .8}`).join(' ');
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const s = Math.min(W * .11, H * .1);
+  const binH = H * .4, binY = H - binH - 2, binW = W * .42;
+  L = {W, H, f, s, binY, binH, binW, homeX: W / 2, homeY: H * .06 + f * 1.6 + s,
+       bins: [{x: W * .05}, {x: W * .53}]};
+  L.stY = L.homeY + s + f * 1.9;
+  // bins
+  E.bin = []; E.sub = [];
+  ['BOTTLES', 'CAPS'].forEach((nm, i) => {
+    const x = L.bins[i].x;
+    E.bin[i] = mk('rect', {x, y: binY, width: binW, height: binH, rx: f * .8, style: `fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:var(--k);stroke-width:${Math.max(2, f * .14)}`}, svg);
+    mk('text', {x: x + binW / 2, y: binY + f * 1.5, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${f}px var(--body);letter-spacing:.06em`}, svg).textContent = nm;
+    E.sub[i] = mk('text', {x: x + binW / 2, y: binY + f * 2.9, 'text-anchor': 'middle', style: `fill:var(--k);opacity:.7;font:600 ${f * .85}px var(--body)`}, svg);
+    E.sub[i].textContent = i ? 'empty' : 'pure PET';
+  });
+  // bottle flakes in the bottle bin
+  const top = binY + f * 3.7, bx = L.bins[0].x;
+  let seed = 7; const r = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const fs = s * .32;
+  for (let k = 0; k < 16; k++) {
+    const cx = bx + fs * 1.4 + r() * (binW - fs * 2.8), cy = top + fs + r() * (binY + binH - top - fs * 2);
+    mk('polygon', {points: pts(fs, cx, cy, .9 + r() * .3), style: `fill:${FLAKE};stroke:var(--k);stroke-width:1.2;opacity:.9`}, svg);
+  }
+  // contamination specks (hidden)
+  E.cont = mk('g', {opacity: 0}, svg);
+  for (let k = 0; k < 18; k++) {
+    const cx = bx + fs + r() * (binW - fs * 2), cy = top + fs * .6 + r() * (binY + binH - top - fs * 1.4);
+    mk('circle', {cx, cy, r: Math.max(2.5, fs * .26), style: `fill:${ALU};stroke:var(--k);stroke-width:1`}, E.cont);
+  }
+  // status lines
+  E.st1 = mk('text', {x: W / 2, y: L.stY, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${f * .95}px var(--body)`}, svg);
+  E.st2 = mk('text', {x: W / 2, y: L.stY + f * 1.35, 'text-anchor': 'middle', style: `fill:var(--k);opacity:.75;font:600 ${f * .85}px var(--body)`}, svg);
+  // flake label
+  E.lab = mk('text', {x: L.homeX, y: L.homeY - s - f * .7, 'text-anchor': 'middle', style: `fill:var(--k);font:800 ${f}px var(--body);letter-spacing:.05em`}, svg);
+  E.lab.textContent = 'CAP FLAKE · PET';
+  // the cap flake
+  E.fl = mk('g', {class: 'fl'}, svg);
+  mk('polygon', {points: pts(s), style: `fill:${FLAKE};stroke:var(--k);stroke-width:${Math.max(2, f * .15)}`}, E.fl);
+  E.sp = mk('g', {opacity: 0}, E.fl);
+  SPECKS.forEach(([x, y, t]) => {
+    const cx = x * s, cy = y * s * .8, rr = s * .11;
+    if (t === 'a') mk('circle', {cx, cy, r: rr, style: `fill:${ALU};stroke:var(--k);stroke-width:1`}, E.sp);
+    else mk('polygon', {points: `${cx},${cy - rr * 1.3} ${cx + rr * 1.2},${cy + rr} ${cx - rr * 1.2},${cy + rr}`, style: 'fill:#fff;stroke:var(--k);stroke-width:1'}, E.sp);
+  });
+  if (phase === 'done') finalState();
+  else { gsap.set(E.fl, {x: L.homeX, y: L.homeY, scale: 1}); E.st1.textContent = 'Looks just like the bottle flakes.'; E.st2.textContent = 'Same polymer, same colour.'; }
+}
+
+function capSpot() { return {x: L.bins[1].x + L.binW / 2, y: L.binY + L.binH * .64}; }
+function finalState() {
+  const c = capSpot();
+  gsap.set(E.fl, {x: c.x, y: c.y, scale: .85}); gsap.set(E.sp, {opacity: 1}); gsap.set(E.cont, {opacity: 0});
+  E.lab.style.opacity = 0;
+  E.sub[1].textContent = 'PET + additives'; E.sub[0].textContent = 'pure PET';
+  E.st1.textContent = 'Inside: aluminium, glass fillers.'; E.st2.textContent = 'Kept apart, the bottle stream stays clean.';
+}
+
+function toSvg(e) { const b = svg.getBoundingClientRect(); return {x: (e.clientX - b.left) * L.W / b.width, y: (e.clientY - b.top) * L.H / b.height}; }
+function binAt(p) {
+  for (let i = 0; i < 2; i++) { const x = L.bins[i].x; if (p.x > x - L.s * .5 && p.x < x + L.binW + L.s * .5 && p.y > L.binY - L.s) return i; }
+  return -1;
+}
+let drag = null;
+svg.addEventListener('pointerdown', e => {
+  if (phase !== 'idle' || !e.target.closest('.fl')) return;
+  const p = toSvg(e);
+  drag = {dx: gsap.getProperty(E.fl, 'x') - p.x, dy: gsap.getProperty(E.fl, 'y') - p.y};
+  E.fl.classList.add('drag'); Kit.haptic('selection');
+  gsap.to(E.lab, {opacity: 0, duration: .2});
+});
+window.addEventListener('pointermove', e => {
+  if (!drag) return; const p = toSvg(e);
+  gsap.set(E.fl, {x: p.x + drag.dx, y: p.y + drag.dy});
+});
+window.addEventListener('pointerup', e => {
+  if (!drag) return; const p = toSvg(e); drag = null; E.fl.classList.remove('drag');
+  const i = binAt({x: gsap.getProperty(E.fl, 'x'), y: gsap.getProperty(E.fl, 'y')});
+  if (i < 0) { gsap.to(E.fl, {x: L.homeX, y: L.homeY, duration: .35, ease: 'back.out(2)'}); gsap.to(E.lab, {opacity: 1, duration: .3}); return; }
+  drop(i);
+});
+
+function drop(i) {
+  phase = 'busy'; Kit.haptic('light');
+  const d = Kit.calm ? .01 : 1, tl = gsap.timeline({onComplete: finish});
+  const set = (el, t) => () => { el.textContent = t; };
+  tl.to(E.fl, {scale: .85, duration: .25 * d});
+  tl.to(E.sp, {opacity: 1, duration: .5 * d});
+  tl.call(set(E.st1, 'Same PET, but additives inside:'));
+  tl.call(set(E.st2, 'aluminium, glass fillers.'));
+  if (i === 0) {
+    const bx = L.bins[0].x + L.binW / 2;
+    tl.to(E.fl, {x: bx, y: L.binY + L.binH * .6, duration: .35 * d, ease: 'power2.in'}, '+=.3');
+    tl.to(E.cont, {opacity: 1, duration: .5 * d});
+    tl.call(() => { E.sub[0].textContent = 'contaminated ✗'; E.sub[0].style.fill = RED; E.sub[0].style.opacity = 1; E.bin[0].style.stroke = RED; E.st1.textContent = 'Mixed in, the recycled bottle'; E.st2.textContent = 'plastic is spoiled.'; Kit.haptic('light'); });
+    tl.to({}, {duration: 1.6 * d});
+    tl.call(() => { E.sub[0].style.fill = ''; E.sub[0].style.opacity = .7; E.bin[0].style.stroke = 'var(--k)'; E.sub[0].textContent = 'pure PET'; });
+    tl.to(E.cont, {opacity: 0, duration: .4 * d});
+  }
+  const c = capSpot();
+  tl.to(E.fl, {x: c.x, y: c.y, duration: .6 * d, ease: 'power3.inOut'});
+  tl.call(() => { E.sub[1].textContent = 'PET + additives'; E.st1.textContent = 'Caps with caps, bottles with bottles:'; E.st2.textContent = 'each stream stays clean.'; Kit.haptic('success'); });
+}
+function finish() {
+  phase = 'done';
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => {
+  if (Kit.calm || phase !== 'idle') return;
+  gsap.fromTo(E.fl, {y: L.homeY - 6}, {y: L.homeY + 6, duration: .7, yoyo: true, repeat: 3, ease: 'sine.inOut', onComplete: () => { if (phase === 'idle' && !drag) gsap.to(E.fl, {y: L.homeY, duration: .3}); }});
+};
+Kit.play.card = async () => {
+  gsap.killTweensOf(E.fl); gsap.set(E.fl, {x: L.homeX, y: L.homeY});
+  const a = E.fl.querySelector('polygon').getBoundingClientRect(), b = E.bin[0].getBoundingClientRect();
+  const ev = (t, x, y, el) => el.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', a.x + a.width / 2, a.y + a.height / 2, E.fl.querySelector('polygon'));
+  ev('pointermove', b.x + b.width / 2, b.y + b.height / 2, window);
+  ev('pointerup', b.x + b.width / 2, b.y + b.height / 2, window);
+  await new Promise(r => setTimeout(r, Kit.calm ? 600 : 5200));
+};
+Kit.single();
+</script>
+</html>

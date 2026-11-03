@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- slug: history-us-iran-axis -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+#map{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh;padding-top:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Aim and launch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOPOLITICS</span></div>
+    <h2 class="q">What is the US's primary strategic objective in Iran?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map"></svg>
+      <div id="why" class="gone">
+        <p class="big">Weaken the Russia–China axis</p>
+        <p class="body">The US also targets Hezbollah, Hamas, the Houthis and militias in Iraq and Syria. But the most strategic aim is bigger: Russia uses Iranian drones, and China buys Iranian oil. Cut both, and the axis is weaker.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap each supply line leaving Iran to launch a strike at it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Iran is a supplier: hit it, and Russia and China feel it too.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Iran, USA, Israele: come siamo arrivati alla guerra e cosa può succedere adesso” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e0362f';
+const cut = {d: false, o: false};
+let G = null, tweens = [], busy = false, finished = false;
+
+function circ(x, y, r, st, p) { return Kit.mk('circle', {cx: x, cy: y, r, style: st}, p); }
+function txt(x, y, s, size, st, anchor, p) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'middle', style: `font-size:${size}px;${st}`}, p);
+  t.textContent = s; return t;
+}
+function pos(k, W, r) {
+  const sgn = k === 'd' ? -1 : 1, c = cut[k];
+  return {x: W / 2 + sgn * (r * .6 + (c ? r * .55 : 0)), s: c ? .75 : 1};
+}
+
+Kit.onShow.card = () => {
+  tweens.forEach(t => t.kill()); tweens = [];
+  const svg = Kit.$('map'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 12);
+  const r = Math.min(W * .22, H * .19), cy = r + f * 2.4;
+  const ix = W / 2, iy = H * .66, ri = Math.max(r * .42, f * 1.7);
+  const ux = W / 2, uy = H - f * 1.1;
+  G = {svg, W, H, f, r, cy, ix, iy, ri, ux, uy, lines: {}, circles: {}};
+
+  const gl = Kit.mk('g', {}, svg);
+  const base = {d: {x: W / 2 - r * .6, y: cy}, o: {x: W / 2 + r * .6, y: cy}};
+  ['d', 'o'].forEach(k => {
+    const b = base[k];
+    const ln = Kit.mk('line', {x1: ix, y1: iy, x2: b.x, y2: b.y, 'stroke-dasharray': `${f * .2} ${f * .7}`,
+      style: `stroke:${cut[k] ? 'var(--muted)' : 'var(--k)'};stroke-width:${f * .32};stroke-linecap:round;opacity:${cut[k] ? .3 : 1}`}, gl);
+    const mx = (ix + b.x) / 2, my = (iy + b.y) / 2 + r * .25;
+    G.lines[k] = {ln, mx, my};
+    if (!cut[k]) tweens.push(gsap.to(ln, {attr: {'stroke-dashoffset': -f * .9}, duration: .5, repeat: -1, ease: 'none'}));
+    else drawSlash(mx, my, 1, gl);
+    const sgn = k === 'd' ? -1 : 1;
+    txt(mx + sgn * f * 1.1, my, k === 'd' ? 'drones' : 'oil', f * 1.15,
+      `font-family:var(--hand);font-weight:700;fill:${cut[k] ? 'var(--muted)' : 'var(--k)'}`, k === 'd' ? 'end' : 'start', gl);
+  });
+
+  // Venn: opaque base then tinted overlay
+  const gv = Kit.mk('g', {}, svg);
+  ['d', 'o'].forEach(k => { const p = pos(k, W, r); G.circles[k + 'b'] = circ(p.x, cy, r * p.s, 'fill:var(--c)', gv); });
+  ['d', 'o'].forEach(k => {
+    const p = pos(k, W, r);
+    G.circles[k] = circ(p.x, cy, r * p.s, 'fill:color-mix(in srgb,var(--k) 16%,transparent);stroke:var(--k);stroke-width:' + f * .14, gv);
+    G.circles[k + 't'] = txt(p.x + (k === 'd' ? -1 : 1) * r * p.s * .3, cy, k === 'd' ? 'RUSSIA' : 'CHINA', f * .95,
+      'font-family:var(--display);font-weight:800;fill:var(--k)', 'middle', gv);
+  });
+  G.axis = txt(W / 2, f * 1.1, 'RUSSIA–CHINA AXIS', f * .95, 'font-family:var(--mono);font-weight:700;fill:var(--k);letter-spacing:.08em', 'middle', gv);
+  G.xg = Kit.mk('g', {}, svg);
+  if (cut.d && cut.o) drawX(false);
+
+  // Iran
+  circ(ix, iy, ri, 'fill:var(--k)', svg);
+  txt(ix, iy, 'IRAN', f * .95, 'font-family:var(--display);font-weight:800;fill:var(--c)', 'middle', svg);
+  // USA launcher
+  Kit.mk('path', {d: `M${ux - f * .9},${uy + f * .2} L${ux},${uy - f * 1.3} L${ux + f * .9},${uy + f * .2}Z`, style: 'fill:' + RED}, svg);
+  txt(ux + f * 1.4, uy - f * .3, 'USA', f * .95, 'font-family:var(--mono);font-weight:700;fill:var(--k)', 'start', svg);
+
+  // hit areas
+  ['d', 'o'].forEach(k => {
+    if (cut[k]) return;
+    const b = base[k];
+    const h = Kit.mk('line', {x1: ix, y1: iy - ri, x2: b.x, y2: b.y + r, class: 'hit', 'data-k': k,
+      style: `stroke:transparent;stroke-width:${f * 3.4};pointer-events:stroke`}, svg);
+    h.addEventListener('click', () => strike(k));
+  });
+};
+
+function drawSlash(x, y, done, p) {
+  const s = G.f * .9;
+  const l1 = Kit.mk('line', {x1: x - s, y1: y - s, x2: x + s, y2: y + s, style: `stroke:${RED};stroke-width:${G.f * .35};stroke-linecap:round`}, p);
+  const l2 = Kit.mk('line', {x1: x + s, y1: y - s, x2: x - s, y2: y + s, style: `stroke:${RED};stroke-width:${G.f * .35};stroke-linecap:round`}, p);
+  if (!done) gsap.from([l1, l2], {scale: 0, transformOrigin: `${x}px ${y}px`, duration: .35, ease: 'back.out(3)'});
+}
+
+function drawX(anim) {
+  const {W, cy, r, f} = G, s = r * .55, x = W / 2;
+  [[x - s, cy - s, x + s, cy + s], [x + s, cy - s, x - s, cy + s]].forEach((c, i) => {
+    const len = Math.hypot(c[2] - c[0], c[3] - c[1]);
+    const l = Kit.mk('line', {x1: c[0], y1: c[1], x2: c[2], y2: c[3], 'stroke-dasharray': len,
+      'stroke-dashoffset': anim ? len : 0, style: `stroke:${RED};stroke-width:${f * .55};stroke-linecap:round`}, G.xg);
+    if (anim) gsap.to(l, {attr: {'stroke-dashoffset': 0}, duration: .35, delay: i * .25, ease: 'power2.out'});
+  });
+  G.axis.textContent = 'AXIS WEAKENED';
+  G.axis.style.fill = RED;
+}
+
+function strike(k) {
+  if (cut[k] || busy) return;
+  busy = true; Kit.haptic('light');
+  const {svg, ux, uy, f, W, r, cy} = G, L = G.lines[k];
+  const fast = Kit.calm ? .01 : 1;
+  const m = circ(ux, uy - f * 1.3, f * .35, 'fill:' + RED, svg);
+  const tl = gsap.timeline();
+  tl.to(m, {attr: {cx: L.mx, cy: L.my}, duration: .55 * fast, ease: 'power2.in'})
+    .add(() => {
+      m.remove(); cut[k] = true; Kit.haptic('selection');
+      tweens.forEach(t => t.kill());
+      L.ln.style.stroke = 'var(--muted)'; L.ln.style.opacity = .3;
+      drawSlash(L.mx, L.my, Kit.calm, L.ln.parentNode);
+      const p = pos(k, W, r), tx = p.x + (k === 'd' ? -1 : 1) * r * p.s * .3;
+      gsap.to([G.circles[k], G.circles[k + 'b']], {attr: {cx: p.x, r: r * p.s}, duration: .6 * fast, ease: 'power3.out'});
+      gsap.to(G.circles[k + 't'], {attr: {x: tx}, duration: .6 * fast, ease: 'power3.out'});
+      const h = svg.querySelector(`.hit[data-k="${k}"]`); if (h) h.remove();
+      ['d', 'o'].forEach(j => { if (!cut[j]) tweens.push(gsap.to(G.lines[j].ln, {attr: {'stroke-dashoffset': -f * .9}, duration: .5, repeat: -1, ease: 'none', overwrite: true})); });
+    })
+    .add(() => {
+      busy = false;
+      if (cut.d && cut.o && !finished) {
+        finished = true; drawX(!Kit.calm); Kit.haptic('success');
+        setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.onShow.card(); }, Kit.calm ? 0 : 900);
+      }
+    }, '+=' + .65 * fast);
+}
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.svg.children, {opacity: 0, y: 8, stagger: .05, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('map').querySelector('.hit[data-k="d"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await w(1500);
+  Kit.$('map').querySelector('.hit[data-k="o"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await w(2600);
+};
+Kit.single();
+</script>
+</html>

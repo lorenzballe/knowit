@@ -1,0 +1,36 @@
+{
+  "id": "science-diamond-sandpaper-test",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when a real diamond is rubbed on sandpaper?",
+  "answer": "A real diamond is harder than the grains of sandpaper, so the grains wear flat and the stone stays clean. A fake is softer than the grit, so the grit scratches it. A real diamond dulls the sandpaper, while the sandpaper scratches a fake.",
+  "move": "A real diamond dulls the sandpaper; the sandpaper scratches a fake.",
+  "keywords": [
+    "diamond",
+    "sandpaper",
+    "fake gemstone",
+    "hardness"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two stones, one labelled real diamond and one fake stone, being dragged back and forth across a sheet of sandpaper. The question asks what happens when a real diamond is rubbed on sandpaper."
+  },
+  "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5RAJM6Yi5wc",
+  "written": "2026-11-03"
+}

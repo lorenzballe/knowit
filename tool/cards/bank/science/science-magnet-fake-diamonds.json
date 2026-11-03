@@ -1,0 +1,37 @@
+{
+  "id": "science-magnet-fake-diamonds",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a magnet catch some fake diamonds but not real ones?",
+  "answer": "Many lab-made diamonds are produced by HPHT, a high-pressure, high-temperature process that uses added metals. Those metals make the stone magnetic, so it jumps to a magnet. A real diamond stays put.",
+  "move": "A diamond that jumps to a magnet was likely made in a lab.",
+  "keywords": [
+    "diamonds",
+    "magnets",
+    "lab_diamonds",
+    "hpht",
+    "gemstones"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Five diamond images on screen. The reader drags a magnet across them and sees which ones jump to it. The question asks why a magnet catches some fake diamonds but not real ones."
+  },
+  "source": "Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=5RAJM6Yi5wc",
+  "written": "2026-11-03"
+}

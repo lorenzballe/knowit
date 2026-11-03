@@ -1,0 +1,36 @@
+{
+  "id": "science-spinning-tube-speed",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "The tube moves forward; the O spins forward too. How fast does it pass?",
+  "answer": "The O spins the way the tube moves, so its speeds add and it passes faster than the tube. The X spins backwards, so it is slower. Pick one, then watch the arrows add up.",
+  "move": "On a spinning, moving object, spin adds on one side and subtracts on the other.",
+  "keywords": [
+    "spinning tube",
+    "rolling motion",
+    "velocity",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tube moves forward while an O and an X spin on it. The reader picks whether the O passes faster, slower, or at the same speed as the tube, then watches arrows show the speeds adding up."
+  },
+  "source": "Veritasium, “Spinning Tube Trick Explained” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=7rAiZR_zasg&t=48s",
+  "written": "2026-11-03"
+}

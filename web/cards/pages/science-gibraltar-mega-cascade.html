@@ -1,0 +1,166 @@
+<!doctype html>
+<!-- slug: science-gibraltar-mega-cascade -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#sc{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body)}
+.hdl{cursor:grab}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see what happens">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MEGA-FLOOD</span></div>
+    <h2 class="q">When the Atlantic refilled the dry Mediterranean, how big was the flow?</h2>
+    <div class="stagebox" id="stage"><svg id="sc"></svg></div>
+    <div id="why" class="gone">
+      <p class="big">Bigger than any waterfall on Earth today</p>
+      <p class="body">The Mediterranean had dried into a giant, salty hollow far below the ocean. When Gibraltar opened, the Atlantic poured in with violence and refilled it in only about one or two centuries.</p>
+    </div>
+    <p class="say" id="say">Drag the Gibraltar rock down to open the strait.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Mediterranean refilled through a Gibraltar mega-cascade, in a blink of geologic time.</div>
+    <div class="foot"><span class="src">Source · Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('sc');
+const S = {cut: 0, fill: 0, done: false, fast: false, dash: 0};
+let G = null, E = {}, dragging = false;
+const WATER = '#2f86d6', FOAM = '#d6efff', ROCK = '#7a6450', ROCK2 = '#5c4a3b', SALT = '#f4efe3', BG = '#0e1a2b';
+
+function txt(x, y, s, size, anchor, weight, fill, op) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': anchor || 'middle', fill: fill || '#fff', style: `font:${weight || 700} ${size}px var(--body);letter-spacing:.04em`, opacity: op == null ? 1 : op}, svg);
+  t.textContent = s; return t;
+}
+
+function draw() {
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H * 0.06));
+  svg.innerHTML = '';
+  const seaY = H * 0.3, sx0 = W * 0.27, sx1 = W * 0.36, atlF = H * 0.62, floor = H * 0.9;
+  const top0 = seaY - H * 0.07, topMax = seaY + H * 0.08;
+  const r = Math.max(16, f * 1.1);
+  G = {W, H, f, seaY, sx0, sx1, atlF, floor, top0, topMax, r, hx: (sx0 + sx1) / 2};
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f * 0.9, fill: BG}, svg);
+  E.atl = Kit.mk('rect', {x: 0, y: seaY, width: sx1, height: H - seaY, fill: WATER}, svg);
+  E.salt = Kit.mk('rect', {x: sx1, y: floor - f * 0.55, width: W - sx1, height: f * 0.6, fill: SALT}, svg);
+  E.med = Kit.mk('rect', {x: sx1, y: floor, width: W - sx1, height: H - floor, fill: WATER, opacity: .93}, svg);
+  E.rock = Kit.mk('path', {fill: ROCK, stroke: ROCK2, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+  E.casc = Kit.mk('path', {fill: WATER}, svg);
+  E.streak = Kit.mk('path', {fill: 'none', stroke: FOAM, 'stroke-width': Math.max(2, f * .18), 'stroke-linecap': 'round', 'stroke-dasharray': `${f * .9} ${f * 1.4}`, opacity: .85}, svg);
+  E.mist = Kit.mk('ellipse', {fill: FOAM, opacity: 0}, svg);
+  // labels
+  txt(sx0 * 0.5, seaY + (atlF - seaY) * 0.5, 'ATLANTIC', f, 'middle', 800);
+  E.medL = txt(W * 0.68, floor - f * 1.4, 'DRY, SALTY MEDITERRANEAN', Math.max(12, f * .85), 'middle', 800, '#fff');
+  E.cascL = txt(0, 0, 'MEGA-CASCADE', f, 'start', 800, FOAM, 0);
+  txt(G.hx, top0 - r - f * 0.6, 'GIBRALTAR', Math.max(12, f * .85), 'middle', 800, '#ffd27a');
+  // Niagara for scale
+  const nw = f * 1.3, nx = Math.min(W * 0.9, W - nw - 2), ny = H * 0.1, hN = Math.max(H * 0.025, 6);
+  Kit.mk('rect', {x: nx - nw, y: ny, width: nw, height: hN * 1.6, fill: ROCK}, svg);
+  Kit.mk('rect', {x: nx - nw, y: ny + hN, width: nw * 2, height: hN * .6, fill: ROCK}, svg);
+  Kit.mk('rect', {x: nx - 1, y: ny - 1, width: Math.max(3, f * .25), height: hN + 1, fill: WATER}, svg);
+  txt(W * 0.965, ny + hN * 1.6 + f * 1.3, 'Niagara today', Math.max(12, f * .8), 'end', 700, '#cfd8e6');
+  // handle
+  E.hdl = Kit.mk('g', {class: 'hdl', id: 'hdl', opacity: S.done ? 0 : 1}, svg);
+  Kit.mk('circle', {cx: 0, cy: 0, r: r * 1.9, fill: 'transparent'}, E.hdl);
+  Kit.mk('circle', {cx: 0, cy: 0, r, fill: '#ffd27a', stroke: '#fff', 'stroke-width': 3}, E.hdl);
+  Kit.mk('path', {d: `M${-r * .45},${-r * .15} L0,${r * .4} L${r * .45},${-r * .15}`, fill: 'none', stroke: BG, 'stroke-width': Math.max(3, r * .18), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, E.hdl);
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {W, H, f, seaY, sx0, sx1, atlF, floor, top0, topMax, r} = G;
+  const rt = top0 + S.cut * (topMax - top0);
+  const medY = floor - S.fill * (floor - seaY);
+  const cliffX = sx1 + H * 0.06;
+  E.rock.setAttribute('d', `M-2,${H + 2} L-2,${atlF} L${sx0 - H * .08},${atlF} L${sx0},${rt} L${sx1},${rt} L${cliffX},${floor} L${W * .95},${floor} L${W + 2},${seaY - H * .03} L${W + 2},${H + 2} Z`);
+  E.med.setAttribute('y', medY);
+  E.med.setAttribute('height', Math.max(0, H - medY));
+  const d = rt - seaY, fall = medY - rt;
+  if (d > 0.5 && fall > 2) {
+    const a = f * 1.2 + d * 1.6, mid = seaY + d / 2;
+    E.casc.setAttribute('d', `M${sx1},${seaY} C${sx1 + a * .9},${seaY} ${sx1 + a},${seaY + (medY - seaY) * .3} ${sx1 + a},${medY} L${sx1 + a * .25},${medY} C${sx1 + a * .2},${rt + fall * .4} ${sx1 + a * .05},${rt} ${sx1},${rt} Z`);
+    E.streak.setAttribute('d', `M${sx1 - f},${mid} L${sx1},${mid} C${sx1 + a * .6},${mid} ${sx1 + a * .62},${mid + fall * .3} ${sx1 + a * .62},${medY}`);
+    E.streak.setAttribute('opacity', .85);
+    const k = Math.min(1, fall / (H * .25));
+    E.mist.setAttribute('cx', sx1 + a * .6); E.mist.setAttribute('cy', medY);
+    E.mist.setAttribute('rx', a * 1.1 + f); E.mist.setAttribute('ry', f * .7 * (0.4 + k));
+    E.mist.setAttribute('opacity', .55 * k);
+    const ly = seaY + (medY - seaY) * 0.5;
+    E.cascL.setAttribute('x', sx1 + a + f * .6); E.cascL.setAttribute('y', ly);
+    E.cascL.setAttribute('opacity', S.done ? Math.max(0, Math.min(1, (1 - S.fill) * 4 - 0.6)) : 0);
+  } else {
+    E.casc.setAttribute('d', ''); E.streak.setAttribute('opacity', 0);
+    E.mist.setAttribute('opacity', 0); E.cascL.setAttribute('opacity', 0);
+  }
+  E.medL.setAttribute('opacity', Math.max(0, 1 - S.fill * 4));
+  E.hdl.setAttribute('transform', `translate(${G.hx},${rt})`);
+}
+
+gsap.ticker.add(() => {
+  if (!E.streak || Kit.calm) return;
+  S.dash -= 2.2; E.streak.setAttribute('stroke-dashoffset', S.dash);
+});
+
+function toY(e) { const b = svg.getBoundingClientRect(); return (e.clientY - b.top) * G.H / b.height; }
+
+svg.addEventListener('pointerdown', e => {
+  if (S.done || !e.target.closest('.hdl')) return;
+  dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  Kit.haptic('selection');
+});
+svg.addEventListener('pointermove', e => {
+  if (!dragging || S.done) return;
+  const y = Math.max(G.top0, Math.min(G.topMax, toY(e)));
+  S.cut = (y - G.top0) / (G.topMax - G.top0); render();
+  if (S.cut >= 0.98) { dragging = false; go(); }
+});
+const up = () => {
+  if (!dragging || S.done) return; dragging = false;
+  if (S.cut > 0.55) go(); else gsap.to(S, {cut: 0, duration: .35, ease: 'power2.out', onUpdate: render});
+};
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+function go() {
+  if (S.done) return; S.done = true;
+  Kit.haptic('light');
+  gsap.to(E.hdl, {opacity: 0, duration: .3});
+  Kit.$('say').textContent = 'The Atlantic pours in… the whole sea refills in about 1–2 centuries.';
+  const dur = S.fast ? 0.6 : (Kit.calm ? 1.2 : 6);
+  const tl = gsap.timeline();
+  tl.to(S, {cut: 1, duration: .3, onUpdate: render});
+  tl.to(S, {fill: 1, duration: dur, ease: 'sine.inOut', onUpdate: render}, S.fast ? '>' : '+=0.8');
+  tl.call(() => {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    requestAnimationFrame(draw);
+  });
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || S.done) return;
+  gsap.fromTo('#hdl circle:nth-child(2)', {attr: {r: G.r}}, {attr: {r: G.r * 1.18}, duration: .5, repeat: 5, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  S.fast = true;
+  const b = svg.getBoundingClientRect(), sc = b.height / G.H;
+  const cx = b.left + G.hx * (b.width / G.W);
+  const y0 = b.top + G.top0 * sc, y1 = b.top + (G.topMax + 10) * sc;
+  E.hdl.dispatchEvent(new PointerEvent('pointerdown', {clientX: cx, clientY: y0, bubbles: true, pointerId: 1}));
+  for (let i = 1; i <= 6; i++) {
+    svg.dispatchEvent(new PointerEvent('pointermove', {clientX: cx, clientY: y0 + (y1 - y0) * i / 6, bubbles: true, pointerId: 1}));
+    await new Promise(r => setTimeout(r, 30));
+  }
+  svg.dispatchEvent(new PointerEvent('pointerup', {clientX: cx, clientY: y1, bubbles: true, pointerId: 1}));
+  await new Promise(r => setTimeout(r, 1600));
+};
+Kit.single();
+</script>
+</html>

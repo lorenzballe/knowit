@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-paper-plastic-cycles -->
+<title>Astute free card · Paper vs plastic recycling</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#pic text{font-family:var(--body);fill:var(--k)}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#ctl .lab{font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k);white-space:nowrap}
+#ctl .n{font:800 max(2.6cqh,16px)/1 var(--mono);color:var(--k);min-width:2.2em;text-align:right}
+#cyc{flex:1;min-width:0;height:max(4cqh,32px);accent-color:var(--k);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.foot{padding-right:110px}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slider · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECYCLING</span></div>
+    <h2 class="q">How many times can plastic be recycled, compared with paper?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl"><span class="lab">Recycling cycles</span><input id="cyc" type="range" min="0" max="20" step="1" value="0" aria-label="Recycling cycles"><span class="n" id="num">0</span></div>
+    </div>
+    <p class="say" id="say">Drag the slider to send both through recycling, again and again.</p>
+    <div id="why" class="gone"><p class="body">Every time paper is pulped, its fibres get weaker. After about 7 rounds they lose their strength and end up as processing waste. Plastic can go round at least 20 times.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Paper wears out after about 7 recyclings; plastic lasts at least 20.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il processo di riciclo della carta” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const PAPER = 7, MAX = 20;
+let c = 0, done = false, g = null, fibers = [];
+const slider = Kit.$('cyc');
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const colW = W * 0.42, cxP = W * 0.27, cxB = W * 0.73;
+  const s = Math.min(colW / 10, f * 1.3), r = s * 0.3;
+  const dotY2 = H - s * 0.6, dotY1 = dotY2 - s;
+  const statY = dotY1 - s * 0.6 - f * 0.4;
+  const nameY = f * 1.3;
+  const objTop = nameY + f * 1.0, objBot = statY - f * 1.4;
+  const objH = Math.max(40, objBot - objTop);
+  g = {W, H, f};
+
+  // names
+  [['PAPER', cxP], ['PLASTIC', cxB]].forEach(([t, x]) => {
+    const e = Kit.mk('text', {x, y: nameY, 'text-anchor': 'middle', 'font-size': f * 1.05, 'font-weight': 800, 'letter-spacing': f * 0.08}, svg);
+    e.textContent = t;
+  });
+
+  // paper sheet
+  const pw = Math.min(colW * 0.8, objH * 0.78), ph = Math.min(objH, pw * 1.35);
+  const px = cxP - pw / 2, py = objTop + (objH - ph) / 2;
+  const sheet = Kit.mk('g', {}, svg);
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'sheetclip'}, defs);
+  Kit.mk('rect', {x: px, y: py, width: pw, height: ph, rx: f * 0.3}, cp);
+  g.sheetRect = Kit.mk('rect', {x: px, y: py, width: pw, height: ph, rx: f * 0.3, fill: 'color-mix(in srgb, var(--c) 70%, white)', stroke: 'var(--k)', 'stroke-width': f * 0.12}, sheet);
+  const fg = Kit.mk('g', {'clip-path': 'url(#sheetclip)'}, sheet);
+  fibers = [];
+  const rand = Kit.rnd;
+  for (let i = 0; i < 34; i++){
+    const x = px + rand() * pw, y = py + rand() * ph, a = rand() * Math.PI;
+    const L = pw * (0.35 + rand() * 0.35);
+    const ln = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': f * 0.13, 'stroke-linecap': 'round', opacity: .6}, fg);
+    fibers.push({ln, x, y, a, L});
+  }
+  g.sheet = sheet; g.pcx = cxP; g.pcy = py + ph / 2;
+  // paper stamp
+  g.pStamp = Kit.mk('g', {opacity: 0}, svg);
+  const sr = Math.min(pw, ph) * 0.24;
+  Kit.mk('circle', {cx: px + pw - sr * 0.5, cy: py + sr * 0.5, r: sr, fill: 'var(--k)'}, g.pStamp);
+  const pt = Kit.mk('text', {x: px + pw - sr * 0.5, y: py + sr * 0.5 + sr * 0.38, 'text-anchor': 'middle', 'font-size': sr * 1.1, 'font-weight': 900, style: 'fill:var(--c)'}, g.pStamp);
+  pt.textContent = '7';
+  g.pStampC = [px + pw - sr * 0.5, py + sr * 0.5];
+
+  // bottle
+  const bh = objH, bw = Math.min(colW * 0.6, bh * 0.42);
+  const by = objTop, hw = bw / 2, nw = bw * 0.16, cx = cxB;
+  const y1 = by + bh * 0.08, y2 = by + bh * 0.16, y3 = by + bh * 0.33, yb = by + bh, rr = bw * 0.18, ym = (y2 + y3) / 2;
+  const bottle = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: cx - nw * 1.25, y: by, width: nw * 2.5, height: bh * 0.08, rx: f * 0.15, fill: 'var(--k)'}, bottle);
+  Kit.mk('path', {d: `M${cx-nw},${y1} L${cx-nw},${y2} C${cx-nw},${ym} ${cx-hw},${ym} ${cx-hw},${y3} L${cx-hw},${yb-rr} Q${cx-hw},${yb} ${cx-hw+rr},${yb} L${cx+hw-rr},${yb} Q${cx+hw},${yb} ${cx+hw},${yb-rr} L${cx+hw},${y3} C${cx+hw},${ym} ${cx+nw},${ym} ${cx+nw},${y2} L${cx+nw},${y1} Z`,
+    fill: 'color-mix(in srgb, var(--k) 12%, var(--c))', stroke: 'var(--k)', 'stroke-width': f * 0.14, 'stroke-linejoin': 'round'}, bottle);
+  Kit.mk('rect', {x: cx - hw, y: by + bh * 0.48, width: bw, height: bh * 0.2, fill: 'color-mix(in srgb, var(--k) 28%, var(--c))'}, bottle);
+  Kit.mk('line', {x1: cx - hw * 0.6, y1: y3 + bh * 0.04, x2: cx - hw * 0.6, y2: yb - bh * 0.06, stroke: 'white', 'stroke-width': f * 0.18, 'stroke-linecap': 'round', opacity: .5}, bottle);
+  g.bottle = bottle; g.bcy = by + bh / 2;
+  g.bStamp = Kit.mk('g', {opacity: 0}, svg);
+  const br = Math.min(bw * 0.42, bh * 0.15);
+  Kit.mk('circle', {cx, cy: by + bh * 0.58, r: br, fill: 'var(--k)'}, g.bStamp);
+  const bt = Kit.mk('text', {x: cx, y: by + bh * 0.58 + br * 0.36, 'text-anchor': 'middle', 'font-size': br * 1.0, 'font-weight': 900, style: 'fill:var(--c)'}, g.bStamp);
+  bt.textContent = '20';
+  g.bStampC = [cx, by + bh * 0.58];
+
+  // status
+  g.pStat = Kit.mk('text', {x: cxP, y: statY, 'text-anchor': 'middle', 'font-size': Math.max(f * 0.85, 12), 'font-weight': 700}, svg);
+  g.bStat = Kit.mk('text', {x: cxB, y: statY, 'text-anchor': 'middle', 'font-size': Math.max(f * 0.85, 12), 'font-weight': 700}, svg);
+
+  // tally dots
+  g.pDots = []; g.bDots = [];
+  for (let i = 0; i < MAX; i++){
+    const row = i < 10 ? dotY1 : dotY2, k = i % 10;
+    const ox = (k - 4.5) * s;
+    g.pDots.push(Kit.mk('circle', {cx: cxP + ox, cy: row, r, 'stroke-width': f * 0.08}, svg));
+    g.bDots.push(Kit.mk('circle', {cx: cxB + ox, cy: row, r, 'stroke-width': f * 0.08}, svg));
+  }
+  update(false);
+}
+
+function update(anim){
+  if (!g) return;
+  const pc = Math.min(c, PAPER), dead = c > PAPER;
+  const k = 1 - pc / PAPER * 0.8;
+  fibers.forEach(F => {
+    const L = F.L * k / 2, dx = Math.cos(F.a) * L, dy = Math.sin(F.a) * L;
+    F.ln.setAttribute('x1', F.x - dx); F.ln.setAttribute('y1', F.y - dy);
+    F.ln.setAttribute('x2', F.x + dx); F.ln.setAttribute('y2', F.y + dy);
+    F.ln.setAttribute('opacity', .65 - pc * 0.05);
+  });
+  const so = dead ? .25 : 1, rot = dead ? -8 : 0, sc = dead ? .82 : 1;
+  const tf = {opacity: so, rotation: rot, scale: sc, svgOrigin: `${g.pcx} ${g.pcy}`};
+  if (anim && !Kit.calm) gsap.to(g.sheet, {...tf, duration: .4, ease: 'power2.out'}); else gsap.set(g.sheet, tf);
+
+  const pOn = c >= PAPER, bOn = c >= MAX;
+  [[g.pStamp, pOn, g.pStampC], [g.bStamp, bOn, g.bStampC]].forEach(([el, on, C]) => {
+    const was = +el.getAttribute('data-on') === 1;
+    el.setAttribute('data-on', on ? 1 : 0);
+    if (on && !was && anim && !Kit.calm) gsap.fromTo(el, {opacity: 0, scale: 1.8, svgOrigin: `${C[0]} ${C[1]}`}, {opacity: 1, scale: 1, duration: .45, ease: 'back.out(2)'});
+    else gsap.set(el, {opacity: on ? 1 : 0, scale: 1, svgOrigin: `${C[0]} ${C[1]}`});
+  });
+
+  if (anim && !Kit.calm && c > 0) gsap.fromTo(g.bottle, {y: -g.f * 0.4}, {y: 0, duration: .35, ease: 'bounce.out'});
+
+  g.pStat.textContent = c === 0 ? 'New sheet' : c < PAPER ? `Cycle ${c}: fibres weaker` : c === PAPER ? 'Cycle 7: last one' : 'Worn out: scrap';
+  g.bStat.textContent = c === 0 ? 'New bottle' : c < MAX ? `Cycle ${c}: still good` : '20 times, at least';
+
+  g.pDots.forEach((d, i) => {
+    const filled = i < pc, beyond = i >= PAPER;
+    d.setAttribute('fill', filled ? 'var(--k)' : 'none');
+    d.setAttribute('stroke', 'var(--k)');
+    d.setAttribute('opacity', beyond ? (c > i ? .35 : .15) : 1);
+    d.setAttribute('stroke-dasharray', beyond ? `${g.f * 0.12} ${g.f * 0.12}` : 'none');
+  });
+  g.bDots.forEach((d, i) => {
+    d.setAttribute('fill', i < c ? 'var(--k)' : 'none');
+    d.setAttribute('stroke', 'var(--k)');
+    d.setAttribute('opacity', 1);
+  });
+  Kit.$('num').textContent = c;
+}
+
+slider.addEventListener('input', () => {
+  const prev = c; c = +slider.value;
+  if (c === prev) return;
+  if ((prev <= PAPER) !== (c <= PAPER) || c === PAPER) Kit.haptic('light'); else Kit.haptic('selection');
+  update(true);
+  if (c >= MAX && !done){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let v = 1; v <= MAX; v++){
+    slider.value = v; slider.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 40));
+  }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

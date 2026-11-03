@@ -1,0 +1,37 @@
+{
+  "id": "nature-column-collapse-flows-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are pyroclastic flows deadlier than the eruption column itself?",
+  "answer": "While the eruption column is hot and light, it rises. When its top cools and grows heavier, it falls back and races along the ground as a glowing cloud at hundreds of km/h, scorching whatever it reaches.",
+  "move": "The worst danger is not the column going up, but the column coming down.",
+  "keywords": [
+    "volcanoes",
+    "pyroclastic flows",
+    "eruption column",
+    "density",
+    "ground flow"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram of a vertical volcanic eruption column with a switch. Flipping it cools the column's top so it turns heavy and falls into a fast, ground-hugging glowing cloud. Asks why pyroclastic flows are deadlier than the eruption column."
+  },
+  "source": "Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=D3ftPHDNXPg&t=200s",
+  "written": "2026-11-03"
+}

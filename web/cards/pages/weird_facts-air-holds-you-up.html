@@ -1,0 +1,224 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The air holds you up</title>
+<!-- You stand on a scale inside a bell jar full of air. Hold the pump: the air leaves the jar (dots out
+     through the pipe), the air's lift on you (an arrow) shrinks, and the scale creeps up, until in a
+     vacuum it reads about 1.2 g more for every kilo of you: you take up about a litre per kilo, and a
+     litre of air weighs 1.2 g. Set your own weight with the stepper. The end adds NIST's million-pound
+     weight stack, which the air holds up by about 70 kg. Canvas particles, a press-and-hold pump.
+     Inspired by Veritasium, "World's Heaviest Weight". Touch: press and hold, taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<style>
+#stage{display:flex;gap:3cqw;align-items:stretch}
+#read{flex:none;width:36cqw;display:flex;flex-direction:column;justify-content:center;gap:.7cqh}
+#read b{font:800 max(1.5cqh,11.5px)/1.15 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:.78}
+#read .n{font:800 max(3.4cqh,18px)/1.05 var(--display);letter-spacing:-.01em}
+#read .d{font:800 max(2.1cqh,13px)/1.2 var(--body);margin-bottom:1.2cqh}
+#read .d.up{background:var(--k);color:var(--c);align-self:flex-start;padding:.3cqh 2cqw;border-radius:99px}
+#cv{flex:1;min-width:0;height:100%;display:block}
+.ctl{display:flex;align-items:center;gap:3cqw}
+#pump{flex:1;touch-action:none;-webkit-user-select:none;user-select:none}
+#pump.on{transform:scale(.97)}
+.mass{display:flex;align-items:center;gap:1.6cqw;flex:none}
+.mass button{width:max(5.4cqh,34px);height:max(5.4cqh,34px);border-radius:50%;border:0;background:transparent;color:var(--k);box-shadow:inset 0 0 0 .25cqh var(--k);font:800 max(2.6cqh,17px)/1 var(--body);cursor:pointer;padding:0}
+.mass span{font:800 max(2.1cqh,13px)/1.1 var(--body);text-align:center;min-width:12cqw}
+.mass span small{display:block;font:700 max(1.5cqh,11.5px)/1.1 var(--body);letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .ctl{display:none}}
+</style>
+<article class="card" id="card" data-topic="weird_facts" data-kind="Hold to pump · the air's lift">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PUMP OUT THE AIR</span></div>
+    <h2 class="q">How much of your weight is the air holding up right now?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read" aria-live="polite">
+        <b>The scale reads</b><span class="n num" id="kg">70.000 kg</span><span class="d num" id="dg">in air</span>
+        <b>Air in the jar</b><span class="n num" id="air">100%</span>
+      </div>
+      <canvas id="cv" role="img" aria-label="A person standing on a scale inside a glass bell jar full of air, with a pipe to a pump."></canvas>
+    </div>
+    <div class="ctl">
+      <button class="btn" id="pump">Hold to pump</button>
+      <div class="mass"><button id="minus" aria-label="Lighter">−</button><span><small>You</small><span id="me" class="num">70 kg</span></span><button id="plus" aria-label="Heavier">+</button></div>
+    </div>
+    <p class="say" id="say">Air holds you up the way water holds up a swimmer, only far less. Set your weight, then <b>hold the pump</b> and watch the scale.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The air holds up about 1.2 g of every kilo of you.</div>
+    <div class="foot"><span class="src">Source · NIST, “Million Pound Makeover”; dry air at 20 °C: 1.204 kg/m³</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), say = Kit.$('say'), pumpBtn = Kit.$('pump'), card = Kit.$('card');
+  const AIR = 1.204;            // g per litre: dry air at 20 °C and sea-level pressure
+  const BODY = 1.0;             // kg per litre: a body is about as dense as water (it just floats)
+  let m = 70, p = 1, pumping = false, done = false, armed = false, stroke = 0, ctx = null, W = 0, H = 0, fs = 12, J = null;
+  let dots = [], leaving = [], last = 0;
+  const lift = () => m / BODY * AIR;                 // grams of air the body pushes aside
+  const WHITE = '#ffffff', w = a => `rgba(255,255,255,${a})`, INKD = '#3a0f45';
+
+  // ---------- the drawing ----------
+  function layout() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    fs = Math.max(11.5, Math.min(13, W / 15));
+    // A tall chamber: as wide as the canvas allows, as tall as the stage, room above your head for the air.
+    const pumpW = Math.max(26, W * .16), base = H - fs * .6 - 6, jw = Math.min(W - pumpW - 16, (base - 8) / 1.3), jh = Math.min(base - 8, jw * 2.2);
+    J = {cx: 4 + jw / 2 + 2, w: jw, r: jw / 2, base, top: base - jh, pumpX: W - pumpW / 2 - 2, pumpW};
+    J.mid = J.top + J.r;                             // where the dome meets the straight sides
+    const want = Math.round(Math.max(60, Math.min(170, jw * (base - J.top) / 70)));
+    if (!dots.length || Math.abs(dots.full - want) > 10) {
+      dots = []; dots.full = want;
+      for (let i = 0; i < want; i++) { const q = spot(); dots.push({x: q[0], y: q[1], vx: (Kit.rnd() - .5) * 60, vy: (Kit.rnd() - .5) * 60}); }
+    } else for (const d of dots) { const q = spot(); d.x = q[0]; d.y = q[1]; }
+    keepCount(true);
+  }
+  const inside = (x, y, pad = 3) => {
+    if (y > J.base - pad || y < J.top + pad) return false;
+    if (y >= J.mid) return Math.abs(x - J.cx) < J.r - pad;
+    return Math.hypot(x - J.cx, y - J.mid) < J.r - pad;
+  };
+  function spot() { for (let k = 0; k < 200; k++) { const x = J.cx + (Kit.rnd() - .5) * J.w, y = J.top + Kit.rnd() * (J.base - J.top); if (inside(x, y, 5)) return [x, y]; } return [J.cx, J.base - 10]; }
+  // As many dots as there is air: the rest head for the pipe.
+  function keepCount(now) {
+    const want = Math.round(dots.full * p);
+    while (dots.length > want) { const d = dots.splice(Math.floor(Kit.rnd() * dots.length), 1)[0]; if (!now && !Kit.calm) leaving.push(Object.assign(d, {t: 0})); }
+    while (dots.length < want) { const q = spot(); dots.push({x: q[0], y: q[1], vx: (Kit.rnd() - .5) * 60, vy: (Kit.rnd() - .5) * 60}); }
+  }
+
+  function person() {
+    // You, standing on the scale, drawn from your height: a little broader the heavier you are.
+    const feet = J.base - J.w * .09, hgt = Math.min(J.w * 1.3, (feet - J.top) * .64), cx = J.cx, top = feet - hgt;
+    const rh = hgt * .075, sw = hgt * .25 * Math.sqrt(m / 70), t0 = top + rh * 2 + hgt * .018, hip = top + hgt * .56;
+    const arm = sw * .2, leg = sw * .43;
+    ctx.fillStyle = WHITE;
+    ctx.beginPath(); ctx.arc(cx, top + rh, rh, 0, 2 * Math.PI); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(cx - sw / 2, t0, sw, hip - t0, [sw * .3, sw * .3, sw * .12, sw * .12]); ctx.fill();
+    for (const sg of [-1, 1]) {
+      ctx.beginPath(); ctx.roundRect(cx + sg * (sw / 2 + arm * .25) - (sg < 0 ? arm : 0), t0 + sw * .06, arm, (hip - t0) * .92, arm / 2); ctx.fill();
+      ctx.beginPath(); ctx.roundRect(cx + sg * sw * .05 - (sg < 0 ? leg : 0), hip - 2, leg, feet - hip + 2, [2, 2, leg * .35, leg * .35]); ctx.fill();
+    }
+    // the scale under the feet
+    const scW = J.w * .46, scH = Math.max(5, J.w * .07);
+    ctx.fillStyle = w(.92); ctx.beginPath(); ctx.roundRect(cx - scW / 2, feet, scW, scH, 3); ctx.fill();
+    ctx.fillStyle = INKD; ctx.fillRect(cx - scW * .16, feet + scH * .25, scW * .32, scH * .5);
+    return {cx, mid: top + hgt * .45, top, sw};
+  }
+
+  function render(dt) {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, W, H);
+    const {cx, r, base, top, mid} = J;
+    // the jar: glass, lit from the left
+    ctx.fillStyle = w(.07); ctx.beginPath(); ctx.moveTo(cx - r, base); ctx.lineTo(cx - r, mid); ctx.arc(cx, mid, r, Math.PI, 0); ctx.lineTo(cx + r, base); ctx.closePath(); ctx.fill();
+    // air in the jar
+    ctx.fillStyle = w(.9);
+    for (const d of dots) { ctx.beginPath(); ctx.arc(d.x, d.y, 1.7, 0, 2 * Math.PI); ctx.fill(); }
+    const me = person();
+    // the air's lift on you: an arrow as big as the air that is left
+    if (p > .02) {
+      const room = me.top - top - fs * 3.3, len = Math.max(10, room * p), x = cx, y0 = me.top - 5;
+      ctx.strokeStyle = WHITE; ctx.fillStyle = WHITE; ctx.lineWidth = 2.6; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y0 - len + 6); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, y0 - len); ctx.lineTo(x - 5.5, y0 - len + 8); ctx.lineTo(x + 5.5, y0 - len + 8); ctx.closePath(); ctx.fill();
+      ctx.font = `800 ${fs}px Figtree`; ctx.textAlign = 'left';
+      const t = `lift ${Math.round(lift() * p)} g`; ctx.textAlign = 'center'; ctx.lineJoin = 'round'; ctx.lineWidth = 4.5; ctx.strokeStyle = '#E040FB';
+      ctx.strokeText(t, x, y0 - len - 6); ctx.fillText(t, x, y0 - len - 6); ctx.textAlign = 'left';
+    }
+    // the glass outline and its shine
+    ctx.strokeStyle = w(.95); ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.moveTo(cx - r, base); ctx.lineTo(cx - r, mid); ctx.arc(cx, mid, r, Math.PI, 0); ctx.lineTo(cx + r, base); ctx.stroke();
+    ctx.strokeStyle = w(.55); ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(cx, mid, r * .82, Math.PI * 1.12, Math.PI * 1.36); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - r * .82, mid + r * .1); ctx.lineTo(cx - r * .82, mid + r * .55); ctx.stroke();
+    // the plate, the pipe, the pump
+    ctx.fillStyle = WHITE; ctx.beginPath(); ctx.roundRect(cx - r - 5, base, 2 * r + 10, 6, 2); ctx.fill();
+    const py = base + 3, px1 = J.pumpX - J.pumpW * .3;
+    ctx.strokeStyle = WHITE; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx + r + 5, py); ctx.lineTo(px1, py); ctx.stroke();
+    const bw = J.pumpW * .6, bh = (base - top) * .42, bx = J.pumpX - bw / 2, by = base + 6 - bh;
+    ctx.strokeStyle = WHITE; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 4); ctx.stroke();
+    const rod = by - bh * (.15 + .35 * (.5 + .5 * Math.cos(stroke)));
+    ctx.beginPath(); ctx.moveTo(J.pumpX, by + bh * .3); ctx.lineTo(J.pumpX, rod); ctx.stroke();
+    ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(J.pumpX - bw * .75, rod); ctx.lineTo(J.pumpX + bw * .75, rod); ctx.stroke();
+    // air on its way out: down to the plate, along the pipe, gone
+    for (const d of leaving) {
+      d.t += dt;
+      const ex = cx + r * .7, ey = base - 4;
+      if (d.t < .45) { const k = d.t / .45; d.dx = d.x + (ex - d.x) * k; d.dy = d.y + (ey - d.y) * k; }
+      else { const k = (d.t - .45) / .5; d.dx = cx + r + 5 + (px1 - cx - r - 5) * k; d.dy = py; }
+      ctx.fillStyle = w(.9 * (1 - Math.max(0, d.t - .7) / .25)); ctx.beginPath(); ctx.arc(d.dx, d.dy, 1.7, 0, 2 * Math.PI); ctx.fill();
+    }
+    leaving = leaving.filter(d => d.t < .95);
+  }
+
+  function move(dt) {
+    if (Kit.calm) return;
+    for (const d of dots) {
+      d.vx += (Kit.rnd() - .5) * 40 * dt; d.vy += (Kit.rnd() - .5) * 40 * dt;
+      let nx = d.x + d.vx * dt, ny = d.y + d.vy * dt;
+      if (!inside(nx, ny)) { d.vx = -d.vx; d.vy = -d.vy; nx = d.x; ny = d.y; if (!inside(nx, ny)) { const q = spot(); nx = q[0]; ny = q[1]; } }
+      d.x = nx; d.y = ny;
+    }
+  }
+
+  // ---------- the numbers ----------
+  function read() {
+    const g = lift(), shown = m - g * p / 1000;
+    Kit.$('kg').textContent = `${shown.toFixed(3)} kg`;
+    const dg = Kit.$('dg'), more = Math.round(g * (1 - p));
+    dg.textContent = more < 1 ? 'in air' : `+${more} g`;
+    dg.classList.toggle('up', more >= 1);
+    Kit.$('air').textContent = p < .005 ? '0%' : `${Math.max(1, Math.round(p * 100))}%`;
+    Kit.$('me').textContent = `${m} kg`;
+    if (done) say.innerHTML = endText();
+  }
+  const endText = () => `With no air the scale reads <b>${Math.round(lift())} g more</b>: you take up about ${Math.round(m / BODY)} litres, and ${Math.round(m / BODY)} litres of air weighs ${Math.round(lift())} g. Even NIST's million-pound weight stack gets about 70 kg of lift.`;
+  function finish() {
+    if (done) return;
+    done = true; p = 0; pumping = false; pumpBtn.classList.remove('on'); pumpBtn.textContent = 'Let the air back in';
+    card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success'); keepCount(); read();
+  }
+
+  // ---------- the pump ----------
+  function frame(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    if (pumping && !done) {
+      p *= Math.exp(-dt / .65);                      // each stroke takes out a share of what is left
+      stroke += dt * 11;
+      if (p < .004) finish(); else { keepCount(); read(); if (p < .7 && say.dataset.at !== 'mid') { say.dataset.at = 'mid'; say.innerHTML = 'Less air, less lift: the scale creeps up. <b>Keep pumping.</b>'; } }
+    }
+    move(dt); render(dt);
+    requestAnimationFrame(frame);
+  }
+  // A press after the jar is empty arms the button to let the air back in; the press that emptied it does not.
+  const press = e => { if (done) { armed = true; return; } e.preventDefault(); pumping = true; pumpBtn.classList.add('on'); pumpBtn.textContent = 'Pumping…'; Kit.haptic('light'); };
+  const letGo = () => { if (!pumping) return; pumping = false; pumpBtn.classList.remove('on'); if (!done) pumpBtn.textContent = 'Hold to pump'; };
+  pumpBtn.addEventListener('pointerdown', press);
+  for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) pumpBtn.addEventListener(ev, letGo);
+  pumpBtn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) press(e); });
+  pumpBtn.addEventListener('keyup', letGo);
+  pumpBtn.addEventListener('click', () => {
+    if (done && armed) {                              // the air comes back, and with it the lift
+      done = false; armed = false; p = 1; keepCount(true); pumpBtn.textContent = 'Hold to pump'; say.dataset.at = '';
+      say.innerHTML = 'The air is back, and so is its lift. <b>Hold the pump</b> to take it away again.'; read();
+    }
+  });
+  const step = d => { m = Math.max(40, Math.min(140, m + d)); Kit.haptic('selection'); read(); };
+  Kit.$('minus').addEventListener('click', () => step(-5));
+  Kit.$('plus').addEventListener('click', () => step(5));
+
+  Kit.onShow.card = () => { layout(); render(0); read(); };
+  // The stage changes size as the story ends (the question shrinks, the box comes in): draw at the new size.
+  new ResizeObserver(() => { if (ctx) { layout(); render(0); } }).observe(Kit.$('stage'));
+  let started = false;
+  const start = () => { if (!started) { started = true; requestAnimationFrame(frame); } };
+  Kit.onEnter.card = start;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start();
+    pumping = true; pumpBtn.classList.add('on');
+    if (Kit.calm) { p = .003; finish(); return; }
+    while (!done) await wait(50);
+  };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-rock-atom-clocks",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a rock tell us how old it is?",
+  "answer": "Rocks hold unstable atoms that slowly turn into stable ones. Compare how many have turned with how many are left, and you know how much time has passed. Some atoms take millions of years, others thousands, minutes or a fraction of a second.",
+  "move": "Unstable vs stable atoms in a rock: a clock that started when it formed.",
+  "keywords": [
+    "rocks",
+    "radioactive decay",
+    "isotopes",
+    "geology",
+    "earth's age"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Rock clocks: drag a time slider until a fresh rock's mix of unstable and stable atoms matches a found rock's mix. The matching time shows how old the found rock is."
+  },
+  "source": "Geopop, “▶️ LE ERE GEOLOGICHE: COME DIAVOLO LE ABBIAMO RICOSTRUITE? |GeologiaPOP” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=VOvkzSDR2Tg&t=107s",
+  "written": "2026-11-03"
+}

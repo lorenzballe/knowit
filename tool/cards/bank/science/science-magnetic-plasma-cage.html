@@ -1,0 +1,193 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-magnetic-plasma-cage -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.4cqh}
+.cvbox{flex:1;min-height:0;position:relative}
+.cvbox canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#btns{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.alt{color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · experiment">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NUCLEAR FUSION</span></div>
+    <h2 class="q">How is plasma held without touching any wall?</h2>
+    <div class="stagebox" id="stage">
+      <div class="cvbox"><canvas id="cv"></canvas></div>
+      <div id="btns">
+        <button class="opt" id="b1">Release the plasma</button>
+        <button class="opt alt gone" id="b2">Switch on the magnets</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">A cage made of magnetism</p>
+        <p class="body">Plasma at millions of degrees would wreck any material it touched. So nothing solid holds it: a complex system of magnetic fields keeps it isolated from the walls and under control.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Release the hot plasma into the ring and watch the wall.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In a fusion reactor, the real wall is made of magnetic fields.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Fusione nucleare: quando terminerà il progetto ITER e avremo i primi reattori a energia pulita?” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let mode = 0, G = null, ctx = null, running = false, last = 0, T = 0;
+const N = 150, BINS = 64, P = [];
+const heatO = new Array(BINS).fill(0), heatI = new Array(BINS).fill(0);
+const fx = {a: 0};
+let ink = '#111';
+for (let i = 0; i < N; i++) P.push({x:0,y:0,vx:0,vy:0,th:0,amp:0,ph:0,om:0,s:Kit.rnd()});
+
+function placeIdle(){
+  for (const p of P){
+    const th = Math.PI/2 + Kit.gauss()*0.13, r = G.Rc + Kit.gauss()*G.hw*0.25;
+    p.x = G.cx + r*Math.cos(th); p.y = G.cy + r*Math.sin(th);
+  }
+}
+function launch(p, fromCentre){
+  if (fromCentre){
+    const th = Kit.rnd()*Math.PI*2;
+    p.x = G.cx + G.Rc*Math.cos(th); p.y = G.cy + G.Rc*Math.sin(th);
+  }
+  const a = Kit.rnd()*Math.PI*2, sp = G.Rc*(0.9 + Kit.rnd()*0.9);
+  p.vx = Math.cos(a)*sp; p.vy = Math.sin(a)*sp;
+}
+function bin(th){ return ((Math.floor((th/(Math.PI*2))*BINS) % BINS) + BINS) % BINS; }
+
+function update(dt){
+  T += dt;
+  if (mode === 0){
+    for (const p of P){ p.x += Kit.gauss()*0.4; p.y += Kit.gauss()*0.4;
+      const th = Math.PI/2 + (p.s-0.5)*0.3, r = G.Rc + (p.s-0.5)*G.hw*0.5;
+      p.x += (G.cx + r*Math.cos(th) - p.x)*0.05; p.y += (G.cy + r*Math.sin(th) - p.y)*0.05; }
+  } else if (mode === 1){
+    for (const p of P){
+      p.x += p.vx*dt; p.y += p.vy*dt;
+      const dx = p.x-G.cx, dy = p.y-G.cy, r = Math.hypot(dx,dy), th = Math.atan2(dy,dx);
+      if (r > G.Ro){ heatO[bin(th)] = Math.min(1.4, heatO[bin(th)] + 0.22); launch(p, true); }
+      else if (r < G.Ri){ heatI[bin(th)] = Math.min(1.4, heatI[bin(th)] + 0.22); launch(p, true); }
+    }
+  } else {
+    const k = 1 - Math.exp(-dt*5);
+    for (const p of P){
+      p.th += p.om*dt; p.ph += 7*dt;
+      const r = G.Rc + G.hw*p.amp*Math.sin(p.ph);
+      const tx = G.cx + r*Math.cos(p.th), ty = G.cy + r*Math.sin(p.th);
+      p.x += (tx-p.x)*k; p.y += (ty-p.y)*k;
+    }
+  }
+  const dec = Math.exp(-dt*(mode === 2 ? 1.6 : 0.45));
+  for (let i = 0; i < BINS; i++){ heatO[i] *= dec; heatI[i] *= dec; }
+}
+
+function draw(){
+  const x = ctx, {W,H,cx,cy,Rc,hw,Ri,Ro} = G;
+  x.clearRect(0,0,W,H);
+  // vessel
+  x.beginPath(); x.arc(cx,cy,Ro,0,Math.PI*2); x.arc(cx,cy,Ri,0,Math.PI*2,true);
+  x.fillStyle = '#0c1022'; x.fill();
+  x.lineWidth = Math.max(2, hw*0.06); x.strokeStyle = ink;
+  x.beginPath(); x.arc(cx,cy,Ro,0,Math.PI*2); x.stroke();
+  x.beginPath(); x.arc(cx,cy,Ri,0,Math.PI*2); x.stroke();
+  // wall heat
+  x.lineCap = 'butt'; x.lineWidth = hw*0.22;
+  for (let i = 0; i < BINS; i++){
+    const a0 = i/BINS*Math.PI*2, a1 = (i+1)/BINS*Math.PI*2;
+    if (heatO[i] > 0.03){ x.strokeStyle = `rgba(255,${Math.round(70+120*Math.min(1,heatO[i]-0.4))},40,${Math.min(1,heatO[i])})`; x.beginPath(); x.arc(cx,cy,Ro-hw*0.1,a0,a1); x.stroke(); }
+    if (heatI[i] > 0.03){ x.strokeStyle = `rgba(255,${Math.round(70+120*Math.min(1,heatI[i]-0.4))},40,${Math.min(1,heatI[i])})`; x.beginPath(); x.arc(cx,cy,Ri+hw*0.1,a0,a1); x.stroke(); }
+  }
+  // field lines (helices seen from above)
+  if (fx.a > 0.01){
+    x.lineWidth = Math.max(1.2, hw*0.035);
+    for (let j = 0; j < 5; j++){
+      x.strokeStyle = `rgba(110,211,255,${0.55*fx.a})`;
+      x.beginPath();
+      for (let s = 0; s <= 360; s++){
+        const th = s/360*Math.PI*2, r = Rc + hw*0.78*Math.sin(10*th + j*Math.PI*2/5 - T*2.2);
+        const px = cx + r*Math.cos(th), py = cy + r*Math.sin(th);
+        s ? x.lineTo(px,py) : x.moveTo(px,py);
+      }
+      x.stroke();
+    }
+  }
+  // plasma
+  x.globalCompositeOperation = 'lighter';
+  const rad = Math.max(2.2, hw*0.075);
+  for (const p of P){
+    x.fillStyle = 'rgba(255,120,60,0.35)'; x.beginPath(); x.arc(p.x,p.y,rad*2.2,0,Math.PI*2); x.fill();
+    x.fillStyle = 'rgba(255,230,190,0.9)'; x.beginPath(); x.arc(p.x,p.y,rad*0.8,0,Math.PI*2); x.fill();
+  }
+  x.globalCompositeOperation = 'source-over';
+  // coils
+  x.lineCap = 'round';
+  for (let i = 0; i < 16; i++){
+    const th = i/16*Math.PI*2, c = Math.cos(th), s = Math.sin(th);
+    x.lineWidth = hw*0.16;
+    x.strokeStyle = fx.a > 0.01 ? `rgba(110,211,255,${0.25+0.6*fx.a})` : 'rgba(150,150,170,0.35)';
+    x.beginPath(); x.moveTo(cx+(Ri-hw*0.25)*c, cy+(Ri-hw*0.25)*s); x.lineTo(cx+(Ro+hw*0.25)*c, cy+(Ro+hw*0.25)*s); x.stroke();
+  }
+  // hole text
+  const fs = Math.max(12, Math.min(G.f, Ri*0.2));
+  const L = mode === 0 ? ['PLASMA','millions of °C'] : mode === 1 ? ['THE WALL','is melting!'] : ['PLASMA','touches nothing'];
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillStyle = mode === 1 ? '#e8452c' : ink;
+  x.font = `800 ${fs*1.1}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+  x.fillText(L[0], cx, cy - fs*0.8);
+  x.font = `600 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+  x.fillText(L[1], cx, cy + fs*0.8);
+}
+
+function loop(t){
+  const dt = Math.min(0.05, last ? (t-last)/1000 : 0.016); last = t;
+  if (G){ update(dt); draw(); }
+  requestAnimationFrame(loop);
+}
+
+Kit.onShow.card = () => {
+  const cv = Kit.$('cv'), r = Kit.fitCanvas(cv);
+  ctx = r.x;
+  ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const m = Math.min(r.W, r.H);
+  const Rc = m*0.355, hw = Rc*0.3;
+  const first = !G;
+  G = {W:r.W, H:r.H, cx:r.W/2, cy:r.H/2, Rc, hw, Ri:Rc-hw, Ro:Rc+hw, f:Math.max(12, m*0.055)};
+  if (first || mode === 0) placeIdle();
+  if (mode === 2) for (const p of P){ p.x = G.cx + G.Rc*Math.cos(p.th); p.y = G.cy + G.Rc*Math.sin(p.th); }
+  if (!running){ running = true; requestAnimationFrame(loop); }
+};
+
+Kit.$('b1').addEventListener('click', () => {
+  if (mode !== 0) return;
+  mode = 1; for (const p of P) launch(p, false);
+  Kit.haptic('light');
+  Kit.hide('b1'); Kit.show('b2');
+  Kit.$('say').textContent = 'No material survives this. Now switch on the magnets.';
+  if (!Kit.calm) gsap.from('#b2', {opacity:0, y:10, duration:.4, ease:'power3.out'});
+});
+Kit.$('b2').addEventListener('click', () => {
+  if (mode !== 1) return;
+  mode = 2;
+  for (const p of P){
+    p.th = Math.atan2(p.y-G.cy, p.x-G.cx); p.amp = 0.25 + 0.5*Kit.rnd();
+    p.ph = Kit.rnd()*Math.PI*2; p.om = 0.7 + 0.5*Kit.rnd();
+  }
+  gsap.to(fx, {a:1, duration: Kit.calm ? 0.01 : 0.9, ease:'power2.out'});
+  Kit.haptic('success');
+  Kit.hide('btns'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:10, stagger:.1, duration:.45, ease:'power3.out'});
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#b1', {opacity:0, y:10, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('b1').click(); await new Promise(r => setTimeout(r, 800));
+  Kit.$('b2').click(); await new Promise(r => setTimeout(r, 1200));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-directors-light-sentence -->
+<title>Astute free card · The director's sentence</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#pic text{font-family:var(--body);fill:var(--k)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{margin:0}
+#why .body{margin:0;font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.q,.say,.body,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess a number · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">REAL SQUID GAME</span></div>
+    <h2 class="q">The camp's director stole millions in subsidies. How long was his prison sentence?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A scale of prison years from 0 to 25"></svg>
+      <div id="why" class="gone">
+        <p class="big">Only 2.5 years</p>
+        <p class="body">He was jailed only for embezzling millions of dollars in government subsidies. Well connected to the state's top officials, he was never made to answer for the illegal confinement and the human rights violations.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the marker to your guess, in years.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>He was punished for the stolen money, never for the people locked up.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 25, REAL = 2.5, RED = '#c8102e';
+let g = 12, moved = false, asked = false, done = false, dragging = false;
+let geo = null;
+const fmt = v => (Math.round(v * 2) / 2).toString();
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(g - REAL) <= 1;
+  done = true;
+  Kit.answer({choice: fmt(g) + ' years', correct: ok, sure: pct});
+  Kit.hide('say');
+  draw(true);
+  Kit.show('why');
+  sure.grade(ok, pct, `${fmt(g)} years, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .45, delay: .5, ease: 'power3.out'});
+});
+
+function txt(svg, x, y, s, size, weight, anchor, fill) {
+  const t = Kit.mk('text', {x, y, 'font-size': size, 'font-weight': weight || 700, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'middle'}, svg);
+  if (fill) t.setAttribute('style', 'fill:' + fill);
+  t.textContent = s; return t;
+}
+function clampX(x, s, size) {
+  const w = s.length * size * 0.56 / 2, {W} = geo;
+  return Math.max(w + 4, Math.min(W - w - 4, x));
+}
+
+function draw(animate) {
+  const svg = Kit.$('pic');
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H / 11, W / 22));
+  svg.innerHTML = '';
+  const pad = Math.max(f * 1.4, W * .07);
+  const x0 = pad, x1 = W - pad;
+  const y = H * (done ? .46 : .52);
+  geo = {W, H, f, x0, x1, y};
+  const X = v => x0 + (x1 - x0) * v / MAX;
+
+  txt(svg, W / 2, Math.max(f * .9, y - f * 5.2), 'Years in prison', f * 1.05, 800);
+
+  // track
+  Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, stroke: 'var(--k)', 'stroke-width': f * .5, 'stroke-linecap': 'round', opacity: .18}, svg);
+  for (let v = 0; v <= MAX; v += 1) {
+    const big = v % 5 === 0;
+    Kit.mk('line', {x1: X(v), y1: y + f * .45, x2: X(v), y2: y + f * (big ? 1 : .7), stroke: 'var(--k)', 'stroke-width': big ? 2 : 1, opacity: big ? .7 : .35}, svg);
+    if (big) txt(svg, X(v), y + f * 1.8, String(v), f * .9, 600, 'middle');
+  }
+
+  // guess
+  const gc = 'var(--k)';
+  Kit.mk('line', {x1: x0, y1: y, x2: X(g), y2: y, stroke: gc, 'stroke-width': f * .5, 'stroke-linecap': 'round', opacity: done ? .35 : .85}, svg);
+  Kit.mk('line', {x1: X(g), y1: y - f * 1.5, x2: X(g), y2: y, stroke: gc, 'stroke-width': 2}, svg);
+  Kit.mk('circle', {cx: X(g), cy: y, r: f * .95, fill: 'var(--c)', stroke: gc, 'stroke-width': f * .28}, svg);
+  const gs = moved ? `your guess · ${fmt(g)} yrs` : 'drag me';
+  txt(svg, clampX(X(g), gs, f), y - f * 2.4, gs, f, 800);
+
+  // real
+  if (done) {
+    const bar = Kit.mk('line', {x1: x0, y1: y, x2: X(REAL), y2: y, stroke: RED, 'stroke-width': f * .7, 'stroke-linecap': 'round'}, svg);
+    const pin = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: X(REAL), y1: y, x2: X(REAL), y2: y + f * 2.6, stroke: RED, 'stroke-width': 2.5}, pin);
+    Kit.mk('circle', {cx: X(REAL), cy: y, r: f * .6, fill: RED}, pin);
+    const rs = 'real sentence · 2.5 yrs';
+    txt(svg, Math.max(x0 - f * .4, 4), y + f * 3.5, rs, f * 1.05, 800, 'start', RED);
+    txt(svg, Math.max(x0 - f * .4, 4), y + f * 5.4, 'for the money only', f * .85, 600, 'start');
+    if (animate && !Kit.calm) {
+      gsap.from(bar, {attr: {x2: x0}, duration: .8, ease: 'power3.out'});
+      gsap.from(pin, {opacity: 0, y: -f, duration: .5, delay: .4, ease: 'back.out(2)'});
+    }
+  }
+}
+
+function valAt(e) {
+  const svg = Kit.$('pic'), r = svg.getBoundingClientRect();
+  const x = (e.clientX - r.left) * geo.W / r.width;
+  const v = (x - geo.x0) / (geo.x1 - geo.x0) * MAX;
+  return Math.max(0, Math.min(MAX, Math.round(v * 2) / 2));
+}
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (done) return;
+  dragging = true; try { pic.setPointerCapture(e.pointerId); } catch (_) {}
+  g = valAt(e); moved = true; draw(); Kit.haptic('selection');
+});
+pic.addEventListener('pointermove', e => {
+  if (!dragging || done) return;
+  const v = valAt(e); if (v !== g) { g = v; if (g % 5 === 0) Kit.haptic('light'); draw(); }
+});
+const up = () => {
+  if (!dragging) return; dragging = false;
+  if (moved && !asked) { asked = true; sure.on(); Kit.$('say').textContent = 'Happy with it? Now say how sure you are.'; }
+};
+pic.addEventListener('pointerup', up);
+pic.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect(), cy = r.top + r.height * .52;
+  const at = v => r.left + (geo.x0 + (geo.x1 - geo.x0) * v / MAX) * r.width / geo.W;
+  const ev = (type, v) => pic.dispatchEvent(new PointerEvent(type, {clientX: at(v), clientY: cy, pointerId: 1, bubbles: true}));
+  ev('pointerdown', 12); ev('pointermove', 10); ev('pointermove', 8); ev('pointerup', 8);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1400));
+};
+Kit.single();
+</script>
+</html>

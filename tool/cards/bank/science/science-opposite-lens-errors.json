@@ -1,0 +1,37 @@
+{
+  "id": "science-opposite-lens-errors",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can two specially designed lenses nearly cancel spherical aberration?",
+  "answer": "Lens 1 focuses its edge rays too soon. Lens 2 has the same error pointing the other way. Together the errors add up to almost zero, so dragging the lenses until every ray meets in one point nearly cancels spherical aberration.",
+  "move": "Can’t remove an error? Add its exact opposite.",
+  "keywords": [
+    "spherical aberration",
+    "lens",
+    "optics",
+    "light rays",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Optics diagram of two lenses with light rays. Lens 2 has the opposite error to Lens 1. Drag the lenses until every ray meets at one point and the spherical aberration nearly cancels."
+  },
+  "source": "Veritasium, “Can You Keep Zooming In Infinitely?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=88bMVbx1dzM",
+  "written": "2026-11-03"
+}

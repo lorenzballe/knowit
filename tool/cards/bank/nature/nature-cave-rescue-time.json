@@ -1,0 +1,37 @@
+{
+  "id": "nature-cave-rescue-time",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the shortest possible rescue time from deep in a cave?",
+  "answer": "No rescue gets you out in an hour. Two people must climb out to call help, rescuers rig every wall with ropes, and the injured caver crosses the rock on a stretcher. Even the shortest rescue takes at least 9–10 hours.",
+  "move": "In a cave there is no quick rescue: even the shortest takes 9–10 hours.",
+  "keywords": [
+    "caver",
+    "cave",
+    "rescue",
+    "stretcher",
+    "ropes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A cave cross-section with numbered glowing spots marking the steps of a rescue, with an injured caver at the bottom. The question asks the shortest possible rescue time. Tapping spot 1 starts a clock that runs through the steps."
+  },
+  "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=alSGiLnBsnQ&t=290s",
+  "written": "2026-11-03"
+}

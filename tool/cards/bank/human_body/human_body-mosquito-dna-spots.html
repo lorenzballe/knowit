@@ -1,0 +1,316 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh}
+#picbox{position:relative;flex:1 1 0;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#why{display:flex;flex-direction:column;gap:.9cqh}
+#pic .zgl{font-family:var(--body);font-weight:800;fill:var(--k)}
+#pic .zcap{font-family:var(--body);font-weight:600;fill:color-mix(in srgb,var(--k) 66%,transparent)}
+#pic .zpp{fill:var(--k)}
+#pic .zhx{fill:none;stroke:color-mix(in srgb,var(--k) 50%,transparent);stroke-linecap:round;stroke-linejoin:round}
+#pic .zrg{stroke:color-mix(in srgb,var(--k) 28%,transparent);stroke-linecap:round}
+#pic .zmb{fill:var(--k)}
+#pic .zmw{fill:color-mix(in srgb,var(--k) 26%,transparent)}
+#pic .zml{fill:none;stroke:var(--k);stroke-width:1.1px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+#pic .zrw{cursor:pointer;outline:none}
+#pic .zrw.zon{cursor:default}
+#pic .zband{fill:color-mix(in srgb,var(--k) 5%,transparent)}
+#pic .zrw.zon .zband{fill:color-mix(in srgb,var(--k) 11%,transparent)}
+#pic .zrw:focus-visible .zband{stroke:var(--k);stroke-width:2px}
+#pic .zrw.zdim{opacity:.34;transition:opacity .6s}
+#pic .zbd circle{fill:var(--c);stroke:var(--k)}
+#pic .zbd text{font-family:var(--mono);font-weight:700;fill:var(--k)}
+#pic .zbd.zon circle{fill:var(--k)}
+#pic .zbd.zon text{fill:var(--c)}
+#pic .zring{fill:none;stroke:var(--k)}
+#pic .zvtx,#pic .zqm text,#pic .zvt text{font-family:var(--body);font-weight:800}
+#pic .zqm rect{fill:none;stroke:color-mix(in srgb,var(--k) 50%,transparent);stroke-dasharray:3 3}
+#pic .zqm text{fill:color-mix(in srgb,var(--k) 72%,transparent)}
+#pic .zvt.za rect{fill:var(--k)}
+#pic .zvt.za text{fill:var(--c)}
+#pic .zvt.zp rect{fill:color-mix(in srgb,var(--k) 12%,var(--c));stroke:var(--k);stroke-width:1.6px}
+#pic .zvt.zp text{fill:var(--k)}
+#pic .zvt.zn rect{fill:none;stroke:color-mix(in srgb,var(--k) 46%,transparent);stroke-dasharray:3 3}
+#pic .zvt.zn text{fill:color-mix(in srgb,var(--k) 64%,transparent)}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="human_body" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOSQUITO DNA</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">Which genetic findings explain differences in mosquito bites?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic" role="group" aria-label="Six people's DNA at four spots: three who say mosquitoes bite them a lot, three who say they rarely do."></svg></div>
+      <!-- The why takes the picture's place once every row is open: the card holds it on the
+           smallest phone too. -->
+      <div id="why" class="gone"><p class="big">7 single letters</p><p class="body">A 2017 study with 23andMe made this comparison across the DNA of 16,000 people who rated how much mosquitoes like them. At seven spots, one letter mattered: some make you less attractive, others more.</p></div>
+    </div>
+    <p class="say" id="say">Tap each row to compare the two groups.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Part of your bite risk is written in seven single DNA letters.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Mosquitoes Bite Some People More Than Others” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// Six people, four spots of their DNA. In each row most people share the usual letter and two
+// carry a one-letter change: where those two sit tells what the change does.
+const ROWS = [
+  {usual: 'C', odd: 'T', who: [0, 2], kind: 'za'},  // both among the bitten: attractive
+  {usual: 'A', odd: 'G', who: [3, 5], kind: 'zp'},  // both among the spared: protective
+  {usual: 'T', odd: 'C', who: [1, 4], kind: 'zn'},  // one in each group: no link
+  {usual: 'G', odd: 'A', who: [0, 1], kind: 'za'},
+];
+const WORD = {za: 'ATTRACTIVE', zp: 'PROTECTIVE', zn: 'NO LINK'};
+const DECOY = ROWS.findIndex(R => R.kind === 'zn');
+const seen = ROWS.map(() => false);
+let done = false, entered = false, V = null;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const n1 = v => (+v).toFixed(1);
+
+function draw() {
+  const svg = Kit.$('pic');
+  gsap.killTweensOf(svg.querySelectorAll('*'));
+  svg.textContent = '';
+  V = null;
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!(W > 80 && H > 80)) return;
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const ff = f > 0 ? f : 15;
+  const tagFs = clamp(ff * .72, 11, 15), capFs = clamp(ff * .74, 11, 14);
+  let labFs = clamp(ff * .92, 12, 19);
+  const m = Math.max(4, W * .015);
+  const textW = (txt, cls, fs) => {
+    const t = mk('text', {class: cls, x: 0, y: -999, style: `font-size:${fs}px`});
+    t.textContent = txt;
+    let w = 0;
+    try { w = t.getComputedTextLength(); } catch (e) {}
+    t.remove();
+    return w > 0 ? w : txt.length * fs * .64;
+  };
+  const tagW = Math.max(textW(WORD.zp, 'zvtx', tagFs), textW(WORD.za, 'zvtx', tagFs)) + tagFs * 1.5;
+  const showCap = true;
+  const labH = labFs * 1.45, capH = showCap ? capFs * 2 : 0;
+  const sW = (W - 2 * m - tagW) / 6.9;
+  const uH = (H - 2 * m - labH - capH) / 6.2;
+  const u = Math.max(12, Math.min(sW, uH, 62));
+  const s = Math.min(sW, u * 1.6);
+  const rowP = clamp((H - 2 * m - labH - capH - 1.66 * u) / 4, 1.12 * u, 1.8 * u);
+  const usedH = labH + 1.66 * u + 4 * rowP + capH;
+  const top = Math.max(m * .5, (H - usedH) / 2);
+  const left = Math.max(m, (W - 6.9 * s - tagW) / 2);
+  const X = i => left + (.5 + i + (i > 2 ? .75 : 0)) * s;
+  const tagX = X(5) + .65 * s, tagC = tagX + tagW / 2;
+  const headY = top + labH + .58 * u, hr = .2 * u, hs = .34 * u, hw = .34 * u;
+  const baseY = headY + hr + .04 * u + hs;
+  const rowsTop = baseY + .3 * u, RY = r => rowsTop + (r + .5) * rowP, rowsBot = rowsTop + 4 * rowP;
+  const br = Math.min(.37 * u, rowP * .4), lf = Math.max(11, br * 1.36), sw = Math.max(1.4, .06 * u);
+
+  // The two groups, as the people rated themselves.
+  const L1 = '“Bitten a lot”', L2 = '“Rarely bitten”';
+  let x1 = 0, x2 = 0;
+  for (let k = 0; k < 14; k++) {
+    const w1 = textW(L1, 'zgl', labFs), w2 = textW(L2, 'zgl', labFs);
+    x1 = Math.max(m, (X(0) + X(2)) / 2 - w1 / 2);
+    x2 = Math.max((X(3) + X(5)) / 2 - w2 / 2, x1 + w1 + labFs * .7);
+    if (x2 + w2 <= W - m || labFs <= 10.5) break;
+    labFs -= .5;
+  }
+  const labY = top + labFs * 1.05;
+  mk('text', {class: 'zgl', x: n1(x1), y: n1(labY), style: `font-size:${labFs}px`}).textContent = L1;
+  mk('text', {class: 'zgl', x: n1(x2), y: n1(labY), style: `font-size:${labFs}px`}).textContent = L2;
+
+  // Each person's DNA: a double helix that crosses under every spot.
+  const a = .15 * u, P = rowP > 1.5 * u ? rowP * 2 / 3 : rowP;
+  const yA = baseY + .05 * u, yB = rowsBot + .12 * u, y00 = RY(0);
+  const helix = (x, ph) => {
+    const n = Math.max(24, Math.ceil((yB - yA) / (P / 14)));
+    let d = '';
+    for (let k = 0; k <= n; k++) {
+      const y = yA + (yB - yA) * k / n;
+      d += (k ? 'L' : 'M') + n1(x + a * Math.sin(2 * Math.PI * (y - y00) / P + ph)) + ' ' + n1(y);
+    }
+    return d;
+  };
+  for (let i = 0; i < 6; i++) {
+    const x = X(i);
+    mk('path', {class: 'zhx', d: helix(x, 0), 'stroke-width': n1(sw)});
+    mk('path', {class: 'zhx', d: helix(x, Math.PI), 'stroke-width': n1(sw)});
+    for (let y = y00 - Math.floor((y00 - yA) / (P / 8)) * (P / 8); y < yB; y += P / 8) {
+      const dx = a * Math.sin(2 * Math.PI * (y - y00) / P);
+      if (Math.abs(dx) < a * .5 || ROWS.some((_, r) => Math.abs(y - RY(r)) < br + sw)) continue;
+      mk('line', {class: 'zrg', x1: n1(x - dx), x2: n1(x + dx), y1: n1(y), y2: n1(y), 'stroke-width': n1(sw * .75)});
+    }
+  }
+
+  // People, and the mosquitoes that crowd the ones who say they are bitten a lot.
+  const people = [];
+  for (let i = 0; i < 6; i++) {
+    const x = X(i), g = mk('g', {class: 'zpp'});
+    mk('circle', {cx: n1(x), cy: n1(headY), r: n1(hr)}, g);
+    mk('path', {d: `M${n1(x - hw)} ${n1(baseY)}Q${n1(x - hw)} ${n1(baseY - hs)} ${n1(x)} ${n1(baseY - hs)}Q${n1(x + hw)} ${n1(baseY - hs)} ${n1(x + hw)} ${n1(baseY)}Z`}, g);
+    people.push(g);
+  }
+  const mq = [], k = .46 * u / 22;
+  [[.08, -.3], [.72, -.42], [1.38, .04], [1.95, -.4], [2.48, -.1]].forEach(([dx, dy], j) => {
+    const pos = mk('g', {transform: `translate(${n1(X(0) + dx * s)} ${n1(headY + dy * u)})`});
+    const fly = mk('g', {}, pos), bz = mk('g', {}, fly);
+    const rot = n1((Kit.rnd() - .5) * 36), fx = (j % 2 ? -k : k).toFixed(3);
+    const body = mk('g', {transform: `rotate(${rot}) scale(${fx} ${k.toFixed(3)})`}, bz);
+    const w = mk('g', {class: 'zmw'}, body);
+    mk('ellipse', {cx: 1, cy: -4.2, rx: 6.5, ry: 2.1, transform: 'rotate(-12 -1 -1)'}, w);
+    mk('ellipse', {cx: 0, cy: -3.8, rx: 5.5, ry: 1.8, transform: 'rotate(-32 -1 -1)'}, w);
+    mk('path', {class: 'zml', d: 'M-3 1.2L-6 5.5L-7.5 9M-2 1.6L-1.5 6L-3 9.5M-1 1.2L3 5L6 8.5M-6.6 .8L-11 2.6'}, body);
+    mk('ellipse', {class: 'zmb', cx: 4.5, cy: .9, rx: 6, ry: 1.5, transform: 'rotate(8 4.5 .9)'}, body);
+    mk('ellipse', {class: 'zmb', cx: -2.2, cy: -.1, rx: 2.4, ry: 2}, body);
+    mk('circle', {class: 'zmb', cx: -5.6, cy: .3, r: 1.3}, body);
+    mq.push({fly, bz, w});
+  });
+
+  // The four spots: one row of letters each, with a slot for what the change does.
+  const rows = [];
+  ROWS.forEach((R, r) => {
+    const y = RY(r), bh = rowP * .88;
+    const g = mk('g', {class: 'zrw', 'data-r': r, role: 'button', tabindex: 0, 'aria-label': `Spot ${r + 1}: compare the two groups`});
+    const bx = Math.max(1, X(0) - .55 * s), bw = Math.min(W - 1, tagX + tagW + .15 * s) - bx;
+    mk('rect', {class: 'zband', x: n1(bx), y: n1(y - bh / 2), width: n1(bw), height: n1(bh), rx: n1(Math.min(bh / 2, u * .55)), 'pointer-events': 'all'}, g);
+    const beads = [];
+    for (let i = 0; i < 6; i++) {
+      const pos = mk('g', {transform: `translate(${n1(X(i))} ${n1(y)})`}, g);
+      const b = mk('g', {class: 'zbd'}, pos);
+      mk('circle', {r: n1(br), 'stroke-width': n1(sw)}, b);
+      mk('text', {'text-anchor': 'middle', dy: '.35em', style: `font-size:${n1(lf)}px`}, b).textContent = R.who.includes(i) ? R.odd : R.usual;
+      beads.push(b);
+    }
+    const ph = Math.min(tagFs * 1.9, rowP * .74);
+    const pill = (cls, txt, fs) => {
+      const pos = mk('g', {transform: `translate(${n1(tagC)} ${n1(y)})`}, g);
+      const inner = mk('g', {class: cls}, pos);
+      mk('rect', {x: n1(-tagW / 2), y: n1(-ph / 2), width: n1(tagW), height: n1(ph), rx: n1(ph / 2)}, inner);
+      mk('text', {'text-anchor': 'middle', dy: '.35em', style: `font-size:${n1(fs)}px`}, inner).textContent = txt;
+      return {pos, inner};
+    };
+    const qm = pill('zqm', '?', tagFs * 1.15);
+    const vt = pill('zvt ' + R.kind, WORD[R.kind], tagFs);
+    vt.pos.style.display = 'none';
+    rows.push({g, beads, qm, vt});
+  });
+
+  if (showCap) {
+    mk('text', {class: 'zcap', x: n1((X(0) + X(5)) / 2), y: n1(rowsBot + .2 * u + capFs * 1.1), 'text-anchor': 'middle', style: `font-size:${capFs}px`}).textContent = 'one strand = one person’s DNA';
+  }
+
+  V = {svg, u, br, sw, rows, mq, people};
+  rows.forEach((E, r) => { if (seen[r]) paint(r, false); });
+  if (done) rows[DECOY].g.classList.add('zdim');
+  if (entered) buzz();
+}
+
+// Light the odd letters of one row and say what the change does.
+function paint(r, anim) {
+  if (!V) return;
+  const E = V.rows[r], R = ROWS[r], hot = R.who.map(i => E.beads[i]);
+  E.g.classList.add('zon');
+  hot.forEach(b => b.classList.add('zon'));
+  E.qm.pos.style.display = 'none';
+  E.vt.pos.style.display = '';
+  E.g.setAttribute('aria-label', `Spot ${r + 1}: ${WORD[R.kind].toLowerCase()}`);
+  if (!anim) return;
+  gsap.killTweensOf(hot);
+  gsap.set(hot, {scale: 1, opacity: 1});
+  gsap.to(hot, {scale: 1.32, duration: .16, yoyo: true, repeat: 1, stagger: .1, ease: 'power2.out', transformOrigin: '50% 50%'});
+  hot.forEach((b, j) => {
+    const ring = Kit.mk('circle', {class: 'zring', r: n1(V.br), 'stroke-width': n1(V.sw)}, b.parentNode);
+    b.parentNode.insertBefore(ring, b);
+    gsap.fromTo(ring, {attr: {r: V.br}, opacity: .7}, {attr: {r: V.br * 2.1}, opacity: 0, duration: .75, delay: j * .1, ease: 'power2.out', onComplete: () => ring.remove()});
+  });
+  gsap.killTweensOf(E.vt.inner);
+  gsap.fromTo(E.vt.inner, {opacity: 0, scale: .55}, {opacity: 1, scale: 1, duration: .5, delay: .22, ease: 'back.out(2.4)', transformOrigin: '50% 50%'});
+}
+
+function open(r) {
+  if (done || seen[r]) return;
+  seen[r] = true;
+  Kit.haptic(ROWS[r].kind === 'zn' ? 'light' : 'selection');
+  paint(r, !Kit.calm);
+  if (seen.every(Boolean)) setTimeout(finish, Kit.calm ? 300 : 950);
+}
+
+// Every row is open: the spot with no link fades, the whole picture stays a moment, then the why
+// takes its place.
+function finish() {
+  if (done) return;
+  done = true;
+  if (V) V.rows[DECOY].g.classList.add('zdim');
+  Kit.haptic('success');
+  const end = () => {
+    Kit.hide('picbox'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (Kit.calm) return;
+    gsap.from([...Kit.$('why').children, Kit.$('keep')], {opacity: 0, y: 14, duration: .55, stagger: .12, ease: 'power3.out'});
+  };
+  if (Kit.calm) end();
+  else gsap.to('#picbox', {opacity: 0, duration: .3, delay: 1.1, ease: 'power1.in', onComplete: end});
+}
+
+function buzz() {
+  if (!V || Kit.calm) return;
+  const ax = n1(V.u * .2), ay = n1(V.u * .14);
+  V.mq.forEach(o => {
+    gsap.to(o.bz, {x: `random(-${ax}, ${ax})`, y: `random(-${ay}, ${ay})`, duration: .28 + Kit.rnd() * .3, ease: 'sine.inOut', repeat: -1, repeatRefresh: true});
+    gsap.to(o.w, {scaleY: .3, duration: .045, repeat: -1, yoyo: true, ease: 'none', transformOrigin: '50% 100%'});
+  });
+}
+
+function intro() {
+  if (!V) return;
+  const {svg, u} = V, all = q => svg.querySelectorAll(q);
+  const len = (i, el) => { try { return el.getTotalLength(); } catch (e) { return 0; } };
+  gsap.from(all('.zgl'), {opacity: 0, y: 6, duration: .5, stagger: .12, ease: 'power2.out'});
+  gsap.from(V.people, {opacity: 0, y: -u * .3, duration: .5, stagger: .06, delay: .1, ease: 'power3.out'});
+  gsap.fromTo(all('.zhx'), {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: .8, stagger: .03, delay: .3, ease: 'power2.out', clearProps: 'strokeDasharray,strokeDashoffset'});
+  gsap.from(all('.zrg,.zband,.zcap'), {opacity: 0, duration: .6, delay: .55});
+  gsap.from(V.rows.flatMap(E => E.beads), {scale: 0, duration: .4, stagger: .02, delay: .6, ease: 'back.out(2)', transformOrigin: '50% 50%'});
+  gsap.from(V.rows.map(E => E.qm.inner), {opacity: 0, x: u * .5, duration: .45, stagger: .08, delay: 1.05, ease: 'power2.out'});
+  gsap.from(V.mq.map(o => o.fly), {x: -u * 2.2, y: -u, opacity: 0, duration: .9, stagger: .1, delay: .3, ease: 'power2.out'});
+  if (!seen[0]) gsap.to(V.rows[0].qm.inner, {scale: 1.12, duration: .3, yoyo: true, repeat: 3, delay: 1.9, ease: 'sine.inOut', transformOrigin: '50% 50%'});
+}
+
+const pic = Kit.$('pic');
+const rowOf = e => e.target && e.target.closest ? e.target.closest('.zrw') : null;
+pic.addEventListener('click', e => { const g = rowOf(e); if (g) open(+g.getAttribute('data-r')); });
+pic.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const g = rowOf(e); if (!g) return;
+  e.preventDefault(); open(+g.getAttribute('data-r'));
+});
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => draw();
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => { entered = true; if (Kit.calm) return; intro(); buzz(); };
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  for (let r = 0; r < ROWS.length; r++) {
+    const g = Kit.$('pic').querySelector(`.zrw[data-r="${r}"]`);
+    if (g) g.dispatchEvent(new MouseEvent('click', {bubbles: true})); else open(r);
+    await wait(420);
+  }
+  await wait(Kit.calm ? 800 : 3400);
+};
+Kit.single();
+</script>
+</html>

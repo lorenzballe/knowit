@@ -1,0 +1,37 @@
+{
+  "id": "science-supersaturation-crystals",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.mixing_cleaners",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What must underground water be like to grow crystals in rock cavities?",
+  "answer": "Water underground is often full of salts. When it carries more than it can hold and reaches a cavity, the extra comes out as crystals. So the water must be supersaturated for crystals to grow in rock cavities.",
+  "move": "Crystals grow from the salt the water can't hold.",
+  "keywords": [
+    "crystals",
+    "supersaturation",
+    "groundwater",
+    "salts",
+    "rock cavities"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider sets how much salt is dissolved in water. The reader drags it up or down, then lets the water into a rock cavity to see whether crystals form. The question asks what the water must be like to grow crystals there."
+  },
+  "source": "Geopop, “Come creare i cristalli fatti in casa? Esperimento facile” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=6d8wdEsQBEo&t=148s",
+  "written": "2026-11-03"
+}

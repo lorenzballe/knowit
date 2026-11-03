@@ -1,0 +1,36 @@
+{
+  "id": "technology-thermite-rail-welds",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much railway is built each year using thermite welds?",
+  "answer": "Thermite welds join the ends of rail by pouring liquid steel into the gap between them. About 2 million of these welds are made each year. Each one fills a gap of about 2.5 cm, which adds up to roughly 50 km of new track annually.",
+  "move": "2 million welds × 2.5 cm ≈ 50 km of rail born liquid each year.",
+  "keywords": [
+    "thermite",
+    "rail",
+    "steel",
+    "welding"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A reveal card titled Astute free card, RAIL WELDS. It asks how much railway is built each year using thermite welds. A draggable control adds welds from 1 up to 2 million, and each weld pours 2.5 cm of new rail. The reveal gives about 2 million welds a year, or about 50 km of rail."
+  },
+  "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=1416s",
+  "written": "2026-11-03"
+}

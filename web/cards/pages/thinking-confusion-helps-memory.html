@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-confusion-helps-memory -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#plot{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ew-resize}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#count{font:600 max(1.8cqh,12px)/1.2 var(--mono);color:var(--muted)}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 6cqw;cursor:pointer}
+.opt:disabled{opacity:.45;cursor:default}
+.big{overflow-wrap:anywhere}
+.body{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Aim and launch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SYSTEM 2</span></div>
+    <h2 class="q">What good comes from feeling confused while learning?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="ctl"><button class="opt" id="go">Launch ↑</button><span id="count">0 of 3 launches</span></div>
+      <div id="why" class="gone">
+        <p class="big">Confusion makes it stick.</p>
+        <p class="body">When something is confusing, System 2, your slow careful thinking, works harder. That extra work makes you more likely to reach the right answer, and to remember the experience.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag to pick how confusing the lesson is, then launch. Try three very different spots.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A little struggle while learning is what makes it stay.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Science of Thinking” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let aim = 0.5, shots = [], flying = false, done = false, g = null;
+const clamp = v => Math.max(0.04, Math.min(0.96, v));
+const svg = Kit.$('plot');
+
+function draw() {
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 12);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const L = f * 1.4, R = W - f * 1.4, T = f * 2.6, B = H - f * 3.8;
+  const X = c => L + f + c * (R - L - 2 * f), Y = m => B - m * (B - T);
+  g = {W, H, f, L, R, T, B, X, Y};
+  Kit.mk('rect', {x: L - f * .6, y: T - f * .6, width: R - L + f * 1.2, height: B - T + f * .6, rx: f * .8, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
+  Kit.mk('line', {x1: L - f * .6, x2: R + f * .6, y1: B, y2: B, style: 'stroke:var(--k);stroke-width:2.5;stroke-linecap:round'}, svg);
+  const t1 = Kit.mk('text', {x: L - f * .6, y: T - f * 1.2, style: `font:700 ${f}px var(--body);fill:var(--k)`}, svg); t1.textContent = '↑ Remembered later';
+  const lc = Kit.mk('text', {x: L, y: B + f * 1.4, style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); lc.textContent = 'Clear';
+  const rc = Kit.mk('text', {x: R, y: B + f * 1.4, 'text-anchor': 'end', style: `font:600 ${f}px var(--body);fill:var(--k)`}, svg); rc.textContent = 'Confusing';
+  const ax = Kit.mk('text', {x: (L + R) / 2, y: B + f * 3.1, 'text-anchor': 'middle', style: `font:500 ${f * .9}px var(--body);fill:var(--muted)`}, svg); ax.textContent = 'how confusing it felt at first →';
+  if (done) {
+    const p = Kit.mk('path', {d: `M${X(0)},${Y(.12)} L${X(1)},${Y(.84)}`, style: 'stroke:var(--k);stroke-width:3;stroke-dasharray:7 6;fill:none;opacity:.55'}, svg);
+    g.trend = p;
+  }
+  shots.forEach(s => {
+    Kit.mk('line', {x1: X(s.c), x2: X(s.c), y1: B, y2: Y(s.m), style: 'stroke:var(--k);stroke-width:1.5;opacity:.25'}, svg);
+    s.el = Kit.mk('circle', {cx: X(s.c), cy: Y(s.m), r: f * .65, style: 'fill:var(--k)'}, svg);
+  });
+  g.aimLine = Kit.mk('line', {x1: X(aim), x2: X(aim), y1: T - f * .4, y2: B, style: `stroke:var(--k);stroke-width:1.5;stroke-dasharray:3 5;opacity:${done ? 0 : .5}`}, svg);
+  g.launcher = Kit.mk('path', {d: `M${-f * .9},${f * .2} L0,${-f * 1.1} L${f * .9},${f * .2} Z`, transform: `translate(${X(aim)},${B})`, style: `fill:var(--k);opacity:${done ? 0 : 1}`}, svg);
+  g.ball = Kit.mk('circle', {cx: X(aim), cy: B, r: f * .65, style: 'fill:var(--k);opacity:0'}, svg);
+}
+
+function setAim(clientX) {
+  if (!g || done || flying) return;
+  const r = svg.getBoundingClientRect();
+  aim = clamp(((clientX - r.left) - g.L - g.f) / (g.R - g.L - 2 * g.f));
+  const x = g.X(aim);
+  g.aimLine.setAttribute('x1', x); g.aimLine.setAttribute('x2', x);
+  g.launcher.setAttribute('transform', `translate(${x},${g.B})`);
+}
+let dragging = false;
+svg.addEventListener('pointerdown', e => { dragging = true; svg.setPointerCapture(e.pointerId); setAim(e.clientX); Kit.haptic('selection'); });
+svg.addEventListener('pointermove', e => { if (dragging) setAim(e.clientX); });
+svg.addEventListener('pointerup', () => dragging = false);
+
+function launch() {
+  return new Promise(res => {
+    if (flying || done || !g) return res();
+    flying = true; Kit.$('go').disabled = true; Kit.haptic('light');
+    const c = aim, m = Math.max(.06, Math.min(.95, .12 + .72 * c + (Kit.rnd() - .5) * .08));
+    const x = g.X(c), y0 = g.B, y1 = g.Y(m), ball = g.ball;
+    ball.setAttribute('cx', x); ball.style.opacity = 1;
+    const o = {t: 0};
+    gsap.to(o, {t: 1, duration: Kit.calm ? .01 : .5 + .6 * m, ease: 'power2.out',
+      onUpdate: () => ball.setAttribute('cy', y0 + (y1 - y0) * o.t),
+      onComplete: () => {
+        shots.push({c, m}); flying = false;
+        const cs = shots.map(s => s.c), spread = Math.max(...cs) - Math.min(...cs);
+        let msg = c < .35 ? 'Clear: System 2 barely works, so little sticks.'
+                : c < .65 ? 'A bit confusing: System 2 wakes up and works.'
+                : 'Confusing: System 2 works hard, and much more sticks.';
+        Kit.$('count').textContent = `${shots.length} of 3 launches`;
+        if (shots.length >= 3 && spread >= .45) {
+          done = true; draw(); finish();
+        } else {
+          draw();
+          const last = shots[shots.length - 1].el;
+          if (!Kit.calm) gsap.from(last, {attr: {r: g.f * 1.4}, opacity: .3, duration: .4, ease: 'back.out(2)'});
+          if (shots.length >= 3) msg += ' Now try a spot far from the others.';
+          else msg += ' Drag elsewhere and launch again.';
+          Kit.$('say').textContent = msg;
+          Kit.$('go').disabled = false;
+        }
+        res();
+      }});
+  });
+}
+
+function finish() {
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (g.trend && !Kit.calm) {
+    const len = g.trend.getTotalLength();
+    g.trend.style.strokeDasharray = `${len}`;
+    gsap.fromTo(g.trend, {strokeDashoffset: len}, {strokeDashoffset: 0, duration: .9, ease: 'power2.inOut', onComplete: () => g.trend.style.strokeDasharray = '7 6'});
+    gsap.from('#why > *', {opacity: 0, y: 8, stagger: .12, duration: .4});
+  }
+}
+
+Kit.$('go').addEventListener('click', () => launch());
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !g) return;
+  gsap.from(g.launcher, {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  const o = {a: .5};
+  gsap.to(o, {a: .75, duration: .5, yoyo: true, repeat: 1, ease: 'sine.inOut', delay: .4,
+    onUpdate: () => { if (!dragging && !flying && shots.length === 0) { aim = o.a; const x = g.X(aim); g.aimLine.setAttribute('x1', x); g.aimLine.setAttribute('x2', x); g.launcher.setAttribute('transform', `translate(${x},${g.B})`); } }});
+};
+Kit.play.card = async () => {
+  for (const c of [.1, .5, .9]) {
+    aim = c; draw();
+    await launch();
+    await new Promise(r => setTimeout(r, 150));
+  }
+  await new Promise(r => setTimeout(r, 1100));
+};
+Kit.single();
+</script>
+</html>

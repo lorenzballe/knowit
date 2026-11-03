@@ -1,0 +1,276 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Flash, then silence</title>
+<!-- Chelyabinsk, 15 February 2013. The reader guesses how long the blast took to reach the city after
+     the flash, then watches a cross-section, sky to city: the light is everywhere at once, the blast
+     front crawls out and reaches Korkino at 88 s and Chelyabinsk between 113 s (south) and 174 s
+     (north), while people walk to their windows to look. Inspired by Veritasium, "These are the
+     asteroids to worry about" (2020).
+     Facts: peak brightness about 30 km up (Popova et al., Science 342, 2013; Brown et al., Nature 503,
+     2013: 29 km); about 500 kt (Brown et al. 2013); some 1,500 hurt, nearly all by glass (1,491 official
+     count; 1,613 sought help, Popova et al.); Korkino factory windows smashed 87.5 s after peak
+     brightness (Heimann et al., SRL 84, 2013, supplement); 113 s in southern Chelyabinsk to 174 s in
+     the north, 86-293 s across the region (Borovicka et al., A&A 585, A90, 2016 catalog; Shrbeny &
+     Borovicka, ESA poster); people flocked to windows (AP, 15 Feb 2013); it came from the direction of
+     the Sun (Jenniskens, KQED; Chodas, Space.com). The drawing is a schematic: the front is placed so it
+     meets each place at its measured time; distances are not drawn to scale.
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.3cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:hidden;border-radius:2cqh;background:linear-gradient(180deg,color-mix(in srgb,var(--edge) 55%,var(--c)) 0%,var(--c) 78%)}
+#opts{display:grid;grid-template-columns:1fr 1fr;gap:1cqh 2.4cqw}
+.opt{font:700 max(2.1cqh,13px)/1.15 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 10%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:1.6cqh;padding:1.35cqh 3.4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic.replay{cursor:pointer}
+.answered .q{font-size:max(2.5cqh,15px)}
+.answered #say{min-height:calc(3 * 1.42em)}
+@container (max-height:700px){.answered .in{gap:1.5cqh}.answered #stage{gap:0}}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Guess, then watch · Chelyabinsk">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE WAIT</span></div>
+    <h2 class="q">A meteor bursts 30 km up, brighter than the Sun. How long until its blast hits your window in Chelyabinsk?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A cross-section from the sky to the ground: the Sun low on the horizon, a meteor streak ending in a burst 30 km up, the town of Korkino nearer and the city of Chelyabinsk farther away."></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Under a second</button>
+        <button class="opt" data-i="1">About 10 seconds</button>
+        <button class="opt" data-i="2">About a minute</button>
+        <button class="opt" data-i="3">2 to 3 minutes</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A flash like that means the blast is still coming: step back from the glass.</div>
+    <div class="foot"><span class="src">Source · Popova et al., Science, 2013 · Borovička et al., A&amp;A, 2016</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), card = Kit.$('card');
+  const RIGHT = 3, OPTS = ['Under a second', 'About 10 seconds', 'About a minute', '2 to 3 minutes'];
+  // Seconds after the flash, from the video records. T0 is where the drawn front meets the ground
+  // right under the burst: the places are set so the front reaches each at its measured time.
+  const KORKINO = 88, SOUTH = 113, NORTH = 174, T0 = 80;
+  const STEPS = [
+    [0, '<b>0 s.</b> 15 February 2013. It came out of the Sun’s glare, unseen. Its flash reaches every window at once.'],
+    [5, '<b>Silence.</b> A trail of smoke hangs in the sky. People go to their windows to look, and film it.'],
+    [45, '<b>Still silent.</b> At the windows, people keep watching the trail.'],
+    [KORKINO, '<b>88 s.</b> The blast reaches Korkino, nearer the burst. A factory’s windows smash.'],
+    [SOUTH, '<b>113 s.</b> Southern Chelyabinsk. Glass blows in on the people watching.'],
+    [NORTH, '<b>174 s.</b> The north of the city, last of all.']
+  ];
+  const END = 'Light took under 0.001 s; the blast, 2 to 3 minutes: time to walk to a window. About 1,500 were hurt, nearly all by glass.';
+  const INK = '#ffffff', SOFT = 'rgba(255,255,255,.6)', WARM = '#ffe6a0', BROKEN = '#0d1f66';
+  let over = false, pick = -1, t = -1, step = -1, G = null, tl = null, finish, ended = new Promise(r => (finish = r));
+
+  const txt = (x, y, s, a, parent) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree'}, a), parent); e.textContent = s; return e; };
+
+  // Sutherland-Hodgman: the front's disc, cut to the sky above the ground.
+  function clip(pts, W, gy) {
+    const inside = [p => p[0] >= 0, p => p[0] <= W, p => p[1] >= 0, p => p[1] <= gy];
+    const cut = [(a, b) => [0, a[1] + (0 - a[0]) / (b[0] - a[0]) * (b[1] - a[1])], (a, b) => [W, a[1] + (W - a[0]) / (b[0] - a[0]) * (b[1] - a[1])],
+      (a, b) => [a[0] + (0 - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), 0], (a, b) => [a[0] + (gy - a[1]) / (b[1] - a[1]) * (b[0] - a[0]), gy]];
+    let out = pts;
+    for (let e = 0; e < 4 && out.length; e++) {
+      const inp = out; out = [];
+      for (let i = 0; i < inp.length; i++) {
+        const c = inp[i], p = inp[(i + inp.length - 1) % inp.length], ci = inside[e](c), pi = inside[e](p);
+        if (ci) { if (!pi) out.push(cut[e](p, c)); out.push(c); } else if (pi) out.push(cut[e](p, c));
+      }
+    }
+    return out;
+  }
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const cq = card.getBoundingClientRect().height / 100;
+    const fs = Math.max(11.5, 1.5 * cq), big = Math.max(18, 3.4 * cq);
+    const gy = H - fs * 3.05;
+    // The burst sits A above the ground; the scene runs 0.85 A to its left and 2 A to its right.
+    const A = Math.max(18, Math.min((W - 14) / 2.9, gy - Math.max(12, fs)));
+    const off = Math.max(0, (W - 14 - 2.9 * A) / 2);
+    const bx = 7 + off + .85 * A, by = gy - A;
+    const X = s => bx + A * Math.sqrt(Math.max(0, (s / T0) ** 2 - 1));
+    const xK = X(KORKINO), xS = X(SOUTH), xN = X(NORTH);
+    const defs = Kit.mk('defs', {}, svg);
+    const glow = Kit.mk('radialGradient', {id: 'glow'}, defs);
+    [[0, 1], [.3, .6], [1, 0]].forEach(([o, a]) => Kit.mk('stop', {offset: o, 'stop-color': WARM, 'stop-opacity': a}, glow));
+    // The streak comes in from low in the east, out of the Sun's glare, about 18 degrees down.
+    const ang = 18 * Math.PI / 180, L = Math.min((bx + 6) / Math.cos(ang), (by - 3) / Math.sin(ang));
+    const x0 = bx - L * Math.cos(ang), y0 = by - L * Math.sin(ang);
+    const lg = Kit.mk('linearGradient', {id: 'trail', gradientUnits: 'userSpaceOnUse', x1: x0, y1: y0, x2: bx, y2: by}, defs);
+    Kit.mk('stop', {offset: 0, 'stop-color': '#fff', 'stop-opacity': 0}, lg); Kit.mk('stop', {offset: 1, 'stop-color': '#fff', 'stop-opacity': .95}, lg);
+    // The Sun, low on the horizon.
+    const sr = Math.max(5, A * .075), sx = Math.max(sr + 6, bx - .62 * A);
+    Kit.mk('circle', {cx: sx, cy: gy, r: sr * 4.2, fill: 'url(#glow)', opacity: .5}, svg);
+    Kit.mk('circle', {cx: sx, cy: gy, r: sr, fill: WARM}, svg);
+    // Where the blast was at 88 s and 113 s stays drawn, faint, as it moves on.
+    const ghosts = [KORKINO, SOUTH].map(() => Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-dasharray': '4 4', opacity: .45}, svg));
+    // The blast front, drawn by update().
+    const frontFill = Kit.mk('path', {fill: 'rgba(255,255,255,.12)'}, svg);
+    const front = Kit.mk('path', {fill: 'none', stroke: INK, 'stroke-width': Math.max(2.2, A * .024), 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    // The light: from the burst to every place at once.
+    const rays = Kit.mk('g', {opacity: 0}, svg);
+    // The streak, then the smoke trail it leaves.
+    const dust = Kit.mk('line', {x1: x0, y1: y0, x2: bx, y2: by, stroke: SOFT, 'stroke-width': Math.max(4, A * .06), 'stroke-linecap': 'round', opacity: 0}, svg);
+    const streak = Kit.mk('line', {x1: x0, y1: y0, x2: bx, y2: by, stroke: 'url(#trail)', 'stroke-width': Math.max(2, A * .025), 'stroke-linecap': 'round'}, svg);
+    const burst = Kit.mk('circle', {cx: bx, cy: by, r: Math.max(6, A * .08), fill: 'url(#glow)'}, svg);
+    Kit.mk('circle', {cx: bx, cy: by, r: Math.max(2, A * .022), fill: '#fff'}, svg);
+    // How high: a dashed line down to the ground.
+    Kit.mk('line', {x1: bx, y1: by + Math.max(6, A * .08), x2: bx, y2: gy, stroke: SOFT, 'stroke-width': 1.3, 'stroke-dasharray': '3 4'}, svg);
+    txt(bx - 6, by + fs * 1.5, '30 km up', {'font-size': fs, 'font-weight': 700, 'text-anchor': 'end', opacity: .92}, svg);
+    // The ground and the buildings on it, Korkino nearer, Chelyabinsk farther.
+    Kit.mk('rect', {x: 0, y: gy, width: W, height: H - gy, fill: 'rgba(8,20,90,.32)'}, svg);
+    const blds = [], hit = Kit.mk('g', {}, svg);
+    const block = (x, w, h) => {
+      const g = Kit.mk('g', {}, svg), wins = [];
+      Kit.mk('rect', {x: x - w / 2, y: gy - h, width: w, height: h, fill: INK, opacity: .92}, g);
+      const s = Math.max(1.6, Math.min(2.6, w / 5));
+      if (h > s * 4 && w > s * 3) for (let wy = gy - h + s * 1.2; wy < gy - s * 1.6; wy += s * 2.1) for (let wx = x - w / 2 + s * .9; wx < x + w / 2 - s * 1.1; wx += s * 1.9) wins.push(Kit.mk('rect', {x: wx, y: wy, width: s, height: s, fill: WARM}, g));
+      const when = T0 * Math.sqrt(((x - bx) / A) ** 2 + 1);
+      // Shards that fly when the front arrives.
+      const sh = Kit.mk('g', {opacity: 0}, hit);
+      for (let k = 0; k < 3; k++) { const a = -Math.PI * (.62 + k * .14), r1 = h * .3 + 2, r2 = r1 + Math.max(3, h * .35); Kit.mk('line', {x1: x + Math.cos(a) * r1, y1: gy - h * .6 + Math.sin(a) * r1 * .6, x2: x + Math.cos(a) * r2, y2: gy - h * .6 + Math.sin(a) * r2 * .6, stroke: INK, 'stroke-width': 1.2, 'stroke-linecap': 'round'}, sh); }
+      blds.push({when, wins, sh, done: false});
+    };
+    const seed = i => Math.abs((Math.sin(i * 12.9898) * 43758.5453) % 1);
+    const hb = A * .2;
+    [-1, 0, 1].forEach((k, i) => block(xK + k * Math.max(4, A * .055), Math.max(3.5, A * .045), Math.max(4, hb * (.32 + .18 * seed(i + 3)))));
+    const n = Math.max(5, Math.round((xN - xS) / Math.max(7, A * .085)));
+    for (let i = 0; i < n; i++) { const x = xS + (i + .5) * (xN - xS) / n; block(x, (xN - xS) / n * .78, Math.max(5, hb * (.45 + .55 * seed(i + 11)))); }
+    Kit.mk('line', {x1: 0, y1: gy, x2: W, y2: gy, stroke: INK, 'stroke-width': 1.5, opacity: .8}, svg);
+    for (const p of [[xK, gy - hb * .4], [(xS + xN) / 2, gy - hb * .6], [xS, gy - hb * .4], [xN, gy - hb * .4]]) Kit.mk('line', {x1: bx, y1: by, x2: p[0], y2: p[1], stroke: WARM, 'stroke-width': 1.2, opacity: .9}, rays);
+    // Names and measured times, under the ground line.
+    const l1 = gy + fs * 1.2, l2 = gy + fs * 2.5;
+    const labK = [txt(xK + fs * .4, l1, 'Korkino', {'font-size': fs, 'font-weight': 700, 'text-anchor': 'end'}, svg), txt(xK + fs * .4, l2, '', {'font-size': fs, 'font-weight': 600, 'text-anchor': 'end'}, svg)];
+    const cx = Math.min(xS - fs * .3, W - 3 - fs * 6.4);
+    const labC = [txt(cx, l1, 'Chelyabinsk', {'font-size': fs, 'font-weight': 700}, svg), txt(cx, l2, '', {'font-size': fs, 'font-weight': 600}, svg)];
+    // The clock, top right: Fraunces, the question's size, on a patch of sky the arcs pass under.
+    const clockBg = Kit.mk('rect', {rx: Math.max(6, fs * .6), fill: 'rgba(31,67,193,.78)'}, svg);
+    const clock = txt(W - 7, big * .95 + 4, '?', {'font-size': big, 'font-weight': 800, 'font-family': 'Fraunces', 'text-anchor': 'end'}, svg);
+    const sub = txt(W - 7, big * .95 + 4 + big * .34 + fs * 1.02, 'from flash to blast', {'font-size': fs, 'font-weight': 600, 'text-anchor': 'end', opacity: .85}, svg);
+    const flash = Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#fff8de', opacity: 0, 'pointer-events': 'none'}, svg);
+    G = {fresh: true, W, H, gy, A, bx, by, front, frontFill, ghosts, rays, dust, streak, burst, blds, clock, sub, clockBg, flash, labK, labC, fs};
+    update(t, true);
+  }
+
+  // The part of the front's circle that is in the sky, as a path.
+  function arc(r) {
+    const {W, gy, bx, by} = G; let d = '', on = false;
+    if (r <= 1) return '';
+    for (let i = 0; i <= 240; i++) {
+      const a = i / 240 * Math.PI * 2, x = bx + r * Math.cos(a), y = by + r * Math.sin(a), ok = x >= 0 && x <= W && y >= 0 && y <= gy;
+      if (ok) { d += (on ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); on = true; } else on = false;
+    }
+    return d;
+  }
+
+  // The picture at time s (seconds after the flash; -1 is before it).
+  function update(s, now) {
+    if (!G) return;
+    const {W, gy, A, bx, by} = G;
+    if (s < 0) {
+      G.front.setAttribute('d', ''); G.frontFill.setAttribute('d', ''); G.ghosts.forEach(g => g.setAttribute('d', ''));
+      G.dust.setAttribute('opacity', 0); G.streak.setAttribute('opacity', 1); G.rays.setAttribute('opacity', 0);
+      setClock('?', 'from flash to blast'); G.labK[1].textContent = ''; G.labC[1].textContent = '';
+      return;
+    }
+    const r = A * s / T0, pts = [];
+    for (let i = 0; i < 180; i++) { const a = i / 180 * Math.PI * 2; pts.push([bx + r * Math.cos(a), by + r * Math.sin(a)]); }
+    const poly = r > 1 ? clip(pts, W, gy) : [];
+    G.frontFill.setAttribute('d', poly.length ? 'M' + poly.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z' : '');
+    G.front.setAttribute('d', arc(r));
+    [KORKINO, SOUTH].forEach((k, i) => G.ghosts[i].setAttribute('d', s > k + 4 ? arc(A * k / T0) : ''));
+    G.streak.setAttribute('opacity', s < .5 ? 1 : 0);
+    G.dust.setAttribute('opacity', s < .5 ? 0 : .42);
+    if (now) G.rays.setAttribute('opacity', .22);
+    for (const b of G.blds) {
+      const was = b.done; b.done = s >= b.when;
+      if (b.done !== was || now) {
+        b.wins.forEach(w => w.setAttribute('fill', b.done ? BROKEN : WARM));
+        if (b.done && !was && !now && !Kit.calm && typeof gsap !== 'undefined') gsap.fromTo(b.sh, {opacity: 1}, {opacity: 0, duration: .9, ease: 'power2.in'});
+        else if (now) b.sh.setAttribute('opacity', 0);
+      }
+    }
+    G.labK.forEach(e => e.setAttribute('opacity', s >= KORKINO ? 1 : .6));
+    G.labC.forEach(e => e.setAttribute('opacity', s >= SOUTH ? 1 : .6));
+    G.labK[1].textContent = s >= KORKINO ? '88 s' : '';
+    G.labC[1].textContent = s >= NORTH ? '113–174 s' : s >= SOUTH ? '113 s' : '';
+    // Once the north of the city is reached, the live front gives way to its dashed ripples.
+    if (now) for (const e of [G.front, G.frontFill]) e.setAttribute('opacity', over ? 0 : 1);
+    if (s < 1) setClock('< 0.001 s', 'the light arrives');
+    else setClock(Math.floor(s) + ' s', s >= NORTH ? 'the north of the city' : s >= SOUTH ? 'the blast hits the city' : s >= KORKINO ? 'the blast hits Korkino' : 'the blast is still coming');
+  }
+  function setClock(a, b) {
+    if (G.clock.textContent === a && G.sub.textContent === b && !G.fresh) return;
+    G.clock.textContent = a; G.sub.textContent = b; G.fresh = false;
+    const p = G.fs * .45, c = G.clock.getBBox(), u = G.sub.getBBox(), x = Math.min(c.x, u.x) - p, y = c.y - p * .5;
+    for (const [k, v] of Object.entries({x, y: Math.max(4, y), width: G.W - 4 - x, height: u.y + u.height + p * .7 - Math.max(4, y)})) G.clockBg.setAttribute(k, v);
+  }
+
+  function caption(s) {
+    let k = -1; for (let i = 0; i < STEPS.length; i++) if (s >= STEPS[i][0]) k = i;
+    if (k !== step) { step = k; if (k >= 0) { say.innerHTML = STEPS[k][1]; if (k >= 3) Kit.haptic('light'); } }
+  }
+
+  function end() {
+    over = true; t = NORTH; update(t, true); say.innerHTML = END;
+    if (!Kit.calm && typeof gsap !== 'undefined') { for (const e of [G.front, G.frontFill]) e.setAttribute('opacity', 1); gsap.to([G.front, G.frontFill], {attr: {opacity: 0}, duration: .7, ease: 'power2.out'}); }
+    Kit.show('keep'); svg.classList.add('replay'); Kit.haptic('success'); finish();
+  }
+
+  function run() {
+    over = false; t = 0; step = -1; update(0, true); caption(0); svg.classList.remove('replay');
+    if (Kit.calm || typeof gsap === 'undefined') { end(); return; }
+    G.rays.setAttribute('opacity', 1);
+    const st = {s: 0};
+    tl && tl.kill();
+    tl = gsap.timeline({onComplete: end});
+    tl.fromTo(G.flash, {opacity: .9}, {opacity: 0, duration: .7, ease: 'power2.out'}, 0)
+      .fromTo(G.burst, {attr: {r: A0() * .5}}, {attr: {r: A0() * .12}, duration: 1.1, ease: 'power2.out'}, 0)
+      .to(G.rays, {opacity: .22, duration: 1, ease: 'power1.in'}, .3);
+    const go = (to, dur, at) => tl.to(st, {s: to, duration: dur, ease: 'none', onUpdate: () => { t = st.s; update(t); caption(t); }}, at);
+    go(1.2, .9, .2); go(5, .5, '>'); go(45, 1.3, '>'); go(KORKINO, 1.3, '>'); tl.to({}, {duration: .55}); go(SOUTH, .9, '>'); tl.to({}, {duration: .55}); go(NORTH, 1.6, '>'); tl.to({}, {duration: .6});
+  }
+  const A0 = () => G ? G.A : 60;
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = pick === RIGHT, said = OPTS[pick];
+    Kit.answer({choice: said, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+    Kit.hide('opts'); card.classList.add('answered');
+    say.innerHTML = STEPS[0][1];
+    requestAnimationFrame(() => { draw(); run(); });
+  });
+  Kit.$('opts').addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+    pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  });
+  // After the story, a tap on the picture plays it again.
+  svg.addEventListener('click', () => { if (svg.classList.contains('replay')) run(); });
+  // The picture keeps its scale when the words under it change length.
+  let queued = false;
+  new ResizeObserver(() => { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; const r = svg.getBoundingClientRect(); if (G && (Math.abs(r.width - G.W) > 1 || Math.abs(r.height - G.H) > 1)) draw(); }); }).observe(svg);
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => {
+    if (Kit.calm || typeof gsap === 'undefined' || !G) return;
+    const len = Math.hypot(G.streak.getAttribute('x2') - G.streak.getAttribute('x1'), G.streak.getAttribute('y2') - G.streak.getAttribute('y1'));
+    gsap.fromTo(G.streak, {attr: {'stroke-dasharray': `${len} ${len}`, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: .9, ease: 'power2.in'});
+    gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', delay: .3});
+  };
+  Kit.play.card = async () => {
+    Kit.$('opts').children[RIGHT].click();
+    await new Promise(r => setTimeout(r, 120));
+    Kit.$('sure').querySelector('[data-v="80"]').click();
+    await ended;
+    await new Promise(r => setTimeout(r, 300));
+  };
+})();
+Kit.single();
+</script>
+</html>

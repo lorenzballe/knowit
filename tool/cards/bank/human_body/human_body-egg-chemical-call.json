@@ -1,0 +1,38 @@
+{
+  "id": "human_body-egg-chemical-call",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Sperm climb the uterus. How do they find the egg?",
+  "answer": "The egg pops out of the ovary and sends out chemical signals. The sperm that survive the trip up the tube are drawn to it, like iron to a magnet. So the egg is not found by luck; its signals pull the sperm in.",
+  "move": "The egg isn't found by luck: its chemical signals pull the sperm in.",
+  "keywords": [
+    "sperm",
+    "egg",
+    "fallopian tube",
+    "uterus",
+    "chemical signals"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four options ask how sperm find the egg in a Fallopian tube. The reader picks one and rates their confidence, then watches a glowing egg send chemical signals that draw the surviving sperm toward it.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vCWzf0yxik8&t=122s",
+  "written": "2026-11-03"
+}

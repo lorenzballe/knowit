@@ -1,0 +1,263 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The prefix that stuck</title>
+<!-- The word for the unit of mass rebuilds itself through time: grave (1793, a litre of water; its
+     lower rungs décigrave, centigrave, gravet) becomes gramme (1795, a thousandth of it: a cube of
+     water a centimetre on a side). Too small to be a working standard, so the reader climbs the new
+     prefixes, x10 a tap (deca, hecto, kilo); the cube grows back to the 1793 grave's size and the
+     standard is made in platinum (1799) as the kilogramme. On a ladder of names, the mark for the base
+     unit goes from the top (grave) to the bottom (gramme) and back to the top (the SI's kilogram),
+     which kept its prefix. At the end the platinum is struck through ("until 2019") under the Planck
+     constant. The cube is to scale (volume x10 a step); the platinum cylinder is to scale for
+     platinum at 21.45 g/cm3 while it sits in the cube.
+     Inspired by Veritasium, "World's Roundest Object!" (2013). The video's claim that 'grave' was
+     dropped for sounding like the title Graf has no source behind it, so the card leaves it out.
+     Facts: NIST, "Kilogram: The Past"; BIPM SI Brochure, 9th ed. (2019), section 3.2 and the
+     definition of the kilogram; Wikipedia, "Grave (unit)" (the 1793 series of names) and "Kilogram".
+     Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#go{align-self:flex-start;min-width:30cqw}
+.say b{font-weight:800}
+/* Three lines kept for the words under the picture, so the picture keeps its size from step to step. */
+#say{min-height:4.26em}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:700px){.answered .in{gap:1.5cqh}.answered .keep{padding-block:1.5cqh}}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap to rebuild · a name through time">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GRAVE TO KILO</span></div>
+    <h2 class="q">Your scale says kilograms, your pills say milligrams. Why is the kilogram the only SI base unit with a prefix?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="A timeline from 1793 to today, the name of the unit of mass in large letters, a cube of water drawn to scale, and a ladder of names with a mark for the base unit."></svg>
+    </div>
+    <p class="say" id="say">In 1793 France named its new unit of mass the <b>grave</b>: the mass of a litre of water.</p>
+    <button class="btn" id="go">Rename it: 1795</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The kilogram is the 1793 <i>grave</i> under a gram’s name. That’s why a pill box says 500 mg, never 500 µkg.</div>
+    <div class="foot"><span class="src">Source · NIST, “Kilogram: The Past”; BIPM, SI Brochure, 9th ed. (2019)</span></div>
+    <!-- The drawing's years and constant are set in the mono face: this keeps it loading with the page. -->
+    <span class="mono" aria-hidden="true" style="position:absolute;left:0;top:0;opacity:0;pointer-events:none">1793 h = 6.626 × 10</span>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), go = Kit.$('go'), card = Kit.$('card');
+  const INK = '#10100c', GROUND = '#FFB000';
+  const YEARS = ['1793', '1795', '1799', 'today'];
+  const FR = ['kilogramme', 'hectogramme', 'décagramme', 'gramme'], EN = ['kilogram', 'hectogram', 'decagram', 'gram'];
+  // Each step: the word (prefix and root), the four rungs of names (1000 g at the top, 1 g at the
+  // bottom), the rung of the base unit, the rung lit, the mass drawn in grams, the year.
+  const STEPS = [
+    {pre: '', root: 'grave', rungs: ['grave', 'décigrave', 'centigrave', 'gravet'], base: 0, on: 0, g: 1000, year: 0, label: '1 litre of water',
+      say: 'In 1793 France named its new unit of mass the <b>grave</b>: the mass of a litre of water.', btn: 'Rename it: 1795'},
+    {pre: '', root: 'gramme', rungs: FR, base: 3, on: 3, g: 1, year: 1, label: '1 cm³ of water',
+      say: 'In 1795 the unit became the <b>gramme</b>, a thousandth of a <i>grave</i>: a cubic centimetre of water, barely bigger than a pea.', btn: '×10'},
+    {pre: 'déca', root: 'gramme', rungs: FR, base: 3, on: 2, g: 10, year: 1, label: '10 g',
+      say: 'Too small to make a practical standard. So climb the prefixes the same law brought in: <b>déca</b>, ten.', btn: '×10'},
+    {pre: 'hecto', root: 'gramme', rungs: FR, base: 3, on: 1, g: 100, year: 1, label: '100 g',
+      say: '<b>Hecto</b>, a hundred: the mass the 1793 list called a <i>décigrave</i>.', btn: '×10'},
+    {pre: 'kilo', root: 'gramme', rungs: FR, base: 3, on: 0, g: 1000, year: 2, label: '1,000 g, in platinum', metal: true,
+      say: '<b>Kilo</b>, a thousand: back to the 1793 <i>grave</i>. In 1799 the standard was made at this mass, in platinum.', btn: 'Today'},
+    {pre: 'kilo', root: 'gram', rungs: EN, base: 0, on: 0, g: 1000, year: 3, label: '', metal: true, h: true,
+      say: 'The SI made the <b>kilogram</b> its base unit, prefix and all. Since 2019 it rests on the Planck constant, not a cylinder.', btn: null},
+  ];
+  let at = 0, L = null, word = {pre: [], root: [], pill: null}, parts = null, busy = false;
+  const calm = () => Kit.calm || typeof gsap === 'undefined';
+  let instant = false;   // a redraw puts everything in place at once
+  const T = (el, v, d = .5, delay = 0, ease = 'power3.out') => { if (calm() || instant) { if (typeof gsap !== 'undefined') gsap.killTweensOf(el); for (const k in v) { if (k === 'attr') for (const a in v.attr) el.setAttribute(a, v.attr[a]); else if (k === 'opacity') el.setAttribute('opacity', v.opacity); } return; } gsap.to(el, Object.assign({duration: d, delay, ease}, v)); };
+  const text = (x, y, s, a, parent) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK}, a), parent); e.textContent = s; return e; };
+
+  // Where the letters of a word fall, in the display face at size F.
+  function advance(str, F) {
+    const t = Kit.mk('text', {x: 0, y: -999, 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': F, 'letter-spacing': -.01 * F}, svg);
+    t.textContent = str; const xs = [0];
+    for (let i = 1; i <= str.length; i++) xs.push(t.getSubStringLength(0, i));
+    t.remove(); return xs;
+  }
+  function wordLayout(pre, root) {
+    const xs = advance(pre + root, L.F), p = pre.length, pad = pre ? L.F * .16 : 0, gap = pre ? L.F * .07 : 0;
+    return {pre: [...pre].map((ch, i) => ({ch, x: pad + xs[i]})), root: [...root].map((ch, j) => ({ch, x: xs[p + j] + 2 * pad + gap})), pillW: pre ? xs[p] + 2 * pad : 0};
+  }
+  // Longest common subsequence of two roots: which letters stay when one name turns into another.
+  function keep(a, b) {
+    const n = a.length, m = b.length, d = Array.from({length: n + 1}, () => new Array(m + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) d[i][j] = a[i] === b[j] ? d[i + 1][j + 1] + 1 : Math.max(d[i + 1][j], d[i][j + 1]);
+    const pairs = []; let i = 0, j = 0;
+    while (i < n && j < m) { if (a[i] === b[j]) { pairs.push([i, j]); i++; j++; } else if (d[i + 1][j] >= d[i][j + 1]) i++; else j++; }
+    return pairs;
+  }
+  // The word is one text, each letter a tspan placed on its own, so the letters can move apart.
+  const letter = (ch, x, fill) => { const e = Kit.mk('tspan', {x, y: L.base, fill, 'fill-opacity': 1}, word.text); e.textContent = ch; return e; };
+
+  function setWord(pre, root, animate) {
+    const lay = wordLayout(pre, root);
+    const fresh = (list, cells, fill, delay0) => cells.map((c, k) => { const e = letter(c.ch, c.x, fill); if (animate && !calm()) { e.setAttribute('fill-opacity', 0); e.setAttribute('y', L.base - L.F * .45); T(e, {attr: {y: L.base, 'fill-opacity': 1}}, .45, delay0 + k * .06); } return {el: e, ch: c.ch}; });
+    const leave = (items, up) => items.forEach((it, k) => { if (!animate || calm()) { it.el.remove(); return; } gsap.to(it.el, {attr: {y: L.base + (up ? -L.F * .5 : L.F * .5), 'fill-opacity': 0}, duration: .32, delay: k * .03, ease: 'power2.in', onComplete: () => it.el.remove()}); });
+    const old = word, oldPre = old.pre.map(o => o.ch).join(''), oldRoot = old.root.map(o => o.ch).join('');
+    let nPre, nRoot;
+    if (oldPre === pre) nPre = old.pre.map((o, k) => { T(o.el, {attr: {x: lay.pre[k].x}}, .5); return o; });
+    else { leave(old.pre, true); nPre = fresh(old.pre, lay.pre, GROUND, .22); }
+    if (oldRoot === root) nRoot = old.root.map((o, k) => { T(o.el, {attr: {x: lay.root[k].x}}, .55, oldPre === pre ? 0 : .12); return o; });
+    else {
+      const pairs = keep(oldRoot, root), kept = new Map(pairs.map(([i, j]) => [j, i])), goneIdx = new Set(old.root.map((o, i) => i).filter(i => !pairs.some(p => p[0] === i)));
+      leave(old.root.filter((o, i) => goneIdx.has(i)), false);
+      nRoot = lay.root.map((c, j) => {
+        if (kept.has(j)) { const o = old.root[kept.get(j)]; T(o.el, {attr: {x: c.x}}, .55, .1); return o; }
+        const e = letter(c.ch, c.x, INK); if (animate && !calm()) { e.setAttribute('fill-opacity', 0); e.setAttribute('y', L.base - L.F * .45); T(e, {attr: {y: L.base, 'fill-opacity': 1}}, .45, .3 + j * .04); }
+        return {el: e, ch: c.ch};
+      });
+    }
+    T(word.pill, {attr: {width: Math.max(.01, lay.pillW)}, opacity: pre ? 1 : 0}, .45);
+    word = {pre: nPre, root: nRoot, pill: word.pill, text: word.text};
+  }
+
+  // A cube drawn in oblique view, its front bottom left corner at (x, y), side s.
+  function cubePts(x, y, s) { const d = s * .34; return {front: `${x},${y} ${x + s},${y} ${x + s},${y - s} ${x},${y - s}`, top: `${x},${y - s} ${x + d},${y - s - d} ${x + s + d},${y - s - d} ${x + s},${y - s}`, side: `${x + s},${y} ${x + s + d},${y - d} ${x + s + d},${y - s - d} ${x + s},${y - s}`}; }
+  function setCube(c, s) { const p = cubePts(L.cx0, L.cy0, s); c.front.setAttribute('points', p.front); c.top.setAttribute('points', p.top); c.side.setAttribute('points', p.side); }
+  const side = g => L.cube * Math.cbrt(g / 1000);
+
+  function draw() {
+    svg.innerHTML = ''; word = {pre: [], root: [], pill: null, text: null};
+    const {W, H} = Kit.fitSvg(svg);
+    const ch = card.getBoundingClientRect().height, fs = Math.max(11.5, ch * .015);
+    // the timeline
+    const tlH = fs * 1.9, mono = {'font-family': 'JetBrains Mono', 'font-weight': 700, 'font-size': fs};
+    // the word: as big as the longest name allows
+    // Fraunces follows its optical size: smaller type is set wider, so measure at the size itself.
+    let F = H * .2;
+    for (let k = 0; k < 4; k++) { const pr = advance('hectogramme', F), wide = pr[pr.length - 1] + F * .39; F = Math.min(H * .2, F * W * .97 / wide); }
+    F = Math.max(20, F);
+    const base = tlH + fs * .7 + F * .78;
+    const yB = base + F * .3 + fs * .8;
+    // the ladder of names, on the right
+    const nameW = Math.max(...[...FR, ...EN, 'décigrave', 'centigrave', 'gravet'].map(n => { const t = text(0, -999, n, {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, svg); const w = t.getComputedTextLength(); t.remove(); return w; }));
+    const tag = (() => { const t = text(0, -999, 'BASE', {'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs * .95, 'letter-spacing': fs * .08}, svg); const w = t.getComputedTextLength(); t.remove(); return w + fs * .9; })();
+    const tagged = Math.max(...['grave', 'gramme', 'kilogram'].map(n => { const t = text(0, -999, n, {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, svg); const w = t.getComputedTextLength(); t.remove(); return w; }));
+    const lw = Math.max(nameW + fs * 2.4, tagged + fs * 2.7 + tag), lx = W - lw;
+    const hp = H - yB, rowH = Math.min(hp / 4, fs * 3.6), ly0 = yB + (hp - rowH * 4) / 2;
+    // the picture, on the left: the cube of a litre as big as the room allows
+    const pw = lx - fs * 1.2, labH = fs * 1.6;
+    const cube = Math.max(20, Math.min((hp - labH) / 1.36, pw / 1.36));
+    L = {W, H, fs, F, base, yB, lx, lw, rowH, ly0, cube, cx0: 1, cy0: H - labH - 2, tag, nameW, tlH, mono};
+
+    // --- timeline
+    const lastW = (() => { const t = text(0, -999, YEARS[3], mono, svg); const w = t.getComputedTextLength(); t.remove(); return w; })();
+    const tl = Kit.mk('g', {}, svg), xs = YEARS.map((y, i) => fs * .55 + i * (W - fs * 1.15 - lastW - fs * .55) / 3);
+    Kit.mk('line', {x1: xs[0], y1: tlH / 2, x2: xs[3] + lastW, y2: tlH / 2, stroke: INK, 'stroke-width': 1.2, opacity: .35}, tl);
+    const backs = YEARS.map((y, i) => Kit.mk('rect', {x: xs[i] - fs * .3, y: tlH / 2 - fs * .8, width: 10, height: fs * 1.6, fill: GROUND}, tl));
+    const yPill = Kit.mk('rect', {x: 0, y: tlH / 2 - fs * .95, width: 10, height: fs * 1.9, rx: fs * .95, fill: INK}, tl);
+    const years = YEARS.map((y, i) => { const t = text(xs[i], tlH / 2 + fs * .36, y, mono, tl); const w = t.getComputedTextLength(); backs[i].setAttribute('width', w + fs * .6); return {t, x: xs[i], w}; });
+    // --- word
+    const wg = Kit.mk('g', {}, svg);
+    word.pill = Kit.mk('rect', {x: 0, y: base - F * .8, width: .01, height: F * 1.02, rx: F * .2, fill: INK, opacity: 0}, wg);
+    word.text = Kit.mk('text', {'font-family': 'Fraunces', 'font-weight': 900, 'font-size': F, 'letter-spacing': -.01 * F}, wg);
+    // --- picture: the litre's ghost, the water cube, the platinum, the constant
+    const pic = Kit.mk('g', {}, svg);
+    const gp = cubePts(L.cx0, L.cy0, cube), ghost = Kit.mk('g', {fill: 'none', stroke: INK, 'stroke-width': 1.3, 'stroke-dasharray': '4 4', 'stroke-linejoin': 'round', opacity: 0}, pic);
+    for (const k of ['front', 'top', 'side']) Kit.mk('polygon', {points: gp[k]}, ghost);
+    const water = Kit.mk('g', {stroke: INK, 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, pic);
+    const cubeEls = {side: Kit.mk('polygon', {fill: '#9fd2f2'}, water), top: Kit.mk('polygon', {fill: '#e4f5ff'}, water), front: Kit.mk('polygon', {fill: '#c6e9ff'}, water)};
+    // platinum, 21.45 g/cm3: a kilogram is a cylinder 3.9 cm across and as tall, against the litre's 10 cm
+    const d = cube * .39, ex = d * .17, mx = L.cx0 + cube * .3, my = L.cy0;
+    const metal = Kit.mk('g', {opacity: 0}, pic), defs = Kit.mk('defs', {}, svg), lg = Kit.mk('linearGradient', {id: 'pt', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+    [['0', '#f6f7f9'], ['.35', '#b9bfc6'], ['.62', '#eef0f3'], ['1', '#8d949c']].forEach(([o, c]) => Kit.mk('stop', {offset: o, 'stop-color': c}, lg));
+    metal.setAttribute('transform', 'translate(0,0) scale(1)');
+    Kit.mk('path', {d: `M${mx},${my - d} L${mx},${my} A${d / 2},${ex} 0 0 0 ${mx + d},${my} L${mx + d},${my - d}`, fill: 'url(#pt)', stroke: INK, 'stroke-width': 1.4, 'vector-effect': 'non-scaling-stroke'}, metal);
+    Kit.mk('ellipse', {cx: mx + d / 2, cy: my - d, rx: d / 2, ry: ex, fill: '#f8f9fb', stroke: INK, 'stroke-width': 1.4, 'vector-effect': 'non-scaling-stroke'}, metal);
+    // The end: the constant and its name on top; below, where there is room, the platinum kilogram
+    // moves down beside its dates and is struck through.
+    const hf = Math.max(12, Math.min(fs * 2.2, pw / 9.9, hp / 5.2)), fH = hf * 2.55 + fs * 2.2, gapE = Math.max(fs * .9, hp * .07);
+    const dC = Math.min((hp - fH - gapE) / 1.5, pw * .34), roomy = dC >= 18;
+    const used = fH + (roomy ? gapE + dC * 1.5 : 0), top0 = yB + Math.max(0, (hp - used) / 2), hy = top0 + hf * .8;
+    const cyTop = top0 + fH + gapE + dC * .25, kC = dC / d, cx1 = L.cx0 + 2;
+    L.end = {roomy, tf: `translate(${cx1 - kC * mx},${cyTop - kC * (my - d)}) scale(${kC})`};
+    const strike = Kit.mk('g', {opacity: 0}, pic);
+    if (roomy) {
+      Kit.mk('line', {x1: cx1 - dC * .15, y1: cyTop + dC * 1.25, x2: cx1 + dC * 1.15, y2: cyTop - dC * .3, stroke: INK, 'stroke-width': Math.max(2.2, fs * .2), 'stroke-linecap': 'round'}, strike);
+      const sx = cx1 + dC + fs * 1.1, sy = cyTop + dC * .5;
+      text(sx, sy - fs * .25, 'platinum kilogram', {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, strike);
+      text(sx, sy + fs * 1.15, 'until 2019', {'font-family': 'Figtree', 'font-weight': 500, 'font-size': fs}, strike);
+    }
+    const hG = Kit.mk('g', {opacity: 0}, pic);
+    const hm = {'font-family': 'JetBrains Mono', 'font-weight': 700, 'font-size': hf};
+    text(L.cx0 + 2, hy, 'h = 6.626 070 15', hm, hG);
+    text(L.cx0 + 2, hy + hf * 1.75 + fs * 1.9, roomy ? 'the Planck constant, since 2019' : 'the Planck constant', {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, hG);
+    const l2 = text(L.cx0 + 2, hy + hf * 1.75, '× 10', hm, hG);
+    const sup = Kit.mk('tspan', {dy: -hf * .45, 'font-size': Math.max(11, hf * .78)}, l2); sup.textContent = '−34';
+    const unit = Kit.mk('tspan', {dy: hf * .45, 'font-size': hf}, l2); unit.textContent = ' J s';
+    const lab = text(L.cx0, H - 2, '', {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, pic);
+    // --- ladder
+    const lad = Kit.mk('g', {}, svg);
+    Kit.mk('line', {x1: lx + fs * .35, y1: ly0 + rowH * .2, x2: lx + fs * .35, y2: ly0 + rowH * 3.8, stroke: INK, 'stroke-width': 1.4, opacity: .45}, lad);
+    const litH = Math.min(rowH * .78, fs * 2), lit = Kit.mk('rect', {x: lx + fs * .9, y: ly0, width: 10, height: litH, rx: litH / 2, fill: INK}, lad);
+    const rows = [0, 1, 2, 3].map(i => { const cy = ly0 + rowH * (i + .5); Kit.mk('line', {x1: lx, y1: cy, x2: lx + fs * .7, y2: cy, stroke: INK, 'stroke-width': 1.4, opacity: .45}, lad); return {cy, t: text(lx + fs * 1.5, cy + fs * .36, '', {'font-family': 'Figtree', 'font-weight': 700, 'font-size': fs}, lad)}; });
+    const baseTag = Kit.mk('g', {}, lad); Kit.mk('rect', {x: 0, y: -fs * .78, width: tag, height: fs * 1.56, rx: fs * .3, fill: 'none', stroke: INK, 'stroke-width': 1.3}, baseTag);
+    text(fs * .45, fs * .34, 'BASE', {'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs * .95, 'letter-spacing': fs * .08}, baseTag);
+    L.litH = litH;
+    parts = {years, yPill, tl, word: wg, ghost, water, cubeEls, metal, strike, hG, lab, rows, lit, baseTag, pw};
+    show(at, false);
+  }
+
+  // Put the card in step i, moving there (animate) or at once.
+  function show(i, animate) {
+    const s = STEPS[i], P = parts, fs = L.fs;
+    instant = !animate;
+    // year
+    const y = P.years[s.year]; T(P.yPill, {attr: {x: y.x - fs * .5, width: y.w + fs}}, .45);
+    P.years.forEach((o, k) => { o.t.setAttribute('fill', k === s.year ? GROUND : INK); o.t.setAttribute('opacity', k === s.year ? 1 : .55); });
+    // word
+    setWord(s.pre, s.root, animate);
+    word.pre.forEach(o => o.el.setAttribute('fill', GROUND));
+    // the cube
+    const target = side(s.g), cur = P.cubeEls.s ?? (animate ? side(STEPS[Math.max(0, i - 1)].g) : target);
+    if (!animate || calm()) { setCube(P.cubeEls, target); P.cubeEls.s = target; }
+    else { const o = {s: cur}; gsap.to(o, {s: target, duration: .7, ease: 'back.out(1.4)', onUpdate: () => setCube(P.cubeEls, o.s)}); P.cubeEls.s = target; }
+    // At a thousand grammes the cube fills the 1793 grave exactly; a beat later it is cast in platinum.
+    const cast = s.metal && !s.h && animate && !calm();
+    if (cast) gsap.timeline().to(P.ghost, {opacity: 1, duration: .2, delay: .6}).to(P.ghost, {opacity: .55, duration: .4, delay: .55});
+    else T(P.ghost, {opacity: i === 0 || s.h ? 0 : .55}, .5);
+    T(P.water, {opacity: s.metal ? 0 : 1}, .5, cast ? 1.3 : 0);
+    if (s.h && L.end.roomy) { T(P.metal, {attr: {transform: L.end.tf}, opacity: 1}, .7, 0, 'power3.inOut'); T(P.strike, {opacity: 1}, .4, animate ? .7 : 0); }
+    else { T(P.metal, {attr: {transform: 'translate(0,0) scale(1)'}, opacity: s.metal && !s.h ? 1 : 0}, .5, cast ? 1.4 : 0); T(P.strike, {opacity: 0}, .2); }
+    T(P.hG, {opacity: s.h ? 1 : 0}, .5, s.h && animate ? .3 : 0);
+    P.lab.textContent = cast ? '1,000 g = 1 grave' : s.label;
+    if (cast) gsap.delayedCall(1.35, () => { if (at === i) P.lab.textContent = s.label; });
+    // the ladder
+    P.rows.forEach((r, k) => { const name = s.rungs[k]; if (r.t.textContent !== name) { if (animate && !calm()) { gsap.fromTo(r.t, {opacity: 0}, {opacity: 1, duration: .4, delay: .1 + k * .05}); } r.t.textContent = name; } r.t.setAttribute('fill', k === s.on ? GROUND : INK); });
+    const on = P.rows[s.on], w = on.t.getComputedTextLength();
+    T(P.lit, {attr: {y: on.cy - L.litH / 2, width: w + fs * 1.2}}, .45);
+    const b = P.rows[s.base], bw = b.t.getComputedTextLength(), bx = L.lx + fs * 1.5 + bw + fs * 1.0;
+    if (!animate || calm()) P.baseTag.setAttribute('transform', `translate(${bx},${b.cy})`);
+    else gsap.to(P.baseTag, {attr: {transform: `translate(${bx},${b.cy})`}, duration: .6, ease: 'power3.inOut'});
+    // the words below
+    say.innerHTML = s.say;
+    if (s.btn) go.textContent = s.btn;
+    instant = false;
+  }
+
+  function next() {
+    if (at >= STEPS.length - 1 || busy) return;
+    if (at === STEPS.length - 2) {
+      // The end makes room for what to keep first, so the last change plays at the card's final size.
+      busy = true; Kit.hide('go'); card.classList.add('answered'); Kit.show('keep');
+      requestAnimationFrame(() => { draw(); at++; show(at, true); Kit.haptic('success'); busy = false; });
+      return;
+    }
+    at++; show(at, true); Kit.haptic('light');
+  }
+  go.addEventListener('click', next);
+  // If the picture's box changes all the same, draw it again at its real size.
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { if (!L || busy) return; const b = svg.getBoundingClientRect(); if (Math.abs(b.width - L.W) < 1 && Math.abs(b.height - L.H) < 1) return; draw(); }).observe(svg);
+  Kit.onShow.card = draw;
+  // Measured before the mono face is in, the years would get the fallback's widths: draw again once it is.
+  if (document.fonts && document.fonts.load) document.fonts.load('700 12px "JetBrains Mono"', '1793 h=6.0').then(() => { if (L && !busy) draw(); }, () => {});
+  Kit.onEnter.card = () => { if (!calm()) gsap.from(word.root.map(o => o.el), {attr: {y: L.base - L.F * .4, 'fill-opacity': 0}, stagger: .06, duration: .45, ease: 'power3.out'}); };
+  Kit.play.card = async () => { while (at < STEPS.length - 1) { next(); await new Promise(r => setTimeout(r, Kit.calm ? 40 : 1000)); } };
+})();
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<!-- slug: science-hydrophobic-sphere-race -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0}
+.opt{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.3cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLUID DRAG</span></div>
+    <h2 class="q">How much faster does a water-repelling sphere move through water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">About the same</button>
+        <button class="opt" data-i="1">About 33% faster</button>
+        <button class="opt" data-i="2">About 10× faster</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About 33% faster</p><p class="body">Its water-repelling coat holds a thin layer of air around it, so the water slides past air instead of gripping the surface. Measured with that air included, the shape's drag coefficient is about 10 times lower.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are. Then watch the race.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A trapped skin of air lets a sphere slip through water with far less drag.</div>
+    <div class="foot"><span class="src">Source · The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const st = {a: 0, b: 0, mark: 0, done: 0};
+const T = 2.0, RATIO = 1.33;
+let G = null;
+
+function render() {
+  if (!G) return;
+  const {x1, x2, yT, yB, r} = G;
+  const y = p => yT + p * (yB - yT);
+  const ya = y(st.a), yb = y(st.b);
+  G.plain.setAttribute('transform', `translate(${x1},${yb})`);
+  G.hydro.setAttribute('transform', `translate(${x2},${ya})`);
+  const movA = st.a > 0 && st.a < 1, movB = st.b > 0 && st.b < 1;
+  G.wake.setAttribute('opacity', movA ? .85 : 0);
+  G.eddy.setAttribute('opacity', movB ? .75 : 0);
+  const ym = y(1 / RATIO);
+  G.markLine.setAttribute('y1', ym); G.markLine.setAttribute('y2', ym);
+  G.markText.setAttribute('y', ym + G.f * .35);
+  G.mark.setAttribute('opacity', st.mark);
+  G.done.setAttribute('opacity', st.done);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.max(8, Math.min(W * .075, H * .06));
+  const x1 = W * .3, x2 = W * .7;
+  const top = f * 2, bot = H - f * 2;
+  const yT = top + r * 2.4, yB = bot - r * 1.5;
+  // tank
+  Kit.mk('rect', {x: W * .06, y: top, width: W * .88, height: bot - top, rx: f * .8, fill: '#1c4a73'}, svg);
+  Kit.mk('rect', {x: W * .06, y: top, width: W * .88, height: f * .5, rx: f * .25, fill: '#5ea6d8', opacity: .6}, svg);
+  Kit.mk('line', {x1: W / 2, x2: W / 2, y1: top + f, y2: bot - f * .6, stroke: '#ffffff', 'stroke-opacity': .15, 'stroke-dasharray': '3 5'}, svg);
+  // lane titles
+  const t1 = Kit.mk('text', {x: x1, y: f * 1.3, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); t1.textContent = 'Plain';
+  const t2 = Kit.mk('text', {x: x2, y: f * 1.3, 'text-anchor': 'middle', fill: 'var(--k)', 'font-size': f, 'font-weight': 700, 'font-family': 'var(--body)'}, svg); t2.textContent = 'Water-repelling';
+  // plain sphere with eddies behind
+  const plain = Kit.mk('g', {}, svg);
+  const eddy = Kit.mk('g', {fill: 'none', stroke: '#9fd0f0', 'stroke-width': Math.max(1.5, r * .12), 'stroke-linecap': 'round'}, plain);
+  Kit.mk('path', {d: `M${-r * .9},${-r * .8} q${-r * .5},${-r * .7} ${r * .1},${-r * 1.2}`}, eddy);
+  Kit.mk('path', {d: `M${r * .9},${-r * .8} q${r * .5},${-r * .7} ${-r * .1},${-r * 1.2}`}, eddy);
+  Kit.mk('path', {d: `M${-r * .4},${-r * 1.9} q${r * .4},${-r * .5} ${r * .8},0`}, eddy);
+  Kit.mk('circle', {r, fill: '#f2b33d'}, plain);
+  Kit.mk('circle', {r: r * .28, cx: -r * .35, cy: -r * .35, fill: '#fff', opacity: .55}, plain);
+  // hydrophobic sphere with air shell and air wake
+  const hydro = Kit.mk('g', {}, svg);
+  const wake = Kit.mk('ellipse', {cx: 0, cy: -r * 1.5, rx: r * .5, ry: r * 1.2, fill: '#e6f3ff', opacity: .85}, hydro);
+  Kit.mk('circle', {r: r * 1.2, fill: '#e6f3ff', 'fill-opacity': .35, stroke: '#f2f9ff', 'stroke-width': Math.max(1.5, r * .12)}, hydro);
+  Kit.mk('circle', {r, fill: '#f2b33d'}, hydro);
+  Kit.mk('circle', {r: r * .28, cx: -r * .35, cy: -r * .35, fill: '#fff', opacity: .55}, hydro);
+  // marker: where plain is when the coated one lands
+  const mark = Kit.mk('g', {opacity: 0}, svg);
+  const markLine = Kit.mk('line', {x1: x1 - r * 1.8, x2: x1 + r * 1.8, stroke: '#ffffff', 'stroke-width': 2, 'stroke-dasharray': '4 4'}, mark);
+  const markText = Kit.mk('text', {x: W / 2, 'text-anchor': 'middle', fill: '#ffffff', 'font-size': f * .9, 'font-weight': 700, 'font-family': 'var(--body)'}, mark);
+  markText.textContent = '¼ to go';
+  // finish labels
+  const done = Kit.mk('g', {opacity: 0, 'font-size': f, 'font-weight': 800, 'font-family': 'var(--mono)', 'text-anchor': 'middle', fill: 'var(--k)'}, svg);
+  const d1 = Kit.mk('text', {x: x1, y: H - f * .5}, done); d1.textContent = 'speed 1×';
+  const d2 = Kit.mk('text', {x: x2, y: H - f * .5}, done); d2.textContent = 'speed 1.33×';
+  G = {x1, x2, yT, yB, r, f, plain, hydro, wake, eddy, mark, markLine, markText, done};
+  render();
+};
+
+function race() {
+  if (Kit.calm) { Object.assign(st, {a: 1, b: 1, mark: 1, done: 1}); render(); return; }
+  Object.assign(st, {a: 0, b: 0, mark: 0, done: 0});
+  gsap.to(st, {a: 1, duration: T, ease: 'none', onUpdate: render, onComplete: () => {
+    Kit.haptic('light');
+    gsap.to(st, {mark: 1, duration: .25, onUpdate: render});
+  }});
+  gsap.to(st, {b: 1, duration: T * RATIO, ease: 'none', onUpdate: render, onComplete: () => {
+    gsap.to(st, {done: 1, duration: .4, onUpdate: render});
+  }});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  race();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3400)); };
+Kit.single();
+</script>
+</html>

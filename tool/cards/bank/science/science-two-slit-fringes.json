@@ -1,0 +1,38 @@
+{
+  "id": "science-two-slit-fringes",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What pattern appears on the screen when two narrow slits are used?",
+  "answer": "Two narrow slits produce one bright middle, not two lines. At the middle both light paths are equal, so the waves arrive in step and add up. Where one path is half a wave longer they cancel, and where it is a whole wave longer they add up again.",
+  "move": "Two slits, one bright middle: light waves that arrive in step add up.",
+  "keywords": [
+    "double-slit",
+    "interference",
+    "light waves",
+    "narrow slits",
+    "bright middle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A screen lit by light from two narrow slits. Drag along the screen to see where the light lands. The question asks what pattern appears: one bright middle, or two separate lines.",
+    "ground": "#080a11"
+  },
+  "source": "Veritasium, “The Original Double Slit Experiment” (YouTube, 2013)",
+  "reference": "https://www.youtube.com/watch?v=Iuv6hY6zsd0",
+  "written": "2026-11-03"
+}

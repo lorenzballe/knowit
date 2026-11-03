@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-eruption-forecast-odds -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+#hold{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;width:100%;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none;transition:transform .12s}
+#hold.down{transform:scale(.97);opacity:.9}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">How many expert eruption forecasts from 1990–2013 turned out correct?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="hold">Hold to check the forecasts</button>
+      <div id="why" class="gone">
+        <p class="big">Only 19%</p>
+        <p class="body">A study checked what scientists had forecast for 190 eruptions between 1990 and 2013. Only about 1 forecast in 5 proved right. So today there is no single reliable way to say when a volcano will erupt.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button: each dot is one eruption, checked against its forecast.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Eruption forecasts were right only about 1 time in 5.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Terremoti Campi Flegrei, la futura eruzione 3D e i possibili scenari - mini documentario” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 190, OK = 36; // 36 of 190 = 19%
+// Which eruptions had a correct forecast, and the order they get checked.
+const idx = [...Array(N).keys()];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Kit.rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const right = new Set(shuffle(idx).slice(0, OK));
+const order = shuffle(idx);
+const pre = [0]; order.forEach((d, i) => pre.push(pre[i] + (right.has(d) ? 1 : 0)));
+
+let prog = 0, shown = 0, holding = false, done = false, last = 0;
+let dots = [], ringOk, ringNo, txtBig, txtSmall, C = 1;
+
+const INK = 'var(--k)';
+const DIM = 'color-mix(in srgb,var(--k) 28%,transparent)';
+const OFF = 'color-mix(in srgb,var(--k) 12%,transparent)';
+
+function paintDot(d, animate) {
+  const el = dots[d]; if (!el) return;
+  const ok = right.has(d);
+  el.style.fill = ok ? INK : DIM;
+  el.style.stroke = 'none';
+  if (animate && !Kit.calm) gsap.fromTo(el, {scale: ok ? 1.9 : 1.3}, {scale: 1, duration: ok ? .45 : .25, ease: 'back.out(3)', transformOrigin: 'center', svgOrigin: el.getAttribute('cx') + ' ' + el.getAttribute('cy')});
+}
+
+function update() {
+  const n = shown, c = pre[n], w = n - c;
+  ringOk.setAttribute('stroke-dasharray', `${C * c / N} ${C}`);
+  ringNo.setAttribute('stroke-dasharray', `${C * w / N} ${C}`);
+  ringNo.setAttribute('stroke-dashoffset', `${-C * c / N}`);
+  if (n === 0) { txtBig.textContent = '?'; txtSmall.textContent = 'right'; }
+  else { txtBig.textContent = Math.round(c / n * 100) + '%'; txtSmall.textContent = `right · ${n}/${N}`; }
+}
+
+Kit.onShow.card = () => {
+  const s = Kit.$('pic'); const {W, H, f} = Kit.fitSvg(s); s.innerHTML = ''; dots = [];
+  const fs = Math.max(12, f * .8);
+  const cols = 19, rows = 10;
+  const cell = Math.min((W - 4) / cols, (H * .48) / rows);
+  const gW = cell * cols, gH = cell * rows;
+  const gx = (W - gW) / 2, gy = H - gH - fs * 1.7;
+  const cap = Kit.mk('text', {x: W / 2, y: H - fs * .35, 'text-anchor': 'middle', style: `font:600 ${fs}px var(--body);fill:var(--k);opacity:.75`}, s);
+  cap.textContent = '● forecast right   ● forecast wrong';
+  const avail = gy - fs * .8;
+  const R = Math.max(30, Math.min(avail / 2 - 2, W * .3));
+  const cx = W / 2, cy = Math.max(R + 2, avail / 2);
+  const sw = R * .3, rm = R - sw / 2; C = 2 * Math.PI * rm;
+  Kit.mk('circle', {cx, cy, r: rm, fill: 'none', 'stroke-width': sw, style: `stroke:${OFF}`}, s);
+  ringNo = Kit.mk('circle', {cx, cy, r: rm, fill: 'none', 'stroke-width': sw, transform: `rotate(-90 ${cx} ${cy})`, style: `stroke:${DIM}`}, s);
+  ringOk = Kit.mk('circle', {cx, cy, r: rm, fill: 'none', 'stroke-width': sw, transform: `rotate(-90 ${cx} ${cy})`, style: `stroke:${INK}`}, s);
+  const bs = Math.max(16, R * .4), ss = Math.max(12, R * .13);
+  txtBig = Kit.mk('text', {x: cx, y: cy + bs * .2, 'text-anchor': 'middle', style: `font:800 ${bs}px var(--display);fill:var(--k)`}, s);
+  txtSmall = Kit.mk('text', {x: cx, y: cy + bs * .2 + ss * 1.6, 'text-anchor': 'middle', style: `font:600 ${ss}px var(--body);fill:var(--k);opacity:.75`}, s);
+  const g = Kit.mk('g', {id: 'grid'}, s);
+  for (let i = 0; i < N; i++) {
+    const x = gx + (i % cols + .5) * cell, y = gy + (Math.floor(i / cols) + .5) * cell;
+    dots.push(Kit.mk('circle', {cx: x, cy: y, r: cell * .36, 'stroke-width': Math.max(1, cell * .08), style: `fill:none;stroke:${DIM}`}, g));
+  }
+  for (let k = 0; k < shown; k++) paintDot(order[k], false);
+  update();
+};
+
+function finish() {
+  if (done) return; done = true; holding = false;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.onShow.card();
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+function tick(t) {
+  if (!holding || done) return;
+  const dt = last ? Math.min(.05, (t - last) / 1000) : 0; last = t;
+  prog = Math.min(N, prog + dt * 46);
+  const n = Math.floor(prog);
+  while (shown < n) { const d = order[shown]; shown++; paintDot(d, true); if (right.has(d)) Kit.haptic('light'); }
+  update();
+  if (shown >= N) { finish(); return; }
+  requestAnimationFrame(tick);
+}
+
+const btn = Kit.$('hold');
+const start = e => { if (e) e.preventDefault(); if (done || holding) return; holding = true; last = 0; btn.classList.add('down'); btn.textContent = 'Checking… keep holding'; Kit.haptic('selection'); requestAnimationFrame(tick); };
+const stop = () => { if (!holding) return; holding = false; btn.classList.remove('down'); if (!done) btn.textContent = 'Hold to keep checking'; };
+btn.addEventListener('pointerdown', start);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, stop));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#grid circle', {opacity: 0, duration: .3, stagger: {each: .004, from: 'random'}}); };
+
+Kit.play.card = async () => {
+  for (let k = shown; k < N; k++) { shown++; }
+  prog = N; Kit.onShow.card(); finish();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

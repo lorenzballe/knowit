@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- slug: nature-la-luna-shale -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#art{flex:1;min-height:0;position:relative}
+#art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOURCE ROCK</span></div>
+    <h2 class="q">What Cretaceous rock is the main source of Venezuela's oil?</h2>
+    <div class="stagebox" id="stage">
+      <div id="art"><svg id="col"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Coarse sandstone from ancient rivers</button>
+        <button class="opt" data-i="1">Organic-rich shale from shallow seas</button>
+        <button class="opt" data-i="2">Granite from deep magma</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Organic-rich marine shale</p><p class="body">120–90 million years ago, shallow, warm, life-filled seas covered much of northern Venezuela. Dead plankton, algae and microbes piled up on the seabed in thick, organic-rich layers: the La Luna formation, the oil's source rock.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the rock that hides behind the “?” layer. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Venezuela's oil began as Cretaceous sea life buried in mud.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La questione "Petrolio Venezuela" spiegata dal punto di vista geologico e industriale” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, G = null, done = false, tl = null;
+const INK = 'fill:var(--k)';
+
+function draw(){
+  const svg = Kit.$('col'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg); const fs = Math.max(f * .95, 12);
+  const cx = W * .04, cw = W * .46, top = H * .2, l1 = H * .24, l2 = H * .26, bot = H * .98;
+  const yT = top + l1, yB = yT + l2, lx = cx + cw + W * .05;
+  const g = {cx, cw, top, l1, l2, yT, yB, bot, fs, W, H};
+  // sea (only during the rewind)
+  g.sea = Kit.mk('g', {opacity: 0}, svg);
+  const sTop = H * .12;
+  Kit.mk('rect', {x: cx, y: sTop, width: cw, height: yT - sTop, fill: '#2a93b8', rx: 4}, g.sea);
+  Kit.mk('path', {d: `M${cx} ${sTop+3} q${cw/8} -6 ${cw/4} 0 t${cw/4} 0 t${cw/4} 0 t${cw/4} 0`, fill: 'none', stroke: '#bfeaff', 'stroke-width': 2.5}, g.sea);
+  Kit.mk('circle', {cx: cx + cw * .86, cy: sTop - H * .02, r: Math.max(H * .035, 8), fill: '#ffcd3c'}, g.sea);
+  // older rocks
+  Kit.mk('rect', {x: cx, y: yB, width: cw, height: bot - yB, fill: '#7a6c60'}, svg);
+  for (let i = 1; i < 4; i++) Kit.mk('line', {x1: cx, x2: cx + cw, y1: yB + (bot - yB) * i / 4, y2: yB + (bot - yB) * i / 4, stroke: '#5f534a', 'stroke-width': 1.5}, svg);
+  // target layer
+  g.tgt = Kit.mk('rect', {x: cx, y: yT, width: cw, height: l2, fill: '#9c968e'}, svg);
+  g.ink = Kit.mk('rect', {x: cx, y: yB, width: cw, height: 0, fill: '#1b1612'}, svg);
+  g.lam = Kit.mk('g', {opacity: 0}, svg);
+  for (let i = 1; i < 6; i++) Kit.mk('line', {x1: cx, x2: cx + cw, y1: yT + l2 * i / 6, y2: yT + l2 * i / 6, stroke: '#3d342c', 'stroke-width': 1.2}, g.lam);
+  g.glow = Kit.mk('rect', {x: cx, y: yT, width: cw, height: l2, fill: 'none', stroke: '#ffb21a', 'stroke-width': 3.5, opacity: 0}, svg);
+  g.q = Kit.mk('text', {x: cx + cw / 2, y: yT + l2 / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', style: `font:800 ${fs * 2}px var(--display)`}, svg); g.q.textContent = '?';
+  // plankton
+  g.pk = Kit.mk('g', {}, svg);
+  // younger rocks
+  g.young = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {x: cx, y: top, width: cw, height: l1, fill: '#e2c48f'}, g.young);
+  for (let i = 0; i < 40; i++) Kit.mk('circle', {cx: cx + 4 + Kit.rnd() * (cw - 8), cy: top + 4 + Kit.rnd() * (l1 - 8), r: 1.6, fill: '#b8955c'}, g.young);
+  // labels
+  const lab = (t, y, w = 700) => { const e = Kit.mk('text', {x: lx, y, 'dominant-baseline': 'central', style: `${INK};font:${w} ${fs}px var(--body)`}, svg); e.textContent = t; return e; };
+  const gap = fs * 1.4;
+  const y2 = yT + l2 / 2 - fs * .7, y2b = y2 + gap;
+  const y1 = Math.min(top + l1 / 2, y2 - gap);
+  const y3 = Math.max((yB + bot) / 2, y2b + gap);
+  g.time = Kit.mk('text', {x: cx, y: H * .045, 'dominant-baseline': 'central', style: `${INK};font:800 ${fs}px var(--mono)`}, svg); g.time.textContent = 'TODAY';
+  g.labSea = lab('Shallow, warm sea', y1); g.labSea.setAttribute('opacity', 0);
+  g.lab1 = lab('Younger rocks', y1);
+  g.lab2 = lab('?', y2, 800);
+  g.lab2b = lab('120–90 Ma', y2b, 600); g.lab2b.setAttribute('opacity', 0);
+  g.lab3 = lab('Older rocks', y3);
+  G = g;
+  if (done) finalState();
+}
+
+function finalState(){
+  const g = G;
+  gsap.set(g.ink, {attr: {y: g.yT, height: g.l2}});
+  gsap.set([g.lam, g.glow, g.lab2b, g.young, g.lab1], {opacity: 1});
+  gsap.set([g.q, g.sea, g.labSea], {opacity: 0});
+  g.lab2.textContent = 'La Luna shale'; g.time.textContent = 'TODAY';
+}
+
+function reveal(){
+  done = true;
+  if (Kit.calm) { finalState(); return; }
+  const g = G; tl = gsap.timeline({onComplete: () => Kit.haptic('success')});
+  tl.call(() => g.time.textContent = '120 MILLION YEARS AGO')
+    .to([g.young, g.lab1], {opacity: 0, y: -10, duration: .5})
+    .to([g.sea, g.labSea], {opacity: 1, duration: .5}, '<.2')
+    .to(g.q, {opacity: 0, duration: .3}, '<');
+  const cols = ['#c7ef6a', '#9be38a', '#fff3a0', '#e7ffd0'];
+  for (let i = 0; i < 46; i++) {
+    const c = Kit.mk('circle', {cx: g.cx + 6 + Kit.rnd() * (g.cw - 12), cy: g.H * .14 + Kit.rnd() * g.l1 * .6, r: Math.max(2, g.W * .008), fill: cols[i % 4], opacity: 0}, g.pk);
+    tl.to(c, {opacity: 1, duration: .1}, 1 + i * .045)
+      .to(c, {attr: {cy: g.yT - 2}, duration: .9, ease: 'power1.in'}, 1 + i * .045 + .05)
+      .to(c, {opacity: 0, duration: .2}, '>-.05');
+  }
+  tl.to(g.ink, {attr: {y: g.yT, height: g.l2}, duration: 2.6, ease: 'none'}, 1.4)
+    .call(() => g.time.textContent = '90 MILLION YEARS AGO', null, 3.4)
+    .to(g.lam, {opacity: 1, duration: .4}, 4)
+    .to([g.sea, g.labSea], {opacity: 0, duration: .5}, 4.4)
+    .call(() => g.time.textContent = 'TODAY', null, 4.6)
+    .to([g.young, g.lab1], {opacity: 1, y: 0, duration: .5}, 4.6)
+    .call(() => g.lab2.textContent = 'La Luna shale', null, 5)
+    .to(g.lab2b, {opacity: 1, duration: .4}, 5)
+    .to(g.glow, {opacity: 1, duration: .3, repeat: 3, yoyo: true}, 5)
+    .set(g.glow, {opacity: 1});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { if (tl) { tl.kill(); tl = null; } draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (G && !done) gsap.fromTo(G.q, {opacity: .3}, {opacity: 1, duration: .8, repeat: 3, yoyo: true});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 100));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

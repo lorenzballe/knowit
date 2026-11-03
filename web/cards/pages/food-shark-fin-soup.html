@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- slug: food-shark-fin-soup -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:visible}
+#info{display:flex;flex-direction:column;gap:.6cqh;min-height:9cqh;overflow-wrap:anywhere}
+#info .big{margin:0}
+#info .body{margin:0}
+.hit{cursor:pointer}
+.mk text{font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LUXURY FOOD</span></div>
+    <h2 class="q">How much can a bowl of shark-fin soup cost in Asia?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A bowl of shark-fin soup with a price tag"></svg>
+      <div id="info"><p class="big" id="ib">One bowl, three secrets</p><p class="body" id="it">Each glowing dot hides part of the story.</p></div>
+    </div>
+    <p class="say" id="say">Tap the soup, the steam and the price tag.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A luxury price on a bowl puts a price on every shark's fin.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Mangiamo carne di squalo senza saperlo: l’Italia è il terzo importatore a livello mondiale” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const found = new Set();
+const INFO = {
+  fin:   {big: 'Dorsal fins', body: 'Sharks are caught for their dorsal fins, used as food mainly in the Asian market.'},
+  steam: {big: 'An aphrodisiac', body: 'In Asia, shark fin is considered an aphrodisiac food.'},
+  tag:   {big: 'Up to $300', body: 'A single bowl of shark-fin soup can cost as much as $300.'}
+};
+let G = {}, price = {v: 0};
+
+function draw() {
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('.mk');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f);
+  const s = Math.min(W, H * 1.15);
+  const cx = W / 2, sy = H * 0.58, rx = s * 0.40, ry = rx * 0.22;
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const card = getComputedStyle(Kit.$('card')).getPropertyValue('--c').trim() || '#fff';
+  G = {W, H, fs, cx, sy, rx, ry};
+
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'above'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: sy + ry * 0.2}, cp);
+
+  // shadow
+  Kit.mk('ellipse', {cx, cy: sy + rx * 0.78, rx: rx * 0.7, ry: ry * 0.45, fill: ink, opacity: .12}, svg);
+
+  // steam
+  const steam = Kit.mk('g', {class: 'hit', 'data-h': 'steam'}, svg);
+  const steamPaths = [];
+  [-0.45, -0.18, 0.1].forEach((o, i) => {
+    const x = cx + rx * o, y0 = sy - ry * 0.4, y1 = H * 0.14 + i * H * 0.03;
+    const d = `M${x},${y0} C${x - rx * .12},${(y0 * 2 + y1) / 3} ${x + rx * .12},${(y0 + y1 * 2) / 3} ${x},${y1}`;
+    Kit.mk('path', {d, fill: 'none', stroke: 'transparent', 'stroke-width': rx * 0.18}, steam);
+    steamPaths.push(Kit.mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': Math.max(2, rx * 0.025), 'stroke-linecap': 'round', opacity: found.has('steam') ? .75 : .35}, steam));
+  });
+  G.steamPaths = steamPaths;
+
+  // dorsal fin rising from the soup
+  const finG = Kit.mk('g', {'clip-path': 'url(#above)'}, svg);
+  const fh = rx * 0.62, fb = cx + rx * 0.22;
+  const fin = Kit.mk('path', {
+    d: `M${fb - rx * .26},${sy + ry * .1} C${fb - rx * .12},${sy - fh * .5} ${fb - rx * .02},${sy - fh * .9} ${fb + rx * .08},${sy - fh} C${fb + rx * .04},${sy - fh * .6} ${fb + rx * .1},${sy - fh * .2} ${fb + rx * .22},${sy + ry * .1} Z`,
+    fill: '#5d6b78', stroke: ink, 'stroke-width': Math.max(1.5, rx * .015)
+  }, finG);
+  G.fin = fin;
+  gsap.set(fin, {y: found.has('fin') ? 0 : fh * 1.15});
+
+  // bowl body
+  const body = `M${cx - rx},${sy} C${cx - rx},${sy + rx * .9} ${cx + rx},${sy + rx * .9} ${cx + rx},${sy} Z`;
+  Kit.mk('path', {d: `M${cx - rx * .3},${sy + rx * .62} L${cx - rx * .34},${sy + rx * .75} L${cx + rx * .34},${sy + rx * .75} L${cx + rx * .3},${sy + rx * .62} Z`, fill: '#efe7d6', stroke: ink, 'stroke-width': Math.max(1.5, rx * .015)}, svg);
+  Kit.mk('path', {d: body, fill: '#fbf7ee', stroke: ink, 'stroke-width': Math.max(2, rx * .02)}, svg);
+  // blue band
+  Kit.mk('path', {d: `M${cx - rx * .93},${sy + rx * .2} C${cx - rx * .6},${sy + rx * .42} ${cx + rx * .6},${sy + rx * .42} ${cx + rx * .93},${sy + rx * .2}`, fill: 'none', stroke: '#2e5aa8', 'stroke-width': Math.max(3, rx * .05)}, svg);
+  for (let i = -3; i <= 3; i++) {
+    const x = cx + i * rx * .2;
+    Kit.mk('circle', {cx: x, cy: sy + rx * .42 + Math.abs(i) * -rx * .035 - (Math.abs(i) === 3 ? rx * .02 : 0), r: Math.max(2, rx * .025), fill: '#2e5aa8'}, svg);
+  }
+  // soup (behind fin base: drawn as the rim, fin clip at surface)
+  const soup = Kit.mk('g', {class: 'hit', 'data-h': 'fin'}, svg);
+  Kit.mk('ellipse', {cx, cy: sy, rx, ry, fill: '#fbf7ee', stroke: ink, 'stroke-width': Math.max(2, rx * .02)}, soup);
+  Kit.mk('ellipse', {cx, cy: sy + ry * .08, rx: rx * .9, ry: ry * .78, fill: '#d9a441'}, soup);
+  // fin strands
+  for (let i = 0; i < 14; i++) {
+    const a = Kit.rnd() * Math.PI * 2, r = Kit.rnd() * .75;
+    const x = cx + Math.cos(a) * rx * .8 * r, y = sy + ry * .08 + Math.sin(a) * ry * .6 * r;
+    const L = rx * (.08 + Kit.rnd() * .1), t = Kit.rnd() * .6 - .3;
+    Kit.mk('line', {x1: x - L / 2, y1: y - L * t / 2, x2: x + L / 2, y2: y + L * t / 2, stroke: '#f6e2a8', 'stroke-width': Math.max(1.5, rx * .014), 'stroke-linecap': 'round'}, soup);
+  }
+  // fin redraw on top of soup surface so it emerges from it
+  svg.appendChild(finG);
+
+  // price tag
+  const tx = cx + rx * .62, ty = H * 0.06, tw = Math.max(fs * 4.6, rx * .5), th = fs * 2.4;
+  const tag = Kit.mk('g', {class: 'hit', 'data-h': 'tag'}, svg);
+  Kit.mk('path', {d: `M${cx + rx * .92},${sy - ry * .3} Q${tx + tw * .2},${ty + th * 1.6} ${tx + tw * .12},${ty + th / 2}`, fill: 'none', stroke: ink, 'stroke-width': Math.max(1.5, rx * .012)}, tag);
+  Kit.mk('path', {d: `M${tx},${ty + th / 2} L${tx + th * .35},${ty} L${tx + tw},${ty} L${tx + tw},${ty + th} L${tx + th * .35},${ty + th} Z`, fill: ink}, tag);
+  Kit.mk('circle', {cx: tx + th * .32, cy: ty + th / 2, r: fs * .22, fill: card}, tag);
+  const tt = Kit.mk('text', {x: tx + th * .35 + (tw - th * .35) / 2, y: ty + th / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: card, 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': fs * 1.15}, tag);
+  tt.textContent = found.has('tag') ? '$' + Math.round(price.v || 300) : '$ ?';
+  G.tagText = tt;
+
+  // markers
+  const marks = {
+    fin: [cx - rx * .42, sy + ry * .05],
+    steam: [cx - rx * .45, H * 0.14 - fs * .2],
+    tag: [tx - fs * .2, ty + th + fs * .3]
+  };
+  G.marks = {};
+  Object.entries(marks).forEach(([k, [x, y]]) => {
+    const g = Kit.mk('g', {class: 'mk hit', 'data-h': k}, svg);
+    const done = found.has(k);
+    Kit.mk('circle', {cx: x, cy: y, r: fs * .95, fill: done ? ink : '#ff5a3c', stroke: card, 'stroke-width': Math.max(2, fs * .15)}, g);
+    const t = Kit.mk('text', {x, y, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-size': fs}, g);
+    t.textContent = done ? '✓' : '?';
+    G.marks[k] = g;
+    if (!done && !Kit.calm) gsap.to(g, {scale: 1.15, transformOrigin: `${x}px ${y}px`, duration: .7, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+  });
+}
+
+function setInfo(big, body) {
+  Kit.$('ib').textContent = big; Kit.$('it').textContent = body;
+  if (!Kit.calm) gsap.from('#info', {opacity: 0, y: 8, duration: .35, ease: 'power2.out'});
+}
+
+function reveal(k) {
+  if (found.has(k)) { setInfo(INFO[k].big, INFO[k].body); return; }
+  found.add(k);
+  Kit.haptic('light');
+  if (k === 'fin') gsap.to(G.fin, {y: 0, duration: Kit.calm ? 0 : .9, ease: 'back.out(1.4)'});
+  if (k === 'steam') G.steamPaths.forEach((p, i) => gsap.to(p, {opacity: .75, duration: .5, delay: i * .08}));
+  if (k === 'tag') {
+    price.v = 0;
+    gsap.to(price, {v: 300, duration: Kit.calm ? 0 : 1.2, ease: 'power2.out', onUpdate: () => { if (G.tagText) G.tagText.textContent = '$' + Math.round(price.v); }});
+  }
+  const g = G.marks[k];
+  if (g) { gsap.killTweensOf(g); gsap.set(g, {scale: 1}); g.querySelector('circle').setAttribute('fill', getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111'); g.querySelector('text').textContent = '✓'; }
+  if (found.size === 3) {
+    Kit.haptic('success');
+    Kit.hide('say');
+    setInfo('$300 a bowl', 'Only the dorsal fins are wanted, prized in Asia as an aphrodisiac. At up to $300 a serving, every fin is worth a lot, and that drives a lucrative illegal fin trade.');
+    Kit.show('keep');
+  } else setInfo(INFO[k].big, INFO[k].body);
+}
+
+Kit.$('pic').addEventListener('click', e => {
+  const h = e.target.closest('[data-h]'); if (h) reveal(h.dataset.h);
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 14, duration: .6, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const k of ['fin', 'steam', 'tag']) { reveal(k); await w(300); }
+  await w(1300);
+};
+Kit.single();
+</script>
+</html>

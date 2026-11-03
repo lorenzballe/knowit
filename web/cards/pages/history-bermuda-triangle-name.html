@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-bermuda-triangle-name -->
+<title>Who named the Bermuda Triangle?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#press{position:relative;overflow:hidden;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;width:78%;align-self:flex-start}
+#press .bar{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 30%,transparent)}
+#press .lab{position:relative}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Hold · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NAME ORIGIN</span></div>
+    <h2 class="q">Who coined the name “Bermuda Triangle”, and when?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A newspaper page with a map of the sea"></svg>
+      <button id="press"><span class="bar" id="bar"></span><span class="lab" id="lab">Hold to run the press</span></button>
+      <div id="why" class="gone">
+        <p class="big">A newspaper, in 1964</p>
+        <p class="body">Journalist Edward Van Winkle Jones kept claiming that strange things happened there, all from one mysterious cause. In ’64 another newspaper, citing Jones, introduced the name “Bermuda Triangle”, and the legend was born.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Hold the button and watch the legend form.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The “Bermuda Triangle” was born in print in 1964, not out at sea.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di vero nel "mistero" del triangolo delle Bermuda? Sfatiamo la leggenda analizzando i dati” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const INK='#1c1a17', PAPER='#f4ecd9', SEA='#cfe0e4', RED='#c8322b', GREY='#bdb3a0';
+const DOTS=[[.22,.78,.02],[.6,.14,.06],[.8,.82,.1],[.45,.5,.14],[.34,.3,.18],[.6,.6,.22],[.12,.42,.25],[.86,.36,.28]];
+const TRI=[0,1,2];
+const P={p:0}; let G=null, finished=false;
+const cl=(v)=>Math.max(0,Math.min(1,v)), seg=(p,a,b)=>cl((p-a)/(b-a));
+
+Kit.onShow.card=()=>{
+  const svg=Kit.$('pic'); svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg);
+  const m=Math.max(4,W*.02), px=m, py=m, w=W-2*m, h=H-2*m;
+  const g={W,H};
+  Kit.mk('rect',{x:px,y:py,width:w,height:h,rx:6,fill:PAPER,stroke:INK,'stroke-width':1.5},svg);
+  const ms=Math.max(12,Math.min(f*.9,h*.05));
+  g.mast=Kit.mk('text',{x:px+w/2,y:py+ms*1.5,'text-anchor':'middle','font-family':'var(--mono)','font-size':ms,fill:INK,'letter-spacing':1},svg);
+  Kit.mk('line',{x1:px+w*.05,x2:px+w*.95,y1:py+ms*2.1,y2:py+ms*2.1,stroke:INK,'stroke-width':1.5},svg);
+  const fh=Math.max(14,Math.min(w/7.2,h*.1));
+  const lh=fh*1.35;
+  const hy=py+ms*2.1+fh*1.05;
+  g.h1=Kit.mk('text',{x:px+w/2,y:hy,'text-anchor':'middle','font-family':'var(--display)','font-weight':900,'font-size':fh,fill:INK},svg);
+  g.h2=Kit.mk('text',{x:px+w/2,y:hy+lh,'text-anchor':'middle','font-family':'var(--display)','font-weight':900,'font-size':fh,fill:INK},svg);
+  g.bars=[0,1].map(i=>Kit.mk('rect',{x:px+w*.12,y:hy-fh*.75+i*lh,width:w*.76,height:fh*.62,rx:3,fill:GREY},svg));
+  const cs=Math.max(12,Math.min(f*.85,w/30));
+  const my0=hy+lh+fh*.45, my1=py+h-cs*3.2;
+  const mx0=px+w*.06, mw=w*.88, mh=Math.max(20,my1-my0);
+  Kit.mk('rect',{x:mx0,y:my0,width:mw,height:mh,fill:SEA,stroke:INK,'stroke-width':1},svg);
+  g.pts=DOTS.map(([u,v])=>[mx0+u*mw,my0+v*mh]);
+  const cx=(g.pts[0][0]+g.pts[1][0]+g.pts[2][0])/3, cy=(g.pts[0][1]+g.pts[1][1]+g.pts[2][1])/3;
+  g.c=[cx,cy];
+  g.links=g.pts.map(p=>Kit.mk('line',{x1:p[0],y1:p[1],x2:cx,y2:cy,stroke:INK,'stroke-width':1.2,'stroke-dasharray':'4 4',opacity:0},svg));
+  const t=g.pts.slice(0,3);
+  g.tri=Kit.mk('path',{d:`M${t[0]}L${t[1]}L${t[2]}Z`,fill:RED,'fill-opacity':0,stroke:RED,'stroke-width':Math.max(2.5,W*.008),'stroke-linejoin':'round'},svg);
+  g.triLen=g.tri.getTotalLength(); g.tri.setAttribute('stroke-dasharray',g.triLen);
+  const r=Math.max(3.5,W*.012);
+  g.dots=g.pts.map(p=>Kit.mk('circle',{cx:p[0],cy:p[1],r,fill:INK,opacity:0},svg));
+  g.q=Kit.mk('text',{x:cx,y:cy+fh*.3,'text-anchor':'middle','font-family':'var(--display)','font-weight':900,'font-size':fh*.9,fill:INK,opacity:0},svg); g.q.textContent='?';
+  g.berm=Kit.mk('text',{x:g.pts[1][0]+r*2,y:g.pts[1][1]+cs*.35,'font-family':'var(--body)','font-weight':700,'font-size':cs,fill:INK,opacity:0},svg); g.berm.textContent='Bermuda';
+  const sr=Math.max(18,Math.min(mw,mh)*.17);
+  g.stamp=Kit.mk('g',{transform:`translate(${mx0+sr*1.15},${my0+sr*1.15}) rotate(-14)`,opacity:0},svg);
+  Kit.mk('circle',{r:sr,fill:'none',stroke:RED,'stroke-width':3},g.stamp);
+  const st=Kit.mk('text',{y:sr*.33,'text-anchor':'middle','font-family':'var(--display)','font-weight':900,'font-size':sr*.95,fill:RED},g.stamp); st.textContent='’64';
+  g.cap=Kit.mk('text',{x:px+w/2,y:py+h-cs*1.3,'text-anchor':'middle','font-family':'var(--body)','font-weight':700,'font-size':cs,fill:INK},svg);
+  G=g; draw();
+};
+
+function draw(){
+  const p=P.p, g=G; if(!g) return;
+  Kit.$('bar').style.width=(p*100)+'%';
+  g.mast.textContent='THE NEWSPAPER · '+(p>=.58?'1964':'19··');
+  g.dots.forEach((d,i)=>d.setAttribute('opacity',seg(p,DOTS[i][2],DOTS[i][2]+.04)));
+  const lk=seg(p,.32,.45)*(1-seg(p,.6,.72));
+  g.links.forEach(l=>l.setAttribute('opacity',lk*.8));
+  g.q.setAttribute('opacity',lk);
+  const td=seg(p,.58,.8);
+  g.tri.setAttribute('stroke-dashoffset',g.triLen*(1-td));
+  g.tri.setAttribute('fill-opacity',seg(p,.78,.9)*.18);
+  g.berm.setAttribute('opacity',seg(p,.78,.88));
+  const ty=seg(p,.62,.95), A='BERMUDA', B='TRIANGLE', n=Math.round(ty*(A.length+B.length));
+  g.h1.textContent=A.slice(0,Math.min(n,A.length));
+  g.h2.textContent=B.slice(0,Math.max(0,n-A.length));
+  g.bars[0].setAttribute('opacity',n>0?0:1);
+  g.bars[1].setAttribute('opacity',n>A.length?0:1);
+  const s=seg(p,.95,1); g.stamp.setAttribute('opacity',s);
+  g.cap.textContent = p<.3?'Ships and planes lost, each on its own.'
+    : p<.58?'Jones: one mysterious cause behind them all.'
+    : '’64: another paper, citing Jones, names it.';
+}
+
+function done(){
+  if(finished) return; finished=true;
+  Kit.haptic('success');
+  Kit.hide('press'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if(!Kit.calm) gsap.from('#why,#keep',{opacity:0,y:8,stagger:.1,duration:.45,ease:'power3.out'});
+}
+const tl=gsap.to(P,{p:1,duration:3.4,ease:'none',paused:true,onUpdate:draw,onComplete:done});
+const btn=Kit.$('press');
+const go=e=>{ if(e) e.preventDefault(); if(finished) return; Kit.haptic('light'); Kit.$('lab').textContent='Printing… keep holding'; tl.play(); };
+const stop=()=>{ if(finished) return; tl.pause(); if(P.p<1) Kit.$('lab').textContent='Hold to keep printing'; };
+btn.addEventListener('pointerdown',go);
+['pointerup','pointerleave','pointercancel'].forEach(t=>btn.addEventListener(t,stop));
+btn.addEventListener('keydown',e=>{ if((e.key===' '||e.key==='Enter')&&!e.repeat) go(e); });
+btn.addEventListener('keyup',stop);
+btn.addEventListener('contextmenu',e=>e.preventDefault());
+
+Kit.onEnter.card=()=>{ if(!Kit.calm) gsap.from('#pic',{opacity:0,y:12,duration:.5,ease:'power3.out'}); };
+Kit.play.card=async()=>{ btn.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true})); tl.timeScale(6); await new Promise(r=>setTimeout(r,1200)); tl.progress(1); done(); await new Promise(r=>setTimeout(r,700)); };
+Kit.single();
+</script>
+</html>

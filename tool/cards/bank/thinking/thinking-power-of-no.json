@@ -1,0 +1,35 @@
+{
+  "id": "thinking-power-of-no",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a “no” teach you more than a “yes”?",
+  "answer": "A test that fits your guess returns a yes, but almost every other rule also says yes, so you learn little. A no wipes out a whole family of rules at once. That is the scientific method: try to disprove your idea, and ask the questions where you expect a no.",
+  "move": "Ask the questions where you expect a “no”.",
+  "keywords": [
+    "negative evidence",
+    "scientific method",
+    "hypothesis",
+    "confirmation bias",
+    "falsification"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A secret rule fits 2, 4, 6. Eight test sequences are shown, and tapping one asks whether it fits the rule too. The page asks which of the eight guesses survive."
+  },
+  "source": "Veritasium, “The Most Common Cognitive Bias” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=vKA4w2O61Xo&t=230s",
+  "written": "2026-11-03"
+}

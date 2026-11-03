@@ -1,0 +1,37 @@
+{
+  "id": "space-gravity-curved-spacetime",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is a black hole's gravity, really?",
+  "answer": "A black hole's gravity is not a force but curved spacetime. Enormous mass packed into enormous density bends spacetime so much that light follows the curve. Bend it enough and no path leads back out, which is why the hole is black.",
+  "move": "Gravity is not a force: it is curved spacetime.",
+  "keywords": [
+    "black hole",
+    "spacetime",
+    "gravity",
+    "light",
+    "density"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A grid drawn as warped spacetime, with a light path. Drag right to pack more mass into less space and watch the light bend until no path leads back out. Asks what a black hole's gravity really is."
+  },
+  "source": "Geopop, “Cosa succederebbe se la terra entrasse in un buco nero?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=DZJ1sHAvsu8&t=139s",
+  "written": "2026-11-03"
+}

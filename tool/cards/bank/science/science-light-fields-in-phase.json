@@ -1,0 +1,36 @@
+{
+  "id": "science-light-fields-in-phase",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "In a light wave, how do the electric and magnetic fields line up?",
+  "answer": "In a light wave, the electric field swings one way and the magnetic field swings across it, at right angles to each other. The two are in phase, so when one reaches its maximum, the other does too. The correct choice is 'At right angles, peaking together'.",
+  "move": "In light, E and B cross at right angles and peak at the same moment.",
+  "keywords": [
+    "light",
+    "electric-field",
+    "magnetic-field",
+    "electromagnetic-wave"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz asking how the electric and magnetic fields in a light wave line up. Four options are offered, each describing their angle and peak timing. Tapping the wave pictures adds a magnetic wave, and the reader picks the real light."
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=213s",
+  "written": "2026-11-03"
+}

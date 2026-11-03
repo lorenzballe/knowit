@@ -1,0 +1,37 @@
+{
+  "id": "science-zero-g-thrust",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a plane fall exactly like a pen in a vacuum?",
+  "answer": "Thrust cancels drag, so only gravity is left acting on the plane. Air drag would slow the plane so the pen would drift ahead of it. Pilots add just enough thrust to cancel drag, so the plane and the pen both fall at 9.8 m/s², and nothing presses on you.",
+  "move": "Zero-G means gravity is the only force left acting on the plane.",
+  "keywords": [
+    "zero-g",
+    "gravity",
+    "thrust",
+    "air drag",
+    "pilots"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Zero-G asks how a plane falls exactly like a pen in a vacuum. It shows a plane with thrust, drag and gravity arrows, a thrust slider, and a pen floating in the cabin. The reader is asked to slide the thrust, then keep the pen floating."
+  },
+  "source": "Veritasium, “Fire in ZERO-G!!” (YouTube, 2017)",
+  "reference": "https://www.youtube.com/watch?v=xdJwG_9kF8s&t=57s",
+  "written": "2026-11-03"
+}

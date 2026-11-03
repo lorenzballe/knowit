@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-load-redistribution-towers -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#ctl .lab{font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k);white-space:nowrap}
+#cut{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#cut::-webkit-slider-runnable-track{height:max(.8cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#cut::-moz-range-track{height:max(.8cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#cut::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);margin-top:calc((max(.8cqh,6px) - max(4cqh,28px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--k) 20%,transparent)}
+#cut::-moz-range-thumb{width:max(4cqh,28px);height:max(4cqh,28px);border:0;border-radius:50%;background:var(--k)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.ink{fill:var(--k)}
+.inks{stroke:var(--k)}
+.soft{fill:color-mix(in srgb,var(--k) 14%,transparent)}
+.hot{fill:#e0522c}
+.hots{stroke:#e0522c}
+.txt{fill:var(--k);font-family:var(--body);font-weight:700}
+.mut{fill:var(--k);opacity:.7;font-family:var(--body);font-weight:600}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Turn a dial · watch it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STRUCTURES</span></div>
+    <h2 class="q">How did the aircraft's weight contribute to the towers' initial survival?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctl"><span class="lab">Columns cut</span><input id="cut" type="range" min="0" max="6" step="1" value="0" aria-label="Columns cut by the impact"></div>
+      <div id="why" class="gone">
+        <p class="body">Each plane weighed about 130,000 kg. Each tower weighed about 450,000 tonnes, almost ten times the Titanic. The plane disintegrated and the structure absorbed the blow.</p>
+        <p class="body">The structure was redundant, so the load of the broken columns moved onto the intact ones. That is why each tower stood for about an hour.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slide to cut columns, and watch where their load goes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In a redundant structure, a broken part's load moves onto the parts still standing.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La simulazione del crollo delle Torri Gemelle dopo gli attentati dell'11 settembre 2001” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 12;
+let K = 0, G = null, done = false;
+
+function loads(k){
+  const s = Math.floor((N - k) / 2), cut = new Set();
+  for (let i = 0; i < k; i++) cut.add(s + i);
+  const L = Array.from({length: N}, (_, i) => cut.has(i) ? 0 : 1);
+  cut.forEach(c => {
+    let w = [], sum = 0;
+    for (let i = 0; i < N; i++) { const v = cut.has(i) ? 0 : 1 / Math.pow(Math.abs(i - c), 2); w.push(v); sum += v; }
+    for (let i = 0; i < N; i++) L[i] += w[i] / sum;
+  });
+  return {L, cut};
+}
+const MAXL = Math.max(...loads(6).L);
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .9, 12), lh = fs * 1.45;
+  const mx = W * .06, span = W - 2 * mx, step = span / N, cw = Math.max(step * .42, 4);
+  const xs = Array.from({length: N}, (_, i) => mx + step * (i + .5));
+  const gap = H * .02;
+  const avail = Math.max(H - lh * 3.4 - gap * 3, 30);
+  const bTop = gap * .5, bBot = bTop + avail * .3;   // floors above
+  const cTop = bBot, cBot = cTop + avail * .3;       // impact floor columns
+  const barTop = cBot + gap + lh * 1.1, barBot = barTop + avail * .4;
+  const ch = cBot - cTop, bh = Math.max(barBot - barTop, 1);
+  const g = {W, H, fs, lh, xs, cw, cTop, cBot, ch, barBot, bh, cols: [], bars: [], extra: [], arcs: null, t1: null, t2: null};
+
+  // floors above
+  Kit.mk('rect', {x: mx * .6, y: bTop, width: W - mx * 1.2, height: bBot - bTop, rx: fs * .3, class: 'soft'}, svg);
+  for (let r = 1; r < 5; r++) {
+    const y = bTop + (bBot - bTop) * r / 5;
+    Kit.mk('line', {x1: mx * .6, x2: W - mx * .6, y1: y, y2: y, class: 'inks', 'stroke-width': 1, opacity: .18}, svg);
+  }
+  const tl = Kit.mk('text', {x: W / 2, y: (bTop + bBot) / 2 + fs * .35, 'text-anchor': 'middle', class: 'txt', 'font-size': fs}, svg);
+  tl.textContent = 'WEIGHT OF THE FLOORS ABOVE';
+  // slabs
+  Kit.mk('rect', {x: mx * .6, y: cBot, width: W - mx * 1.2, height: Math.max(H * .012, 3), class: 'ink'}, svg);
+  Kit.mk('rect', {x: mx * .6, y: cTop - Math.max(H * .012, 3), width: W - mx * 1.2, height: Math.max(H * .012, 3), class: 'ink'}, svg);
+  // columns: top stub + bottom stub
+  xs.forEach(x => {
+    const a = Kit.mk('rect', {x: x - cw / 2, y: cTop, width: cw, height: ch / 2 + 1, class: 'ink'}, svg);
+    const b = Kit.mk('rect', {x: x - cw / 2, y: cTop + ch / 2, width: cw, height: ch / 2, class: 'ink'}, svg);
+    g.cols.push([a, b]);
+  });
+  g.arcs = Kit.mk('g', {}, svg);
+  g.flash = Kit.mk('circle', {cx: W / 2, cy: cTop + ch / 2, r: 0, class: 'hot', opacity: 0}, svg);
+
+  // bar chart
+  const bl = Kit.mk('text', {x: mx * .6, y: cBot + gap + fs, class: 'mut', 'font-size': fs}, svg);
+  bl.textContent = 'Load on each column';
+  Kit.mk('line', {x1: mx * .6, x2: W - mx * .6, y1: barBot, y2: barBot, class: 'inks', 'stroke-width': 2}, svg);
+  const yOne = barBot - bh / MAXL;
+  Kit.mk('line', {x1: mx * .6, x2: W - mx * .6, y1: yOne, y2: yOne, class: 'hots', 'stroke-width': 1.5, 'stroke-dasharray': '5 4'}, svg);
+  xs.forEach(x => {
+    g.bars.push(Kit.mk('rect', {x: x - cw / 2, y: yOne, width: cw, height: bh / MAXL, class: 'ink'}, svg));
+    g.extra.push(Kit.mk('rect', {x: x - cw / 2, y: yOne, width: cw, height: 0, class: 'hot'}, svg));
+  });
+  g.yOne = yOne;
+  g.t1 = Kit.mk('text', {x: W / 2, y: barBot + lh, 'text-anchor': 'middle', class: 'txt', 'font-size': fs}, svg);
+  g.t2 = Kit.mk('text', {x: W / 2, y: barBot + lh * 2, 'text-anchor': 'middle', class: 'mut', 'font-size': fs}, svg);
+  G = g; update(K, false);
+}
+
+function update(k, anim){
+  if (!G) return;
+  const g = G, {L, cut} = loads(k), d = anim && !Kit.calm ? .45 : 0;
+  const u = g.bh / MAXL;
+  g.cols.forEach(([a, b], i) => {
+    const c = cut.has(i);
+    gsap.to(a, {attr: {height: c ? g.ch * .2 : g.ch / 2 + 1}, opacity: c ? .45 : 1, duration: d, ease: 'power2.out'});
+    gsap.to(b, {attr: {y: c ? g.cBot - g.ch * .16 : g.cTop + g.ch / 2, height: c ? g.ch * .16 : g.ch / 2}, opacity: c ? .45 : 1, duration: d, ease: 'power2.out'});
+    const base = Math.min(L[i], 1), ex = Math.max(L[i] - 1, 0);
+    gsap.to(g.bars[i], {attr: {y: g.barBot - base * u, height: base * u}, duration: d, ease: 'power2.out'});
+    gsap.to(g.extra[i], {attr: {y: g.barBot - (base + ex) * u, height: ex * u}, duration: d, ease: 'power2.out'});
+  });
+  // arcs: load of cut columns sent to nearest intact neighbours
+  g.arcs.innerHTML = '';
+  if (k > 0) {
+    const s = Math.floor((N - k) / 2), lft = s - 1, rgt = s + k;
+    cut.forEach(c => {
+      [lft, rgt].forEach(t => {
+        if (t < 0 || t >= N) return;
+        const x1 = g.xs[c], x2 = g.xs[t], y = g.cTop + 2, dip = g.ch * (.18 + .06 * Math.abs(c - t));
+        const p = Kit.mk('path', {d: `M${x1},${y} Q${(x1 + x2) / 2},${y + dip} ${x2},${y + g.ch * .12}`, fill: 'none', class: 'hots', 'stroke-width': Math.max(g.fs * .16, 2), 'stroke-linecap': 'round', 'stroke-dasharray': '6 6'}, g.arcs);
+        if (!Kit.calm) gsap.to(p, {attr: {'stroke-dashoffset': -48}, duration: 1.2, repeat: -1, ease: 'none'});
+      });
+    });
+    [lft, rgt].forEach(t => { if (t >= 0 && t < N) Kit.mk('circle', {cx: g.xs[t], cy: g.cTop + g.ch * .12, r: Math.max(g.fs * .3, 4), class: 'hot'}, g.arcs); });
+  }
+  const top = Math.max(...L);
+  g.t1.textContent = k === 0 ? 'Every column carries its share' : `${k} of ${N} cut · busiest column ×${top.toFixed(1)}`;
+  g.t2.textContent = 'Weight still held: 100%';
+}
+
+const sl = Kit.$('cut');
+sl.addEventListener('input', () => {
+  const k = +sl.value; if (k === K) return;
+  const first = K === 0 && k > 0; K = k;
+  Kit.haptic('selection'); update(k, true);
+  if (first && G && !Kit.calm) gsap.fromTo(G.flash, {attr: {r: 0}, opacity: .8}, {attr: {r: G.W * .25}, opacity: 0, duration: .6, ease: 'power2.out'});
+});
+sl.addEventListener('change', () => {
+  if (done || +sl.value < 3) return;
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => draw());
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let v = 1; v <= 5; v++) { sl.value = v; sl.dispatchEvent(new Event('input')); await new Promise(r => setTimeout(r, 80)); }
+  sl.dispatchEvent(new Event('change'));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

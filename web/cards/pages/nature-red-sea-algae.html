@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-red-sea-algae -->
+<title>Why the Red Sea is red</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+#map{display:block;width:100%;height:100%;cursor:pointer;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap · watch it bloom">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RED SEA</span></div>
+    <h2 class="q">Why is the Red Sea called red, when it looks blue?</h2>
+    <div class="stagebox" id="stage"><svg id="map" aria-label="Satellite-style map of the Red Sea"></svg></div>
+    <p class="say" id="say">Tap the sea six times to let the algae bloom.</p>
+    <div id="why" class="gone">
+      <p class="big">Algae paint it pink.</p>
+      <p class="body">In some periods of the year, especially summer, a tiny cyanobacterium called Trichodesmium blooms massively. Its reddish-pink mats float on the water and colour it. That is the most scientific explanation for the name.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The Red Sea is named after algae that tint it reddish-pink.</div>
+    <div class="foot"><span class="src">Source · Geopop, “IL Mar Rosso é un OCEANO!” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 6;
+const SEA = [[.19,.02],[.23,.03],[.29,.13],[.35,.05],[.38,.00],[.405,.02],[.39,.14],[.45,.24],[.53,.37],[.61,.51],[.69,.65],[.77,.79],[.85,.91],[.88,.97],[.84,.985],[.74,.88],[.63,.76],[.52,.63],[.42,.50],[.33,.36],[.26,.24],[.21,.12]];
+const PRESETS = [[.355,.25],[.47,.42],[.54,.55],[.645,.68],[.735,.82],[.31,.15]];
+const COLS = ['#ff4f82','#f7849f','#e0466e','#ffb0c2'];
+const mats = []; let used = new Set(), tint = 0, G = null, done = false;
+
+function smooth(pts){
+  const n = pts.length; let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 0; i < n; i++){
+    const p0 = pts[(i-1+n)%n], p1 = pts[i], p2 = pts[(i+1)%n], p3 = pts[(i+2)%n];
+    const c1 = [p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6], c2 = [p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6];
+    d += `C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${p2[0]},${p2[1]}`;
+  }
+  return d + 'Z';
+}
+
+function drawMat(m, animate){
+  const {bw,bh,ox,oy,s,ang,layer} = G;
+  const outer = Kit.mk('g', {transform:`translate(${ox+m.x*bw},${oy+m.y*bh})`}, layer);
+  const mid = Kit.mk('g', {transform:`rotate(${ang})`}, outer);
+  const inner = Kit.mk('g', {}, mid);
+  m.parts.forEach(p => Kit.mk('ellipse', {cx:p.dx*s, cy:p.dy*s, rx:p.rx*s, ry:p.ry*s, fill:p.c, opacity:p.o}, inner));
+  if (animate && !Kit.calm) gsap.from(inner, {scale:0, opacity:0, transformOrigin:'50% 50%', duration:.9, ease:'back.out(1.6)'});
+}
+
+function updateCount(){
+  if (!G) return;
+  G.count.textContent = `Blooms ${mats.length}/${N}`;
+  G.tintEl.setAttribute('fill-opacity', tint);
+  if (G.ring) G.ring.style.display = mats.length ? 'none' : '';
+}
+
+function addMat(x, y){
+  if (mats.length >= N) return;
+  const parts = [];
+  const k = 3 + Math.floor(Kit.rnd()*3);
+  for (let i = 0; i < k; i++) parts.push({dx:(Kit.rnd()-.5)*.12, dy:(Kit.rnd()-.5)*.05, rx:.04+Kit.rnd()*.06, ry:.01+Kit.rnd()*.016, c:COLS[Math.floor(Kit.rnd()*COLS.length)], o:.55+Kit.rnd()*.4});
+  const m = {x, y, parts}; mats.push(m);
+  drawMat(m, true); Kit.haptic('light');
+  updateCount();
+  if (mats.length === N) finish();
+}
+
+function finish(){
+  done = true;
+  const t = {v:0};
+  const end = () => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); };
+  if (Kit.calm){ tint = .42; updateCount(); end(); return; }
+  gsap.to(t, {v:.42, duration:1.4, ease:'power2.inOut', onUpdate(){ tint = t.v; updateCount(); }});
+  setTimeout(end, 500);
+}
+
+function tap(e){
+  if (done || !G) return;
+  let pt = null;
+  if (e && (e.clientX || e.clientY)){
+    const r = G.svg.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    let inside = false;
+    try { inside = G.sea.isPointInFill(new DOMPoint(x, y)); } catch(_) {}
+    if (inside) pt = [(x-G.ox)/G.bw, (y-G.oy)/G.bh];
+  }
+  if (!pt){
+    const i = PRESETS.findIndex((_, j) => !used.has(j));
+    if (i < 0) return; used.add(i); pt = PRESETS[i];
+  } else {
+    let best = -1, bd = 1e9;
+    PRESETS.forEach((p, j) => { if (used.has(j)) return; const d = Math.hypot(p[0]-pt[0], p[1]-pt[1]); if (d < bd){ bd = d; best = j; } });
+    if (best >= 0) used.add(best);
+  }
+  addMat(pt[0], pt[1]);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('map');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  let bh = H*.94, bw = bh*.8;
+  if (bw > W*.94){ bw = W*.94; bh = bw/.8; }
+  const ox = (W-bw)/2, oy = (H-bh)/2, s = Math.min(bw, bh);
+  const pts = SEA.map(p => [ox+p[0]*bw, oy+p[1]*bh]);
+  const d = smooth(pts);
+  const fs = Math.max(f*.85, 12);
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id:'land', x1:0, y1:0, x2:1, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#d9b57c'}, lg); Kit.mk('stop', {offset:1, 'stop-color':'#9c6f3e'}, lg);
+  const sg = Kit.mk('linearGradient', {id:'sea', x1:0, y1:0, x2:1, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#1f6aa5'}, sg); Kit.mk('stop', {offset:1, 'stop-color':'#0c3561'}, sg);
+  const cp = Kit.mk('clipPath', {id:'seaClip'}, defs); Kit.mk('path', {d}, cp);
+  const fr = Kit.mk('clipPath', {id:'frame'}, defs); Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:f*.8}, fr);
+  const fl = Kit.mk('filter', {id:'soft', x:'-50%', y:'-50%', width:'200%', height:'200%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation:s*.006}, fl);
+
+  const root = Kit.mk('g', {'clip-path':'url(#frame)'}, svg);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, fill:'url(#land)'}, root);
+  for (let i = 0; i < 26; i++) Kit.mk('ellipse', {cx:Kit.rnd()*W, cy:Kit.rnd()*H, rx:s*(.03+Kit.rnd()*.08), ry:s*(.015+Kit.rnd()*.04), fill:'#7a5430', opacity:.12+Kit.rnd()*.12}, root);
+  const sea = Kit.mk('path', {d, fill:'url(#sea)', stroke:'rgba(255,255,255,.35)', 'stroke-width':Math.max(1, s*.004)}, root);
+  const clipG = Kit.mk('g', {'clip-path':'url(#seaClip)'}, root);
+  const tintEl = Kit.mk('path', {d, fill:'#ff5c8a', 'fill-opacity':tint}, clipG);
+  const layer = Kit.mk('g', {filter:'url(#soft)'}, clipG);
+
+  const ang = Math.atan2(.84*bh, .47*bw) * 180/Math.PI;
+  G = {svg, sea, tintEl, layer, bw, bh, ox, oy, s, ang};
+
+  const txt = (x, y, t, a, extra={}) => { const e = Kit.mk('text', Object.assign({x, y, 'text-anchor':a, fill:'#fff', 'font-family':'var(--mono)', 'font-size':fs, 'font-weight':700, 'letter-spacing':'.06em'}, extra), root); e.textContent = t; return e; };
+  txt(ox+.12*bw, oy+.66*bh, 'AFRICA', 'middle', {fill:'rgba(60,35,10,.7)'});
+  txt(ox+.80*bw, oy+.40*bh, 'ARABIA', 'middle', {fill:'rgba(60,35,10,.7)'});
+  txt(f*.7, H-f*.8, 'SATELLITE VIEW', 'start', {fill:'rgba(255,255,255,.85)', 'font-size':Math.max(fs*.85,12)});
+  const cbg = Kit.mk('rect', {x:W-fs*8.2-f*.6, y:f*.6, width:fs*8.2, height:fs*1.8, rx:fs*.9, fill:'rgba(10,30,55,.75)'}, root);
+  G.count = txt(W-f*.6-fs*4.1, f*.6+fs*1.25, '', 'middle');
+
+  const p0 = PRESETS[0];
+  const ring = Kit.mk('circle', {cx:ox+p0[0]*bw, cy:oy+p0[1]*bh, r:s*.04, fill:'none', stroke:'#fff', 'stroke-width':Math.max(2, s*.006)}, root);
+  G.ring = ring;
+  if (!Kit.calm) gsap.fromTo(ring, {attr:{r:s*.02}, opacity:1}, {attr:{r:s*.07}, opacity:0, duration:1.3, repeat:-1, ease:'power1.out'});
+
+  mats.forEach(m => drawMat(m, false));
+  updateCount();
+};
+
+Kit.$('map').addEventListener('click', tap);
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map', {opacity:0, scale:.97, transformOrigin:'50% 50%', duration:.6, ease:'power3.out'}); };
+
+Kit.play.card = async () => {
+  for (let i = 0; i < N; i++){ Kit.$('map').dispatchEvent(new MouseEvent('click', {bubbles:true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 1700));
+};
+Kit.single();
+</script>
+</html>

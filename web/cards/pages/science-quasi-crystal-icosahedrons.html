@@ -1,0 +1,176 @@
+<!doctype html>
+<!-- slug: science-quasi-crystal-icosahedrons -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hold{font:700 max(2.3cqh,15px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;align-self:center;min-width:60%}
+#hold.down{transform:scale(.97);opacity:.85}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.q,.say,.keep{overflow-wrap:anywhere}
+.src{display:block;padding-right:100px}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulation">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">QUASI-CRYSTAL</span></div>
+    <h2 class="q">What is the 3D version of a Penrose tiling called?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <button id="hold">Hold to grow</button>
+      <div id="why" class="gone"><p class="big">A quasi-crystal</p><p class="body">Atoms here like to form icosahedrons, full of the five-fold symmetry crystals forbid. Inspired by Penrose tilings, a 3D structure keeps that order going forever without repeating. Its X-ray pattern: rings of 10 points.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button: atoms gather into icosahedrons. How big can they get?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Quasi-crystal: ordered everywhere, repeating nowhere, a Penrose tiling in 3D.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const PHI = (1 + Math.sqrt(5)) / 2, R = PHI ** 3;
+// 12 icosahedron vertices, radius 1
+const V = [];
+for (const s1 of [-1, 1]) for (const s2 of [-1, 1]) {
+  V.push([0, s1, s2 * PHI], [s1, s2 * PHI, 0], [s2 * PHI, 0, s1]);
+}
+V.forEach(v => { const n = Math.hypot(...v); v[0] /= n; v[1] /= n; v[2] /= n; });
+const C = [[0, 0, 0], ...V];
+let mind = 9;
+for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) {
+  const d = Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1], V[i][2] - V[j][2]); if (d < mind) mind = d;
+}
+const ADJ = [];
+for (let i = 1; i < 13; i++) { ADJ.push([0, i]); for (let j = i + 1; j < 13; j++) {
+  const d = Math.hypot(C[i][0] - C[j][0], C[i][1] - C[j][1], C[i][2] - C[j][2]); if (d < mind * 1.01) ADJ.push([i, j]);
+}}
+// icosahedra of icosahedra: 13^3 atoms, scaled by phi^3 at each level
+const P = [], E = [];
+for (let c = 0; c < 13; c++) for (let b = 0; b < 13; b++) {
+  const base = P.length;
+  for (let a = 0; a < 13; a++) {
+    const p = [0, 1, 2].map(k => C[a][k] + C[b][k] * R + C[c][k] * R * R);
+    P.push({p, d: Math.hypot(...p)});
+  }
+  ADJ.forEach(([i, j]) => E.push([base + i, base + j]));
+}
+const RMAX = Math.max(...P.map(q => q.d)) + 0.5;
+
+let x, W, H, prog = 0, holding = false, ang = 0.6, vr = 1.6, diff = 0, done = false;
+const cv = Kit.$('cv');
+const col = n => getComputedStyle(Kit.$('card')).getPropertyValue(n).trim() || '#111';
+
+function draw() {
+  if (!x) return;
+  const K = col('--k'), Cc = col('--c');
+  x.clearRect(0, 0, W, H);
+  const rr = 0.6 * Math.pow(RMAX / 0.6, prog);
+  const target = Math.max(rr, 1.5) * 1.1;
+  vr += (target - vr) * 0.12;
+  const m = Math.min(W, H), sc = m * 0.46 / vr, cx = W / 2, cy = H * 0.5;
+  const ca = Math.cos(ang), sa = Math.sin(ang), tl = 0.42, ct = Math.cos(tl), st = Math.sin(tl);
+  const pr = new Array(P.length);
+  let count = 0;
+  for (let i = 0; i < P.length; i++) {
+    const q = P[i]; if (q.d > rr) { pr[i] = null; continue; }
+    count++;
+    const [px, py, pz] = q.p;
+    const x1 = px * ca + pz * sa, z1 = -px * sa + pz * ca;
+    const y2 = py * ct - z1 * st, z2 = py * st + z1 * ct;
+    const f = 1 / (1 + z2 / (vr * 4));
+    pr[i] = {X: cx + x1 * sc * f, Y: cy + y2 * sc * f, z: z2, f};
+  }
+  // bonds
+  x.strokeStyle = K; x.lineWidth = Math.max(0.6, sc * 0.03);
+  x.globalAlpha = count > 300 ? 0.18 : 0.4;
+  x.beginPath();
+  for (const [i, j] of E) { const a = pr[i], b = pr[j]; if (a && b) { x.moveTo(a.X, a.Y); x.lineTo(b.X, b.Y); } }
+  x.stroke();
+  // atoms, far to near
+  const idx = []; for (let i = 0; i < P.length; i++) if (pr[i]) idx.push(i);
+  idx.sort((i, j) => pr[j].z - pr[i].z);
+  x.lineWidth = Math.max(0.5, sc * 0.03);
+  for (const i of idx) {
+    const a = pr[i], r = Math.max(1.2, sc * 0.16 * a.f);
+    x.globalAlpha = Math.max(0.35, Math.min(1, 0.75 - a.z / (vr * 2.5)));
+    x.fillStyle = K; x.strokeStyle = Cc;
+    x.beginPath(); x.arc(a.X, a.Y, r, 0, 7); x.fill(); if (r > 2.5) x.stroke();
+  }
+  x.globalAlpha = 1;
+  // labels
+  const fs = Math.max(13, H * 0.05);
+  x.fillStyle = K; x.textBaseline = 'top';
+  x.font = `800 ${fs}px ${col('--display') || 'sans-serif'}`;
+  x.textAlign = 'left';
+  x.fillText(count >= P.length || done ? 'Quasi-crystal' : 'Icosahedron', 4, 4);
+  x.font = `700 ${fs * 0.8}px ${col('--mono') || 'monospace'}`;
+  x.textAlign = 'right';
+  x.fillText(`${count} atom${count === 1 ? '' : 's'}`, W - 4, 4);
+  x.textAlign = 'left'; x.textBaseline = 'bottom';
+  x.font = `600 ${fs * 0.72}px ${col('--body') || 'sans-serif'}`;
+  const note = done ? 'no limit, never repeats' : count > 100 ? '100 atoms? keep going…' : count > 10 ? '10 atoms? …' : prog > 0 ? 'five-fold symmetry' : '';
+  x.globalAlpha = 0.85; x.fillText(note, 4, H - 4); x.globalAlpha = 1;
+  // X-ray diffraction inset
+  if (diff > 0) {
+    const rad = m * 0.2, ix = W - rad - 6, iy = H - rad - 6;
+    x.globalAlpha = diff;
+    x.fillStyle = '#0b0b14'; x.beginPath(); x.arc(ix, iy, rad, 0, 7); x.fill();
+    x.fillStyle = '#fff';
+    x.beginPath(); x.arc(ix, iy, rad * 0.06, 0, 7); x.fill();
+    [[0.32, 0, 0.06], [0.58, Math.PI / 10, 0.045], [0.82, 0, 0.032]].forEach(([rf, off, sz], k) => {
+      for (let n = 0; n < 10; n++) {
+        if (n / 10 > diff * 1.4 - k * 0.2) continue;
+        const t = off + n * Math.PI / 5;
+        x.beginPath(); x.arc(ix + Math.cos(t) * rad * rf, iy + Math.sin(t) * rad * rf, rad * sz, 0, 7); x.fill();
+      }
+    });
+    x.fillStyle = K; x.textAlign = 'right'; x.textBaseline = 'bottom';
+    x.font = `700 ${Math.max(12, fs * 0.62)}px ${col('--body') || 'sans-serif'}`;
+    x.fillText('X-rays: rings of 10', W - 4, iy - rad - 4);
+    x.globalAlpha = 1;
+  }
+}
+
+function finish() {
+  if (done) return; done = true; holding = false; prog = 1;
+  Kit.haptic('success');
+  Kit.hide('hold'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { Kit.onShow.card(); });
+  const o = {v: 0};
+  gsap.to(o, {v: 1, duration: Kit.calm ? 0.01 : 1.6, ease: 'power2.out', onUpdate: () => { diff = o.v; draw(); }});
+}
+
+gsap.ticker.add((t, dt) => {
+  const s = dt / 1000;
+  if (holding && !done) { prog = Math.min(1, prog + s / 4.5); if (prog >= 1) finish(); }
+  if (!Kit.calm || holding) ang += s * 0.45;
+  draw();
+});
+
+const hb = Kit.$('hold');
+const down = e => { if (done) return; e.preventDefault(); holding = true; hb.classList.add('down'); hb.textContent = 'Growing…'; Kit.haptic('light'); };
+const up = () => { if (!holding) return; holding = false; hb.classList.remove('down'); if (!done) hb.textContent = 'Hold to keep growing'; };
+hb.addEventListener('pointerdown', down);
+hb.addEventListener('pointerup', up);
+hb.addEventListener('pointerleave', up);
+hb.addEventListener('pointercancel', up);
+hb.addEventListener('contextmenu', e => e.preventDefault());
+
+Kit.onShow.card = () => { const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H; draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .45, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  hb.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  prog = 0.97;
+  await new Promise(r => setTimeout(r, 400));
+  finish();
+  hb.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

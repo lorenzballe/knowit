@@ -1,0 +1,232 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-stratovolcano-explosivity -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#sv{display:block;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none}
+#sv .bub.live{cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.5cqh,15px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see what happens">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VOLCANOES</span></div>
+    <h2 class="q">Why are stratovolcanoes more explosive than shield volcanoes?</h2>
+    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
+    <div id="why" class="gone">
+      <p class="big">Sticky magma traps the gas.</p>
+      <p class="body">A shield volcano's runny magma lets gas slip away, so lava flows calmly. A stratovolcano's thick magma keeps it in, and trapped gas means pressure, released all at once.</p>
+    </div>
+    <p class="say" id="say">Drag a gas bubble into each volcano's magma.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Thick magma traps gas; trapped gas becomes pressure; pressure explodes.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Vulcani: i tipi di vulcani, come si formano” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const sv = Kit.$('sv');
+const S = {out: 0, trap: 0, boom: false, end: false};
+let G = null, live = null, drag = null, lava = null, lavaLen = 0, gasTxt = null, pfill = null, strato = null, conR = null;
+const C = {rock: '#3d302b', rock2: '#5c4840', runny: '#ffa51f', runnyHi: '#ffd25a', sticky: '#8a1f15', stickyHi: '#b3361f', gas: '#f2fbff', ash: '#6c625d', red: '#e2412a'};
+const SL = [[-.45, .15], [.42, -.12], [-.05, .45], [.15, -.45]];
+const CL = [[0, 0, 1], [-.9, .25, .8], [.9, .2, .85], [-.5, -.55, .75], [.55, -.5, .8], [0, -.8, .7], [-1.4, -.15, .6], [1.4, -.2, .6]];
+const D = d => Kit.calm ? 0 : d;
+const say = t => { Kit.$('say').textContent = t; };
+function T(x, y, s, txt, o = {}) {
+  const t = Kit.mk('text', {x, y, 'text-anchor': o.a || 'middle', style: `font:${o.w || 700} ${s}px var(--body);fill:${o.c || 'var(--k)'}`}, o.p || sv);
+  t.textContent = txt; return t;
+}
+function bubble(x, y, rr, parent) {
+  const g = Kit.mk('g', {class: 'bub'}, parent || sv);
+  Kit.mk('circle', {r: rr * 2.1, fill: 'transparent'}, g);
+  Kit.mk('circle', {r: rr, fill: C.gas, stroke: '#16232b', 'stroke-width': Math.max(1.6, rr * .14)}, g);
+  Kit.mk('circle', {r: rr * .28, cx: -rr * .35, cy: -rr * .35, fill: '#fff'}, g);
+  gsap.set(g, {x, y, transformOrigin: '50% 50%'});
+  return g;
+}
+function cloud(parent, animate) {
+  const g = G, vx = g.rx, vy = g.syR, R = Math.min(g.W * .06, g.Sh * .065), cy = vy - R * 1.3;
+  const col = Kit.mk('path', {d: `M${vx - g.cw * .6},${vy} L${vx - R * .7},${cy} L${vx + R * .7},${cy} L${vx + g.cw * .6},${vy}Z`, fill: C.ash}, parent);
+  const cs = CL.map(([dx, dy, s]) => Kit.mk('circle', {cx: vx + dx * R, cy: cy + dy * R, r: R * s, fill: C.ash, stroke: '#4d4541', 'stroke-width': 1.2}, parent));
+  if (animate) {
+    gsap.from(col, {scaleY: 0, transformOrigin: '50% 100%', duration: D(.5), ease: 'power2.out'});
+    cs.forEach((c, i) => gsap.from(c, {scale: 0, opacity: 0, transformOrigin: '50% 50%', duration: D(1.1), delay: D(.25 + i * .05), ease: 'power3.out'}));
+  }
+}
+function spawn() {
+  if (S.boom) return;
+  live = bubble(G.W / 2, G.ty, G.r);
+  live.classList.add('live');
+  live.addEventListener('pointerdown', down);
+  if (!Kit.calm) gsap.from(live, {scale: 0, duration: .35, ease: 'back.out(2)'});
+}
+function pt(e) { const b = sv.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; }
+function down(e) {
+  if (S.boom || e.currentTarget !== live) return;
+  e.preventDefault(); drag = live; gsap.killTweensOf(drag);
+  gsap.to(drag, {scale: 1.15, duration: D(.15)});
+  Kit.haptic('selection');
+}
+window.addEventListener('pointermove', e => { if (!drag) return; const [x, y] = pt(e); gsap.set(drag, {x, y}); });
+function up(e) {
+  if (!drag) return;
+  const el = drag; drag = null;
+  const [x, y] = pt(e), g = G;
+  const inL = x < g.W / 2 && y > g.syL - g.r * 2.5 && y < g.cyc + g.ry + g.r * 1.5;
+  const inR = x >= g.W / 2 && y > g.syR - g.r * 2.5 && y < g.cyc + g.ry + g.r * 1.5;
+  if (inL) toShield(el);
+  else if (inR) toStrato(el);
+  else gsap.to(el, {x: g.W / 2, y: g.ty, scale: 1, duration: D(.35), ease: 'power2.out'});
+}
+window.addEventListener('pointerup', up);
+window.addEventListener('pointercancel', up);
+
+function toShield(el) {
+  const g = G; el.classList.remove('live'); live = null;
+  S.out++; gasTxt.textContent = `Gas escaped: ${S.out}`;
+  Kit.haptic('light');
+  gsap.timeline()
+    .to(el, {x: g.lx, y: g.cyc, scale: .8, duration: D(.3), ease: 'power2.out'})
+    .to(el, {y: g.syL, duration: D(.7), ease: 'power1.in'})
+    .to(el, {scale: 2, opacity: 0, duration: D(.25), onComplete: () => el.remove()});
+  if (lava) {
+    lava.setAttribute('opacity', 1);
+    gsap.fromTo(lava, {attr: {'stroke-dashoffset': lavaLen}}, {attr: {'stroke-dashoffset': 0}, duration: D(1.4), delay: D(1), ease: 'power1.out'});
+  }
+  say(S.trap ? 'Runny magma: the gas slips straight out.' : 'Runny magma: the gas slips straight out. Now try the tall one.');
+  spawn();
+}
+function toStrato(el) {
+  const g = G; el.classList.remove('live'); live = null;
+  const i = S.trap++, [sx, sy] = SL[i];
+  const X = g.rx + sx * g.crx, Y = g.cyc + sy * g.ry;
+  strato.appendChild(el); el.classList.add('trapped');
+  gsap.to(el, {x: X, y: Y, scale: .7, duration: D(1.6), ease: 'expo.out', onComplete: () => {
+    if (!Kit.calm && !S.boom) gsap.to(el, {y: Y - 2, duration: .9, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+  }});
+  gsap.to(pfill, {attr: {width: g.bw * S.trap / 4}, duration: D(.5)});
+  if (!Kit.calm) gsap.fromTo(strato, {x: 0}, {x: g.f * .1 * S.trap, duration: .05, repeat: 7, yoyo: true});
+  Kit.haptic('light');
+  if (S.trap >= 4) {
+    S.boom = true; say('Too much pressure…');
+    setTimeout(explode, Kit.calm ? 0 : 900);
+    setTimeout(finish, Kit.calm ? 300 : 3300);
+  } else {
+    say(S.trap === 1 ? 'Thick magma: the bubble is stuck. Add another.' : 'Still trapped. The pressure keeps building…');
+    spawn();
+  }
+}
+function explode() {
+  const g = G, vx = g.rx, vy = g.syR;
+  sv.querySelectorAll('.bub.trapped').forEach((b, i) => {
+    gsap.killTweensOf(b);
+    gsap.to(b, {x: vx + (i - 1.5) * g.f, y: vy - g.Sh * .15, scale: 1.3, opacity: 0, duration: D(.6), ease: 'power2.in', delay: D(i * .05)});
+  });
+  gsap.to(conR, {attr: {fill: '#ffcf3a'}, duration: D(.2)});
+  gsap.to(pfill, {attr: {width: 0}, duration: D(1.2), delay: D(.4)});
+  if (!Kit.calm) gsap.fromTo(strato, {x: 0}, {x: g.f * .5, duration: .04, repeat: 13, yoyo: true});
+  const bg = Kit.mk('g', {}, sv);
+  cloud(bg, true);
+  if (!Kit.calm) for (let i = 0; i < 22; i++) {
+    const a = (-160 + Kit.rnd() * 140) * Math.PI / 180, d = g.Sh * (.12 + Kit.rnd() * .3);
+    const c = Kit.mk('circle', {cx: 0, cy: 0, r: Math.max(2, g.f * (.12 + Kit.rnd() * .2)), fill: i % 3 ? '#2b2220' : C.runnyHi}, bg);
+    gsap.set(c, {x: vx, y: vy});
+    gsap.to(c, {x: vx + Math.cos(a) * d, y: Math.max(4, vy + Math.sin(a) * d), opacity: 0, duration: .9 + Kit.rnd() * .6, ease: 'power2.out', onComplete: () => c.remove()});
+  }
+  Kit.haptic('success');
+}
+function finish() {
+  S.end = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => {
+    Kit.onShow.card();
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+  });
+}
+
+Kit.onShow.card = () => {
+  drag = null; live = null;
+  sv.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(sv);
+  const f = Math.max(13, Math.min(f0, H * .06));
+  const r = Math.max(12, f * .95);
+  const B = S.end ? f * 1.6 : f * 5.3 + 2 * r;
+  const Sh = H - B;
+  const gy = Sh * .58, syR = Sh * .2, syL = gy - Sh * .14, cyc = gy + Sh * .2;
+  const ry = Math.min(Sh * .12, W * .08), crx = W * .13;
+  const lx = W * .27, rx = W * .73, hwL = W * .22, hwR = W * .2, swL = W * .04, swR = W * .025, cw = Math.max(6, W * .024);
+  G = {W, H, f, r, gy, syR, syL, cyc, ry, crx, lx, rx, cw, Sh, ty: H - r - f * .3};
+
+  Kit.mk('rect', {x: 0, y: gy, width: W, height: Sh * .98 - gy, rx: f * .6, style: 'fill:color-mix(in srgb,var(--k) 12%,transparent)'}, sv);
+  Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, style: 'stroke:var(--k);stroke-opacity:.4;stroke-width:1.5'}, sv);
+
+  // shield volcano: low, wide, runny magma
+  const sh = Kit.mk('g', {}, sv);
+  Kit.mk('path', {d: `M${lx - hwL},${gy} Q${lx - hwL * .55},${syL} ${lx - swL},${syL} L${lx + swL},${syL} Q${lx + hwL * .55},${syL} ${lx + hwL},${gy}Z`, fill: C.rock2, stroke: C.rock, 'stroke-width': 1.5}, sh);
+  Kit.mk('rect', {x: lx - cw / 2, y: syL, width: cw, height: cyc - syL, fill: C.runny}, sh);
+  Kit.mk('ellipse', {cx: lx, cy: cyc, rx: crx, ry, fill: C.runny, stroke: C.runnyHi, 'stroke-width': 2}, sh);
+  lava = Kit.mk('path', {d: `M${lx + swL * .5},${syL} Q${lx + hwL * .55},${syL} ${lx + hwL * .95},${gy - 1}`, fill: 'none', stroke: C.runny, 'stroke-width': cw * .9, 'stroke-linecap': 'round', opacity: S.out ? 1 : 0}, sh);
+  lavaLen = lava.getTotalLength();
+  lava.setAttribute('stroke-dasharray', lavaLen);
+  lava.setAttribute('stroke-dashoffset', S.out ? 0 : lavaLen);
+
+  // stratovolcano: steep, layered, sticky magma
+  strato = Kit.mk('g', {}, sv);
+  Kit.mk('path', {d: `M${rx - hwR},${gy} Q${rx - hwR * .3},${gy - (gy - syR) * .25} ${rx - swR},${syR} L${rx + swR},${syR} Q${rx + hwR * .3},${gy - (gy - syR) * .25} ${rx + hwR},${gy}Z`, fill: C.rock, stroke: '#271e1b', 'stroke-width': 1.5}, strato);
+  const y2 = syR + (gy - syR) * .4;
+  Kit.mk('path', {d: `M${rx - hwR * .72},${gy} Q${rx - hwR * .25},${gy - (gy - y2) * .25} ${rx - swR * 2},${y2} L${rx + swR * 2},${y2} Q${rx + hwR * .25},${gy - (gy - y2) * .25} ${rx + hwR * .72},${gy}Z`, fill: C.rock2, opacity: .7}, strato);
+  conR = Kit.mk('rect', {x: rx - cw / 2, y: syR, width: cw, height: cyc - syR, fill: S.boom ? '#ffcf3a' : C.sticky}, strato);
+  Kit.mk('ellipse', {cx: rx, cy: cyc, rx: crx, ry, fill: C.sticky, stroke: C.stickyHi, 'stroke-width': Math.max(3, ry * .12)}, strato);
+  if (!S.boom) for (let i = 0; i < S.trap; i++) {
+    const [sx, sy] = SL[i], X = rx + sx * crx, Y = cyc + sy * ry;
+    const b = bubble(X, Y, r, strato); b.classList.add('trapped'); gsap.set(b, {scale: .7});
+    if (!Kit.calm) gsap.to(b, {y: Y - 2, duration: .9, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i * .2});
+  } else cloud(Kit.mk('g', {}, sv), false);
+
+  // labels
+  const y1 = Sh + f * 1.05;
+  T(lx, y1, f, 'SHIELD', {w: 800});
+  T(rx, y1, f, 'STRATOVOLCANO', {w: 800});
+  gasTxt = null; pfill = null;
+  if (!S.end) {
+    const yb = y1 + f * 1.35, fs = Math.max(12, f * .9);
+    T(lx, yb, fs, 'runny magma', {w: 600, c: 'var(--muted)'});
+    T(rx, yb, fs, 'thick magma', {w: 600, c: 'var(--muted)'});
+    const y3 = yb + f * 1.55;
+    gasTxt = T(W * .04, y3, fs, `Gas escaped: ${S.out}`, {a: 'start'});
+    const bx = rx - W * .05, bw = rx + hwR - bx, bh = f * .7;
+    G.bw = bw;
+    T(bx - 6, y3, fs, 'Pressure', {a: 'end'});
+    Kit.mk('rect', {x: bx, y: y3 - bh * .9, width: bw, height: bh, rx: bh / 2, style: 'fill:none;stroke:var(--k);stroke-width:1.5'}, sv);
+    pfill = Kit.mk('rect', {x: bx, y: y3 - bh * .9, width: S.boom ? 0 : bw * S.trap / 4, height: bh, rx: bh / 2, fill: C.red}, sv);
+    if (!S.boom) {
+      Kit.mk('circle', {cx: W / 2, cy: G.ty, r: r * 1.4, style: 'fill:none;stroke:var(--k);stroke-opacity:.45;stroke-width:1.5;stroke-dasharray:4 4'}, sv);
+      T(W / 2 - r * 1.4 - 6, G.ty + fs * .35, fs, 'GAS', {a: 'end', w: 800});
+      spawn();
+    }
+  }
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm || !live) return;
+  gsap.fromTo(live, {y: G.ty}, {y: G.ty - G.f * .5, duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const fire = (t, el, x, y) => { const b = sv.getBoundingClientRect(); (el || window).dispatchEvent(new PointerEvent(t, {clientX: b.left + x, clientY: b.top + y, bubbles: true, pointerId: 1, isPrimary: true})); };
+  const go = async (x, y) => {
+    const el = sv.querySelector('.bub.live'); if (!el) return;
+    fire('pointerdown', el, G.W / 2, G.ty); fire('pointermove', null, x, y); fire('pointerup', null, x, y);
+    await w(250);
+  };
+  await go(G.lx, G.cyc);
+  for (let i = 0; i < 4; i++) await go(G.rx, G.cyc);
+  await w(Kit.calm ? 700 : 4000);
+};
+Kit.single();
+</script>
+</html>

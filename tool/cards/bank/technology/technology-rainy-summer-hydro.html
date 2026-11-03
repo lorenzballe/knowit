@@ -1,0 +1,129 @@
+<!doctype html>
+<!-- slug: technology-rainy-summer-hydro -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#pic{width:100%;height:100%;display:block;min-height:0}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap to build · watch it fill">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HYDRO POWER</span></div>
+    <h2 class="q">How much of Italy's August power could one very rainy summer supply?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" aria-label="A tank showing Italy's August electricity demand, filling with hydro power as rain falls"></svg></div>
+    <div id="why" class="gone"><p class="big">Almost 90%</p><p class="body">An unexpectedly rainy summer filled Italy's rivers and reservoirs. Dams turned the extra water into power, so in August hydro nearly covered 90% of demand and other sources were briefly barely needed.</p></div>
+    <p class="say" id="say">Tap the sky to send more rain into the dams.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hydro output follows the rain: one wet summer nearly powered Italy alone.</div>
+    <div class="foot"><span class="src">Source · Geopop, “ENERGIE RINNOVABILI: SONO DAVVERO GREEN? Analisi con il Professore de La Sapienza” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const STEPS = [0, 22, 44, 63, 78, 89];
+const LAST = STEPS.length - 1;
+let step = 0, level = 0, G = null, busy = false;
+const WATER = '#2f7de1';
+
+function setLevel(v){
+  level = v;
+  if (!G) return;
+  const h = G.th * v / 100, y = G.y0 + G.th - h;
+  G.water.setAttribute('y', y); G.water.setAttribute('height', h);
+  G.surf.setAttribute('y1', y); G.surf.setAttribute('y2', y);
+  G.surf.style.opacity = v > 0 ? 1 : 0;
+  const gap = G.big * .34 + G.f * 1.2;
+  const ty = Math.max(G.y0 + G.big * .8, Math.min(G.y0 + G.th - gap - G.f * .3, y + G.big * .35));
+  G.num.setAttribute('y', ty); G.lab.setAttribute('y', ty + gap);
+  G.num.textContent = (step === LAST ? '≈' : '') + Math.round(v === 89 ? 90 : v) + '%';
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const tw = Math.min(W * .34, H * .5), x0 = W * .52 - tw / 2;
+  const y0 = H * .26, th = H * .7;
+  const cx = x0 + tw / 2, cy = H * .1;
+  // cloud
+  const cloud = Kit.mk('g', {id: 'cloud'}, svg);
+  const r = Math.min(tw * .26, H * .08);
+  [[-1.3,.25,.8],[-.55,-.1,1],[.35,-.25,1.15],[1.2,.2,.85],[0,.35,.9]].forEach(([dx,dy,s]) =>
+    Kit.mk('circle', {cx: cx + dx * r, cy: cy + dy * r, r: r * s, style: 'fill:color-mix(in srgb,var(--k) 22%,var(--c))'}, cloud));
+  const ct = Kit.mk('text', {x: cx, y: cy + r * .45, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, cloud);
+  ct.textContent = step >= LAST ? 'wet summer' : `rain ${step}/${LAST}`;
+  // tank = August demand
+  const clip = Kit.mk('clipPath', {id: 'tk'}, Kit.mk('defs', {}, svg));
+  Kit.mk('rect', {x: x0, y: y0, width: tw, height: th, rx: fs * .6}, clip);
+  Kit.mk('rect', {x: x0, y: y0, width: tw, height: th, rx: fs * .6, style: 'fill:color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
+  const water = Kit.mk('rect', {x: x0, y: y0 + th, width: tw, height: 0, 'clip-path': 'url(#tk)', style: `fill:${WATER}`}, svg);
+  const surf = Kit.mk('line', {x1: x0, x2: x0 + tw, y1: y0 + th, y2: y0 + th, style: 'stroke:#9fd0ff;stroke-width:3;opacity:0', 'clip-path': 'url(#tk)'}, svg);
+  Kit.mk('rect', {x: x0, y: y0, width: tw, height: th, rx: fs * .6, style: 'fill:none;stroke:var(--k);stroke-width:' + Math.max(2, fs * .18)}, svg);
+  // 90% mark
+  const y90 = y0 + th * .1;
+  Kit.mk('line', {x1: x0 - fs * .3, x2: x0 + tw + fs * .5, y1: y90, y2: y90, style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:5 4;opacity:.7'}, svg);
+  const rx = x0 + tw + fs * .7;
+  const t100 = Kit.mk('text', {x: rx, y: y0 - fs * .9, style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  t100.textContent = '100% = demand';
+  const t90 = Kit.mk('text', {x: rx, y: y90 + fs * .9, style: `font:800 ${fs}px var(--mono);fill:var(--k)`}, svg);
+  t90.textContent = '90%';
+  const tb = Kit.mk('text', {x: cx, y: y0 + th + fs * 1.3, 'text-anchor': 'middle', style: `font:600 ${fs}px var(--body);fill:var(--muted)`}, svg);
+  tb.textContent = "Italy's August electricity";
+  if (y0 + th + fs * 1.3 > H) tb.remove();
+  // big number left of tank
+  const big = Math.max(fs * 2.2, Math.min(H * .1, (x0 - fs) / 2.6));
+  const nx = x0 - fs * .6;
+  const num = Kit.mk('text', {x: nx, y: 0, 'text-anchor': 'end', style: `font:800 ${big}px var(--display);fill:${WATER}`}, svg);
+  const lab = Kit.mk('text', {x: nx, y: 0, 'text-anchor': 'end', style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  lab.textContent = 'from hydro';
+  G = {W, H, f: fs, big, x0, y0, tw, th, cx, cy, r, water, surf, num, lab, ct, svg};
+  setLevel(level);
+}
+
+function rain(){
+  const drops = [];
+  for (let i = 0; i < 16; i++) {
+    const x = G.cx + (Kit.rnd() - .5) * G.tw * .85;
+    const d = Kit.mk('line', {x1: x, x2: x - 3, y1: G.cy + G.r * .9, y2: G.cy + G.r * .9 + G.f, style: `stroke:${WATER};stroke-width:3;stroke-linecap:round`}, G.svg);
+    drops.push(d);
+    const fall = G.y0 + G.th * (1 - level / 100) - G.cy - G.r;
+    gsap.to(d, {y: fall, opacity: .2, duration: .55, delay: Kit.rnd() * .35, ease: 'power2.in', onComplete: () => d.remove()});
+  }
+}
+
+Kit.$('stage').addEventListener('click', () => {
+  if (busy || step >= LAST) return;
+  busy = true; step++;
+  Kit.haptic(step === LAST ? 'success' : 'light');
+  G.ct.textContent = step >= LAST ? 'wet summer' : `rain ${step}/${LAST}`;
+  const target = STEPS[step];
+  const go = () => {
+    if (Kit.calm) { setLevel(target); done(); return; }
+    const o = {v: level};
+    gsap.to(o, {v: target, duration: .7, ease: 'power2.out', onUpdate: () => setLevel(o.v), onComplete: done});
+  };
+  const done = () => {
+    setLevel(target); busy = false;
+    if (step === LAST) {
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .45});
+    }
+  };
+  if (!Kit.calm) { rain(); setTimeout(go, 450); } else go();
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#cloud', {opacity: 0, y: -12, duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < LAST; i++) { Kit.$('stage').click(); await new Promise(r => setTimeout(r, 1300)); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

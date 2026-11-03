@@ -1,0 +1,331 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* The sky is one canvas that fills the stage; the why slides in under it at the end. */
+#stage{position:relative;min-height:0}
+#sky{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#sky.drag{cursor:grabbing}
+#why{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:.8cqh}
+#why p{margin:0}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TOTAL ECLIPSE</span></div>
+    <h2 class="q">Why do solar prominences and the corona become visible during an eclipse?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="sky" role="img" aria-label="A blue daytime sky: the blazing Sun in the middle, the dark Moon at the top left."></canvas>
+      <div id="why" class="gone"><p class="big">Always there, just outshone.</p><p class="body">The Sun’s blazing disc drowns out its faint outer glow. Once the Moon covers the disc, the corona and pink prominences show.</p></div>
+    </div>
+    <p class="say" id="say">Drag the Moon over the Sun.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An eclipse doesn’t switch the corona on; it switches the glare off.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What it’s like to watch a Total Solar Eclipse” (YouTube, 2017)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TAU = Math.PI * 2, deg = a => a * Math.PI / 180;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const sstep = (a, b, v) => { const t = clamp((v - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const lerp = (a, b, t) => a + (b - a) * t;
+const prng = seed => () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+// The corona's long streamers and the biggest prominences sit top left and bottom right, as in the video.
+const A1 = deg(208), A2 = deg(28);
+const PROMS = [
+  {loop: 1, a: deg(234), w: deg(8), h: .27},
+  {loop: 0, a: deg(52), w: deg(4.5), h: .22, lean: .4},
+  {loop: 1, a: deg(318), w: deg(4), h: .13},
+  {loop: 0, a: deg(150), w: deg(3), h: .14, lean: -.35},
+  {loop: 1, a: deg(96), w: deg(3), h: .11},
+];
+// Sky colour by how dark it has gone: day, deep partial, totality. [darkness, top, bottom]
+const SKY = [[0, [46, 112, 190], [134, 190, 236]], [.72, [24, 38, 90], [94, 84, 134]], [1, [4, 7, 22], [16, 20, 50]]];
+const sky = (t, j) => { const i = t > SKY[1][0] ? 1 : 0, A = SKY[i], B = SKY[i + 1], u = clamp((t - A[0]) / (B[0] - A[0]), 0, 1); return `rgb(${A[j].map((v, k) => Math.round(lerp(v, B[j][k], u))).join(',')})`; };
+
+const st = {s: 0, lab: 0, res: 0, rip: 0, ph: 0};   // Moon along its path (1 = centred), names, room for the why, hint ripple, shimmer
+let G = null, dirty = false, total = false, ended = false, whyIn = false, snapping = false, dragging = false, touched = false, p0 = null, hint = [];
+const cv = Kit.$('sky'), req = () => { dirty = true; };
+
+// Share of the bright disc (radius r) that a Moon (radius R) at distance d leaves showing.
+function shown(d, r, R) {
+  if (d >= r + R) return 1;
+  if (d <= R - r) return 0;
+  const a = r * r * Math.acos(clamp((d * d + r * r - R * R) / (2 * d * r), -1, 1));
+  const b = R * R * Math.acos(clamp((d * d + R * R - r * r) / (2 * d * R), -1, 1));
+  const c = .5 * Math.sqrt(Math.max(0, (-d + r + R) * (d + r - R) * (d - r + R) * (d + r + R)));
+  return clamp(1 - (a + b - c) / (Math.PI * r * r), 0, 1);
+}
+function offscreen(S) {
+  const dpr = Math.min(2, window.devicePixelRatio || 1), c = document.createElement('canvas');
+  c.width = c.height = Math.max(2, Math.ceil(S * dpr));
+  const x = c.getContext('2d'); x.scale(dpr, dpr);
+  return {c, x, dpr};
+}
+// The corona: a pearly glow, broad streamers and fine rays. Drawn once per size, then only faded in.
+function renderCorona(R, seed) {
+  const S = Math.ceil(R * 6), o = S / 2, {c, x} = offscreen(S), rnd = prng(seed);
+  const pol = (a, r) => [o + Math.cos(a) * r, o + Math.sin(a) * r];
+  const lobe = a => Math.pow(Math.max(0, Math.cos(a - A1)), 3) + .85 * Math.pow(Math.max(0, Math.cos(a - A2)), 3);
+  x.globalCompositeOperation = 'lighter';
+  const hg = x.createRadialGradient(o, o, R * .97, o, o, R * 2.4);
+  hg.addColorStop(0, 'rgba(255,255,255,.95)'); hg.addColorStop(.06, 'rgba(236,241,255,.5)'); hg.addColorStop(.22, 'rgba(206,218,255,.16)'); hg.addColorStop(.55, 'rgba(190,205,255,.045)'); hg.addColorStop(1, 'rgba(190,205,255,0)');
+  x.fillStyle = hg; x.beginPath(); x.arc(o, o, R * 2.4, 0, TAU); x.fill();
+  [[A1, .62, 1.55, .3], [A1 + .26, .34, 1.05, .2], [A1 - .3, .3, .85, .18], [A2, .55, 1.4, .28], [A2 - .24, .32, .95, .18], [A2 + .3, .28, .75, .16]].forEach(([a, w, L, al]) => {
+    a += (rnd() - .5) * .06; L *= R * (.92 + .16 * rnd());
+    const g = x.createRadialGradient(o, o, R * .97, o, o, R + L);
+    g.addColorStop(0, `rgba(255,255,255,${al})`); g.addColorStop(.35, `rgba(228,235,255,${al * .4})`); g.addColorStop(1, 'rgba(220,230,255,0)');
+    const [x0, y0] = pol(a - w / 2, R * .97), [x1, y1] = pol(a + w / 2, R * .97), [tx, ty] = pol(a, R + L), [p, q] = pol(a - w * .42, R + L * .42), [u, v] = pol(a + w * .42, R + L * .42);
+    x.fillStyle = g; x.beginPath(); x.moveTo(x0, y0); x.quadraticCurveTo(p, q, tx, ty); x.quadraticCurveTo(u, v, x1, y1); x.closePath(); x.fill();
+  });
+  x.lineCap = 'round';
+  for (let i = 0; i < 300; i++) {
+    const a = rnd() * TAU, k = lobe(a), L = R * Math.min(1.9, .16 + .42 * rnd() + k * (.6 + .9 * rnd())), bend = (rnd() - .5) * .16 * L / R;
+    const [x0, y0] = pol(a, R * .98), [x1, y1] = pol(a + bend, R + L), [xm, ym] = pol(a + bend * .3, R + L * .5), al = .05 + .08 * rnd() + .07 * k;
+    const g = x.createLinearGradient(x0, y0, x1, y1);
+    g.addColorStop(0, `rgba(255,255,255,${al})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+    x.strokeStyle = g; x.lineWidth = R * (.008 + .03 * rnd());
+    x.beginPath(); x.moveTo(x0, y0); x.quadraticCurveTo(xm, ym, x1, y1); x.stroke();
+  }
+  return {c, S};
+}
+// The prominences: glowing pink loops and tongues of plasma at the edge.
+function renderProms(R) {
+  const S = Math.ceil(R * 3.2), o = S / 2, {c, x, dpr} = offscreen(S), rnd = prng(11);
+  const pol = (a, r) => [o + Math.cos(a) * r, o + Math.sin(a) * r];
+  x.globalCompositeOperation = 'lighter'; x.lineCap = 'round';
+  x.shadowColor = 'rgba(255,40,100,.9)'; x.shadowBlur = R * .07 * dpr;
+  PROMS.forEach(p => {
+    if (p.loop) for (let i = 0; i < 6; i++) {
+      const w = p.w * (.65 + .12 * i + .05 * rnd()), hh = R * p.h * (.7 + .06 * i + .08 * rnd());
+      const [x0, y0] = pol(p.a - w, R * .97), [x3, y3] = pol(p.a + w, R * .97), [x1, y1] = pol(p.a - w * 1.25, R + hh * 1.35), [x2, y2] = pol(p.a + w * 1.25, R + hh * 1.35);
+      x.strokeStyle = `rgba(255,${85 + 50 * rnd() | 0},${130 + 40 * rnd() | 0},${.4 + .25 * rnd()})`; x.lineWidth = R * (.016 + .018 * rnd());
+      x.beginPath(); x.moveTo(x0, y0); x.bezierCurveTo(x1, y1, x2, y2, x3, y3); x.stroke();
+    }
+    else for (let i = 0; i < 4; i++) {
+      const w = p.w * (1 - .18 * i), hh = R * p.h * (1 - .15 * i + .1 * rnd()), lean = p.lean * w * (1 + .2 * i);
+      const [b0x, b0y] = pol(p.a - w, R * .97), [b1x, b1y] = pol(p.a + w, R * .97), [tx, ty] = pol(p.a + lean * 2, R + hh), [c0x, c0y] = pol(p.a - w * .9 + lean, R + hh * .55), [c1x, c1y] = pol(p.a + w * .9 + lean * 1.5, R + hh * .5);
+      const g = x.createRadialGradient(o, o, R * .97, o, o, R + hh);
+      g.addColorStop(0, `rgba(255,125,165,${.6 - .08 * i})`); g.addColorStop(1, 'rgba(255,70,120,.06)');
+      x.fillStyle = g; x.beginPath(); x.moveTo(b0x, b0y); x.quadraticCurveTo(c0x, c0y, tx, ty); x.quadraticCurveTo(c1x, c1y, b1x, b1y); x.closePath(); x.fill();
+    }
+  });
+  return {c, S};
+}
+function rrect(x, X, Y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
+  x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath();
+}
+function leader(x, x1, y1, x2, y2, col) {
+  const dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy) || 1, e = Math.min(5, l * .2);
+  x.strokeStyle = col; x.lineWidth = 1.2;
+  x.beginPath(); x.moveTo(x1, y1); x.lineTo(x2 - dx / l * e, y2 - dy / l * e); x.stroke();
+}
+
+const sunR = (W, h) => Math.max(12, Math.min(W / 5, h / 4.8));
+// Where everything sits in the sky window (the stage minus the room the why takes at the end).
+function geo() {
+  const W = G.W, H = G.H, h = Math.max(80, H - st.res);
+  const Rs = sunR(W, h), Rm = Rs * 1.035, cx = W / 2, cy = h / 2, pad = Math.max(6, Rs * .12);
+  const sx = Math.min(cx - 1, pad + Rm), sy = Math.min(cy - 1, pad + Rm);
+  const D = Math.hypot(cx - sx, cy - sy), ux = (cx - sx) / D, uy = (cy - sy) / D;
+  return {W, H, h, Rs, Rm, cx, cy, D, ux, uy, snap: 1 - .06 * Rs / D};
+}
+const whyRoom = () => Kit.$('why').offsetHeight + Math.max(8, G.H * .03);
+
+function fit() {
+  cv.style.width = cv.style.height = '';
+  const {x, W, H} = Kit.fitCanvas(cv);
+  if (!(W > 20 && H > 20)) return;
+  const cs = getComputedStyle(Kit.$('card')), v = n => cs.getPropertyValue(n).trim();
+  const R0 = sunR(W, H), old = G && G.R0 === R0 ? G : null;
+  G = {x, W, H, R0, body: v('--body') || 'sans-serif', mono: v('--mono') || 'monospace',
+       corA: old ? old.corA : renderCorona(R0, 7), corB: old ? old.corB : renderCorona(R0, 23), pro: old ? old.pro : renderProms(R0)};
+  if (whyIn) st.res = whyRoom();
+  draw();
+}
+
+function draw() {
+  if (!G) return;
+  const x = G.x, {W, H, h, Rs, Rm, cx, cy, D, ux, uy} = geo();
+  const d = (1 - st.s) * D, mx = cx - d * ux, my = cy - d * uy;
+  const f = shown(d, Rs, Rm);                   // share of the bright disc still showing
+  const dark = f <= 0 ? 1 : 1 - Math.pow(f, .3);
+  const vis = 1 - sstep(0, .006, f);            // how well the faint light can be seen
+  const fs = clamp(Math.min(W, h) * .047, 12, 17), pad = Math.max(8, fs * .75);
+  x.save();
+  x.clearRect(0, 0, W, H);
+  rrect(x, 0, 0, W, h, Math.min(W, h) * .055); x.clip();
+  const sk = x.createLinearGradient(0, 0, 0, h);
+  sk.addColorStop(0, sky(dark, 1)); sk.addColorStop(1, sky(dark, 2));
+  x.fillStyle = sk; x.fillRect(0, 0, W, h);
+
+  x.globalCompositeOperation = 'lighter';
+  const vx = W - pad - fs * .5, vy = pad + fs * .55;
+  if (vis > .01) {                              // Venus, once the sky is dark
+    const vg = x.createRadialGradient(vx, vy, 0, vx, vy, fs * .75);
+    vg.addColorStop(0, `rgba(255,255,255,${vis})`); vg.addColorStop(.16, `rgba(255,248,230,${.8 * vis})`); vg.addColorStop(1, 'rgba(255,248,230,0)');
+    x.fillStyle = vg; x.beginPath(); x.arc(vx, vy, fs * .75, 0, TAU); x.fill();
+  }
+  if (vis > .002) {                             // the corona
+    const k = Rs / G.R0 * (.9 + .1 * Math.sqrt(vis)), w = .5 + .2 * Math.sin(st.ph * .9);
+    [[G.corA, w], [G.corB, 1 - w]].forEach(([o, a]) => { const z = o.S * k; x.globalAlpha = vis * a; x.drawImage(o.c, cx - z / 2, cy - z / 2, z, z); });
+    x.globalAlpha = 1;
+  }
+  if (f > 0) {                                  // glare from whatever is left of the bright disc
+    const gx = cx + ux * Rs * (1 - f) * .85, gy = cy + uy * Rs * (1 - f) * .85;
+    const Rg = Rs * (1.2 + 2 * Math.pow(f, .35)), a = Math.min(1, 1.1 * Math.pow(f, .22));
+    const gg = x.createRadialGradient(gx, gy, 0, gx, gy, Rg);
+    gg.addColorStop(0, `rgba(255,252,238,${a})`); gg.addColorStop(.2, `rgba(255,248,226,${.7 * a})`); gg.addColorStop(.5, `rgba(255,244,215,${.2 * a})`); gg.addColorStop(1, 'rgba(255,244,215,0)');
+    x.fillStyle = gg; x.beginPath(); x.arc(gx, gy, Rg, 0, TAU); x.fill();
+  }
+  if (vis > .002) {                             // the prominences
+    const z = G.pro.S * Rs / G.R0;
+    x.globalAlpha = vis * (.9 + .1 * Math.sin(st.ph * 1.3)); x.drawImage(G.pro.c, cx - z / 2, cy - z / 2, z, z); x.globalAlpha = 1;
+  }
+  x.globalCompositeOperation = 'source-over';
+  if (f > 0) {                                  // the bright disc
+    const sg = x.createRadialGradient(cx, cy, 0, cx, cy, Rs);
+    sg.addColorStop(0, '#ffffff'); sg.addColorStop(.75, '#fffbee'); sg.addColorStop(1, '#ffedc0');
+    x.fillStyle = sg; x.beginPath(); x.arc(cx, cy, Rs, 0, TAU); x.fill();
+  }
+  x.fillStyle = '#04050b'; x.beginPath(); x.arc(mx, my, Rm, 0, TAU); x.fill();   // the Moon
+  if (st.rip > 0 && !touched) {
+    x.strokeStyle = `rgba(255,255,255,${.85 * (1 - st.rip)})`; x.lineWidth = Math.max(1.5, Rs * .035);
+    x.beginPath(); x.arc(mx, my, Rm * (1.04 + .4 * st.rip), 0, TAU); x.stroke();
+  }
+  x.font = `600 ${fs * .9}px ${G.body}`; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillStyle = `rgba(255,255,255,${.65 - .3 * vis})`; x.fillText('Moon', mx, my);
+  const b = f > 0 ? (1 - sstep(.004, .07, f)) * sstep(0, .0006, f) : 0;
+  if (b > .01) {                                // the last bead of bright disc still blinds
+    const bx = cx + ux * Rs, by = cy + uy * Rs, rb = Rs * (.3 + .9 * b);
+    x.globalCompositeOperation = 'lighter';
+    const hg = x.createRadialGradient(bx, by, 0, bx, by, rb);
+    hg.addColorStop(0, `rgba(255,255,255,${b})`); hg.addColorStop(.12, `rgba(255,252,240,${.8 * b})`); hg.addColorStop(.4, `rgba(255,246,225,${.25 * b})`); hg.addColorStop(1, 'rgba(255,246,225,0)');
+    x.fillStyle = hg; x.beginPath(); x.arc(bx, by, rb, 0, TAU); x.fill();
+    x.lineWidth = Math.max(1, Rs * .022);
+    for (let i = 0; i < 4; i++) {
+      const a = .35 + i * Math.PI / 4, l = Rs * 1.5 * b, ex = Math.cos(a) * l, ey = Math.sin(a) * l;
+      const lg = x.createLinearGradient(bx - ex, by - ey, bx + ex, by + ey);
+      lg.addColorStop(0, 'rgba(255,255,255,0)'); lg.addColorStop(.5, `rgba(255,255,255,${.75 * b})`); lg.addColorStop(1, 'rgba(255,255,255,0)');
+      x.strokeStyle = lg; x.beginPath(); x.moveTo(bx - ex, by - ey); x.lineTo(bx + ex, by + ey); x.stroke();
+    }
+    x.globalCompositeOperation = 'source-over';
+  }
+  const ra = .9 * (1 - st.lab);
+  if (ra > .01) {                               // how much of the bright disc is covered
+    x.font = `600 ${fs * .8}px ${G.mono}`; x.textAlign = 'right'; x.textBaseline = 'alphabetic';
+    x.fillStyle = dark < .6 ? `rgba(8,24,54,${ra})` : `rgba(232,236,255,${ra})`;
+    x.fillText(`${f <= 0 ? 100 : Math.floor((1 - f) * 100)}% covered`, W - pad, h - pad);
+  }
+  const la = st.lab * vis;
+  if (la > .01) {                               // names, once everything shows
+    x.font = `600 ${fs}px ${G.body}`; x.textBaseline = 'alphabetic';
+    x.shadowColor = 'rgba(0,0,12,.9)'; x.shadowBlur = 6;
+    const P = PROMS[0], ar = Rs * (1 + P.h + .1), pink = a => `rgba(255,150,184,${a})`, pale = a => `rgba(236,240,255,${a})`;
+    x.textAlign = 'left'; x.fillStyle = pink(la); x.fillText('prominence', pad, pad + fs);
+    leader(x, pad + x.measureText('prominence').width * .55, pad + fs * 1.4, cx + Math.cos(P.a) * ar, cy + Math.sin(P.a) * ar, pink(.75 * la));
+    const ca = deg(150), cr = Rs * 1.6;
+    x.fillStyle = pale(la); x.fillText('corona', pad, h - pad);
+    leader(x, pad + x.measureText('corona').width * .55, h - pad - fs * 1.1, cx + Math.cos(ca) * cr, cy + Math.sin(ca) * cr, pale(.75 * la));
+    x.textAlign = 'right'; x.fillText('Venus', vx - fs * .8, vy + fs * .36);
+    x.shadowBlur = 0;
+  }
+  x.restore();
+}
+
+// Dragging moves the Moon along its path; near the centre it slides home and the glare goes out.
+cv.addEventListener('pointerdown', e => {
+  if (snapping || !G) return;
+  e.preventDefault();
+  if (!touched) { touched = true; hint.forEach(t => t.kill()); hint = []; st.rip = 0; }
+  const g = geo();
+  p0 = {x: e.clientX, y: e.clientY, s: st.s, t: performance.now(), far: 0, D: g.D, ux: g.ux, uy: g.uy, snap: g.snap};
+  dragging = true; cv.classList.add('drag');
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  Kit.haptic('selection');
+});
+addEventListener('pointermove', e => {
+  if (!dragging) return;
+  const dx = e.clientX - p0.x, dy = e.clientY - p0.y;
+  p0.far = Math.max(p0.far, Math.hypot(dx, dy));
+  st.s = clamp(p0.s + (dx * p0.ux + dy * p0.uy) / p0.D, 0, 1);
+  if (st.s >= p0.snap) { if (total) st.s = 1; else { stopDrag(); toTotality(p0.snap); return; } }
+  else total = false;
+  req();
+});
+const stopDrag = () => { dragging = false; cv.classList.remove('drag'); };
+addEventListener('pointerup', () => {
+  if (!dragging) return;
+  const tap = p0.far < 6 && performance.now() - p0.t < 500;
+  stopDrag();
+  if (tap && !total) stepIn();
+});
+addEventListener('pointercancel', stopDrag);
+
+// A tap moves the Moon a step closer, for readers who tap instead of drag.
+function stepIn() {
+  const to = Math.min(1, st.s + .26);
+  if (to >= geo().snap) return toTotality();
+  if (Kit.calm) { st.s = to; req(); return; }
+  snapping = true;
+  gsap.to(st, {s: to, duration: .55, ease: 'power2.out', onUpdate: req, onComplete: () => { snapping = false; }});
+}
+function toTotality(from) {
+  if (total) return;
+  total = true; snapping = true;
+  const done = () => { snapping = false; req(); if (!ended) finish(); };
+  if (Kit.calm) { st.s = 1; draw(); done(); return; }
+  if (from != null) st.s = Math.min(st.s, from);   // always pass through the last blinding bead
+  gsap.to(st, {s: 1, duration: clamp(.75 + (1 - st.s) * 2.2, .9, 1.6), ease: 'sine.inOut', onUpdate: req, onComplete: done});
+}
+function finish() {
+  ended = true;
+  Kit.haptic('success');
+  cv.setAttribute('aria-label', 'Total eclipse: the dark Moon hides the bright disc, and a white corona and pink prominences glow around it. Venus shows in the dark sky.');
+  if (Kit.calm) { st.lab = 1; showEnd(false); return; }
+  gsap.to(st, {lab: 1, duration: .9, delay: .15, ease: 'power2.out', onUpdate: req});
+  gsap.delayedCall(.95, () => showEnd(true));
+}
+function showEnd(anim) {
+  Kit.hide('say'); Kit.show('keep'); Kit.show('why');
+  const room = whyRoom();
+  if (!anim) { st.res = room; whyIn = true; draw(); return; }
+  gsap.to(st, {res: room, duration: .8, ease: 'power3.inOut', onUpdate: req, onComplete: () => { whyIn = true; st.res = whyRoom(); req(); }});
+  gsap.fromTo('#why', {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: .6, delay: .35, ease: 'power2.out'});
+}
+
+// Draw at the card's real size: once the fonts are in, and again on every resize.
+Kit.onShow.card = fit;
+new ResizeObserver(() => { if (G) fit(); }).observe(Kit.$('stage'));
+// The Moon leans toward the Sun once, then a ripple shows what to drag.
+Kit.onEnter.card = () => {
+  if (Kit.calm || touched || total) return;
+  hint.forEach(t => t.kill());
+  hint = [
+    gsap.fromTo(st, {s: 0}, {s: .1, duration: .65, delay: .5, ease: 'sine.inOut', yoyo: true, repeat: 1, onUpdate: req}),
+    gsap.fromTo(st, {rip: 0}, {rip: 1, duration: 1.5, delay: 1.9, ease: 'power1.out', repeat: -1, repeatDelay: .5, onUpdate: req}),
+  ];
+};
+gsap.ticker.add(time => {
+  if (total && st.lab > 0 && !Kit.calm) { st.ph = time; dirty = true; }
+  if (dirty && G) { dirty = false; draw(); }
+});
+// Plays the card through for the checker: drag the Moon onto the Sun and wait for the why.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  if (!G) fit();
+  if (!G) return;
+  const g = geo(), r = cv.getBoundingClientRect(), d = (1 - st.s) * g.D, mx = g.cx - d * g.ux, my = g.cy - d * g.uy;
+  const ev = (type, px, py) => cv.dispatchEvent(new PointerEvent(type, {clientX: r.left + px, clientY: r.top + py, bubbles: true, cancelable: true, pointerId: 7, isPrimary: true, pointerType: 'touch'}));
+  ev('pointerdown', mx, my);
+  for (let i = 1; i <= 18; i++) { const t = i / 18 * 1.06; ev('pointermove', mx + (g.cx - mx) * t, my + (g.cy - my) * t); await wait(35); }
+  ev('pointerup', g.cx, g.cy);
+  for (let i = 0; i < 80 && !whyIn; i++) await wait(100);
+  await wait(300);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<!-- slug: science-why-drill-kola -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why drill in Kola?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.4cqh,15px)/1.15 var(--display)}
+#why .body{font:400 max(1.75cqh,12px)/1.35 var(--body);overflow-wrap:anywhere}
+#pic text{font-family:var(--body);font-weight:700;pointer-events:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag a guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEPEST HOLE</span></div>
+    <h2 class="q">Why drill the world's deepest hole on Russia's Kola Peninsula?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Two slices of Earth's crust: most places, and Kola"></svg>
+      <div id="why" class="gone">
+        <p class="big">The ancient crust is right there</p>
+        <p class="body">In most places, rock over 2 billion years old lies buried deep under younger layers. Kola is a geological oddity: the young cover is very thin, so the drill hits Proterozoic crust almost at once, and it only gets older on the way down.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the line: where does ancient rock begin under Kola?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Kola was picked for science: Earth's oldest crust sits close to the surface.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il buco più profondo della Terra, il racconto scientifico del pozzo Kola in Russia con animazioni 3D” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {g: .5, rev: false, touched: false, drag: false, lay: null};
+const YOUNG = ['#f0cd86', '#dfaa5e', '#c98c47'], OLD = '#2f2552', INKY = '#3a2708', THIN = .05;
+
+function txt(p, x, y, s, fill, size, anchor){
+  const t = Kit.mk('text', {x, y, fill, 'font-size': size, 'text-anchor': anchor || 'middle', 'dominant-baseline': 'middle'}, p);
+  t.textContent = s; return t;
+}
+
+function draw(anim){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12), ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const top = fs * 2.6, bot = H - 4, h = Math.max(bot - top, 40);
+  const L = {x: W * .05, w: W * .4}, R = {x: W * .55, w: W * .4};
+  S.lay = {top, h};
+  const r = Math.min(fs * .7, 10);
+
+  // titles
+  txt(svg, L.x + L.w / 2, fs * 1.1, 'Most places', ink, fs);
+  txt(svg, R.x + R.w / 2, fs * 1.1, 'Kola Peninsula', ink, fs);
+
+  // clip paths for rounded bottom
+  const defs = Kit.mk('defs', {}, svg);
+  [L, R].forEach((c, i) => {
+    const cp = Kit.mk('clipPath', {id: 'cp' + i}, defs);
+    Kit.mk('rect', {x: c.x, y: top, width: c.w, height: h, rx: r}, cp);
+  });
+
+  // --- typical column
+  const gL = Kit.mk('g', {'clip-path': 'url(#cp0)'}, svg);
+  const yf = .62;
+  Kit.mk('rect', {x: L.x, y: top, width: L.w, height: h, fill: OLD}, gL);
+  YOUNG.forEach((c, i) => Kit.mk('rect', {x: L.x, y: top + h * yf * i / 3, width: L.w, height: h * yf / 3 + 1, fill: c}, gL));
+  Kit.mk('rect', {x: L.x, y: top, width: L.w, height: 5, fill: '#5aa65a'}, gL);
+  const am = top + h * (yf + 1) / 2;
+  if (h * yf >= fs * 2.9 && h * (1 - yf) >= fs * 2.9){
+    txt(svg, L.x + L.w / 2, top + h * yf / 2 - fs * .65, 'younger', INKY, fs);
+    txt(svg, L.x + L.w / 2, top + h * yf / 2 + fs * .65, 'rocks', INKY, fs);
+    txt(svg, L.x + L.w / 2, am - fs * .65, 'ancient rock', '#fff', fs);
+    txt(svg, L.x + L.w / 2, am + fs * .65, '2+ billion yrs', '#cfc6ff', fs * .9);
+  } else {
+    if (h * yf >= fs * 1.3) txt(svg, L.x + L.w / 2, top + h * yf / 2, 'younger', INKY, fs);
+    if (h * (1 - yf) >= fs * 1.3) txt(svg, L.x + L.w / 2, am, 'ancient', '#fff', fs);
+  }
+
+  // --- Kola column
+  const gR = Kit.mk('g', {'clip-path': 'url(#cp1)'}, svg);
+  Kit.mk('rect', {x: R.x, y: top, width: R.w, height: h, fill: OLD}, gR);
+  const yh = (S.rev && !anim ? THIN : S.g) * h;
+  const young = Kit.mk('rect', {x: R.x, y: top, width: R.w, height: yh, fill: YOUNG[1]}, gR);
+  Kit.mk('rect', {x: R.x, y: top, width: R.w, height: 5, fill: '#5aa65a'}, gR);
+
+  if (!S.rev){
+    const y = top + S.g * h, cx = R.x + R.w / 2;
+    if (S.g * h > fs * 2.4) txt(svg, cx, top + S.g * h / 2, 'younger?', INKY, fs);
+    if ((1 - S.g) * h > fs * 2.4) txt(svg, cx, y + (1 - S.g) * h / 2, 'ancient?', '#fff', fs);
+    Kit.mk('line', {x1: R.x, x2: R.x + R.w, y1: y, y2: y, stroke: '#fff', 'stroke-width': 3}, svg);
+    const hr = Math.max(fs * 1.05, 14);
+    Kit.mk('circle', {cx, cy: y, r: hr, fill: '#ffd166', stroke: OLD, 'stroke-width': 2.5}, svg);
+    txt(svg, cx, y + 1, '↕', OLD, fs * 1.1);
+    if (!S.touched){
+      const ring = Kit.mk('circle', {cx, cy: y, r: hr, fill: 'none', stroke: '#ffd166', 'stroke-width': 2}, svg);
+      if (!Kit.calm) gsap.fromTo(ring, {attr: {r: hr}, opacity: 1}, {attr: {r: hr * 2.2}, opacity: 0, duration: 1.2, repeat: -1, ease: 'power2.out'});
+    }
+  } else {
+    const gy = top + S.g * h;
+    Kit.mk('line', {x1: R.x, x2: R.x + R.w, y1: gy, y2: gy, stroke: '#fff', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: .75}, svg);
+    const dx = R.x + R.w * .93;
+    const drill = Kit.mk('line', {x1: dx, x2: dx, y1: top - fs * .5, y2: top + h * .96, stroke: '#ffd166', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    const cx = R.x + R.w * .46;
+    const labs = Kit.mk('g', {}, svg);
+    const m = top + h * .5;
+    if (h >= fs * 3.2) txt(labs, R.x + 6, top + THIN * h + fs * 1.1, '↑ thin young layer', '#ffd166', fs * .85, 'start');
+    if (h >= fs * 7.6){
+      txt(labs, cx, m - fs * 1.3, 'ancient rock', '#fff', fs);
+      txt(labs, cx, m, 'near the top', '#fff', fs);
+      txt(labs, cx, m + fs * 1.3, '2+ billion yrs', '#cfc6ff', fs * .9);
+    } else if (h >= fs * 4.8){
+      txt(labs, cx, m + fs * .3, 'ancient rock', '#fff', fs);
+    }
+    if (gy > m - fs * 2.2 && gy < m + fs * 2.2) {} // dashed line sits behind labels; it stays faint
+    if (anim && !Kit.calm){
+      gsap.fromTo(young, {attr: {height: S.g * h}}, {attr: {height: THIN * h}, duration: 1.1, ease: 'power3.inOut'});
+      const len = top + h * .96 - (top - fs * .5);
+      gsap.fromTo(drill, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: 1.4, delay: .6, ease: 'power2.in'});
+      gsap.from(labs, {opacity: 0, duration: .5, delay: 1});
+    } else young.setAttribute('height', THIN * h);
+  }
+}
+
+function setFromY(clientY){
+  const box = Kit.$('pic').getBoundingClientRect();
+  const y = clientY - box.top;
+  S.g = Math.min(.95, Math.max(.03, (y - S.lay.top) / S.lay.h));
+  draw();
+}
+
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  if (S.rev) return; S.drag = true; S.touched = true;
+  try { pic.setPointerCapture(e.pointerId); } catch(_) {}
+  setFromY(e.clientY); Kit.haptic('selection');
+});
+pic.addEventListener('pointermove', e => { if (S.drag && !S.rev) setFromY(e.clientY); });
+const end = () => {
+  if (!S.drag) return; S.drag = false;
+  if (!S.rev){ sure.on(); Kit.$('say').textContent = 'Happy with your line? Then: how sure are you?'; }
+};
+pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = S.g <= .2;
+  const said = S.g <= .2 ? 'Ancient rock starts near the surface' : S.g <= .5 ? 'Ancient rock starts fairly deep' : 'Ancient rock starts very deep';
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  S.rev = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}: ${ok ? 'right' : 'it starts much higher'}`);
+  Kit.haptic('success');
+  requestAnimationFrame(() => draw(true));
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const b = pic.getBoundingClientRect(), x = b.left + b.width * .75, wait = ms => new Promise(r => setTimeout(r, ms));
+  const ev = (t, y) => pic.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', b.top + b.height * .5); await wait(50);
+  ev('pointermove', b.top + b.height * .7); await wait(50);
+  ev('pointerup', b.top + b.height * .7); await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await wait(2200);
+};
+Kit.single();
+</script>
+</html>

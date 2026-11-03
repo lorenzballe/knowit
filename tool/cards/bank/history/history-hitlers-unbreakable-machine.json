@@ -1,0 +1,38 @@
+{
+  "id": "history-hitlers-unbreakable-machine",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why was Hitler's own cipher machine so much harder to break than Enigma?",
+  "answer": "Enigma had about 10²³ possible keys. Hitler's machine had 10¹⁷⁰, more than the number of atoms in the observable universe squared. Trying every key on it was mathematically impossible.",
+  "move": "Every extra digit makes brute force ten times harder.",
+  "keywords": [
+    "enigma",
+    "hitler",
+    "cipher machine",
+    "brute force",
+    "key space"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A row of square cells, one per digit. Grey cells fill Enigma's key count of about 10 to the 23rd. Drag to guess where Hitler's cipher machine's key count, 10 to the 170th, ends.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=2781s",
+  "written": "2026-11-03"
+}

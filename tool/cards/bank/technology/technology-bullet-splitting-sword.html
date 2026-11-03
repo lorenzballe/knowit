@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: technology-bullet-splitting-sword -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#fire{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;align-self:stretch}
+#pic text{font-family:var(--body);fill:var(--k)}
+#pic .ttl{font-weight:800}
+#pic .res{font-weight:700;opacity:0}
+.lane{fill:color-mix(in srgb,var(--k) 7%,transparent)}
+.steel{fill:#c3ccd4;stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+.hard{fill:#f3f6f9}
+.grain{fill:none;stroke:#7d8994;stroke-width:1;opacity:.8}
+.cu{fill:#c97a3d;stroke:var(--k);stroke-width:1.2;stroke-linejoin:round}
+.core{fill:#5d636a}
+.spark{stroke:#ffb020;stroke-width:2.2;stroke-linecap:round;opacity:0}
+.speed{stroke:var(--k);stroke-width:1.4;stroke-linecap:round;opacity:.35}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Race · two blades">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SWORD STEEL</span></div>
+    <h2 class="q">Why can a Japanese sword slice a bullet in half?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Two blades, seen from above, each meeting a bullet"></svg>
+      <button id="fire">Fire at both blades</button>
+      <div id="why" class="gone">
+        <p class="big">Hard steel, layered grain</p>
+        <p class="body">The sword is high-carbon steel with a layered grain. That makes the edge very hard, and it stays sharp, so it parts the bullet’s core instead of giving way.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Blades seen from above, edge toward the bullet. Fire and watch in slow motion.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A blade cuts what is softer than its edge, so hardness is everything.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let fired = false, finished = false, tl = null;
+
+function done(){
+  if (finished) return; finished = true;
+  Kit.hide('fire'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+}
+
+function bulletParts(g, L, r){
+  const nb = L/2 - L*.36;
+  const top = Kit.mk('g', {}, g), bot = Kit.mk('g', {}, g);
+  Kit.mk('path', {class:'cu', d:`M${-L/2},0 L${-L/2},${-r} L${nb},${-r} Q${L/2},${-r} ${L/2},0 Z`}, top);
+  Kit.mk('rect', {class:'core', x:-L/2+L*.08, y:-r*.5, width:nb-(-L/2+L*.08), height:r*.5}, top);
+  Kit.mk('path', {class:'cu', d:`M${-L/2},0 L${-L/2},${r} L${nb},${r} Q${L/2},${r} ${L/2},0 Z`}, bot);
+  Kit.mk('rect', {class:'core', x:-L/2+L*.08, y:0, width:nb-(-L/2+L*.08), height:r*.5}, bot);
+  return {top, bot};
+}
+
+function wedgeD(bx, ym, wl, t, xe, dd, s){
+  // apex region: three points (sharp when dd=s=0)
+  return `M${bx+dd},${ym-s} L${bx+dd*.8},${ym} L${bx+dd},${ym+s} L${bx+wl},${ym+t/2} L${xe},${ym+t/2} L${xe},${ym-t/2} L${bx+wl},${ym-t/2} Z`;
+}
+
+function lane(y0, hl, W, f, hard){
+  const pad = Math.max(W*.035, 10);
+  Kit.mk('rect', {class:'lane', x:0, y:y0, width:W, height:hl, rx:Math.min(16, hl*.08)}, svg);
+  const ttl = Kit.mk('text', {class:'ttl', x:pad, y:y0+f*1.4, 'font-size':f}, svg);
+  ttl.textContent = hard ? 'Japanese sword · high-carbon, layered' : 'Plain soft iron blade';
+  const res = Kit.mk('text', {class:'res', x:pad, y:y0+hl-f*.7, 'font-size':f}, svg);
+  res.textContent = hard ? 'Edge holds · bullet split in two' : 'Edge flattens · bullet bounces off';
+
+  const ym = y0 + hl*.54, bx = W*.5, wl = W*.22, xe = W - pad;
+  const t = Math.min(hl*.26, W*.09);
+  const L = Math.min(W*.15, hl*.42), r = L*.27;
+
+  // speed lines
+  for (let i=0;i<3;i++) Kit.mk('line', {class:'speed', x1:pad, x2:bx*.55, y1:ym+(i-1)*r*.9, y2:ym+(i-1)*r*.9}, svg);
+
+  const wedge = Kit.mk('path', {class:'steel', d:wedgeD(bx, ym, wl, t, xe, 0, 0)}, svg);
+  if (hard){
+    // hardened edge zone with a wavy boundary
+    const hx = bx + wl*.6, ht = t/2*.6, n = 5;
+    let d = `M${bx+2},${ym} L${hx},${ym-ht}`;
+    for (let i=0;i<n;i++){ const x = hx + (xe-hx)*(i+1)/n; d += ` Q${x-(xe-hx)/n/2},${ym-ht*(i%2?1.25:.75)} ${x},${ym-ht}`; }
+    d += ` L${xe},${ym+ht}`;
+    for (let i=n-1;i>=0;i--){ const x = hx + (xe-hx)*i/n; d += ` Q${x+(xe-hx)/n/2},${ym+ht*(i%2?1.25:.75)} ${x},${ym+ht}`; }
+    d += ' Z';
+    Kit.mk('path', {class:'hard', d}, svg);
+    // layered grain
+    [-.75,-.4,.4,.75].forEach(k => {
+      Kit.mk('path', {class:'grain', d:`M${bx+wl*.25},${ym+k*t*.5*.25} L${bx+wl},${ym+k*t/2*.9} L${xe-1},${ym+k*t/2*.9}`}, svg);
+    });
+    Kit.mk('path', {class:'steel', style:'fill:none', d:wedgeD(bx, ym, wl, t, xe, 0, 0)}, svg);
+  }
+  const sp = Kit.mk('g', {}, svg);
+  for (let i=0;i<6;i++){
+    const a = Math.PI*(.6 + i*.16), R1 = r*.6, R2 = r*1.9;
+    Kit.mk('line', {class:'spark', x1:bx+Math.cos(a)*R1, y1:ym+Math.sin(a)*R1, x2:bx+Math.cos(a)*R2, y2:ym+Math.sin(a)*R2}, sp);
+  }
+  const g = Kit.mk('g', {}, svg), body = Kit.mk('g', {}, g);
+  const {top, bot} = bulletParts(body, L, r);
+  gsap.set(g, {x:pad + L/2, y:ym});
+
+  const cx = bx - L/2;
+  tl.to(g, {x:cx, duration:1.1, ease:'none'}, 0);
+  tl.to(sp.children, {opacity:1, duration:.06}, 1.1).to(sp.children, {opacity:0, duration:.5}, 1.2);
+  if (hard){
+    tl.to(g, {x:W + L*1.6, duration:1.4, ease:'none'}, 1.1);
+    tl.to(top, {y:-(t*.55 + r*.6), rotation:-9, svgOrigin:'0 0', duration:1, ease:'power2.out'}, 1.1);
+    tl.to(bot, {y:(t*.55 + r*.6), rotation:9, svgOrigin:'0 0', duration:1, ease:'power2.out'}, 1.1);
+  } else {
+    tl.to(wedge, {attr:{d:wedgeD(bx, ym, wl, t, xe, wl*.28, t*.34)}, duration:.25, ease:'power2.out'}, 1.1);
+    tl.to(body, {scaleX:.62, svgOrigin:`${L/2} 0`, duration:.2, ease:'power2.out'}, 1.1);
+    tl.to(g, {x:cx - L*1.6, duration:1.3, ease:'power2.out'}, 1.3);
+    tl.to(body, {rotation:-35, svgOrigin:'0 0', duration:1.3, ease:'power2.out'}, 1.3);
+  }
+  tl.to(res, {opacity:1, duration:.4}, 1.9);
+}
+
+function build(){
+  if (tl) tl.kill();
+  svg.replaceChildren();
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  tl = gsap.timeline({paused:true, onComplete:done});
+  const gap = Math.max(H*.03, 8), hl = (H - gap)/2;
+  lane(0, hl, W, fs, false);
+  lane(hl + gap, hl, W, fs, true);
+  if (fired) tl.progress(1);
+}
+
+function fire(){
+  if (!tl) return;
+  fired = true; Kit.haptic('light');
+  if (Kit.calm) tl.progress(1); else tl.restart();
+}
+Kit.$('fire').addEventListener('click', fire);
+svg.addEventListener('click', () => { if (fired) fire(); });
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity:0, y:10, duration:.5, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('fire').click();
+  await new Promise(r => setTimeout(r, 300));
+  tl.progress(1); done();
+  await new Promise(r => setTimeout(r, 500));
+};
+Kit.single();
+</script>
+</html>

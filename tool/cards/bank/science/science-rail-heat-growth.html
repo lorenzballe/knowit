@@ -1,0 +1,176 @@
+<!doctype html>
+<!-- slug: science-rail-heat-growth -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#ctl{display:flex;flex-direction:column;gap:.4cqh}
+#heat{width:100%;height:max(4.4cqh,30px);margin:0;accent-color:#e0622c;cursor:pointer}
+#ends{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--k);opacity:.75}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THERMAL EXPANSION</span></div>
+    <h2 class="q">How much does a 12 m rail grow when it warms 40 °C?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A 12 metre rail, with its end magnified against a millimetre ruler"></svg>
+      <div id="ctl">
+        <input id="heat" type="range" min="0" max="40" step="1" value="0" aria-label="Temperature rise">
+        <div id="ends"><span>+0 °C</span><span>+20 °C</span><span>+40 °C</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to heat the rail from winter to summer.</p>
+    <div id="why" class="gone"><p class="body">Steel grows about 0.5 mm for every metre when it warms 40 °C. Twelve metres of rail makes about 6 mm. Over kilometres of track, people feared that growth would buckle the line.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A 40 °C rise makes 12 m of steel rail about 6 mm longer.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let T = 0, done = false, lastTen = 0;
+let G = null; // drawn elements
+const svg = Kit.$('pic'), slider = Kit.$('heat');
+
+function mix(a, b, t){
+  const p = s => [1,3,5].map(i => parseInt(s.substr(i,2),16));
+  const A = p(a), B = p(b);
+  return '#' + A.map((v,i) => Math.round(v + (B[i]-v)*t).toString(16).padStart(2,'0')).join('');
+}
+
+function railShape(parent, x, y, w, h, cls){
+  // side view of a rail: head, web, foot
+  const head = Kit.mk('rect', {x, y, width: w, height: h*.36, rx: h*.06}, parent);
+  const web  = Kit.mk('rect', {x, y: y+h*.34, width: w, height: h*.38}, parent);
+  const foot = Kit.mk('rect', {x, y: y+h*.7, width: w, height: h*.3, rx: h*.04}, parent);
+  [head, foot].forEach(r => r.setAttribute('class', cls));
+  web.setAttribute('class', cls + ' web');
+  return [head, web, foot];
+}
+
+function draw(){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(13, Math.min(f0, H/14, W/20));
+  const ink = 'var(--k)';
+  const L = W*.05, R = W*.95;
+
+  // --- top: readouts
+  const yT = 1.7*f;
+  const temp = Kit.mk('text', {x: L, y: yT, fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': 1.7*f}, svg);
+  const len = Kit.mk('text', {x: R, y: yT, fill: ink, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': f}, svg);
+
+  // --- full rail
+  const rY = yT + 1.2*f, rH = Math.max(.9*f, 12);
+  const sleepers = Kit.mk('g', {}, svg);
+  for (let i = 0; i <= 24; i++){
+    const sx = L + (R-L)*i/24;
+    Kit.mk('rect', {x: sx-2.5, y: rY+rH*.55, width: 5, height: rH*.75, fill: ink, opacity: .25, rx: 1}, sleepers);
+  }
+  const top = Kit.mk('g', {}, svg);
+  const topRail = railShape(top, L, rY, R-L, rH, 'rl');
+  for (let i = 1; i < 12; i++){
+    const mx = L + (R-L)*i/12;
+    Kit.mk('line', {x1: mx, x2: mx, y1: rY+rH*.05, y2: rY+rH*.32, stroke: ink, 'stroke-opacity': .35, 'stroke-width': 1}, top);
+  }
+  // dimension line
+  const yd = rY + rH + 1.1*f;
+  Kit.mk('line', {x1: L, x2: R, y1: yd, y2: yd, stroke: ink, 'stroke-width': 1.5}, svg);
+  [L, R].forEach(x => Kit.mk('line', {x1: x, x2: x, y1: yd-.4*f, y2: yd+.4*f, stroke: ink, 'stroke-width': 1.5}, svg));
+  const dimBg = Kit.mk('rect', {x: W/2-2.2*f, y: yd-.7*f, width: 4.4*f, height: 1.4*f, fill: 'var(--c)'}, svg);
+  Kit.mk('text', {x: W/2, y: yd+.35*f, fill: ink, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': f}, svg).textContent = '12 m';
+
+  // magnifier ring at the rail's end
+  const ringR = rH*1.1;
+  Kit.mk('circle', {cx: R, cy: rY+rH/2, r: ringR, fill: 'none', stroke: '#e0622c', 'stroke-width': 2.2}, svg);
+
+  // --- zoom box
+  const bx = L, bw = R-L, by = yd + 1.6*f, bh = Math.max(H - by - 2, 8*f);
+  Kit.mk('line', {x1: R-ringR*.7, y1: rY+rH/2+ringR*.7, x2: bx+bw*.55, y2: by, stroke: '#e0622c', 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, svg);
+  Kit.mk('line', {x1: R, y1: rY+rH/2+ringR, x2: R, y2: by, stroke: '#e0622c', 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}, svg);
+  Kit.mk('rect', {x: bx, y: by, width: bw, height: bh, rx: f*.8, fill: ink, 'fill-opacity': .06, stroke: '#e0622c', 'stroke-width': 2.2}, svg);
+  Kit.mk('text', {x: bx+bw-.8*f, y: by+1.4*f, fill: ink, 'text-anchor': 'end', 'font-family': 'var(--body)', 'font-weight': 700, 'font-size': .9*f, opacity: .8}, svg).textContent = 'The rail’s end, magnified';
+
+  const clipId = 'zc';
+  const cp = Kit.mk('clipPath', {id: clipId}, svg);
+  Kit.mk('rect', {x: bx+1, y: by+1, width: bw-2, height: bh-2, rx: f*.8}, cp);
+  const z = Kit.mk('g', {'clip-path': `url(#${clipId})`}, svg);
+
+  const rx0 = bx + bw*.12, rx1 = bx + bw*.9, s = (rx1-rx0)/10;
+  const zTop = by + 4.9*f;
+  const zH = Math.max(Math.min(bh - 4.9*f - 3.6*f, 4.5*f), 1.6*f);
+  // start mark
+  Kit.mk('line', {x1: rx0, x2: rx0, y1: by+4.2*f, y2: zTop+zH+.2*f, stroke: ink, 'stroke-width': 1.5, 'stroke-dasharray': '3 3', opacity: .6}, z);
+  const gain = Kit.mk('rect', {x: rx0, y: zTop, width: 0, height: zH, fill: '#e0622c', opacity: .25}, z);
+  const zRail = railShape(z, bx - 10, zTop, rx0 - bx + 10, zH, 'rl');
+  // bracket
+  const brY = by + 4.0*f;
+  const br = Kit.mk('path', {fill: 'none', stroke: '#e0622c', 'stroke-width': 2.4, 'stroke-linecap': 'round'}, z);
+  const brT = Kit.mk('text', {y: brY - .55*f, fill: '#c2410c', 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 800, 'font-size': 1.05*f}, z);
+  // ruler
+  const ruY = zTop + zH + .5*f;
+  Kit.mk('line', {x1: rx0 - s*.6, x2: rx1 + s*.3, y1: ruY, y2: ruY, stroke: ink, 'stroke-width': 1.5}, z);
+  for (let i = 0; i <= 20; i++){
+    const x = rx0 + i*s/2, big = i % 2 === 0;
+    Kit.mk('line', {x1: x, x2: x, y1: ruY, y2: ruY + (i%10===0 ? 1 : big ? .7 : .4)*f, stroke: ink, 'stroke-width': big ? 1.5 : 1}, z);
+    if (i % 4 === 0) Kit.mk('text', {x, y: ruY + 2.1*f, fill: ink, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': .9*f}, z).textContent = i/2;
+  }
+  Kit.mk('text', {x: rx1 + s*.3, y: ruY + 2.1*f, fill: ink, 'text-anchor': 'start', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': .9*f, dx: '.5em'}, z).textContent = '';
+  Kit.mk('text', {x: rx0 - s*.6, y: ruY + 2.1*f, fill: ink, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': .9*f, opacity: .7}, z).textContent = 'mm';
+
+  G = {temp, len, topRail, zRail, gain, br, brT, rx0, s, brY, bx, f};
+  update(T);
+}
+
+function update(t){
+  T = t;
+  if (!G) return;
+  const mm = t * 6 / 40;
+  const col = mix('#6f7c88', '#e0622c', t/40);
+  G.temp.textContent = `+${t} °C`;
+  G.len.textContent = `12 m + ${mm.toFixed(1)} mm`;
+  [...G.topRail, ...G.zRail].forEach(r => r.setAttribute('fill', r.classList.contains('web') ? mix('#4b5560', '#b5441c', t/40) : col));
+  const xe = G.rx0 + mm*G.s;
+  G.zRail.forEach(r => r.setAttribute('width', xe - (G.bx - 10)));
+  G.gain.setAttribute('width', mm*G.s);
+  const h = .45*G.f;
+  G.br.setAttribute('d', mm > .05 ? `M${G.rx0},${G.brY+h} V${G.brY} H${xe} V${G.brY+h}` : '');
+  G.brT.setAttribute('x', Math.max(G.rx0 + mm*G.s/2, G.rx0 + 1.6*G.f));
+  G.brT.textContent = mm > .05 ? `+${mm.toFixed(1)} mm` : '';
+}
+
+slider.addEventListener('input', () => {
+  const t = +slider.value;
+  const ten = Math.floor(t/10);
+  if (ten !== lastTen){ lastTen = ten; Kit.haptic('selection'); }
+  update(t);
+  if (t >= 40 && !done){
+    done = true;
+    Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'}); });
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+  gsap.from('#ctl', {opacity: 0, y: 8, duration: .45, delay: .15, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (const v of [10, 25, 40]){
+    slider.value = v; slider.dispatchEvent(new Event('input', {bubbles: true}));
+    await new Promise(r => setTimeout(r, 120));
+  }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

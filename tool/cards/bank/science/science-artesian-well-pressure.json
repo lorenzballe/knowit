@@ -1,0 +1,36 @@
+{
+  "id": "science-artesian-well-pressure",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does water gush out of an artesian well with no pump?",
+  "answer": "Water gushes out of an artesian well with no pump because it is trapped under pressure. Drilling opens a way out, and the pressure pushes the water up by itself.",
+  "move": "Trapped water is pressurised water: open a way out and it climbs by itself.",
+  "keywords": [
+    "artesian well",
+    "water",
+    "pressure",
+    "drilling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Cutaway of layered rock with a well being drilled step by step, controlled by a slider. The question asks why water gushes out of an artesian well with no pump."
+  },
+  "source": "Geopop, “Ricostruzione 3D inedita dell'incidente di Vermicino: come hanno estratto il corpo di Alfredino” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=sbaPzuSkEuQ&t=210s",
+  "written": "2026-11-03"
+}

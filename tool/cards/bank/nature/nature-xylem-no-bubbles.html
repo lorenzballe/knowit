@@ -1,0 +1,177 @@
+<!doctype html>
+<!-- slug: nature-xylem-no-bubbles -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pull · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TREE WATER</span></div>
+    <h2 class="q">Why must a tree's water tubes be completely free of air bubbles?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A straw and a xylem tube, both full of water, being pulled from the top"></svg>
+    </div>
+    <div id="why" class="gone">
+      <p class="big">One bubble is enough.</p>
+      <p class="body">Pulled this hard, the water should boil, yet it stays liquid while nothing gives the boiling a place to start. A bubble is that place: it grows and the column snaps. Xylem is water-filled from the start, so no air ever gets in.</p>
+    </div>
+    <p class="say" id="say">Drag up on the picture to pull water up both tubes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pulled water stays liquid only while no bubble gives boiling a start.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const BLUE = '#2e86de', RED = '#d6453d', PALE = '#e9f1f9';
+const S = {t: 0, straw: 'ok', xy: 'ok', phase: 0};
+let svg, W, H, fs, tTop, bot, L, mid, tw, xs = [], T = [], flow = 0, ring = null;
+const K = () => Kit.calm ? 0 : 1;
+
+function statusText(i) {
+  const s = i === 0 ? S.straw : S.xy;
+  if (s === 'broken') return ['column broken', RED];
+  if (s === 'bubble') return ['a bubble!', RED];
+  return [S.t > 0.05 ? 'pulled · whole' : 'column whole', 'var(--k)'];
+}
+
+function render() {
+  svg = Kit.$('pic'); svg.innerHTML = '';
+  const r = Kit.fitSvg(svg); W = r.W; H = r.H; fs = Math.max(r.f, 13);
+  const lh = fs * 1.45, sm = Math.max(fs * .85, 12);
+  const y1 = H - lh * 2 - fs * 0.4;
+  const poolTop = y1 - fs * 2.3, poolBot = y1 - fs * 1.2;
+  tTop = fs * 3.2; bot = poolTop + fs * 0.55; L = Math.max(bot - tTop, 40); mid = tTop + L * 0.5;
+  tw = Math.min(W * 0.13, 56); xs = [W * 0.27, W * 0.73];
+  const defs = Kit.mk('defs', {}, svg);
+  Kit.mk('rect', {x: W * .08, y: poolTop, width: W * .84, height: poolBot - poolTop, rx: fs * .4, fill: BLUE, opacity: .85}, svg);
+  const pull = Kit.mk('text', {x: W / 2, y: fs * 1.2, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, 'letter-spacing': '.12em'}, svg);
+  pull.textContent = 'PULL';
+  T = [];
+  [0, 1].forEach(i => {
+    const x = xs[i], st = i === 0 ? S.straw : S.xy, broken = st === 'broken';
+    const cp = Kit.mk('clipPath', {id: 'cl' + i}, defs);
+    Kit.mk('rect', {x: x - tw / 2, y: tTop, width: tw, height: L, rx: tw / 2}, cp);
+    const g = Kit.mk('g', {'clip-path': `url(#cl${i})`}, svg);
+    Kit.mk('rect', {x: x - tw / 2, y: tTop, width: tw, height: L, fill: PALE}, g);
+    const up = Kit.mk('rect', {x: x - tw / 2, y: tTop, width: tw, height: broken ? L * .2 : L / 2 + 1, fill: BLUE}, g);
+    const ly = broken ? bot - L * .25 : mid;
+    const low = Kit.mk('rect', {x: x - tw / 2, y: ly, width: tw, height: bot - ly, fill: BLUE}, g);
+    const dots = [];
+    for (let k = 0; k < 6; k++) dots.push(Kit.mk('circle', {cx: x + (k % 2 ? 1 : -1) * tw * .14, cy: mid, r: Math.max(1.8, tw * .06), fill: '#fff', opacity: broken ? 0 : .75}, g));
+    const showB = (i === 0 && st === 'ok') || (i === 1 && st === 'bubble');
+    const bub = Kit.mk('circle', {cx: x, cy: mid, r: i === 0 ? tw * .09 * (1 + 2.6 * S.t) : tw * .12, fill: '#fff', stroke: 'var(--k)', 'stroke-width': 1.5, opacity: showB ? 1 : 0}, g);
+    const out = Kit.mk('rect', {x: x - tw / 2, y: tTop, width: tw, height: L, rx: tw / 2, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2, fs * .15)}, svg);
+    const arrow = Kit.mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, fs * .18), 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    const name = Kit.mk('text', {x, y: y1, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg);
+    name.textContent = i === 0 ? 'STRAW' : 'XYLEM';
+    const desc = Kit.mk('text', {x, y: y1 + lh, 'text-anchor': 'middle', fill: 'var(--k)', opacity: .75, 'font-family': 'var(--body)', 'font-weight': 500, 'font-size': sm}, svg);
+    desc.textContent = i === 0 ? 'air got in' : 'water from day one';
+    const stat = Kit.mk('text', {x, y: y1 + lh * 2, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': sm}, svg);
+    T.push({x, up, low, dots, bub, out, arrow, stat});
+  });
+  update();
+  if (S.phase === 2 && S.xy === 'ok') pulse();
+}
+
+function update() {
+  if (!T.length) return;
+  T.forEach((g, i) => {
+    const len = 6 + S.t * Math.max(0, tTop - fs * 2.1 - 6), y0 = tTop - 5, y2 = y0 - len, h = fs * .45;
+    g.arrow.setAttribute('d', `M${g.x},${y0} L${g.x},${y2} M${g.x - h},${y2 + h} L${g.x},${y2} L${g.x + h},${y2 + h}`);
+    const [txt, col] = statusText(i); g.stat.textContent = txt; g.stat.setAttribute('fill', col);
+  });
+  if (S.straw === 'ok') T[0].bub.setAttribute('r', tw * .09 * (1 + 2.6 * S.t));
+  placeDots();
+}
+
+function placeDots() {
+  T.forEach((g, i) => g.dots.forEach((d, k) => {
+    const fr = (k / g.dots.length + flow) % 1;
+    d.setAttribute('cy', bot - 6 - fr * (L - 12));
+  }));
+}
+gsap.ticker.add((time, dt) => { if (!T.length || Kit.calm) return; flow += dt / 1000 * S.t * .45; placeDots(); });
+
+function snap(i, done) {
+  const g = T[i], k = K();
+  g.dots.forEach(d => gsap.to(d, {opacity: 0, duration: .2 * k}));
+  gsap.to(g.bub, {attr: {r: tw * .5}, duration: .25 * k, ease: 'power2.out'});
+  gsap.to(g.bub, {opacity: 0, delay: .25 * k, duration: .2 * k});
+  gsap.to(g.up, {attr: {height: L * .2}, duration: .35 * k, delay: .2 * k});
+  gsap.to(g.low, {attr: {y: bot - L * .25, height: L * .25}, duration: .55 * k, delay: .2 * k, ease: 'power2.in', onComplete: done});
+  Kit.haptic('light');
+}
+
+function pulse() {
+  if (ring) ring.kill();
+  const o = T[1].out;
+  ring = Kit.calm ? null : gsap.to(o, {attr: {'stroke-width': Math.max(4, fs * .35)}, duration: .5, repeat: -1, yoyo: true});
+}
+
+function check() {
+  if (S.straw === 'ok' && S.t >= .4) {
+    S.straw = 'broken'; update(); snap(0);
+    Kit.$('say').textContent = 'The straw’s air bubble grew and snapped its column. Keep pulling.';
+  }
+  if (S.straw === 'broken' && S.t >= .85 && S.phase < 2) {
+    S.phase = 2; pulse();
+    Kit.$('say').textContent = 'The xylem still holds. Now tap it to slip in one tiny bubble.';
+  }
+}
+
+function addBubble() {
+  S.xy = 'bubble'; if (ring) { ring.kill(); ring = null; }
+  const g = T[1]; gsap.set(g.out, {attr: {'stroke-width': Math.max(2, fs * .15)}});
+  gsap.fromTo(g.bub, {opacity: 1, attr: {r: 1}}, {attr: {r: tw * .14}, duration: .35 * K()});
+  update();
+  setTimeout(() => {
+    S.xy = 'broken'; update();
+    snap(1, () => {});
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  }, 450 * K());
+}
+
+let drag = null;
+const svgEl = Kit.$('pic');
+svgEl.addEventListener('pointerdown', e => {
+  if (S.xy !== 'ok') return;
+  const rc = svgEl.getBoundingClientRect(), sc = rc.height / H, lx = (e.clientX - rc.left) / sc;
+  if (S.phase === 2 && Math.abs(lx - xs[1]) < tw * 1.4) { addBubble(); return; }
+  drag = {y0: e.clientY, t0: S.t, sc};
+  try { svgEl.setPointerCapture(e.pointerId); } catch (_) {}
+});
+svgEl.addEventListener('pointermove', e => {
+  if (!drag || S.xy !== 'ok') return;
+  S.t = Math.min(1, Math.max(0, drag.t0 + (drag.y0 - e.clientY) / drag.sc / (H * .45)));
+  update(); check();
+});
+const end = () => { drag = null; };
+svgEl.addEventListener('pointerup', end); svgEl.addEventListener('pointercancel', end);
+
+Kit.onShow.card = render;
+Kit.onEnter.card = () => { if (!Kit.calm && T.length) gsap.from(T.map(g => g.arrow), {opacity: 0, y: 8, repeat: 2, yoyo: true, duration: .5, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const rc = svgEl.getBoundingClientRect(), cx = rc.left + rc.width / 2;
+  const ev = (type, x, y) => svgEl.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, bubbles: true, pointerId: 1, isPrimary: true}));
+  ev('pointerdown', cx, rc.top + rc.height * .85);
+  for (let k = 1; k <= 12; k++) { ev('pointermove', cx, rc.top + rc.height * (.85 - k * .065)); await w(40); }
+  ev('pointerup', cx, rc.top + rc.height * .07);
+  await w(800);
+  const sc = rc.height / H;
+  ev('pointerdown', rc.left + xs[1] * sc, rc.top + mid * sc);
+  ev('pointerup', rc.left + xs[1] * sc, rc.top + mid * sc);
+  await w(1400);
+};
+Kit.single();
+</script>
+</html>

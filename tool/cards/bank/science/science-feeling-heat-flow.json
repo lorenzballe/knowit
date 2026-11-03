@@ -1,0 +1,37 @@
+{
+  "id": "science-feeling-heat-flow",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A metal hard drive and a book share a room. Which is colder?",
+  "answer": "The answer is neither: both sit at the same temperature, which is room temperature. Your warmer hand loses heat to each, and metal conducts that heat away fast, so the hard drive feels cold, while the book takes it away slowly.",
+  "move": "You don't feel temperature; you feel how fast heat flows to or from you.",
+  "keywords": [
+    "hard drive",
+    "book",
+    "metal",
+    "heat flow",
+    "bath mat"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Astute: a metal hard drive and a book share a room. It asks which is colder, offering three choices: the hard drive, the book, or neither (same temperature). The reader picks one, then rates how sure they are."
+  },
+  "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=vqDbMEdLiCs&t=210s",
+  "written": "2026-11-03"
+}

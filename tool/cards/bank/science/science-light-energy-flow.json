@@ -1,0 +1,38 @@
+{
+  "id": "science-light-energy-flow",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "Light carries energy. Which way does it flow, compared with its fields?",
+  "answer": "Light carries energy, and that energy flows along the Poynting vector, at right angles to both its electric and magnetic fields. This is the same direction the light travels, from its source out to its destination. The energy therefore moves along the beam, not across it.",
+  "move": "Light’s energy flows at right angles to its E and B fields, along the beam.",
+  "keywords": [
+    "light",
+    "poynting_vector",
+    "electric_field",
+    "magnetic_field",
+    "veritasium"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Diagram prompt: a light beam with electric and magnetic fields drawn at right angles to each other. Drag the gold arrow to show the direction light's energy flows, which is along the beam, at right angles to both fields.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=315s",
+  "written": "2026-11-03"
+}

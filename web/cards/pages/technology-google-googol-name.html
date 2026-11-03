@@ -1,0 +1,139 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-google-googol-name -->
+<title>Why is it called Google?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.4cqh}
+#pic{position:relative;flex:1;min-height:12cqh}
+#art{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NAME ORIGIN</span></div>
+    <h2 class="q">Why is the company called Google?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="art"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">“Go” + “ogle”: go and look</button>
+        <button class="opt" data-i="1">A real number: 1 followed by 100 zeros</button>
+        <button class="opt" data-i="2">A founder’s childhood nickname</button>
+      </div>
+      <div id="why" class="gone"><p class="big">From the googol: 10¹⁰⁰</p><p class="body">The name comes from a number that really exists, the googol: a 1 followed by 100 zeros. It signals the huge amount of information the founders meant to organize.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick where the name comes from. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Google is named after the googol, a 1 with 100 zeros.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ma perché #google si chiama così? #scienza #science #geopop #tech #informatica” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, phase = 0;
+const INK = 'fill:var(--k)';
+
+function logo(svg, W, H, cy){
+  const fs = Math.min(W / 3.4, H * 0.42);
+  const t = Kit.mk('text', {x: W/2, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'central',
+    style: `font:800 ${fs}px var(--display);${INK};letter-spacing:-.02em`}, svg);
+  t.textContent = 'Google';
+  return t;
+}
+
+function draw(anim){
+  const svg = Kit.$('art'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (phase === 0){
+    logo(svg, W, H, H/2);
+    return;
+  }
+  // grid of "1" + 100 zeros
+  const lab = Math.max(f * 1.25, 14), cap = Math.max(f * 0.9, 12);
+  const top = lab * 1.7, bot = cap * 1.8, gh = H - top - bot;
+  let best = {fs: 0, cols: 10};
+  for (let c = 7; c <= 26; c++){
+    const r = Math.ceil(101 / c);
+    const fs = Math.min((W * 0.94) / (c * 0.64), gh / (r * 1.22));
+    if (fs > best.fs) best = {fs, cols: c};
+  }
+  const {fs, cols} = best, rows = Math.ceil(101 / cols);
+  const cw = fs * 0.64, lh = fs * 1.22;
+  const x0 = (W - cols * cw) / 2 + cw / 2, y0 = top + (gh - rows * lh) / 2 + lh / 2;
+  const head = Kit.mk('text', {x: W/2, y: lab * 0.9, 'text-anchor': 'middle', 'dominant-baseline': 'central',
+    style: `font:800 ${lab}px var(--display);${INK}`}, svg);
+  head.textContent = 'googol = 10¹⁰⁰';
+  const foot = Kit.mk('text', {x: W/2, y: H - cap * 0.8, 'text-anchor': 'middle', 'dominant-baseline': 'central',
+    style: `font:700 ${cap}px var(--body);fill:var(--k);opacity:.75`}, svg);
+  foot.textContent = '1 followed by 100 zeros';
+  const chars = [];
+  for (let i = 0; i < 101; i++){
+    const x = x0 + (i % cols) * cw, y = y0 + Math.floor(i / cols) * lh;
+    let t;
+    if (i){
+      t = Kit.mk('ellipse', {cx: x, cy: y, rx: fs * 0.2, ry: fs * 0.32,
+        style: `fill:none;stroke:var(--k);stroke-width:${fs * 0.1}px;opacity:.85`}, svg);
+    } else {
+      t = Kit.mk('path', {d: `M${x - fs * 0.13} ${y - fs * 0.2}L${x + fs * 0.04} ${y - fs * 0.34}V${y + fs * 0.34}`,
+        style: `fill:none;stroke:var(--k);stroke-width:${fs * 0.13}px;stroke-linecap:round;stroke-linejoin:round;opacity:1`}, svg);
+    }
+    chars.push({t, x, y});
+  }
+  if (!anim || Kit.calm) return;
+  // morph: the logo's o's burst into the zeros, the G becomes the 1
+  const L = logo(svg, W, H, H/2);
+  let oA = {x: W*0.42, y: H/2}, oB = {x: W*0.55, y: H/2}, gP = {x: W*0.25, y: H/2};
+  try {
+    const e = i => { const b = L.getExtentOfChar(i); return {x: b.x + b.width/2, y: b.y + b.height/2}; };
+    gP = e(0); oA = e(1); oB = e(2);
+  } catch(_) {}
+  const tl = gsap.timeline();
+  gsap.set([head, foot], {opacity: 0});
+  chars.forEach(c => gsap.set(c.t, {opacity: 0}));
+  tl.from(L, {scale: 1, duration: .01})
+    .to(L, {scale: 1.08, transformOrigin: '50% 50%', duration: .35, ease: 'power2.out'})
+    .to(L, {opacity: 0, scale: .9, duration: .35, ease: 'power2.in'});
+  chars.forEach((c, i) => {
+    const o = i === 0 ? gP : (i % 2 ? oA : oB);
+    tl.fromTo(c.t, {x: o.x - c.x, y: o.y - c.y, opacity: 0},
+      {x: 0, y: 0, opacity: i ? .85 : 1, duration: .7, ease: 'power3.out'}, .45 + i * .012);
+  });
+  tl.to(head, {opacity: 1, duration: .4}, 1.2).to(foot, {opacity: .75, duration: .4}, 1.5);
+  const n = {v: 0};
+  tl.to(n, {v: 100, duration: 1.4, ease: 'none', onUpdate(){ foot.textContent = `1 followed by ${Math.round(n.v)} zeros`; }}, .45);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: it’s the googol`);
+  Kit.show('keep');
+  phase = 1; Kit.haptic(ok ? 'success' : 'light');
+  requestAnimationFrame(() => draw(true));
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm){
+  gsap.from('#art text', {opacity: 0, scale: .85, transformOrigin: '50% 50%', duration: .6, ease: 'back.out(1.6)'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', delay: .2});
+} };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

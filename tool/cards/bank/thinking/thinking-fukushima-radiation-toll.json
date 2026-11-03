@@ -1,0 +1,35 @@
+{
+  "id": "thinking-fukushima-radiation-toll",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many people died directly from radiation at Fukushima?",
+  "answer": "Only one death was tied to radioactivity: the plant director. The tsunami killed over 15,000 people. We remember Fukushima for its radiation, not the wave.",
+  "move": "What we fear most is not always what kills most.",
+  "keywords": [
+    "fukushima",
+    "tsunami",
+    "radiation",
+    "nuclear plant"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asks how many people died directly from radiation at Fukushima. The reader drags to guess, and each dot on the display stands for one person. The reveal gives the answer: one death from radiation, while the tsunami killed over 15,000.",
+    "graded": false
+  },
+  "source": "Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=yoTTJ9BJYIM&t=559s",
+  "written": "2026-11-03"
+}

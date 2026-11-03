@@ -1,0 +1,36 @@
+{
+  "id": "nature-ocean-salt-cube",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If all the oceans' salt were one cube, how big would it be?",
+  "answer": "Piling up every grain of salt dissolved in the seas would make a cube about 265 km on each side, roughly as wide as all of Sicily. Standing beside Etna, you would look up at a wall of salt.",
+  "move": "The oceans hold an island-sized cube of salt: about 265 km a side.",
+  "keywords": [
+    "ocean salt",
+    "sicily",
+    "mount etna",
+    "seawater"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A salt block is dragged onto a map of Sicily to show the size of a cube holding all the oceans' salt, about 265 km on each side. The reader is asked how big that cube would be."
+  },
+  "source": "Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=x-7g0VrlPQ0&t=719s",
+  "written": "2026-11-03"
+}

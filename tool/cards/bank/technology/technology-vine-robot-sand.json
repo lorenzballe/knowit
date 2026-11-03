@@ -1,0 +1,37 @@
+{
+  "id": "technology-vine-robot-sand",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a growing robot push its way through sand?",
+  "answer": "The robot blows a jet of air out of its front. That loosens the sand, so the sand pushes back much less. Then the robot just extends its tip and makes its way through.",
+  "move": "Loosen the sand with air, and plain tip growth gets through.",
+  "keywords": [
+    "soft robots",
+    "sand",
+    "air jet",
+    "tip growth",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Soft Robots asks how a growing robot pushes through sand, showing two cases: growing with no air, and growing with an air jet at the tip. The reveal says the air loosens the sand so the tip can extend through."
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=685s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "technology-motogp-braking-distance",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much road does a MotoGP rider get to brake from 350 km/h?",
+  "answer": "A MotoGP rider approaching a corner at 350 km/h has about 200 metres to brake before reaching it. In that distance they grab the brakes and slow to 100 km/h. Valentino Rossi says braking feels even more extreme than the throttle, which he compares to a 1,300 kg car with nearly 2,000 hp.",
+  "move": "350 down to 100 km/h in roughly 200 metres.",
+  "keywords": [
+    "motogp",
+    "valentino_rossi",
+    "motorcycle",
+    "brakes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive card asking how much road a MotoGP rider gets to brake from 350 km/h. A horizontal track marker runs from 0 m to 200 m. The user drags a bike from the brake point to the corner to see the braking distance."
+  },
+  "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=129s",
+  "written": "2026-11-03"
+}

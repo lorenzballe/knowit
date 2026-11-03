@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-human-hair-mechanism -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.4cqh}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1.1cqh}
+#why{display:flex;flex-direction:column;gap:1.2cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BENDING STEEL</span></div>
+    <h2 class="q">How thin is the thinnest part of a hardened-steel bending mechanism?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">As thin as a matchstick</button>
+        <button class="opt" data-i="1">As thin as a pencil lead</button>
+        <button class="opt" data-i="2">As thin as a human hair</button>
+      </div>
+      <div id="why" class="gone"><p class="big">A human hair</p><p class="body">This mechanism has no hinges: the steel blades themselves bend. Swiss watchmakers cut it from hardened stainless steel, with some parts as thin as a human hair.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a size, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Make steel thin enough and it bends like a hinge, as fine as a hair.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, answered = false, flex = null, R = {};
+const st = {s: 0};
+
+function reveal(instant) {
+  if (!R.hair) return;
+  if (instant || Kit.calm) {
+    gsap.set(R.hair, {y: 0}); gsap.set(R.qm, {opacity: 0}); gsap.set(R.labs, {opacity: 1});
+  } else {
+    gsap.to(R.qm, {opacity: 0, duration: .25});
+    gsap.fromTo(R.hair, {y: R.r * 2.4}, {y: 0, duration: 1.1, ease: 'power3.out'});
+    gsap.to(R.labs, {opacity: 1, duration: .5, delay: .7});
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  answered = true; reveal(false); Kit.haptic('success');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function bladePath(x0, y0, x1, y1) {
+  const m = (y1 - y0) * .5;
+  return `M${x0} ${y0} C${x0} ${y0 + m} ${x1} ${y1 - m} ${x1} ${y1}`;
+}
+function upd() {
+  if (!R.blades) return;
+  const s = st.s;
+  R.blades.forEach(b => b.el.setAttribute('d', b.top ? bladePath(b.x, b.ya, b.x + s, b.yb) : bladePath(b.x + s, b.ya, b.x, b.yb)));
+  R.block.setAttribute('transform', `translate(${s} 0)`);
+  R.mark.setAttribute('transform', `translate(${s * .5} 0)`);
+  if (R.zbar) R.zbar.setAttribute('transform', `skewX(${s * .25})`);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H * .065, W * .045));
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const defs = mk('defs', {});
+  const g = mk('linearGradient', {id: 'stl', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#e3e8ec'}, g);
+  mk('stop', {offset: .5, 'stop-color': '#a7b0b8'}, g);
+  mk('stop', {offset: 1, 'stop-color': '#d0d6db'}, g);
+
+  // Mechanism (left)
+  const labY = H - f * .6;
+  const fx0 = W * .04, fx1 = W * .54, fy0 = H * .06, fy1 = labY - f * 1.4;
+  const t = Math.max(8, (fx1 - fx0) * .1);
+  const ix0 = fx0 + t, ix1 = fx1 - t, iy0 = fy0 + t, iy1 = fy1 - t;
+  mk('path', {d: `M${fx0} ${fy0}H${fx1}V${fy1}H${fx0}Z M${ix0} ${iy0}H${ix1}V${iy1}H${ix0}Z`, 'fill-rule': 'evenodd', fill: 'url(#stl)', style: 'stroke:var(--k);stroke-width:2'});
+  const bw = (ix1 - ix0) * .46, bh = (iy1 - iy0) * .3;
+  const bx = (ix0 + ix1) / 2 - bw / 2, by = (iy0 + iy1) / 2 - bh / 2;
+  const sw = Math.max(1.4, W * .004);
+  R.blades = [];
+  const xs = [bx + bw * .12, bx + bw * .88];
+  xs.forEach(x => {
+    R.blades.push({x, ya: iy0, yb: by, top: true, el: mk('path', {fill: 'none', style: `stroke:var(--k);stroke-width:${sw};stroke-linecap:round`})});
+    R.blades.push({x, ya: by + bh, yb: iy1, top: false, el: mk('path', {fill: 'none', style: `stroke:var(--k);stroke-width:${sw};stroke-linecap:round`})});
+  });
+  R.block = mk('g', {});
+  mk('rect', {x: bx, y: by, width: bw, height: bh, rx: 4, fill: 'url(#stl)', style: 'stroke:var(--k);stroke-width:2'}, R.block);
+  mk('circle', {cx: bx + bw / 2, cy: by + bh / 2, r: Math.min(bw, bh) * .18, style: 'fill:var(--c);stroke:var(--k);stroke-width:2'}, R.block);
+  const lt = mk('text', {x: (fx0 + fx1) / 2, y: labY, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${f}px`}, svg);
+  lt.textContent = 'hardened steel';
+
+  // Loupe (right)
+  const r = Math.min(W * .2, (labY - f * 3.4 - H * .06) / 2);
+  const cx = W * .78, cy = H * .06 + r + 2;
+  R.r = r;
+  // marker on the right top blade + leader line
+  const mx = xs[1], my = (iy0 + by) / 2;
+  R.mark = mk('g', {});
+  mk('circle', {cx: mx, cy: my, r: Math.max(7, f * .55), fill: 'none', style: 'stroke:var(--k);stroke-width:2'}, R.mark);
+  const ang = Math.atan2(my - cy, mx - cx);
+  mk('line', {x1: mx + Math.max(7, f * .55), y1: my, x2: cx + r * Math.cos(ang), y2: cy + r * Math.sin(ang), style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:4 4'});
+  const cp = mk('clipPath', {id: 'lp'}, defs);
+  mk('circle', {cx, cy, r: r - 2}, cp);
+  mk('circle', {cx, cy, r, style: 'fill:#f6f3ec;stroke:var(--k);stroke-width:' + Math.max(3, r * .06)});
+  const inner = mk('g', {'clip-path': 'url(#lp)'});
+  const thick = r * .2;
+  R.zbar = mk('g', {}, inner);
+  R.zbar.style.transformOrigin = `${cx - r * .32}px ${cy}px`;
+  mk('rect', {x: cx - r * .32 - thick / 2, y: cy - r * 1.2, width: thick, height: r * 2.4, fill: 'url(#stl)', stroke: '#4b545c', 'stroke-width': 1.5}, R.zbar);
+  R.hair = mk('g', {}, inner);
+  const hx = cx + r * .3;
+  let d = `M${hx} ${cy - r * 1.2}`;
+  for (let i = 1; i <= 6; i++) d += ` Q${hx + (i % 2 ? r * .07 : -r * .07)} ${cy - r * 1.2 + (i - .5) * r * .4} ${hx} ${cy - r * 1.2 + i * r * .4}`;
+  mk('path', {d, fill: 'none', stroke: '#5a3a24', 'stroke-width': thick, 'stroke-linecap': 'round'}, R.hair);
+  mk('path', {d, fill: 'none', stroke: '#8a5d3b', 'stroke-width': thick * .25, transform: `translate(${-thick * .2} 0)`, 'stroke-linecap': 'round'}, R.hair);
+  gsap.set(R.hair, {y: r * 2.4});
+  R.qm = mk('text', {x: hx, y: cy + f * .9, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${f * 2.4}px`});
+  R.qm.textContent = '?';
+  // labels under loupe, stacked
+  R.labs = mk('g', {opacity: 0});
+  const ly1 = cy + r + f * 1.4, ly2 = ly1 + f * 1.45, lx = cx - r * .95;
+  mk('rect', {x: lx, y: ly1 - f * .75, width: f * .7, height: f * .7, fill: '#a7b0b8', stroke: '#4b545c'}, R.labs);
+  mk('text', {x: lx + f, y: ly1, class: 'lbl', style: `fill:var(--k);font-size:${f}px`}, R.labs).textContent = 'steel blade';
+  mk('rect', {x: lx, y: ly2 - f * .75, width: f * .7, height: f * .7, fill: '#5a3a24'}, R.labs);
+  mk('text', {x: lx + f, y: ly2, class: 'lbl', style: `fill:var(--k);font-size:${f}px`}, R.labs).textContent = 'human hair';
+
+  if (flex) flex.kill();
+  st.s = 0; upd();
+  const amp = bw * .28;
+  if (!Kit.calm) flex = gsap.fromTo(st, {s: -amp}, {s: amp, duration: .8, ease: 'sine.inOut', yoyo: true, repeat: -1, onUpdate: upd});
+  else { st.s = amp * .6; upd(); }
+  if (answered) reveal(true);
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1600)); };
+Kit.single();
+</script>
+</html>

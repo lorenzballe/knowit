@@ -1,0 +1,38 @@
+{
+  "id": "history-korean-auschwitz",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.children",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What was the infamous nickname of South Korea's Brothers Home facility?",
+  "answer": "The facility was nicknamed the 'Korean Auschwitz.' The name came afterwards, not from its founding. To save money, the director made the most violent prisoners into guards, who formed paramilitary squads, and beatings, forced labor and abuse were daily. 657 people died.",
+  "move": "The name came afterwards, earned by brutality and 657 dead.",
+  "keywords": [
+    "brothers home",
+    "korean auschwitz",
+    "south korea",
+    "squid game",
+    "forced labor",
+    "nickname"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question: what was the nickname of South Korea's Brothers Home facility? Options include The House of No Return, The Korean Auschwitz, and The Real Squid Game. The reader picks one, then rates how sure they are."
+  },
+  "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=_pZ1C8ag1YM&t=252s",
+  "written": "2026-11-03"
+}

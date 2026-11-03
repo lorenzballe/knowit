@@ -1,0 +1,37 @@
+{
+  "id": "space-penrose-two-universes",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the simplest Einstein solution link black and white holes to two universes?",
+  "answer": "The simplest Einstein solution links a black hole and a white hole to two universes. Edges on the map can't simply stop, so a white hole and a second universe appear to finish them. Tap each ? to extend the map until every edge ends at a singularity or infinity.",
+  "move": "Even the simplest solution holds two universes.",
+  "keywords": [
+    "einstein",
+    "black_hole",
+    "white_hole",
+    "wormhole"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A map of the simplest Einstein solution, with black holes, white holes and universes as nodes joined by edges. The reader taps each question mark to extend the map until every edge ends at a singularity or infinity.",
+    "ground": "#0b0b11"
+  },
+  "source": "Veritasium, “White holes and wormholes are probably real. Here's why.” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=6akmv1bsz1M",
+  "written": "2026-11-03"
+}

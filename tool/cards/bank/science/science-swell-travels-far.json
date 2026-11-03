@@ -1,0 +1,36 @@
+{
+  "id": "science-swell-travels-far",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do low-frequency waves travel farther than high-frequency ones?",
+  "answer": "Near the storm, both high-frequency and low-frequency waves are strong. High-frequency waves lose their energy quickly, so they fade close to the storm. The fast, low-frequency swell keeps going and arrives hundreds of miles away.",
+  "move": "Far from a storm, only the long, low-frequency swell is left.",
+  "keywords": [
+    "ocean waves",
+    "storm",
+    "swell",
+    "wave energy"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An ocean scene with a storm and a boat. Waves of two kinds are shown near the storm, and both are strong. Drag the boat away from the storm to see which waves are still there."
+  },
+  "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=pir_muTzYM8&t=632s",
+  "written": "2026-11-03"
+}

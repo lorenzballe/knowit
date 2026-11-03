@@ -1,0 +1,35 @@
+{
+  "id": "technology-quantum-fewer-steps",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.hype_cycles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the real advantage of a quantum computer?",
+  "answer": "Quantum computers do not run each operation faster. For some kinds of calculations and algorithms, they need an exponentially smaller number of operations to reach the result. The advantage is fewer operations, not faster ones, and it applies only to particular problems.",
+  "move": "The win is fewer operations, not faster ones, and only for some problems.",
+  "keywords": [
+    "quantum_computer",
+    "classical_computer",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two runners on a track, one classical and one quantum, step at the same pace as a dial sets the problem size. The quantum runner needs far fewer steps to reach the result."
+  },
+  "source": "Veritasium, “How Does a Quantum Computer Work?” (YouTube, 2013)",
+  "reference": "https://www.youtube.com/watch?v=g_IaVepNDT4&t=366s",
+  "written": "2026-11-03"
+}

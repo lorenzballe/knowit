@@ -1,0 +1,37 @@
+{
+  "id": "nature-venice-flood-causes",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Why is a flood in Venice never down to one cause?",
+  "answer": "Alone, each cause leaves the street dry. The Moon and Sun pull the tide up, wind pushes water in and low pressure lifts the sea, while the ground slowly sinks. Stacked together, these three causes top the pavement and flood it.",
+  "move": "A flood is the product of several causes acting at once.",
+  "keywords": [
+    "venice",
+    "acqua alta",
+    "tide",
+    "low pressure",
+    "land subsidence"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card asking which causes flood a Venice street: the Moon and Sun tide, wind and low pressure, sinking ground, or all three together. The reader picks an option, then watches the water rise."
+  },
+  "source": "Geopop, “ACQUA ALTA VENEZIA:  L'ANALISI SCIENTIFICA DELLE CAUSE” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=j6YkctHvs9U&t=45s",
+  "written": "2026-11-03"
+}

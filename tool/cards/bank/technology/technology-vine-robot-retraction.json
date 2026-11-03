@@ -1,0 +1,37 @@
+{
+  "id": "technology-vine-robot-retraction",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when you retract a vine robot in a big open area?",
+  "answer": "A vine robot grows by turning inside out, so it should retract by pulling its tail back through the core and slipping back inside itself. In open space nothing holds the tube straight, so when it is pulled back it buckles and coils into a tangle. Internal rollers guide it back in cleanly.",
+  "move": "Pulled back in the open, a vine robot coils; internal rollers make it invert.",
+  "keywords": [
+    "vine robot",
+    "soft robots",
+    "inversion",
+    "internal rollers",
+    "retraction"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page asks what happens when a vine robot is retracted in a big open area. Reader pulls the tail: the tube coils into a messy tangle in open space, and internal rollers make it retract cleanly."
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=171s",
+  "written": "2026-11-03"
+}

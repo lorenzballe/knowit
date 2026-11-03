@@ -1,0 +1,38 @@
+{
+  "id": "nature-nacre-two-components",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What are the two main components of nacre?",
+  "answer": "Nacre is made of tablets of aragonite, a mineral of calcium carbonate, and conchiolin, an organic protein. The protein is the binding matrix that holds the mineral tablets together. Because of this, the whole is stronger than the mineral alone.",
+  "move": "Nacre is mineral bricks glued by protein mortar.",
+  "keywords": [
+    "nacre",
+    "aragonite",
+    "conchiolin",
+    "mollusk shells",
+    "pearls"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four ingredient options are listed: silica, aragonite crystals, keratin, and conchiolin. The reader picks two to build nacre, and the reveal shows that aragonite plus conchiolin make up nacre.",
+    "graded": false
+  },
+  "source": "Geopop, “Ostriche, come creano le perle e perché?” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=3RiQ05xqWwY&t=117s",
+  "written": "2026-11-03"
+}

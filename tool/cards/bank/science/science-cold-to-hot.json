@@ -1,0 +1,37 @@
+{
+  "id": "science-cold-to-hot",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How likely is a spontaneous cold‑to‑hot energy transfer?",
+  "answer": "Random energy hops between atoms usually land on even splits, because those splits have far more possible arrangements. As the bars gain atoms, the odds of a spontaneous cold-to-hot transfer become overwhelmingly small. Heat therefore moves from hot to cold because of these overwhelming odds, not because anything forces it.",
+  "move": "Heat flows hot to cold by sheer odds, not by force.",
+  "keywords": [
+    "heat",
+    "atoms",
+    "arrangements",
+    "probability",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two bars, one hot and one cold, with a slider that adds atoms to each bar. Random energy hops mostly land on even splits. The page asks how likely a spontaneous cold-to-hot energy transfer is."
+  },
+  "source": "Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=DxL2HoqLbyA",
+  "written": "2026-11-03"
+}

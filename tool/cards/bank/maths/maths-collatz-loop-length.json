@@ -1,0 +1,38 @@
+{
+  "id": "maths-collatz-loop-length",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.big_numbers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "If a Collatz loop besides 4→2→1 existed, how long must it be?",
+  "answer": "Every number checked so far falls into 4→2→1, and mathematicians use that to calculate the shortest loop that another cycle would have to be. Another loop isn't ruled out, but it would need at least 186 billion numbers. So the pattern is likely true, though it has not been proved.",
+  "move": "Another loop isn't ruled out, but it would need at least 186 billion numbers.",
+  "keywords": [
+    "collatz",
+    "loops",
+    "4-2-1",
+    "mathematics",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Titled 'Collatz loop length'. It asks how long a Collatz loop other than 4→2→1 would have to be. A slider runs from 1,000 to 3 thousand million billion trillion, with dots each standing for about 17 numbers. The reader drags to a guess and presses 'Lock in my guess'.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Simplest Math Problem No One Can Solve - Collatz Conjecture” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=094y1Z2wpJg",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-china-philippines-route -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#map{flex:1;min-height:0;position:relative}
+#map svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why{display:flex;flex-direction:column;gap:1cqh;flex:none}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lab{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ESCAPE ROUTE</span></div>
+    <h2 class="q">China held a group of North Korean defectors. Where did it send them?</h2>
+    <div class="stagebox" id="stage">
+      <div id="map"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Back to North Korea</button>
+        <button class="opt" data-i="1">Kept in a Chinese prison</button>
+        <button class="opt" data-i="2">Flown to the Philippines</button>
+      </div>
+      <div id="why" class="gone"><p class="big">To the Philippines</p><p class="body">He expected North Korean diplomats. Instead a South Korean and a Westerner came, smiling, with good news: China had, strangely, decided to move the group to the Philippines, where they were safe.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap where you think they went. Watch the route.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Caught in China did not mean sent home: this group flew to a third country.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, flown = false, tween = null;
+const svg = Kit.$('svg');
+let G = null;
+
+function routeD(i, P, W, H){
+  const c = P.china;
+  if (i === 0) return `M${c.x} ${c.y} Q${W*.6} ${H*.06} ${P.nk.x} ${P.nk.y}`;
+  if (i === 1){ const r = Math.min(W,H)*.09; return `M${c.x-r} ${c.y} a${r} ${r} 0 1 0 ${2*r} 0 a${r} ${r} 0 1 0 ${-2*r} 0`; }
+  return `M${c.x} ${c.y} C${W*.36} ${H*.62} ${W*.5} ${H*.8} ${P.ph.x} ${P.ph.y}`;
+}
+
+function draw(animate){
+  if (tween) { tween.kill(); tween = null; }
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f*.85, 12), sw = Math.max(3, fs*.28);
+  const P = {china:{x:W*.36,y:H*.36}, nk:{x:W*.76,y:H*.2}, ph:{x:W*.72,y:H*.8}};
+  const land = 'fill:color-mix(in srgb,var(--k) 11%,transparent);stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.5;stroke-linejoin:round';
+  // China (schematic)
+  Kit.mk('path',{d:`M0 ${H*.02} L${W*.64} ${H*.02} L${W*.69} ${H*.14} L${W*.66} ${H*.3} L${W*.58} ${H*.46} L${W*.52} ${H*.6} L${W*.34} ${H*.66} L0 ${H*.64} Z`,style:land},svg);
+  // Korean peninsula
+  Kit.mk('path',{d:`M${W*.69} ${H*.14} L${W*.84} ${H*.1} L${W*.86} ${H*.22} L${W*.82} ${H*.36} L${W*.76} ${H*.42} L${W*.72} ${H*.34} L${W*.73} ${H*.22} Z`,style:land},svg);
+  // Philippines islands
+  [[.7,.74,.035,.05],[.75,.82,.03,.035],[.72,.9,.04,.03],[.66,.82,.015,.03]].forEach(e=>
+    Kit.mk('ellipse',{cx:W*e[0],cy:H*e[1],rx:W*e[2],ry:H*e[3],style:land},svg));
+  // dots + labels
+  const dot = (p,s)=>Kit.mk('circle',{cx:p.x,cy:p.y,r:Math.max(4,fs*.32),style:`fill:${s}`},svg);
+  const lab = (t,x,y,a)=>{const e=Kit.mk('text',{x,y,'text-anchor':a,class:'lab',style:`font-size:${fs}px;fill:var(--k)`},svg); e.textContent=t;};
+  dot(P.china,'var(--k)'); dot(P.nk,'color-mix(in srgb,var(--k) 55%,transparent)'); dot(P.ph,'color-mix(in srgb,var(--k) 55%,transparent)');
+  lab('CHINA', P.china.x, P.china.y - fs*1.1, 'middle');
+  lab('NORTH KOREA', W*.98, P.nk.y - fs*1.1 < fs ? fs*1.1 : P.nk.y - fs*.9, 'end');
+  lab('PHILIPPINES', P.ph.x - W*.06, P.ph.y + fs*.35, 'end');
+  // the reader's guess
+  if (pick >= 0){
+    const g = Kit.mk('path',{d:routeD(pick,P,W,H),style:`fill:none;stroke:var(--k);stroke-width:${sw*.75};stroke-dasharray:${sw*1.6} ${sw*1.6};stroke-linecap:round;opacity:${done && pick!==RIGHT ? .3 : .75}`},svg);
+    if (animate === 'pick' && !Kit.calm) gsap.from(g,{opacity:0,duration:.4});
+  }
+  // the real route
+  if (done){
+    const r = Kit.mk('path',{d:routeD(RIGHT,P,W,H),style:`fill:none;stroke:var(--k);stroke-width:${sw};stroke-linecap:round`},svg);
+    const L = r.getTotalLength();
+    r.style.strokeDasharray = L;
+    const s = fs*.09;
+    const plane = Kit.mk('path',{d:'M12 0 L-4 -3 L-8 -11 L-11 -11 L-8 -3 L-12 -3 L-14 -6 L-16 -6 L-15 0 L-16 6 L-14 6 L-12 3 L-8 3 L-11 11 L-8 11 L-4 3 Z',style:'fill:var(--k)'},svg);
+    const at = t => {
+      const p = r.getPointAtLength(L*t), q = r.getPointAtLength(Math.min(L, L*t + 1)), b = r.getPointAtLength(Math.max(0, L*t - 1));
+      const a = Math.atan2(q.y-b.y, q.x-b.x)*180/Math.PI;
+      r.style.strokeDashoffset = L*(1-t);
+      plane.setAttribute('transform',`translate(${p.x} ${p.y}) rotate(${a}) scale(${Math.max(s,1.1)})`);
+    };
+    if (animate === 'fly' && !Kit.calm && !flown){
+      const o = {t:0}; at(0);
+      tween = gsap.to(o,{t:1,duration:1.7,ease:'power2.inOut',onUpdate:()=>at(o.t),onComplete:()=>{flown=true;Kit.haptic('success');}});
+    } else { flown = true; at(1); }
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  done = true; draw('fly');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  draw('pick');
+});
+Kit.onShow.card = () => draw(null);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[0].click(); await new Promise(r => setTimeout(r, 150)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2100)); };
+Kit.single();
+</script>
+</html>

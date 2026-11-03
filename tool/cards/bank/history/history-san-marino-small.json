@@ -1,0 +1,36 @@
+{
+  "id": "history-san-marino-small",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did San Marino turn down Napoleon's offer of more land?",
+  "answer": "In the late 1700s, Napoleon offered San Marino more land, and the republic said no. It reasoned that a bigger state gets noticed, and noticed states get attacked. Bothering no one and staying almost invisible kept it free.",
+  "move": "Sometimes the safest size is the one nobody notices.",
+  "keywords": [
+    "san marino",
+    "napoleon",
+    "territorial offer",
+    "small state"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "An interactive card asking why San Marino turned down Napoleon's offer of more land. Two choices are shown, Take the land and Stay small, and selecting one reveals who comes after the state in each case."
+  },
+  "source": "Geopop, “Perché esiste la Repubblica di San Marino e come mai non è mai entrata a far parte dell'Italia?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=KniHBbR_Nv4&t=302s",
+  "written": "2026-11-03"
+}

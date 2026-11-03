@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-crimea-1954-gift -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#map{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;cursor:pointer}
+#cap,#why p{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;color:var(--k);overflow-wrap:break-word}
+#cap{min-height:calc(3 * 1.3 * max(1.9cqh,13px))}
+#cap b,#why b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Timeline · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CRIMEA 1954</span></div>
+    <h2 class="q">Why did Russia call Crimea “theirs” after giving it away?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="map"></svg>
+      <p id="cap"></p>
+      <div id="why" class="gone"><p><b>In 1954 the gift was symbolic:</b> Ukraine and Russia were in the same Union. When the Union dissolved, it became a real loss of the peninsula that controls the Black Sea. Russia always meant to get it back, and took it in 2014.</p></div>
+    </div>
+    <p class="say" id="say">Drag the marker along the timeline and watch Crimea.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A border drawn as a gesture inside one state turns real when that state breaks up.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const UA='#f4c542', RU='#c8453b', SEA='#1f4f7a', INK='#14161a';
+const LABELS=['Before','1954','USSR ends','2014'];
+const CAPS=[
+  'Inside the USSR, the Black Sea peninsula of <b>Crimea belongs to Russia</b>.',
+  '<b>1954:</b> Khrushchev gifts Crimea to Ukraine. Inside one Union, it is a <b>mostly symbolic</b> move.',
+  '<b>The Union dissolves.</b> The inner line becomes a real border: Russia is left without its strategic Black Sea point.',
+  '<b>2014:</b> Russia occupies Crimea militarily, the territory it had always meant to recover. Many Russians lived there.'
+];
+let st=0, done=false, G={}, W=0, H=0, mh=0, nodes=[], dragging=false;
+
+function P(pts){return 'M'+pts.map(p=>(p[0]*W).toFixed(1)+','+(p[1]*mh).toFixed(1)).join('L')+'Z';}
+function label(txt,x,y,fs,parent,anchor){
+  const t=Kit.mk('text',{x,y,'text-anchor':anchor||'middle','dominant-baseline':'middle',fill:INK,stroke:'#fff','stroke-width':Math.max(3,fs*.25),'stroke-linejoin':'round','paint-order':'stroke',style:`font:800 ${fs}px var(--body);letter-spacing:.04em`},parent);
+  t.textContent=txt; return t;
+}
+
+function draw(){
+  const svg=Kit.$('map'); svg.innerHTML='';
+  const r=Kit.fitSvg(svg); W=r.W; H=r.H;
+  const fs=Math.max(r.f*.85,12);
+  const th=Math.max(H*.22, fs*4.4); mh=H-th;
+  const defs=Kit.mk('defs',{},svg);
+  const pat=Kit.mk('pattern',{id:'hatch',patternUnits:'userSpaceOnUse',width:9,height:9,patternTransform:'rotate(45)'},defs);
+  Kit.mk('line',{x1:0,y1:0,x2:0,y2:9,stroke:INK,'stroke-width':3.2,'stroke-opacity':.55},pat);
+  const cp=Kit.mk('clipPath',{id:'mclip'},defs);
+  Kit.mk('rect',{x:0,y:0,width:W,height:mh,rx:fs*.9},cp);
+  const g=Kit.mk('g',{'clip-path':'url(#mclip)'},svg);
+  Kit.mk('rect',{x:0,y:0,width:W,height:mh,fill:SEA},g);
+  const s=Math.min(W,mh);
+  G.ring=Kit.mk('circle',{cx:.5*W,cy:.6*mh,r:.36*s,fill:'none',stroke:'#fff','stroke-width':3,'stroke-dasharray':'8 7',opacity:0},g);
+  G.ring2=Kit.mk('circle',{cx:.5*W,cy:.6*mh,r:.36*s,fill:RU,'fill-opacity':.18,stroke:'none',opacity:0},g);
+  Kit.mk('path',{d:P([[0,0],[.57,0],[.6,.15],[.57,.3],[.6,.42],[.5,.44],[.42,.46],[.3,.42],[.18,.47],[.08,.52],[0,.5]]),fill:UA,stroke:INK,'stroke-width':1.5},g);
+  Kit.mk('path',{d:P([[.57,0],[1,0],[1,.55],[.9,.6],[.8,.52],[.72,.47],[.66,.43],[.6,.42],[.57,.3],[.6,.15]]),fill:RU,stroke:INK,'stroke-width':1.5},g);
+  const crD=P([[.40,.455],[.44,.45],[.47,.52],[.58,.53],[.66,.5],[.68,.54],[.6,.6],[.55,.68],[.47,.72],[.4,.66],[.34,.6],[.37,.53],[.41,.5]]);
+  G.cr=Kit.mk('path',{d:crD,fill:RU,stroke:INK,'stroke-width':2.2},g);
+  G.hatch=Kit.mk('path',{d:crD,fill:'url(#hatch)',opacity:0},g);
+  G.border=Kit.mk('path',{d:'M'+[[.57,-.02],[.6,.15],[.57,.3],[.6,.42]].map(p=>(p[0]*W)+','+(p[1]*mh)).join('L'),fill:'none',stroke:INK,'stroke-width':2,'stroke-dasharray':'5 5'},g);
+  G.ussr=Kit.mk('rect',{x:.02*W,y:.02*mh,width:.96*W,height:.74*mh,rx:fs,fill:'none',stroke:'#fff','stroke-width':2.5,'stroke-dasharray':'10 6'},g);
+  G.ussrL=label('ONE UNION · USSR',.05*W,.09*mh,fs*.85,g,'start');
+  // arrow from Russia to Crimea
+  G.arrow=Kit.mk('path',{d:`M${.82*W},${.34*mh} Q${.8*W},${.58*mh} ${.62*W},${.58*mh}`,fill:'none',stroke:'#fff','stroke-width':3.5,'stroke-linecap':'round',opacity:0},g);
+  G.head=Kit.mk('path',{d:`M${.62*W},${.58*mh} l${fs*.7},${-fs*.45} M${.62*W},${.58*mh} l${fs*.7},${fs*.45}`,stroke:'#fff','stroke-width':3.5,'stroke-linecap':'round',opacity:0},g);
+  G.arrowL=label('1954 gift',.7*W,.7*mh,fs,g,'start'); G.arrowL.setAttribute('opacity',0);
+  label('UKRAINE',.27*W,.24*mh,fs,g);
+  label('RUSSIA',.8*W,.22*mh,fs,g);
+  label('CRIMEA',.5*W,.61*mh,fs*.9,g);
+  const sl=label('BLACK SEA',.05*W,.9*mh,fs*.85,g,'start'); sl.setAttribute('fill','#fff'); sl.setAttribute('stroke',SEA);
+  // timeline
+  const ly=mh+th*.38, pad=W*.11;
+  nodes=[0,1,2,3].map(i=>pad+i*(W-2*pad)/3);
+  G.ly=ly;
+  Kit.mk('line',{x1:nodes[0],y1:ly,x2:nodes[3],y2:ly,stroke:'var(--k)','stroke-width':3,'stroke-linecap':'round'},svg);
+  G.dots=nodes.map(x=>Kit.mk('circle',{cx:x,cy:ly,r:fs*.35,fill:'var(--c)',stroke:'var(--k)','stroke-width':2.5},svg));
+  G.tl=nodes.map((x,i)=>{const t=Kit.mk('text',{x,y:ly+fs*1.75,'text-anchor':'middle','dominant-baseline':'middle',fill:'var(--k)',style:`font:800 ${fs*.9}px var(--body)`},svg);t.textContent=LABELS[i];return t;});
+  G.handle=Kit.mk('circle',{cx:nodes[st],cy:ly,r:fs*.75,fill:'var(--k)',stroke:'var(--c)','stroke-width':3},svg);
+  apply(false);
+}
+
+function apply(anim){
+  const d=anim&&!Kit.calm?.55:0, s=st;
+  const T=(el,v)=>gsap.to(el,Object.assign({duration:d,ease:'power2.out'},v));
+  T(G.cr,{attr:{fill:(s===1||s===2)?UA:RU}});
+  T(G.hatch,{opacity:s===3?1:0});
+  T([G.ussr,G.ussrL],{opacity:s<=1?1:0});
+  G.border.setAttribute('stroke-dasharray',s<=1?'5 5':'none');
+  T(G.border,{attr:{'stroke-width':s<=1?2:5}});
+  T([G.ring,G.ring2],{opacity:s>=2?1:0});
+  G.ring.setAttribute('stroke-dasharray',s===2?'8 7':'none');
+  T(G.ring2,{attr:{'fill-opacity':s===3?.3:.12}});
+  G.arrowL.textContent=s===3?'2014 taken':'1954 gift';
+  T([G.arrow,G.head,G.arrowL],{opacity:(s===1||s===3)?1:0});
+  if(d&&(s===1||s===3)){gsap.fromTo(G.arrow,{attr:{'stroke-dasharray':'400','stroke-dashoffset':400}},{attr:{'stroke-dashoffset':0},duration:.6,ease:'power2.out'});}
+  else G.arrow.removeAttribute('stroke-dasharray');
+  G.dots.forEach((c,i)=>c.setAttribute('fill',i<=s?'var(--k)':'var(--c)'));
+  G.tl.forEach((t,i)=>t.setAttribute('opacity',i===s?1:.6));
+  if(!dragging) T(G.handle,{attr:{cx:nodes[s]}});
+  if(!done) Kit.$('cap').innerHTML=CAPS[s];
+}
+
+function go(s,anim=true){
+  s=Math.max(0,Math.min(3,s));
+  if(s===st&&anim){ if(!dragging) gsap.to(G.handle,{attr:{cx:nodes[s]},duration:.3}); return; }
+  st=s; Kit.haptic('selection'); apply(anim);
+  if(s===3&&!done){
+    setTimeout(()=>{ if(done)return; done=true;
+      Kit.$('cap').innerHTML=CAPS[3];
+      Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.1,duration:.45,ease:'power3.out'});
+    },900);
+  }
+}
+
+function toX(e){const svg=Kit.$('map'),r=svg.getBoundingClientRect();return {x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};}
+function nearest(x){let b=0;nodes.forEach((n,i)=>{if(Math.abs(n-x)<Math.abs(nodes[b]-x))b=i;});return b;}
+const svgEl=Kit.$('map');
+svgEl.addEventListener('pointerdown',e=>{
+  const p=toX(e);
+  if(p.y<mh){ go(st<3?st+1:st); return; }
+  dragging=true; svgEl.setPointerCapture(e.pointerId);
+  const x=Math.max(nodes[0],Math.min(nodes[3],p.x)); G.handle.setAttribute('cx',x); go(nearest(x));
+});
+svgEl.addEventListener('pointermove',e=>{
+  if(!dragging)return; const x=Math.max(nodes[0],Math.min(nodes[3],toX(e).x));
+  gsap.killTweensOf(G.handle); G.handle.setAttribute('cx',x);
+  const n=nearest(x); if(n!==st) go(n);
+});
+const end=()=>{ if(!dragging)return; dragging=false; gsap.to(G.handle,{attr:{cx:nodes[st]},duration:.3,ease:'power2.out'}); };
+svgEl.addEventListener('pointerup',end); svgEl.addEventListener('pointercancel',end);
+
+Kit.onShow.card = () => { draw(); if(!done) Kit.$('cap').innerHTML=CAPS[st]; };
+Kit.onEnter.card = () => {
+  if(Kit.calm||!G.handle) return;
+  gsap.fromTo(G.handle,{attr:{r:+G.handle.getAttribute('r')*1.4}},{attr:{r:+G.handle.getAttribute('r')},duration:.6,repeat:2,yoyo:false,ease:'power2.out'});
+};
+Kit.play.card = async () => {
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  const svg=Kit.$('map'), r=svg.getBoundingClientRect();
+  const ev=(type,x)=>svg.dispatchEvent(new PointerEvent(type,{bubbles:true,pointerId:1,clientX:r.left+x*r.width/W,clientY:r.top+G.ly*r.height/H}));
+  ev('pointerdown',nodes[0]);
+  for(let i=1;i<=3;i++){ ev('pointermove',nodes[i]); await wait(150); }
+  ev('pointerup',nodes[3]);
+  await wait(1500);
+};
+Kit.single();
+</script>
+</html>

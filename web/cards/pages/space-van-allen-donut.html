@@ -1,0 +1,159 @@
+<!doctype html>
+<!-- slug: space-van-allen-donut -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#sky{flex:1;min-height:0;position:relative}
+#sky svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#routes{display:flex;gap:2.5cqw}
+.rt{flex:1;display:flex;flex-direction:column;gap:.9cqh;font:700 max(1.9cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.rt.on{box-shadow:inset 0 0 0 .3cqh var(--k)}
+.rt small{font:600 max(1.4cqh,12px)/1.2 var(--body);color:var(--muted)}
+.bar{height:max(1.1cqh,8px);border-radius:1cqh;background:#0b1026;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:1cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Tap to fly · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VAN ALLEN BELTS</span></div>
+    <h2 class="q">Why did Apollo astronauts survive crossing the Van Allen radiation belts?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sky"><svg id="svg"></svg></div>
+      <div id="routes">
+        <button class="rt" data-k="mid"><span>Straight through the middle</span><small>radiation picked up</small><span class="bar"><i id="bm" style="background:#ffd166"></i></span></button>
+        <button class="rt" data-k="apo"><span>Apollo’s way, over the edge</span><small>radiation picked up</small><span class="bar"><i id="ba" style="background:#7ee8fa"></i></span></button>
+      </div>
+    </div>
+    <p class="say" id="say">Tap a route to fly it. Watch its radiation bar fill.</p>
+    <div id="why" class="gone"><p class="body">The belts are a donut around Earth’s middle, not a shell all around it. Apollo flew out across their thin outer edge, so it spent little time in strong radiation.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The belts are a ring, not a wall: you can skirt the thick part.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const D2R = Math.PI/180;
+const BELTS = [{L1:1.3, L2:2.5, cut:35}, {L1:3, L2:6.5, cut:45}];
+function weight(x, z){
+  const r = Math.hypot(x, z); if (r < 1) return 0;
+  const lam = Math.atan2(z, Math.abs(x)) / D2R, c = Math.cos(lam*D2R), L = r/(c*c);
+  for (const b of BELTS){
+    if (L > b.L1 && L < b.L2 && Math.abs(lam) < b.cut){
+      const u = (L-b.L1)/(b.L2-b.L1);
+      return Math.sin(Math.PI*u) * (1 - (lam/b.cut)**2);
+    }
+  }
+  return 0;
+}
+function route(a, b){
+  const N = 400, pts = []; let cum = 0;
+  const len = Math.hypot(b[0]-a[0], b[1]-a[1]), ds = len/N;
+  for (let i = 0; i <= N; i++){
+    const s = i/N, x = a[0]+(b[0]-a[0])*s, z = a[1]+(b[1]-a[1])*s, w = weight(x, z);
+    if (i) cum += w*ds;
+    pts.push({x, z, w, cum});
+  }
+  return {a, b, pts, len};
+}
+const R_ = {mid: route([1,0],[9.5,0]), apo: route([0.6,0.8],[9.48,6.44])};
+// Fair comparison: dose counted only out to the same distance on screen-independent scale
+const MAX = R_.mid.pts[R_.mid.pts.length-1].cum;
+const st = {mid:{t:0, done:false}, apo:{t:0, done:false}}, bars = {mid:'bm', apo:'ba'}, col = {mid:'#ffd166', apo:'#7ee8fa'};
+let running = false, fast = false, G = null, els = {};
+
+function draw(){
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const R = Math.min(W/14.5, H/8.4), cx = W/2, cy = H/2 + 1.2*R;
+  G = {W, H, R, cx, cy, f};
+  const P = (x, z) => [cx + x*R, cy - z*R];
+  const defs = Kit.mk('defs', {}, svg);
+  const fl = Kit.mk('filter', {id:'gl', x:'-20%', y:'-20%', width:'140%', height:'140%'}, defs);
+  Kit.mk('feGaussianBlur', {stdDeviation: Math.max(1.5, R*0.15)}, fl);
+  const eg = Kit.mk('radialGradient', {id:'eg', cx:'35%', cy:'35%', r:'70%'}, defs);
+  Kit.mk('stop', {offset:'0', 'stop-color':'#6fd3ff'}, eg); Kit.mk('stop', {offset:'1', 'stop-color':'#1b5fb0'}, eg);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx: Math.min(W,H)*0.05, fill:'#0b1026'}, svg);
+  // stars
+  for (let i = 0; i < 40; i++) Kit.mk('circle', {cx: Kit.rnd()*W, cy: Kit.rnd()*H, r: 0.6 + Kit.rnd()*0.8, fill:'#fff', opacity: .25 + Kit.rnd()*.4}, svg);
+  // belts: cross-section of a donut, both sides of Earth
+  const gB = Kit.mk('g', {id:'belts', filter:'url(#gl)'}, svg);
+  for (const b of BELTS) for (let k = 0; k < 4; k++){
+    const sh = (b.L2-b.L1)*k*.12, L1 = b.L1+sh, L2 = b.L2-sh, cut = b.cut*(1-k*.22);
+    for (const side of [-1, 1]){
+      const pts = [], n = 40;
+      for (let i = 0; i <= n; i++){ const l = (-cut+2*cut*i/n)*D2R, r = L2*Math.cos(l)**2; pts.push(P(side*r*Math.cos(l), r*Math.sin(l))); }
+      for (let i = n; i >= 0; i--){ const l = (-cut+2*cut*i/n)*D2R, r = L1*Math.cos(l)**2; pts.push(P(side*r*Math.cos(l), r*Math.sin(l))); }
+      Kit.mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill: k === 3 ? '#ffc04d' : '#ff5a3c', opacity: k === 3 ? .55 : .3}, gB);
+    }
+  }
+  // Earth
+  const [ex, ey] = P(0, 0);
+  Kit.mk('circle', {cx: ex, cy: ey, r: R, fill: 'url(#eg)', stroke: '#bfe9ff', 'stroke-width': 1}, svg);
+  const fs = Math.max(12, f*0.85);
+  const txt = (x, y, s, a, c) => { const t = Kit.mk('text', {x, y, 'text-anchor': a || 'middle', 'dominant-baseline':'middle', fill: c || '#e8ecff', 'font-family':'var(--body)', 'font-weight':700, 'font-size': fs}, svg); t.textContent = s; return t; };
+  txt(...P(-1.9, 0), 'inner'); txt(...P(-4.75, 0), 'outer');
+  txt(...P(0, -1.0 - fs*0.9/R), 'Earth', 'middle', '#bfe9ff');
+  txt(Math.max(10, W*0.04), fs*1.4, 'Side view: a donut, cut in half', 'start', '#aab3d9');
+  // Moon where Apollo's route leaves the frame
+  const A = R_.apo, xMax = (W-cx)/R - 0.7, zMax = cy/R - 0.7;
+  let s = 1; const dx = A.b[0]-A.a[0], dz = A.b[1]-A.a[1];
+  s = Math.min(s, (xMax-A.a[0])/dx, (zMax-A.a[1])/dz);
+  const [mx, my] = P(A.a[0]+dx*s, A.a[1]+dz*s);
+  Kit.mk('circle', {cx: mx, cy: my, r: Math.max(6, R*0.45), fill:'#d9d9e3'}, svg);
+  txt(mx - Math.max(6, R*0.45) - 6, my, 'to the Moon', 'end', '#d9d9e3');
+  // routes (clipped to the frame)
+  els = {};
+  const m = (Math.max(5, R*0.24) + 4)/R, xLim = (W-cx)/R - m, zLim = cy/R - m;
+  for (const k of ['mid', 'apo']){
+    const r = R_[k], rdx = r.b[0]-r.a[0], rdz = r.b[1]-r.a[1];
+    let sc = 1;
+    if (rdx > 0) sc = Math.min(sc, (xLim-r.a[0])/rdx);
+    if (rdz > 0) sc = Math.min(sc, (zLim-r.a[1])/rdz);
+    sc = Math.max(0, sc);
+    const [x1, y1] = P(...r.a), [x2, y2] = P(r.a[0]+rdx*sc, r.a[1]+rdz*sc);
+    Kit.mk('line', {x1, y1, x2, y2, stroke: col[k], 'stroke-opacity': .18, 'stroke-width': 1.5, 'stroke-dasharray': '4 5'}, svg);
+    const ln = Kit.mk('line', {x1, y1, x2, y2, stroke: col[k], 'stroke-width': Math.max(2.5, R*0.12), 'stroke-linecap':'round', pathLength: 1, 'stroke-dasharray': '1 1', 'stroke-dashoffset': 1}, svg);
+    const cr = Kit.mk('circle', {r: Math.max(5, R*0.24), fill: '#fff', stroke: col[k], 'stroke-width': 2, opacity: 0}, svg);
+    els[k] = {ln, cr, P, sc};
+  }
+  for (const k of ['mid', 'apo']) render(k);
+}
+function render(k){
+  const e = els[k]; if (!e) return;
+  const t = st[k].t, r = R_[k], p = r.pts[Math.round(t*e.sc*(r.pts.length-1))];
+  e.ln.setAttribute('stroke-dashoffset', 1 - t);
+  const [x, y] = e.P(p.x, p.z);
+  e.cr.setAttribute('cx', x); e.cr.setAttribute('cy', y);
+  e.cr.setAttribute('opacity', t > 0 && !st[k].done ? 1 : 0);
+  e.cr.setAttribute('fill', p.w > 0.05 ? '#ff4d3d' : '#fff');
+  Kit.$(bars[k]).style.width = (Math.min(1, p.cum/MAX)*100) + '%';
+}
+function fly(k, btn){
+  if (running || st[k].done) return;
+  running = true; btn.classList.add('on'); Kit.haptic('selection');
+  const dur = fast || Kit.calm ? 0.3 : R_[k].len*0.33;
+  gsap.to(st[k], {t: 1, duration: dur, ease: 'none', onUpdate: () => render(k), onComplete: () => {
+    st[k].done = true; running = false; render(k); Kit.haptic('light');
+    if (st.mid.done && st.apo.done) finish();
+  }});
+}
+function finish(){
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+Kit.$('routes').addEventListener('click', e => { const b = e.target.closest('.rt'); if (b) fly(b.dataset.k, b); });
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('#belts', {opacity: 0, duration: 1.1, ease: 'power2.out'}); gsap.from('.rt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  fast = true; const w = ms => new Promise(r => setTimeout(r, ms));
+  document.querySelector('.rt[data-k="mid"]').click(); await w(500);
+  document.querySelector('.rt[data-k="apo"]').click(); await w(1100);
+};
+Kit.single();
+</script>
+</html>

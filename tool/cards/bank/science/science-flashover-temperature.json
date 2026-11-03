@@ -1,0 +1,38 @@
+{
+  "id": "science-flashover-temperature",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How hot does a burning room get before it all ignites at once?",
+  "answer": "A burning room's hot gases pile up under the ceiling, and the heat climbs out of control. At their combustion limit, typically 500–600°C, all those gases catch fire together. This is flashover, which is practically unstoppable.",
+  "move": "At about 500–600°C, a room's gases ignite all at once.",
+  "keywords": [
+    "flashover",
+    "fire",
+    "combustion",
+    "hot_gases",
+    "ceiling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A thermometer you drag upward from 20°C to find the temperature at which a burning room's whole space bursts into flame. The question asks how hot a room gets before it all ignites at once.",
+    "graded": false
+  },
+  "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=386s",
+  "written": "2026-11-03"
+}

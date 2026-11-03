@@ -1,0 +1,37 @@
+{
+  "id": "science-sulfur-brittle-steel",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Titanic's steel hull crack so quickly?",
+  "answer": "Tests on a piece of the wreck's hull found the steel very rich in sulfur. Sulfur and iron form ferrous sulfide crystals, which under stress seed micro-cracks that join up. So under the impact, in cold water, the stiff hull cracked instead of bending.",
+  "move": "Sulfur makes steel stiff: hit hard, it cracks instead of bending.",
+  "keywords": [
+    "titanic",
+    "sulfur",
+    "steel",
+    "hull",
+    "brittleness"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page titled 'Why Titanic's steel cracked'. It shows two steel plates. Tapping delivers the same blow to both, and the reader watches each one. The page asks why the Titanic's steel hull cracked so quickly."
+  },
+  "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=hR2yfGGHniY&t=600s",
+  "written": "2026-11-03"
+}

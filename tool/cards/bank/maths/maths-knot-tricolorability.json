@@ -1,0 +1,36 @@
+{
+  "id": "maths-knot-tricolorability",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What simple test can prove two knots are different?",
+  "answer": "The trefoil can be coloured with three colours so every crossing shows all-same or all-different strands, so it is tricolorable. Twists, pokes and slides never change this. A plain loop is one strand, so one colour only; no amount of moving turns the trefoil into a plain loop.",
+  "move": "If one knot is tricolorable and another isn't, they're different knots.",
+  "keywords": [
+    "trefoil",
+    "knot theory",
+    "tricolorability",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A trefoil knot diagram with its three strands coloured. The reader taps a strand to change its colour and must make every crossing show either three strands of one colour or three different colours."
+  },
+  "source": "Veritasium, “The Insane Math Of Knot Theory” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=8DBhTXM_Br4&t=872s",
+  "written": "2026-11-03"
+}

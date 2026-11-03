@@ -1,0 +1,144 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-mediterranean-plates -->
+<title>Astute free card: why the Mediterranean is geologically complex</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sw{display:flex;gap:1.5cqw;background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:2cqh;padding:.6cqh;flex:none}
+.sb{flex:1;font:700 max(1.9cqh,13px)/1.15 var(--body);color:var(--k);background:transparent;border:0;border-radius:1.5cqh;padding:1.2cqh 2cqw;cursor:pointer}
+.sb.on{background:var(--k);color:var(--c)}
+#map{flex:1;min-height:0;width:100%;display:block}
+#leg{display:flex;justify-content:center;gap:5cqw;flex-wrap:wrap;font:600 max(1.6cqh,12px)/1.3 var(--body);color:var(--k);flex:none}
+#leg span{display:inline-flex;align-items:center;gap:1.5cqw}
+#leg i{display:inline-block;width:5cqw;max-width:28px;height:max(.7cqh,4px);border-radius:4px}
+#read{text-align:center;font:700 max(2.1cqh,14px)/1.25 var(--body);color:var(--k);flex:none}
+#read b{font-family:var(--mono)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0}
+.bd{transition:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TECTONICS</span></div>
+    <h2 class="q">Why is the Mediterranean so geologically complex?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw">
+        <button class="sb on" data-m="0">Two plates</button>
+        <button class="sb" data-m="1">Plates + microplates</button>
+      </div>
+      <svg id="map"></svg>
+      <div id="leg"><span><i style="background:#e0333a"></i>Squeezed · compression</span><span><i style="background:#1f6fe0"></i>Pulled apart · extension</span></div>
+      <div id="read"></div>
+    </div>
+    <p class="say" id="say">Flip to “Plates + microplates” and watch the borders change.</p>
+    <div id="why" class="gone"><p class="body">The Mediterranean is not one clean meeting of two plates. Big plates and many microplates move in different directions, so squeezed zones and stretched zones sit side by side and cross.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Many plates moving many ways means compression and extension at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ponte sullo stretto di Messina: sarebbe un'assurdità dal punto di vista geologico ?” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e0333a', BLUE = '#1f6fe0';
+const S = {t: 0, mode: 0, seen: false};
+const V = {top: [0.05, 0.1], bot: [0, -0.5], m: [[-0.3, 0.3], [0.3, -0.3], [-0.4, 0.4], [0.4, -0.6]]};
+const XT = [0, .26, .5, .76, 1], XB = [0, .3, .47, .72, 1];
+const lerp = (a, b, t) => a + (b - a) * t;
+const uY = (x, t) => lerp(.5 + .03 * Math.sin(x * 8), .30 + .035 * Math.sin(x * 9), t);
+const lY = (x, t) => lerp(.5 + .03 * Math.sin(x * 8), .70 + .035 * Math.sin(x * 7 + 1), t);
+const xb = (i, t) => lerp(XT[i], XB[i], t);
+let G = null;
+
+function stressU(i, t) { return lerp(-0.6, V.m[i][1] - V.top[1], t); }
+function stressL(i, t) { return lerp(-0.6, V.bot[1] - V.m[i][1], t); }
+function stressD(i, t) { return lerp(0, V.m[i + 1][0] - V.m[i][0], t); }
+
+function draw() {
+  if (!G) return;
+  const {svg, W, H, f} = G, t = S.t;
+  svg.innerHTML = '';
+  const pad = Math.min(W, H) * 0.04, iw = W - 2 * pad, ih = H - 2 * pad;
+  const P = (x, y) => [pad + x * iw, pad + y * ih];
+  const pts = (fn, x0, x1, n = 24) => { const a = []; for (let k = 0; k <= n; k++) { const x = lerp(x0, x1, k / n); a.push(P(x, fn(x, t))); } return a; };
+  const d = a => 'M' + a.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L');
+  const r = Math.min(W, H) * 0.04;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'clp'}, defs);
+  Kit.mk('rect', {x: pad, y: pad, width: iw, height: ih, rx: r}, cp);
+  const g = Kit.mk('g', {'clip-path': 'url(#clp)'}, svg);
+  // plates
+  const U = pts(uY, 0, 1, 60), L = pts(lY, 0, 1, 60);
+  Kit.mk('path', {d: d([P(0, 0), P(1, 0), ...U.slice().reverse()]) + 'Z', style: 'fill:color-mix(in srgb,var(--k) 14%,var(--c))'}, g);
+  Kit.mk('path', {d: d([...L, P(1, 1), P(0, 1)]) + 'Z', style: 'fill:color-mix(in srgb,var(--k) 22%,var(--c))'}, g);
+  for (let i = 0; i < 4; i++) {
+    const a = pts(uY, XT[i], XT[i + 1]), b = pts(lY, xb(i, t), xb(i + 1, t)).reverse();
+    Kit.mk('path', {d: d([...a, ...b]) + 'Z', style: `fill:color-mix(in srgb,var(--k) ${i % 2 ? 4 : 9}%,var(--c))`}, g);
+  }
+  // boundaries
+  const bw = Math.max(3, Math.min(W, H) * 0.014);
+  const seg = (a, s) => {
+    const m = Math.abs(s), op = Math.min(1, m / 0.25);
+    if (op < 0.02) return;
+    const dd = d(a);
+    Kit.mk('path', {d: dd, fill: 'none', style: 'stroke:var(--c)', 'stroke-width': bw * (1 + m * 1.6) + 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: op}, g);
+    Kit.mk('path', {class: 'bd', d: dd, fill: 'none', stroke: s < 0 ? RED : BLUE, 'stroke-width': bw * (1 + m * 1.6), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: op}, g);
+  };
+  for (let i = 0; i < 4; i++) seg(pts(uY, XT[i], XT[i + 1]), stressU(i, t));
+  for (let i = 0; i < 4; i++) seg(pts(lY, xb(i, t), xb(i + 1, t)), stressL(i, t));
+  for (let i = 1; i <= 3; i++) seg([P(XT[i], uY(XT[i], t)), P(xb(i, t), lY(xb(i, t), t))], stressD(i - 1, t));
+  // arrows
+  const arrow = (cx, cy, v, op) => {
+    if (op < 0.02) return;
+    const k = Math.min(iw, ih) * 0.42, vx = v[0] * k, vy = v[1] * k * (ih / iw < 1 ? 1 : 1);
+    const len = Math.hypot(vx, vy); if (len < 2) return;
+    const [x, y] = P(cx, cy), x0 = x - vx / 2, y0 = y - vy / 2, x1 = x + vx / 2, y1 = y + vy / 2;
+    const ux = vx / len, uy = vy / len, hs = Math.max(7, bw * 2.4);
+    const ag = Kit.mk('g', {opacity: op}, g);
+    Kit.mk('line', {x1: x0, y1: y0, x2: x1 - ux * hs * .6, y2: y1 - uy * hs * .6, style: 'stroke:var(--k)', 'stroke-width': Math.max(2.5, bw * .8), 'stroke-linecap': 'round'}, ag);
+    Kit.mk('path', {d: `M${x1},${y1}L${x1 - ux * hs - uy * hs * .6},${y1 - uy * hs + ux * hs * .6}L${x1 - ux * hs + uy * hs * .6},${y1 - uy * hs - ux * hs * .6}Z`, style: 'fill:var(--k)'}, ag);
+  };
+  arrow(.8, lerp(.27, .15, t), V.top, 1);
+  arrow(.8, lerp(.75, .86, t), V.bot, 1);
+  for (let i = 0; i < 4; i++) {
+    const cx = (XT[i] + XT[i + 1] + xb(i, t) + xb(i + 1, t)) / 4;
+    arrow(cx, (uY(cx, t) + lY(cx, t)) / 2, V.m[i], Math.max(0, (t - .3) / .7));
+  }
+  // labels
+  const fs = Math.max(13, f);
+  const lab = (x, y, s) => Kit.mk('text', {x: P(x, y)[0], y: P(x, y)[1], 'text-anchor': 'middle', 'dominant-baseline': 'middle', style: `fill:var(--k);font:700 ${fs}px var(--body);letter-spacing:.04em`}, svg).textContent = s;
+  lab(.3, lerp(.25, .12, t), 'EUROPE');
+  lab(.3, lerp(.76, .88, t), 'AFRICA');
+  Kit.mk('rect', {x: pad, y: pad, width: iw, height: ih, rx: r, fill: 'none', style: 'stroke:color-mix(in srgb,var(--k) 35%,transparent)', 'stroke-width': 1.5}, svg);
+}
+
+function readout() {
+  Kit.$('read').innerHTML = S.mode
+    ? '4 microplates · <b>6</b> squeezed borders, <b>5</b> stretched'
+    : 'One push · <b>1</b> squeezed border, <b>0</b> stretched';
+}
+
+function setMode(m) {
+  if (m === S.mode) return;
+  S.mode = m;
+  document.querySelectorAll('.sb').forEach(b => b.classList.toggle('on', +b.dataset.m === m));
+  Kit.haptic('selection');
+  readout();
+  gsap.killTweensOf(S);
+  if (Kit.calm) { S.t = m; draw(); }
+  else gsap.to(S, {t: m, duration: 1.3, ease: 'power2.inOut', onUpdate: draw});
+  if (m === 1 && !S.seen) {
+    S.seen = true;
+    setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }, Kit.calm ? 0 : 900);
+  }
+}
+
+Kit.$('sw').addEventListener('click', e => { const b = e.target.closest('.sb'); if (b) setMode(+b.dataset.m); });
+readout();
+
+Kit.onShow.card = () => { const svg = Kit.$('map'); const fit = Kit.fitSvg(svg); G = {svg, ...fit}; draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#map', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { document.querySelector('.sb[data-m="1"]').click(); await new Promise(r => setTimeout(r, 1700)); };
+Kit.single();
+</script>
+</html>

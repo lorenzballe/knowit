@@ -1,0 +1,38 @@
+{
+  "id": "science-flashover-ten-seconds",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "In a flashover, the whole room ignites. How fast can it happen?",
+  "answer": "The correct answer is as little as ten seconds. A flashover sets everything that can burn in the room alight at once. It can build in about ten seconds, which leaves no time to get out, and it kills even experienced firefighters.",
+  "move": "In a flashover, escape time is counted in seconds, not minutes.",
+  "keywords": [
+    "flashover",
+    "fire",
+    "firefighters",
+    "escape time",
+    "room fire"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A fire-safety card asks how long a flashover takes to make a whole room ignite. Three options are about 10 seconds, 2 minutes and 10 minutes, plus a fourth, as little as ten seconds. The reader guesses, then watches a clock.",
+    "ground": "#1d2230"
+  },
+  "source": "Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ErPrRuFkc6s&t=275s",
+  "written": "2026-11-03"
+}

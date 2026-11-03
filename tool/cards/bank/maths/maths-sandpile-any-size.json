@@ -1,0 +1,37 @@
+{
+  "id": "maths-sandpile-any-size",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can one grain of sand set off an avalanche of any size?",
+  "answer": "This pile was fed grain by grain until it could take no more, so it sits on the edge of collapse. A square with 4 grains topples, sending one grain to each neighbour, and that can set off a chain reaction. Any single grain can start an avalanche of any size.",
+  "move": "On the edge, a huge avalanche needs no huge cause: any grain can start one.",
+  "keywords": [
+    "sand",
+    "avalanche",
+    "sandpile",
+    "grain",
+    "bak"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A grid of squares holding grains of sand. Tap any square to drop a grain; a square with 4 grains topples, sending one to each neighbour. Gold squares hold 3. Asks why one grain can set off an avalanche of any size."
+  },
+  "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-vesuvius-1631-shape -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;align-items:center;gap:3cqw;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#row span{white-space:nowrap}
+#ex{flex:1;-webkit-appearance:none;appearance:none;height:max(1cqh,8px);border-radius:99px;background:color-mix(in srgb,var(--k) 18%,transparent);outline:none;margin:0}
+#ex::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);box-shadow:0 0 0 max(.25cqh,2px) var(--k);cursor:grab}
+#ex::-moz-range-thumb{width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);border:max(.5cqh,3px) solid var(--c);cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+#pic text{font-family:var(--body)}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Slide · true scale">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VESUVIUS</span></div>
+    <h2 class="q">What kind of eruption was 1631, and how big is Vesuvius?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of Vesuvius"></svg>
+      <div id="row"><span>stretched</span><input id="ex" type="range" min="0" max="100" value="0" aria-label="Height stretch"><span>true scale</span></div>
+      <div id="why" class="gone">
+        <p class="big">Sub-Plinian, 1631</p>
+        <p class="body">The video takes the Sub-Plinian eruption of 1631 as its model. Today's cone has a crater about 450 m across and a summit of 1 281 m, but its base spreads about 20 km: more than 15 times wider than tall. Drawn true to scale, it is a broad swell, not a spike.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to bring the height back to true scale.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>1631 was Sub-Plinian. Vesuvius: crater ≈450 m, summit 1 281 m, base ≈20 km.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LA FUTURA ERUZIONE DEL VESUVIO - animazione realistica per un messaggio di PREVENZIONE” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {v: 0};
+let G = null, done = false;
+const slider = Kit.$('ex');
+
+function h(x){ // metres above base, x in metres from axis
+  const a = Math.abs(x), R = 225;
+  if (a >= 10000) return 0;
+  if (a >= R) return 1281 * Math.pow((10000 - a) / (10000 - R), 1.5);
+  return 1281 - 160 * (1 - (a / R) * (a / R));
+}
+
+function draw(){
+  if (!G) return;
+  const {W, f, cx, gy, s, exMax, el} = G;
+  const ex = exMax - S.v * (exMax - 1);
+  const vy = s * ex;
+  let d = `M${cx - 10000 * s},${gy}`;
+  const xs = [];
+  for (let x = -10000; x <= 10000; x += 100){ if (Math.abs(x) < 450){ continue; } xs.push(x); }
+  for (let x = -450; x <= 450; x += 15) xs.push(x);
+  xs.sort((a, b) => a - b);
+  xs.forEach(x => { d += ` L${(cx + x * s).toFixed(1)},${(gy - h(x) * vy).toFixed(1)}`; });
+  d += ` L${cx + 10000 * s},${gy} Z`;
+  el.mount.setAttribute('d', d);
+
+  const sy = gy - 1281 * vy;
+  const rl = cx - 225 * s, rr = cx + 225 * s;
+  // crater
+  const cyl = sy - 0.6 * f;
+  el.crater.setAttribute('d', `M${rl},${cyl} L${rr},${cyl} M${rl},${cyl - .35 * f} L${rl},${cyl + .35 * f} M${rr},${cyl - .35 * f} L${rr},${cyl + .35 * f}`);
+  el.craterT.setAttribute('x', cx); el.craterT.setAttribute('y', sy - 1.4 * f);
+  // height
+  const hx = cx + 0.27 * W;
+  el.hdot.setAttribute('d', `M${rr},${sy} L${hx},${sy}`);
+  el.hline.setAttribute('d', `M${hx},${gy} L${hx},${sy} M${hx - .4 * f},${sy} L${hx + .4 * f},${sy}`);
+  el.hT.setAttribute('x', hx + 0.6 * f);
+  el.hT.setAttribute('y', Math.min(sy + (gy - sy) / 2 + 0.35 * f, gy - 0.4 * f));
+  // readout
+  if (el.read) el.read.textContent = ex < 1.05 ? 'true scale · ×1' : `height stretched ×${ex.toFixed(1)}`;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  let {W, H, f} = Kit.fitSvg(svg);
+  f = Math.max(12, Math.min(f, H / 14));
+  const compact = H < 14 * f;
+  const cx = W / 2, gy = H - 3.4 * f, half = W * 0.44, s = half / 10000;
+  const exMax = Math.max(1.5, Math.min(7, (gy - 5.8 * f) / (1281 * s)));
+  const ink = 'var(--k)';
+  const el = {};
+  Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, stroke: ink, 'stroke-width': Math.max(1.5, f * .12), opacity: .5}, svg);
+  el.mount = Kit.mk('path', {fill: 'color-mix(in srgb, var(--k) 85%, transparent)', stroke: ink, 'stroke-width': Math.max(1.5, f * .1), 'stroke-linejoin': 'round'}, svg);
+  // base dimension
+  const by = gy + 1.1 * f;
+  Kit.mk('path', {d: `M${cx - half},${by} L${cx + half},${by} M${cx - half},${by - .4 * f} L${cx - half},${by + .4 * f} M${cx + half},${by - .4 * f} L${cx + half},${by + .4 * f}`, stroke: ink, 'stroke-width': 1.6, fill: 'none'}, svg);
+  const bT = Kit.mk('text', {x: cx, y: gy + 2.75 * f, 'text-anchor': 'middle', 'font-size': f, 'font-weight': 700, fill: ink}, svg); bT.textContent = 'base ≈ 20 km';
+  el.crater = Kit.mk('path', {stroke: '#e0471b', 'stroke-width': 2, fill: 'none'}, svg);
+  el.craterT = Kit.mk('text', {'text-anchor': 'middle', 'font-size': f, 'font-weight': 700, fill: '#e0471b'}, svg); el.craterT.textContent = 'crater ≈ 450 m';
+  el.hdot = Kit.mk('path', {stroke: ink, 'stroke-width': 1.3, 'stroke-dasharray': '3 4', fill: 'none', opacity: .7}, svg);
+  el.hline = Kit.mk('path', {stroke: ink, 'stroke-width': 1.6, fill: 'none'}, svg);
+  el.hT = Kit.mk('text', {'text-anchor': 'start', 'font-size': f, 'font-weight': 700, fill: ink}, svg); el.hT.textContent = '1 281 m';
+  if (!compact){
+    const tT = Kit.mk('text', {x: W * .03, y: 1.2 * f, 'font-size': f * 1.05, 'font-weight': 800, fill: ink}, svg); tT.textContent = 'SUB-PLINIAN · 1631';
+    el.read = Kit.mk('text', {x: W * .03, y: 2.65 * f, 'font-size': Math.max(12, f * .9), 'font-weight': 600, fill: 'var(--muted)'}, svg);
+  }
+  G = {W, H, f, cx, gy, s, exMax, el};
+  draw();
+};
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { Kit.onShow.card(); if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'}); });
+}
+
+let lastTick = 0;
+slider.addEventListener('input', () => {
+  S.v = slider.value / 100; draw();
+  const t = Math.round(slider.value / 20); if (t !== lastTick){ lastTick = t; Kit.haptic('selection'); }
+  if (slider.value >= 99) finish();
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, y: 12, duration: .6, ease: 'power3.out'});
+  gsap.fromTo(S, {v: 0}, {v: .12, duration: .5, delay: .7, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: draw});
+};
+
+Kit.play.card = async () => {
+  slider.value = 100; slider.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

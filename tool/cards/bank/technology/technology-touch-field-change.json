@@ -1,0 +1,37 @@
+{
+  "id": "technology-touch-field-change",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the phone know exactly where you touched?",
+  "answer": "The screen keeps an electric field across it and checks it all the time. Your body conducts electricity, so your fingertip changes the field right where it lands. The phone spots that one change and reads it as a touch at that exact point.",
+  "move": "A touch screen feels the field change where a conductor touches it.",
+  "keywords": [
+    "touch screen",
+    "electric field",
+    "fingertip",
+    "stylus",
+    "smartphone"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A phone screen with a finger icon and a plastic stylus icon. It asks the reader to tap anywhere on the phone's screen, then try the plastic stylus."
+  },
+  "source": "Geopop, “Sai come funziona uno schermo touch screen? FIGO! NON LO SAPEVO” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=RDLaITwXBVk&t=44s",
+  "written": "2026-11-03"
+}

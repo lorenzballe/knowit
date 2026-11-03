@@ -1,0 +1,38 @@
+{
+  "id": "science-maxwell-light-wave",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What did Maxwell discover light is actually made of?",
+  "answer": "In the 1860s and 70s, Maxwell realised that light is an electric field and a magnetic field oscillating together. The two fields stand at right angles to each other and travel forward as one electromagnetic wave.",
+  "move": "Light is electric and magnetic fields waving together, at right angles, moving forward.",
+  "keywords": [
+    "maxwell",
+    "light",
+    "electromagnetic wave",
+    "electric field",
+    "magnetic field"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A wave of light's electric field is shown in the top strip. The reader is asked to draw the magnetic field in the lower strip. The two fields stand at right angles and travel forward together as one wave.",
+    "graded": false
+  },
+  "source": "Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=bHIhgxav9LY&t=194s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "science-solid-nitrogen-bath",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Why does pouring solid nitrogen onto a water bath work?",
+  "answer": "Solid nitrogen sublimates, meaning it goes straight from solid to gas. That change takes huge amounts of heat, which the nitrogen pulls out of the water bath, so the surface stays extremely cold. Turning solid into gas soaks up heat from whatever it touches.",
+  "move": "Turning solid into gas soaks up heat from whatever it touches.",
+  "keywords": [
+    "solid nitrogen",
+    "sublimation",
+    "water bath",
+    "heat absorption"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four options ask why pouring solid nitrogen onto a water bath works: it sinks and is melted away by the warm water, it turns straight to gas and pulls heat out of the water, it floats as a lid that keeps the water's heat in, or it turns to gas and drinks heat. The reader picks one and states how sure they are."
+  },
+  "source": "Veritasium, “Making SOLID Nitrogen!” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=rM04U5BO3Ug&t=132s",
+  "written": "2026-11-03"
+}

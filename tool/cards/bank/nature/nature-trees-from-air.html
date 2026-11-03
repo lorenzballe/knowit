@@ -1,0 +1,390 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* The stage is one drawing: a tree made of grains, the ground, and a soil-share slider under it. */
+#stage{position:relative;display:flex;flex-direction:column;min-height:0}
+#art{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab;outline:none;--soil:color-mix(in srgb,#9a6235 74%,var(--k))}
+#art.drag{cursor:grabbing}
+#art.over{cursor:default}
+#art .sil{fill:color-mix(in srgb,var(--k) 8%,var(--c))}
+#art .wood{fill:color-mix(in srgb,var(--k) 13%,var(--c))}
+#art .mol{fill:var(--k);stroke:var(--c)}
+#art .amb{opacity:.55}
+#art .grain,#art .ground,#art .fsoil{fill:var(--soil)}
+#art .ring{fill:none;stroke:color-mix(in srgb,var(--k) 45%,var(--c))}
+#art .root{fill:none;stroke:color-mix(in srgb,var(--c) 55%,var(--soil));stroke-linecap:round}
+#art .track{fill:color-mix(in srgb,var(--k) 7%,var(--c));stroke:color-mix(in srgb,var(--k) 30%,var(--c))}
+#art .fair,#art .knob{fill:var(--k)}
+#art .kring{fill:none;stroke:var(--k);opacity:0}
+#art:focus-visible .kring{opacity:1}
+#art .chev{fill:none;stroke:var(--c);stroke-linecap:round;stroke-linejoin:round}
+#art .tick{stroke:var(--k);stroke-linecap:round}
+#art text{font-family:var(--body);font-weight:700;fill:var(--k)}
+#art text.mut{fill:var(--muted);font-weight:600}
+/* The why comes in at the top of the stage, where the air was, once the tree is rebuilt. */
+#why{position:absolute;left:0;right:0;top:0;pointer-events:none}
+#why b{font-weight:800}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG TO GUESS</span></div>
+    <h2 class="q">Where does most of a tree's mass originate?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="art" tabindex="0" role="slider" aria-label="How much of the tree came from the soil" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></svg>
+      <div id="why" class="gone"><p class="body"><b>About 95% of a tree's dry mass comes from the air.</b> The tree builds itself from the carbon dioxide it takes in, not from the soil.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the knob: how much came from the soil?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Trees are largely made of air.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Where Do Trees Get Their Mass?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUTH = .05, OK_MAX = .15, D = .054;
+const svg = Kit.$('art'), why = Kit.$('why'), say = Kit.$('say');
+
+// The tree, measured in tree heights: base at (0,0), top at y = -1.
+const LOBES = [[0,-.70,.27],[-.25,-.60,.20],[.25,-.62,.21],[-.13,-.85,.15],[.14,-.84,.16],[-.37,-.52,.12],[.37,-.54,.12]];
+const TRUNK = 'M-.13 0Q-.08-.02-.075-.14L-.065-.5H.065L.075-.14Q.08-.02.13 0Z';
+const half = y => y < -.14 ? .065 + .01 * (y + .5) / .36 : .075 + .055 * ((y + .14) / .14) ** 2;
+const inCanopy = (x, y, m) => LOBES.some(([a, b, r]) => (x - a) ** 2 + (y - b) ** 2 <= (r - m) ** 2);
+const inTrunk = (x, y, m) => y <= -.005 && y >= -.48 && Math.abs(x) <= half(y) - m;
+
+// Its matter, one grain per slot, the same on every phone. Each slot has a rank: a soil share p
+// paints the lowest-ranked p of them as soil, so the soil is scattered through the whole tree.
+const slots = [];
+for (let row = 0, y = -.03; y > -1.02; row++, y -= D * .866)
+  for (let x = -.52 + (row % 2) * D / 2; x < .52; x += D) {
+    const px = x + (Kit.rnd() - .5) * D * .3, py = y + (Kit.rnd() - .5) * D * .3;
+    if (inCanopy(px, py, D * .42) || inTrunk(px, py, D * .22)) slots.push({x: px, y: py, rot: Kit.rnd() * 180, r: Kit.rnd()});
+  }
+[...slots].sort((a, b) => a.r - b.r).forEach((s, i) => s.rank = i);
+const N = slots.length, NSOIL = Math.max(1, Math.round(N * TRUTH));
+
+const st = {p: .5, phase: 'guess', guess: null, shrink: 0, touched: false};
+let L = null, E = {}, key = '', tl = null, hint = null, t0 = 0, ticking = false, drag = null;
+let doneResolve; const revealDone = new Promise(r => doneResolve = r);
+const prng = s => () => { s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const put = (el, x, y, r) => el.setAttribute('transform', `translate(${x.toFixed(4)},${y.toFixed(4)}) rotate(${r.toFixed(1)})`);
+const pct = p => Math.round(p * 100);
+
+function layout(W, H, f) {
+  const fs = Math.max(13, Math.min(f || 15, 21));
+  const pad = Math.max(10, W * .04);
+  const bh = Math.max(22, Math.min(fs * 1.5, 32)), kr = bh * .82;
+  const mb = Math.max(4, H * .012);
+  const barB = H - mb - Math.max(fs * 1.3, kr - bh / 2 + 3);
+  const barT = barB - bh, barM = barT + bh / 2;
+  const labY = barM - kr - fs * .32;
+  const gh = Math.max(12, H * .045);
+  const gy = labY - fs * 1.05 - Math.max(6, H * .02) - gh;
+  const S = Math.max(40, Math.min(gy - Math.max(fs * 1.8, H * .085), W - 2 * pad));
+  return {W, H, fs, pad, bh, kr, barT, barB, barM, labY, gh, gy, S, top: gy - S, cx: W / 2, xa: kr + 4, xb: W - kr - 4, kDone: 1};
+}
+
+// Draw at the real size, from the state alone: the slider, the reveal's end, or the end itself.
+function draw(force) {
+  if (st.phase === 'reveal') return;
+  svg.style.width = svg.style.height = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!W || !H) return;
+  const k = `${Math.round(W)}x${Math.round(H)}${st.phase}`;
+  if (!force && k === key) return;
+  key = k; L = layout(W, H, f); E = {amb: []};
+  svg.textContent = '';
+  const done = st.phase === 'done';
+  const defs = Kit.mk('defs', {}, svg);
+  const m = Kit.mk('g', {id: 'co2', 'stroke-width': 1.1 / L.S}, defs);
+  for (const [x, r] of [[-.0145, .0081], [.0145, .0081], [0, .0072]]) Kit.mk('circle', {cx: x, cy: 0, r}, m);
+  Kit.mk('rect', {id: 'grain', x: -.013, y: -.013, width: .026, height: .026, rx: .0065}, defs);
+  Kit.mk('circle', {id: 'ring', r: .0105, 'stroke-width': 1.3 / L.S}, defs);
+  Kit.mk('rect', {x: L.xa, y: L.barT, width: L.xb - L.xa, height: L.bh, rx: L.bh / 2}, Kit.mk('clipPath', {id: 'barclip'}, defs));
+
+  // The air: a few CO2 molecules drifting beside the crown, clear of it.
+  if (!done) {
+    const R = prng(5), g = Kit.mk('g', {}, svg);
+    for (let n = 0; n < 600 && E.amb.length < 11; n++) {
+      const x = L.pad + R() * (W - 2 * L.pad), y = L.fs * .9 + R() * (L.top + L.S * .45 - L.fs * .9);
+      if (inCanopy((x - L.cx) / L.S, (y - L.gy) / L.S, -.06)) continue;
+      if (y < L.top + L.fs * .3 && Math.abs(x - L.cx) < L.fs * 5.4) continue;
+      if (E.amb.some(a => Math.hypot(a.x - x, a.y - y) < L.S * .12)) continue;
+      E.amb.push({x, y, rot: R() * 180, ph: R() * 6.3, el: Kit.mk('use', {href: '#co2', class: 'mol amb'}, g)});
+    }
+    bob(ticking ? (performance.now() - t0) / 1000 : 0);
+  }
+
+  // The tree: a pale silhouette, and its grains on top.
+  const tg = E.tree = Kit.mk('g', {}, svg);
+  Kit.mk('path', {class: 'wood', d: TRUNK}, tg);
+  const sil = Kit.mk('g', {class: 'sil'}, tg);
+  for (const [a, b, r] of LOBES) Kit.mk('circle', {cx: a, cy: b, r}, sil);
+  E.pg = Kit.mk('g', {}, tg);
+  const k0 = Math.round(st.p * N);
+  for (const s of slots) {
+    s.soil = done ? s.rank < NSOIL : s.rank < k0;
+    const kind = s.soil ? 'grain' : done ? 'co2' : 'ring';
+    s.el = Kit.mk('use', {href: '#' + kind, class: kind === 'co2' ? 'mol' : kind}, E.pg);
+    put(s.el, s.x, s.y, s.rot);
+  }
+
+  // The ground, drawn over the tree's foot so falling grains sink into it.
+  Kit.mk('rect', {class: 'ground', x: 0, y: L.gy, width: W, height: L.gh}, svg);
+  const rg = Kit.mk('g', {class: 'root', 'stroke-width': Math.max(1.3, L.S * .011)}, svg);
+  for (const [dx, ex, ey] of [[-.06, -.36, .7], [-.025, -.17, .92], [.025, .15, .88], [.06, .33, .66]])
+    Kit.mk('path', {d: `M${L.cx + dx * L.S} ${L.gy + .5}Q${L.cx + ex * L.S * .45} ${L.gy + L.gh * .5} ${L.cx + ex * L.S} ${L.gy + L.gh * ey}`}, rg);
+
+  // The slider is also the answer's chart: soil on the left, the rest on the right.
+  const bg = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {class: 'track', x: L.xa, y: L.barT, width: L.xb - L.xa, height: L.bh, rx: L.bh / 2, 'stroke-width': 1.2}, bg);
+  const cg = Kit.mk('g', {'clip-path': 'url(#barclip)'}, bg);
+  E.soil = Kit.mk('rect', {class: 'fsoil', x: L.xa, y: L.barT, width: 0, height: L.bh}, cg);
+  E.air = Kit.mk('rect', {class: 'fair', x: L.xa, y: L.barT, width: 0, height: L.bh}, cg);
+  E.lab = Kit.mk('text', {x: L.xa, y: L.labY, 'font-size': L.fs.toFixed(1)}, bg);
+  E.labR = Kit.mk('text', {x: L.xb, y: L.labY, 'font-size': (L.fs * 1.08).toFixed(1), 'text-anchor': 'end'}, bg);
+  E.you = Kit.mk('g', {opacity: 0}, bg);
+  E.youLine = Kit.mk('line', {class: 'tick', y1: L.barT - 4, y2: L.barB + 4, 'stroke-width': 2.2}, E.you);
+  E.youTxt = Kit.mk('text', {class: 'mut', x: L.cx, y: L.barB + L.fs * 1.08, 'font-size': (L.fs * .86).toFixed(1), 'text-anchor': 'middle'}, E.you);
+  E.youTxt.textContent = 'your guess';
+  E.knob = Kit.mk('g', {}, bg);
+  Kit.mk('circle', {class: 'kring', r: L.kr + 3.5, 'stroke-width': 2}, E.knob);
+  Kit.mk('circle', {class: 'knob', r: L.kr}, E.knob);
+  const c = L.kr * .3, h = L.kr * .28;
+  Kit.mk('path', {class: 'chev', 'stroke-width': Math.max(1.8, L.kr * .14), d: `M${-c} ${-h}l${-h} ${h}l${h} ${h}M${c} ${-h}l${h} ${h}l${-h} ${h}`}, E.knob);
+
+  if (done) {
+    const sr = svg.getBoundingClientRect(), wr = why.getBoundingClientRect();
+    const wb = wr.height && sr.height ? (wr.bottom - sr.top) * H / sr.height : 0;
+    L.kDone = Math.max(.42, Math.min(1, (L.gy - wb - L.fs * .5) / L.S));
+    E.knob.setAttribute('opacity', 0);
+    bar(TRUTH, 1);
+    E.lab.textContent = `${pct(TRUTH)}%`;
+    E.labR.textContent = `${100 - pct(TRUTH)}% from the air`;
+    if (st.guess != null) youAt(st.guess);
+  } else {
+    E.sky = Kit.mk('text', {x: L.cx, y: L.top - L.fs * .5, 'font-size': L.fs.toFixed(1), 'text-anchor': 'middle', opacity: 0}, svg);
+    E.sky.textContent = 'CO₂ from the air';
+    bar(st.p, 0); labels();
+  }
+  placeTree();
+}
+
+function bob(t) {
+  if (!L || !E.amb) return;
+  const A = L.S * .02;
+  for (const a of E.amb) {
+    a.cx = a.x + Math.sin(t * .8 + a.ph) * A; a.cy = a.y + Math.cos(t * .6 + a.ph * 1.7) * A * .7; a.cr = a.rot + Math.sin(t * .5 + a.ph) * 30;
+    a.el.setAttribute('transform', `translate(${a.cx.toFixed(1)},${a.cy.toFixed(1)}) scale(${L.S.toFixed(2)}) rotate(${a.cr.toFixed(1)})`);
+  }
+}
+function placeTree() {
+  if (!E.tree) return;
+  const k = 1 + (L.kDone - 1) * (st.phase === 'done' ? st.shrink : 0);
+  E.tree.setAttribute('transform', `translate(${L.cx.toFixed(1)},${L.gy.toFixed(1)}) scale(${(L.S * k).toFixed(2)})`);
+}
+function bar(p, air) {
+  const bx = L.xa + p * (L.xb - L.xa);
+  E.soil.setAttribute('width', Math.max(0, bx - L.xa).toFixed(1));
+  E.air.setAttribute('x', bx.toFixed(1));
+  E.air.setAttribute('width', Math.max(0, air * (L.xb - bx)).toFixed(1));
+  E.knob.setAttribute('transform', `translate(${bx.toFixed(1)},${L.barM.toFixed(1)})`);
+}
+function labels() {
+  E.lab.textContent = `${pct(st.p)}% from the soil`;
+  E.labR.textContent = '';
+  svg.setAttribute('aria-valuenow', pct(st.p));
+  svg.setAttribute('aria-valuetext', `${pct(st.p)}% from the soil`);
+}
+function youAt(p) {
+  const x = L.xa + p * (L.xb - L.xa);
+  E.youLine.setAttribute('x1', x.toFixed(1)); E.youLine.setAttribute('x2', x.toFixed(1));
+  let w = 0; try { w = E.youTxt.getComputedTextLength(); } catch (_) {}
+  w = w || L.fs * 4.6;
+  E.youTxt.setAttribute('x', Math.max(w / 2 + 2, Math.min(L.W - w / 2 - 2, x)).toFixed(1));
+  E.you.setAttribute('opacity', 1);
+}
+
+// The reader's guess: the share of the tree's grains that came out of the soil.
+function setP(p) {
+  if (st.phase !== 'guess' || !L) return;
+  st.p = Math.max(0, Math.min(1, p));
+  const k = Math.round(st.p * N);
+  for (const s of slots) {
+    const soil = s.rank < k;
+    if (soil !== s.soil) { s.soil = soil; s.el.setAttribute('href', soil ? '#grain' : '#ring'); s.el.setAttribute('class', soil ? 'grain' : 'ring'); }
+  }
+  bar(st.p, 0); labels();
+}
+function stopHint() { if (hint) { hint.kill(); hint = null; } }
+function touched() {
+  if (st.touched) return;
+  st.touched = true; sure.on();
+  say.textContent = 'Adjust it if you like, then say how sure.';
+}
+const local = e => { const r = svg.getBoundingClientRect(); return {x: (e.clientX - r.left) * L.W / (r.width || 1), y: (e.clientY - r.top) * L.H / (r.height || 1)}; };
+const xToP = x => (x - L.xa) / (L.xb - L.xa);
+svg.addEventListener('pointerdown', e => {
+  if (st.phase !== 'guess' || !L) return;
+  stopHint();
+  const q = local(e), onBar = q.y > L.labY - L.fs;
+  drag = {id: e.pointerId, x0: q.x, p0: st.p, onBar, step: Math.round(st.p * 20)};
+  if (onBar) setP(xToP(q.x));
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  svg.classList.add('drag'); e.preventDefault();
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const q = local(e);
+  setP(drag.onBar ? xToP(q.x) : drag.p0 + (q.x - drag.x0) / (L.xb - L.xa));
+  const step = Math.round(st.p * 20);
+  if (step !== drag.step) { drag.step = step; Kit.haptic('selection'); }
+});
+const lift = e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  drag = null; svg.classList.remove('drag'); touched();
+};
+svg.addEventListener('pointerup', lift);
+svg.addEventListener('pointercancel', lift);
+svg.addEventListener('keydown', e => {
+  const d = {ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1}[e.key];
+  if (!d || st.phase !== 'guess' || !L) return;
+  e.preventDefault(); stopHint();
+  setP(Math.round(st.p * 20 + d) / 20); touched();
+});
+
+// How sure, after the guess. Then the drawing answers: the soil falls back into the ground and
+// the air pours in through the crown until the tree is whole again.
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', v => {
+  if (st.phase !== 'guess') return;
+  stopHint();
+  const ok = st.p <= OK_MAX, said = `${pct(st.p)}% from the soil`;
+  st.guess = st.p;
+  Kit.answer({choice: said, correct: ok, sure: v});
+  sure.grade(ok, v, `${said}, ${ok ? 'right' : 'wrong'}`);
+  reveal();
+});
+
+function reveal() {
+  if (ticking) { gsap.ticker.remove(tick); ticking = false; }
+  svg.classList.add('over');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'About 95% of the tree came from carbon dioxide in the air; about 5% from everything else.');
+  if (Kit.calm || !L || !E.pg) { finish(); return; }
+  st.phase = 'reveal';
+  const R = prng(9), S = L.S, toL = (x, y) => [(x - L.cx) / S, (y - L.gy) / S];
+  const fly = [], fall = [], rise = [];
+  const air = slots.filter(s => s.rank >= NSOIL).sort((a, b) => b.y - a.y);
+  air.forEach((s, i) => {
+    const a = E.amb[i];
+    let p0, r0, o0 = 0;
+    if (a) { p0 = toL(a.cx ?? a.x, a.cy ?? a.y); r0 = a.cr ?? a.rot; o0 = .55; a.el.style.opacity = 0; }
+    else { p0 = toL(L.W * (R() * 1.3 - .15), -L.H * (.03 + R() * .2)); r0 = R() * 360; }
+    const p2 = [s.x, s.y];
+    let p1;
+    if (s.y > -.43) p1 = [s.x * .3 + (R() - .5) * .14, -.58 - R() * .18];
+    else { const k = (R() - .5) * .6; p1 = [(p0[0] + p2[0]) / 2 - (p2[1] - p0[1]) * k, (p0[1] + p2[1]) / 2 + (p2[0] - p0[0]) * k]; }
+    const el = Kit.mk('use', {href: '#co2', class: 'mol', opacity: o0}, E.pg);
+    put(el, p0[0], p0[1], r0);
+    fly.push({el, p0, p1, p2, r0, r1: s.rot + 360 * Math.round(R() * 2 - 1), o0, ring: s.soil ? null : s.el, t: .4 + 1.35 * i / air.length + R() * .15, d: .65 + R() * .3});
+    if (s.soil) fall.push({el: s.el, x: s.x, y: s.y, x1: s.x * .7 + (R() - .5) * .1, y1: L.gh / S * (.4 + R() * .5), r0: s.rot, r1: s.rot + (R() - .5) * 240, t: .05 + R() * .4, d: .45 + R() * .3});
+  });
+  for (const s of slots) if (s.rank < NSOIL && !s.soil) {
+    s.el.setAttribute('href', '#grain'); s.el.setAttribute('class', 'grain'); s.el.setAttribute('opacity', 0);
+    rise.push({el: s.el, x: s.x, y: s.y, r: s.rot, t: .3 + R() * .6, d: .8 + R() * .3});
+  }
+  const total = Math.max(...fly.map(o => o.t + o.d), ...fall.map(o => o.t + o.d), ...rise.map(o => o.t + o.d)) + .05;
+  const out3 = u => 1 - (1 - u) ** 3, B = {p: st.p}, clock = {T: 0}, n = fly.length;
+  const frame = () => {
+    const T = clock.T; let got = 0;
+    for (const o of fly) {
+      const u = Math.min(1, (T - o.t) / o.d);
+      if (u <= 0) continue;
+      if (u >= 1) got++;
+      if (o.fin) continue;
+      const e = out3(u), m = 1 - e;
+      put(o.el, m * m * o.p0[0] + 2 * m * e * o.p1[0] + e * e * o.p2[0], m * m * o.p0[1] + 2 * m * e * o.p1[1] + e * e * o.p2[1], o.r0 + (o.r1 - o.r0) * e);
+      o.el.setAttribute('opacity', (o.o0 + (1 - o.o0) * Math.min(1, u * 4)).toFixed(2));
+      if (o.ring) o.ring.setAttribute('opacity', Math.max(0, Math.min(1, (1 - u) / .3)).toFixed(2));
+      if (u >= 1) o.fin = true;
+    }
+    for (const o of fall) {
+      const u = Math.max(0, Math.min(1, (T - o.t) / o.d));
+      if (u > 0 && !o.fin) { put(o.el, o.x + (o.x1 - o.x) * u, o.y + (o.y1 - o.y) * u * u, o.r0 + (o.r1 - o.r0) * u); if (u >= 1) o.fin = true; }
+    }
+    for (const o of rise) {
+      const u = Math.max(0, Math.min(1, (T - o.t) / o.d));
+      if (u > 0 && !o.fin) { const e = out3(u); put(o.el, o.x * e, .02 + (o.y - .02) * e, o.r); o.el.setAttribute('opacity', Math.min(1, u * 3).toFixed(2)); if (u >= 1) o.fin = true; }
+    }
+    const a = got / n;
+    bar(B.p, a);
+    E.lab.textContent = `${pct(B.p)}%`;
+    E.labR.textContent = a > 0 ? `${Math.round(a * (100 - pct(TRUTH)))}% from the air` : '';
+  };
+  youAt(st.p); E.you.setAttribute('opacity', 0);
+  tl = gsap.timeline({onComplete: finish})
+    .to(clock, {T: total, duration: total, ease: 'none', onUpdate: frame}, 0)
+    .to(B, {p: TRUTH, duration: .8, ease: 'power2.inOut'}, 0)
+    .to(E.knob, {opacity: 0, duration: .25}, 0)
+    .to(E.you, {opacity: 1, duration: .3}, .15)
+    .to(E.sky, {opacity: 1, duration: .4}, .25)
+    .to(E.sky, {opacity: 0, duration: .35}, Math.max(.9, total - .4));
+  Kit.haptic('light');
+}
+
+function finish() {
+  if (st.phase === 'done') return;
+  if (tl) { tl.kill(); tl = null; }
+  st.phase = 'done';
+  st.shrink = Kit.calm ? 1 : 0;
+  Kit.hide('say'); Kit.show('keep');
+  gsap.set(why, {opacity: 0}); Kit.show('why');
+  draw(true);
+  if (Kit.calm) { gsap.set(why, {opacity: 1}); doneResolve(); return; }
+  gsap.timeline({onComplete: doneResolve})
+    .to(st, {shrink: 1, duration: .75, ease: 'power2.inOut', onUpdate: placeTree})
+    .to(why, {opacity: 1, duration: .5}, .35);
+  Kit.haptic('success');
+}
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => draw(true);
+// The stage also changes size inside the card (the how-sure row, the keep box): redraw then too.
+new ResizeObserver(() => { if (L) draw(); }).observe(Kit.$('stage'));
+function tick() { if (st.phase === 'guess') bob((performance.now() - t0) / 1000); }
+// Motion the reader should see starts here: the air drifts, and the knob shows once what it does.
+Kit.onEnter.card = () => {
+  if (Kit.calm || st.phase !== 'guess') return;
+  if (!ticking) { t0 = performance.now(); gsap.ticker.add(tick); ticking = true; }
+  if (!st.touched && !hint) hint = gsap.timeline({delay: .7})
+    .to(st, {p: .66, duration: .7, ease: 'sine.inOut', onUpdate: () => setP(st.p)})
+    .to(st, {p: .5, duration: .7, ease: 'sine.inOut', onUpdate: () => setP(st.p)});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  stopHint(); await wait(60);
+  const r = svg.getBoundingClientRect(), y = r.top + L.barM * r.height / L.H;
+  const at = p => r.left + (L.xa + p * (L.xb - L.xa)) * r.width / L.W;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true, clientX: x, clientY: y}));
+  const p0 = st.p;
+  ev('pointerdown', at(p0));
+  for (let i = 1; i <= 8; i++) { await wait(30); ev('pointermove', at(p0 + (.7 - p0) * i / 8)); }
+  ev('pointerup', at(.7));
+  await wait(250);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await Promise.race([revealDone, wait(8000)]);
+  await wait(250);
+};
+Kit.single();
+</script>
+</html>

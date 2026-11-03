@@ -1,0 +1,159 @@
+<!doctype html>
+<!-- slug: history-pompeii-pyroclastic-flow -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#scene{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#scene canvas{display:block;width:100%;height:100%}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);overflow-wrap:anywhere}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VESUVIUS</span></div>
+    <h2 class="q">What volcanic event actually buried Pompeii?</h2>
+    <div class="stagebox" id="stage">
+      <div id="scene"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">A slow river of lava crept over it</button>
+        <button class="opt" data-i="1">A racing, scorching cloud of ash, pumice and gas</button>
+        <button class="opt" data-i="2">The ground cracked open and swallowed it</button>
+      </div>
+      <div id="why" class="gone"><p class="big">A pyroclastic flow: a burning cloud of ash, pumice and gas.</p><p class="body">In 79 AD a violent eruption of Vesuvius sent it racing down the slope at incredible speed, destroying everything. Then the material it carried settled, little by little, until the whole city was covered.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch Vesuvius in 79 AD.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The cloud destroyed Pompeii; what it carried buried it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “PERCHÉ LE ANTICHE CITTÀ VENGONO SEPOLTE?” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, tl = null, C = null, f = 14;
+const S = {col: 0, flow: 0, cloud: 0, dep: 0};
+const puffs = [], colP = [], houses = [];
+for (let i = 0; i < 95; i++) puffs.push({d: Kit.rnd(), h: Kit.rnd(), s: Kit.rnd(), j: Kit.rnd()});
+for (let i = 0; i < 26; i++) colP.push({h: Kit.rnd(), s: Kit.rnd(), j: Kit.rnd() - .5});
+{ let x = .6; while (x < .95) { const w = .035 + Kit.rnd() * .03; houses.push({x, w, h: .05 + Kit.rnd() * .06, t: houses.length === 3}); x += w + .008; } }
+
+function geo() { const {W, H} = C; return {W, H, gy: H * .78, px: W * .25, py: H * .26, bx: W * .56}; }
+function pt(u, g) {
+  if (u < .45) { const t = u / .45, x0 = g.px + g.W * .05, y0 = g.py, cx = g.px + g.W * .1, cy = g.gy - 2, x1 = g.bx, y1 = g.gy;
+    return [(1-t)*(1-t)*x0 + 2*(1-t)*t*cx + t*t*x1, (1-t)*(1-t)*y0 + 2*(1-t)*t*cy + t*t*y1]; }
+  const t = (u - .45) / .55; return [g.bx + t * (g.W * 1.1 - g.bx), g.gy];
+}
+function puff(x, y, r, a, hot) {
+  const k = C.x, gr = k.createRadialGradient(x, y, 0, x, y, r);
+  gr.addColorStop(0, hot ? `rgba(255,150,70,${a})` : `rgba(170,160,150,${a})`);
+  gr.addColorStop(.55, `rgba(110,98,92,${a * .8})`);
+  gr.addColorStop(1, 'rgba(80,70,68,0)');
+  k.fillStyle = gr; k.beginPath(); k.arc(x, y, r, 0, 7); k.fill();
+}
+function draw() {
+  if (!C) return;
+  const k = C.x, g = geo(), {W, H, gy, px, py, bx} = g, font = getComputedStyle(document.documentElement).getPropertyValue('--body') || 'sans-serif';
+  // sky
+  const sk = k.createLinearGradient(0, 0, 0, gy);
+  sk.addColorStop(0, '#16112a'); sk.addColorStop(1, S.flow > 0 ? `rgb(${90 + 60 * S.cloud},${45 + 20 * S.cloud},50)` : '#4a2b3d');
+  k.fillStyle = sk; k.fillRect(0, 0, W, H);
+  // ground
+  k.fillStyle = '#2a211e'; k.fillRect(0, gy, W, H - gy);
+  // volcano
+  k.fillStyle = '#3d2f2a'; k.beginPath(); k.moveTo(-W * .05, gy);
+  k.quadraticCurveTo(px - W * .1, gy - 2, px - W * .05, py);
+  k.lineTo(px - W * .02, py + H * .015); k.lineTo(px + W * .02, py + H * .015); k.lineTo(px + W * .05, py);
+  k.quadraticCurveTo(px + W * .1, gy - 2, bx, gy); k.closePath(); k.fill();
+  k.fillStyle = '#ff7a3a'; k.globalAlpha = .35 + .65 * S.col; k.fillRect(px - W * .02, py + H * .005, W * .04, H * .012); k.globalAlpha = 1;
+  // houses
+  for (const h of houses) {
+    const x = h.x * W, w = h.w * W, hh = h.h * H;
+    k.fillStyle = '#ecdfc6'; k.fillRect(x, gy - hh, w, hh);
+    if (h.t) { k.fillStyle = '#ecdfc6'; k.beginPath(); k.moveTo(x - 2, gy - hh); k.lineTo(x + w / 2, gy - hh - H * .03); k.lineTo(x + w + 2, gy - hh); k.fill();
+      k.fillStyle = '#b9a98c'; for (let c = 1; c < 4; c++) k.fillRect(x + c * w / 4 - 1, gy - hh * .85, 2, hh * .85); }
+    else { k.fillStyle = '#c4704a'; k.fillRect(x - 1, gy - hh - H * .01, w + 2, H * .01); k.fillStyle = '#5a4a40'; k.fillRect(x + w * .35, gy - hh * .5, w * .3, hh * .5); }
+  }
+  // deposit, layer on layer
+  if (S.dep > 0) {
+    const dh = S.dep * H * .16, x0 = bx - W * .12;
+    for (let b = 4; b >= 1; b--) {
+      k.fillStyle = b % 2 ? '#9a918a' : '#857c76';
+      k.beginPath(); k.moveTo(x0, gy);
+      for (let x = x0; x <= W + 4; x += 6) { const ramp = Math.min(1, (x - x0) / (W * .14)); k.lineTo(x, gy - dh * b / 4 * ramp * (.94 + .06 * Math.sin(x * .07 + b))); }
+      k.lineTo(W + 4, gy); k.closePath(); k.fill();
+    }
+  }
+  // eruption column
+  if (S.col > 0) for (const p of colP) {
+    const y = py - p.h * S.col * H * .22, x = px + p.j * W * .06 * (1 + p.h);
+    puff(x, y, H * (.025 + .035 * p.s) * (.6 + p.h), .8 * Math.max(.25, S.cloud || S.col), p.h < .2);
+  }
+  // pyroclastic flow
+  if (S.flow > 0 && S.cloud > 0) {
+    for (const p of puffs) {
+      const u = Math.min(1, S.flow * 1.05 - p.d * .45); if (u < 0) continue;
+      const [x, y] = pt(u, g), lift = H * (.02 + .17 * p.d) * p.h;
+      puff(x + (p.j - .5) * W * .03, y - lift - H * .02, H * (.035 + .05 * p.s) * (.6 + p.d * .8), .85 * S.cloud, p.d < .18);
+    }
+    const [fx, fy] = pt(Math.min(1, S.flow * 1.05), g);
+    k.globalAlpha = S.cloud * Math.min(1, S.flow * 4) * (S.flow < .97 ? 1 : 0);
+    k.font = `700 ${f}px ${font}`; k.fillStyle = '#ffd8b0'; k.textAlign = 'center';
+    k.fillText('ash · pumice · gas', Math.min(W - k.measureText('ash · pumice · gas').width / 2 - 6, fx), fy - H * .25);
+    k.globalAlpha = 1;
+  }
+  // labels
+  k.textAlign = 'center'; k.font = `700 ${f}px ${font}`; k.fillStyle = '#e8d9c4';
+  k.fillText('Vesuvius', px, gy - (gy - py) * .3);
+  k.fillStyle = '#ecdfc6';
+  k.fillText(S.dep > .6 ? 'Pompeii, buried' : 'Pompeii', W * .78, gy + f * 1.5);
+  k.textAlign = 'right'; k.font = `700 ${f}px ${font}`; k.fillStyle = '#ffb27a';
+  k.fillText('79 AD', W - f * .6, f * 1.4);
+}
+
+function erupt() {
+  tl = gsap.timeline({onUpdate: draw});
+  tl.set(S, {cloud: 1})
+    .to(S, {col: 1, duration: .9, ease: 'power2.out'})
+    .to(S, {flow: 1, duration: 2.2, ease: 'power2.in'}, '-=.2')
+    .to(S, {dep: 1, duration: 2.2, ease: 'power1.inOut'}, '-=.5')
+    .to(S, {cloud: 0, col: .15, duration: 1.8, ease: 'power1.in'}, '<.4');
+  if (Kit.calm) tl.progress(1);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: watch the cloud`);
+  Kit.show('keep');
+  Kit.onShow.card(); erupt();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => {
+  C = Kit.fitCanvas(Kit.$('cv'));
+  f = Math.max(12, Math.min(C.H * .065, C.W * .05));
+  draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) tl.progress(1); draw();
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

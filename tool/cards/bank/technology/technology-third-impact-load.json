@@ -1,0 +1,37 @@
+{
+  "id": "technology-third-impact-load",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Besides gravity and wind, what else did the Twin Towers have to resist?",
+  "answer": "Besides weight and wind, the towers had to resist an aircraft impact. Weight and wind push steadily, but an impact is a third load that arrives all at once, a sudden, dynamic blow. The towers were meant to take the hit of a Boeing 707, the largest airliner of the 1960s and 70s.",
+  "move": "Weight and wind push steadily; an impact is a sudden third load.",
+  "keywords": [
+    "twin_towers",
+    "boeing_707",
+    "aircraft_impact",
+    "wind_load",
+    "structural_loads"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tower with arrows showing weight pressing down and wind pushing sideways. A plane can be dragged into the tower to show the sudden impact force as a third load. The question asks what else the towers had to resist besides gravity and wind."
+  },
+  "source": "Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=PvhMUg70Jtc&t=443s",
+  "written": "2026-11-03"
+}

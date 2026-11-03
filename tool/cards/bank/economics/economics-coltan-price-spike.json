@@ -1,0 +1,37 @@
+{
+  "id": "economics-coltan-price-spike",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "After the early-2000s gadget boom, what did a kilo of coltan cost?",
+  "answer": "When electronic devices boomed in the early 2000s, the price of coltan, which is essential for smartphones and other electronics, shot up twelvefold. A kilo cost €15 before the boom and €180 after it. The card asks readers to drag a dot up to their guess of the price.",
+  "move": "The gadget boom made coltan 12× pricier: €15 to €180 per kilo.",
+  "keywords": [
+    "coltan",
+    "smartphones",
+    "electronics",
+    "congo"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive chart asking the reader to guess the early-2000s price of a kilo of coltan. A vertical axis runs from €15 up to €180, and the reader drags a dot up to their guess.",
+    "graded": false
+  },
+  "source": "Geopop, “Il coltan è essenziale per gli smartphone, ma a quale prezzo? Lo sfruttamento delle miniere in Congo” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=I-MMteT9YTM&t=359s",
+  "written": "2026-11-03"
+}

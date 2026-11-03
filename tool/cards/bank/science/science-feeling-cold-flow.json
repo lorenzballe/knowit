@@ -1,0 +1,37 @@
+{
+  "id": "science-feeling-cold-flow",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does aluminium feel colder than a book?",
+  "answer": "Both the aluminium and the book are at the same temperature. Aluminium conducts heat away from your hand much faster, so your hand loses heat quickly, and that loss is what feels cold.",
+  "move": "Touch senses how fast heat leaves you, not how hot things are.",
+  "keywords": [
+    "aluminium",
+    "book",
+    "hand",
+    "bath mat",
+    "towel"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A hand touching a piece of aluminium and then a book, with arrows showing heat leaving the hand faster from the aluminium. The question asks why aluminium feels colder than a book."
+  },
+  "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=vqDbMEdLiCs&t=202s",
+  "written": "2026-11-03"
+}

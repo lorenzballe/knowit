@@ -1,0 +1,37 @@
+{
+  "id": "science-wave-base-depth",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How deep under a wave does the water stop moving?",
+  "answer": "Each bit of water under a wave moves in a circle, and these circles shrink the deeper you go. In an ideal wave they reach zero at half a wavelength down, which is the wave base. Below that depth the water is still.",
+  "move": "A wave stirs the water only down to half its wavelength.",
+  "keywords": [
+    "waves",
+    "wave base",
+    "wavelength",
+    "ocean",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A wave drawn over water, with a ball you can drag down into the water and a circle that shows the ball's motion. The question asks how deep under a wave the water stops moving."
+  },
+  "source": "Veritasium, “Inside The Navy's Indoor Ocean” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=pir_muTzYM8&t=157s",
+  "written": "2026-11-03"
+}

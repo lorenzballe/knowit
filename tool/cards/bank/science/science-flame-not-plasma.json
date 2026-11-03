@@ -1,0 +1,37 @@
+{
+  "id": "science-flame-not-plasma",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A candle flame holds ions. Does that make it a true plasma?",
+  "answer": "A flame does contain ions, because strong electric fields pull its charges apart. But it isn't hot enough and its ions aren't dense enough to count as a true plasma. Having ions isn't enough: plasma needs great heat and dense ions.",
+  "move": "Having ions isn't enough: plasma needs great heat and dense ions.",
+  "keywords": [
+    "candle flame",
+    "plasma",
+    "ions",
+    "electric fields",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A Venn diagram with overlapping circles for Ions and Plasma asks the reader to tap where a candle flame belongs. The reveal shows the flame sits in the Ions-only zone, outside Plasma."
+  },
+  "source": "Veritasium, “What's In A Candle Flame?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=a7_8Gc_Llr8&t=123s",
+  "written": "2026-11-03"
+}

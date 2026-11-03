@@ -1,0 +1,36 @@
+{
+  "id": "science-xenon-blind-control",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the automatic control fail during Chernobyl's low-power test?",
+  "answer": "Automatic control ignored xenon, a gas that builds up in the core and upsets the fine balance of the reaction. So power dropped fast, down to 1%, and the poisoned core became truly unstable. A basic safety rule says never restart a reactor poisoned with xenon.",
+  "move": "A control system can only fix what it counts, and it never counted the xenon.",
+  "keywords": [
+    "chernobyl",
+    "xenon",
+    "nuclear-reactor",
+    "automatic-control"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive drawing of a reactor core that can be pulled apart into layers by dragging down or tapping. The card asks why automatic control failed during Chernobyl's low-power test."
+  },
+  "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=4G-cqJy_6_o&t=408s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,203 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-mosquito-winter-eggs -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#cap{font:700 max(2cqh,13px)/1.25 var(--body);min-height:2.5em;margin:0;overflow-wrap:anywhere}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh;flex-shrink:0}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#stage.done{gap:.6cqh}
+#stage.done #cap{min-height:0;flex-shrink:0}
+#stage.done #why{gap:.4cqh}
+#stage.done #why .big{margin:0}
+#stage.done #why .body{margin:0}
+@media (max-height:760px){
+  #stage.done #cap{font-size:12px;line-height:1.2}
+  #stage.done #why .big{font-size:18px;line-height:1.1}
+  #stage.done #why .body{font-size:12.5px;line-height:1.3}
+}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WINTER EGGS</span></div>
+    <h2 class="q">Tiger mosquitoes can't stand the cold. So how are they back every spring?</h2>
+    <div class="stagebox" id="stage">
+      <p id="cap">Autumn. The cold is coming. Who makes it to spring?</p>
+      <svg id="pic" aria-label="A tiger mosquito and its egg from autumn to spring"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The adults hide and sleep until spring</button>
+        <button class="opt" data-i="1">Their eggs wait out the winter</button>
+        <button class="opt" data-i="2">They fly away to warmer places</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Their eggs</p><p class="body">The tiger mosquito (Aedes albopictus) dies in the cold. Before winter it lays eggs that resist freezing and drying out; they stay dormant and hatch when warmth returns.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, say how sure you are, then watch the winter.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The adults die in winter; the eggs carry the species to spring.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, ctx = null, tl = null, prog = 0, started = false, bob = null, buzz = null;
+const svg = Kit.$('pic'), cap = Kit.$('cap');
+const CAP0 = 'Autumn. The cold is coming. Who makes it to spring?';
+const CAPS = [[0,'Autumn: before the cold, she lays her eggs.'],[2.4,'Winter: the cold kills the adult.'],[4.4,'The egg stays intact: it resists freezing and drying.'],[6.4,'Spring: the warmth comes back…'],[7.6,'…and the egg hatches. A new mosquito.']];
+const AUT = '#f2c27b', WIN = '#b9cde0', SPR = '#a8dba0';
+const pos = v => Math.max(0, v);
+
+function mosq(p, s){
+  const g = Kit.mk('g', {}, p), b = Kit.mk('g', {}, g), m = (t, a) => Kit.mk(t, a, b);
+  [[[-1.0,.2],[-1.8,-.3],[-2.4,1.4]],[[-1.0,.25],[-1.1,-.25],[-.9,1.6]],[[-1.1,.2],[-.2,-.4],[.9,1.4]]].forEach(L => {
+    const d = 'M' + L.map(q => (q[0]*s) + ' ' + (q[1]*s)).join('L');
+    m('path', {d, fill:'none', stroke:'#111', 'stroke-width':.1*s, 'stroke-linejoin':'round'});
+    m('path', {d, fill:'none', stroke:'#fff', 'stroke-width':.08*s, 'stroke-dasharray':`${.14*s} ${.26*s}`});
+  });
+  const w = m('ellipse', {cx:-.2*s, cy:-.5*s, rx:.95*s, ry:.26*s, fill:'#fff', 'fill-opacity':.6, stroke:'#222', 'stroke-width':.04*s, transform:`rotate(-14 ${-.2*s} ${-.5*s})`});
+  m('ellipse', {cx:.3*s, cy:0, rx:1.0*s, ry:.3*s, fill:'#111'});
+  for (let i = 0; i < 4; i++){ const x = -.25 + i*.35, h = .3*Math.sqrt(Math.max(0, 1 - ((x - .3)/1)**2))*.9;
+    m('line', {x1:x*s, y1:-h*s, x2:x*s, y2:h*s, stroke:'#fff', 'stroke-width':.09*s}); }
+  m('circle', {cx:-.95*s, cy:0, r:.36*s, fill:'#111'});
+  m('line', {x1:-1.2*s, y1:-.14*s, x2:-.72*s, y2:-.14*s, stroke:'#fff', 'stroke-width':.09*s, 'stroke-linecap':'round'});
+  m('circle', {cx:-1.45*s, cy:.02*s, r:.21*s, fill:'#111'});
+  m('line', {x1:-1.6*s, y1:.08*s, x2:-2.35*s, y2:.35*s, stroke:'#111', 'stroke-width':.07*s, 'stroke-linecap':'round'});
+  return {g, b, w};
+}
+
+function build(W, H, f){
+  W = Math.max(W, 1); H = Math.max(H, 1);
+  const mk = (t, a, p) => Kit.mk(t, a, p || root), fs = Math.max(f*.8, 12);
+  const defs = Kit.mk('defs', {}, svg), clp = Kit.mk('clipPath', {id:'clp'}, defs);
+  Kit.mk('rect', {width:W, height:H, rx:f*.8}, clp);
+  const root = Kit.mk('g', {'clip-path':'url(#clp)'}, svg);
+  const gy = H - 3.6*f;
+  const sky = mk('rect', {width:W, height:H, fill:AUT});
+  const sun = mk('circle', {cx:W*.64, cy:H*.15, r:f*1.3, fill:'#ffd54a', opacity:.6});
+  mk('rect', {y:gy, width:W, height:pos(H-gy), fill:'#4a3a2e'});
+  const snow = mk('rect', {x:-5, y:gy-.55*f, width:W+10, height:.8*f, rx:.4*f, fill:'#fff', opacity:0});
+  // timeline
+  const ly = gy + 1.2*f;
+  mk('line', {x1:W*.14, y1:ly, x2:W*.86, y2:ly, stroke:'#fff6e8', 'stroke-opacity':.5, 'stroke-width':Math.max(2,.12*f), 'stroke-linecap':'round'});
+  const lab = ['AUTUMN','WINTER','SPRING'].map((t, i) => { const e = mk('text', {x:W*(.2+.3*i), y:gy+2.9*f, 'text-anchor':'middle', fill:'#fff6e8', style:`font:700 ${fs}px var(--body);letter-spacing:.06em`, opacity:i ? .5 : 1}); e.textContent = t; return e; });
+  [0,1,2].forEach(i => mk('circle', {cx:W*(.2+.3*i), cy:ly, r:.18*f, fill:'#fff6e8', opacity:.6}));
+  const mark = mk('circle', {cx:W*.2, cy:ly, r:.42*f, fill:'#ffd54a', stroke:'#4a3a2e', 'stroke-width':.12*f});
+  // thermometer
+  const tx = W*.89, tt = H*.1, tb = Math.max(gy - 1.4*f, tt), tw = .8*f;
+  mk('rect', {x:tx-tw/2, y:tt, width:tw, height:pos(tb-tt+tw/2), rx:tw/2, fill:'#fff', stroke:'#4a3a2e', 'stroke-width':.1*f});
+  const tfill = mk('rect', {x:tx-tw*.25, y:tt+tw*.3, width:tw*.5, height:pos(tb-tt), rx:tw*.25, fill:'#e2483c'});
+  gsap.set(tfill, {scaleY:.7, transformOrigin:'50% 100%'});
+  const bulb = mk('circle', {cx:tx, cy:tb+tw*.4, r:tw*.85, fill:'#e2483c', stroke:'#4a3a2e', 'stroke-width':.1*f});
+  // egg
+  const b = Math.max(2, Math.min(H*.17, W*.14, (gy - H*.1)*.4)), a = b*.62, cx = W*.5, cy = gy - b - 1;
+  const egg = mk('g', {});
+  const sy = cy - b*.15, aa = a*Math.sqrt(1 - .15*.15), pts = [];
+  for (let i = 0; i <= 6; i++) pts.push([cx - aa + i*2*aa/6, sy + (i === 0 || i === 6 ? 0 : (i % 2 ? -1 : 1)*b*.08)]);
+  const zig = pts.map(q => `L${q[0]} ${q[1]}`).join('');
+  mk('path', {d:`M${cx-aa} ${sy}${zig}A${a} ${b} 0 1 1 ${cx-aa} ${sy}Z`, fill:'#2a211c'}, egg);
+  const top = mk('g', {}, egg);
+  mk('path', {d:`M${cx-aa} ${sy}${zig}A${a} ${b} 0 0 0 ${cx-aa} ${sy}Z`, fill:'#2a211c'}, top);
+  mk('ellipse', {cx:cx-a*.35, cy:cy-b*.55, rx:a*.18, ry:b*.2, fill:'#fff', opacity:.28}, top);
+  const crack = mk('path', {d:'M' + pts.map(q => q.join(' ')).join('L'), fill:'none', stroke:'#ffe9b0', 'stroke-width':Math.max(2,b*.04), 'stroke-linejoin':'round', opacity:0}, egg);
+  const frost = mk('ellipse', {cx, cy, rx:a+.15*f, ry:b+.15*f, fill:'none', stroke:'#fff', 'stroke-width':.22*f, 'stroke-dasharray':`${.5*f} ${.3*f}`, opacity:0}, egg);
+  gsap.set(egg, {scale:0, transformOrigin:'50% 100%'});
+  const elab = mk('text', {x:cx+a+.6*f, y:cy+fs*.35, fill:'#2a211c', style:`font:700 ${fs}px var(--body);letter-spacing:.06em`, opacity:0}); elab.textContent = 'EGG';
+  // adult
+  const s = Math.max(b*.32, f*.9), ax = W*.24, ay = H*.3;
+  const A = mosq(root, s);
+  const alab = Kit.mk('text', {x:-.5*s, y:1.7*s + fs, 'text-anchor':'middle', fill:'#2a211c', style:`font:700 ${fs}px var(--body);letter-spacing:.06em`}, A.g); alab.textContent = 'ADULT';
+  gsap.set(A.g, {x:ax, y:ay, transformOrigin:'50% 50%'});
+  bob = gsap.to(A.b, {y:-.35*s, duration:.7, repeat:-1, yoyo:true, ease:'sine.inOut'});
+  buzz = gsap.to(A.w, {scaleY:.35, duration:.05, repeat:-1, yoyo:true, transformOrigin:'50% 100%'});
+  // newborn
+  const N = mosq(root, s);
+  gsap.set(N.g, {x:cx, y:sy, scale:0, opacity:0, transformOrigin:'50% 50%'});
+  gsap.to(N.w, {scaleY:.35, duration:.05, repeat:-1, yoyo:true, transformOrigin:'50% 100%'});
+  // flakes
+  const flakes = [];
+  for (let i = 0; i < 26; i++) flakes.push(mk('circle', {cx:Kit.rnd()*W*.84, cy:0, r:(.12+Kit.rnd()*.14)*f, fill:'#fff', opacity:0}));
+
+  tl = gsap.timeline({paused:true, onUpdate:upd});
+  tl.to(A.g, {x:cx+a+s*1.4, y:cy-b*.1, duration:.9, ease:'power2.inOut'}, 0)
+    .to(egg, {scale:1, duration:.5, ease:'back.out(2)'}, .8)
+    .to(elab, {opacity:1, duration:.4}, 1)
+    .to(A.g, {x:ax, y:ay, duration:.8, ease:'power2.inOut'}, 1.4)
+    .to(sky, {attr:{fill:WIN}, duration:1}, 2.4)
+    .to(sun, {opacity:0, duration:.8}, 2.4)
+    .to([tfill, bulb], {attr:{fill:'#3d7fd1'}, duration:1}, 2.4)
+    .to(tfill, {scaleY:.15, duration:1}, 2.4)
+    .to(mark, {attr:{cx:W*.5}, duration:1}, 2.4)
+    .to(lab[0], {opacity:.5, duration:.4}, 2.4).to(lab[1], {opacity:1, duration:.4}, 2.4)
+    .to(flakes, {opacity:.95, duration:.4}, 2.5)
+    .to(snow, {opacity:1, duration:1.2}, 2.9)
+    .to(frost, {opacity:1, duration:.8}, 3)
+    .to(alab, {opacity:0, duration:.3}, 2.7)
+    .to(A.g, {y:gy-s*.45, rotation:170, duration:1, ease:'power2.in'}, 2.8)
+    .to(A.g, {opacity:0, duration:.8}, 4.2)
+    .to(egg, {x:'+=3', duration:.06, repeat:5, yoyo:true}, 5.2)
+    .to(sky, {attr:{fill:SPR}, duration:1}, 6.4)
+    .to(sun, {opacity:1, duration:.8}, 6.4)
+    .to([tfill, bulb], {attr:{fill:'#e2483c'}, duration:1}, 6.4)
+    .to(tfill, {scaleY:.8, duration:1}, 6.4)
+    .to(mark, {attr:{cx:W*.8}, duration:1}, 6.4)
+    .to(lab[1], {opacity:.5, duration:.4}, 6.4).to(lab[2], {opacity:1, duration:.4}, 6.4)
+    .to(flakes, {opacity:0, duration:.4}, 6.4)
+    .to([snow, frost], {opacity:0, duration:.8}, 6.6)
+    .to(crack, {opacity:1, duration:.2}, 7.4)
+    .to(egg, {rotation:6, duration:.08, repeat:5, yoyo:true, transformOrigin:'50% 100%'}, 7.6)
+    .to(top, {x:a*.9, y:-b*.9, rotation:40, opacity:0, duration:.7, ease:'power2.out', transformOrigin:'50% 50%'}, 8.1)
+    .to(N.g, {scale:1, opacity:1, duration:.4}, 8.2)
+    .to(N.g, {x:W*.7, y:H*.38, duration:1.4, ease:'power1.inOut'}, 8.5);
+  flakes.forEach(fl => tl.fromTo(fl, {y:-Kit.rnd()*H*.3 - 10}, {y:gy - .3*f, duration:1.4 + Kit.rnd()*.6, ease:'none', repeat:1}, 2.5 + Kit.rnd()*.8));
+}
+
+function upd(){
+  prog = tl.progress();
+  const t = tl.time(); let c = CAPS[0][1];
+  for (const [s, txt] of CAPS) if (t >= s) c = txt;
+  if (started) cap.textContent = c;
+  if (bob) { const dead = t > 2.7; bob.paused(dead); buzz.paused(dead); }
+}
+
+function draw(){
+  if (ctx) ctx.revert();
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  ctx = gsap.context(() => build(W, H, f));
+  if (started) { tl.progress(prog); upd(); if (!Kit.calm && prog < 1) tl.play(); }
+}
+
+function start(){
+  started = true;
+  if (Kit.calm) { tl.progress(1); upd(); } else tl.play(0);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  Kit.$('stage').classList.add('done');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  start();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 600));
+  if (tl) { tl.progress(1); upd(); }
+};
+Kit.single();
+</script>
+</html>

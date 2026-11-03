@@ -1,0 +1,36 @@
+{
+  "id": "human_body-forgotten-dreams",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.sleep_and_thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do we usually forget our dreams?",
+  "answer": "Noradrenaline is a brain messenger that helps fix memories for the long term. During sleep its level drops a lot, so the brain struggles to save what you dream. That drop is why dreams fade.",
+  "move": "Dreams fade because noradrenaline, the brain's “save” signal, drops during sleep.",
+  "keywords": [
+    "noradrenaline",
+    "dreams",
+    "sleep",
+    "memory"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Page titled 'Why we forget our dreams' with a 'Hold to fall asleep' button. Holding it lowers the noradrenaline level, and the reader watches which dream memories get saved."
+  },
+  "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=ddHHHndH-6c&t=506s",
+  "written": "2026-11-03"
+}

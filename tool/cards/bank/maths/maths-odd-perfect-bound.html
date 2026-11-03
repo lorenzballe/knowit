@@ -1,0 +1,147 @@
+<!doctype html>
+<!-- slug: maths-odd-perfect-bound -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#read{display:flex;flex-direction:column;gap:.4cqh}
+#num{font:800 max(5.4cqh,26px)/1 var(--display);color:var(--k);margin:0}
+#num sup{font-size:.55em;vertical-align:.75em;margin-left:.08em}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:2.6em;overflow-wrap:anywhere}
+#wrap{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#go{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:stretch}
+#go:active{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{margin:0;font:500 max(1.85cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Tap · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LOWER BOUNDS</span></div>
+    <h2 class="q">How big must an odd perfect number be, if one exists?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">
+        <p id="num">10<sup>?</sup></p>
+        <p id="cap">If an odd perfect number exists, it must be bigger than…</p>
+      </div>
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <button id="go">Raise the bound</button>
+      <div id="why" class="gone"><p class="body">Each square is one digit: the number must have more than 2,200 of them. No computer can check numbers that big one by one, so the search is hopeless. Only a clever proof can settle it.</p></div>
+    </div>
+    <p class="say" id="say">Tap to raise the bound, one result at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An odd perfect number, if real, exceeds 10<sup>2,200</sup>.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const BOUNDS = [300, 1500, 2200];
+const LABEL = ['300', '1,500', '2,200'];
+const CAPS = [
+  'The bound for decades: a 1 and 300 zeros. 301 digits.',
+  '21 years later, Pascal Ochem and Michael Rao: 1,501 digits.',
+  'Recent progress: 2,201 digits. And still nobody has found one.'
+];
+const S = {D: 301, L: 0, R: 300};
+let step = 0, busy = false, FAST = false, ctx = null, W = 0, H = 0;
+
+function col(v){ return getComputedStyle(Kit.$('card')).getPropertyValue(v).trim() || '#111'; }
+
+function draw(){
+  if (!ctx) return;
+  const x = ctx, k = col('--k'), c = col('--c'), font = col('--body') || 'sans-serif';
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, H * 0.05);
+  const rh = fs * 3.1, pad = fs * 2.2, ry = fs * 2.1;
+  // ruler
+  x.strokeStyle = k; x.fillStyle = k; x.lineWidth = Math.max(1.5, fs * .12); x.globalAlpha = 1;
+  const x0 = pad, x1 = W - pad * .6;
+  x.beginPath(); x.moveTo(x0, ry); x.lineTo(x1, ry); x.stroke();
+  x.beginPath(); x.moveTo(x1 + fs * .5, ry); x.lineTo(x1 - fs * .2, ry - fs * .4); x.lineTo(x1 - fs * .2, ry + fs * .4); x.fill();
+  const ex = e => x0 + e / S.R * (W - pad * 2 - x0 + pad);
+  x.lineWidth = Math.max(1, fs * .07);
+  for (let e = 0; e <= S.R + .1; e += 100){
+    const px = ex(e); if (px > x1) break;
+    const big = e % 500 === 0;
+    x.globalAlpha = big ? .9 : .45;
+    x.beginPath(); x.moveTo(px, ry); x.lineTo(px, ry + fs * (big ? .7 : .4)); x.stroke();
+  }
+  x.globalAlpha = 1;
+  x.font = `700 ${fs}px ${font}`; x.textBaseline = 'alphabetic';
+  for (let i = 0; i < BOUNDS.length; i++){
+    if (S.L < BOUNDS[i] + 1 - .5) continue;
+    const px = ex(BOUNDS[i]);
+    x.globalAlpha = [1, .75, .55][i];
+    x.beginPath(); x.moveTo(px, ry - fs * .15); x.lineTo(px - fs * .35, ry - fs * .75); x.lineTo(px + fs * .35, ry - fs * .75); x.fill();
+    x.globalAlpha = 1;
+    x.textAlign = px + x.measureText(LABEL[i]).width / 2 > W ? 'right' : 'center';
+    x.fillText(LABEL[i], x.textAlign === 'right' ? W : px, ry - fs * 1.05);
+  }
+  x.textAlign = 'left'; x.globalAlpha = .7;
+  x.font = `600 ${fs * .8}px ${font}`;
+  x.fillText('0', x0 - fs * .2, ry + fs * 1.6);
+  // digit grid
+  const top = rh + fs * .3, aw = W, ah = H - top;
+  const D = Math.max(1, S.D);
+  let s = Math.sqrt(aw * ah / D);
+  const cols = Math.max(1, Math.floor(aw / s)), rows = Math.ceil(D / cols);
+  s = Math.min(aw / cols, ah / rows);
+  const g = s * .14, ox = (aw - cols * s) / 2, n = Math.floor(D), L = S.L;
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = `700 ${s * .66}px ${font}`;
+  for (let i = 0; i < n; i++){
+    const cx = ox + (i % cols) * s, cy = top + Math.floor(i / cols) * s;
+    if (i < L){
+      x.globalAlpha = i < 301 ? 1 : i < 1501 ? .68 : .42;
+      x.fillStyle = k; x.fillRect(cx + g / 2, cy + g / 2, s - g, s - g);
+      if (s >= 12){ x.globalAlpha = 1; x.fillStyle = c; x.fillText(i === 0 ? '1' : '0', cx + s / 2, cy + s / 2 + s * .03); }
+    } else {
+      x.globalAlpha = .12; x.fillStyle = k; x.fillRect(cx + g / 2, cy + g / 2, s - g, s - g);
+    }
+  }
+  x.globalAlpha = 1;
+}
+
+function setText(i){
+  Kit.$('num').innerHTML = `10<sup>${LABEL[i]}</sup>`;
+  Kit.$('cap').textContent = CAPS[i];
+  if (!Kit.calm && !FAST) gsap.from('#num', {scale: .85, opacity: 0, duration: .45, ease: 'back.out(2)', transformOrigin: 'left center'});
+}
+
+function finish(){
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm && !FAST) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (busy || step >= 3) return;
+  const i = step++, d = BOUNDS[i] + 1;
+  Kit.haptic('light'); setText(i);
+  if (Kit.calm || FAST){
+    Object.assign(S, {D: d, L: d, R: BOUNDS[i]}); draw();
+    if (step === 3) finish();
+    return;
+  }
+  busy = true;
+  gsap.timeline({onUpdate: draw, onComplete: () => { busy = false; draw(); if (step === 3) finish(); }})
+    .to(S, {D: d, R: BOUNDS[i], duration: i ? .9 : .01, ease: 'power2.inOut', onUpdate: draw})
+    .to(S, {L: d, duration: i ? 1.1 : .9, ease: 'none', onUpdate: draw});
+});
+
+Kit.onShow.card = () => {
+  const r = Kit.fitCanvas(Kit.$('cv'));
+  ctx = r.x; W = r.W; H = r.H; draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  FAST = true;
+  for (let i = 0; i < 3; i++){ Kit.$('go').click(); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

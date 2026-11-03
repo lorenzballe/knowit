@@ -1,0 +1,38 @@
+{
+  "id": "maths-ranked-choice-paradox",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "How can a candidate win by doing worse in the first round?",
+  "answer": "Bohr wins with fewer first-round votes: 6 of his 45 points jump to Einstein. Curie then finishes last and is knocked out, and her voters split half to Einstein and half to Bohr, which pushes Bohr past 50%.",
+  "move": "In instant runoff, losing votes can change who's knocked out first, and hand you the win.",
+  "keywords": [
+    "instant runoff",
+    "ranked voting",
+    "einstein",
+    "curie",
+    "bohr"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Three candidates, Einstein, Curie and Bohr, in a ranked vote. Bohr wins despite losing first-round votes, and Curie is knocked out with her votes splitting between Einstein and Bohr. The page asks who wins if Bohr's speech flops and some voters defect to Einstein.",
+    "graded": false
+  },
+  "source": "Veritasium, “Why Democracy Is Mathematically Impossible” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=qf7ws2DF-zk&t=412s",
+  "written": "2026-11-03"
+}

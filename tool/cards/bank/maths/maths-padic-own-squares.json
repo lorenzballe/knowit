@@ -1,0 +1,38 @@
+{
+  "id": "maths-padic-own-squares",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are 0 and 1 the only numbers that equal their own square in p-adics?",
+  "answer": "In base 10, two non-zero numbers can multiply to 0: 6 × 5 = 30 ends in 0, because 10 = 2 × 5. A prime base never does this, so n × (n − 1) = 0 forces n = 0 or n = 1.",
+  "move": "Prime base: no zero-divisors, so only 0 and 1 are their own square.",
+  "keywords": [
+    "p-adic numbers",
+    "zero divisors",
+    "base 7",
+    "base 10",
+    "idempotent",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two digit grids, one in base 10 and one in base 7, with arrows showing where each last digit lands when squared. Tap a base to see which digits stay the same after squaring."
+  },
+  "source": "Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=tRaq4aYPzCc&t=654s",
+  "written": "2026-11-03"
+}

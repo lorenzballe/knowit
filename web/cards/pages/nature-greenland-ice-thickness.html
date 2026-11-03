@@ -1,0 +1,145 @@
+<!doctype html>
+<!-- slug: nature-greenland-ice-thickness -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How thick is Greenland's ice?</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sw{display:flex;gap:2cqw;flex:none}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#read{flex:none;display:flex;align-items:baseline;gap:3cqw;flex-wrap:wrap}
+#read .big{font:800 max(4.6cqh,24px)/1 var(--display);margin:0;white-space:nowrap}
+#read .body{font:600 max(1.9cqh,13px)/1.25 var(--body);margin:0;flex:1;min-width:40cqw;overflow-wrap:anywhere}
+#why{flex:none}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0}
+.lbl{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE SHEET</span></div>
+    <h2 class="q">What is the maximum thickness of Greenland's ice sheet?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw">
+        <button class="opt" data-m="coast">Coast</button>
+        <button class="opt" data-m="inland">Interior</button>
+      </div>
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="read"><p class="big" id="num">? km</p><p class="body" id="lab">Each block is a 300 m tower, for scale.</p></div>
+      <div id="why" class="gone"><p class="body">In the middle the ice piles up to about 3 km in places: ten 300 m towers stacked. Only the thin edge is free of ice, so that is where people can live.</p></div>
+    </div>
+    <p class="say" id="say">Flip between the coast and the interior. Measure the ice.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Greenland's ice is up to ~3 km thick, and it decides where people can live.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('svg');
+let mode = null, G = null, done = false;
+const seen = new Set();
+const num = {v: 0};
+
+function geom(W, H) {
+  const y0 = H * 0.84, xL = W * 0.05, xR = W * 0.95, cx = W / 2, half = (xR - xL) / 2, R = half * 0.74;
+  const k = (H * 0.66) / 3; // px per km (height exaggerated)
+  const rock = x => y0 - H * 0.035 - H * 0.012 * Math.sin(x / W * 19);
+  const thick = x => { const u = Math.abs(x - cx) / R; return u < 1 ? 3 * Math.pow(1 - u * u, 0.55) : 0; };
+  const xs = { coast: xL + (cx - R - xL) * 0.5, inland: cx };
+  return {W, H, y0, xL, xR, cx, R, k, rock, thick, xs};
+}
+
+function draw() {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  G = geom(W, H); G.f = f;
+  const {y0, xL, xR, cx, R, k, rock, thick} = G;
+  const fs = Math.max(f * 0.8, 12);
+  // sea
+  Kit.mk('rect', {x: 0, y: y0, width: W, height: H - y0, fill: '#2b6aa8'}, svg);
+  // rock
+  let d = `M${xL - W * 0.02},${y0}`;
+  for (let x = xL; x <= xR; x += W / 120) d += ` L${x},${rock(x)}`;
+  d += ` L${xR + W * 0.02},${y0} L${xR},${H} L${xL},${H} Z`;
+  Kit.mk('path', {d, fill: '#45403f'}, svg);
+  // ice dome
+  let di = '';
+  for (let x = cx - R; x <= cx + R + 0.1; x += W / 160) di += (di ? ' L' : 'M') + `${x},${rock(x) - thick(x) * k}`;
+  for (let x = cx + R; x >= cx - R - 0.1; x -= W / 160) di += ` L${x},${rock(x)}`;
+  Kit.mk('path', {d: di + ' Z', fill: '#eef7ff', stroke: '#9cc6e8', 'stroke-width': Math.max(W * 0.004, 1.5)}, svg);
+  // labels
+  Kit.mk('text', {x: cx, y: rock(cx) - thick(cx) * k * 0.28, 'text-anchor': 'middle', 'font-size': fs, fill: '#5b86ad', class: 'lbl'}, svg).textContent = 'ICE';
+  Kit.mk('text', {x: W * 0.03, y: y0 + fs * 1.4, 'font-size': fs, fill: '#dfeefc', class: 'lbl'}, svg).textContent = 'sea';
+  // little houses on the bare coasts
+  [G.xs.coast, W - G.xs.coast].forEach(hx => {
+    for (let i = -1; i <= 1; i++) {
+      const x = hx + i * W * 0.025, y = rock(x), s = W * 0.014;
+      Kit.mk('path', {d: `M${x - s},${y} L${x - s},${y - s} L${x},${y - s * 1.8} L${x + s},${y - s} L${x + s},${y} Z`, fill: '#e2574c'}, svg);
+    }
+  });
+  // probe group
+  G.probe = Kit.mk('g', {}, svg);
+  G.line = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(W * 0.004, 1.5), 'stroke-dasharray': '5 4'}, G.probe);
+  G.towers = Kit.mk('g', {}, G.probe);
+  G.tag = Kit.mk('text', {'font-size': fs, fill: 'var(--k)', class: 'lbl', 'text-anchor': 'middle'}, G.probe);
+  if (mode) place(mode, false);
+}
+
+function place(m, anim) {
+  const {xs, rock, thick, k, W, H} = G;
+  const x = xs[m], base = rock(x), t = thick(x), top = base - t * k;
+  const n = Math.round(t / 0.3), th = 0.3 * k, tw = W * 0.06;
+  while (G.towers.firstChild) G.towers.removeChild(G.towers.firstChild);
+  const blocks = [];
+  for (let i = 0; i < n; i++) {
+    const g = Kit.mk('g', {}, G.towers);
+    const y = base - (i + 1) * th;
+    Kit.mk('rect', {x: x - tw / 2, y: y + 1, width: tw, height: th - 2, rx: 2, fill: i % 2 ? '#f2b33d' : '#e89b1c', stroke: '#7a4c00', 'stroke-width': 1}, g);
+    for (let j = 0; j < 2; j++) Kit.mk('rect', {x: x - tw * 0.28 + j * tw * 0.34, y: y + th * 0.3, width: tw * 0.22, height: th * 0.4, fill: '#7a4c00', opacity: .45}, g);
+    blocks.push(g);
+  }
+  const ly = Math.max(top - H * 0.03, H * 0.06);
+  G.line.setAttribute('x1', x); G.line.setAttribute('x2', x);
+  G.line.setAttribute('y1', ly + 4); G.line.setAttribute('y2', base);
+  G.tag.setAttribute('x', Math.min(Math.max(x, W * 0.12), W * 0.88)); G.tag.setAttribute('y', ly - 2);
+  G.tag.textContent = m === 'coast' ? 'no ice here' : `${n} towers`;
+  const target = t;
+  if (anim && !Kit.calm) {
+    gsap.fromTo(G.line, {opacity: 0}, {opacity: 1, duration: .3});
+    gsap.from(blocks, {scaleY: 0, transformOrigin: '50% 100%', opacity: 0, stagger: .07, duration: .3, ease: 'back.out(2)'});
+    gsap.to(num, {v: target, duration: .3 + n * .07, ease: 'power2.out', onUpdate: showNum});
+  } else { num.v = target; showNum(); }
+  Kit.$('lab').textContent = m === 'coast'
+    ? 'Bare rock at the edge: this is where the towns are.'
+    : 'Ice as tall as ten 300 m towers stacked. Nobody lives on top.';
+}
+function showNum() { Kit.$('num').textContent = `≈ ${num.v.toFixed(1)} km`; }
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  mode = b.dataset.m;
+  [...Kit.$('sw').children].forEach(o => o.classList.toggle('on', o === b));
+  Kit.haptic('selection');
+  place(mode, true);
+  seen.add(mode);
+  if (seen.size === 2 && !done) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('sw').children[0].click(); await w(500);
+  Kit.$('sw').children[1].click(); await w(1400);
+};
+Kit.single();
+</script>
+</html>

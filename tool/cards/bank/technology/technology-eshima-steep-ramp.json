@@ -1,0 +1,37 @@
+{
+  "id": "technology-eshima-steep-ramp",
+  "topic": "technology",
+  "genre": "technology.think_about_tech",
+  "strand": "technology.think_about_tech.defaults",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why couldn’t a gentler ramp be built on Eshima Island?",
+  "answer": "The bridge's deck must stay high so ships can pass underneath without stopping. Eshima Island is too small for a longer approach, so the bridge has to climb that fixed height in a short run, which makes the ramp steep. A gentler ramp would need its foot dragged outward or the deck lowered.",
+  "move": "Fixed height + little land = a steep slope.",
+  "keywords": [
+    "eshima-ohashi",
+    "eshima-island",
+    "japan",
+    "bridge",
+    "ships"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A map-style diagram of a small island with a bridge rising steeply from it to a high deck. The reader is asked why a gentler ramp cannot be built and can drag the ramp's foot outward or the deck down."
+  },
+  "source": "Geopop, “Come funziona l’illusione ottica del ponte giapponese Eshima Ohashi?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aU4aGIzz1W4&t=84s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-elevator-air-drag -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#fig{flex:1;min-height:0;width:100%;display:block}
+#dial{display:flex;align-items:center;gap:3cqw}
+#dial span{font:700 max(1.7cqh,12px)/1.1 var(--body);color:var(--k);white-space:nowrap}
+#air{flex:1;accent-color:var(--k);height:max(3.6cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.ink{fill:var(--k)}
+.stk{stroke:var(--k);fill:none}
+.fillc{fill:var(--c)}
+.mut{fill:var(--k);opacity:.12}
+.air{fill:var(--k)}
+.lab{font-family:var(--body);font-weight:700;fill:var(--k)}
+.ghost{stroke:var(--k);stroke-dasharray:5 4;opacity:.7}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Dial · watch it fall">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FREE FALL</span></div>
+    <h2 class="q">How does air resistance change a falling elevator's crash?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="fig"></svg>
+      <div id="dial"><span>Vacuum</span><input id="air" type="range" min="0" max="100" value="0" aria-label="Amount of air"><span>Real air</span></div>
+      <div id="why" class="gone"><p class="body">Air pushes up on the falling cabin, and that push grows as it speeds up. So it falls slower than in a vacuum: from the 50th floor it takes 6.1 seconds and hits at about 148 km/h.</p></div>
+    </div>
+    <p class="say" id="say">Slide from vacuum to real air, let go, and watch it fall.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Air resistance grows with speed and always slows a fall.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const g = 9.81, HGT = 149, VT = 49, PACE = 2.4;
+function sim(a){
+  const c = a * g / (VT * VT), dt = .002, ts = [0], ys = [0], vs = [0];
+  let t = 0, y = 0, v = 0, k = 0;
+  while (y < HGT){ v += (g - c * v * v) * dt; y += v * dt; t += dt; if (++k % 5 === 0){ ts.push(t); ys.push(Math.min(y, HGT)); vs.push(v); } }
+  ts.push(t); ys.push(HGT); vs.push(v);
+  return {T: t, V: v, ts, ys, vs, a};
+}
+const S0 = sim(0), S1 = sim(1);
+const tMax = S1.T * 1.12, vMax = S0.V * 1.08;
+let a = 0, S = S0, cur = {t: 0, y: 0, v: 0}, ended = false, ghost = null, touched = false, shown = false, tick = null;
+let E = {};
+
+function draw(){
+  const svg = Kit.$('fig'); svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg), f = Math.max(f0, 13);
+  const mk = (t, at, p) => Kit.mk(t, at, p || svg);
+  const sx = W * .03, sw = W * .44, top = f * 1.8, bot = H - f * 1.8;
+  const eh = Math.min((bot - top) * .16, sw * .7), ew = Math.min(sw * .62, eh * 1.1);
+  E = {f, sx, sw, top, bot, eh, ew};
+  mk('rect', {x: sx, y: top, width: sw, height: bot - top, class: 'mut'});
+  for (let i = 1; i < 10; i++){ const y = top + (bot - top) * i / 10; mk('line', {x1: sx, x2: sx + f * .7, y1: y, y2: y, class: 'stk', 'stroke-width': 1.5, opacity: .35}); }
+  E.airG = mk('g', {});
+  for (let i = 0; i < 70; i++) mk('circle', {cx: sx + Kit.rnd() * sw, cy: top + Kit.rnd() * (bot - top), r: Math.max(1.5, f * .13), class: 'air'}, E.airG);
+  mk('line', {x1: sx - 4, x2: sx + sw + 4, y1: bot, y2: bot, class: 'stk', 'stroke-width': 3});
+  mk('text', {x: sx, y: top - f * .5, class: 'lab', 'font-size': f}).textContent = '50th floor';
+  mk('text', {x: sx, y: bot + f * 1.25, class: 'lab', 'font-size': f}).textContent = 'ground';
+  E.cab = mk('g', {});
+  mk('rect', {x: -ew / 2, y: 0, width: ew, height: eh, rx: 4, class: 'ink'}, E.cab);
+  mk('line', {x1: 0, x2: 0, y1: eh * .15, y2: eh * .92, class: 'fillc', stroke: 'currentColor', 'stroke-width': 2, style: 'stroke:var(--c)'}, E.cab);
+  const arrow = () => ({l: mk('line', {class: 'stk', 'stroke-width': Math.max(3, f * .25), 'stroke-linecap': 'round'}), h: mk('path', {class: 'ink'})});
+  E.up = arrow(); E.dn = arrow();
+  E.upT = mk('text', {class: 'lab', 'font-size': f, 'text-anchor': 'middle'}); E.upT.textContent = 'air resistance';
+  E.dnT = mk('text', {class: 'lab', 'font-size': f, 'text-anchor': 'middle'}); E.dnT.textContent = 'weight';
+  // bars
+  const rx0 = sx + sw + W * .08, rw = W - W * .03 - rx0, bw = rw * .36;
+  const bTop = f * 3, bBot = H - f * 3;
+  E.bars = [];
+  [['Fall', 'time'], ['Impact', 'speed']].forEach((nm, i) => {
+    const x = rx0 + (i ? rw - bw : 0);
+    mk('rect', {x, y: bTop, width: bw, height: bBot - bTop, class: 'mut', rx: 4});
+    const bar = mk('rect', {x, y: bBot, width: bw, height: 0, class: 'ink', rx: 4});
+    const gl = mk('line', {x1: x - 4, x2: x + bw + 4, class: 'ghost', 'stroke-width': 2});
+    const val = mk('text', {x: x + bw / 2, y: bTop - f * .6, class: 'lab', 'font-size': f, 'text-anchor': 'middle'});
+    mk('text', {x: x + bw / 2, y: bBot + f * 1.25, class: 'lab', 'font-size': f, 'text-anchor': 'middle'}).textContent = nm[0];
+    mk('text', {x: x + bw / 2, y: bBot + f * 2.55, class: 'lab', 'font-size': f, 'text-anchor': 'middle'}).textContent = nm[1];
+    E.bars.push({x, bw, bar, gl, val});
+  });
+  E.bTop = bTop; E.bBot = bBot;
+  paint();
+}
+
+function setArrow(A, x, y1, y2, hs){
+  const d = y2 - y1, on = Math.abs(d) > hs * 1.2;
+  A.l.setAttribute('opacity', on ? 1 : 0); A.h.setAttribute('opacity', on ? 1 : 0);
+  const s = Math.sign(d), ye = y2 - s * hs * .9;
+  A.l.setAttribute('x1', x); A.l.setAttribute('x2', x); A.l.setAttribute('y1', y1); A.l.setAttribute('y2', ye);
+  A.h.setAttribute('d', `M${x - hs * .7},${ye}L${x + hs * .7},${ye}L${x},${y2}Z`);
+  return on;
+}
+
+function paint(){
+  if (!E.cab) return;
+  const {f, sx, sw, top, bot, eh} = E;
+  E.airG.setAttribute('opacity', a * .55);
+  const cx = sx + sw / 2, cy = top + (cur.y / HGT) * (bot - top - eh);
+  E.cab.setAttribute('transform', `translate(${cx},${cy})`);
+  const L = Math.min(eh * 1.1, (bot - top) * .2), hs = Math.max(6, f * .55);
+  const dL = cur.t > 0 && !ended ? L : (ended ? 0 : L);
+  const uL = ended ? 0 : L * a * (cur.v / VT) ** 2;
+  const dOn = setArrow(E.dn, cx, cy + eh + 3, cy + eh + 3 + dL, hs);
+  E.dnT.setAttribute('x', cx); E.dnT.setAttribute('y', Math.min(cy + eh + dL + f * 1.2, bot - 4));
+  E.dnT.setAttribute('opacity', dOn && cy + eh + dL + f * 1.2 < bot - 4 ? 1 : 0);
+  const uOn = setArrow(E.up, cx, cy - 3, cy - 3 - uL, hs);
+  E.upT.setAttribute('x', cx); E.upT.setAttribute('y', cy - uL - f * .6);
+  E.upT.setAttribute('opacity', uOn && cy - uL - f * .6 > top + f ? 1 : 0);
+  const bh = E.bBot - E.bTop;
+  const vals = [cur.t / tMax, cur.v / vMax], gv = ghost ? [ghost.T / tMax, ghost.V / vMax] : null;
+  E.bars.forEach((b, i) => {
+    const h = Math.min(1, vals[i]) * bh;
+    b.bar.setAttribute('y', E.bBot - h); b.bar.setAttribute('height', h);
+    if (gv){ const gy = E.bBot - gv[i] * bh; b.gl.setAttribute('y1', gy); b.gl.setAttribute('y2', gy); b.gl.setAttribute('opacity', .7); }
+    else b.gl.setAttribute('opacity', 0);
+    let t = '';
+    if (ended && a >= .99) t = i ? '≈148 km/h' : '6.1 s';
+    else if (ended && a <= .01) t = 'no air';
+    b.val.textContent = t;
+  });
+}
+
+function reset(){
+  if (tick){ gsap.ticker.remove(tick); tick = null; }
+  if (ended){ ghost = S; }
+  ended = false; S = sim(a); cur = {t: 0, y: 0, v: 0}; paint();
+}
+
+function drop(){
+  reset();
+  const t0 = performance.now();
+  tick = () => {
+    const st = (performance.now() - t0) / 1000 * PACE;
+    if (st >= S.T){
+      cur = {t: S.T, y: HGT, v: S.V}; gsap.ticker.remove(tick); tick = null; paint(); land(); return;
+    }
+    let i = Math.min(S.ts.length - 1, Math.floor(st / (S.T / (S.ts.length - 1))));
+    while (i < S.ts.length - 1 && S.ts[i + 1] < st) i++;
+    cur = {t: st, y: S.ys[i], v: S.vs[i]}; paint();
+  };
+  gsap.ticker.add(tick);
+}
+
+function land(){
+  ended = true; paint(); Kit.haptic('light');
+  if (!Kit.calm) gsap.fromTo(E.cab, {y: 0}, {y: -E.f * .4, duration: .12, yoyo: true, repeat: 1, ease: 'power2.out'});
+  if (touched && a >= .99 && !shown){
+    shown = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(draw);
+  }
+}
+
+const slider = Kit.$('air');
+slider.addEventListener('input', () => { a = +slider.value / 100; touched = true; reset(); });
+slider.addEventListener('change', () => { a = +slider.value / 100; Kit.haptic('selection'); drop(); });
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) drop(); else { ended = true; cur = {t: S0.T, y: HGT, v: S0.V}; paint(); } };
+Kit.play.card = async () => {
+  slider.value = 100;
+  slider.dispatchEvent(new Event('input', {bubbles: true}));
+  slider.dispatchEvent(new Event('change', {bubbles: true}));
+  await new Promise(r => setTimeout(r, S1.T / PACE * 1000 + 700));
+};
+Kit.single();
+</script>
+</html>

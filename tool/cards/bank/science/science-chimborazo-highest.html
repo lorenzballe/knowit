@@ -1,0 +1,186 @@
+<!doctype html>
+<!-- slug: science-chimborazo-highest -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute card · If Earth stopped spinning</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#opts{display:flex;flex-wrap:wrap;gap:1.2cqh 2.4cqw}
+.opt{flex:1 1 0;min-width:0;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#spin{display:flex;flex-direction:column;gap:.6cqh}
+#spin .ends{display:flex;justify-content:space-between;font:700 max(1.7cqh,12px)/1.2 var(--body);color:var(--k)}
+#slider{width:100%;height:max(4.4cqh,30px);accent-color:var(--k);cursor:pointer;margin:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTH</span></div>
+    <h2 class="q">Which mountain becomes the highest if Earth stops rotating?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="ctl">
+        <div id="opts">
+          <button class="opt" data-i="0">Everest</button>
+          <button class="opt" data-i="1">Chimborazo</button>
+          <button class="opt" data-i="2">Kilimanjaro</button>
+        </div>
+        <div id="spin" class="gone">
+          <input id="slider" type="range" min="0" max="100" value="0" aria-label="Earth's spin, from today to stopped">
+          <div class="ends"><span>Spinning today</span><span>Stopped</span></div>
+        </div>
+        <div id="why" class="gone">
+          <p class="big">Chimborazo, 13,600 m</p>
+          <p class="body">A spinning Earth bulges at the equator, and its oceans bulge with it. Chimborazo sits on the equator, so its summit is the farthest point from Earth's centre. Stop the spin and the seas flatten and drain away from the equator, leaving Chimborazo towering above Everest.</p>
+        </div>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Height is measured from the sea, and spin shapes where the sea sits.</div>
+    <div class="foot"><span class="src">Source · Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, t = 0, done = false, G = null;
+
+// Exaggerated model: rock keeps its bulge; the sea follows the spin.
+const A = 1, B = 0.8, R0 = Math.sqrt(A * B);
+const MOUNTS = [
+  {name: 'Everest', lat: 28, h: 0.09, d: 5},
+  {name: 'Chimborazo', lat: -1.5, h: 0.06, d: 4}
+];
+const rad = d => d * Math.PI / 180;
+const rEll = (a, b, th) => a * b / Math.hypot(b * Math.cos(th), a * Math.sin(th));
+const lerp = (a, b, k) => a + (b - a) * k;
+
+function draw() {
+  if (!G) return;
+  const {svg, W, H, f} = G;
+  svg.innerHTML = '';
+  const mk = (tag, at, p = svg) => Kit.mk(tag, at, p);
+  const barsH = f * 6;
+  const Htop = H - barsH;
+  const m = f * 0.6;
+  const R = Math.max(20, Math.min((W - m - 6.4 * f) / 2.08, (Htop - 2 * f) / 1.85));
+  const cx = m + R * 1.02, cy = Htop / 2 + f * 0.2;
+  const sa = lerp(A, R0, t), sb = lerp(B, R0, t);
+  const pt = (r, th) => [cx + r * R * Math.cos(th), cy - r * R * Math.sin(th)];
+
+  // rock (brown), then sea on top: where the sea shell is smaller, rock shows
+  mk('ellipse', {cx, cy, rx: A * R, ry: B * R, fill: '#a77d50'});
+  mk('ellipse', {cx, cy, rx: sa * R, ry: sb * R, fill: '#2f6fd1'});
+  if (t > 0.02) mk('ellipse', {cx, cy, rx: A * R, ry: B * R, fill: 'none', stroke: '#ffffff', 'stroke-width': 1.2, 'stroke-dasharray': '4 4', opacity: 0.55 * t});
+  // equator
+  mk('line', {x1: cx - A * R, y1: cy, x2: cx + A * R, y2: cy, stroke: '#ffffff', 'stroke-width': 1, opacity: .35, 'stroke-dasharray': '2 5'});
+
+  const vals = MOUNTS.map(M => {
+    const th = rad(M.lat);
+    const rr = rEll(A, B, th), top = rr + M.h;
+    return {M, th, rr, top, above: top - rEll(sa, sb, th)};
+  });
+  const lead = vals[1].above > vals[0].above ? 1 : 0;
+
+  // centre to summit lines
+  vals.forEach((v, i) => {
+    const [x, y] = pt(v.top, v.th);
+    mk('line', {x1: cx, y1: cy, x2: x, y2: y, stroke: i === lead ? '#ffd23f' : '#ffffff', 'stroke-width': 1.6, 'stroke-dasharray': '5 4', opacity: .85});
+  });
+  mk('circle', {cx, cy, r: Math.max(3, f * 0.25), fill: '#ffffff'});
+  const ct = mk('text', {x: cx, y: cy + f * 1.4, 'text-anchor': 'middle', 'font-size': f * 0.9, 'font-weight': 700, fill: '#ffffff', style: 'font-family:var(--body)'});
+  ct.textContent = 'centre';
+
+  // mountains
+  vals.forEach((v, i) => {
+    const d = rad(v.M.d);
+    const b1 = pt(rEll(A, B, v.th - d), v.th - d), b2 = pt(rEll(A, B, v.th + d), v.th + d), ap = pt(v.top, v.th);
+    mk('path', {d: `M${b1}L${ap}L${b2}Z`, fill: i === lead ? '#5a3a1f' : '#6e5440', stroke: i === lead ? '#ffd23f' : 'none', 'stroke-width': 1.5, 'stroke-linejoin': 'round'});
+    const k = 0.3, s1 = [lerp(ap[0], b1[0], k), lerp(ap[1], b1[1], k)], s2 = [lerp(ap[0], b2[0], k), lerp(ap[1], b2[1], k)];
+    mk('path', {d: `M${s1}L${ap}L${s2}Z`, fill: '#ffffff'});
+    const lab = mk('text', {x: ap[0] + f * 0.5, y: ap[1] + (i === 0 ? -f * 0.2 : f * 0.4), 'font-size': f, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'});
+    lab.textContent = v.M.name;
+    if (i === 1) lab.id = 'chimLab';
+  });
+  const ex = mk('text', {x: m, y: f * 1, 'font-size': Math.max(12, f * 0.8), style: 'fill:var(--k);opacity:.7;font-family:var(--body)'});
+  ex.textContent = 'Bulge and peaks exaggerated';
+
+  // bars: height above the sea
+  const y0 = Htop + f * 0.4;
+  const tt = mk('text', {x: m, y: y0 + f, 'font-size': f * 0.95, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'});
+  tt.textContent = 'Height above the sea';
+  const bx = m + 6.4 * f, bmax = Math.max(20, W - bx - 5.6 * f), top = 0.17;
+  vals.forEach((v, i) => {
+    const yc = y0 + f * (2.6 + 2 * i);
+    const nl = mk('text', {x: m, y: yc + f * 0.35, 'font-size': f * 0.9, 'font-weight': 700, style: 'fill:var(--k);font-family:var(--body)'});
+    nl.textContent = v.M.name;
+    mk('rect', {x: bx, y: yc - f * 0.55, width: bmax, height: f * 1.1, rx: f * 0.3, style: 'fill:var(--k);opacity:.1'});
+    const w = Math.max(2, bmax * v.above / top);
+    mk('rect', {x: bx, y: yc - f * 0.55, width: w, height: f * 1.1, rx: f * 0.3, fill: i === lead ? '#e0a400' : '#8a7a6a'});
+    if (i === lead) {
+      const vt = mk('text', {x: bx + w + f * 0.4, y: yc + f * 0.35, 'font-size': f * 0.9, 'font-weight': 800, style: 'fill:var(--k);font-family:var(--body)'});
+      vt.textContent = (i === 1 && t >= 0.999) ? '13,600 m' : 'highest';
+    }
+  });
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.hide('opts'); Kit.show('spin');
+  Kit.$('say').textContent = 'Now drag the slider to stop Earth spinning.';
+  if (!Kit.calm) gsap.from('#spin', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'});
+});
+
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function finish() {
+  if (done) return; done = true;
+  const o = {v: t};
+  gsap.to(o, {v: 1, duration: Kit.calm ? 0 : .3, onUpdate: () => { t = o.v; draw(); }, onComplete: () => {
+    t = 1; draw();
+    Kit.haptic('success');
+    Kit.hide('spin'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) {
+      gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+      const l = document.getElementById('chimLab');
+      if (l) gsap.from(l, {opacity: 0, duration: .5});
+    }
+  }});
+}
+
+Kit.$('slider').addEventListener('input', e => {
+  if (done) return;
+  t = +e.target.value / 100; draw();
+  if (t >= 0.98) finish();
+});
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg');
+  const g = Kit.fitSvg(svg);
+  G = {svg, W: g.W, H: g.H, f: Math.max(12, Math.min(g.f, g.H / 16))};
+  draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from('#pic', {opacity: 0, scale: .96, duration: .6, ease: 'power3.out'}); } };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('opts').children[1].click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(300);
+  const s = Kit.$('slider'); s.value = 100; s.dispatchEvent(new Event('input', {bubbles: true}));
+  await w(900);
+};
+Kit.single();
+</script>
+</html>

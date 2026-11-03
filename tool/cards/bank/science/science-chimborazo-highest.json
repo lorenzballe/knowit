@@ -1,0 +1,37 @@
+{
+  "id": "science-chimborazo-highest",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Which mountain becomes the highest if Earth stops rotating?",
+  "answer": "If Earth stopped spinning, Chimborazo in Ecuador would become the highest point, at 13,600 m. A spinning Earth bulges at the equator, and Chimborazo sits on that bulge, so its summit is the farthest point from Earth's centre. When the spin stops, the seas flatten and drain away from the equator, leaving Chimborazo towering above Everest.",
+  "move": "Height is measured from the sea, and spin shapes where the sea sits.",
+  "keywords": [
+    "chimborazo",
+    "everest",
+    "earth",
+    "equator",
+    "ecuador"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking which mountain becomes highest if Earth stops spinning, with choices Everest, Chimborazo and Kilimanjaro. After picking and rating confidence, the reveal shows Chimborazo at 13,600 m rising above Everest once the equatorial bulge flattens."
+  },
+  "source": "Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=OSECBud3lD4&t=350s",
+  "written": "2026-11-03"
+}

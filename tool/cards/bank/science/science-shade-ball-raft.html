@@ -1,0 +1,198 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh}
+#box{position:relative;flex:1 1 0;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+#pic text{font-family:var(--body);font-weight:700}
+#pic .num{font-family:var(--display);font-weight:800}
+#pic .ink{fill:var(--k)}
+#pic .soft{fill:var(--k);opacity:.72}
+#pic .sky{fill:color-mix(in srgb,var(--k) 6%,transparent)}
+#pic .chev{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Build it · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BUOYANCY</span></div>
+    <h2 class="q">How many shade balls must be trapped under you to keep you above water?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><svg id="pic" role="img" aria-label="A swimmer standing on shade balls trapped under the water"></svg></div>
+      <div id="why" class="gone"><p class="big">Only 300 g a ball</p><p class="body">Each ball is almost half full of water, so underwater it holds up only about 300 g. It takes more than 260 of them, about 78 kg, to lift a person clear.</p></div>
+    </div>
+    <p class="say" id="say">Drag up to trap shade balls under the swimmer.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A shade ball lifts only ~300 g, so standing on them takes 260+.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Can You Swim in Shade Balls?” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const GOAL = 260, MAXN = 264, KG = 0.3;
+const svg = Kit.$('pic'), mk = Kit.mk;
+let N = 0, shown = 0, done = false, hinted = false, S = null, drag = null;
+const clamp = v => Math.max(0, Math.min(MAXN, v));
+
+// Hex-packed spots under the feet, nearest first: the pile grows as a dome.
+function slots(A, B, r) {
+  const out = [], dy = r * Math.sqrt(3), M = Math.ceil(A / (2 * r)) + 1;
+  for (let j = 0; r + j * dy <= B; j++) {
+    const y = r + j * dy, off = (j % 2) * r;
+    for (let i = -M; i <= M; i++) {
+      const x = i * 2 * r + off;
+      if (Math.hypot((Math.abs(x) + r) / A, (y + r) / B) <= 1) out.push({x, y, d: Math.hypot(x / A, y / B)});
+    }
+  }
+  return out.sort((a, b) => a.d - b.d);
+}
+
+Kit.onShow.card = () => {
+  gsap.killTweensOf(svg.querySelectorAll('*'));
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.textContent = '';
+  const fs = Math.max(f * .78, 11), pad = Math.max(W * .04, 8);
+  const wy = H * .42, bh = H * .37, D = bh * .85, cx = W / 2;
+  const fy = n => wy + D * (1 - Math.min(n, GOAL) / GOAL);
+  // Size the pile so all 264 balls fit above the floor at every step of the climb.
+  let A = Math.min(W * .46, W / 2 - 4), B = H - 3 - wy, r, pts;
+  for (let t = 0; t < 14; t++) {
+    r = Math.sqrt(.8 * Math.PI / 2 * A * B / (MAXN * 2 * Math.sqrt(3)));
+    for (let u = 0; u < 60; u++) { pts = slots(A, B, r); if (pts.length >= MAXN) break; r *= .97; }
+    let worst = 0, my = 0;
+    for (let n = 1; n <= MAXN; n++) { my = Math.max(my, pts[n - 1].y); worst = Math.max(worst, fy(n) + my + r); }
+    if (worst <= H - 2) break;
+    B *= .93;
+  }
+  const defs = mk('defs', {}, svg);
+  const cp = mk('clipPath', {id: 'scene'}, defs); mk('rect', {width: W, height: H, rx: f * .9}, cp);
+  const wg = mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#43cbd9'}, wg); mk('stop', {offset: 1, 'stop-color': '#0a5a73'}, wg);
+  const bg = mk('radialGradient', {id: 'ball', cx: .36, cy: .32, r: .7}, defs);
+  [[0, '#7c8792'], [.4, '#2b3139'], [1, '#07090b']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, bg));
+  const root = mk('g', {'clip-path': 'url(#scene)'}, svg);
+  mk('rect', {width: W, height: H, class: 'sky'}, root);
+  mk('rect', {y: wy, width: W, height: H - wy, fill: 'url(#wat)'}, root);
+  const rig = mk('g', {}, root), pile = mk('g', {}, rig), man = mk('g', {transform: `translate(${cx} 0)`}, rig);
+  const rr = r * .97, balls = pts.slice(0, MAXN).map(p => mk('circle', {cx: cx + p.x, cy: p.y, r: 0, fill: 'url(#ball)'}, pile));
+  for (let i = 0; i < shown; i++) balls[i].setAttribute('r', rr);
+  gsap.set(rig, {y: fy(shown)});
+  // The swimmer, feet at 0.
+  const s = bh, me = mk('g', {}, man), SKIN = '#eab38c', SHIRT = '#ff7657', SHORTS = '#233f6e', OUT = '#16191d';
+  const ln = (x1, y1, x2, y2, w, c, p) => { mk('line', {x1, y1, x2, y2, stroke: OUT, 'stroke-width': w + 2.4, 'stroke-linecap': 'round'}, p); mk('line', {x1, y1, x2, y2, stroke: c, 'stroke-width': w, 'stroke-linecap': 'round'}, p); };
+  [-1, 1].forEach(k => ln(k * .055 * s, -.4 * s, k * .068 * s, -.025 * s, .078 * s, SKIN, me));
+  mk('rect', {x: -.135 * s, y: -.53 * s, width: .27 * s, height: .17 * s, rx: .03 * s, fill: SHORTS, stroke: OUT, 'stroke-width': 1.2}, me);
+  const arms = [-1, 1].map(k => {
+    const g = mk('g', {}, me), sx = k * .1 * s, sy = -.76 * s;
+    ln(sx, sy, k * .21 * s, -.5 * s, .066 * s, SHIRT, g);
+    mk('circle', {cx: k * .215 * s, cy: -.49 * s, r: .036 * s, fill: SKIN, stroke: OUT, 'stroke-width': 1.2}, g);
+    return {g, k, sx, sy};
+  });
+  mk('rect', {x: -.125 * s, y: -.81 * s, width: .25 * s, height: .33 * s, rx: .07 * s, fill: SHIRT, stroke: OUT, 'stroke-width': 1.2}, me);
+  mk('circle', {cx: 0, cy: -.89 * s, r: .085 * s, fill: SKIN, stroke: OUT, 'stroke-width': 1.2}, me);
+  mk('path', {d: `M${-.085 * s} ${-.9 * s}A${.085 * s} ${.085 * s} 0 0 1 ${.085 * s} ${-.9 * s}Q0 ${-.935 * s} ${-.085 * s} ${-.9 * s}Z`, fill: '#2b2420'}, me);
+  const raise = a => arms.forEach(o => o.g.setAttribute('transform', `rotate(${-o.k * a} ${o.sx} ${o.sy})`));
+  raise(done ? 140 : 0);
+  // Water in front: whatever is under the surface is tinted.
+  mk('rect', {y: wy, width: W, height: H - wy, fill: '#0b8aa0', opacity: .4}, root);
+  let d = `M0 ${wy}`;
+  for (let x = 0, i = 0; x <= W + 13; x += 13, i++) d += `Q${x + 6.5} ${wy + (i % 2 ? 1.8 : -1.8)} ${x + 13} ${wy}`;
+  mk('path', {d, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: .9}, root);
+  let hint = null, hg = null;
+  if (!hinted && !done) {
+    hint = mk('g', {transform: `translate(${W - pad - f} ${H * .8})`}, root); hg = mk('g', {}, hint);
+    [0, 1].forEach(i => mk('path', {d: `M${-f * .55} ${i * f * .6 + f * .3}L0 ${i * f * .6 - f * .25}L${f * .55} ${i * f * .6 + f * .3}`, class: 'chev', 'stroke-width': Math.max(f * .16, 2.5), opacity: 1 - i * .45}, hg));
+  }
+  // Count, top left.
+  const nsz = Math.max(f * 2.3, 26), ny = pad + nsz * .8, ly = ny + nsz * .3 + fs * 1.05;
+  const num = mk('text', {x: pad, y: ny, 'font-size': nsz, class: 'num ink'}, svg);
+  mk('text', {x: pad, y: ly, 'font-size': fs, class: 'soft'}, svg).textContent = 'shade balls';
+  const l2 = mk('text', {x: pad, y: ly + fs * 1.3, 'font-size': fs, class: 'ink'}, svg);
+  // One ball cut open, top right.
+  const R = Math.max(Math.min(H * .075, W * .075), 14), ix = W - pad - R, iy = pad + R, wq = iy + R * .1;
+  const inset = mk('g', {}, svg), icp = mk('clipPath', {id: 'inball'}, defs);
+  mk('circle', {cx: ix, cy: iy, r: R}, icp);
+  mk('circle', {cx: ix, cy: iy, r: R, fill: '#eef8fa'}, inset);
+  mk('path', {d: `M${ix - R} ${wq}q${R / 2} ${-R * .12} ${R} 0t${R} 0V${iy + R}H${ix - R}Z`, fill: '#2bb5c8', 'clip-path': 'url(#inball)'}, inset);
+  mk('circle', {cx: ix, cy: iy, r: R, fill: 'none', stroke: '#111418', 'stroke-width': Math.max(R * .17, 2.5)}, inset);
+  mk('text', {x: W - pad, y: iy + R + fs * 1.45, 'font-size': fs, 'text-anchor': 'end', class: 'soft'}, inset).textContent = 'almost half water';
+  mk('text', {x: W - pad, y: iy + R + fs * 2.7, 'font-size': fs, 'text-anchor': 'end', class: 'ink'}, inset).textContent = 'lifts only 300 g';
+  S = {W, H, f, rr, balls, rig, me, fy, num, l2, raise, inset, hint, hg};
+  label();
+};
+
+function label() {
+  if (!S) return;
+  S.num.textContent = done ? '260+' : shown;
+  S.l2.textContent = `≈ ${Math.round((done ? GOAL : shown) * KG)} kg of lift`;
+}
+
+function setN(v) {
+  N = clamp(v);
+  const k = Math.round(N);
+  if (!S || k === shown) return;
+  for (let i = shown; i < k; i++) {
+    if (Kit.calm) S.balls[i].setAttribute('r', S.rr);
+    else gsap.fromTo(S.balls[i], {attr: {r: 0}}, {attr: {r: S.rr}, duration: .3, ease: 'back.out(2.5)', delay: Math.min(i - shown, 20) * .006});
+  }
+  for (let i = k; i < shown; i++) { gsap.killTweensOf(S.balls[i]); S.balls[i].setAttribute('r', 0); }
+  if (Math.floor(k / 50) !== Math.floor(shown / 50)) Kit.haptic('light');
+  shown = k;
+  gsap.to(S.rig, {y: S.fy(k), duration: Kit.calm ? 0 : .35, ease: 'power2.out', overwrite: true});
+  label();
+  if (k >= GOAL && !done) finish();
+}
+
+function finish() {
+  done = true; drag = null; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.onShow.card();            // the stage is shorter now: draw it again at its new size
+  setN(MAXN);
+  if (Kit.calm) return;
+  const o = {a: 0}; S.raise(0);
+  gsap.to(o, {a: 140, duration: .7, ease: 'back.out(1.6)', onUpdate: () => S.raise(o.a)});
+  gsap.from(S.num, {scale: 1.6, transformOrigin: '0% 100%', duration: .6, ease: 'back.out(2)'});
+  gsap.from(S.me, {y: S.H * .03, duration: .9, ease: 'elastic.out(1, .4)'});
+}
+
+svg.addEventListener('pointerdown', e => {
+  if (done) return;
+  drag = {y: e.clientY, n: N, moved: 0};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  if (!hinted) { hinted = true; if (S && S.hint) gsap.to(S.hint, {opacity: 0, duration: .25}); }
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag || done || !S) return;
+  const dy = drag.y - e.clientY;
+  drag.moved = Math.max(drag.moved, Math.abs(dy));
+  setN(drag.n + dy * GOAL / (1.45 * S.H));
+});
+svg.addEventListener('pointerup', () => {
+  if (drag && !done && drag.moved < 6) setN(Math.round(N) + 10);
+  drag = null;
+});
+svg.addEventListener('pointercancel', () => { drag = null; });
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !S) return;
+  gsap.from(S.me, {y: S.H * .08, duration: 1, ease: 'sine.out'});
+  gsap.from(S.inset, {scale: 0, transformOrigin: '50% 50%', duration: .55, ease: 'back.out(2)', delay: .25});
+  if (S.hg) gsap.fromTo(S.hg, {y: 5}, {y: -6, duration: .55, repeat: 7, yoyo: true, ease: 'sine.inOut'});
+};
+
+// Two long upward drags: the first one is not enough.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (let k = 0; k < 8 && !done; k++) {
+    const b = svg.getBoundingClientRect(), x = b.left + b.width * .5, y0 = b.top + b.height * .92, y1 = b.top + b.height * .1;
+    const ev = (t, y) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, pointerId: 7, pointerType: 'touch', isPrimary: true, bubbles: true}));
+    ev('pointerdown', y0);
+    for (let i = 1; i <= 14; i++) { ev('pointermove', y0 + (y1 - y0) * i / 14); await wait(30); }
+    ev('pointerup', y1); await wait(200);
+  }
+  await wait(1200);
+};
+Kit.single();
+</script>
+</html>

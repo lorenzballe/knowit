@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-swaying-tower-stress -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#plot{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer}
+#go:active{transform:scale(.97)}
+#dots{display:flex;gap:1.4cqw}
+#dots i{width:max(1.3cqh,9px);height:max(1.3cqh,9px);border-radius:50%;box-shadow:inset 0 0 0 .2cqh var(--k);display:block}
+#dots i.on{background:var(--k)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.4cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.foot{padding-right:112px}
+.say{font:600 max(1.9cqh,13px)/1.25 var(--body)}
+svg text{font-family:var(--body)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WIND TUNNEL</span></div>
+    <h2 class="q">How much higher could stress get once the skyscraper sways?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="ctl"><button id="go">Let it sway</button><div id="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div id="why" class="gone"><p class="big">Up to 60% more</p><p class="body">The original calculation treated the tower as standing still. The wind tunnel measured it moving, and the motion piled on force: stresses up to 60% above what was anticipated.</p></div>
+    </div>
+    <p class="say" id="say">Tap to let the wind push the tower further, step by step.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A building that moves feels more force than one that stands still.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('plot');
+const S = {amp: 0, ph: .5, step: 0, done: false};
+let G = null;
+const st = (el, s) => { el.setAttribute('style', s); return el; };
+
+function val(u){ return 100 + S.amp * Math.sin(2 * Math.PI * 3.25 * u) * u; }
+
+function build(){
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const gx0 = W * .36, gx1 = W - 4, gy0 = fs * 3.2, gy1 = H - fs * 1.8;
+  const y = v => gy1 - (v - 40) / 135 * (gy1 - gy0);
+  const g = {W, H, fs, gx0, gx1, gy0, gy1, y};
+  // ground
+  st(Kit.mk('line', {x1: 0, x2: W * .32, y1: gy1, y2: gy1}, svg), 'stroke:var(--k);stroke-width:2.5');
+  // axes
+  st(Kit.mk('line', {x1: gx0, x2: gx0, y1: gy0 - fs * .5, y2: gy1}, svg), 'stroke:var(--k);stroke-width:1.5;opacity:.5');
+  st(Kit.mk('line', {x1: gx0, x2: gx1, y1: gy1, y2: gy1}, svg), 'stroke:var(--k);stroke-width:1.5;opacity:.5');
+  const tl = st(Kit.mk('text', {x: gx1, y: gy1 + fs * 1.3, 'text-anchor': 'end'}, svg), `fill:var(--k);opacity:.7;font-size:${fs}px`); tl.textContent = 'time →';
+  const sl = st(Kit.mk('text', {x: gx0 + 4, y: gy0 - fs * 1.4}, svg), `fill:var(--k);opacity:.7;font-size:${fs}px;font-weight:700;letter-spacing:.05em`); sl.textContent = 'STRESS';
+  // static line
+  st(Kit.mk('line', {x1: gx0, x2: gx1, y1: y(100), y2: y(100)}, svg), 'stroke:var(--k);stroke-width:2.5;stroke-dasharray:7 6;opacity:.55');
+  const stl = st(Kit.mk('text', {x: gx0 + 6, y: y(100) + fs * 1.35}, svg), `fill:var(--k);opacity:.75;font-size:${fs}px;font-weight:700`); stl.textContent = 'static estimate';
+  // peak line + label
+  g.peak = st(Kit.mk('line', {x1: gx0, x2: gx1}, svg), 'stroke:var(--k);stroke-width:1.5;opacity:.45');
+  g.peakT = st(Kit.mk('text', {x: gx1, 'text-anchor': 'end'}, svg), `fill:var(--k);font-size:${fs * 1.9}px;font-weight:800;font-family:var(--display)`);
+  // dynamic curve
+  g.curve = st(Kit.mk('path', {fill: 'none'}, svg), 'stroke:var(--k);stroke-width:4;stroke-linejoin:round;stroke-linecap:round');
+  g.dot = st(Kit.mk('circle', {r: fs * .45}, svg), 'fill:var(--c);stroke:var(--k);stroke-width:3');
+  // tower
+  const bx = W * .16, bw = W * .12, top = gy0 + fs * .5;
+  Object.assign(g, {bx, bw, top});
+  g.tower = st(Kit.mk('polygon', {}, svg), 'fill:var(--k)');
+  g.win = [];
+  for (let i = 1; i < 9; i++) g.win.push(st(Kit.mk('line', {}, svg), 'stroke:var(--c);stroke-width:1.5;opacity:.55'));
+  g.leg = st(Kit.mk('rect', {}, svg), 'fill:var(--c)');
+  G = g; render();
+}
+
+function render(){
+  if (!G) return;
+  const {gx0, gx1, y, fs, bx, bw, top, gy1} = G;
+  let d = '';
+  for (let i = 0; i <= 160; i++){ const u = i / 160; d += (i ? 'L' : 'M') + (gx0 + u * (gx1 - gx0)).toFixed(1) + ',' + y(val(u)).toFixed(1); }
+  G.curve.setAttribute('d', d);
+  const pv = 100 + S.amp, py = y(pv);
+  G.peak.setAttribute('y1', py); G.peak.setAttribute('y2', py);
+  G.peak.style.opacity = S.amp > .5 ? .45 : 0;
+  G.peakT.setAttribute('y', py - fs * .4);
+  G.peakT.textContent = '+' + Math.round(S.amp) + '%';
+  const u = S.ph % 1, v = val(u);
+  G.dot.setAttribute('cx', gx0 + u * (gx1 - gx0)); G.dot.setAttribute('cy', y(v));
+  // tower sway follows the stress at the dot
+  const sw = (v - 100) / 60 * bw * .9;
+  const off = yy => sw * Math.pow((gy1 - yy) / (gy1 - top), 2);
+  const L = bx - bw / 2, R = bx + bw / 2, crown = top + bw * .55;
+  G.tower.setAttribute('points', [[L, gy1], [R, gy1], [R + off(top), top], [L + off(crown), crown]].map(p => p.join(',')).join(' '));
+  G.win.forEach((ln, i) => {
+    const yy = gy1 - (i + 1) * (gy1 - crown) / 9.5;
+    ln.setAttribute('x1', L + off(yy) + 3); ln.setAttribute('x2', R + off(yy) - 3); ln.setAttribute('y1', yy); ln.setAttribute('y2', yy);
+  });
+  const lh = (gy1 - top) * .1;
+  G.leg.setAttribute('x', L + bw * .3); G.leg.setAttribute('width', bw * .4); G.leg.setAttribute('y', gy1 - lh); G.leg.setAttribute('height', lh);
+}
+
+function tick(){ S.ph += gsap.ticker.deltaRatio() / 240; render(); }
+
+function finish(){
+  S.done = true;
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+}
+
+Kit.$('go').addEventListener('click', () => {
+  if (S.step >= 6) return;
+  S.step++;
+  Kit.$('dots').children[S.step - 1].classList.add('on');
+  Kit.haptic('light');
+  const to = S.step * 10;
+  if (Kit.calm){ S.amp = to; render(); }
+  else gsap.to(S, {amp: to, duration: .7, ease: 'power2.out', onUpdate: render});
+  if (S.step === 6) setTimeout(finish, Kit.calm ? 0 : 750);
+});
+
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(tick);
+  gsap.from('#ctl', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (let i = 0; i < 6; i++){ Kit.$('go').click(); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 900));
+  S.amp = 60; S.ph = 1; render();
+};
+Kit.single();
+</script>
+</html>

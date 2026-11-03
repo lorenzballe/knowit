@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- slug: science-many-worlds-flow -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:stretch}
+#go:disabled{opacity:.55;cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say,.keep,.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · two rules vs one">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">QUANTUM</span></div>
+    <h2 class="q">Why do many physicists find Many-Worlds cleaner than the Copenhagen interpretation?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <button id="go">▶ Run to measurement 1 of 3</button>
+      <div id="why" class="gone">
+        <p class="big">One rule, never broken</p>
+        <p class="body">Copenhagen adds a special collapse rule that stops the wave at every measurement. Many-Worlds keeps only the Schrödinger equation: the wave just branches, and you see the branch you are entangled with. Same experience, cleaner maths.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap Run three times and watch which wave keeps flowing.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Many-Worlds drops collapse: wave functions just follow one equation.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const F = [0.28, 0.56, 0.84], GAP = 0.04, YOU = [1, 0, 1];
+const st = {X: 0.12, n: 0, phase: 0, fl: [{v:0},{v:0},{v:0}]};
+let x = null, W = 0, H = 0, K = '#111', C = '#fff', busy = false;
+const cv = Kit.$('cv');
+const sm = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+
+function size() {
+  const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+  const cs = getComputedStyle(Kit.$('card'));
+  K = cs.getPropertyValue('--k').trim() || '#111';
+  C = cs.getPropertyValue('--c').trim() || '#fff';
+  draw();
+}
+
+function band(u0, u1, ux, yc, wf) {
+  if (u1 <= u0) return;
+  const N = 40, top = [], bot = [];
+  for (let i = 0; i <= N; i++) { const u = u0 + (u1 - u0) * i / N, w = wf(u) / 2; top.push([ux(u), yc - w]); bot.push([ux(u), yc + w]); }
+  x.beginPath(); x.moveTo(top[0][0], top[0][1]);
+  top.forEach(p => x.lineTo(p[0], p[1])); bot.reverse().forEach(p => x.lineTo(p[0], p[1]));
+  x.closePath(); x.fillStyle = K; x.fill();
+}
+function ripple(pts, lw, fs) {
+  if (pts.length < 2) return;
+  x.save(); x.strokeStyle = C; x.globalAlpha = .7; x.lineWidth = Math.max(1, lw);
+  x.setLineDash([fs * .5, fs * .7]); x.lineDashOffset = -st.phase * fs * 3;
+  x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); x.restore();
+}
+
+function draw() {
+  if (!x) return;
+  x.clearRect(0, 0, W, H);
+  const fs = Math.max(12, Math.min(W * .045, H * .05)), fsS = Math.max(12, fs * .82);
+  const xl = fs * .9, xr = W - fs * .9, ux = u => xl + u * (xr - xl);
+  const X = st.X, n = st.n;
+  for (let L = 0; L < 2; L++) {
+    const top = L * H / 2, at = top + fs * 3.4, ab = top + H / 2 - fs * (L === 0 ? 2 : .9);
+    const yc = (at + ab) / 2, half = Math.max(fs, (ab - at) / 2);
+    const wmax = Math.min(half * 1.2, fs * 1.5), wmin = fs * .25;
+    // titles
+    x.fillStyle = K; x.textBaseline = 'middle'; x.globalAlpha = 1;
+    x.font = `800 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+    x.textAlign = 'left'; x.fillText(L === 0 ? 'COPENHAGEN' : 'MANY-WORLDS', xl, top + fs * 1.1);
+    x.textAlign = 'right'; x.fillText('stops ' + (L === 0 ? n : 0), xr, top + fs * 1.1);
+    x.font = `600 ${fsS}px sans-serif`; x.textAlign = 'left'; x.globalAlpha = .75;
+    x.fillText(L === 0 ? 'Schrödinger equation + collapse rule' : 'Schrödinger equation only', xl, top + fs * 2.45);
+    x.globalAlpha = 1;
+    // detectors
+    F.forEach((f, k) => {
+      x.save(); x.strokeStyle = K; x.globalAlpha = k < n ? .35 : .15; x.lineWidth = 1.5; x.setLineDash([3, 5]);
+      x.beginPath(); x.moveTo(ux(f), at); x.lineTo(ux(f), ab); x.stroke(); x.restore();
+    });
+    // source
+    x.beginPath(); x.arc(xl, yc, fs * .3, 0, 7); x.fillStyle = K; x.fill();
+    if (L === 0) {
+      for (let j = 0; j <= n; j++) {
+        const s = j === 0 ? 0 : F[j - 1] + GAP, e = j < n ? F[j] : X;
+        if (e <= s) continue;
+        const wf = u => wmin + (wmax - wmin) * (1 - Math.exp(-(u - s) / .07));
+        band(s, e, ux, yc, wf);
+        const pts = []; for (let i = 0; i <= 40; i++) { const u = s + (e - s) * i / 40; pts.push([ux(u), yc]); }
+        ripple(pts, wmax * .14, fs);
+      }
+      for (let k = 0; k < n; k++) {
+        const cx = ux(F[k] + GAP / 2), r = fs * .45 * (1 + st.fl[k].v * .7);
+        x.save(); x.strokeStyle = K; x.lineWidth = Math.max(2.5, fs * .2); x.lineCap = 'round';
+        x.beginPath(); x.moveTo(cx - r, yc - r); x.lineTo(cx + r, yc + r); x.moveTo(cx + r, yc - r); x.lineTo(cx - r, yc + r); x.stroke();
+        if (st.fl[k].v > 0) { x.globalAlpha = st.fl[k].v * .5; x.beginPath(); x.arc(cx, yc, r * 2, 0, 7); x.stroke(); }
+        x.restore();
+        x.fillStyle = K; x.font = `700 ${fsS}px sans-serif`; x.textAlign = 'center';
+        x.fillText('collapse', cx, yc + wmax / 2 + fs * 1.1);
+      }
+    } else {
+      const D = [half * .5, half * .26, half * .13];
+      const yOf = (u, b, j) => { let y = yc; for (let i = 0; i < j; i++) y += (((b >> i) & 1) ? 1 : -1) * D[i] * sm((u - F[i]) / .12); return y; };
+      const youB = j => { let b = 0; for (let i = 0; i < j; i++) b |= YOU[i] << i; return b; };
+      for (let j = 0; j <= n; j++) {
+        const s = j === 0 ? 0 : F[j - 1], e = j < n ? F[j] : X;
+        if (e <= s) continue;
+        if (j === 0) {
+          band(s, e, ux, yc, u => wmin + (wmax - wmin) * (1 - Math.exp(-u / .07)));
+          const pts = []; for (let i = 0; i <= 40; i++) pts.push([ux(s + (e - s) * i / 40), yc]);
+          ripple(pts, wmax * .14, fs); continue;
+        }
+        const lw = Math.max(3, wmax * Math.pow(.66, j)), yb = youB(j);
+        for (let pass = 0; pass < 2; pass++) for (let b = 0; b < (1 << j); b++) {
+          const me = b === yb; if ((pass === 1) !== me) continue;
+          const pts = []; for (let i = 0; i <= 40; i++) { const u = s + (e - s) * i / 40; pts.push([ux(u), yOf(u, b, j)]); }
+          x.save(); x.strokeStyle = K; x.globalAlpha = me ? 1 : .28; x.lineWidth = lw; x.lineCap = 'round';
+          x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.stroke(); x.restore();
+          if (me) ripple(pts, lw * .2, fs);
+        }
+      }
+      if (n > 0) {
+        const y = yOf(X, youB(n), n);
+        x.fillStyle = K; x.font = `800 ${fsS}px sans-serif`; x.textAlign = 'right';
+        x.fillText('you', ux(X) - fs * .5, y - Math.max(3, wmax * Math.pow(.66, n)) / 2 - fs * .7);
+      }
+    }
+    if (L === 0) { x.save(); x.globalAlpha = .2; x.fillStyle = K; x.fillRect(0, H / 2 - 1, W, 2); x.restore(); }
+  }
+}
+
+function run() {
+  if (busy || st.n >= 3) return;
+  busy = true; const k = st.n, go = Kit.$('go'); go.disabled = true; Kit.haptic('selection');
+  const tl = gsap.timeline({onComplete: () => {
+    busy = false;
+    if (st.n >= 3) {
+      Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      requestAnimationFrame(size);
+    } else { go.disabled = false; go.textContent = `▶ Run to measurement ${st.n + 1} of 3`; }
+  }});
+  tl.to(st, {X: F[k], duration: 1.3, ease: 'none'});
+  tl.add(() => { st.n = k + 1; Kit.haptic('light'); });
+  tl.fromTo(st.fl[k], {v: 1}, {v: 0, duration: .9, ease: 'power2.out'});
+  tl.to(st, {X: k === 2 ? 1 : F[k] + .09, duration: .7, ease: 'power1.out'}, '-=0.5');
+}
+Kit.$('go').addEventListener('click', run);
+
+gsap.ticker.add(() => { if (!Kit.calm) st.phase += .016; draw(); });
+Kit.onShow.card = () => { size(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.fromTo(st, {X: 0}, {X: .12, duration: .9, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  gsap.globalTimeline.timeScale(12);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++) { Kit.$('go').click(); await wait(400); }
+  await wait(300);
+  gsap.globalTimeline.timeScale(1);
+};
+Kit.single();
+</script>
+</html>

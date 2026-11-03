@@ -1,0 +1,194 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-tunnel-pressure-barrier -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#draw{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#ctrl{display:flex;flex-direction:column}
+#hold{position:relative;overflow:hidden;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.8cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+#hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#2ecc71;opacity:.35;pointer-events:none}
+#hold span{position:relative}
+#hold.on{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TUNNEL SAFETY</span></div>
+    <h2 class="q">Why doesn't tunnel smoke flow into the emergency escape passage?</h2>
+    <div class="stagebox" id="stage">
+      <div id="draw"><canvas id="cv"></canvas></div>
+      <div id="ctrl"><button id="hold"><i class="fill" id="fill"></i><span>Hold · switch on the fans</span></button></div>
+      <div id="why" class="gone"><p class="big">Higher pressure inside.</p><p class="body">Fans keep the escape passage at a slightly higher pressure than the road tunnel. Its air keeps pushing out through the door, a moving wall smoke can't cross, so the air inside stays clean to breathe.</p></div>
+    </div>
+    <p class="say" id="say">Hold the button and watch the smoke at the doorway.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Air flows from high to low pressure: keep the shelter higher and smoke stays out.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), btn = Kit.$('hold');
+let x = null, W = 300, H = 300, f = 14, sprite = null, ink = '#111';
+const P = {p: 0};
+let holding = false, done = false, cleanT = 0, t = 0, fanA = 0, q = 1;
+const pts = [];
+for (let i = 0; i < 230; i++) pts.push({x: .04 + Kit.rnd() * .92, y: .06 + Kit.rnd() * .32});
+for (let i = 0; i < 20; i++) pts.push({x: .14 + Kit.rnd() * .8, y: .65 + Kit.rnd() * .24});
+
+const inRoad = (a, b) => a >= .02 && a <= .98 && b >= .04 && b <= .40;
+const inPass = (a, b) => a >= .47 && a <= .57 && b >= .40 && b <= .62;
+const inPed = (a, b) => a >= .10 && a <= .98 && b >= .62 && b <= .92;
+const inside = (a, b) => inRoad(a, b) || inPass(a, b) || inPed(a, b);
+
+function step(k) {
+  const net = P.p * 1.8 - 0.45;
+  for (const s of pts) {
+    let dx = (Kit.rnd() - .5) * .012, dy = (Kit.rnd() - .5) * .012;
+    if (inRoad(s.x, s.y)) {
+      dx += .0015;
+      if (Math.abs(s.x - .52) < .1 && s.y > .28) {
+        if (net < 0) { dy += .004 * -net; dx += (.52 - s.x) * .02 * -net; }
+        else dy -= .007 * net;
+      }
+    } else if (inPass(s.x, s.y)) {
+      dy += -net * .007; dx += (.52 - s.x) * .05;
+    } else if (inPed(s.x, s.y)) {
+      if (net > 0) { dx += (.52 - s.x) * .025 * net; dy -= .004 * net; }
+      else { dx += Math.sign(s.x - .52) * .0025 * -net; dy += .001 * -net; }
+    }
+    dx *= k; dy *= k;
+    if (inside(s.x + dx, s.y + dy)) { s.x += dx; s.y += dy; }
+    else if (inside(s.x + dx, s.y)) s.x += dx;
+    else if (inside(s.x, s.y + dy)) s.y += dy;
+    if (inRoad(s.x, s.y) && s.x > .96) { s.x = .05 + Kit.rnd() * .05; s.y = .1 + Kit.rnd() * .28; }
+  }
+  let n = 0; for (const s of pts) if (s.y > .6) n++;
+  q = Math.max(0, 1 - n / 25);
+}
+
+function mix(a, b, u) { return a.map((v, i) => Math.round(v + (b[i] - v) * u)); }
+function rr(x0, y0, w, h, r) { x.beginPath(); x.roundRect(x0, y0, w, h, r); }
+
+function draw() {
+  if (!x) return;
+  x.clearRect(0, 0, W, H);
+  const R = [.02 * W, .04 * H, .96 * W, .36 * H], PS = [.47 * W, .40 * H, .10 * W, .22 * H], PD = [.10 * W, .62 * H, .88 * W, .30 * H];
+  const rad = Math.min(W, H) * .04;
+  // road
+  rr(...R, rad); x.fillStyle = '#1f2329'; x.fill();
+  // passage + escape tunnel, tinted by smoke
+  const c = mix([234, 246, 238], [160, 164, 170], 1 - q); x.fillStyle = `rgb(${c})`;
+  rr(...PD, rad); x.fill(); x.fillRect(...PS);
+  // road markings
+  x.strokeStyle = 'rgba(255,255,255,.25)'; x.lineWidth = Math.max(1.5, H * .005); x.setLineDash([W * .04, W * .03]);
+  x.beginPath(); x.moveTo(.04 * W, .33 * H); x.lineTo(.96 * W, .33 * H); x.stroke(); x.setLineDash([]);
+  // green door frame
+  x.save(); x.shadowColor = '#2ecc71'; x.shadowBlur = H * .03; x.strokeStyle = '#2ecc71'; x.lineWidth = Math.max(3, H * .012);
+  x.beginPath(); x.moveTo(.47 * W, .41 * H); x.lineTo(.47 * W, .38 * H); x.lineTo(.57 * W, .38 * H); x.lineTo(.57 * W, .41 * H); x.stroke(); x.restore();
+  // fire
+  const fx = .09 * W, fy = .40 * H, fh = H * .13;
+  [['#ff4d1a', 1], ['#ff9a1a', .7], ['#ffe066', .4]].forEach(([col, s], i) => {
+    const h = fh * s * (0.85 + .15 * Math.sin(t * 9 + i * 2)), w = W * .045 * s;
+    x.beginPath(); x.moveTo(fx - w, fy); x.quadraticCurveTo(fx - w, fy - h * .5, fx + Math.sin(t * 6 + i) * w * .3, fy - h);
+    x.quadraticCurveTo(fx + w, fy - h * .5, fx + w, fy); x.closePath(); x.fillStyle = col; x.fill();
+  });
+  // fan
+  const cx = .90 * W, cy = .77 * H, fr = Math.min(PD[3] * .32, W * .05);
+  x.save(); x.translate(cx, cy); x.rotate(fanA); x.fillStyle = ink;
+  for (let i = 0; i < 3; i++) { x.rotate(Math.PI * 2 / 3); x.beginPath(); x.ellipse(0, -fr * .55, fr * .22, fr * .5, 0, 0, Math.PI * 2); x.fill(); }
+  x.restore(); x.beginPath(); x.arc(cx, cy, fr, 0, Math.PI * 2); x.strokeStyle = ink; x.lineWidth = 2; x.stroke();
+  // airflow chevrons
+  if (P.p > .05) {
+    x.save(); x.globalAlpha = P.p; x.strokeStyle = '#1fae5b'; x.lineWidth = Math.max(2.5, H * .009); x.lineCap = 'round'; x.lineJoin = 'round';
+    const cw = W * .025;
+    for (let i = 0; i < 4; i++) {
+      const u = (t * .45 + i / 4) % 1, yy = (.60 - u * .32) * H;
+      x.globalAlpha = P.p * (1 - u * .6);
+      x.beginPath(); x.moveTo(.52 * W - cw, yy + cw * .7); x.lineTo(.52 * W, yy); x.lineTo(.52 * W + cw, yy + cw * .7); x.stroke();
+      const xr = (.82 - u * .26) * W, xl = (.16 + u * .26) * W, y2 = .77 * H;
+      x.globalAlpha = P.p * .8;
+      x.beginPath(); x.moveTo(xr + cw * .7, y2 - cw); x.lineTo(xr, y2); x.lineTo(xr + cw * .7, y2 + cw); x.stroke();
+      x.beginPath(); x.moveTo(xl - cw * .7, y2 - cw); x.lineTo(xl, y2); x.lineTo(xl - cw * .7, y2 + cw); x.stroke();
+    }
+    x.restore();
+  }
+  // smoke, clipped to the tunnels
+  x.save(); x.beginPath(); x.roundRect(...R, rad); x.rect(...PS); x.roundRect(...PD, rad); x.clip();
+  const sr = Math.min(W, H) * .07;
+  for (const s of pts) x.drawImage(sprite, s.x * W - sr, s.y * H - sr, sr * 2, sr * 2);
+  x.restore();
+  // outlines
+  x.strokeStyle = ink; x.lineWidth = Math.max(2, H * .007);
+  rr(...R, rad); x.stroke();
+  x.beginPath(); x.roundRect(...PD, rad); x.stroke();
+  x.fillStyle = `rgb(${c})`; x.fillRect(PS[0] + 1, PS[1] - 1, PS[2] - 2, PS[3] + 4);
+  x.beginPath(); x.moveTo(PS[0], PS[1]); x.lineTo(PS[0], PS[1] + PS[3]); x.moveTo(PS[0] + PS[2], PS[1]); x.lineTo(PS[0] + PS[2], PS[1] + PS[3]); x.stroke();
+  // labels
+  x.textBaseline = 'middle';
+  x.font = `800 ${f}px ${getComputedStyle(cv).getPropertyValue('--body') || 'sans-serif'}`;
+  x.fillStyle = '#fff'; x.textAlign = 'right'; x.fillText('ROAD TUNNEL', .94 * W, .04 * H + f * 1.2);
+  x.fillStyle = ink; x.textAlign = 'left'; x.fillText('ESCAPE PASSAGE', .13 * W, .62 * H + f * 1.2);
+  const mid = .51 * H, sf = Math.max(12, f * .9);
+  x.font = `700 ${sf}px sans-serif`; x.fillStyle = ink; x.globalAlpha = .7;
+  x.fillText('PRESSURE', .03 * W, mid - sf * .8);
+  x.textAlign = 'right'; x.fillText('AIR INSIDE', .97 * W, mid - sf * .8);
+  x.globalAlpha = 1; x.font = `800 ${f}px sans-serif`;
+  x.fillStyle = P.p > .5 ? '#14864a' : ink; x.textAlign = 'left';
+  x.fillText(P.p > .5 ? 'higher inside' : 'equal', .03 * W, mid + f * .8);
+  x.fillStyle = q > .95 ? '#14864a' : '#c0392b'; x.textAlign = 'right';
+  x.fillText(q > .95 ? 'clean' : `smoky ${Math.round((1 - q) * 100)}%`, .97 * W, mid + f * .8);
+}
+
+function tick() {
+  const k = Math.min(3, gsap.ticker.deltaRatio()), dt = k / 60;
+  t += dt; fanA += P.p * dt * 18;
+  step(k);
+  if (!done) {
+    if (holding && P.p > .8 && q >= .98) cleanT += dt; else if (!holding) cleanT = Math.max(0, cleanT - dt);
+    Kit.$('fill').style.width = Math.min(100, cleanT / .9 * 100) + '%';
+    if (cleanT > .9) finish();
+  }
+  draw();
+}
+
+function press(e) { if (e) e.preventDefault(); if (done || holding) return; holding = true; btn.classList.add('on'); Kit.haptic('light'); gsap.to(P, {p: 1, duration: .7, ease: 'power2.out', overwrite: true}); }
+function release() { if (done || !holding) return; holding = false; btn.classList.remove('on'); gsap.to(P, {p: 0, duration: 1.2, ease: 'power2.in', overwrite: true}); }
+function finish() {
+  if (done) return; done = true; holding = false;
+  gsap.to(P, {p: 1, duration: .4, overwrite: true});
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .45, ease: 'power3.out'});
+}
+btn.addEventListener('pointerdown', press);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, release));
+btn.addEventListener('contextmenu', e => e.preventDefault());
+btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') press(e); });
+btn.addEventListener('keyup', release);
+
+Kit.onShow.card = () => {
+  const r = Kit.fitCanvas(cv); x = r.x; W = r.W; H = r.H;
+  f = Math.max(12, Math.min(W * .042, H * .05));
+  ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  sprite = document.createElement('canvas'); sprite.width = sprite.height = 64;
+  const g = sprite.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(135,140,146,.42)'); gr.addColorStop(1, 'rgba(135,140,146,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+  draw();
+};
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#hold', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+gsap.ticker.add(tick);
+Kit.play.card = async () => {
+  btn.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  for (let i = 0; i < 50 && !done; i++) await new Promise(r => setTimeout(r, 100));
+  if (!done) finish();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

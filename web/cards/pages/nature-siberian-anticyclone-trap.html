@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-siberian-anticyclone-trap -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#sky{width:100%;height:100%;display:block;border-radius:2cqh;overflow:hidden}
+#ctl{display:flex;justify-content:flex-start}
+#act{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;max-width:70cqw}
+#act:active{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap · watch the air">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLD AIR</span></div>
+    <h2 class="q">What atmospheric feature traps cold air over Yakutsk?</h2>
+    <div class="stagebox" id="stage"><svg id="sky"></svg></div>
+    <div id="ctl"><button id="act">Chill the land · 0/5</button></div>
+    <p class="say" id="say">Tap to chill the frozen land five times. Watch the air.</p>
+    <div id="why" class="gone">
+      <p class="big">The Siberian anticyclone</p>
+      <p class="body">Freezing ground makes the air above it cold, dry and heavy: a high-pressure zone where the weather changes very slowly. Yakutsk sits on a valley floor ringed by mountains, so that dense air sinks in and stays trapped.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Cold air is heavy: under high pressure in a valley, it settles and stays.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 70, STEPS = 5;
+const P = Array.from({length: N}, () => ({u: Kit.rnd(), v: Kit.rnd()}));
+let level = 0, windDone = false, R = null;
+
+const lerp = (a, b, t) => a + (b - a) * t;
+const sm = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+function mixHex(a, b, t){
+  const pa = [1,3,5].map(i => parseInt(a.slice(i, i+2), 16)), pb = [1,3,5].map(i => parseInt(b.slice(i, i+2), 16));
+  return '#' + pa.map((v, i) => Math.round(lerp(v, pb[i], t)).toString(16).padStart(2, '0')).join('');
+}
+
+function draw(){
+  const svg = Kit.$('sky');
+  gsap.killTweensOf('*');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const peakY = .4 * H, floorY = .84 * H, poolTop = .5 * H;
+  const g = x => {
+    const s = x / W;
+    const m = s < .5 ? sm((.3 - s) / .2) : sm((s - .7) / .2);
+    return floorY - (floorY - peakY) * m + Math.sin(s * 37) * .012 * H * m;
+  };
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  mk('rect', {x: 0, y: 0, width: W, height: H, fill: '#13233b'});
+  const pool = mk('rect', {x: 0, y: floorY, width: W, height: H - floorY, fill: '#7fd6ff', opacity: 0});
+  const dots = mk('g', {});
+  // mountains
+  let d = `M0 ${H} `;
+  for (let i = 0; i <= 80; i++){ const x = W * i / 80; d += `L${x.toFixed(1)} ${g(x).toFixed(1)} `; }
+  d += `L${W} ${H} Z`;
+  const ground = mk('path', {d, fill: '#4a3a4a'});
+  let ridge = ''; for (let i = 0; i <= 80; i++){ const x = W * i / 80; ridge += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + g(x).toFixed(1) + ' '; }
+  const snow = mk('path', {d: ridge, fill: 'none', stroke: '#ffffff', 'stroke-width': Math.max(2, H * .006), opacity: .25, 'stroke-linejoin': 'round'});
+  // city
+  const cw = W * .022;
+  [-3, -2, -1, 0, 1, 2].forEach((k, i) => {
+    const h = H * (.03 + ((i * 7) % 5) * .008);
+    mk('rect', {x: W / 2 + k * cw * 1.3, y: floorY - h + 1, width: cw, height: h, fill: '#f3e6c8', rx: 1.5});
+  });
+  const tStyle = (sz, w) => ({'font-family': 'var(--body)', 'font-size': sz, 'font-weight': w, 'text-anchor': 'middle', fill: '#ffffff'});
+  const city = mk('text', Object.assign(tStyle(Math.max(12, f * .85), 700), {x: W / 2, y: floorY + H * .08}));
+  city.textContent = 'Yakutsk';
+  // high pressure
+  const hi = mk('g', {opacity: 0});
+  const hT = mk('text', Object.assign(tStyle(Math.max(26, f * 2.6), 800), {x: W / 2, y: H * .15, 'font-family': 'var(--display)'}), hi);
+  hT.textContent = 'H';
+  const hS = mk('text', Object.assign(tStyle(Math.max(12, f * .75), 700), {x: W / 2, y: H * .15 + Math.max(16, f * 1.25), 'letter-spacing': '.08em'}), hi);
+  hS.textContent = 'HIGH PRESSURE · HEAVY AIR';
+  [.2, .8].forEach(s => {
+    const x = W * s, y0 = H * .08, y1 = H * .28, a = H * .025;
+    mk('path', {d: `M${x} ${y0} L${x} ${y1} M${x - a * .7} ${y1 - a} L${x} ${y1} L${x + a * .7} ${y1 - a}`, stroke: '#9fe3ff', 'stroke-width': Math.max(2, H * .007), fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hi);
+  });
+  const poolLbl = mk('text', Object.assign(tStyle(Math.max(12, f * .85), 800), {x: W / 2, y: lerp(poolTop, floorY, .38), opacity: 0, stroke: '#13233b', 'stroke-width': 4, 'paint-order': 'stroke'}));
+  poolLbl.textContent = 'cold, dense, dry air';
+  const windG = mk('g', {opacity: windDone ? 1 : 0});
+  const winds = [];
+  for (let i = 0; i < 6; i++){
+    const y = H * (.27 + .022 * i * (i % 2 ? 1 : .6)), len = W * (.18 + .06 * (i % 3));
+    winds.push(mk('path', {d: `M0 ${y} q${len / 2} ${-H * .015} ${len} 0`, stroke: '#ffffff', 'stroke-width': Math.max(2, H * .005), fill: 'none', 'stroke-linecap': 'round', opacity: .8}, windG));
+  }
+  const windLbl = mk('text', Object.assign(tStyle(Math.max(12, f * .8), 700), {x: W / 2, y: H * .37, stroke: '#13233b', 'stroke-width': 4, 'paint-order': 'stroke'}), windG);
+  windLbl.textContent = 'wind skims the peaks';
+  const r = Math.max(2.5, Math.min(W, H) * .011);
+  const circles = P.map(() => mk('circle', {r, cx: 0, cy: 0}, dots));
+  R = {W, H, f, g, floorY, poolTop, pool, ground, snow, hi, poolLbl, windG, winds, circles};
+  setLevel(level, 0);
+  if (windDone) windG.setAttribute('opacity', 1);
+}
+
+function pos(p, t){
+  const {W, H, g, poolTop} = R;
+  const x = lerp(.04 * W + p.u * .92 * W, .28 * W + p.u * .44 * W, t);
+  const top = lerp(.08 * H, poolTop + .02 * H, t), bot = g(x) - .025 * H;
+  return {x, y: top + p.v * (bot - top)};
+}
+
+function setLevel(L, dur){
+  if (!R) return;
+  const t = L / STEPS, dd = Kit.calm ? 0 : dur;
+  const col = mixHex('#ffb27a', '#9fe3ff', t);
+  R.circles.forEach((c, i) => {
+    const q = pos(P[i], t);
+    gsap.to(c, {attr: {cx: q.x, cy: q.y, fill: col}, duration: dd, delay: dd ? (i % 10) * .02 : 0, ease: 'power2.inOut'});
+  });
+  const py = lerp(R.floorY, R.poolTop, t);
+  gsap.to(R.pool, {attr: {y: py, height: R.H - py}, opacity: .28 * t, duration: dd, ease: 'power2.out'});
+  gsap.to(R.ground, {attr: {fill: mixHex('#4a3a4a', '#26364f', t)}, duration: dd});
+  gsap.to(R.snow, {opacity: .25 + .75 * t, duration: dd});
+  gsap.to(R.hi, {opacity: t >= 1 ? 1 : t * .35, duration: dd});
+  gsap.to(R.poolLbl, {opacity: t >= 1 ? 1 : 0, duration: dd, delay: dd ? .4 : 0});
+}
+
+function blow(){
+  const {W} = R, dd = Kit.calm ? 0 : 1;
+  gsap.to(R.windG, {opacity: 1, duration: dd * .3});
+  R.winds.forEach((w, i) => {
+    if (Kit.calm) { gsap.set(w, {x: W * (.1 + i * .12)}); return; }
+    gsap.fromTo(w, {x: -W * .4}, {x: W * 1.1, duration: 1.6 + (i % 3) * .3, delay: i * .15, repeat: 1, ease: 'none',
+      onComplete(){ gsap.set(w, {x: W * (.05 + i * .13)}); }});
+  });
+  if (!Kit.calm) R.circles.forEach((c, i) => gsap.to(c, {attr: {cx: '+=' + (2 + (i % 3))}, duration: .25, yoyo: true, repeat: 7, ease: 'sine.inOut'}));
+}
+
+Kit.$('act').addEventListener('click', () => {
+  if (level < STEPS){
+    level++; Kit.haptic('light'); setLevel(level, .9);
+    if (level < STEPS) Kit.$('act').textContent = `Chill the land · ${level}/${STEPS}`;
+    else { Kit.$('act').textContent = 'Send a wind'; Kit.$('say').textContent = 'The heavy air sank into the valley. Now try to blow it away.'; }
+  } else if (!windDone){
+    windDone = true; Kit.haptic('success'); blow();
+    setTimeout(() => {
+      Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      requestAnimationFrame(() => { draw(); if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .4, stagger: .1}); });
+    }, Kit.calm ? 0 : 2200);
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && R) gsap.from(R.circles, {opacity: 0, duration: .6, stagger: .008}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < STEPS; i++){ Kit.$('act').click(); await w(120); }
+  Kit.$('act').click(); await w(2600);
+};
+Kit.single();
+</script>
+</html>

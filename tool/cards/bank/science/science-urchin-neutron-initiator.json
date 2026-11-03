@@ -1,0 +1,37 @@
+{
+  "id": "science-urchin-neutron-initiator",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 7‑gram pellet start the Trinity bomb’s chain reaction?",
+  "answer": "The urchin kept polonium and beryllium apart with a layer of nickel and gold. The implosion's shockwave mixed them, and polonium's alpha particles made the beryllium release a flood of neutrons. Those neutrons kick-started the chain reaction.",
+  "move": "Kept apart it was harmless; crushed together it fired neutrons.",
+  "keywords": [
+    "trinity_bomb",
+    "urchin",
+    "polonium",
+    "beryllium",
+    "neutrons"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Four steps of the urchin neutron source appear as tiles. Tap them in the order they happen to show how the Trinity bomb's chain reaction started."
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=1178s",
+  "written": "2026-11-03"
+}

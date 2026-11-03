@@ -1,0 +1,37 @@
+{
+  "id": "weird_facts-skin-of-aerogel",
+  "topic": "weird_facts",
+  "genre": "weird_facts.numbers_that_surprise",
+  "strand": "weird_facts.numbers_that_surprise.doubling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "An ice-cube-sized block of aerogel weighs 1.6 g. How much surface is inside it?",
+  "answer": "An ice-cube-sized block of aerogel weighs 1.6 g, and its skin, laid flat, covers 5 cm². Melted down, its glass would be a 9 mm lump with the skin of a postage stamp, and aerogel is that glass split into beads. Splitting increases the surface exposed, which is why crushed ice melts faster than cubes.",
+  "move": "Pieces half as wide, twice the skin: why crushed ice melts faster than cubes.",
+  "keywords": [
+    "aerogel",
+    "ice_cube",
+    "glass",
+    "surface_area",
+    "crushed_ice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Shows an ice-cube-sized block of aerogel weighing 1.6 g, with its skin laid flat at 5 cm², and a slider that splits it into beads. Asks how much surface is inside the block."
+  },
+  "source": "Veritasium, “I Waterproofed Myself With Aerogel!” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=GcdB5bFwio4",
+  "written": "2026-11-03"
+}

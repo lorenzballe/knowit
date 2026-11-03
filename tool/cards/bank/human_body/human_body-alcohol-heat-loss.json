@@ -1,0 +1,37 @@
+{
+  "id": "human_body-alcohol-heat-loss",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Alcohol makes you feel warm. So why does your body actually get colder?",
+  "answer": "Alcohol widens your blood vessels, so more blood flows to the skin. That feels cosy, but the skin is giving heat away, so your core temperature drops. In extreme cases this leads to hypothermia.",
+  "move": "The warm glow of alcohol is heat leaving your body.",
+  "keywords": [
+    "alcohol",
+    "blood vessels",
+    "skin",
+    "body temperature",
+    "hypothermia"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: why does alcohol make you feel warm while your body actually gets colder? A 'One more drink' button counts 0 of 4 drinks, and a diagram shows warm skin with a colder core as you drink."
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=r3KrMPQSUFs&t=180s",
+  "written": "2026-11-03"
+}

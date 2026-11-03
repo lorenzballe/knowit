@@ -1,0 +1,37 @@
+{
+  "id": "economics-gulf-idle-fleet",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What are the ~1,000 ships stuck in the Gulf worth?",
+  "answer": "About 1,000 ships are stuck in the Gulf. Lloyd's Market Association in London puts the value of this idle fleet at over $25 billion. About half of these ships carry oil or gas, cargo that cannot reach buyers while it waits.",
+  "move": "About 1,000 stuck ships: over $25 billion idle, half carrying oil and gas.",
+  "keywords": [
+    "gulf",
+    "blocked_ships",
+    "lloyds_market_association",
+    "oil_and_gas",
+    "idle_fleet"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page with a slider that traps ships in the Gulf one by one. It asks what the roughly 1,000 stuck ships are worth, and shows the idle fleet's value of over $25 billion and the share carrying oil or gas."
+  },
+  "source": "Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=Zfk7QT4zhZQ&t=129s",
+  "written": "2026-11-03"
+}

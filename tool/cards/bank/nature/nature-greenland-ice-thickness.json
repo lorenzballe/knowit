@@ -1,0 +1,37 @@
+{
+  "id": "nature-greenland-ice-thickness",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the maximum thickness of Greenland's ice sheet?",
+  "answer": "Greenland's ice sheet reaches about 3 km in places, in the middle, which is roughly ten 300 m towers stacked. Only the thin edge is free of ice, so that is where people can live. Flip between the coast and the interior to measure the ice.",
+  "move": "Greenland's ice is up to ~3 km thick, and it decides where people can live.",
+  "keywords": [
+    "greenland",
+    "ice sheet",
+    "ice thickness",
+    "coast",
+    "interior"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking how thick Greenland's ice sheet is. A Coast/Interior toggle switches the view. Blocks show 300 m towers stacked for scale, with the interior reaching about 3 km, ten towers high."
+  },
+  "source": "Geopop, “Cosa c'è di così prezioso in Groenlandia e perché Trump la vuole: un ripasso geopolitico” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=P0PF8r7i6Zw&t=40s",
+  "written": "2026-11-03"
+}

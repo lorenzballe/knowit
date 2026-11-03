@@ -1,0 +1,37 @@
+{
+  "id": "science-aluminium-ice-melt",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does ice melt faster on aluminium than on plastic?",
+  "answer": "Both plates are at room temperature, warmer than ice. Aluminium conducts heat much better, so it pours heat into the ice far faster. That same fast flow, out of your hand, is why it feels colder.",
+  "move": "“Feels cold” means heat leaves you fast, not a lower temperature.",
+  "keywords": [
+    "aluminium",
+    "plastic",
+    "ice",
+    "heat_flow",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive diagram: two plates, one aluminium and one plastic, each with ice, both at room temperature. Drag time forward to see where heat flows. Asks why ice melts faster on aluminium."
+  },
+  "source": "Veritasium, “Misconceptions About Temperature” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=vqDbMEdLiCs&t=103s",
+  "written": "2026-11-03"
+}

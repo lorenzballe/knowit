@@ -1,0 +1,37 @@
+{
+  "id": "technology-heat-pump-savings",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.why_some_tech_wins",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How much can a home heat pump cut energy use?",
+  "answer": "The heat pump uses about 60% less energy than the heater. Both homes got the same 10 units of heat. The heater makes every unit from electricity, while the pump only spends energy moving heat already in the ground, so it buys about 4.",
+  "move": "Moving heat costs far less than making it: up to 60% less energy.",
+  "keywords": [
+    "heat pump",
+    "geothermal heat",
+    "home heating",
+    "electricity",
+    "energy efficiency"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A guess-first quiz asking how much less energy a home heat pump uses than an electric heater. Choices are 20%, 40%, 60% and 80%, with a 0/10 counter. A diagram shows two homes given the same 10 units of heat."
+  },
+  "source": "Geopop, “RISPARMIARE SULLE BOLLETTE SFRUTTANDO IL CALORE DELLA TERRA - Impianti Geotermici” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=1HiwKPHVc-8&t=80s",
+  "written": "2026-11-03"
+}

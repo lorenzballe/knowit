@@ -1,0 +1,37 @@
+{
+  "id": "food-resveratrol-wine-flood",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.superfoods",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much red wine a day for a heart-helping dose of resveratrol?",
+  "answer": "Red wine holds only milligrams of resveratrol per litre, and the body often breaks much of it down. Reaching a heart-helping dose would take about 16,000 glasses a day, roughly 2,000 litres. So the benefit from wine is practically nil.",
+  "move": "Red wine's resveratrol is far too little to protect your heart.",
+  "keywords": [
+    "red wine",
+    "resveratrol",
+    "heart health",
+    "dose",
+    "glasses"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled Red Wine asks how many glasses a day would give a heart-helping dose of resveratrol. A drag control lets the reader pour glasses; the total shown is about 16,000 glasses, roughly 2,000 litres, a day."
+  },
+  "source": "Geopop, “La droga che uccide di più al mondo non è quella che pensi” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=EE4KyY3lTGg&t=560s",
+  "written": "2026-11-03"
+}

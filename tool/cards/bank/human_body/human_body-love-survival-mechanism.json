@@ -1,0 +1,38 @@
+{
+  "id": "human_body-love-survival-mechanism",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "What is falling in love for, biologically speaking?",
+  "answer": "Falling in love is biologically about the survival of the species, not happiness or stress relief. It sparks strong sexual desire, which keeps the species going. The molecules behind it are the sex hormones testosterone and estrogens, made mainly by the testes and ovaries.",
+  "move": "Love's first job is biological: it pushes us to make the next generation.",
+  "keywords": [
+    "love",
+    "testosterone",
+    "estrogen",
+    "sexual desire",
+    "species",
+    "hormones"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question asking what falling in love is for, biologically speaking. Three options: to make us feel happy, the survival of the species, or to lower our stress. Below, a low-to-high slider asks how sure the reader is of their pick."
+  },
+  "source": "Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=8J1oZkA9D3E&t=125s",
+  "written": "2026-11-03"
+}

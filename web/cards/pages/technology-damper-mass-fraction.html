@@ -1,0 +1,164 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-damper-mass-fraction -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;gap:2.5cqw;justify-content:center}
+.btn{font:700 max(2.1cqh,14px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;touch-action:manipulation}
+.btn.go{background:var(--k);color:var(--c);box-shadow:none}
+.btn:disabled{opacity:.35}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Count · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COUNT</span></div>
+    <h2 class="q">What share of a skyscraper's weight must its tuned mass damper be?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="ctrl">
+        <button class="btn" id="minus" aria-label="Remove a block">−</button>
+        <button class="btn" id="plus">+ 1% block</button>
+        <button class="btn go" id="lock">Lock in</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">At least 1% to 5%</p>
+        <p class="body">The damper is a pendulum near the top, tuned to swing at the building's own rhythm, with friction to soak up energy. A light one can't push back hard enough: it must weigh at least 1–5% of the whole building.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">The tower is 100 blocks. Load its damper one 1% block at a time, then lock in.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A sway damper only works if it's heavy: 1–5% of the building.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let n = 0, locked = false, revealed = false;
+const S = {amp: 2.6, t: 0};
+let R = {};
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = n >= 1 && n <= 5;
+  Kit.answer({choice: n + '%', correct: ok, sure: pct});
+  revealed = true;
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${n}%, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  draw();
+  if (R.band && !Kit.calm) gsap.from(R.band, {opacity: 0, duration: .6, ease: 'power2.out'});
+  gsap.to(S, {amp: n >= 1 ? 0.35 : 2.6, duration: 2.2, ease: 'power2.out'});
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+function setN(v){
+  if (locked) return;
+  n = Math.max(0, Math.min(10, v));
+  Kit.$('minus').disabled = n === 0; Kit.$('plus').disabled = n === 10;
+  Kit.haptic('selection');
+  const grew = draw(true);
+}
+Kit.$('plus').onclick = () => { const o = n; setN(n + 1); if (n > o && R.last && !Kit.calm) gsap.from(R.last, {scale: 0, transformOrigin: '50% 50%', duration: .35, ease: 'back.out(2)'}); };
+Kit.$('minus').onclick = () => setN(n - 1);
+Kit.$('lock').onclick = () => { if (locked) return; locked = true; Kit.hide('ctrl'); Kit.$('say').textContent = 'Locked at ' + n + '%. How sure are you?'; sure.on(); Kit.haptic('light'); };
+Kit.$('minus').disabled = true;
+
+function T(p, x, y, s, attrs){ const e = Kit.mk('text', Object.assign({x, y}, attrs || {}), p); e.textContent = s; e.setAttribute('style', `fill:var(--k);font:700 ${attrs && attrs.fs || 13}px var(--body)`); return e; }
+
+function draw(){
+  const svg = Kit.$('pic'); if (!svg.clientHeight) return;
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f * .85, 12);
+  const rows = 20, cols = 5, crown = 7;
+  const bs = Math.min(H * .9 / (rows + crown + .4), W * .4 / cols);
+  const tw = cols * bs, cx = W * .3, tx = cx - tw / 2, gy = H - .5;
+  const yT = gy - rows * bs, cTop = yT - crown * bs;
+  Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, style: 'stroke:var(--k);stroke-width:2'}, svg);
+  const tg = Kit.mk('g', {}, svg);
+  const gap = Math.max(1, bs * .12);
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
+    Kit.mk('rect', {x: tx + c * bs + gap / 2, y: gy - (r + 1) * bs + gap / 2, width: bs - gap, height: bs - gap, rx: bs * .12, style: 'fill:var(--k);fill-opacity:.28'}, tg);
+  Kit.mk('rect', {x: tx, y: cTop, width: tw, height: crown * bs, rx: bs * .2, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-opacity:.6'}, tg);
+  const hx = cx, hy = cTop + .4 * bs, bb = bs * .8, L = crown * bs - .4 * bs - 4 * bb - .3 * bs;
+  const pg = Kit.mk('g', {}, tg);
+  Kit.mk('line', {x1: hx, x2: hx, y1: hy, y2: hy + L, style: 'stroke:var(--k);stroke-width:2.5'}, pg);
+  Kit.mk('circle', {cx: hx, cy: hy, r: bs * .18, style: 'fill:var(--k)'}, tg);
+  R.last = null;
+  if (n === 0) Kit.mk('circle', {cx: hx, cy: hy + L, r: bs * .2, style: 'fill:none;stroke:var(--k);stroke-width:2'}, pg);
+  for (let i = 0; i < n; i++){
+    const row = Math.floor(i / 3), inRow = Math.min(3, n - row * 3), col = i % 3;
+    const x = hx - inRow * bb / 2 + col * bb;
+    R.last = Kit.mk('rect', {x: x + gap / 2, y: hy + L + row * bb + gap / 2, width: bb - gap, height: bb - gap, rx: bb * .12, style: 'fill:var(--k)'}, pg);
+  }
+  // gauge
+  const bigFs = Math.max(f * 2.1, 26);
+  R.band = null;
+  if (H >= bigFs * 1.15 + fs * 8.4){
+    const gx = W * .76, gw = Math.max(W * .07, 16);
+    const bigY = bigFs * .85, subY = bigY + bigFs * .25 + fs * 1.15;
+    const gt = subY + fs * 1.6, gb = H - fs * 2.6;
+    const y = p => gb - p / 10 * (gb - gt);
+    T(svg, gx, bigY, n + '%', {'text-anchor': 'middle', fs: bigFs});
+    T(svg, gx, subY, 'of the tower', {'text-anchor': 'middle', fs});
+    Kit.mk('rect', {x: gx - gw / 2, y: gt, width: gw, height: gb - gt, rx: gw * .25, style: 'fill:var(--k);fill-opacity:.12;stroke:var(--k);stroke-opacity:.4;stroke-width:1.5'}, svg);
+    if (n) Kit.mk('rect', {x: gx - gw / 2, y: y(n), width: gw, height: gb - y(n), rx: gw * .25, style: 'fill:var(--k)'}, svg);
+    [0, 5, 10].forEach(p => { T(svg, gx - gw / 2 - 6, y(p) + fs * .35, p + '%', {'text-anchor': 'end', fs}); Kit.mk('line', {x1: gx - gw / 2 - 4, x2: gx - gw / 2, y1: y(p), y2: y(p), style: 'stroke:var(--k);stroke-width:1.5'}, svg); });
+    T(svg, gx + gw / 2 + 5, y(n) + fs * .35, '◂ you', {fs});
+    if (revealed){
+      const b = Kit.mk('g', {}, svg);
+      Kit.mk('rect', {x: gx - gw / 2 - 4, y: y(5), width: gw + 8, height: y(1) - y(5), rx: 4, style: 'fill:var(--c);fill-opacity:.25;stroke:var(--k);stroke-width:2.5;stroke-dasharray:5 4'}, b);
+      T(b, gx, gb + fs * 2.05, 'real: 1–5%', {'text-anchor': 'middle', fs});
+      R.band = b;
+    }
+  } else {
+    // compact horizontal gauge for short stages
+    const cf = Math.max(8, Math.min(fs, H / 3.6));
+    const x0 = W * .53, x1 = W - 2, bw = Math.max(1, x1 - x0);
+    const by = cf * 1.45, bh = cf * .8;
+    const xp = p => x0 + p / 10 * bw;
+    T(svg, x0, cf * 1.05, revealed ? n + '% · real: 1–5%' : n + '% of the tower', {fs: cf});
+    Kit.mk('rect', {x: x0, y: by, width: bw, height: bh, rx: bh * .3, style: 'fill:var(--k);fill-opacity:.12;stroke:var(--k);stroke-opacity:.4;stroke-width:1.5'}, svg);
+    if (n) Kit.mk('rect', {x: x0, y: by, width: xp(n) - x0, height: bh, rx: bh * .3, style: 'fill:var(--k)'}, svg);
+    [[0, 'start'], [5, 'middle'], [10, 'end']].forEach(([p, a]) => {
+      Kit.mk('line', {x1: xp(p), x2: xp(p), y1: by + bh, y2: by + bh + 3, style: 'stroke:var(--k);stroke-width:1.5'}, svg);
+      T(svg, xp(p), by + bh + cf * 1.1, p + '%', {'text-anchor': a, fs: cf});
+    });
+    if (revealed){
+      const b = Kit.mk('g', {}, svg);
+      Kit.mk('rect', {x: xp(1), y: by - 2, width: xp(5) - xp(1), height: bh + 4, rx: 3, style: 'fill:var(--c);fill-opacity:.25;stroke:var(--k);stroke-width:2;stroke-dasharray:5 4'}, b);
+      R.band = b;
+    }
+  }
+  R.tg = tg; R.pg = pg; R.cx = cx; R.gy = gy; R.hx = hx; R.hy = hy;
+  pose();
+}
+function pose(){
+  if (!R.tg) return;
+  const a = S.amp * Math.sin(S.t * 2 * Math.PI / 2.4);
+  R.tg.setAttribute('transform', `rotate(${a.toFixed(3)} ${R.cx} ${R.gy})`);
+  const pa = n ? -Math.sin(S.t * 2 * Math.PI / 2.4) * (revealed ? 10 : 3) : 0;
+  R.pg.setAttribute('transform', `rotate(${pa.toFixed(3)} ${R.hx} ${R.hy})`);
+}
+let ticking = false;
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#ctrl .btn', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (!ticking){ ticking = true; gsap.ticker.add((t, dt) => { S.t += dt / 1000; pose(); }); }
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 3; i++){ Kit.$('plus').click(); await w(60); }
+  Kit.$('lock').click(); await w(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click(); await w(700);
+};
+Kit.single();
+</script>
+</html>

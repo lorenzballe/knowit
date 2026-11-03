@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- slug: technology-quake-prevention-pays -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;align-items:center;gap:3cqw}
+#mag{font:800 max(3cqh,18px)/1 var(--display);color:var(--k);min-width:6.2em;white-space:nowrap}
+#mag small{font:700 max(1.5cqh,12px)/1 var(--body);color:var(--muted);display:block;margin-bottom:.4cqh}
+#sl{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.q,.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Slider · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTHQUAKES</span></div>
+    <h2 class="q">Japan gets big earthquakes all the time. Why is damage so low?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="img" aria-label="Two buildings shaken by the same earthquake"></svg>
+      <div id="ctrl">
+        <div id="mag"><small>MAGNITUDE</small><span id="mv">M 6.0</span></div>
+        <input id="sl" type="range" min="6" max="8" step="0.05" value="6" aria-label="Earthquake magnitude">
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Prevention pays.</p>
+        <p class="body">Japan spends a lot of money on prevention, and spends it efficiently. Its buildings are designed to flex, not break. So a magnitude 6, 7 or 8 still does damage, but far less than elsewhere.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the magnitude up to 8 and watch both cities.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Money spent before a quake buys far smaller losses after it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Terremoti in Giappone - come prevenire i disastri del rischio sismico con l'ingegneria” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let m = 6, done = false, R = null, t = 0;
+const sl = Kit.$('sl'), svg = Kit.$('pic');
+const dmg = v => Math.pow((v - 5) / 3, 1.7);          // illustrative shape, other region
+const JP = 0.15;                                        // Japan: far smaller share of it
+const bars = {o: {w: 0}, j: {w: 0}};
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  svg.innerHTML = '';
+  const mk = (tag, a, p) => Kit.mk(tag, a, p || svg);
+  const cw = W / 2;
+  const titleY1 = fs * 1.1, titleY2 = titleY1 + fs * 1.35;
+  const capY = H - fs * 0.4;
+  const barH = Math.max(H * 0.05, 10);
+  const barY = capY - fs * 1.5 - barH;
+  const gy = barY - fs * 0.9;
+  const topY = titleY2 + fs * 1.1;
+  const bh = Math.max(gy - topY, 40);
+  const bw = Math.min(cw * 0.42, bh * 0.55);
+  const r = {W, H, fs, cw, gy, bw, bh, barY, barH};
+  // max sway (deg) so the flexible building's top stays inside the picture
+  r.swayMax = Math.atan(Math.max(0, cw * 0.4 - bw / 2) / bh) * 180 / Math.PI;
+
+  // titles
+  [['Little prevention', 'rigid buildings'], ['Japan', 'heavy prevention, flexible']].forEach((s, i) => {
+    const x = cw * i + cw / 2;
+    const a = mk('text', {x, y: titleY1, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--display);fill:var(--k)`}); a.textContent = s[0];
+    const b = mk('text', {x, y: titleY2, 'text-anchor': 'middle', style: `font:600 ${fs * 0.85 < 12 ? 12 : fs * 0.85}px var(--body);fill:var(--muted)`}); b.textContent = s[1];
+  });
+  mk('line', {x1: cw, y1: topY - fs * .3, x2: cw, y2: gy, style: 'stroke:var(--edge);stroke-width:1;stroke-dasharray:4 5'});
+
+  // ground (shakes) — inset so the shake never pushes it outside
+  r.ground = mk('g', {});
+  const gpad = W * 0.03;
+  mk('rect', {x: gpad, y: gy, width: W - gpad * 2, height: Math.max(3, fs * .25), rx: 2, style: 'fill:var(--k)'}, r.ground);
+
+  const building = (i) => {
+    const bx = cw * i + cw / 2 - bw / 2;
+    const g = mk('g', {});
+    const floors = 6, fh = bh / floors;
+    mk('rect', {x: bx, y: gy - bh, width: bw, height: bh, rx: i ? bw * .06 : 1,
+      style: `fill:color-mix(in srgb,var(--k) ${i ? 16 : 10}%,transparent);stroke:var(--k);stroke-width:${Math.max(2, fs * .14)}`}, g);
+    const wins = [];
+    for (let fl = 0; fl < floors; fl++) for (let c = 0; c < 3; c++) {
+      const w = mk('rect', {x: bx + bw * (0.12 + c * 0.28), y: gy - bh + fl * fh + fh * .25, width: bw * .2, height: fh * .45, rx: 1,
+        style: 'fill:var(--k);opacity:.55'}, g);
+      wins.push(w);
+    }
+    if (i) { // flexible joints at each floor
+      for (let fl = 1; fl < floors; fl++) mk('line', {x1: bx, x2: bx + bw, y1: gy - bh + fl * fh, y2: gy - bh + fl * fh,
+        style: 'stroke:var(--k);stroke-width:1;opacity:.35'}, g);
+    }
+    // cracks
+    const cr = mk('path', {d: `M${bx + bw * .5},${gy - bh} l${-bw * .12},${fh * .9} l${bw * .18},${fh * .7} l${-bw * .2},${fh * 1.1} l${bw * .15},${fh * .9}
+      M${bx},${gy - fh * 2} l${bw * .25},${-fh * .4} l${bw * .1},${fh * .5} M${bx + bw},${gy - fh * 3.5} l${-bw * .3},${fh * .3} l${-bw * .05},${fh * .6}`,
+      style: `fill:none;stroke:#e0312b;stroke-width:${Math.max(2, fs * .16)};stroke-linejoin:round;opacity:0`}, g);
+    return {g, bx: bx + bw / 2, base: i ? bx + bw / 2 : bx + bw, wins, cr};
+  };
+  r.o = building(0); r.j = building(1);
+
+  // damage bars
+  [0, 1].forEach(i => {
+    const x0 = cw * i + cw * .1, wmax = cw * .8;
+    mk('rect', {x: x0, y: barY, width: wmax, height: barH, rx: barH / 2, style: 'fill:color-mix(in srgb,var(--k) 10%,transparent)'});
+    const b = mk('rect', {x: x0, y: barY, width: 0, height: barH, rx: barH / 2, style: `fill:${i ? 'var(--k)' : '#e0312b'}`});
+    r[i ? 'jb' : 'ob'] = {el: b, wmax};
+  });
+  const cap = mk('text', {x: W / 2, y: capY, 'text-anchor': 'middle', style: `font:700 ${Math.max(fs * .85, 12)}px var(--body);fill:var(--muted)`});
+  cap.textContent = 'Damage from the same quake (illustrative)';
+  R = r;
+  update(true);
+  pose();
+}
+
+function update(instant) {
+  if (!R) return;
+  const d = dmg(m);
+  Kit.$('mv').textContent = 'M ' + m.toFixed(1);
+  const to = (o, v) => instant || Kit.calm ? (o.w = v) : gsap.to(o, {w: v, duration: .35, ease: 'power2.out', overwrite: true});
+  to(bars.o, d); to(bars.j, d * JP);
+  if (instant || Kit.calm) setBars();
+  R.o.cr.style.opacity = Math.max(0, (d - .2) / .6).toFixed(2);
+  R.o.wins.forEach((w, k) => w.style.opacity = (k * 0.37 % 1) < d * .8 ? .12 : .55);
+}
+function setBars() {
+  if (!R) return;
+  R.ob.el.setAttribute('width', Math.max(R.barH, R.ob.wmax * bars.o.w));
+  R.jb.el.setAttribute('width', Math.max(R.barH, R.jb.wmax * bars.j.w));
+}
+function pose() {
+  if (!R) return;
+  const d = dmg(m), A = Kit.calm ? 0 : (m - 5.7) * R.W * 0.006;
+  const gx = A * Math.sin(t * 26);
+  R.ground.setAttribute('transform', `translate(${gx},0)`);
+  const tilt = d > .45 ? (d - .45) * 14 : 0;
+  const jit = Kit.calm ? 0 : (m - 5.7) * 0.9 * Math.sin(t * 31);
+  R.o.g.setAttribute('transform', `translate(${gx},0) rotate(${tilt + jit},${R.o.base},${R.gy})`);
+  const amp = Math.min((m - 5.7) * 3.2, R.swayMax);
+  const sway = Kit.calm ? 0 : amp * Math.sin(t * 7);
+  R.j.g.setAttribute('transform', `translate(${gx * .3},0) translate(${R.j.bx},${R.gy}) skewX(${sway}) translate(${-R.j.bx},${-R.gy})`);
+  setBars();
+}
+
+sl.addEventListener('input', () => {
+  const v = +sl.value;
+  if (Math.floor(v * 2) !== Math.floor(m * 2)) Kit.haptic('selection');
+  m = v; update(false);
+  if (!done && m >= 7.9) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+    requestAnimationFrame(draw);
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add((time, dt) => { t += dt / 1000; pose(); });
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  for (const v of [6.5, 7, 7.5, 8]) { sl.value = v; sl.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 120)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

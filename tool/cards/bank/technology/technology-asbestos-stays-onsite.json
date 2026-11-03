@@ -1,0 +1,37 @@
+{
+  "id": "technology-asbestos-stays-onsite",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.supply_chains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the Turin–Lyon tunnel deal with asbestos in the rock?",
+  "answer": "TELT, the company building the Turin–Lyon line, guarantees that rock containing asbestos never leaves the worksite. It stays inside and is handled under a strict safety protocol. Clean rock is reused, even as aggregate for the tunnel's lining segments.",
+  "move": "Asbestos rock stays on site; clean rock becomes tunnel lining.",
+  "keywords": [
+    "asbestos",
+    "turin-lyon tunnel",
+    "telt",
+    "tunnel lining",
+    "rock"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive page asking how the Turin–Lyon tunnel handles asbestos in the rock. Three counters start at zero: lining segments, asbestos loads kept on site, and asbestos loads that left. A Dig button sends each rock load to its destination."
+  },
+  "source": "Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Jo7Sd0wxNE0&t=364s",
+  "written": "2026-11-03"
+}

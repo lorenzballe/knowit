@@ -1,0 +1,198 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who noticed the shirt</title>
+<!-- The spotlight effect (Gilovich, Medvec & Savitsky 2000, Study 1). The reader stands in the doorway
+     of a hand-drawn room in an embarrassing T-shirt and slides a guess: as it grows, that many heads
+     turn to stare. Then the room is reset and only the real share turns: wearers guessed 46%, about 23%
+     had noticed (6 and 3 of the 13 drawn here). Inspired by Diventare Strong, "Come apparire Dominanti,
+     Sicuri di se" (how others see you when you walk into a room). Touch: drags (the slider). -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#room{flex:1;min-height:0;width:100%;display:block}
+#ask{display:flex;flex-direction:column;gap:.6cqh}
+.askrow{display:flex;align-items:baseline;justify-content:space-between;gap:3cqw}
+.askrow span{font:700 max(1.9cqh,12.5px)/1 var(--body)}
+#guess{font:800 max(2.3cqh,14px)/1 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+#slide{-webkit-appearance:none;appearance:none;width:100%;height:4.6cqh;background:transparent;touch-action:none;cursor:grab;margin:0;--p:0%}
+#slide::-webkit-slider-runnable-track{height:1.1cqh;border-radius:99px;background:linear-gradient(to right,var(--hi) var(--p),color-mix(in srgb,var(--k) 28%,transparent) var(--p))}
+#slide::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:3.8cqh;height:3.8cqh;margin-top:-1.35cqh;border-radius:50%;background:var(--k);box-shadow:0 .3cqh .9cqh rgba(20,0,50,.3)}
+#slide::-moz-range-track{height:1.1cqh;border-radius:99px;background:linear-gradient(to right,var(--hi) var(--p),color-mix(in srgb,var(--k) 28%,transparent) var(--p))}
+#slide::-moz-range-thumb{width:3.8cqh;height:3.8cqh;border:0;border-radius:50%;background:var(--k)}
+#res{display:flex;gap:2cqw}
+#res div{flex:1;border-radius:1.6cqh;padding:1cqh 2.6cqw;background:color-mix(in srgb,var(--k) 12%,transparent);display:flex;flex-direction:column;gap:.5cqh}
+#res div.real{background:var(--hi);color:#1b0b33}
+#res b{font:800 max(2.6cqh,15px)/1 var(--display);font-variant-numeric:tabular-nums}
+#res span{font:700 max(1.5cqh,11.5px)/1.1 var(--body)}
+.answered .q{font-size:max(2.5cqh,15px)}
+/* The small phone at the end: the room keeps the room it needs, the numbers fit one line. */
+@container (max-height:520px){
+  .answered #stage{gap:.8cqh}
+  #res{gap:4cqw}
+  #res div{flex:none;flex-direction:row;align-items:baseline;gap:1.4cqw;padding:0;background:none}
+  #res div.mine{display:none}
+  #res div.real{background:none;color:var(--hi)}
+  #res b{font-size:max(2.3cqh,14px)}
+}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Estimate · how sure" style="--hi:#FFE15A">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS</span></div>
+    <h2 class="q">You walk into a room in an embarrassing T-shirt. How many people noticed?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="room" role="img" aria-label="A classroom seen from the front: thirteen students at desks, and you in the doorway in a bright T-shirt."></canvas>
+      <div id="ask">
+        <div class="askrow"><span>Slide: how many noticed it?</span><b id="guess">0 of 13</b></div>
+        <input id="slide" type="range" min="0" max="13" step="1" value="0" data-drag aria-label="How many of the 13 noticed the shirt">
+      </div>
+      <div id="res" class="gone">
+        <div class="mine"><b id="you">0%</b><span>your guess</span></div>
+        <div><b>46%</b><span>wearers guessed</span></div>
+        <div class="real"><b>23%</b><span>really noticed</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">In the study, Cornell students wore a shirt with a big face of crooner Barry Manilow.</p>
+    <div id="sure"></div>
+    <p class="say gone" id="why">The shirt fills your attention, so you assume it fills theirs. Most of the evidence is one team’s studies of students; it held for flattering shirts too.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>People notice you far less than you think: your slips, and your shine.</div>
+    <div class="foot"><span class="src">Source · Gilovich, Medvec &amp; Savitsky, JPSP 78: 211–222, 2000</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const N = 13, REAL = 3, cv = Kit.$('room'), slide = Kit.$('slide'), card = Kit.$('card');
+  const INK = '#ffffff', HI = '#FFE15A', DARK = '#1b0b33';
+  // The order heads turn as the guess grows (nearest the door first, rows mixed), and the three who really did.
+  const ORDER = [8, 4, 9, 0, 5, 10, 1, 6, 11, 2, 7, 12, 3], NOTICED = [9, 5, 1];
+  let look = new Array(N).fill(0), lit = new Array(N).fill(0), seats = [], dims = null, guess = 0, revealed = false, ctx = null;
+
+  // Figures are sized by the room's height, spread by its width, so a short wide room stays in proportion.
+  function layout() {
+    const r = cv.getBoundingClientRect(), W = r.width, H = r.height;
+    const R = Math.min(W * .036, H * .072);
+    const door = {x: W * .02, w: Math.min(W * .2, H * .62)};
+    const left = door.x + door.w + R * 2.6, right = W - R * 2.3;
+    const rows = [{n: 4, y: .34, s: .76}, {n: 4, y: .57, s: .88}, {n: 5, y: .8, s: 1}];
+    seats = [];
+    rows.forEach((row, k) => {
+      const inset = row.n === 4 ? (right - left) * .1 : 0, x0 = left + inset + (k === 1 ? R * .9 : 0), x1 = right - inset + (k === 1 ? R * .9 : 0) - (k === 1 ? R * 1.8 : 0);
+      for (let i = 0; i < row.n; i++) seats.push({x: x0 + (x1 - x0) * i / (row.n - 1), y: H * row.y, r: R * row.s, seed: 11 + seats.length * 7});
+    });
+    dims = {W, H, R, door};
+  }
+  // Sized to the canvas's real box once per resize; every frame after that only redraws.
+  function fit() { ctx = Kit.fitCanvas(cv).x; layout(); }
+
+  function draw() {
+    if (!ctx) fit();
+    const x = ctx, {W, H, door} = dims, rc = rough.canvas(cv);
+    x.clearRect(0, 0, W, H);
+    const line = (a, b, c, d, o = {}) => rc.line(a, b, c, d, Object.assign({stroke: INK, strokeWidth: 1.4, roughness: .9, seed: 3}, o));
+    // the board on the back wall
+    const bx = door.x + door.w + W * .08;
+    rc.rectangle(bx, H * .04, W * .96 - bx, H * .12, {stroke: 'rgba(255,255,255,.45)', strokeWidth: 1.2, roughness: 1.1, seed: 5});
+    // a few lines of chalk on it
+    const bw = W * .96 - bx;
+    [[.08, .075, .55], [.08, .118, .38], [.6, .118, .3]].forEach(([a, yy, len], k) => {
+      const pts = []; for (let t = 0; t <= 12; t++) pts.push([bx + bw * (a + len * t / 12), H * yy + Math.sin(t * 1.7 + k) * H * .006]);
+      rc.linearPath(pts, {stroke: 'rgba(255,255,255,.35)', strokeWidth: 1.1, roughness: .6, seed: 40 + k});
+    });
+    // the door, and you in it
+    const dt = H * .05, dh = H * .93;
+    rc.rectangle(door.x, dt, door.w, dh, {stroke: 'rgba(255,255,255,.6)', strokeWidth: 1.3, roughness: 1, seed: 6});
+    const ux = door.x + door.w / 2, lab = Math.max(11.5, H * .06), uR = Math.min(door.w * .2, H * .075), uy = dt + lab + 6 + uR;
+    rc.circle(ux, uy, uR * 2, {stroke: INK, strokeWidth: 1.6, fill: 'rgba(255,255,255,.12)', fillStyle: 'solid', roughness: .8, seed: 7});
+    // the shirt, with its crooner
+    const sw = door.w * .78, st = uy + uR * 1.2, sh = (dt + dh - st) * .58;
+    rc.path(`M${ux - sw / 2} ${st + sh}L${ux - sw / 2} ${st + sh * .2}Q${ux - sw / 2} ${st} ${ux - sw * .2} ${st}L${ux + sw * .2} ${st}Q${ux + sw / 2} ${st} ${ux + sw / 2} ${st + sh * .2}L${ux + sw / 2} ${st + sh}Z`, {stroke: INK, strokeWidth: 1.5, fill: HI, fillStyle: 'solid', roughness: .9, seed: 8});
+    const fr = Math.min(sw * .24, sh * .3), fx = ux, fy = st + sh * .52;
+    x.save(); x.strokeStyle = DARK; x.fillStyle = DARK; x.lineWidth = Math.max(1, fr * .1); x.lineCap = 'round';
+    // feathered hair over an oval face, two eyes, a long nose, a crooner's smile
+    x.beginPath(); x.ellipse(fx, fy, fr * .78, fr, 0, 0, Math.PI * 2); x.stroke();
+    x.beginPath(); x.moveTo(fx - fr * 1.05, fy + fr * .2); x.quadraticCurveTo(fx - fr * 1.15, fy - fr * 1.35, fx + fr * .2, fy - fr * 1.25); x.quadraticCurveTo(fx + fr * 1.25, fy - fr * 1.1, fx + fr * 1.05, fy + fr * .25); x.quadraticCurveTo(fx + fr * .7, fy - fr * .55, fx - fr * .1, fy - fr * .6); x.quadraticCurveTo(fx - fr * .75, fy - fr * .45, fx - fr * 1.05, fy + fr * .2); x.fill();
+    for (const s of [-1, 1]) { x.beginPath(); x.arc(fx + s * fr * .32, fy - fr * .05, fr * .1, 0, Math.PI * 2); x.fill(); }
+    x.beginPath(); x.moveTo(fx + fr * .02, fy); x.lineTo(fx + fr * .16, fy + fr * .38); x.lineTo(fx - fr * .04, fy + fr * .4); x.stroke();
+    x.beginPath(); x.arc(fx, fy + fr * .45, fr * .32, .15 * Math.PI, .85 * Math.PI); x.stroke();
+    x.restore();
+    line(ux - sw * .26, st + sh, ux - sw * .28, dt + dh - 2, {seed: 9}); line(ux + sw * .26, st + sh, ux + sw * .28, dt + dh - 2, {seed: 10});
+    x.fillStyle = INK; x.font = `700 ${lab}px Figtree`; x.textAlign = 'center'; x.textBaseline = 'alphabetic'; x.fillText('you', ux, dt + lab + 2);
+    // the students: shoulders, a desk with a sheet, a head that looks down at it or round at you
+    seats.forEach((p, i) => {
+      const r = p.r, l = look[i], g = lit[i];
+      const hx = p.x - l * r * .3, hy = p.y - l * r * .1;
+      rc.path(`M${p.x - r * 1.55} ${p.y + r * 2.35}Q${p.x - r * 1.5} ${p.y + r * 1.15} ${p.x} ${p.y + r * 1.1}Q${p.x + r * 1.5} ${p.y + r * 1.15} ${p.x + r * 1.55} ${p.y + r * 2.35}`, {stroke: INK, strokeWidth: 1.3, roughness: .8, seed: p.seed});
+      // a face that stares is lit and turned to the door: light fill, a nose pointing at you, dark eyes
+      rc.circle(hx, hy, r * 2, {stroke: g ? HI : INK, strokeWidth: g ? 2.2 : 1.3 + .5 * l, fill: g ? HI : `rgba(255,255,255,${(.1 + .82 * l).toFixed(3)})`, fillStyle: 'solid', roughness: .7, seed: p.seed + 1});
+      if (l > .35) {
+        const k = Math.min(1, (l - .35) / .4);
+        x.save(); x.globalAlpha = k; x.fillStyle = g ? HI : '#fff'; x.strokeStyle = g ? HI : INK; x.lineWidth = 1.2; x.lineJoin = 'round';
+        x.beginPath(); x.moveTo(hx - r * .9, hy - r * .16); x.lineTo(hx - r * 1.32, hy + r * .24); x.lineTo(hx - r * .86, hy + r * .32); x.closePath(); x.fill(); x.stroke();
+        x.restore();
+      }
+      line(p.x - r * 2.05, p.y + r * 2.35, p.x + r * 2.05, p.y + r * 2.35, {seed: p.seed + 2, strokeWidth: 1.5});
+      x.save(); x.fillStyle = 'rgba(255,255,255,.55)'; x.fillRect(p.x - r * .4, p.y + r * 1.75, r * 1.1, r * .55); x.restore();
+      const ex = hx - l * r * .44, ey = hy + (1 - l) * r * .32 - l * r * .08, gap = r * .36 * (1 - .32 * l), eye = (g || l >= .5) ? DARK : INK;
+      x.save(); x.fillStyle = eye; x.strokeStyle = eye; x.lineWidth = Math.max(1, r * .14); x.lineCap = 'round';
+      for (const s of [-1, 1]) {
+        if (l < .5) { x.beginPath(); x.moveTo(ex + s * gap - r * .14, ey); x.lineTo(ex + s * gap + r * .14, ey); x.stroke(); }
+        else { x.beginPath(); x.arc(ex + s * gap, ey, r * .17, 0, Math.PI * 2); x.fill(); }
+      }
+      x.restore();
+    });
+  }
+
+  // As the guess grows, more of the room turns to stare at you.
+  let turn = null;
+  function setGuess(n, animate) {
+    guess = n;
+    Kit.$('guess').textContent = `${n} of ${N} · ${Math.round(n / N * 100)}%`;
+    slide.style.setProperty('--p', (n / N * 100) + '%');
+    const target = look.map((_, i) => ORDER.indexOf(i) < n ? 1 : 0);
+    if (turn) turn.kill();
+    if (!animate || Kit.calm) { look = target; draw(); return; }
+    const from = look.slice(), t = {k: 0};
+    turn = gsap.to(t, {k: 1, duration: .25, ease: 'power2.out', onUpdate: () => { look = from.map((v, i) => v + (target[i] - v) * t.k); draw(); }});
+  }
+
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = Math.abs(guess - REAL) <= 1;
+    Kit.answer({choice: `${Math.round(guess / N * 100)}%`, correct: ok, sure: pct});
+    sure.grade(ok, pct, `${guess} of ${N}, ${ok ? 'close' : guess > REAL ? 'too many' : 'too few'}`);
+    revealed = true; card.classList.add('answered');
+    Kit.$('you').textContent = Math.round(guess / N * 100) + '%';
+    Kit.hide('ask'); Kit.hide('say'); Kit.show('res'); Kit.show('why'); Kit.show('keep');
+    requestAnimationFrame(() => { fit(); reveal(); });
+  });
+
+  // The room resets, then only the three who really noticed look up, lit.
+  function reveal() {
+    if (turn) turn.kill();
+    const done = () => { look = look.map((_, i) => NOTICED.includes(i) ? 1 : 0); lit = lit.map((_, i) => NOTICED.includes(i) ? 1 : 0); draw(); };
+    if (Kit.calm) return done();
+    const from = look.slice(), t = {k: 0};
+    gsap.to(t, {k: 1, duration: .35, ease: 'power2.in', onUpdate: () => { look = from.map(v => v * (1 - t.k)); draw(); }, onComplete: () => {
+      NOTICED.forEach((i, j) => gsap.delayedCall(.25 + j * .4, () => { const u = {k: 0}; lit[i] = 1; gsap.to(u, {k: 1, duration: .3, ease: 'back.out(2)', onUpdate: () => { look[i] = u.k; draw(); }}); }));
+    }});
+  }
+
+  slide.addEventListener('input', () => { if (revealed) return; setGuess(+slide.value, true); Kit.haptic('selection'); sure.on(); });
+  Kit.onShow.card = () => { fit(); draw(); };
+  Kit.onEnter.card = () => {
+    if (Kit.calm || revealed) return;
+    // a first nudge: one student glances at you, then back to work
+    const t = {k: 0};
+    gsap.to(t, {k: 1, duration: .45, delay: .3, yoyo: true, repeat: 1, repeatDelay: .4, ease: 'power2.inOut', onUpdate: () => { if (!revealed && guess === 0) { look = look.map((_, i) => i === 8 ? t.k : 0); draw(); } }});
+  };
+  Kit.play.card = async () => {
+    slide.value = 6; slide.dispatchEvent(new Event('input'));
+    await new Promise(r => setTimeout(r, 400));
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await new Promise(r => setTimeout(r, Kit.calm ? 100 : 2400));
+  };
+})();
+Kit.single();
+</script>
+</html>

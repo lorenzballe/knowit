@@ -1,0 +1,37 @@
+{
+  "id": "science-antarctica-co2-2100",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.estimating",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What CO₂ levels are projected for 2100, and why does Antarctica care?",
+  "answer": "By 2100, scenarios put atmospheric CO₂ between 730 and 1,020 parts per million. Levels like these could dramatically speed up Antarctic melting, pushing the continent toward a far warmer, even tropical, climate. Tap both 2100 scenarios to watch the ice.",
+  "move": "2100: 730–1,020 ppm CO₂, enough to put Antarctica's ice at real risk.",
+  "keywords": [
+    "antarctica",
+    "co2",
+    "ice-sheet",
+    "climate-scenarios",
+    "2100"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive map of Antarctica with projected warming overlaid. Asks what CO₂ levels are projected for 2100, with low (730 ppm) and high (1,020 ppm) scenario buttons to tap and watch the ice."
+  },
+  "source": "Geopop, “Sotto l'Antartide: come sarebbe il continente senza la calotta di ghiaccio? E come si è formato?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=nCRYmQqs-yc&t=614s",
+  "written": "2026-11-03"
+}

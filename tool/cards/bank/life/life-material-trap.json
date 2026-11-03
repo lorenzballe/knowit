@@ -1,0 +1,37 @@
+{
+  "id": "life-material-trap",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is counting on money or looks for success a mistake?",
+  "answer": "Money and beauty do make a difference, but they only count if you know how to use them. Without skills, know-how and the right mindset, others take them from you. Build yourself first, and your chances of getting money and the rest go up with it.",
+  "move": "Gold is only a tool; the strength has to be yours.",
+  "keywords": [
+    "gold",
+    "money",
+    "skill",
+    "mindset",
+    "wolf"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Slider comparing a bag of gold alone with gold plus skills, know-how and mindset. Drag it to see the same bag of gold with more skill and mindset. The page asks why counting on money or looks for success is a mistake."
+  },
+  "source": "Diventare Strong, “Mentalità D'Acciaio: 7 Pensieri da Eliminare dalla Tua Mente (Atteggiamento Mentale Vincente Strong)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=XuSUFo5JdZo&t=1184s",
+  "written": "2026-11-03"
+}

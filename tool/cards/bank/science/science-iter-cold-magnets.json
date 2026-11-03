@@ -1,0 +1,38 @@
+{
+  "id": "science-iter-cold-magnets",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "ITER's plasma hits 150 million °C. How cold must its magnets be?",
+  "answer": "ITER's magnets are superconductors, which carry electric current with no resistance only at about -269 °C. That deep cold lets them make the huge magnetic field that holds the 150-million-degree plasma away from the walls, since no material could touch it.",
+  "move": "To hold the hottest thing on Earth, ITER needs some of the coldest magnets.",
+  "keywords": [
+    "iter",
+    "superconductors",
+    "plasma",
+    "fusion",
+    "magnets"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks how cold ITER's superconducting magnets must be while its plasma reaches 150 million degrees. The reader drags a marker to guess the magnets' temperature, and the reveal shows -269 °C.",
+    "graded": false
+  },
+  "source": "Geopop, “Fusione nucleare, a che punto è la ricerca? L'eccellenza del progetto ITER” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=W3C02y8A8LY&t=57s",
+  "written": "2026-11-03"
+}

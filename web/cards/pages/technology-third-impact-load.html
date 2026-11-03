@@ -1,0 +1,211 @@
+<!doctype html>
+<!-- slug: technology-third-impact-load -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:block}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#why .big{margin:0}
+.plane{cursor:grab}
+.plane.drag{cursor:grabbing}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see the forces">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THREE LOADS</span></div>
+    <h2 class="q">Besides gravity and wind, what else did the Twin Towers have to resist?</h2>
+    <div class="stagebox" id="stage"><svg id="pic" aria-label="A tower with arrows for its loads, and a plane to drag into it"></svg></div>
+    <p class="say" id="say">Drag the plane into the tower and watch the forces.</p>
+    <div id="why" class="gone">
+      <p class="big">A sudden, dynamic blow</p>
+      <p class="body">Weight presses down and wind pushes sideways, steadily. An aircraft impact is a third load that arrives all at once. The towers were meant to take the hit of a Boeing 707, the largest airliner of the 1960s and 70s.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Weight and wind push steadily; an impact is a sudden third load.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Attentati 11 settembre 2001, documentario tecnico: come sono crollate le Torri Gemelle e la Torre 7” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const HOT = '#e0352b';
+let hit = false, done = false, G = null, lastW = 0, lastH = 0;
+const svg = Kit.$('pic');
+
+function arrowPath(x1, y1, x2, y2, head) {
+  const a = Math.atan2(y2 - y1, x2 - x1), h = head;
+  const bx = x2 - Math.cos(a) * h, by = y2 - Math.sin(a) * h;
+  const lx = bx + Math.cos(a + Math.PI / 2) * h * .6, ly = by + Math.sin(a + Math.PI / 2) * h * .6;
+  const rx = bx + Math.cos(a - Math.PI / 2) * h * .6, ry = by + Math.sin(a - Math.PI / 2) * h * .6;
+  return {line: `M${x1},${y1}L${bx},${by}`, head: `M${x2},${y2}L${lx},${ly}L${rx},${ry}Z`};
+}
+function arrow(parent, x1, y1, x2, y2, w, col) {
+  const g = Kit.mk('g', {}, parent), p = arrowPath(x1, y1, x2, y2, w * 3.2);
+  Kit.mk('path', {d: p.line, stroke: col, 'stroke-width': w, 'stroke-linecap': 'round', fill: 'none'}, g);
+  Kit.mk('path', {d: p.head, fill: col}, g);
+  return g;
+}
+function text(parent, x, y, s, size, attrs = {}) {
+  const t = Kit.mk('text', Object.assign({x, y, 'font-size': size, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 700, 'dominant-baseline': 'middle'}, attrs), parent);
+  t.textContent = s; return t;
+}
+
+function draw() {
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  lastW = W; lastH = H;
+  svg.innerHTML = '';
+  const f = Math.max(12, Math.min(f0, H * .055, W * .045));
+  const x0 = W * .47, w = W * .17, top = H * .08, bot = H * .94, cx = x0 + w / 2;
+  const ty = H * .32, rx = x0 + w + W * .045;
+  const L = Math.min(W * .3, H * .26);
+  const g = {W, H, f, x0, w, top, bot, cx, ty, rx, L};
+
+  // ground
+  Kit.mk('line', {x1: W * .04, x2: W * .96, y1: bot, y2: bot, stroke: 'var(--k)', 'stroke-width': Math.max(2, H * .006), 'stroke-linecap': 'round'}, svg);
+  // tower
+  const tower = Kit.mk('g', {}, svg); g.tower = tower;
+  Kit.mk('rect', {x: x0, y: top, width: w, height: bot - top, fill: 'var(--k)', rx: 2}, tower);
+  const floors = 22;
+  for (let i = 1; i < floors; i++) {
+    const y = top + (bot - top) * i / floors;
+    Kit.mk('line', {x1: x0 + w * .1, x2: x0 + w * .9, y1: y, y2: y, stroke: 'var(--c)', 'stroke-width': 1, opacity: .35}, tower);
+  }
+  for (let j = 1; j < 5; j++) {
+    const x = x0 + w * j / 5;
+    Kit.mk('line', {x1: x, x2: x, y1: top + 4, y2: bot - 4, stroke: 'var(--c)', 'stroke-width': 1, opacity: .25}, tower);
+  }
+  // 1 weight (right side)
+  const sw = Math.max(3, W * .011);
+  arrow(svg, rx + f * .9, H * .44, rx + f * .9, H * .62, sw, 'var(--k)');
+  const wy = Math.max(H * .67, ty + f * 2.2);
+  text(svg, rx, wy, '1 · Weight', f);
+  if (wy + f * 1.4 + f * .5 <= H) text(svg, rx, wy + f * 1.4, 'steady', f * .85, {'font-weight': 500, fill: 'var(--muted)'});
+  // 2 wind (left side)
+  text(svg, x0 - W * .3, H * .55, '2 · Wind', f);
+  text(svg, x0 - W * .3, H * .55 + f * 1.4, 'steady', f * .85, {'font-weight': 500, fill: 'var(--muted)'});
+  g.wind = [];
+  [.68, .76, .84].forEach((k, i) => {
+    g.wind.push(arrow(svg, x0 - W * .3 + i * W * .03, H * k, x0 - W * .025, H * k, sw * .8, 'var(--k)'));
+  });
+  // 3 target / impact
+  g.ring = Kit.mk('circle', {cx, cy: ty, r: w * .62, fill: 'none', stroke: HOT, 'stroke-width': Math.max(2, W * .007), 'stroke-dasharray': '5 5'}, svg);
+  g.lab3 = text(svg, rx, ty - f * .7, '3 · ?', f, {fill: HOT});
+  g.sub3 = text(svg, rx, ty + f * .75, '', f * .85, {'font-weight': 500, fill: HOT});
+  g.impact = Kit.mk('g', {opacity: 0}, svg);
+  arrow(g.impact, x0 - W * .3, ty, x0 + w * .35, ty, sw * 1.7, HOT);
+  g.flash = Kit.mk('circle', {cx: x0 + w * .3, cy: ty, r: w * .5, fill: HOT, opacity: 0}, svg);
+
+  // plane (top view, facing right)
+  const pl = Kit.mk('g', {class: 'plane'}, svg); g.plane = pl;
+  const b = Kit.mk('g', {}, pl);
+  Kit.mk('rect', {x: -L * .7, y: -L * .7, width: L * 1.4, height: L * 1.4, fill: 'transparent'}, b);
+  Kit.mk('ellipse', {cx: 0, cy: 0, rx: L / 2, ry: L * .065, fill: 'var(--k)'}, b);
+  Kit.mk('path', {d: `M${L*.1},0L${-L*.12},${-L*.42}L${-L*.22},${-L*.42}L${-L*.1},0L${-L*.22},${L*.42}L${-L*.12},${L*.42}Z`, fill: 'var(--k)'}, b);
+  Kit.mk('path', {d: `M${-L*.36},0L${-L*.46},${-L*.17}L${-L*.51},${-L*.17}L${-L*.45},0L${-L*.51},${L*.17}L${-L*.46},${L*.17}Z`, fill: 'var(--k)'}, b);
+  Kit.mk('ellipse', {cx: -L * .16, cy: -L * .2, rx: L * .06, ry: L * .025, fill: HOT}, b);
+  Kit.mk('ellipse', {cx: -L * .16, cy: L * .2, rx: L * .06, ry: L * .025, fill: HOT}, b);
+  g.home = {x: W * .06 + L / 2, y: Math.max(L * .45, H * .12)};
+  g.px = g.home.x; g.py = g.home.y;
+  G = g;
+  place();
+
+  if (hit) { // final state, no motion
+    pl.setAttribute('opacity', 0); pl.style.pointerEvents = 'none';
+    g.impact.setAttribute('opacity', 1);
+    g.ring.setAttribute('stroke-dasharray', 'none');
+    g.lab3.textContent = '3 · Impact'; g.sub3.textContent = 'sudden';
+  } else {
+    bindDrag();
+  }
+}
+function place() { G.plane.setAttribute('transform', `translate(${G.px},${G.py})`); }
+
+function bindDrag() {
+  const pl = G.plane;
+  let dragging = false, ox = 0, oy = 0;
+  const pt = e => { const r = svg.getBoundingClientRect(); return {x: (e.clientX - r.left) * G.W / r.width, y: (e.clientY - r.top) * G.H / r.height}; };
+  pl.addEventListener('pointerdown', e => {
+    if (hit) return;
+    e.preventDefault(); dragging = true; pl.classList.add('drag');
+    gsap.killTweensOf(G);
+    const p = pt(e); ox = p.x - G.px; oy = p.y - G.py;
+    Kit.haptic('selection');
+    try { pl.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  const move = e => {
+    if (!dragging || hit) return;
+    const p = pt(e);
+    G.px = Math.max(G.L * .3, Math.min(G.W - G.L * .3, p.x - ox));
+    G.py = Math.max(G.L * .3, Math.min(G.H - G.L * .3, p.y - oy));
+    place();
+    if (G.px + G.L * .5 > G.x0 + G.w * .15 && G.py > G.top && G.py < G.bot) { dragging = false; strike(); }
+  };
+  const up = () => {
+    if (!dragging) return; dragging = false; pl.classList.remove('drag');
+    if (!hit) gsap.to(G, {px: G.home.x, py: G.home.y, duration: .45, ease: 'power3.out', onUpdate: place});
+  };
+  pl.addEventListener('pointermove', move);
+  window.addEventListener('pointermove', move);
+  pl.addEventListener('pointerup', up);
+  window.addEventListener('pointerup', up);
+  pl.addEventListener('pointercancel', up);
+}
+
+function strike() {
+  if (hit) return; hit = true;
+  const g = G; g.plane.style.pointerEvents = 'none';
+  Kit.haptic('success');
+  const cal = Kit.calm;
+  const tl = gsap.timeline({onComplete: finish});
+  tl.to(g, {px: g.x0 - g.L * .1, py: g.ty, duration: cal ? .01 : .22, ease: 'power2.in', onUpdate: place})
+    .to(g.plane, {opacity: 0, duration: cal ? .01 : .12})
+    .set(g.flash, {attr: {opacity: .85}})
+    .to(g.flash, {attr: {r: g.w * 1.6, opacity: 0}, duration: cal ? .01 : .5, ease: 'power2.out'}, '<')
+    .set(g.ring, {attr: {'stroke-dasharray': 'none'}}, '<')
+    .add(() => { g.lab3.textContent = '3 · Impact'; g.sub3.textContent = 'sudden'; }, '<')
+    .fromTo(g.impact, {opacity: 0, scaleX: 0, svgOrigin: `${g.x0 + g.w * .35} ${g.ty}`}, {opacity: 1, scaleX: 1, duration: cal ? .01 : .3, ease: 'power3.out'}, '<');
+  if (!cal) {
+    tl.to(g.tower, {rotation: 2.4, svgOrigin: `${g.cx} ${g.bot}`, duration: .1, ease: 'power2.out'}, '<')
+      .to(g.tower, {rotation: 0, svgOrigin: `${g.cx} ${g.bot}`, duration: 1.1, ease: 'elastic.out(1.2,0.25)'})
+      .fromTo([g.lab3, g.sub3], {x: -6}, {x: 0, duration: .5, ease: 'elastic.out(1,0.3)'}, '<');
+  }
+}
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+}
+
+Kit.onShow.card = () => draw();
+new ResizeObserver(() => {
+  const r = svg.getBoundingClientRect();
+  if (G && (Math.abs(r.width - lastW) > 1 || Math.abs(r.height - lastH) > 1) && (!hit || done)) draw();
+}).observe(Kit.$('stage'));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G || hit) return;
+  gsap.fromTo(G.plane, {opacity: 0}, {opacity: 1, duration: .4});
+  gsap.fromTo(G.wind, {x: -8}, {x: 0, duration: .9, stagger: .12, ease: 'sine.inOut', repeat: 2, yoyo: true});
+  gsap.fromTo(G.ring, {attr: {'stroke-dashoffset': 0}}, {attr: {'stroke-dashoffset': -40}, duration: 2, ease: 'none', repeat: 3});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svg.getBoundingClientRect(), sx = r.width / G.W, sy = r.height / G.H;
+  const at = (x, y) => ({clientX: r.left + x * sx, clientY: r.top + y * sy, pointerId: 1, bubbles: true, isPrimary: true, pointerType: 'mouse'});
+  const s = at(G.px, G.py);
+  G.plane.dispatchEvent(new PointerEvent('pointerdown', s));
+  for (let i = 1; i <= 8 && !hit; i++) {
+    const k = i / 8;
+    window.dispatchEvent(new PointerEvent('pointermove', at(G.home.x + (G.x0 + G.w * .3 - G.home.x) * k, G.home.y + (G.ty - G.home.y) * k)));
+    await wait(30);
+  }
+  window.dispatchEvent(new PointerEvent('pointerup', at(G.cx, G.ty)));
+  await wait(2000);
+  finish();
+  await wait(300);
+};
+Kit.single();
+</script>
+</html>

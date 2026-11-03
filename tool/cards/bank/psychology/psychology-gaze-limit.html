@@ -1,0 +1,270 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Too long a gaze</title>
+<!-- A stranger's eyes, drawn in chalk, look down; the reader taps Start, the eyes lift and hold
+     theirs, and the reader taps the moment it feels too long. Their time lands on the preferred gaze
+     durations of the 428 Science Museum visitors in Binetti et al. 2016 (Royal Society Open Science
+     3: 160086), redrawn from the paper's figure 1b: 30 bins of 0.263 s from 0.84 s, which sum to 428
+     and give the paper's mean of 3.3 s (mode 2.8 s). About 77% of the visitors fall between 2 and 5 s.
+     Inspired by Diventare Strong (Alex Onofri), "Come Avere Uno Sguardo Penetrante": the card shows
+     what research found instead of a technique. Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/rough.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#eyes,#chart{flex:1;min-height:0;width:100%;display:block;overflow:visible;user-select:none;-webkit-user-select:none}
+#stage[data-tap]{cursor:pointer}
+#go{align-self:flex-start;min-width:34cqw}
+#res{display:flex;flex-direction:column;gap:1.1cqh}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){.answered .in{gap:7px}.answered .keep{padding:9px 15px}.answered #res{gap:5px}}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Tap to stop · a stranger's gaze">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EYE CONTACT</span></div>
+    <h2 class="q">How long can you hold a stranger’s gaze before it feels too long?</h2>
+    <div class="stagebox" id="stage" data-tap>
+      <svg id="eyes" role="img" aria-label="A stranger's eyes, drawn in chalk. They look down until you tap Start, then look straight at you."></svg>
+      <svg id="chart" class="gone" role="img" aria-label="How long 428 museum visitors were comfortable holding a stranger's gaze: most between 2 and 5 seconds, average 3.3 seconds, with your time marked."></svg>
+    </div>
+    <p class="say" id="say">Picture a stranger facing you on the train. Tap <b>Start</b> and they look up at you. Tap again the moment it feels too long.</p>
+    <div id="res" class="gone">
+      <p class="say" id="r1"></p>
+    </div>
+    <button class="btn" id="go">Start</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A stranger’s gaze feels right for about 3 s. Past 5 s, nine in ten find it too long.</div>
+    <div class="foot"><span class="src">Source · Binetti et al., “Pupil dilation as an index of preferred mutual gaze duration”, Royal Society Open Science, 2016</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const card = Kit.$('card'), stage = Kit.$('stage'), eyes = Kit.$('eyes'), chart = Kit.$('chart');
+  const go = Kit.$('go'), say = Kit.$('say');
+  // Preferred gaze durations of the 428 visitors with a good psychometric fit (Binetti et al. 2016,
+  // fig. 1b): 30 bins of 0.2627 s from 0.837 s.
+  const BIN0 = .837, BW = .2627, N = 428, MEAN = 3.3, CAP = 12;
+  const COUNTS = [4, 7, 11, 26, 25, 31, 39, 40, 39, 30, 31, 28, 24, 23, 20, 11, 12, 8, 8, 0, 1, 2, 2, 1, 0, 1, 0, 1, 1, 2];
+  const INK = '#ffffff', PUPIL = '#26104f';
+  // 0: waiting, eyes down. 1: the stranger holds the reader's gaze. 2: stopped, the chart.
+  let state = 0, t0 = 0, took = null, parts = null;
+  const pose = {lid: .46, look: 1, brow: .05}, jit = {x: 0, y: 0};
+  let loops = [];
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const anim = () => !Kit.calm && typeof gsap !== 'undefined';
+
+  // The share of visitors whose comfortable gaze ran out before t seconds.
+  function shareBelow(t) {
+    let s = 0;
+    COUNTS.forEach((c, i) => { const a = BIN0 + i * BW; if (t >= a + BW) s += c; else if (t > a) s += c * (t - a) / BW; });
+    return s / N;
+  }
+
+  // ---------- the eyes ----------
+  function drawEyes() {
+    eyes.innerHTML = '';
+    const {W, H} = Kit.fitSvg(eyes);
+    const bg = getComputedStyle(card).getPropertyValue('--c').trim() || '#9B5CFF';
+    const eh = Math.min(W * .156, H / 4.05), ew = eh / .42, gap = ew * .3, cy = H * .44;
+    const sw = Math.max(1.6, eh * .055);
+    const rc = rough.svg(eyes);
+    const chalk = (d, o) => rc.path(d, Object.assign({stroke: INK, strokeWidth: sw, roughness: .7, bowing: .4, seed: 5}, o));
+    const defs = Kit.mk('defs', {}, eyes);
+    const face = Kit.mk('g', {}, eyes);
+    const browG = Kit.mk('g', {}, face);
+    const list = [];
+    [W / 2 - gap / 2 - ew / 2, W / 2 + gap / 2 + ew / 2].forEach((ex, k) => {
+      const s = k === 0 ? 1 : -1;               // toward the nose
+      const ey = cy, inY = ey + eh * .08, outY = ey - eh * .03;
+      const A = [ex - ew / 2, k === 0 ? outY : inY], B = [ex + ew / 2, k === 0 ? inY : outY];
+      const up1 = [A[0] + ew * .2 + s * ew * .03, ey - eh * .7], up2 = [B[0] - ew * .2 + s * ew * .03, ey - eh * .7];
+      const lo1 = [B[0] - ew * .22, ey + eh * .52], lo2 = [A[0] + ew * .22, ey + eh * .52];
+      const P = p => p.map(v => v.toFixed(1)).join(' ');
+      const upper = `M${P(A)} C${P(up1)} ${P(up2)} ${P(B)}`;
+      const almond = `${upper} C${P(lo1)} ${P(lo2)} ${P(A)}Z`;
+      const id = 'eye' + k;
+      Kit.mk('path', {d: almond}, Kit.mk('clipPath', {id}, defs));
+      const inside = Kit.mk('g', {'clip-path': `url(#${id})`}, face);
+      Kit.mk('path', {d: almond, fill: INK, 'fill-opacity': .26}, inside);
+      // The iris: a ring of chalk strokes round a dark pupil, like the video's blackboard eye.
+      const iris = Kit.mk('g', {}, inside), r = eh * .5, ix = ex + s * ew * .015, iy = ey - eh * .02;
+      Kit.mk('circle', {cx: ix, cy: iy, r, fill: bg, 'fill-opacity': .55}, iris);
+      for (let i = 0; i < 34; i++) {
+        const a = i / 34 * Math.PI * 2 + Kit.rnd() * .08, r0 = r * (.46 + Kit.rnd() * .08), r1 = r * (.8 + Kit.rnd() * .16);
+        Kit.mk('line', {x1: ix + r0 * Math.cos(a), y1: iy + r0 * Math.sin(a), x2: ix + r1 * Math.cos(a), y2: iy + r1 * Math.sin(a), stroke: INK, 'stroke-opacity': .62, 'stroke-width': Math.max(1, sw * .5), 'stroke-linecap': 'round'}, iris);
+      }
+      Kit.mk('circle', {cx: ix, cy: iy, r, fill: 'none', stroke: INK, 'stroke-width': sw * .9}, iris);
+      Kit.mk('circle', {cx: ix, cy: iy, r: r * .42, fill: PUPIL}, iris);
+      Kit.mk('circle', {cx: ix - r * .26, cy: iy - r * .3, r: r * .13, fill: INK}, iris);
+      Kit.mk('circle', {cx: ix + r * .2, cy: iy + r * .18, r: r * .05, fill: INK, 'fill-opacity': .8}, iris);
+      // The upper lid, the colour of the skin, with the lash line along its edge.
+      const lid = Kit.mk('g', {}, inside);
+      Kit.mk('path', {d: `${upper} L${(B[0] + 6).toFixed(1)} ${(ey - eh * 3).toFixed(1)} L${(A[0] - 6).toFixed(1)} ${(ey - eh * 3).toFixed(1)}Z`, fill: bg}, lid);
+      Kit.mk('path', {d: upper, fill: 'none', stroke: INK, 'stroke-width': sw * 2.3, 'stroke-linecap': 'round'}, lid);
+      // Chalk outlines: the crease above, the lower lid, a brow.
+      const crease = `M${P([A[0] + ew * .1, A[1] - eh * .32])} C${P([up1[0], ey - eh * 1.02])} ${P([up2[0], ey - eh * 1.02])} ${P([B[0] - ew * .06, B[1] - eh * .34])}`;
+      face.appendChild(chalk(crease, {strokeWidth: sw * .8, stroke: 'rgba(255,255,255,.6)', seed: 11 + k}));
+      face.appendChild(chalk(`M${P(B)} C${P(lo1)} ${P(lo2)} ${P(A)}`, {strokeWidth: sw * .9, stroke: 'rgba(255,255,255,.85)', seed: 21 + k}));
+      // A brow: a tapered shape shaded in chalk, thin at the temple, full toward the nose.
+      const outer = k === 0 ? A[0] : B[0], inner = k === 0 ? B[0] : A[0];
+      const b0 = [outer - s * ew * .02, ey - eh * 1.08], b1 = [outer + s * ew * .24, ey - eh * 1.56], b2 = [inner - s * ew * .28, ey - eh * 1.62], b3 = [inner + s * ew * .02, ey - eh * 1.36];
+      const at = (u, i) => (1 - u) ** 3 * b0[i] + 3 * (1 - u) ** 2 * u * b1[i] + 3 * (1 - u) * u * u * b2[i] + u ** 3 * b3[i];
+      const tan = (u, i) => 3 * (1 - u) ** 2 * (b1[i] - b0[i]) + 6 * (1 - u) * u * (b2[i] - b1[i]) + 3 * u * u * (b3[i] - b2[i]);
+      const upper2 = [], lower2 = [];
+      for (let j = 0; j <= 16; j++) {
+        const u = j / 16, x = at(u, 0), y = at(u, 1), dx = tan(u, 0), dy = tan(u, 1), l = Math.hypot(dx, dy) || 1;
+        let nx = -dy / l, ny = dx / l; if (ny > 0) { nx = -nx; ny = -ny; }
+        const th = eh * (.035 + .2 * Math.sin(Math.min(1, u * 1.15) * Math.PI / 2) * (u > .9 ? 1 - (u - .9) * 3 : 1));
+        upper2.push([x + nx * th * .6, y + ny * th * .6]); lower2.push([x - nx * th * .4, y - ny * th * .4]);
+      }
+      browG.appendChild(rc.polygon(upper2.concat(lower2.reverse()), {fill: INK, fillStyle: 'hachure', hachureAngle: k ? 60 : -60, hachureGap: Math.max(1.5, sw * .8), fillWeight: Math.max(.9, sw * .45), stroke: INK, strokeWidth: sw * .5, roughness: .75, bowing: .3, seed: 31 + k}));
+      list.push({lid, iris});
+    });
+    // A nose, just enough to make the eyes someone's.
+    const nx = W / 2, Q = (x, y) => `${(nx + x * ew).toFixed(1)} ${(cy + y * eh).toFixed(1)}`;
+    face.appendChild(chalk(`M${Q(-.09, .35)} C${Q(-.12, 1)} ${Q(-.27, 1.45)} ${Q(-.22, 1.9)} S${Q(-.02, 2.1)} ${Q(.1, 1.98)}`, {strokeWidth: sw * .95, stroke: 'rgba(255,255,255,.78)', seed: 41}));
+    face.appendChild(chalk(`M${Q(.17, 1.97)} C${Q(.24, 1.95)} ${Q(.27, 1.86)} ${Q(.25, 1.76)}`, {strokeWidth: sw * .8, stroke: 'rgba(255,255,255,.6)', seed: 43}));
+    parts = {eh, ew, eyes: list, brows: browG};
+    apply();
+  }
+  function apply() {
+    if (!parts) return;
+    const {eh, ew} = parts;
+    for (const e of parts.eyes) {
+      e.lid.setAttribute('transform', `translate(0 ${(pose.lid * eh).toFixed(2)})`);
+      e.iris.setAttribute('transform', `translate(${(jit.x * ew).toFixed(2)} ${(pose.look * .3 * eh + jit.y * eh).toFixed(2)})`);
+    }
+    parts.brows.setAttribute('transform', `translate(0 ${(pose.brow * eh).toFixed(2)})`);
+  }
+  const to = (v, d, ease = 'power2.out') => anim() ? gsap.to(pose, Object.assign({duration: d, ease, onUpdate: apply, overwrite: 'auto'}, v)) : (Object.assign(pose, v), apply());
+  function blink() {
+    if (!anim()) return;
+    const back = pose.lid;
+    gsap.timeline({onUpdate: apply}).to(pose, {lid: 1, duration: .07, ease: 'power1.in', onUpdate: apply}).to(pose, {lid: back, duration: .14, ease: 'power1.out', onUpdate: apply});
+  }
+  function stopLoops() { loops.forEach(l => l.kill && l.kill()); loops = []; }
+  // Eyes are never quite still: tiny shifts while they hold yours, a blink now and then.
+  function liveLoops() {
+    stopLoops(); if (!anim()) return;
+    const twitch = () => { gsap.to(jit, {x: (Kit.rnd() - .5) * .022, y: (Kit.rnd() - .5) * .03, duration: .06, onUpdate: apply}); loops.push(gsap.delayedCall(.55 + Kit.rnd() * .6, twitch)); };
+    loops.push(gsap.delayedCall(.6, twitch));
+    loops.push(gsap.delayedCall(5.6, blink), gsap.delayedCall(10.4, blink));
+  }
+  function idleLoops() {
+    stopLoops(); if (!anim()) return;
+    const again = () => { blink(); loops.push(gsap.delayedCall(3.4 + Kit.rnd() * 1.4, again)); };
+    loops.push(gsap.delayedCall(1.8, again));
+  }
+
+  // ---------- the game ----------
+  const LIFT = .38;
+  function start() {
+    if (state !== 0) return;
+    state = 1; took = null;
+    go.textContent = 'Too long';
+    say.innerHTML = 'They are looking at you. Tap the moment it feels <b>too long</b>.';
+    Kit.haptic('light');
+    stopLoops();
+    jit.x = jit.y = 0;
+    to({lid: 0, look: 0, brow: -.04}, LIFT);
+    t0 = performance.now() + (anim() ? LIFT * 1000 : 0);
+    liveLoops();
+    loops.push(anim() ? gsap.delayedCall(CAP + LIFT, () => stop(CAP)) : {kill: (h => () => clearTimeout(h))(setTimeout(() => stop(CAP), CAP * 1000))});
+  }
+  function stop(forced) {
+    if (state !== 1) return;
+    took = forced != null ? forced : Math.max(0, Math.min(CAP, (performance.now() - t0) / 1000));
+    state = 2;
+    stopLoops(); jit.x = jit.y = 0;
+    Kit.haptic('success');
+    to({lid: .5, look: 1.1, brow: .06}, .32);
+    stage.removeAttribute('data-tap');
+    go.classList.add('gone');
+    if (anim()) gsap.delayedCall(.45, reveal); else reveal();
+  }
+  function reveal() {
+    const p = Math.round(100 * shareBelow(took)), ts = took.toFixed(1);
+    let lead;
+    if (took >= CAP) lead = `<b>You held on past ${CAP} s, longer than anyone tested.</b>`;
+    else if (p >= 99) lead = `<b>You: ${ts} s, longer than almost everyone.</b>`;
+    else if (p <= 1) lead = `<b>You: ${ts} s, sooner than almost everyone.</b>`;
+    else lead = `<b>You: ${ts} s, longer than ${p}% of people.</b>`;
+    Kit.$('r1').innerHTML = `${lead} 428 Science Museum visitors in London judged videos of an actor’s gaze. Gender, personality and the actor’s looks didn’t predict their limit. Pupils did, a little: they widened faster in those who liked longer gazes.`;
+    card.classList.add('answered');
+    Kit.hide('say'); Kit.hide('eyes'); Kit.show('chart'); Kit.show('res'); Kit.show('keep');
+    requestAnimationFrame(() => drawChart(true));
+  }
+
+  // ---------- the chart ----------
+  function drawChart(grow) {
+    chart.innerHTML = '';
+    const {W, H} = Kit.fitSvg(chart);
+    const fs = Math.max(11, Math.min(13, H / 13));
+    const X = v => 1 + (W - 2) * v / 9;
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 600}, a), chart); e.textContent = s; return e; };
+    // Where a label of width w starts, kept inside the drawing.
+    const leftOf = (w, x, anchor) => Math.max(0, Math.min(W - w, anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x));
+    const clamp = (e, x, anchor) => { e.setAttribute('x', leftOf(e.getComputedTextLength(), x, anchor).toFixed(1)); e.setAttribute('text-anchor', 'start'); };
+    // The reader's label and the average's share one row when they cannot touch; else two rows.
+    const mx = X(MEAN), right = took < MEAN, yx = X(Math.min(took, 9));
+    const you = Kit.mk('g', {}, chart);
+    const yl = Kit.mk('text', {x: 0, y: 0, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 800}, you);
+    yl.textContent = took >= 9 ? `you · ${took >= CAP ? CAP + '+' : took.toFixed(1)} s →` : `you · ${took.toFixed(1)} s`;
+    const ml = txt(0, 0, 'average 3.3 s', {});
+    const yw = yl.getComputedTextLength(), aw = ml.getComputedTextLength();
+    const yLeft = leftOf(yw, yx, 'middle'), aLeft = leftOf(aw, mx + (right ? 5 : -5), right ? 'start' : 'end');
+    const oneRow = yLeft + yw + 6 < aLeft || aLeft + aw + 6 < yLeft;
+    const row1 = fs * .95, row2 = oneRow ? row1 : fs * 2.15;
+    const top = oneRow ? fs * 1.9 : fs * 3, bot = fs * 1.75, base = H - bot, ph = base - top;
+    Kit.mk('rect', {x: X(2), y: top - fs * .3, width: X(5) - X(2), height: base - top + fs * .3, rx: 5, fill: INK, 'fill-opacity': .1}, chart);
+    const mine = took < BIN0 ? -1 : Math.floor((Math.min(took, 9) - BIN0) / BW);
+    const bars = [];
+    COUNTS.forEach((c, i) => {
+      if (!c) return;
+      const a = BIN0 + i * BW, mid = a + BW / 2, x = X(a) + .7, w = Math.max(1, X(a + BW) - X(a) - 1.4), h = Math.max(2, c / 40 * ph);
+      bars.push(Kit.mk('rect', {x, y: base - h, width: w, height: h, rx: Math.min(2, w / 2), fill: INK, 'fill-opacity': i === mine ? 1 : mid >= 2 && mid <= 5 ? .62 : .36}, chart));
+    });
+    Kit.mk('line', {x1: X(0), x2: X(9), y1: base + .5, y2: base + .5, stroke: INK, 'stroke-opacity': .75, 'stroke-width': 1.2}, chart);
+    // Seconds along the bottom, and between 2 and 5 the three in four who stopped there.
+    const ly = base + fs * 1.45;
+    for (let s = 0; s <= 9; s++) {
+      Kit.mk('line', {x1: X(s), x2: X(s), y1: base, y2: base + fs * .35, stroke: INK, 'stroke-opacity': .75}, chart);
+      if (![0, 2, 5, 9].includes(s)) continue;
+      const e = txt(X(s), ly, s === 9 ? '9 s' : String(s), {'text-anchor': 'middle', 'font-weight': 500, opacity: .85});
+      if (s === 0 || s === 9) clamp(e, X(s), 'middle');
+    }
+    const band = txt((X(2) + X(5)) / 2, ly, '3 in 4 people', {'text-anchor': 'middle', 'font-weight': 700});
+    const bw = band.getComputedTextLength(), bl = (X(2) + X(5)) / 2 - bw / 2 - 5, br = (X(2) + X(5)) / 2 + bw / 2 + 5, by = ly - fs * .33;
+    if (bl > X(2) + fs * .9) for (const [a, b] of [[X(2) + fs * .6, bl], [br, X(5) - fs * .6]]) Kit.mk('line', {x1: a, x2: b, y1: by, y2: by, stroke: INK, 'stroke-width': 1.2}, chart);
+    // The average, its label on the side away from the reader's mark.
+    Kit.mk('line', {x1: mx, x2: mx, y1: row2 + fs * .35, y2: base, stroke: INK, 'stroke-width': 1.4, 'stroke-dasharray': '4 4'}, chart);
+    ml.setAttribute('x', aLeft.toFixed(1)); ml.setAttribute('y', row2.toFixed(1));
+    chart.appendChild(ml);
+    // The reader, drawn last so it sits on top.
+    Kit.mk('line', {x1: yx, x2: yx, y1: row1 + fs * .4, y2: base, stroke: INK, 'stroke-width': 2.4}, you);
+    Kit.mk('circle', {cx: yx, cy: row1 + fs * .4, r: 3.4, fill: INK}, you);
+    yl.setAttribute('x', yLeft.toFixed(1)); yl.setAttribute('y', row1.toFixed(1));
+    chart.appendChild(you);
+    if (grow && anim()) {
+      gsap.from(bars, {attr: {y: base, height: 0}, duration: .5, ease: 'power2.out', stagger: .012});
+      gsap.from(you, {opacity: 0, y: -8, duration: .4, delay: .45, ease: 'power2.out'});
+    }
+  }
+
+  function draw() { if (state < 2) { drawEyes(); } else drawChart(false); }
+  go.addEventListener('click', () => state === 0 ? start() : stop());
+  stage.addEventListener('click', () => { if (state === 0) start(); else if (state === 1) stop(); });
+  Kit.onShow.card = draw;
+  Kit.onEnter.card = () => { if (state === 0) idleLoops(); if (anim()) gsap.from('#eyes', {opacity: 0, duration: .6, ease: 'power1.out'}); };
+  // Swiped away while the stranger is looking: start again from the eyes down.
+  Kit.onHide.card = () => {
+    if (state !== 1) return;
+    stopLoops(); state = 0; go.textContent = 'Start';
+    say.innerHTML = 'Picture a stranger facing you on the train. Tap <b>Start</b> and they look up at you. Tap again the moment it feels too long.';
+    Object.assign(pose, {lid: .46, look: 1, brow: .05}); apply();
+  };
+  Kit.play.card = async () => { start(); await wait(Kit.calm ? 40 : 900); stop(4.1); await wait(Kit.calm ? 60 : 1100); };
+})();
+Kit.single();
+</script>

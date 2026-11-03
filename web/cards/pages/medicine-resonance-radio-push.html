@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- slug: medicine-resonance-radio-push -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#scene{position:relative;flex:1;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#ctrl{display:flex;flex-direction:column;gap:.8cqh}
+#status{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);text-align:center;overflow-wrap:anywhere}
+#status small{display:block;font:500 max(1.6cqh,12px)/1.3 var(--body);color:var(--muted)}
+#rf{-webkit-appearance:none;appearance:none;width:100%;height:max(4.6cqh,32px);background:transparent;margin:0;cursor:pointer;touch-action:pan-y}
+#rf::-webkit-slider-runnable-track{height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#rf::-moz-range-track{height:max(.9cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#rf::-webkit-slider-thumb{-webkit-appearance:none;width:max(4.2cqh,28px);height:max(4.2cqh,28px);border-radius:50%;background:var(--k);margin-top:calc((max(.9cqh,6px) - max(4.2cqh,28px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--c) 70%,transparent)}
+#rf::-moz-range-thumb{width:max(4.2cqh,28px);height:max(4.2cqh,28px);border:0;border-radius:50%;background:var(--k)}
+.ends{display:flex;justify-content:space-between;font:600 max(1.5cqh,12px)/1 var(--body);color:var(--muted)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Tune it · resonance">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MRI</span></div>
+    <h2 class="q">How does the MRI machine excite the protons?</h2>
+    <div class="stagebox" id="stage">
+      <div id="scene"><canvas id="cv"></canvas></div>
+      <div id="ctrl">
+        <div id="status">Radio wave: too slow<small>The pushes miss the proton's rhythm</small></div>
+        <input id="rf" type="range" min="0.3" max="2" step="0.01" value="0.5" aria-label="Radio wave frequency">
+        <div class="ends"><span>slower radio</span><span>faster radio</span></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Same rhythm, so every push lands.</p>
+        <p class="body">The magnet makes each proton spin around a little cone. The machine then sends radio waves at exactly the cone's rhythm, the resonance frequency. Like timed pushes on a swing, they hand the proton energy and tip it over.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Slide to tune the radio wave until the proton tips over.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Matching the protons' own frequency is the “resonance” in magnetic resonance.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const WP = Math.PI * 2 * 0.9;      // proton precession, rad/s
+const BASE = 0.38, FULL = Math.PI / 2 - 0.03, K = 0.42, RELAX = 0.15;
+let C = null, ratio = 0.5, p = 0, d = 0, e = 0, done = false, lastTip = BASE;
+const rf = Kit.$('rf');
+
+function css(n){ return getComputedStyle(Kit.$('card')).getPropertyValue(n).trim() || '#111'; }
+
+function setRatio(v){
+  v = +v;
+  if (Math.abs(v - 1) < 0.05) { v = 1; rf.value = 1; }
+  if (v !== ratio) { ratio = v; d = 0; }
+  const st = Kit.$('status');
+  if (done) return;
+  if (ratio === 1) st.innerHTML = 'In tune: resonance!<small>Every push lands in step, energy builds up</small>';
+  else if (ratio < 1) st.innerHTML = 'Radio wave: too slow<small>The pushes drift out of step and cancel out</small>';
+  else st.innerHTML = 'Radio wave: too fast<small>The pushes drift out of step and cancel out</small>';
+}
+rf.addEventListener('input', () => { const was = ratio; setRatio(rf.value); if (ratio === 1 && was !== 1) Kit.haptic('selection'); });
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+function draw(){
+  if (!C) return;
+  const {x, W, H} = C, ink = css('--k'), muted = css('--muted');
+  x.clearRect(0, 0, W, H);
+  const f = Math.max(12, Math.min(W, H) * 0.048);
+  const sceneH = H * 0.6;
+  const L = Math.min(W * 0.3, sceneH * 0.5);
+  const cx = W / 2, cy = sceneH * 0.72;
+  const tip = Math.min(BASE + Math.abs(e), FULL + 0.03);
+  lastTip = tip;
+  x.lineCap = 'round';
+  // field axis
+  x.strokeStyle = muted; x.lineWidth = Math.max(1.5, f * .12); x.setLineDash([f * .4, f * .35]);
+  x.beginPath(); x.moveTo(cx, cy + L * .25); x.lineTo(cx, cy - L * 1.2); x.stroke(); x.setLineDash([]);
+  x.fillStyle = muted; x.font = `700 ${f * .85}px ${css('--body') || 'sans-serif'}`; x.textAlign = 'left'; x.textBaseline = 'middle';
+  x.fillText('MAGNET FIELD', cx + f * .5, cy - L * 1.12);
+  // cone ellipse
+  const rx = L * Math.sin(tip), ry = rx * 0.3, ey = cy - L * Math.cos(tip);
+  x.strokeStyle = ink; x.globalAlpha = .45; x.lineWidth = Math.max(1.5, f * .1);
+  x.beginPath(); x.ellipse(cx, ey, rx, Math.max(ry, .5), 0, 0, Math.PI * 2); x.stroke();
+  x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx - rx, ey); x.moveTo(cx, cy); x.lineTo(cx + rx, ey); x.stroke();
+  x.globalAlpha = 1;
+  // proton arrow
+  const tx = cx + rx * Math.cos(p), ty = ey + ry * Math.sin(p);
+  x.lineWidth = Math.max(3, f * .28); x.strokeStyle = ink;
+  x.beginPath(); x.moveTo(cx, cy); x.lineTo(tx, ty); x.stroke();
+  const a = Math.atan2(ty - cy, tx - cx), hs = f * .9;
+  x.fillStyle = ink; x.beginPath(); x.moveTo(tx + Math.cos(a) * hs * .4, ty + Math.sin(a) * hs * .4);
+  x.lineTo(tx + Math.cos(a + 2.5) * hs, ty + Math.sin(a + 2.5) * hs);
+  x.lineTo(tx + Math.cos(a - 2.5) * hs, ty + Math.sin(a - 2.5) * hs); x.fill();
+  x.beginPath(); x.arc(cx, cy, L * .13, 0, Math.PI * 2); x.fill();
+  x.fillStyle = muted; x.textAlign = 'center';
+  x.fillText('PROTON', cx, cy + L * .13 + f * 1.1);
+  // energy gauge
+  const pct = Math.max(0, Math.min(1, (tip - BASE) / (FULL - BASE)));
+  const gw = W * .06, gh = sceneH * .62, gx = W - gw - f * .4, gy = sceneH * .12;
+  x.strokeStyle = ink; x.lineWidth = Math.max(1.5, f * .1);
+  x.strokeRect(gx, gy, gw, gh);
+  x.fillStyle = ink; x.fillRect(gx, gy + gh * (1 - pct), gw, gh * pct);
+  x.fillStyle = muted; x.textAlign = 'right';
+  x.fillText('ENERGY', gx + gw, gy + gh + f * 1.1);
+  // two rhythm strips
+  const s0 = sceneH + f * 1.6, sh = (H - s0 - f * .4) / 2, amp = Math.min(sh * .3, f * 1.3);
+  const strip = (y0, label, phase, w, dash) => {
+    x.fillStyle = ink; x.textAlign = 'left'; x.font = `700 ${f * .85}px ${css('--body') || 'sans-serif'}`;
+    x.fillText(label, 0, y0 - f * .2);
+    const mid = y0 + sh * .55;
+    x.strokeStyle = ink; x.lineWidth = Math.max(2, f * .18); x.setLineDash(dash);
+    x.beginPath();
+    for (let i = 0; i <= 120; i++) {
+      const xx = W * i / 120, tau = (W - xx) / W * 2.2;
+      const yy = mid - amp * Math.sin(phase - w * tau);
+      i ? x.lineTo(xx, yy) : x.moveTo(xx, yy);
+    }
+    x.stroke(); x.setLineDash([]);
+  };
+  strip(s0, 'PROTON SPIN RHYTHM', p, WP, []);
+  strip(s0 + sh, 'RADIO WAVE RHYTHM', p + d, WP * ratio, [f * .55, f * .3]);
+}
+
+function tick(_, dtms){
+  const dt = Math.min(dtms / 1000, .05);
+  p += WP * dt;
+  d += (WP * ratio - WP) * dt;
+  if (!done) e += (K * Math.cos(d) - RELAX * e) * dt;
+  else e = Math.min(e + K * dt, FULL);
+  draw();
+  if (!done && BASE + Math.abs(e) >= FULL) finish();
+}
+
+Kit.onShow.card = () => { C = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onEnter.card = () => {
+  gsap.ticker.add(tick);
+  if (!Kit.calm) gsap.from('#ctrl', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  rf.value = 1; rf.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 200));
+  e = FULL; finish(); draw();
+  await new Promise(r => setTimeout(r, 700));
+};
+setRatio(rf.value);
+Kit.single();
+</script>
+</html>

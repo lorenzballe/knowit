@@ -1,0 +1,235 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The longest straw</title>
+<!-- Drag a straw up beside a three-storey house. The drink follows, and the air left in your mouth runs
+     out, until at 10.3 m your mouth is a perfect vacuum and the drink stops: the air outside pushes with
+     one atmosphere, the weight of 10.3 m of water. Then the picture pulls back to a 116 m redwood, which
+     pulls its water up from the leaves instead, under the 122-130 m ceiling Koch et al. (2004) worked out
+     for trees. Drawn by hand with rough.js on SVG. Inspired by Veritasium, "World's Longest Straw".
+     Touch: a drag (anywhere on the picture), a tap. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/rough.js"></script>
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex}
+#pic{flex:1;min-width:0;width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+.hint{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-4px)}}
+.flow{animation:flow .9s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-16}}
+.puff{animation:puff 2.4s ease-out infinite;opacity:0}
+@keyframes puff{0%{opacity:0;transform:translateY(0)}30%{opacity:.85}100%{opacity:0;transform:translateY(-12px)}}
+.kit-calm .puff{opacity:.7}
+#next{align-self:flex-start}
+.answered .q{font-size:max(2.5cqh,15px)}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag the straw up · the air's push">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DRAG THE STRAW UP</span></div>
+    <h2 class="q">How long can a drinking straw be?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" data-drag role="img" aria-label="A glass on the ground, a straw going up beside a three-storey house to a drinker's mouth, and a scale in metres."></svg>
+    </div>
+    <p class="say" id="say">You never pull a drink up a straw. You lower the pressure in your mouth and the air outside <b>pushes</b> it up. <b>Drag the straw longer.</b></p>
+    <button class="btn gone" id="next">So how does a 116 m tree drink?</button>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A straw only lets the air push, and the air gives up at 10.3 m. Trees pull.</div>
+    <div class="foot"><span class="src">Source · Koch et al., Nature 428 (2004); Guinness World Records (2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const svg = Kit.$('pic'), say = Kit.$('say'), next = Kit.$('next'), card = Kit.$('card');
+  const INK = '#10100c', PAPER = '#ffffff';
+  const LIMIT = 10.33;          // m of water one atmosphere holds up: 101,325 Pa / (1,000 kg/m³ × 9.81 m/s²)
+  const TREE = 116;             // Hyperion, the tallest tree known (Guinness: 116.07 m, 2019)
+  let h = 3, water = 3, span = 12, grow = 0, step = 'straw', touched = false, stuck = false;
+  let W = 0, H = 0, fs = 12, GY = 0, PX = 1, X = {}, rc = null;
+  const layers = {};
+
+  const label = (parent, x, y, t, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, fill: INK, 'font-family': 'Figtree', 'font-size': fs, 'font-weight': 700}, a), parent); e.textContent = t; return e; };
+  // A label kept inside the picture: measured, then slid back in from either edge.
+  const fitLabel = (parent, x, y, t, a = {}) => {
+    const e = label(parent, x, y, t, a), w = e.getComputedTextLength(), anchor = a['text-anchor'] || 'start';
+    const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x;
+    const shift = Math.max(2 - left, Math.min(0, W - 2 - (left + w)));
+    if (shift) e.setAttribute('x', x + shift);
+    return e;
+  };
+  const yOf = m => GY - m * PX;
+  const put = (parent, node) => { parent.appendChild(node); return node; };
+
+  function layout() {
+    svg.innerHTML = '';
+    const f = Kit.fitSvg(svg); W = f.W; H = f.H;
+    fs = Math.max(11, Math.min(13, W / 26));
+    rc = rough.svg(svg);
+    GY = H - fs * .8;                          // the ground
+    X = {straw: W * .5, house0: W * .63, house1: W * .95, tree: W * .26};
+    for (const k of ['ground', 'house', 'tree', 'ceil', 'straw', 'notes']) layers[k] = Kit.mk('g', {id: k}, svg);
+    paint();
+  }
+
+  // Everything is drawn again at the current zoom, the picture being ``span`` metres tall.
+  function paint() {
+    if (!rc) return;
+    PX = (GY - fs * 2.4) / span;
+    for (const k in layers) layers[k].innerHTML = '';
+    const L = layers, pen = {stroke: INK, strokeWidth: 1.6, roughness: 1.1, bowing: .8};
+
+    // The ground, and a ruler of metres down the left.
+    put(L.ground, rc.line(0, GY, W, GY, Object.assign({}, pen, {seed: 3, strokeWidth: 2})));
+    const big = span > 40, every = big ? 20 : 2;
+    for (let m = every; m <= span + .01; m += every) {
+      const y = yOf(m); if (y < fs * .8) break;
+      Kit.mk('line', {x1: 0, x2: fs * .55, y1: y, y2: y, stroke: INK, 'stroke-width': 1.4}, L.ground);
+      if (m % (big ? 40 : 4) === 0 && m < 100) label(L.ground, fs * .8, y + fs * .35, `${m} m`, {'font-weight': 600, opacity: .7});
+    }
+
+    // A three-storey house: three floors of 3 m under a flat roof, and a chimney.
+    // as wide as it is tall or less: when the view pulls back it shrinks evenly instead of flattening into a slab
+    const hx0 = X.house0, hx1 = hx0 + Math.min(X.house1 - X.house0, 8 * PX), fh = 3 * PX;
+    put(L.house, rc.rectangle(hx1 - (hx1 - hx0) * .24, yOf(10), (hx1 - hx0) * .12, PX * 1.1, Object.assign({}, pen, {seed: 7, strokeWidth: 1.3, fill: INK, fillStyle: 'hachure', hachureGap: 3, fillWeight: .9})));
+    put(L.house, rc.rectangle(hx0, yOf(9), hx1 - hx0, 9 * PX, Object.assign({}, pen, {seed: 5, fill: 'rgba(255,255,255,.35)', fillStyle: 'solid'})));
+    put(L.house, rc.rectangle(hx0 - PX * .3, yOf(9.35), hx1 - hx0 + PX * .6, PX * .35, Object.assign({}, pen, {seed: 6, strokeWidth: 1.3, fill: INK, fillStyle: 'solid'})));
+    if (fh > 14) for (let i = 0; i < 3; i++) {
+      const ww = (hx1 - hx0) * .24, wh = Math.min(fh * .45, PX * 1.4), wy = yOf(i * 3 + 2.3);
+      [.16, .6].forEach((p, j) => put(L.house, rc.rectangle(hx0 + (hx1 - hx0) * p, wy, ww, wh, Object.assign({}, pen, {seed: 10 + i * 2 + j, strokeWidth: 1.2, fill: INK, fillStyle: 'hachure', hachureGap: 3.5, fillWeight: .8}))));
+      if (i) put(L.house, rc.line(hx0, yOf(i * 3), hx1, yOf(i * 3), Object.assign({}, pen, {seed: 20 + i, strokeWidth: 1})));
+    }
+
+    // The ceiling: what one atmosphere can hold up, once the drink has found it.
+    if (stuck || step === 'tree') {
+      Kit.mk('line', {x1: fs * .8, x2: W, y1: yOf(LIMIT), y2: yOf(LIMIT), stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '6 5'}, L.ceil);
+      if (step === 'straw') { label(L.ceil, fs * 3.4, yOf(LIMIT) + fs * 1.25, '10.3 m: the air', {'font-weight': 800}); label(L.ceil, fs * 3.4, yOf(LIMIT) + fs * 2.45, 'can push no higher', {'font-weight': 800}); }
+    }
+
+    straw(L.straw);
+    if (step === 'tree') tree(L.tree, L.notes);
+  }
+
+  // The glass, the straw with the drink in it, the drinker at the top.
+  function straw(L) {
+    const x = X.straw, gw = Math.max(9, Math.min(24, PX * 1.5)), gh = gw * 1.15, top = yOf(h), wy = yOf(water);
+    const sw = Math.max(2.5, Math.min(7, PX * .45)), big = step === 'straw';
+    put(L, rc.polygon([[x - gw / 2, GY - gh], [x + gw / 2, GY - gh], [x + gw * .38, GY], [x - gw * .38, GY]], {stroke: INK, strokeWidth: 1.5, roughness: .9, seed: 31, fill: 'rgba(16,16,12,.82)', fillStyle: 'solid'}));
+    // The air outside, pushing down on the drink in the glass.
+    if (big && gw > 16) {
+      for (const dx of [-.95, .95]) { const ax = x + dx * gw, ay = GY - gh - fs * 1.1; Kit.mk('path', {d: `M${ax},${ay} V${GY - gh - 3} M${ax - 4},${GY - gh - 8} L${ax},${GY - gh - 2} L${ax + 4},${GY - gh - 8}`, stroke: INK, 'stroke-width': 1.8, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L); }
+      label(L, x - gw * .62 - 5, GY - gh * .2, 'air pushes', {'text-anchor': 'end', 'font-weight': 800});
+    }
+    // The straw, and the drink as far as it gets.
+    const bottom = GY - gh * .35;
+    Kit.mk('rect', {x: x - sw / 2, y: top, width: sw, height: Math.max(0, bottom - top), fill: 'rgba(255,255,255,.8)'}, L);
+    Kit.mk('rect', {x: x - sw / 2, y: Math.max(top, wy), width: sw, height: Math.max(0, bottom - Math.max(top, wy)), fill: INK}, L);
+    put(L, rc.rectangle(x - sw / 2, top, sw, bottom - top, {stroke: INK, strokeWidth: 1.3, roughness: .6, seed: 33}));
+    // The drinker, and what is left in their mouth.
+    const r = Math.max(4, Math.min(11, PX * .9)), hy = top - r * .85;
+    put(L, rc.circle(x, hy, r * 2, {stroke: INK, strokeWidth: 1.5, roughness: .8, seed: 35, fill: PAPER, fillStyle: 'solid'}));
+    if (r > 8) {
+      if (stuck) for (const sg of [-1, 1]) Kit.mk('path', {d: `M${x + sg * r * .6},${hy - r * .4} l${-sg * r * .3},${r * .2} l${sg * r * .3},${r * .2}`, stroke: INK, 'stroke-width': 1.4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, L);
+      else for (const sg of [-1, 1]) Kit.mk('circle', {cx: x + sg * r * .38, cy: hy - r * .18, r: 1.5, fill: INK}, L);
+    }
+    if (big) {
+      const air = Math.max(0, 1 - water / LIMIT), lx = x - r - 7;
+      label(L, lx, hy - fs * .2, `${h.toFixed(1)} m of straw`, {'text-anchor': 'end', 'font-weight': 800});
+      label(L, lx, hy + fs * 1, air < .005 ? '0% air in mouth' : `${Math.round(air * 100)}% air in mouth`, {'text-anchor': 'end', 'font-weight': 600});
+      if (stuck && h - water > .5) label(L, x + sw / 2 + 6, (top + wy) / 2 + fs * .35, '← a vacuum', {'font-weight': 700});
+      if (!touched) {
+        const hint = Kit.mk('g', {class: 'hint'}, L), ay = hy - r - 5;
+        Kit.mk('path', {d: `M${x},${ay} v-${fs * 1.3} m-5,6 l5,-6 l5,6`, stroke: INK, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, hint);
+      }
+    }
+  }
+
+  // The redwood: a straight trunk, a narrow ragged crown, its water hauled up from the leaves.
+  function tree(L, N) {
+    const x = X.tree, tall = TREE * grow, top = yOf(tall), base = GY, tw = Math.max(5, W * .03);
+    if (grow > .02) {
+      put(L, rc.polygon([[x - tw / 2, base], [x + tw / 2, base], [x + tw * .12, top], [x - tw * .12, top]], {stroke: INK, strokeWidth: 1.4, roughness: .7, seed: 41, fill: INK, fillStyle: 'solid'}));
+      const K = 16, right = [], left = [], c0 = .34;
+      for (let k = 0; k <= K; k++) {
+        const t = k / K, m = tall * (c0 + (1 - c0) * t), wdt = W * (.012 + .1 * Math.pow(1 - t, .75)) * (k % 2 ? .62 : 1) * Math.min(1, grow * 1.3);
+        right.push([x + wdt, yOf(m)]); left.unshift([x - wdt * (k % 2 ? 1 : .62), yOf(m)]);
+      }
+      put(L, rc.polygon([[x, yOf(tall * c0)], ...right, [x, top - 2], ...left], {stroke: INK, strokeWidth: 1.2, roughness: 1.2, seed: 43, fill: INK, fillStyle: 'hachure', hachureGap: 3, fillWeight: .9, hachureAngle: -50}));
+      Kit.mk('line', {x1: x, x2: x, y1: base - 2, y2: top + 4, stroke: PAPER, 'stroke-width': 1.8, 'stroke-dasharray': '5 3', class: 'flow'}, L);
+    }
+    if (grow < .999) return;
+    // Water leaving the leaves at the top.
+    [[-1, 0], [1, .8], [0, 1.6]].forEach(([dx, d]) => Kit.mk('path', {d: `M${x + dx * fs * .9},${top - 3} q3,-4 0,-8 q-3,-4 0,-8`, stroke: INK, 'stroke-width': 1.4, fill: 'none', class: 'puff', style: `animation-delay:${d}s`}, L));
+    // The ceiling for trees: the pull their highest leaves can stand.
+    const b0 = yOf(130), b1 = yOf(122);
+    put(N, rc.rectangle(fs * .8, b0, W - fs * .8, b1 - b0, {stroke: 'none', roughness: .5, seed: 61, fill: INK, fillStyle: 'cross-hatch', hachureGap: 4.5, fillWeight: .7}));
+    const tx = x + W * .15;
+    fitLabel(N, tx, b0 - fs * .45, 'max height for trees: 122–130 m', {'font-weight': 800});
+    fitLabel(N, tx, top + fs * 1.1, 'Hyperion, a redwood: 116 m', {'font-weight': 800});
+    fitLabel(N, tx, top + fs * 2.45, 'its leaves pull at least 11×', {'font-weight': 600});
+    fitLabel(N, tx, top + fs * 3.75, 'harder than air can push', {'font-weight': 600});
+    fitLabel(N, X.straw + fs * .6, yOf(LIMIT) - fs * .5, 'a straw stops at 10.3 m', {'font-weight': 700});
+  }
+
+  // ---------- the drag ----------
+  function setH(v) {
+    h = Math.max(.6, Math.min(12, v));
+    if (water > Math.min(h, LIMIT)) water = Math.min(h, LIMIT);
+    paint();
+  }
+  let dragging = false;
+  const fromY = e => { const r = svg.getBoundingClientRect(); return (GY - (e.clientY - r.top)) / PX; };
+  svg.addEventListener('pointerdown', e => { if (step !== 'straw') return; dragging = true; touched = true; svg.setPointerCapture(e.pointerId); setH(fromY(e)); });
+  svg.addEventListener('pointermove', e => { if (dragging) setH(fromY(e)); });
+  const end = () => { dragging = false; };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+
+  // The drink climbs as you suck, a few metres a second, and stops where the air gives up.
+  let last = 0;
+  function tick(t) {
+    const dt = Math.min(.05, last ? (t - last) / 1000 : .016); last = t;
+    const want = Math.min(h, LIMIT);
+    if (step === 'straw' && water < want - 1e-4) {
+      water = Math.min(want, water + dt * 3.2);
+      if (!stuck && water >= LIMIT - .02) reachTop();
+      else if (water > 2.5 && !stuck && say.dataset.at !== 'mid') { say.dataset.at = 'mid'; say.innerHTML = 'The longer the straw, the more drink the air must hold up, and the less air you can leave in your mouth. <b>Keep going.</b>'; }
+      paint();
+    }
+    requestAnimationFrame(tick);
+  }
+  function reachTop() {
+    stuck = true; water = LIMIT; Kit.haptic('success');
+    say.innerHTML = 'Stuck at 10.3 m, about three storeys, even with a perfect vacuum in your mouth. The air outside pushes with one atmosphere: the weight of 10.3 m of water, and no more.';
+    Kit.show('next'); paint();
+  }
+
+  // ---------- the tree ----------
+  function toTree() {
+    if (step === 'tree') return;
+    step = 'tree'; Kit.hide('next');
+    say.innerHTML = 'Trees pull. Leaves let water evaporate, and the water in their thin pipes holds together like a rope, hauled up from the top. The higher the leaf, the harder the pull.';
+    card.classList.add('answered'); Kit.show('keep'); Kit.haptic('light');
+    const z = {span, grow};
+    if (Kit.calm || typeof gsap === 'undefined') { span = 140; grow = 1; paint(); return; }
+    gsap.timeline({onUpdate: () => { span = z.span; grow = z.grow; paint(); }, onComplete: paint})
+      .to(z, {span: 140, duration: 1.1, ease: 'power2.inOut'})
+      .to(z, {grow: 1, duration: 1.1, ease: 'power2.out'}, '-=.15');
+  }
+  next.addEventListener('click', toTree);
+
+  new ResizeObserver(() => { if (rc) layout(); }).observe(Kit.$('stage'));
+  Kit.onShow.card = layout;
+  let started = false;
+  const start = () => { if (!started) { started = true; requestAnimationFrame(tick); } };
+  Kit.onEnter.card = start;
+  Kit.play.card = async () => {
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    start(); touched = true;
+    setH(12); water = LIMIT - .05;
+    await wait(Kit.calm ? 60 : 500);
+    if (!stuck) reachTop();
+    await wait(Kit.calm ? 60 : 300);
+    next.click();
+  };
+})();
+Kit.single();
+</script>
+</html>

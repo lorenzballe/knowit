@@ -1,0 +1,37 @@
+{
+  "id": "nature-ten-am-rule",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.unintended_fixes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does putting out every small fire make the big ones worse?",
+  "answer": "Trees grow, lightning strikes, and fire jumps to touching trees. Most fires are small and a few run far, as in real records. Put every fire out by 10 a.m. and the forest fills up for one giant, because small fires keep it patchy.",
+  "move": "Small fires keep a forest patchy. Put them all out and it fills up for one giant.",
+  "keywords": [
+    "forest fire",
+    "lightning",
+    "malamud",
+    "fire suppression",
+    "forest"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "The 10 a.m. rule. Asks why putting out every small fire makes the big ones worse. Shows a bar chart where each bar is one fire: most bars are small, a few run far. Text covers trees growing, lightning strikes, fire jumping to touching trees, a 45% figure, and the rule to put every fire out by 10 a.m."
+  },
+  "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
+  "written": "2026-11-03"
+}

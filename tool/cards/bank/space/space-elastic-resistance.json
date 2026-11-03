@@ -1,0 +1,38 @@
+{
+  "id": "space-elastic-resistance",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.living_on_mars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is lifting weights useless for astronauts in zero-G?",
+  "answer": "In orbit the dumbbell weighs nothing, so lifting it asks nothing of your muscles. Unused, they shrink: up to 20% of muscle mass can go on flights of just 5 to 11 days. A stretched elastic pulls back the way weight would, so astronauts train against bands instead.",
+  "move": "Muscles need a pull to work against; in space it comes from elastic, not weight.",
+  "keywords": [
+    "astronauts",
+    "dumbbell",
+    "elastic band",
+    "zero-g",
+    "muscle loss"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page: drag a dumbbell up in three settings (on Earth, in orbit, and in orbit with an elastic band) and watch the load. It asks why lifting weights is useless for astronauts in zero-G.",
+    "ground": "#0b1026"
+  },
+  "source": "Veritasium, “Drinking in ZERO-G! (and other challenges of a trip to Mars)” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=SAQ-iIJkLzA&t=114s",
+  "written": "2026-11-03"
+}

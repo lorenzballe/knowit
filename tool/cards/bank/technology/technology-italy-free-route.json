@@ -1,0 +1,37 @@
+{
+  "id": "technology-italy-free-route",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.regulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does Italy's “free route” airspace save every year?",
+  "answer": "Italy's free route airspace lets airlines fly direct paths instead of hopping from radio beacon to radio beacon. Italy introduced it first in Europe. Straighter routes save about 90 million kg of fuel each year, and burning less fuel also means less CO2.",
+  "move": "Straighter routes: about 90 million kg of fuel saved each year.",
+  "keywords": [
+    "italy",
+    "airspace",
+    "airlines",
+    "fuel",
+    "co2"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asking what Italy's free route airspace saves each year. The reveal gives about 90 million kg of fuel saved yearly. A draggable map invites the reader to draw a flight from Milan to Bari with a finger."
+  },
+  "source": "Geopop, “Dentro una Torre di controllo, come si gestisce il traffico aereo in Italia” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=aFGI2WAYkyo&t=244s",
+  "written": "2026-11-03"
+}

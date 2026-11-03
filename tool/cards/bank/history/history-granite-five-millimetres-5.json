@@ -1,0 +1,36 @@
+{
+  "id": "history-granite-five-millimetres-5",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Pounding granite with a stone ball: how deep do you get in an hour?",
+  "answer": "Quarrying granite by pounding with a stone ball gave about 5 mm of progress per hour. The card asks you to drag on the rock to guess the depth, then pound for an hour to check. The source is Veritasium's \"How Were the Pyramids Built?\" (YouTube, 2014).",
+  "move": "Quarrying granite by pounding: about 5 mm of progress per hour.",
+  "keywords": [
+    "pyramids",
+    "granite",
+    "quarrying",
+    "egypt"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card titled PYRAMIDS shows a stone ball pounding granite. It asks how deep you get in an hour and offers a drag-on-the-rock guess, then a button to pound for one hour and a 10-hour day. The reveal says about 5 mm in an hour."
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=231s",
+  "written": "2026-11-03"
+}

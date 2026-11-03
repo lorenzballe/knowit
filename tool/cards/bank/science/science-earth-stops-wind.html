@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-earth-stops-wind -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#read{display:flex;flex-direction:column;align-items:flex-start;gap:.4cqh;max-width:100%}
+#read .n{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:1.2cqw;row-gap:.3cqh;max-width:100%;font:800 max(5.2cqh,26px)/1.15 var(--display);color:var(--k);font-variant-numeric:tabular-nums}
+#read .n #kmh{display:block;line-height:1.15}
+#read .n small{display:block;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);min-width:0;overflow-wrap:anywhere}
+#read .sub{font:600 max(1.7cqh,12px)/1.3 var(--body);color:var(--muted);overflow-wrap:anywhere}
+#wrap{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.6cqh}
+#ctl label{display:flex;justify-content:space-between;font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+#spin{width:100%;height:max(4.4cqh,30px);accent-color:var(--k);cursor:pointer;touch-action:none}
+#why{display:flex;flex-direction:column;gap:.8cqh;min-width:0}
+#why .body{overflow-wrap:anywhere}
+@media (max-height:720px){
+  #stage:has(#why:not(.gone)) #read .sub{display:none}
+  #why{gap:.4cqh}
+  #why .big{font-size:max(3cqh,18px);line-height:1.1}
+  #why .body{font-size:max(1.7cqh,12px);line-height:1.3}
+}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">EARTH'S SPIN</span></div>
+    <h2 class="q">If Earth suddenly stopped spinning, how strong would the wind be?</h2>
+    <div class="stagebox" id="stage">
+      <div id="read">
+        <div class="n"><span id="kmh">0</span><small>km/h wind on the equator</small></div>
+        <div class="sub" id="sub">Ground: 1700 km/h east · Air: 1700 km/h east</div>
+      </div>
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="ctl">
+        <label for="spin"><span>Earth's spin</span><span id="pct">100%</span></label>
+        <input type="range" id="spin" min="0" max="100" value="100" step="1" aria-label="Earth's spin">
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Up to 1700 km/h</p>
+        <p class="body">At the equator the ground and the air both race east at about 1700 km/h, so we feel nothing. Stop the ground and the air keeps going: winds 3 to 4 times stronger than the most intense storms ever recorded.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to zero to stop Earth. Watch the air.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>We feel no wind because the air spins with us. Stop the ground, and the air won't stop.</div>
+    <div class="foot"><span class="src">Source · Geopop, “E se per assurdo la Terra si fermasse e smettesse di ruotare? Ecco cosa accadrebbe” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const V = 1700;
+let ctx = null, W = 0, H = 0, spin = 1, target = 1, done = false, ink = '#111', paper = '#fff';
+const streaks = [], clouds = [];
+for (let i = 0; i < 46; i++) streaks.push({x: Kit.rnd(), y: Kit.rnd(), l: .5 + Kit.rnd()});
+for (let i = 0; i < 4; i++) clouds.push({x: i / 4 + Kit.rnd() * .1, y: .12 + Kit.rnd() * .35, s: .7 + Kit.rnd() * .5});
+const slider = Kit.$('spin');
+
+function finish() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+  Kit.onShow.card();
+}
+slider.addEventListener('input', () => {
+  target = slider.value / 100;
+  Kit.$('pct').textContent = slider.value + '%';
+  if (+slider.value === 0) setTimeout(finish, 450);
+});
+slider.addEventListener('change', () => Kit.haptic('selection'));
+
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+
+function draw(dt) {
+  if (!ctx) return;
+  spin += (target - spin) * Math.min(1, dt * 5);
+  if (Math.abs(spin - target) < .002) spin = target;
+  const wind = V * (1 - spin), fr = wind / V;
+  Kit.$('kmh').textContent = Math.round(wind);
+  Kit.$('sub').textContent = `Ground: ${Math.round(V * spin)} km/h east · Air: ${V} km/h east`;
+  const f = Math.max(12, Math.min(W * .042, H * .06));
+  const sh = H * .66, gy = sh * .8;
+  // sky
+  const sk = ctx.createLinearGradient(0, 0, 0, gy);
+  sk.addColorStop(0, '#2c6fb3'); sk.addColorStop(1, '#a9d6f2');
+  ctx.fillStyle = sk; ctx.fillRect(0, 0, W, gy);
+  ctx.fillStyle = '#ffd34d'; ctx.beginPath(); ctx.arc(W * .82, sh * .2, Math.min(W, sh) * .07, 0, 7); ctx.fill();
+  const sp = fr * W * 1.8;
+  // clouds
+  clouds.forEach(c => {
+    c.x += sp * .6 * dt / W; if (c.x > 1.2) c.x -= 1.4;
+    const cx = c.x * W, cy = c.y * gy, r = Math.min(W, sh) * .05 * c.s, st = 1 + fr * 1.5;
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, r * 1.6 * st, r * .7, 0, 0, 7);
+    ctx.ellipse(cx - r * .5, cy - r * .4, r * .8, r * .6, 0, 0, 7);
+    ctx.fill();
+  });
+  // wind streaks
+  if (fr > .01) {
+    streaks.forEach(s => {
+      s.x += sp * dt / W * (.8 + s.l * .4); if (s.x > 1.3) s.x -= 1.5;
+      const len = (10 + fr * W * .28) * s.l, x = s.x * W, y = 6 + s.y * (gy - 12);
+      ctx.strokeStyle = `rgba(255,255,255,${.25 + .6 * fr})`;
+      ctx.lineWidth = 1.5 + fr * 2.5; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(x - len, y); ctx.lineTo(x, y); ctx.stroke();
+    });
+  }
+  // east label
+  ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.font = `800 ${f}px sans-serif`; ctx.textBaseline = 'top';
+  ctx.fillText('EAST →', W * .04, sh * .05);
+  // ground
+  ctx.fillStyle = '#3f8a3a'; ctx.fillRect(0, gy, W, sh - gy);
+  ctx.fillStyle = '#2f6d2c'; ctx.fillRect(0, gy, W, 3);
+  // houses and palms, fixed to the ground
+  const n = 5;
+  for (let i = 0; i < n; i++) {
+    const bx = W * (i + .5) / n;
+    if (i % 2) {
+      const hw = W * .07, hh = sh * .1;
+      ctx.fillStyle = '#f2e3c6'; ctx.fillRect(bx - hw / 2, gy - hh, hw, hh);
+      ctx.fillStyle = '#b4472f'; ctx.beginPath();
+      ctx.moveTo(bx - hw * .65, gy - hh); ctx.lineTo(bx, gy - hh * 1.7); ctx.lineTo(bx + hw * .65, gy - hh); ctx.fill();
+    } else {
+      const th = sh * .3, tip = fr * th * .75, tx = bx + tip, ty = gy - th * (1 - fr * .2);
+      ctx.strokeStyle = '#6b4a2b'; ctx.lineWidth = Math.max(3, W * .012); ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(bx, gy); ctx.quadraticCurveTo(bx, gy - th * .5, tx, ty); ctx.stroke();
+      ctx.strokeStyle = '#1f6b2a'; ctx.lineWidth = Math.max(2.5, W * .009);
+      for (let k = 0; k < 5; k++) {
+        const a0 = -Math.PI / 2 + (k - 2) * .75, a = a0 + (0 - a0) * fr * .85, L = th * .32;
+        ctx.beginPath(); ctx.moveTo(tx, ty);
+        ctx.quadraticCurveTo(tx + Math.cos(a) * L * .6, ty + Math.sin(a) * L * .6 - L * .15 * (1 - fr), tx + Math.cos(a) * L, ty + Math.sin(a) * L + L * .25 * (1 - fr));
+        ctx.stroke();
+      }
+    }
+  }
+  // comparison bar
+  ctx.fillStyle = paper; ctx.fillRect(0, sh, W, H - sh);
+  const pad = W * .05, tw = W - pad * 2, unit = tw / 4.2;
+  const ty0 = sh + (H - sh) * .12;
+  ctx.fillStyle = ink; ctx.font = `700 ${f}px sans-serif`; ctx.textBaseline = 'top';
+  ctx.fillText('Wind vs. strongest storms recorded', pad, ty0);
+  const by = ty0 + f * 1.6, bh = Math.max(10, (H - sh) * .2);
+  ctx.globalAlpha = .12; rr(pad, by, tw, bh, bh / 2); ctx.fill(); ctx.globalAlpha = 1;
+  const bw = unit * 3.5 * fr;
+  if (bw > 1) { ctx.fillStyle = fr > 2 / 7 ? '#d6452b' : '#2c6fb3'; rr(pad, by, Math.max(bw, bh * .5), bh, bh / 2); ctx.fill(); }
+  ctx.font = `700 ${f * .9}px sans-serif`;
+  for (let k = 1; k <= 4; k++) {
+    const x = pad + unit * k;
+    ctx.strokeStyle = ink; ctx.setLineDash([3, 3]); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x, by - 3); ctx.lineTo(x, by + bh + 3); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = ink; ctx.textAlign = 'center'; ctx.fillText(k + '×', x, by + bh + f * .4);
+  }
+  ctx.textAlign = 'left';
+}
+
+Kit.onShow.card = () => {
+  const r = Kit.fitCanvas(Kit.$('cv'));
+  ctx = r.x; W = r.W; H = r.H;
+  const cs = getComputedStyle(Kit.$('card'));
+  ink = cs.getPropertyValue('--k').trim() || '#111';
+  paper = cs.getPropertyValue('--c').trim() || '#fff';
+  draw(0);
+};
+gsap.ticker.add((t, dms) => draw(Math.min(.05, dms / 1000)));
+Kit.onEnter.card = () => {
+  if (!Kit.calm) gsap.from('#wrap', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  slider.value = 0;
+  slider.dispatchEvent(new Event('input', {bubbles: true}));
+  slider.dispatchEvent(new Event('change', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 1400));
+};
+Kit.single();
+</script>
+</html>

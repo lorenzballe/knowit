@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- slug: thinking-fukushima-radiation-toll -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#cvbox{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctrl{display:flex;flex-direction:column;gap:1cqh}
+#row{display:flex;align-items:center;gap:3cqw}
+#guess{font:700 max(2.4cqh,15px)/1.1 var(--mono);color:var(--k);min-width:6.5ch;text-align:right}
+#sl{flex:1;min-width:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
+#lock{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;align-self:stretch}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Slide · guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FEAR VS FACT</span></div>
+    <h2 class="q">How many people died directly from radiation at Fukushima?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cvbox"><canvas id="cv"></canvas></div>
+      <div id="ctrl">
+        <div id="row"><input id="sl" type="range" min="0" max="1000" value="600" aria-label="Your guess"><span id="guess">0</span></div>
+        <button id="lock">That's my guess</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Just one</p><p class="body">The plant director was the only person whose death was tied to radioactivity. The tsunami killed over 15,000. Yet we remember Fukushima for its radiation, not the wave.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag to guess the radiation deaths. Each dot is one person.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What we fear most is not always what kills most.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il disastro nucleare di Fukushima - molto diverso da Chernobyl” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAXN = 15000;
+const G = {n: 1, t: 0, rev: false, ring: 0};
+let locked = false, done = false, ctx = null, W = 0, H = 0, F = 14;
+const sl = Kit.$('sl');
+const toN = v => Math.max(1, Math.round(Math.pow(10, v / 1000 * Math.log10(MAXN))));
+const fmt = n => Math.round(n).toLocaleString('en-US');
+
+function readGuess(){ G.n = toN(+sl.value); Kit.$('guess').textContent = fmt(G.n); draw(); }
+
+function draw(){
+  if (!ctx) return;
+  const x = ctx, cs = getComputedStyle(Kit.$('card'));
+  const ink = cs.getPropertyValue('--k').trim() || '#111';
+  x.clearRect(0, 0, W, H);
+  const f = Math.max(12, F);
+  const gap = W * 0.05, top = 4, fh = f * 3.2;
+  const pw = (W - gap) / 2, ph = Math.max(20, H - top - fh);
+  let s = Math.sqrt(pw * ph / MAXN), cols, rows;
+  for (let i = 0; i < 60; i++){ cols = Math.max(1, Math.floor(pw / s)); rows = Math.ceil(MAXN / cols); if (rows * s <= ph) break; s *= 0.98; }
+  const d = Math.max(1, s * 0.74);
+  const panels = [{x0: 0, n: Math.round(G.n), name: G.rev ? 'Radiation' : 'Radiation · your guess'}, {x0: pw + gap, n: Math.round(G.t), name: 'Tsunami'}];
+  panels.forEach((p, i) => {
+    const gx = p.x0 + (pw - cols * s) / 2, by = top + ph;
+    x.globalAlpha = 0.25; x.strokeStyle = ink; x.lineWidth = 1.5;
+    x.strokeRect(p.x0 + .75, top + .75, pw - 1.5, ph - 1.5);
+    x.globalAlpha = 1; x.fillStyle = ink;
+    const n = Math.min(MAXN, p.n);
+    for (let k = 0; k < n; k++){
+      const c = k % cols, r = Math.floor(k / cols);
+      x.fillRect(gx + c * s, by - (r + 1) * s, d, d);
+    }
+    if (i === 1 && !G.rev){
+      x.globalAlpha = .35; x.font = `700 ${f * 3}px ${cs.getPropertyValue('--display') || 'serif'}`;
+      x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('?', p.x0 + pw / 2, top + ph / 2); x.globalAlpha = 1;
+    }
+    if (i === 0 && G.rev && G.ring > 0){
+      const cx = gx + d / 2, cy = by - s + d / 2, R = Math.max(10, f * 0.9) * G.ring;
+      x.lineWidth = 2.5; x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.stroke();
+      x.beginPath(); x.arc(cx, cy, Math.max(3, d * 1.2), 0, Math.PI * 2); x.fill();
+      x.globalAlpha = G.ring; x.font = `600 ${f * .9}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
+      x.textAlign = 'left'; x.textBaseline = 'bottom';
+      x.fillText('the plant director', Math.min(cx + R * 0.6, p.x0 + 6), cy - R - 4); x.globalAlpha = 1;
+    }
+    x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    const num = i === 1 ? (G.rev ? (G.t >= MAXN - 1 ? '15,000+' : fmt(G.t)) : '') : fmt(G.n);
+    x.font = `700 ${f * 1.35}px ${cs.getPropertyValue('--mono') || 'monospace'}`;
+    x.fillText(num, p.x0 + pw / 2, top + ph + f * 1.55);
+    x.font = `600 ${Math.max(12, f * .82)}px ${cs.getPropertyValue('--body') || 'sans-serif'}`;
+    x.globalAlpha = .75; x.fillText(p.name, p.x0 + pw / 2, top + ph + f * 2.95); x.globalAlpha = 1;
+  });
+}
+
+function reveal(){
+  G.rev = true;
+  if (Kit.calm){ G.n = 1; G.t = MAXN; G.ring = 1; draw(); return; }
+  gsap.timeline({onUpdate: draw})
+    .to(G, {n: 1, duration: .7, ease: 'power2.inOut', onUpdate: draw})
+    .to(G, {ring: 1, duration: .4, ease: 'back.out(2)', onUpdate: draw})
+    .to(G, {t: MAXN, duration: 2, ease: 'power1.in', onUpdate: draw}, '-=.1');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  if (done) return; done = true;
+  const g = toN(+sl.value), ok = g <= 3;
+  Kit.answer({choice: `${fmt(g)} deaths`, correct: ok, sure: pct});
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${fmt(g)}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep'); Kit.haptic(ok ? 'success' : 'light');
+  reveal();
+});
+
+sl.addEventListener('input', () => { if (locked) return; readGuess(); Kit.haptic('selection'); });
+Kit.$('lock').addEventListener('click', () => {
+  if (locked) return; locked = true; sl.disabled = true;
+  Kit.$('lock').classList.add('gone'); sure.on(); Kit.haptic('selection');
+});
+
+Kit.onShow.card = () => {
+  const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; W = r.W; H = r.H;
+  F = Math.max(12, Math.min(W, H * 1.6) * 0.045);
+  if (!G.rev) readGuess(); else draw();
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {v: 0};
+  gsap.to(o, {v: +sl.value, duration: 1.2, ease: 'power2.out', onUpdate(){ if (!locked){ G.n = toN(o.v); Kit.$('guess').textContent = fmt(G.n); draw(); } }});
+};
+Kit.play.card = async () => {
+  sl.value = 700; sl.dispatchEvent(new Event('input', {bubbles: true}));
+  Kit.$('lock').click(); await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 3600));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: nature-etna-flank-collapse -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;overflow:hidden}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;width:100%}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.rock{fill:color-mix(in srgb,var(--k) 20%,var(--c));stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+.flank{fill:color-mix(in srgb,var(--k) 34%,var(--c));stroke:var(--k);stroke-width:1.5;stroke-linejoin:round}
+.base{fill:color-mix(in srgb,var(--k) 45%,var(--c))}
+.sea{fill:#2d7fd3}
+.seaTop{fill:#2d7fd3;opacity:.38}
+.fault{stroke:var(--k);stroke-dasharray:5 4;stroke-width:2;fill:none;opacity:.7}
+.fault.on{stroke:#e23b2a;stroke-dasharray:none;stroke-width:4;opacity:1}
+.lava{fill:#e23b2a}
+.lbl{fill:var(--k);font-family:var(--body);font-weight:700}
+.num{fill:var(--k);font-family:var(--display);font-weight:800}
+.barbg{fill:color-mix(in srgb,var(--k) 14%,transparent)}
+.bar{fill:var(--k)}
+.bar.low{fill:#e23b2a}
+.wave{fill:#2d7fd3}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap · build up">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ETNA</span></div>
+    <h2 class="q">What happens if faults on Etna's flank slip in the same instant?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="go">Make 1 fault slip</button>
+      <div id="why" class="gone">
+        <p class="big">Support lost all at once</p>
+        <p class="body">A fault doesn't creep: it usually moves in an instant. If several faults on the flank slipped together, the slope would lose its support suddenly, and the flank, or part of it, could collapse.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to add one more fault slipping in the same instant.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Faults slip in an instant, so a collapse would come without slow warning.</div>
+    <div class="foot"><span class="src">Source · Geopop, “▶️ETNA: "POSSIBILE COLLASSO GRAVITATIVO E TSUNAMI". VUOI CAPIRE COSA SUCCEDE?” (YouTube, 2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let n = 0, busy = false, G = null;
+const SETS = [[], [1], [0, 2], [0, 1, 2]];
+const svg = Kit.$('pic');
+
+function draw() {
+  gsap.killTweensOf('*');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .85);
+  const P = (x, y) => [x * W, y * H];
+  const peak = P(.3, .24), C = P(.8, .62), seaY = .62 * H, baseY = .93 * H;
+  const s = t => [peak[0] + t * (C[0] - peak[0]), peak[1] + t * (C[1] - peak[1])];
+  const tops = [.24, .5, .75].map(s);
+  const bots = tops.map(p => [p[0] + .08 * W, baseY]);
+  const pts = a => a.map(p => p.join(',')).join(' ');
+  const scene = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {class: 'sea', x: .44 * W, y: seaY, width: .56 * W, height: H - seaY}, scene);
+  const wave = Kit.mk('path', {class: 'wave', d: `M0,0 Q${.09 * W},${-.09 * H} ${.18 * W},0 Z`, transform: `translate(${C[0]},${seaY})`, opacity: 0}, scene);
+  Kit.mk('polygon', {class: 'rock', points: pts([[0, baseY], [0, .6 * H], P(.27, .25), P(.33, .25), tops[0], bots[0]])}, scene);
+  Kit.mk('ellipse', {class: 'lava', cx: peak[0], cy: peak[1] + 1, rx: .03 * W, ry: .012 * H}, scene);
+  const slices = [];
+  for (let j = 0; j < 3; j++) {
+    const poly = j < 2
+      ? [tops[j], tops[j + 1], bots[j + 1], bots[j]]
+      : [tops[2], C, [W, .84 * H], [W, baseY], bots[2]];
+    slices.push(Kit.mk('polygon', {class: 'flank', points: pts(poly)}, scene));
+  }
+  Kit.mk('rect', {class: 'seaTop', x: C[0], y: seaY, width: W - C[0], height: H - seaY}, scene);
+  Kit.mk('rect', {class: 'base', x: 0, y: baseY, width: W, height: H - baseY}, scene);
+  const faults = tops.map((p, i) => Kit.mk('line', {class: 'fault', x1: p[0] - (bots[i][0] - p[0]) * .06, y1: p[1] - (bots[i][1] - p[1]) * .06, x2: bots[i][0], y2: bots[i][1]}, scene));
+  // labels
+  const num = Kit.mk('text', {class: 'num', x: .04 * W, y: fs * 2.4, 'font-size': fs * 2.6}, svg);
+  num.textContent = '0';
+  const l1 = Kit.mk('text', {class: 'lbl', x: .04 * W, y: fs * 2.4 + fs * 2.2, 'font-size': fs}, svg);
+  l1.textContent = 'faults slipping';
+  const l2 = Kit.mk('text', {class: 'lbl', x: .04 * W, y: fs * 2.4 + fs * 3.6, 'font-size': fs}, svg);
+  l2.textContent = 'at the same instant';
+  const bw = .36 * W, bx = W * .96 - bw, by = fs * 2.1;
+  const gl = Kit.mk('text', {class: 'lbl', x: W * .96, y: fs * 1.3, 'font-size': fs, 'text-anchor': 'end'}, svg);
+  gl.textContent = 'Grip on the flank';
+  Kit.mk('rect', {class: 'barbg', x: bx, y: by, width: bw, height: fs * .9, rx: fs * .45}, svg);
+  const bar = Kit.mk('rect', {class: 'bar', x: bx, y: by, width: bw, height: fs * .9, rx: fs * .45}, svg);
+  const u = [bots[1][0] - tops[1][0], bots[1][1] - tops[1][1]], L = Math.hypot(...u);
+  const d = .045 * H;
+  G = {W, H, scene, slices, faults, num, bar, bw, wave, dx: d * u[0] / L, dy: d * u[1] / L};
+  pose(n, false);
+}
+
+function offsets(k) {
+  const S = SETS[k];
+  return [0, 1, 2].map(j => { const c = S.filter(i => i <= j).length; return {x: c * G.dx, y: c * G.dy}; });
+}
+function collapsed(j) { return {x: (.13 + .04 * j) * G.W, y: (.1 + .035 * j) * G.H, rotation: 5 + 4 * j}; }
+function setStatic(k) {
+  G.faults.forEach((fl, i) => fl.classList.toggle('on', SETS[k].includes(i)));
+  G.num.textContent = k;
+  G.bar.classList.toggle('low', k >= 2);
+}
+function pose(k, anim) {
+  setStatic(k);
+  const off = offsets(k), grip = [1, .66, .3, 0][k];
+  if (!anim) {
+    G.slices.forEach((s, j) => gsap.set(s, k === 3 ? {...collapsed(j), transformOrigin: '50% 50%'} : {x: off[j].x, y: off[j].y, rotation: 0}));
+    gsap.set(G.bar, {attr: {width: Math.max(.001, G.bw * grip)}});
+    gsap.set(G.wave, k === 3 ? {opacity: 1, scaleY: 1, x: 0} : {opacity: 0});
+    return Promise.resolve();
+  }
+  G.faults.forEach(fl => fl.classList.remove('on'));
+  gsap.set(G.slices, {x: 0, y: 0, rotation: 0});
+  return new Promise(res => {
+    const tl = gsap.timeline({onComplete: res});
+    tl.to({}, {duration: .35});
+    tl.call(() => { setStatic(k); Kit.haptic('light'); });
+    G.slices.forEach((s, j) => tl.to(s, {x: off[j].x, y: off[j].y, duration: .07, ease: 'none'}, '<'));
+    tl.to(G.bar, {attr: {width: Math.max(.001, G.bw * grip)}, duration: .07, ease: 'none'}, '<');
+    tl.fromTo(G.scene, {x: -5}, {x: 0, duration: .5, ease: 'elastic.out(1,0.25)'}, '<');
+    if (k === 3) {
+      G.slices.forEach((s, j) => tl.to(s, {...collapsed(j), transformOrigin: '50% 50%', duration: 1.1, ease: 'power2.in'}, .7 + (2 - j) * .08));
+      tl.fromTo(G.wave, {opacity: 1, scaleY: 0, x: 0, transformOrigin: '0% 100%'}, {scaleY: 1, x: .02 * G.W, duration: .9, ease: 'power2.out'}, 1.5);
+    }
+  });
+}
+
+Kit.$('go').addEventListener('click', async () => {
+  if (busy || n >= 3) return;
+  busy = true; n++;
+  Kit.haptic('selection');
+  const b = Kit.$('go');
+  await pose(n, !Kit.calm);
+  if (n < 3) b.textContent = `Make ${n + 1} faults slip at once`;
+  else { Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+  busy = false;
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(G.faults, {opacity: 0, stagger: .12, duration: .4}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 3; i++) {
+    Kit.$('go').click();
+    await new Promise(r => { const t = setInterval(() => { if (!busy) { clearInterval(t); r(); } }, 50); });
+  }
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

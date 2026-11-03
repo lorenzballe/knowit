@@ -1,0 +1,37 @@
+{
+  "id": "history-atomic-shadow",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.forgotten_heroes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the “atomic shadow”?",
+  "answer": "The flash hit the ground at about 4,000 °C in an instant, and people within half a kilometre were vaporized. For that instant their bodies blocked the heat, so their outline stayed printed on concrete or asphalt. That outline is the atomic shadow.",
+  "move": "The shadow is the person: the only trace the flash left.",
+  "keywords": [
+    "hiroshima",
+    "atomic bomb",
+    "atomic shadow",
+    "concrete",
+    "asphalt"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A wall with a dark human silhouette burned into it, the rest of the wall intact. The reader drags a person along the wall, then presses Flash to see the outline the heat leaves behind."
+  },
+  "source": "Geopop, “Le due bombe atomiche che hanno cambiato il mondo: la ricostruzione 3D di Little Boy e Fat Man” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=o47-tXGxpv8&t=578s",
+  "written": "2026-11-03"
+}

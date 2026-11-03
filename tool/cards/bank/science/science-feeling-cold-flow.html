@@ -1,0 +1,149 @@
+<!doctype html>
+<!-- slug: science-feeling-cold-flow -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#pic{width:100%;height:100%;display:block;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap to touch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAT FLOW</span></div>
+    <h2 class="q">Why does aluminium feel colder than a book?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Tap the aluminium, then the book, to lay your hand on each.</p>
+    <div id="why" class="gone"><p class="body">Both are at the same temperature. Aluminium conducts heat away from your hand much faster, so your hand loses heat quickly, and that is what feels cold. It's why a bath mat feels nicer than a towel after a winter shower.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Touch senses how fast heat leaves you, not how hot things are.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Misconceptions About Temperature” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const WARM = '#f4a06e', COLD = '#8db6e6', HEAT = '#ff6a1f';
+const done = {al: false, book: false};
+let busy = false, G = null;
+
+function mk(t, a, p) { return Kit.mk(t, a, p); }
+
+function draw() {
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, Math.min(f, H * 0.055));
+  const lh = fs * 1.4;
+  const defs = mk('defs', {}, svg);
+  const g1 = mk('linearGradient', {id: 'alg', x1: 0, y1: 0, x2: 1, y2: 1}, defs);
+  [['0', '#eef2f6'], ['.45', '#b9c2cc'], ['.55', '#d8dee5'], ['1', '#8d97a3']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, g1));
+
+  const bw = Math.min(W * 0.4, H * 0.62);
+  const bh = Math.min(H * 0.2, bw * 0.55);
+  const stack = lh * 3.4;
+  const by = H - stack - bh;
+  const hs = Math.max(40, Math.min(H * 0.3, bw * 0.75, by - fs * 2.6));
+  const cx = {al: W * 0.27, book: W * 0.73};
+
+  const head = mk('text', {x: W / 2, y: fs * 1.2, 'text-anchor': 'middle', fill: 'currentColor', opacity: .7,
+    style: `font:600 ${fs}px var(--body)`}, svg);
+  head.textContent = 'Both sit at the same room temperature';
+
+  // blocks
+  function thermo(x, y, h, p) {
+    const w = Math.max(5, h * 0.14);
+    mk('rect', {x: x - w / 2, y, width: w, height: h, rx: w / 2, fill: '#fff', stroke: '#333', 'stroke-width': 1.2}, p);
+    mk('rect', {x: x - w / 4, y: y + h * 0.4, width: w / 2, height: h * 0.6, fill: '#e2382b'}, p);
+    mk('circle', {cx: x, cy: y + h, r: w * 0.85, fill: '#e2382b', stroke: '#333', 'stroke-width': 1.2}, p);
+  }
+  for (const k of ['al', 'book']) {
+    const g = mk('g', {class: 'hit'}, svg);
+    const x0 = cx[k] - bw / 2;
+    if (k === 'al') {
+      mk('rect', {x: x0, y: by, width: bw, height: bh, rx: 4, fill: 'url(#alg)', stroke: '#5d6670', 'stroke-width': 1.5}, g);
+      for (let i = 0; i < 4; i++) mk('line', {x1: x0 + bw * (0.1 + i * 0.12), y1: by + bh * 0.15, x2: x0 + bw * (0.02 + i * 0.12), y2: by + bh * 0.85, stroke: '#fff', 'stroke-width': 2, opacity: .5}, g);
+    } else {
+      mk('rect', {x: x0, y: by, width: bw, height: bh, rx: 4, fill: '#f5ecd6', stroke: '#6b5a3a', 'stroke-width': 1.5}, g);
+      for (let i = 1; i < 6; i++) mk('line', {x1: x0 + 4, y1: by + bh * i / 6, x2: x0 + bw - 4, y2: by + bh * i / 6, stroke: '#c9b88f', 'stroke-width': 1}, g);
+      mk('rect', {x: x0, y: by, width: bw, height: bh * 0.16, rx: 3, fill: '#2f5d8a'}, g);
+      mk('rect', {x: x0, y: by + bh * 0.86, width: bw, height: bh * 0.14, rx: 3, fill: '#2f5d8a'}, g);
+    }
+    thermo(x0 + bw * 0.86, by + bh * 0.2, bh * 0.48, g);
+    const name = mk('text', {x: cx[k], y: by + bh + lh, 'text-anchor': 'middle', fill: 'currentColor', style: `font:800 ${fs * 1.05}px var(--body)`}, g);
+    name.textContent = k === 'al' ? 'Aluminium' : 'Book';
+    if (done[k]) {
+      const c = k === 'al' ? '#2a6fc0' : '#d0571b';
+      const a = mk('text', {x: cx[k], y: by + bh + lh * 2, 'text-anchor': 'middle', fill: c, style: `font:600 ${fs}px var(--body)`}, g);
+      a.textContent = k === 'al' ? 'heat leaves fast' : 'heat leaves slowly';
+      const b = mk('text', {x: cx[k], y: by + bh + lh * 3, 'text-anchor': 'middle', fill: c, style: `font:800 ${fs * 1.05}px var(--body)`}, g);
+      b.textContent = k === 'al' ? 'feels COLD' : 'feels warm';
+    } else {
+      const a = mk('text', {x: cx[k], y: by + bh + lh * 2, 'text-anchor': 'middle', fill: 'currentColor', opacity: .55, style: `font:600 ${fs}px var(--body)`}, g);
+      a.textContent = 'tap to touch';
+    }
+    mk('rect', {x: x0 - 4, y: by - 6, width: bw + 8, height: bh + lh * 3.3, fill: 'transparent'}, g);
+    g.addEventListener('click', () => touch(k));
+  }
+
+  // hand (palm down, fingers toward the block); local box 100 x 120
+  const s = hs / 120;
+  const hand = mk('g', {}, svg);
+  const parts = [];
+  const P = (t, a) => parts.push(mk(t, Object.assign({fill: WARM, stroke: '#a85a32', 'stroke-width': 1.6 / s}, a), hand));
+  P('rect', {x: 26, y: 0, width: 48, height: 34, rx: 6});
+  P('rect', {x: 3, y: 34, width: 18, height: 44, rx: 9, transform: 'rotate(-18 12 56)'});
+  P('rect', {x: 12, y: 24, width: 76, height: 56, rx: 18});
+  [13, 32, 51, 70].forEach(x => P('rect', {x, y: 62, width: 17, height: x === 13 || x === 70 ? 50 : 58, rx: 8.5}));
+  const rest = {x: W / 2 - 50 * s, y: fs * 2};
+  const pos = {x: rest.x, y: rest.y};
+  const place = () => hand.setAttribute('transform', `translate(${pos.x} ${pos.y}) scale(${s})`);
+  place();
+  G = {svg, W, H, fs, bw, bh, by, hs, s, cx, hand, parts, rest, pos, place};
+}
+
+function touch(k) {
+  if (busy || !G) return;
+  busy = true; Kit.haptic('light');
+  const g = G, al = k === 'al';
+  const color = c => g.parts.forEach(p => p.setAttribute('fill', c));
+  const finish = () => { done[k] = true; busy = false; draw(); check(); };
+  if (Kit.calm) { finish(); return; }
+  const tl = gsap.timeline({onComplete: finish});
+  tl.to(g.pos, {x: g.cx[k] - 50 * g.s, y: g.by - g.hs + 2, duration: .5, ease: 'power2.inOut', onUpdate: g.place});
+  let timer;
+  tl.add(() => {
+    timer = setInterval(() => {
+      const x = g.pos.x + (14 + Math.random() * 72) * g.s;
+      const c = mk('circle', {cx: x, cy: g.by + 2, r: Math.max(2.5, g.fs * 0.24), fill: HEAT}, g.svg);
+      gsap.to(c, {attr: {cy: g.by + g.bh * (al ? 0.9 : 0.3), cx: x + (Math.random() - .5) * g.bw * (al ? 0.5 : 0.1)},
+        opacity: 0, duration: al ? .55 : 1.5, ease: 'none', onComplete: () => c.remove()});
+    }, al ? 30 : 240);
+  });
+  const hc = {c: WARM};
+  tl.to(hc, {c: al ? COLD : '#eea47a', duration: 2, ease: 'none', onUpdate: () => color(hc.c)});
+  tl.add(() => clearInterval(timer));
+  tl.to(g.pos, {x: g.rest.x, y: g.rest.y, duration: .5, ease: 'power2.inOut', onUpdate: g.place}, '+=.25');
+}
+
+function check() {
+  if (done.al && done.book && Kit.$('why').classList.contains('gone')) {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  }
+}
+
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (!busy && G) draw(); }); }).observe(Kit.$('stage'));
+Kit.onShow.card = () => { if (!busy) draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  touch('al'); while (busy) await wait(100);
+  touch('book'); while (busy) await wait(100);
+  await wait(400);
+};
+Kit.single();
+</script>
+</html>

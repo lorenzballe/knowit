@@ -1,0 +1,161 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-sewer-spoil-removal -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
+#ctl .lab{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--body);color:var(--muted)}
+#dial{width:100%;accent-color:var(--k);height:max(3.6cqh,26px);margin:0;cursor:pointer}
+#stats{display:flex;gap:3cqw}
+.st{flex:1;min-width:0;padding:1cqh 3cqw;border-radius:1.6cqh;background:color-mix(in srgb,var(--k) 8%,transparent)}
+.st .n{font:800 max(2.8cqh,17px)/1.1 var(--display);color:var(--k)}
+.st .t{font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted);overflow-wrap:anywhere}
+.st .bar{height:max(.8cqh,5px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 12%,transparent);margin-top:.6cqh;overflow:hidden}
+.st .bar i{display:block;height:100%;width:0;border-radius:1cqh}
+#why{display:flex;flex-direction:column;gap:.5cqh;min-height:0;flex-shrink:1;overflow-y:auto}
+#why p{margin:0}
+#why .big{font-size:max(2.4cqh,16px);line-height:1.15}
+#why .body{font:500 max(1.6cqh,12px)/1.25 var(--body);overflow-wrap:anywhere}
+.src{display:block;padding-right:100px;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Turn the dial · trade-off">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">THE HEIST</span></div>
+    <h2 class="q">How did the Naples bank robbers hide the dirt they dug?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section: a tunnel to a bank, a shaft into a flowing sewer"></svg>
+      <div id="ctl">
+        <div class="lab"><span>Pile it in the tunnel</span><span>Tip it into the sewer</span></div>
+        <input id="dial" type="range" min="0" max="100" value="0" aria-label="Share of buckets tipped into the sewer">
+      </div>
+      <div id="stats">
+        <div class="st"><div class="n" id="nIn">100%</div><div class="t">of the spoil left in the tunnel</div><div class="bar"><i id="bIn" style="background:#8a5a2b"></i></div></div>
+        <div class="st"><div class="n" id="nOut">0%</div><div class="t">carried off by sewer water</div><div class="bar"><i id="bOut" style="background:#2f7fd8"></i></div></div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">The sewer took it away.</p>
+        <p class="body">They dug 12 m by hand or with a small pick, filled one bucket at a time and tipped it into the sewer collector. The flowing water did the rest: a natural, free and silent disposal system. That is also why the spoil on the tunnel floor didn't add up.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider: send more buckets into the sewer.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Running water is a free conveyor belt: no trucks, no noise, no pile.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La ricostruzione 3D della rapina in banca a Napoli, hanno scavato nella monnezza” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let s = 0, done = false, G = null, bits = [], spawnAcc = 0;
+const svg = Kit.$('pic'), dial = Kit.$('dial');
+const BROWN = '#8a5a2b', BLUE = '#2f7fd8';
+
+function draw(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const g = {W, H, f};
+  const ink = p => `color-mix(in srgb,var(--k) ${p}%,transparent)`;
+  // ground
+  const gy = H*.14;
+  mk('rect', {x:0, y:gy, width:W, height:H-gy, rx:f*.6, style:`fill:${ink(10)}`});
+  mk('line', {x1:0, y1:gy, x2:W, y2:gy, style:'stroke:var(--k);stroke-width:2'});
+  const t1 = mk('text', {x:f*.4, y:gy-f*.45, style:`fill:var(--muted);font:600 ${f*.9}px var(--body)`}); t1.textContent = 'street';
+  // bank vault
+  const bx = W*.74, by = H*.2, bh = H*.34;
+  mk('rect', {x:bx, y:by, width:W-bx-f*.3, height:bh, rx:f*.3, style:'fill:var(--k)'});
+  const bt = mk('text', {x:(bx+W)/2, y:by+f*1.4, 'text-anchor':'middle', style:`fill:var(--c);font:800 ${f}px var(--display)`}); bt.textContent = 'BANK';
+  // tunnel
+  const tx0 = W*.26, tx1 = bx, th = H*.12, ty = by+bh-th-H*.03;
+  mk('rect', {x:tx0, y:ty, width:tx1-tx0, height:th, style:`fill:${ink(72)}`});
+  const tl = mk('text', {x:tx0, y:ty-f*.5, style:`fill:var(--k);font:700 ${f}px var(--body)`}); tl.textContent = '12 m tunnel, dug by hand';
+  // sewer
+  const sy = H*.7, sh = H*.16;
+  // shaft
+  const sx = tx0, sw = W*.07;
+  mk('rect', {x:sx, y:ty, width:sw, height:sy-ty+2, style:`fill:${ink(72)}`});
+  mk('rect', {x:0, y:sy, width:W, height:sh, style:`fill:${ink(25)}`});
+  mk('line', {x1:0, y1:sy, x2:W, y2:sy, style:'stroke:var(--k);stroke-width:3'});
+  mk('line', {x1:0, y1:sy+sh, x2:W, y2:sy+sh, style:'stroke:var(--k);stroke-width:3'});
+  const wy = sy+sh*.42;
+  mk('rect', {x:0, y:wy, width:W, height:sy+sh-wy-1.5, style:`fill:${BLUE};opacity:.85`});
+  const sl = mk('text', {x:f*.4, y:sy+sh+f*1.3, style:`fill:var(--k);font:700 ${f*.95}px var(--body)`}); sl.textContent = 'sewer collector';
+  const fl = mk('text', {x:W-f*.4, y:sy+sh+f*1.3, 'text-anchor':'end', style:`fill:${BLUE};font:800 ${f*.95}px var(--body)`}); fl.textContent = 'flow →';
+  // pile
+  g.pile = mk('path', {style:`fill:${BROWN}`});
+  g.status = mk('text', {x:(tx0+sw+tx1)/2, y:(ty+th+sy)/2+f*.35, 'text-anchor':'middle', style:`font:800 ${f}px var(--body)`});
+  g.debris = mk('g', {});
+  Object.assign(g, {tx0, tx1, ty, th, sx, sw, sy, sh, wy});
+  G = g; bits = [];
+  if (Kit.calm) seedStatic();
+  update();
+}
+
+function seedStatic(){
+  G.debris.innerHTML = '';
+  const n = Math.round(s*22);
+  for (let i = 0; i < n; i++){
+    const x = G.sx + G.sw/2 + (G.W - G.sx)*(i+.5)/n, y = G.wy + (G.sy+G.sh-G.wy)*(.2+.6*Kit.rnd());
+    Kit.mk('rect', {x:x, y:y, width:G.f*.45, height:G.f*.35, rx:2, style:`fill:${BROWN}`}, G.debris);
+  }
+}
+
+function update(){
+  const v = Math.round(s*100);
+  Kit.$('nIn').textContent = (100-v)+'%'; Kit.$('nOut').textContent = v+'%';
+  Kit.$('bIn').style.width = (100-v)+'%'; Kit.$('bOut').style.width = v+'%';
+  if (!G) return;
+  const yb = G.ty+G.th, a = G.sx+G.sw*.4, b = G.tx1-G.W*.01, h = (1-s)*G.th*.9 + 2;
+  G.pile.setAttribute('d', `M${a},${yb} Q${(a+b)/2},${yb-2*h} ${b},${yb} Z`);
+  G.status.textContent = s < .35 ? 'tunnel choking up' : s > .85 ? 'tunnel stays clear' : 'less to hide';
+  G.status.style.fill = s < .35 ? BROWN : s > .85 ? BLUE : 'var(--muted)';
+  if (Kit.calm) seedStatic();
+}
+
+function tick(t, dt){
+  if (!G || Kit.calm) return;
+  const d = Math.min(dt, 50)/1000;
+  spawnAcc += s*7*d;
+  while (spawnAcc >= 1){
+    spawnAcc--;
+    const el = Kit.mk('rect', {width:G.f*.45, height:G.f*.35, rx:2, style:`fill:${BROWN}`}, G.debris);
+    bits.push({el, x:G.sx+G.sw*(.25+.4*Math.random()), y:G.ty+G.th*.5, vy:0, ph:Math.random()*6, dy:(G.sy+G.sh-G.wy)*(.2+.55*Math.random())});
+  }
+  const speed = G.W*.18;
+  bits = bits.filter(p => {
+    const floor = G.wy + p.dy;
+    if (p.y < floor){ p.vy += G.H*2*d; p.y = Math.min(floor, p.y + p.vy*d); }
+    else { p.x += speed*d; p.ph += d*4; }
+    const yy = p.y + (p.y >= floor ? Math.sin(p.ph)*G.f*.12 : 0);
+    p.el.setAttribute('x', p.x); p.el.setAttribute('y', yy);
+    if (p.x > G.W){ p.el.remove(); return false; }
+    return true;
+  });
+}
+gsap.ticker.add(tick);
+
+dial.addEventListener('input', () => {
+  const prev = s; s = dial.value/100; update();
+  if (Math.round(prev*10) !== Math.round(s*10)) Kit.haptic('selection');
+  if (!done && s >= .95){
+    done = true; Kit.haptic('success');
+    Kit.hide('stats'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why', {opacity:0, y:8, duration:.45, ease:'power3.out'});
+  }
+});
+
+Kit.onShow.card = draw;
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity:0, duration:.5});
+  gsap.from('.st', {opacity:0, y:10, stagger:.08, duration:.4, ease:'power3.out'});
+};
+Kit.play.card = async () => {
+  for (const v of [30, 60, 100]){ dial.value = v; dial.dispatchEvent(new Event('input', {bubbles:true})); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

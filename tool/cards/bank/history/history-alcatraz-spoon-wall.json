@@ -1,0 +1,38 @@
+{
+  "id": "history-alcatraz-spoon-wall",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.hindsight_in_history",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What did it take to dig through Alcatraz's cell walls?",
+  "answer": "The salt water around Alcatraz deposited chlorine and other ions on the concrete, year after year. With little upkeep, the walls grew so brittle that a spoon could chip them away.",
+  "move": "Salt slowly eats concrete: a fortress is only as strong as its upkeep.",
+  "keywords": [
+    "alcatraz",
+    "spoon",
+    "concrete",
+    "saltwater",
+    "prison"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks the reader to drag a marker to the tool they think was enough to dig through Alcatraz's cell walls. Heading: The spoon flaw, with the title Astute free card above it.",
+    "graded": false
+  },
+  "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=274s",
+  "written": "2026-11-03"
+}

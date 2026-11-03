@@ -1,0 +1,37 @@
+{
+  "id": "food-apple-slow-breath",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.food_waste",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does cool, dark storage slow an apple's ripening?",
+  "answer": "In a cool, dark place an apple breathes slowly. Slower breathing means a slower metabolism, so ripening is delayed and the apple keeps for a long time. Dragging the slider lets time pass for both apples so you can compare them.",
+  "move": "Cool and dark slows the apple's breath, so it ripens later.",
+  "keywords": [
+    "apple",
+    "ripening",
+    "respiration",
+    "metabolism",
+    "cold_storage"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Two apples on a time slider running from Harvest to Later, with a slider to drag. Dragging it lets time pass for both apples, one kept in a cool, dark store. Asks how cool, dark storage slows an apple's ripening."
+  },
+  "source": "Geopop, “Perché le mele sono disponibili tutto l'anno? Il viaggio dalla raccolta alla conservazione” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=YEMGl9gG9Zk&t=129s",
+  "written": "2026-11-03"
+}

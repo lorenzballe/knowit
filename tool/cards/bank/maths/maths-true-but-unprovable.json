@@ -1,0 +1,37 @@
+{
+  "id": "maths-true-but-unprovable",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.logic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a consistent formal system not prove all true statements?",
+  "answer": "Some statements are true but cannot be proven inside a consistent formal system. Proving such a statement would mean proving a falsehood, which a consistent system cannot do. By numbering every symbol, Gödel showed that any strong enough system can say this about itself.",
+  "move": "Any consistent system of maths leaves some truths unprovable.",
+  "keywords": [
+    "godel",
+    "incompleteness",
+    "formal systems",
+    "consistency",
+    "self-reference"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card on Gödel's incompleteness asking why a consistent formal system cannot prove all true statements. It shows the answer that some truths are unprovable, and it prompts the reader to drag the card into the box where it fits."
+  },
+  "source": "Veritasium, “Math's Fundamental Flaw” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=HeQX2HjkcNo",
+  "written": "2026-11-03"
+}

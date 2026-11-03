@@ -1,0 +1,37 @@
+{
+  "id": "science-ice-lifts-gibraltar",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "How did an ice age help close the Strait of Gibraltar?",
+  "answer": "Growing ice sheets at the poles locked up water, so sea level dropped. With less water pressing down, the ground at Gibraltar rose like an unloaded buoy. Together with tectonic movement, that sealed the strait and the Mediterranean dried out.",
+  "move": "Take weight off the Earth's crust and it slowly rises: that's isostasy.",
+  "keywords": [
+    "gibraltar",
+    "isostasy",
+    "ice-age",
+    "mediterranean",
+    "sea-level"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram-style card asking the reader to tap four steps in the order they happened: ice sheets grow at the poles, sea level drops, less water means less weight, and the land at Gibraltar rises."
+  },
+  "source": "Geopop, “IL MEDITERRANEO si prosciugò e ne abbiamo LE PROVE - Crisi di salinità del Messiniano” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=K3pwfIsKCjY&t=159s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "nature-longest-straw",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long can a drinking straw be?",
+  "answer": "You never pull a drink up a straw. You lower the pressure in your mouth and the outside air pushes the liquid up, and air gives up at 10.3 m, so a longer straw does not work. A 116 m tree drinks because it pulls the water instead.",
+  "move": "A straw only lets the air push, and the air gives up at 10.3 m. Trees pull.",
+  "keywords": [
+    "drinking straw",
+    "tree",
+    "air pressure",
+    "water"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A page titled 'The longest straw' with a draggable straw and a 'Drag the straw up' control. It asks how long a drinking straw can be and how a 116 m tree drinks. The reveal says air pressure limits a straw to 10.3 m, and trees pull water instead."
+  },
+  "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=HUmZrtiXDik",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,125 @@
+<!doctype html>
+<!-- slug: human_body-salt-free-deodorant -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#bubble{position:relative;align-self:center;max-width:88%;font:700 max(2.1cqh,13px)/1.25 var(--hand);color:var(--k);background:color-mix(in srgb,var(--k) 7%,transparent);box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:3cqh;padding:1.1cqh 4cqw;text-align:center;overflow-wrap:anywhere}
+#bubble::after{content:"";position:absolute;left:50%;bottom:-1.4cqh;width:1.2cqh;height:1.2cqh;border-radius:50%;background:color-mix(in srgb,var(--k) 20%,transparent);transform:translateX(-50%)}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;flex-direction:column;gap:.5cqh}
+#ctrl .ends{display:flex;justify-content:space-between;font:600 max(1.7cqh,12px)/1.2 var(--body);color:var(--muted)}
+#lvl{width:100%;accent-color:var(--k);height:4cqh;min-height:28px;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Slide · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ARMPITS</span></div>
+    <h2 class="q">Why might a light sweater use a salt-free deodorant?</h2>
+    <div class="stagebox" id="stage">
+      <div id="bubble">Slide to see what the aluminum does.</div>
+      <svg id="pic"></svg>
+      <div id="ctrl">
+        <input id="lvl" type="range" min="0" max="100" value="80" aria-label="How much you sweat">
+        <div class="ends"><span>I sweat a little</span><span>I sweat a lot</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider down to a light sweater.</p>
+    <div id="why" class="gone"><p class="body">Aluminum salts work by plugging sweat pores. If you sweat little, there is almost nothing to plug, so their action is wasted. Not because the salts are harmful: they are harmless.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Salt-free is fine when there is little sweat to stop.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAXD = 16;
+let level = .8, G = null, done = false, seen = false;
+const slider = Kit.$('lvl');
+
+function draw(){
+  const svg = Kit.$('pic');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H * .07));
+  const pad = W * .04, pw = (W - pad * 3) / 2;
+  const skinTop = H * .45, skinBot = H - f * 2.2;
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k') || '#111';
+  const blue = '#2f8fe0', skin = '#f2c6a8', skinD = '#d99a7a', plugC = '#9aa3ad';
+  G = {L: {drops: [], fills: []}, R: {drops: [], fills: [], plugs: []}, texts: {}};
+  const seedR = (() => { let s = 7; return () => (s = (s * 9301 + 49297) % 233280) / 233280; })();
+  ['L', 'R'].forEach((side, k) => {
+    const x0 = pad + k * (pw + pad);
+    const t = Kit.mk('text', {x: x0 + pw / 2, y: f * 1.1, 'text-anchor': 'middle', 'font-size': f, 'font-weight': 800, fill: ink, 'font-family': 'var(--body)'}, svg);
+    t.textContent = side === 'L' ? 'No salts' : 'Aluminum salts';
+    Kit.mk('rect', {x: x0, y: skinTop, width: pw, height: skinBot - skinTop, rx: f * .6, fill: skin, stroke: skinD, 'stroke-width': 2}, svg);
+    const pores = [.22, .5, .78];
+    const chH = (skinBot - skinTop) * .62, chW = Math.max(6, pw * .07);
+    pores.forEach(p => {
+      const cx = x0 + pw * p;
+      Kit.mk('rect', {x: cx - chW / 2, y: skinTop, width: chW, height: chH, fill: '#fff6ef', stroke: skinD, 'stroke-width': 1.5}, svg);
+      Kit.mk('circle', {cx, cy: skinTop + chH + chW * .9, r: chW * 1.1, fill: '#fff6ef', stroke: skinD, 'stroke-width': 1.5}, svg);
+      const fill = Kit.mk('rect', {x: cx - chW / 2 + 1, y: skinTop + chH, width: chW - 2, height: 0, fill: blue}, svg);
+      G[side].fills.push({el: fill, top: skinTop, bot: skinTop + chH});
+      Kit.mk('circle', {cx, cy: skinTop + chH + chW * .9, r: chW * .8, fill: blue, opacity: .85}, svg);
+      if (side === 'R') {
+        const pl = Kit.mk('rect', {x: cx - chW * .85, y: skinTop - chW * .35, width: chW * 1.7, height: chW * 1.1, rx: chW * .3, fill: plugC, stroke: ink, 'stroke-width': 1.2}, svg);
+        G.R.plugs.push(pl);
+      }
+    });
+    // drops above the skin
+    const top = f * 2, bot = skinTop - f * .5, r = Math.min(pw * .045, (bot - top) * .12);
+    for (let i = 0; i < MAXD; i++) {
+      const dx = x0 + r * 1.5 + seedR() * (pw - r * 3), dy = top + r + seedR() * (bot - top - r * 2);
+      const d = Kit.mk('path', {d: `M${dx} ${dy - r * 1.6} C${dx + r * .4} ${dy - r * .6} ${dx + r} ${dy - r * .2} ${dx + r} ${dy + r * .3} A${r} ${r} 0 0 1 ${dx - r} ${dy + r * .3} C${dx - r} ${dy - r * .2} ${dx - r * .4} ${dy - r * .6} ${dx} ${dy - r * 1.6}Z`, fill: blue, opacity: 0}, svg);
+      G[side].drops.push(d);
+    }
+    const c = Kit.mk('text', {x: x0 + pw / 2, y: H - f * .5, 'text-anchor': 'middle', 'font-size': Math.max(12, f * .8), 'font-weight': 700, fill: ink, 'font-family': 'var(--body)'}, svg);
+    G.texts[side] = c;
+  });
+  update(true);
+}
+
+function update(instant){
+  if (!G) return;
+  const n = Math.round(level * MAXD), dur = instant || Kit.calm ? 0 : .35;
+  G.L.drops.forEach((d, i) => gsap.to(d, {opacity: i < n ? .95 : 0, duration: dur}));
+  G.R.drops.forEach(d => gsap.to(d, {opacity: 0, duration: dur}));
+  G.L.fills.forEach(F => { const h = (F.bot - F.top) * Math.min(1, level * .5 + .05); gsap.to(F.el, {attr: {y: F.bot - h, height: h}, duration: dur}); });
+  G.R.fills.forEach(F => { const h = (F.bot - F.top) * (level * .95 + .02); gsap.to(F.el, {attr: {y: F.bot - h, height: h}, duration: dur}); });
+  G.R.plugs.forEach(p => gsap.to(p, {opacity: .35 + level * .65, duration: dur}));
+  G.texts.L.textContent = `${n} drops on skin`;
+  G.texts.R.textContent = `${n} drops stopped`;
+  const b = Kit.$('bubble');
+  b.textContent = level < .3 ? 'Aluminum is useless here: almost nothing to stop.'
+    : level < .65 ? 'Some sweat to stop: the plugs help a bit.'
+    : 'Lots of sweat: the aluminum plugs do real work.';
+}
+
+slider.addEventListener('input', () => {
+  level = slider.value / 100; update(false);
+  if (level < .3 && !seen) { seen = true; Kit.haptic('light'); }
+});
+slider.addEventListener('change', () => {
+  if (done || level >= .3) return;
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.L.drops.concat(G.R.plugs), {opacity: 0, stagger: .03, duration: .4, ease: 'power2.out'});
+  gsap.from('#bubble', {opacity: 0, y: -8, duration: .5, delay: .3});
+};
+Kit.play.card = async () => {
+  slider.value = 10; slider.dispatchEvent(new Event('input')); slider.dispatchEvent(new Event('change'));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

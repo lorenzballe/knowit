@@ -1,0 +1,38 @@
+{
+  "id": "science-branching-body-decays",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How often do the radioactive atoms in your body split the universe?",
+  "answer": "Each radioactive nucleus in your body is in a superposition of decayed and not decayed. When one decays, it hits what is around it, becomes entangled, and the universe branches. Your body has about 5,000 such decays every second.",
+  "move": "Branching is constant: your own body does it thousands of times a second.",
+  "keywords": [
+    "many worlds",
+    "radioactive decay",
+    "superposition",
+    "entanglement",
+    "branching universe"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A scale you drag to guess how many times per second the radioactive atoms in your body split the universe, followed by a prompt to rate how sure you are of your guess.",
+    "graded": false
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=826s",
+  "written": "2026-11-03"
+}

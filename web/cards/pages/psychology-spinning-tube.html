@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-spinning-tube -->
+<title>Astute · The spinning tube trick</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#box{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.opt{flex:1;font:700 max(2.2cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 3cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Try it · two sides">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEEING</span></div>
+    <h2 class="q">Spin a labelled tube: why do you only see the side you press?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><canvas id="cv"></canvas></div>
+      <div id="ctl">
+        <button class="opt" data-s="O">Press the O</button>
+        <button class="opt" data-s="X">Press the X</button>
+      </div>
+      <div id="why" class="gone"><p class="body">The spinning tube is a series of quick images, and your brain stitches them into one continuous picture. The side under your finger is the one you keep looking at, so that is the image your brain shows you.</p></div>
+    </div>
+    <p class="say" id="say">Press one side and watch the tube spin.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>What you see is a stitch of quick images, not the object itself.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Spinning Tube Trick” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const OFF = {O: 0, X: Math.PI};
+const COL = {O: '#16130f', X: '#c0392b'};
+let S = null, th = 0, pressed = null, clock = 0, lastSnap = 0;
+let trail = [], strip = [], hist = [];
+const tried = new Set();
+
+function rr(x, X, Y, w, h, r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
+
+function body(x, cx, cy, w, h){
+  const g = x.createLinearGradient(0, cy-h/2, 0, cy+h/2);
+  g.addColorStop(0,'#9c7444'); g.addColorStop(.35,'#e6c897'); g.addColorStop(.55,'#f1dbb0'); g.addColorStop(1,'#8a6438');
+  rr(x, cx-w/2, cy-h/2, w, h, h*.18); x.fillStyle = g; x.fill();
+  x.lineWidth = Math.max(1.5, h*.03); x.strokeStyle = '#5e4322'; x.stroke();
+}
+
+function letter(x, L, t, cx, cy, h, a){
+  const p = t + OFF[L], c = Math.cos(p); if (c <= 0.02) return;
+  x.save(); x.globalAlpha = Math.min(1, a);
+  x.translate(cx, cy + Math.sin(p)*h*.42); x.scale(1, c);
+  x.fillStyle = COL[L]; x.font = `900 ${h*.72}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+  x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(L, 0, h*.02);
+  x.restore();
+}
+
+function draw(){
+  if (!S) return;
+  const {x, W, H} = S, ink = getComputedStyle(Kit.$('card')).color;
+  x.clearRect(0, 0, W, H);
+  const f = Math.max(12, Math.min(W*.042, H*.05));
+  x.font = `700 ${f}px sans-serif`; x.textBaseline = 'alphabetic'; x.textAlign = 'left'; x.fillStyle = ink;
+  // snapshots
+  x.globalAlpha = .7; x.fillText('EACH INSTANT, ONE IMAGE', 0, f); x.globalAlpha = 1;
+  const n = 8, gap = W*.015, tw = (W - gap*(n-1))/n, thh = Math.min(tw*.55, H*.1), sy = f*1.6 + thh/2 + 2;
+  for (let i = 0; i < n; i++){
+    const cx = i*(tw+gap) + tw/2, t = strip.length ? strip[Math.max(0, strip.length - n + i)] ?? th : th;
+    body(x, cx, sy, tw*.92, thh);
+    if (strip.length > i || !pressed) { letter(x,'O',t,cx,sy,thh,1); letter(x,'X',t,cx,sy,thh,1); }
+  }
+  // big view
+  const barsH = f*3.6, top = sy + thh/2 + f*2.2, bot = H - barsH - f*.6;
+  x.fillStyle = ink; x.globalAlpha = .7; x.fillText('WHAT YOUR BRAIN STITCHES', 0, top - f*.5); x.globalAlpha = 1;
+  const reg = bot - top, bh = Math.min(reg*.5, W*.3), bw = Math.min(W*.86, bh*2.6), cx = W/2, cy = top + reg*.62;
+  body(x, cx, cy, bw, bh);
+  if (!pressed) { letter(x,'O',th,cx,cy,bh,1); letter(x,'X',th,cx,cy,bh,1); }
+  else for (const s of trail){ const a = .09*(1 - s.age/.35); letter(x,'O',s.t,cx,cy,bh,a); letter(x,'X',s.t,cx,cy,bh,a); }
+  // finger
+  if (pressed){
+    const fw = bh*.34, fy = cy - bh/2 - reg*.02, fx = cx + bw*.18;
+    x.save(); rr(x, fx-fw/2, top + f*.2, fw, fy - top - f*.2, fw*.45);
+    x.fillStyle = '#f0c3a0'; x.fill(); x.lineWidth = 2; x.strokeStyle = '#7a4d33'; x.stroke();
+    rr(x, fx-fw*.3, fy - fw*.75, fw*.6, fw*.55, fw*.22); x.fillStyle = '#fbe3d2'; x.fill(); x.restore();
+    x.fillStyle = ink; x.font = `700 ${f}px sans-serif`; x.textAlign = 'right';
+    x.fillText('finger on ' + pressed, fx - fw*.8, top + f*1.4); x.textAlign = 'left';
+  }
+  // bars
+  let o = 0, X = 0; for (const h of hist){ if (h === 'O') o++; else if (h === 'X') X++; }
+  const tot = hist.length || 1, po = pressed ? o/tot : 0, px = pressed ? X/tot : 0;
+  const lw = f*4.6, bx = lw, bwid = W - lw - f*3.4;
+  [['O', po], ['X', px]].forEach(([L, p], i) => {
+    const y = H - barsH + i*f*1.8 + f*.3;
+    x.fillStyle = ink; x.font = `700 ${f}px sans-serif`; x.fillText(L + ' seen', 0, y + f*.85);
+    rr(x, bx, y, bwid, f*1.1, f*.4); x.fillStyle = 'rgba(0,0,0,.1)'; x.fill();
+    if (p > .005){ rr(x, bx, y, Math.max(f*.8, bwid*p), f*1.1, f*.4); x.fillStyle = COL[L]; x.fill(); }
+    x.fillStyle = ink; x.fillText(pressed ? Math.round(p*100) + '%' : '–', bx + bwid + f*.4, y + f*.85);
+  });
+}
+
+function step(dt){
+  if (!pressed) return;
+  const sub = 8, h = dt/sub;
+  for (let k = 0; k < sub; k++){
+    th += 14*(0.12 + 1 - Math.cos(th + OFF[pressed]))*h;
+    clock += h; trail.push({t: th, age: 0});
+    const c = Math.cos(th); hist.push(c > .6 ? 'O' : c < -.6 ? 'X' : '');
+  }
+  for (const s of trail) s.age += dt;
+  trail = trail.filter(s => s.age < .35);
+  if (hist.length > 480) hist.splice(0, hist.length - 480);
+  if (clock - lastSnap > .07){ lastSnap = clock; strip.push(th); if (strip.length > 8) strip.shift(); }
+}
+
+gsap.ticker.add((t, dms) => { step(Math.min(.05, dms/1000)); draw(); });
+
+Kit.$('ctl').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  pressed = b.dataset.s; trail = []; strip = []; hist = []; clock = 0; lastSnap = 0;
+  [...Kit.$('ctl').children].forEach(c => c.classList.toggle('on', c === b));
+  Kit.haptic('selection'); tried.add(pressed);
+  if (tried.size < 2) Kit.$('say').textContent = `Only ${pressed}s. Now press the ${pressed === 'O' ? 'X' : 'O'}.`;
+  else if (Kit.$('why').classList.contains('gone')) { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success'); }
+  if (Kit.calm) for (let i = 0; i < 60; i++) step(1/60);
+});
+
+Kit.onShow.card = () => { S = Kit.fitCanvas(Kit.$('cv')); draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('ctl').children[0].click(); await new Promise(r => setTimeout(r, 900));
+  Kit.$('ctl').children[1].click(); await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

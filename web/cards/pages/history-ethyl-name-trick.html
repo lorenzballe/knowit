@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-ethyl-name-trick -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{width:100%;height:100%;flex:1;min-height:0;display:block;touch-action:manipulation}
+#pic .b{cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NAME GAME</span></div>
+    <h2 class="q">Why was the lead additive named ‘Ethyl’?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">One bottle holds the lead additive. Tap it.</p>
+    <div id="why" class="gone"><p class="body">Its full name was <b>tetraethyl lead</b>. Midgley and Kettering sold it as “Ethyl”, perhaps so it might be confused with ethyl alcohol, a common additive. They made no mention of lead.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A friendly name can hide what’s inside: ask for the full one.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Accidentally Killed The Most People In History” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0, NAMES = ['“Ethyl”', '“Ethyl alcohol”'];
+const S = {pick: -1, done: false};
+const RED = '#c4232b', LIQ = '#e0a43a', INK = '#16120e';
+let G = {};
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const cs = Math.max(12, f * 1.05);               // caption size
+  const capSpace = cs * 2.8;
+  const bh = Math.max(80, Math.min(H - capSpace - 8, W * 0.38 * 2.1));
+  const bw = Math.min(W * 0.38, bh * 0.56);
+  const y0 = Math.max(4, (H - capSpace - bh) / 2);
+  const defs = Kit.mk('defs', {}, svg);
+  G = {};
+  [0, 1].forEach(i => {
+    const cx = W * (i ? 0.73 : 0.27);
+    const x0 = cx - bw / 2, x1 = cx + bw / 2, nw = bw * 0.34, nx0 = cx - nw / 2, nx1 = cx + nw / 2;
+    const yS = y0 + bh * 0.2, yB = y0 + bh * 0.33, yE = y0 + bh, r = bw * 0.13;
+    const d = `M${nx0},${y0} L${nx1},${y0} L${nx1},${yS} Q${x1},${yS} ${x1},${yB} L${x1},${yE - r} Q${x1},${yE} ${x1 - r},${yE} L${x0 + r},${yE} Q${x0},${yE} ${x0},${yE - r} L${x0},${yB} Q${x0},${yS} ${nx0},${yS} Z`;
+    const cp = Kit.mk('clipPath', {id: 'cl' + i}, defs); Kit.mk('path', {d}, cp);
+    const g = Kit.mk('g', {class: 'b', 'data-i': i}, svg);
+    const inner = Kit.mk('g', {}, g);
+    Kit.mk('path', {d, fill: 'rgba(255,255,255,.35)'}, inner);
+    Kit.mk('rect', {x: x0, y: y0 + bh * 0.26, width: bw, height: bh, fill: LIQ, 'clip-path': `url(#cl${i})`}, inner);
+    Kit.mk('rect', {x: x0 + bw * 0.12, y: yB, width: bw * 0.07, height: bh * 0.5, rx: bw * 0.035, fill: 'rgba(255,255,255,.45)', 'clip-path': `url(#cl${i})`}, inner);
+    const ring = Kit.mk('path', {d, fill: 'none', stroke: INK, 'stroke-width': Math.max(2, bw * 0.025), 'stroke-linejoin': 'round'}, inner);
+    Kit.mk('rect', {x: nx0 - bw * 0.04, y: y0 - bh * 0.07, width: nw + bw * 0.08, height: bh * 0.08, rx: bw * 0.03, fill: INK}, inner);
+    // label
+    const lx = x0 + bw * 0.09, lw = bw * 0.82, ly = yB + bh * 0.05, lh = yE - ly - bh * 0.08;
+    Kit.mk('rect', {x: lx, y: ly, width: lw, height: lh, rx: bw * 0.04, fill: '#fbf7ee', stroke: INK, 'stroke-width': 1.5}, inner);
+    const fs = Math.max(12, Math.min(f * 1.35, lw / 5.2, lh / 4.4));
+    const t = (txt, y, col, w, op, parent) => { const e = Kit.mk('text', {x: cx, y, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: col, 'font-family': 'var(--display)', 'font-weight': w, 'font-size': fs, opacity: op}, parent); e.textContent = txt; return e; };
+    const mid = ly + lh / 2;
+    const before = Kit.mk('g', {opacity: S.done ? 0 : 1}, inner), after = Kit.mk('g', {opacity: S.done ? 1 : 0}, inner);
+    if (i === 0) {
+      t('ETHYL', mid, INK, 800, 1, before);
+      t('TETRA', mid - fs * 1.35, '#9a9187', 700, 1, after);
+      t('ETHYL', mid, INK, 800, 1, after);
+      t('LEAD', mid + fs * 1.35, RED, 900, 1, after);
+    } else {
+      t('ETHYL', mid - fs * 0.68, INK, 800, 1, before); t('ALCOHOL', mid + fs * 0.68, INK, 800, 1, before);
+      t('ETHYL', mid - fs * 0.68, INK, 800, 1, after); t('ALCOHOL', mid + fs * 0.68, INK, 800, 1, after);
+    }
+    const cap = Kit.mk('text', {x: cx, y: yE + capSpace * 0.55, 'text-anchor': 'middle', 'dominant-baseline': 'middle', fill: i === 0 ? RED : 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': cs, opacity: S.done ? 1 : 0}, svg);
+    cap.textContent = i === 0 ? 'toxic lead' : 'no lead';
+    if (S.pick === i) ring.setAttribute('stroke-width', Math.max(4, bw * 0.05));
+    G[i] = {inner, ring, before, after, cap, bw};
+  });
+}
+
+function reveal() {
+  S.done = true;
+  [0, 1].forEach(i => {
+    const g = G[i];
+    if (Kit.calm) { g.before.setAttribute('opacity', 0); g.after.setAttribute('opacity', 1); g.cap.setAttribute('opacity', 1); return; }
+    gsap.to(g.before, {attr: {opacity: 0}, duration: .3});
+    gsap.to(g.after, {attr: {opacity: 1}, duration: .5, delay: .25 + i * .2});
+    gsap.to(g.cap, {attr: {opacity: 1}, duration: .4, delay: .5 + i * .2});
+  });
+  if (!Kit.calm) gsap.fromTo(G[0].inner, {x: -4}, {x: 4, duration: .07, repeat: 5, yoyo: true, delay: .4, onComplete: () => gsap.set(G[0].inner, {x: 0})});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = S.pick === RIGHT, said = NAMES[S.pick];
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  requestAnimationFrame(() => { draw(); S.done = false; draw(); reveal(); });
+});
+
+Kit.$('pic').addEventListener('click', e => {
+  const b = e.target.closest('[data-i]'); if (!b || S.pick >= 0) return;
+  S.pick = +b.dataset.i; Kit.haptic('selection');
+  G[S.pick].ring.setAttribute('stroke-width', Math.max(4, G[S.pick].bw * 0.05));
+  if (!Kit.calm) gsap.fromTo(G[S.pick].inner, {y: 0}, {y: -10, duration: .18, yoyo: true, repeat: 1, ease: 'power2.out'});
+  Kit.$('say').textContent = 'Now say how sure you are.';
+  sure.on();
+});
+
+let raf = 0;
+new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }).observe(Kit.$('stage'));
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) [0, 1].forEach(i => gsap.from(G[i].inner, {opacity: 0, y: 20, duration: .5, delay: i * .12, ease: 'power3.out'})); };
+Kit.play.card = async () => {
+  G[0].inner.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1400));
+};
+Kit.single();
+</script>
+</html>

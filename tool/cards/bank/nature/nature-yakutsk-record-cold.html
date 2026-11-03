@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-yakutsk-record-cold -->
+<title>Astute free card · Yakutsk record cold</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:ns-resize;border-radius:2cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLD RECORD</span></div>
+    <h2 class="q">What is the lowest temperature ever recorded in Yakutsk?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A thermometer over a snowy night skyline"></svg>
+      <div id="why" class="gone"><p class="body">−63 °C: the coldest temperature ever measured in a place where people live all year. Some there leave the car engine running all night, because 20 minutes switched off would freeze everything.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the thermometer down to your guess for the record low.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Yakutsk hit −63 °C: the coldest city people live in.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REC = -63, TMAX = 20, TMIN = -80;
+const st = {g: -20, cur: -20, picked: false, revealed: false};
+const fmt = n => (n < 0 ? '−' : '') + Math.abs(Math.round(n));
+let G = null; // geometry and live elements
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = Math.abs(st.g - REC) <= 5;
+  Kit.answer({choice: fmt(st.g) + ' °C', correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${fmt(st.g)} °C, ${ok ? 'close' : 'off'}`);
+  reveal();
+  Kit.show('keep');
+});
+
+function reveal(){
+  st.revealed = true;
+  Kit.haptic('success');
+  const o = {t: st.cur};
+  gsap.to(o, {t: REC, duration: Kit.calm ? 0.01 : 1.6, ease: 'power2.inOut', onUpdate: () => { st.cur = o.t; update(); }, onComplete: () => { st.cur = REC; update(); }});
+  if (G && !Kit.calm) gsap.to(G.frost, {opacity: .35, duration: 1.6});
+  else if (G) G.frost.setAttribute('opacity', .35);
+}
+
+function draw(){
+  const svg = Kit.$('pic');
+  gsap.killTweensOf('#pic circle.flake');
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(13, f0);
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const defs = mk('defs', {});
+  const gr = mk('linearGradient', {id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: 0, 'stop-color': '#06102a'}, gr);
+  mk('stop', {offset: 1, 'stop-color': '#21477e'}, gr);
+  mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: 'url(#sky)'});
+  // stars
+  for (let i = 0; i < 30; i++) mk('circle', {cx: Kit.rnd() * W, cy: Kit.rnd() * H * .5, r: .6 + Kit.rnd() * 1.1, fill: '#fff', opacity: .3 + Kit.rnd() * .5});
+  // skyline
+  const base = H * .8;
+  let x = -4;
+  while (x < W){
+    const bw = W * (.06 + Kit.rnd() * .08), bh = H * (.08 + Kit.rnd() * .16);
+    mk('rect', {x, y: base - bh, width: bw, height: H - base + bh, fill: '#091530'});
+    mk('rect', {x: x - 1, y: base - bh - 3, width: bw + 2, height: 4, rx: 2, fill: '#eef6ff'});
+    for (let wy = base - bh + 8; wy < H - 6; wy += 10) for (let wx = x + 4; wx < x + bw - 5; wx += 8)
+      if (Kit.rnd() < .3) mk('rect', {x: wx, y: wy, width: 3, height: 4, fill: '#ffd27a', opacity: .8});
+    x += bw + 2;
+  }
+  mk('rect', {x: 0, y: H * .93, width: W, height: H * .07, fill: '#eef6ff'});
+  const frost = mk('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .05, fill: '#cfe8ff', opacity: st.revealed ? .35 : 0, 'pointer-events': 'none'});
+  // thermometer
+  const cx = W * .38, br = Math.min(W * .07, H * .055), tw = br * 1.05;
+  const by = H * .86 - br, top = H * .07, bot = by - br * 1.1;
+  const y = T => top + (TMAX - T) / (TMAX - TMIN) * (bot - top);
+  mk('rect', {x: cx - tw / 2 - 3, y: top - tw / 2 - 3, width: tw + 6, height: by - top + tw / 2, rx: tw / 2 + 3, fill: '#0b1a33', opacity: .5});
+  mk('rect', {x: cx - tw / 2, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: '#f4f8ff'});
+  mk('circle', {cx, cy: by, r: br + 3, fill: '#0b1a33', opacity: .5});
+  mk('circle', {cx, cy: by, r: br, fill: '#f4f8ff'});
+  // ticks
+  const pitch = (bot - top) / 10;
+  const step = pitch >= f * 1.35 * 1.05 ? 10 : 20;
+  for (let T = TMAX; T >= TMIN; T -= 10){
+    const yy = y(T);
+    mk('line', {x1: cx - tw / 2 + 2, x2: cx - tw / 2 + tw * .3, y1: yy, y2: yy, stroke: '#7b8db0', 'stroke-width': 1.5});
+    if (T % step === 0){
+      const t = mk('text', {x: cx - tw / 2 - 8, y: yy, 'text-anchor': 'end', 'dominant-baseline': 'central', fill: '#dfeaff', 'font-size': f, style: 'font-family:var(--mono);font-weight:600'});
+      t.textContent = fmt(T) + '°';
+    }
+  }
+  const mw = tw * .5;
+  mk('circle', {cx, cy: by, r: br * .78, fill: '#e2402f'});
+  const merc = mk('rect', {x: cx - mw / 2, width: mw, rx: mw / 2, fill: '#e2402f'});
+  // guess marker (shown after reveal)
+  const gline = mk('line', {x1: cx - tw * .9, x2: cx + tw * 1.2, stroke: '#ffd27a', 'stroke-width': 2.5, 'stroke-dasharray': '5 4', opacity: 0});
+  const glab = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#ffd27a', 'font-size': f, opacity: 0, style: 'font-family:var(--body);font-weight:700'});
+  // readout
+  const big = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#ffffff', 'font-size': f * 2.1, style: 'font-family:var(--display);font-weight:800'});
+  const small = mk('text', {x: cx + tw * 1.4, 'dominant-baseline': 'central', fill: '#b8cdf0', 'font-size': f, style: 'font-family:var(--body);font-weight:600'});
+  const arrow = mk('path', {fill: '#ffffff'});
+  // snow
+  const sg = mk('g', {'pointer-events': 'none'});
+  const flakes = [];
+  for (let i = 0; i < 36; i++){
+    const c = mk('circle', {class: 'flake', cx: Kit.rnd() * W, cy: Kit.rnd() * H, r: 1 + Kit.rnd() * 2.2, fill: '#fff', opacity: .55 + Kit.rnd() * .4}, sg);
+    flakes.push(c);
+  }
+  G = {W, H, f, cx, tw, by, top, bot, y, merc, mw, gline, glab, big, small, arrow, frost, flakes};
+  update();
+  if (!Kit.calm) flakes.forEach(c => {
+    const d = 4 + Kit.rnd() * 5;
+    gsap.fromTo(c, {attr: {cy: -10}}, {attr: {cy: H + 10, cx: '+=' + (Kit.rnd() * 30 - 15)}, duration: d, ease: 'none', repeat: -1, delay: -Kit.rnd() * d});
+  });
+}
+
+function update(){
+  if (!G) return;
+  const {y, merc, by, cx, tw, f, H} = G;
+  const yy = y(st.cur);
+  merc.setAttribute('y', yy); merc.setAttribute('height', Math.max(0, by - yy));
+  const lim = v => Math.max(f * 1.4, Math.min(H - f * 3.2, v));
+  const ry = lim(yy);
+  G.big.setAttribute('y', ry); G.big.textContent = fmt(st.cur) + ' °C';
+  G.small.setAttribute('y', ry + f * 2.2); G.small.textContent = st.revealed ? 'record low' : 'your guess';
+  const ax = cx + tw * .75;
+  G.arrow.setAttribute('d', `M${ax},${yy} l${tw * .45},-${f * .4} v${f * .8} z`);
+  if (st.revealed){
+    const gy = y(st.g);
+    G.gline.setAttribute('y1', gy); G.gline.setAttribute('y2', gy); G.gline.setAttribute('opacity', 1);
+    let ly = gy;
+    if (ly > ry - f * 2 && ly < ry + f * 3.6) ly = (gy < ry) ? ry - f * 2.2 : ry + f * 3.6;
+    G.glab.setAttribute('y', Math.max(f, Math.min(H - f, ly))); G.glab.setAttribute('opacity', 1);
+    G.glab.textContent = 'you: ' + fmt(st.g) + ' °C';
+  }
+}
+
+function setFromY(clientY){
+  const r = Kit.$('pic').getBoundingClientRect();
+  const sy = (clientY - r.top) * (G.H / r.height);
+  let T = TMAX - (sy - G.top) / (G.bot - G.top) * (TMAX - TMIN);
+  T = Math.round(Math.max(TMIN, Math.min(TMAX, T)));
+  if (T !== st.g && T % 5 === 0) Kit.haptic('light');
+  st.g = st.cur = T; update();
+}
+let dragging = false;
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => { if (st.revealed || !G) return; dragging = true; try { pic.setPointerCapture(e.pointerId); } catch(_){} setFromY(e.clientY); });
+pic.addEventListener('pointermove', e => { if (dragging) setFromY(e.clientY); });
+const end = () => { if (!dragging) return; dragging = false; if (!st.picked){ st.picked = true; Kit.haptic('selection'); sure.on(); } };
+pic.addEventListener('pointerup', end); pic.addEventListener('pointercancel', end);
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || st.picked) return;
+  const o = {t: 10};
+  gsap.to(o, {t: -20, duration: 1.2, ease: 'power2.out', onUpdate: () => { if (!st.picked && !dragging){ st.cur = st.g = Math.round(o.t); update(); } }});
+};
+Kit.play.card = async () => {
+  const r = pic.getBoundingClientRect();
+  const sy = G.y(-45) * (r.height / G.H) + r.top, cxp = r.left + r.width * .4;
+  const ev = (t, yy) => pic.dispatchEvent(new PointerEvent(t, {clientX: cxp, clientY: yy, pointerId: 1, bubbles: true}));
+  ev('pointerdown', sy - 40); ev('pointermove', sy - 20); ev('pointermove', sy); ev('pointerup', sy);
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1900));
+};
+Kit.single();
+</script>
+</html>

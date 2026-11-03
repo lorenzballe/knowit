@@ -1,0 +1,37 @@
+{
+  "id": "technology-yakutsk-stilt-houses",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do Yakutsk's buildings keep from melting the frozen ground?",
+  "answer": "A heated house touching the ground would warm and thaw its top layer, and the building could sink. Lifted about 1.5 m, its heat stays in the air, while piles driven about 10 m down hold it up.",
+  "move": "On permafrost, keep the heat off the ground: build on stilts.",
+  "keywords": [
+    "yakutsk",
+    "permafrost",
+    "stilts",
+    "siberia",
+    "pile foundations"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A house sits on frozen ground. The reader drags it upward to lift it about 1.5 m off the ground, showing piles beneath. The question asks how Yakutsk's buildings keep from melting the frozen ground."
+  },
+  "source": "Geopop, “Qual è la città più fredda del mondo? Yakutsk, dove si vive anche a -63°C” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=0Mg2HR3KN1M&t=252s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,223 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-wave-energy-depth -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:crosshair}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Draw it · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN WAVES</span></div>
+    <h2 class="q">What happens to a wave's energy as it goes deeper?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A wave seen from the side, with the water below it down to the seabed"></svg>
+      <div id="why" class="gone">
+        <p class="big">The circles shrink.</p>
+        <p class="body">At the surface a wave is a shape; below, it becomes water moving in circles. The deeper you go, the smaller the circles, because the wave's energy disperses on the way down.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag from the top circle down to the seabed: draw how wide the water swirls.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A wave's energy fades with depth: its circles get smaller.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 48;
+const G = new Array(N).fill(null);
+let done = false, drawing = false, last = -1, phase = 0, ticking = false;
+let geo = {};
+const svg = Kit.$('pic');
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const rr = d => geo.r0 * Math.exp(-3.4 * d);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+function surfacePath() {
+  const {W, H, sY, r0} = geo, lam = W * .8, k = 2 * Math.PI / lam;
+  let s = '';
+  for (let x = 0; x <= W + 4; x += 4) {
+    const y = sY - r0 * Math.cos(k * (x - geo.cx) - phase);
+    s += (x ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+  }
+  return s + `L${W + 4} ${H}L0 ${H}Z`;
+}
+
+function tick() {
+  if (!geo.water) return;
+  geo.water.setAttribute('d', surfacePath());
+  geo.dots.forEach(o => {
+    o.el.setAttribute('cx', geo.cx + o.r * Math.sin(phase));
+    o.el.setAttribute('cy', o.y - o.r * Math.cos(phase));
+  });
+}
+
+function guessD(side) {
+  const {cx, sY, bY, r0} = geo; let s = '', first = true;
+  for (let i = 0; i < N; i++) {
+    if (G[i] == null) { first = true; continue; }
+    const y = sY + (bY - sY) * i / (N - 1), x = cx + side * G[i] * r0;
+    s += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1); first = false;
+  }
+  return s || 'M0 0';
+}
+function drawGuess() { if (geo.gR) { geo.gR.setAttribute('d', guessD(1)); geo.gL.setAttribute('d', guessD(-1)); } }
+
+function realD(side) {
+  const {cx, sY, bY} = geo; let s = '';
+  for (let i = 0; i <= 60; i++) {
+    const d = i / 60, y = sY + (bY - sY) * d;
+    s += (i ? 'L' : 'M') + (cx + side * rr(d)).toFixed(1) + ' ' + y.toFixed(1);
+  }
+  return s;
+}
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(12, f * .8);
+  const r0 = Math.min(W * .15, H * .085);
+  const sY = r0 * 1.7 + 4;
+  const bY = H - Math.max(fs * 1.1, H * .05);
+  geo = {W, H, f, fs, r0, sY, bY, cx: W / 2, dots: []};
+  const defs = mk('defs', {}, svg);
+  const lg = mk('linearGradient', {id: 'wg', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  mk('stop', {offset: '0', style: 'stop-color:var(--k);stop-opacity:.08'}, lg);
+  mk('stop', {offset: '1', style: 'stop-color:var(--k);stop-opacity:.34'}, lg);
+  geo.water = mk('path', {fill: 'url(#wg)', stroke: 'var(--k)', 'stroke-width': Math.max(2, f * .14), style: 'stroke:var(--k)'}, svg);
+  mk('rect', {x: 0, y: bY, width: W, height: H - bY, style: 'fill:var(--k);opacity:.55'}, svg);
+  mk('line', {x1: geo.cx, y1: sY, x2: geo.cx, y2: bY, style: 'stroke:var(--k);opacity:.25', 'stroke-width': 1.2, 'stroke-dasharray': '3 5'}, svg);
+  const lab = (t, x, y, anchor, extra) => { const e = mk('text', {x, y, 'text-anchor': anchor || 'start', style: `fill:var(--k);font:700 ${fs}px var(--body);letter-spacing:.06em;${extra || ''}`}, svg); e.textContent = t; return e; };
+  const deepY = bY - fs * .6;
+  let surfY = Math.min(sY + r0 + fs * 1.4, deepY - fs * 1.5);
+  surfY = Math.max(surfY, sY + fs * .35);
+  lab('SURFACE', 8, surfY);
+  if (deepY - surfY >= fs * 1.5) lab('DEEP', 8, deepY);
+  lab('SEABED', 8, bY + (H - bY) / 2 + fs * .35, 'start', 'fill:var(--c)');
+  // the top circle: the surface swirl, as big as the wave
+  mk('circle', {cx: geo.cx, cy: sY, r: r0, fill: 'none', style: 'stroke:var(--k)', 'stroke-width': Math.max(2, f * .16)}, svg);
+  // the reader's guess
+  const gs = {fill: 'none', 'stroke-width': Math.max(3, f * .22), 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': `${f * .5} ${f * .45}`, style: 'stroke:var(--k);opacity:.6'};
+  geo.gR = mk('path', gs, svg); geo.gL = mk('path', gs, svg);
+  drawGuess();
+  // the real thing
+  geo.real = mk('g', {}, svg);
+  if (done) buildReal();
+  const top = mk('circle', {r: Math.max(5, f * .38), style: 'fill:var(--k)'}, svg);
+  geo.dots.push({el: top, r: r0, y: sY});
+  tick();
+};
+
+function buildReal() {
+  const {cx, sY, bY, r0, f, fs, W} = geo, g = geo.real;
+  geo.edges = [1, -1].map(s => mk('path', {d: realD(s), fill: 'none', 'stroke-width': Math.max(3.5, f * .26), 'stroke-linecap': 'round', style: 'stroke:var(--k)'}, g));
+  geo.circles = [];
+  let y = sY + r0 + Math.max(6, f * .5);
+  let d = (y - sY) / (bY - sY), r = rr(d);
+  y += r;
+  while (y + r < bY - 2 && r > 1.8) {
+    d = (y - sY) / (bY - sY); r = rr(d);
+    const c = mk('circle', {cx, cy: y, r, fill: 'none', 'stroke-width': Math.max(1.8, f * .13), style: 'stroke:var(--k);opacity:.85'}, g);
+    const dot = mk('circle', {r: Math.max(2.5, Math.min(f * .3, r * .35 + 1.5)), style: 'fill:var(--k)'}, g);
+    geo.circles.push(c, dot);
+    geo.dots.push({el: dot, r, y});
+    const gap = Math.max(5, f * .45);
+    const ny = y + r + gap;
+    const nr = rr((ny - sY) / (bY - sY));
+    y = ny + nr; r = nr;
+  }
+  // legend, two lines well apart
+  const lx = W - 8, ly = bY - fs * .7;
+  const l1 = mk('text', {x: lx, y: ly, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${fs}px var(--body)`}, g); l1.textContent = '━ real';
+  const l2 = mk('text', {x: lx, y: ly - fs * 1.6, 'text-anchor': 'end', style: `fill:var(--k);opacity:.7;font:700 ${fs}px var(--body)`}, g); l2.textContent = '╌ your guess';
+  geo.legend = [l1, l2];
+}
+
+function animateReveal() {
+  if (Kit.calm || !geo.edges) return;
+  geo.edges.forEach(p => { const L = p.getTotalLength(); gsap.fromTo(p, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut'}); });
+  gsap.from(geo.circles, {opacity: 0, duration: .4, stagger: .06, delay: .25});
+  gsap.from(geo.legend, {opacity: 0, y: 6, duration: .4, delay: 1});
+}
+
+function pt(e) {
+  const b = svg.getBoundingClientRect();
+  return [(e.clientX - b.left) * geo.W / b.width, (e.clientY - b.top) * geo.H / b.height];
+}
+function record(e) {
+  const [x, y] = pt(e), {sY, bY, cx, r0, W} = geo;
+  const d = (y - sY) / (bY - sY);
+  if (d < -.08 || d > 1.06) return;
+  const i = Math.round(clamp(d, 0, 1) * (N - 1));
+  const r = Math.min(Math.abs(x - cx), W / 2 - 4) / r0;
+  if (last >= 0 && last !== i && G[last] != null) {
+    const s = Math.sign(i - last);
+    for (let j = last + s; j !== i; j += s) G[j] = G[last] + (r - G[last]) * (j - last) / (i - last);
+  }
+  G[i] = r; last = i; drawGuess();
+}
+svg.addEventListener('pointerdown', e => {
+  if (done) return;
+  drawing = true; last = -1; G.fill(null);
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  record(e);
+});
+svg.addEventListener('pointermove', e => { if (drawing) record(e); });
+const end = () => {
+  if (!drawing) return; drawing = false;
+  const n = G.filter(v => v != null).length;
+  if (n < N * .6) { Kit.$('say').textContent = 'Draw all the way down to the seabed.'; return; }
+  let firstI = G.findIndex(v => v != null);
+  for (let i = 0; i < firstI; i++) G[i] = G[firstI];
+  for (let i = 1; i < N; i++) if (G[i] == null) {
+    let j = i; while (j < N && G[j] == null) j++;
+    const a = G[i - 1], b = j < N ? G[j] : a;
+    for (let k = i; k < j; k++) G[k] = a + (b - a) * (k - i + 1) / (j - i + 1);
+  }
+  drawGuess(); Kit.haptic('selection');
+  Kit.$('say').textContent = 'Got it. Now: how sure are you? (You can redraw.)';
+  sure.on();
+  requestAnimationFrame(() => Kit.onShow.card());
+};
+svg.addEventListener('pointerup', end);
+svg.addEventListener('pointercancel', end);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ratio = G[N - 1], ok = ratio < .45;
+  const said = ratio < .45 ? 'Swirl shrinks with depth' : ratio < .9 ? 'Swirl shrinks a little' : 'Swirl stays as big or grows';
+  done = true;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  requestAnimationFrame(() => { Kit.onShow.card(); animateReveal(); });
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) { phase = .9; tick(); return; }
+  if (!ticking) { ticking = true; gsap.ticker.add((t, dt) => { phase += dt * .0016; tick(); }); }
+  gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const b = svg.getBoundingClientRect(), sx = b.width / geo.W, sy = b.height / geo.H;
+  const fire = (type, x, y) => svg.dispatchEvent(new PointerEvent(type, {clientX: b.left + x * sx, clientY: b.top + y * sy, bubbles: true, pointerId: 1, pointerType: 'touch'}));
+  const x = geo.cx + geo.r0 * .9;
+  fire('pointerdown', x, geo.sY);
+  for (let i = 1; i <= 30; i++) fire('pointermove', x - geo.r0 * .2 * i / 30, geo.sY + (geo.bY - geo.sY) * i / 30);
+  fire('pointerup', x - geo.r0 * .2, geo.bY);
+  await wait(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1400);
+};
+Kit.single();
+</script>
+</html>

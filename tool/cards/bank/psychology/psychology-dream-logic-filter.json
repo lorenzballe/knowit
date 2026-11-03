@@ -1,0 +1,37 @@
+{
+  "id": "psychology-dream-logic-filter",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do absurd dream events seem perfectly normal?",
+  "answer": "The prefrontal cortex handles critical thinking: logic, planning, and the sense of time. It is less active during sleep, so the rational filter shrinks. The brain then builds strange stories that we accept without questioning them.",
+  "move": "In dreams the part of you that asks “really?” is turned down.",
+  "keywords": [
+    "dreams",
+    "prefrontal cortex",
+    "logic",
+    "sleep",
+    "brain"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider moves from awake to asleep while a logic filter labeled prefrontal cortex dims from 100%, letting surreal images pass through. Asks: why do absurd dream events seem normal?"
+  },
+  "source": "Geopop, “Cosa accade nel nostro cervello quando sogniamo?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=ddHHHndH-6c&t=333s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-belt-friction-equation -->
+<title>Astute free card · Belt friction equation</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#formula{font:700 max(2.4cqh,15px)/1.2 var(--mono);text-align:center;color:var(--k)}
+#formula small{font:600 max(1.5cqh,12px)/1.2 var(--body);color:var(--muted);display:block;margin-top:.4cqh}
+#formula sup{font-size:.7em}
+#svgbox{flex:1;min-height:0;position:relative}
+#svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+#read{display:flex;gap:3cqw;flex-shrink:0}
+.rb{flex:1;min-width:0;border-radius:1.6cqh;padding:.9cqh 3cqw;background:color-mix(in srgb,var(--k) 8%,transparent)}
+.rb.you{background:var(--k);color:var(--c)}
+.rb .l{font:600 max(1.5cqh,12px)/1.2 var(--body);display:block}
+.rb .n{font:800 max(3cqh,18px)/1.1 var(--display);display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;flex-shrink:0}
+#tl{font:700 max(1.8cqh,13px)/1.2 var(--body);white-space:nowrap;min-width:8.5em}
+#turns{flex:1;accent-color:var(--k);height:max(4cqh,28px);margin:0}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+.say{overflow-wrap:anywhere}
+.card.done #formula small{display:none}
+.card.done #stage{gap:.6cqh}
+.card.done .rb{padding:.5cqh 3cqw;display:flex;align-items:baseline;justify-content:space-between;gap:2cqw;flex-wrap:wrap}
+.card.done .rb .n{font-size:max(2.2cqh,15px)}
+.card.done #turns{height:max(3cqh,24px)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn a dial">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FRICTION</span></div>
+    <h2 class="q">What equation gives the tension a coiled rope or string can hold?</h2>
+    <div class="stagebox" id="stage">
+      <div id="formula">T<sub>ship</sub> = T<sub>you</sub> · e<sup>μθ</sup><small>the belt friction equation · θ = angle wrapped (μ = 0.3 here)</small></div>
+      <div id="svgbox"><svg id="svg"></svg></div>
+      <div id="read">
+        <div class="rb"><span class="l">Ship pulls with</span><span class="n" id="nShip">10,000</span></div>
+        <div class="rb you"><span class="l">You hold it with</span><span class="n" id="nYou">10,000</span></div>
+      </div>
+      <div id="ctl"><span id="tl">0.0 turns</span><input id="turns" type="range" min="0" max="4" step="0.01" value="0" aria-label="Turns of rope around the bollard"></div>
+    </div>
+    <p class="say" id="say">Slide to wrap the rope more turns around the bollard.</p>
+    <div id="why" class="gone"><p class="body">Friction grips along every bit of rope touching the post, and each extra turn multiplies the grip again. So the hold grows exponentially with the angle wrapped: that's how a few turns on a yo-yo's axle let the string pull it back.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Wrap angle multiplies grip: a few turns of rope can hold a ship.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Stringless Yo-Yo!” (YouTube, 2016)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MU = 0.3, SHIP = 10000, MAXT = 4;
+let t = 0, done = false, lastInt = 0, G = null;
+const fmt = v => v >= 100 ? Math.round(v).toLocaleString('en-US') : v.toFixed(1);
+const svg = Kit.$('svg'), slider = Kit.$('turns');
+
+function build(){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  let topH = H * .56;
+  const need = fs * 6.2;
+  if (H - topH < need) topH = H - need;
+  const hasGraph = topH >= H * .3;
+  if (!hasGraph) topH = H;
+  const cx = W * .6, cy = topH * .5;
+  const r = Math.max(8, Math.min(W * .105, topH * .15));
+  const rw = Math.max(3, r * .13);
+  const g = { W, H, fs, topH, cx, cy, r, rw, hasGraph };
+  // ship
+  const sx = W * .2, sy = cy - r - rw / 2;
+  const hull = `M${W*.01},${sy - r*.2} L${sx},${sy - r*.2} L${sx - r*.35},${sy + r*.9} L${W*.04},${sy + r*.9} Z`;
+  Kit.mk('path', {d: hull, style: 'fill:var(--k);opacity:.85'}, svg);
+  Kit.mk('rect', {x: W*.05, y: sy - r*.75, width: W*.08, height: r*.55, rx: 3, style: 'fill:var(--k);opacity:.55'}, svg);
+  Kit.mk('path', {d: `M0,${sy + r*.9} Q${W*.06},${sy + r*.75} ${W*.12},${sy + r*.9} T${W*.24},${sy + r*.9}`, style: 'fill:none;stroke:var(--k);stroke-width:2;opacity:.35'}, svg);
+  g.sx = sx; g.sy = sy;
+  // bollard base + post
+  Kit.mk('circle', {cx, cy, r: r * 1.05, style: 'fill:var(--k);opacity:.18'}, svg);
+  g.rope = Kit.mk('path', {style: `fill:none;stroke:var(--k);stroke-width:${rw};stroke-linecap:round;stroke-linejoin:round`}, svg);
+  Kit.mk('circle', {cx, cy, r: r * .82, style: 'fill:var(--k)'}, svg);
+  Kit.mk('circle', {cx, cy, r: r * .55, style: 'fill:var(--c);opacity:.25'}, svg);
+  g.hand = Kit.mk('circle', {r: Math.max(6, r * .26), style: 'fill:var(--c);stroke:var(--k);stroke-width:3'}, svg);
+  if (hasGraph){
+    // graph
+    const gx0 = W * .1, gx1 = W * .95, gy0 = topH + fs * 1.9, gy1 = H - fs * 1.7;
+    Object.assign(g, {gx0, gx1, gy0, gy1});
+    const lab = Kit.mk('text', {x: gx0, y: topH + fs * 1.05, style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+    lab.textContent = 'how hard you must pull';
+    Kit.mk('path', {d: `M${gx0},${gy0} L${gx0},${gy1} L${gx1},${gy1}`, style: 'fill:none;stroke:var(--k);stroke-width:2;opacity:.5'}, svg);
+    for (let i = 0; i <= MAXT; i++){
+      const x = gx0 + (gx1 - gx0) * i / MAXT;
+      const tx = Kit.mk('text', {x, y: gy1 + fs * 1.3, 'text-anchor': i === MAXT ? 'end' : 'middle', style: `font:600 ${fs}px var(--body);fill:var(--k);opacity:.75`}, svg);
+      tx.textContent = i === MAXT ? '4 turns' : String(i);
+    }
+    let d = '';
+    for (let i = 0; i <= 120; i++){ const tt = MAXT * i / 120; d += (i ? 'L' : 'M') + gxy(g, tt).join(','); }
+    Kit.mk('path', {d, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 5;opacity:.35'}, svg);
+    g.curve = Kit.mk('path', {style: `fill:none;stroke:var(--k);stroke-width:${Math.max(3, rw*.8)};stroke-linecap:round`}, svg);
+    g.dot = Kit.mk('circle', {r: Math.max(5, fs * .4), style: 'fill:var(--k)'}, svg);
+  }
+  G = g; draw();
+}
+function gxy(g, tt){
+  const p = Math.exp(-MU * 2 * Math.PI * tt);
+  return [g.gx0 + (g.gx1 - g.gx0) * tt / MAXT, g.gy1 - p * (g.gy1 - g.gy0)];
+}
+function draw(){
+  if (!G) return;
+  const g = G, th = t * 2 * Math.PI, grow = .55 * g.r / (MAXT * 2 * Math.PI);
+  const R0 = g.r * .82 + g.rw / 2;
+  let d = `M${g.sx},${g.sy}`, a = -Math.PI / 2, R = R0;
+  const n = Math.max(1, Math.ceil(th / .05));
+  for (let i = 0; i <= n; i++){
+    const ph = th * i / n; a = -Math.PI / 2 + ph; R = R0 + grow * ph;
+    d += `L${(g.cx + R * Math.cos(a)).toFixed(1)},${(g.cy + R * Math.sin(a)).toFixed(1)}`;
+  }
+  const ex = g.cx + R * Math.cos(a), ey = g.cy + R * Math.sin(a), L = g.r * 1.45;
+  const hx = ex - Math.sin(a) * L, hy = ey + Math.cos(a) * L;
+  d += `L${hx.toFixed(1)},${hy.toFixed(1)}`;
+  g.rope.setAttribute('d', d);
+  g.hand.setAttribute('cx', hx); g.hand.setAttribute('cy', hy);
+  if (g.hasGraph){
+    let c = '';
+    const m = Math.max(1, Math.ceil(t * 30));
+    for (let i = 0; i <= m; i++) c += (i ? 'L' : 'M') + gxy(g, t * i / m).join(',');
+    g.curve.setAttribute('d', c);
+    const [dx, dy] = gxy(g, t); g.dot.setAttribute('cx', dx); g.dot.setAttribute('cy', dy);
+  }
+  const you = SHIP * Math.exp(-MU * th);
+  Kit.$('nYou').textContent = fmt(you);
+  Kit.$('tl').textContent = `${t.toFixed(1)} turns · ×${fmt(Math.exp(MU * th))}`;
+}
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.$('card').classList.add('done');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  build();
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+slider.addEventListener('input', () => {
+  t = +slider.value; draw();
+  const k = Math.floor(t);
+  if (k !== lastInt){ lastInt = k; Kit.haptic('selection'); }
+  if (t >= 3) finish();
+});
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from('#svg', {opacity: 0, duration: .5, ease: 'power2.out'});
+  gsap.fromTo(G.hand, {attr: {r: G.r * .26}}, {attr: {r: G.r * .4}, duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut', delay: .4});
+};
+Kit.play.card = async () => {
+  slider.value = 4; slider.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

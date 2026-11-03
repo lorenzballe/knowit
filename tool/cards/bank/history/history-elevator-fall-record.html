@@ -1,0 +1,168 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-elevator-fall-record -->
+<title>Astute · The longest elevator fall</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12.5px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{font:700 max(2cqh,13px)/1.25 var(--body)}
+.keep{font:600 max(1.75cqh,12.5px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RECORD FALL</span></div>
+    <h2 class="q">What is the longest elevator fall anyone has ever survived?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="The Empire State Building with an elevator at the 75th floor"></svg>
+      <div id="why" class="gone">
+        <p class="big">75 floors: over 300 metres.</p>
+        <p class="body">In 1945 a plane hit the Empire State Building, and one engine damaged an elevator's cables. Rescuers put the injured Betty Lou Oliver, on a stretcher, in that very elevator, and it fell. She survived.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the elevator down the shaft, from the 75th floor to the ground.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The record elevator fall survived: 75 floors, Empire State Building, 1945.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Puoi sopravvivere a un ascensore in caduta libera saltando? La migliore strategia secondo la scienza” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e2372b';
+const S = {p: 0, done: false, drag: false};
+let G = null, hint = null;
+
+function draw(){
+  const svg = Kit.$('pic');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const F = Math.max(13, f);
+  const mk = (t, a, p) => Kit.mk(t, a, p || root);
+  const root = Kit.mk('g', {}, svg);
+
+  const gy = H - F * 0.6, topY = Math.max(F * 0.3, H * 0.02);
+  const h = (gy - topY) / 1.12;
+  const bw = Math.min(W * 0.4, h * 0.42);
+  const bx = W * 0.3;
+  const Y = fr => gy - h * fr;
+  const ink = 'fill:var(--k)';
+  // ground
+  mk('line', {x1: 0, y1: gy, x2: W * 0.62, y2: gy, style: 'stroke:var(--k);stroke-width:' + Math.max(2, F * .15) + ';stroke-linecap:round'});
+  // building, from base to spire
+  const tiers = [[0, .07, 1], [.07, .86, .66], [.86, .93, .48], [.93, 1, .3]];
+  tiers.forEach(([a, b, w]) => mk('rect', {x: bx - bw * w / 2, y: Y(b), width: bw * w, height: Y(a) - Y(b), style: ink}));
+  mk('polygon', {points: `${bx - bw * .05},${Y(1)} ${bx + bw * .05},${Y(1)} ${bx},${Y(1.12)}`, style: ink});
+  // art-deco window strips
+  const body = bw * .66;
+  for (let i = 1; i < 8; i++) {
+    const x = bx - body / 2 + body * i / 8;
+    mk('line', {x1: x, y1: Y(.84), x2: x, y2: Y(.09), style: 'stroke:var(--c);stroke-opacity:.18;stroke-width:' + Math.max(1, body * .025)});
+  }
+  // shaft
+  const sw = bw * .14, sx = bx - sw / 2 - body * .06;
+  mk('rect', {x: sx, y: Y(.86), width: sw, height: Y(0) - Y(.86), style: 'fill:var(--c);fill-opacity:.88'});
+  const y75 = Y(.66);
+  const ch = Math.min(sw * 1.25, (gy - y75) * .1);
+  // snapped cable: top piece hangs fixed
+  mk('line', {x1: sx + sw / 2, y1: Y(.86), x2: sx + sw / 2, y2: y75 - ch - F * .9, style: 'stroke:var(--k);stroke-width:' + Math.max(1.5, sw * .07)});
+  // the 75th-floor arrow
+  const ax = W - F * .3, aEnd = sx + sw + F * .25;
+  mk('line', {x1: ax, y1: y75 - ch / 2, x2: aEnd + F * .5, y2: y75 - ch / 2, style: `stroke:${RED};stroke-width:${Math.max(2.5, F * .2)};stroke-linecap:round`});
+  mk('polygon', {points: `${aEnd},${y75 - ch / 2} ${aEnd + F * .8},${y75 - ch / 2 - F * .45} ${aEnd + F * .8},${y75 - ch / 2 + F * .45}`, style: `fill:${RED}`});
+  const lab = mk('text', {x: ax, y: y75 - ch / 2 - F * .7, 'text-anchor': 'end', style: `fill:${RED};font:800 ${F * 1.1}px var(--display)`});
+  lab.textContent = '75th floor';
+
+  // readouts, right column below the arrow
+  const rx = W - F * .3;
+  let ry = y75 + F * 2.6;
+  const small = Math.max(12, F * .8), bigF = Math.max(22, F * 2.3);
+  const t1 = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--muted);font:700 ${small}px var(--body);letter-spacing:.06em`}); t1.textContent = 'FLOORS FALLEN';
+  ry += small * 0.6 + bigF * 1.1;
+  const nFl = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${bigF}px var(--display)`});
+  ry += small * 2.2;
+  const t2 = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--muted);font:700 ${small}px var(--body);letter-spacing:.06em`}); t2.textContent = 'METRES';
+  ry += small * 0.6 + bigF * 1.1;
+  const nM = mk('text', {x: rx, y: ry, 'text-anchor': 'end', style: `fill:var(--k);font:800 ${bigF}px var(--display)`});
+
+  // the car, with its cable stub
+  const car = mk('g', {});
+  const cw = sw * .82;
+  mk('line', {x1: sx + sw / 2, y1: -ch - F * .5, x2: sx + sw / 2, y2: -ch, style: 'stroke:var(--k);stroke-width:' + Math.max(1.5, sw * .07)}, car);
+  mk('rect', {x: sx + (sw - cw) / 2, y: -ch, width: cw, height: ch, rx: Math.min(3, cw * .1), style: `fill:${RED}`}, car);
+  // drag hint chevron
+  hint = mk('path', {d: `M${sx + sw / 2 - F * .5},0 l${F * .5},${F * .5} l${F * .5},${-F * .5}`, style: `fill:none;stroke:${RED};stroke-width:${Math.max(2, F * .18)};stroke-linecap:round;stroke-linejoin:round`}, car);
+  hint.setAttribute('transform', `translate(0,${F * .5})`);
+  if (S.p > 0) hint.style.opacity = 0;
+
+  G = {svg, root, W, H, F, gy, y75, ch, car, nFl, nM, sx, sw};
+  setP(S.p);
+}
+
+function setP(p){
+  if (!G) return;
+  S.p = Math.max(0, Math.min(1, p));
+  const y = G.y75 + (G.gy - G.y75) * S.p;
+  G.car.setAttribute('transform', `translate(0,${y})`);
+  if (S.done) { G.nFl.textContent = '75'; G.nM.textContent = '300+'; }
+  else { G.nFl.textContent = Math.round(S.p * 75); G.nM.textContent = Math.round(S.p * 300); }
+}
+
+function finish(){
+  S.done = true; S.drag = false; setP(1);
+  Kit.haptic('success');
+  const {root, sx, sw, gy, F} = G;
+  if (!Kit.calm) {
+    gsap.fromTo(root, {x: -6}, {x: 0, duration: .5, ease: 'elastic.out(1.2,.25)'});
+    for (let i = 0; i < 7; i++) {
+      const c = Kit.mk('circle', {cx: sx + sw / 2, cy: gy - 2, r: F * .25, style: 'fill:var(--muted)'}, root);
+      gsap.to(c, {attr: {cx: sx + sw / 2 + (i - 3) * F * .7, cy: gy - F * (0.6 + Kit.rnd() * 1.2), r: F * .05}, opacity: 0, duration: .8, ease: 'power2.out', onComplete: () => c.remove()});
+    }
+  }
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(draw);
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+function yFrom(e){
+  const r = G.svg.getBoundingClientRect();
+  return (e.clientY - r.top) * (G.H / r.height);
+}
+const svgEl = Kit.$('pic');
+svgEl.addEventListener('pointerdown', e => {
+  if (S.done || !G) return;
+  S.drag = true; try { svgEl.setPointerCapture(e.pointerId); } catch (_) {}
+  if (hint) gsap.to(hint, {opacity: 0, duration: .2});
+  Kit.haptic('light');
+});
+svgEl.addEventListener('pointermove', e => {
+  if (!S.drag || S.done) return;
+  const p = (yFrom(e) - G.y75) / (G.gy - G.y75);
+  setP(p);
+  if (S.p >= .985) finish();
+});
+const stop = () => { S.drag = false; };
+svgEl.addEventListener('pointerup', stop);
+svgEl.addEventListener('pointercancel', stop);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !hint) return;
+  gsap.fromTo(hint, {y: 0}, {y: G.F * .5, repeat: -1, yoyo: true, duration: .6, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = svgEl.getBoundingClientRect();
+  const toClient = y => r.top + y * r.height / G.H;
+  const x = r.left + (G.sx + G.sw / 2) * r.width / G.W;
+  const ev = (t, y) => svgEl.dispatchEvent(new PointerEvent(t, {bubbles: true, pointerId: 1, clientX: x, clientY: toClient(y)}));
+  ev('pointerdown', G.y75);
+  for (let i = 1; i <= 10; i++) { ev('pointermove', G.y75 + (G.gy - G.y75) * i / 10); await new Promise(r => setTimeout(r, 30)); }
+  ev('pointerup', G.gy);
+  if (!S.done) finish();
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

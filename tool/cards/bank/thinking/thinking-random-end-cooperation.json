@@ -1,0 +1,35 @@
+{
+  "id": "thinking-random-end-cooperation",
+  "topic": "thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does not knowing when a game ends keep players cooperating?",
+  "answer": "With a known last round, betraying in that round is safe, and the same logic slides back to round 1. With a random end, averaging 200 rounds, any round might be followed by another, so players keep cooperating because they might still need each other.",
+  "move": "When the end is uncertain, the future keeps people cooperating.",
+  "keywords": [
+    "game theory",
+    "backward induction",
+    "cooperation",
+    "repeated games",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled 'Why does not knowing when a game ends keep players cooperating?' with a tap-to-reason prompt. Tapping reasons backward from a known last round. A counter shows 0 of 10."
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=781s",
+  "written": "2026-11-03"
+}

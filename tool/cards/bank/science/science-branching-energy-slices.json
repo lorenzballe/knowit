@@ -1,0 +1,37 @@
+{
+  "id": "science-branching-energy-slices",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If the universe splits into copies, where does the extra energy come from?",
+  "answer": "When the universe branches, it is sliced rather than copied. Each branch looks complete from the inside but carries a smaller share of the total. Added together, the slices equal the energy of the whole wave function, which is exactly what it was before.",
+  "move": "Branches are slices, not copies: total energy never changes.",
+  "keywords": [
+    "many-worlds",
+    "wave-function",
+    "energy",
+    "spin",
+    "veritasium"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card titled Many Worlds asking where extra energy comes from if the universe splits. It shows a branch count and three bars at 100%: energy in each branch, the whole wave function, and if they were copies. A tappable prompt says to measure a spin and watch the universe branch."
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=787s",
+  "written": "2026-11-03"
+}

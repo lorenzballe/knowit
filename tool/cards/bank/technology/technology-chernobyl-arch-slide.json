@@ -1,0 +1,37 @@
+{
+  "id": "technology-chernobyl-arch-slide",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do you put a new lid over Chernobyl's old sarcophagus?",
+  "answer": "The new containment is a giant steel arch built next to the old sarcophagus, not on top of it. Once finished, it slides sideways along its rails and covers the old structure like a lid.",
+  "move": "Build the giant lid off to the side, then slide it over.",
+  "keywords": [
+    "chernobyl",
+    "sarcophagus",
+    "steel arch",
+    "containment",
+    "nuclear"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Side view of Chernobyl's old sarcophagus with a giant steel arch beside it. Drag the arch along its rails onto the sarcophagus to slide it over like a lid."
+  },
+  "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=9DWnjcSo9J0&t=37s",
+  "written": "2026-11-03"
+}

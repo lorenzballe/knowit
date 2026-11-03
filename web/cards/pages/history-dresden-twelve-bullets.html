@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-dresden-twelve-bullets -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k);touch-action:none;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">COLD WAR</span></div>
+    <h2 class="q">Dresden: Putin, a pistol, 12 bullets. How many did he threaten the crowd with?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Twelve bullets above a crowd"></svg>
+      <div id="why" class="gone"><p class="big">11 of the 12</p><p class="body">A crowd of young people was at his building. Gun in hand, Putin said the building was Soviet territory: if they did not leave, he would use all 12 bullets, 11 for the first of them.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag across the bullets: how many were meant for the crowd?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Putin's Dresden threat: all 12 bullets, 11 of them for the crowd.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché Putin cammina come un pistolero? La vita di Vladimir tra risse, servizi segreti e politica” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 11, RED = '#d62828';
+let pick = -1, revealed = false, armed = false, G = null;
+let bullets = [], heads = [], countTxt = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT;
+  Kit.answer({choice: `${pick} bullets`, correct: ok, sure: pct});
+  revealed = true;
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${pick} for the crowd, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  draw(); fire();
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+function bulletPath(x, y, w, h){
+  return `M${x},${y+h} L${x},${y+h*.36} Q${x},${y} ${x+w/2},${y} Q${x+w},${y} ${x+w},${y+h*.36} L${x+w},${y+h} Z`;
+}
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = ''; bullets = []; heads = [];
+  const fs = Math.max(f, 12);
+  // the building
+  const bx = W*.16, bwid = W*.68, by = H*.02, bh = H*.17;
+  Kit.mk('rect', {x: bx, y: by, width: bwid, height: bh, rx: 4, fill: 'currentColor', opacity: .12}, svg);
+  for (let r = 0; r < 2; r++) for (let c = 0; c < 5; c++) {
+    if (r === 1 && c === 2) continue;
+    Kit.mk('rect', {x: bx + bwid*(.07 + c*.18), y: by + bh*(.14 + r*.4), width: bwid*.11, height: bh*.24, rx: 2, fill: 'currentColor', opacity: .35}, svg);
+  }
+  Kit.mk('rect', {x: bx + bwid*.44, y: by + bh*.62, width: bwid*.12, height: bh*.38, fill: 'currentColor', opacity: .7}, svg);
+  const lineY = by + bh + fs*.5;
+  Kit.mk('line', {x1: W*.04, x2: W*.96, y1: lineY, y2: lineY, stroke: RED, 'stroke-width': Math.max(2, fs*.14), 'stroke-dasharray': `${fs*.5} ${fs*.35}`}, svg);
+  const sovY = lineY + fs*1.25;
+  const t1 = Kit.mk('text', {x: W/2, y: sovY, 'text-anchor': 'middle', fill: RED, 'font-size': fs*1.05, 'font-weight': 700, style: 'font-family:var(--hand)'}, svg);
+  t1.textContent = '“This is Soviet territory”';
+  const pisY = sovY + fs*1.9;
+  const t2 = Kit.mk('text', {x: W/2, y: pisY, 'text-anchor': 'middle', fill: 'currentColor', 'font-size': fs*.95, 'font-weight': 700, style: 'font-family:var(--body)'}, svg);
+  t2.textContent = 'His pistol: 12 rounds';
+  // the bullets
+  const x0 = W*.04, cell = W*.92/12, w = cell*.6;
+  const btop = pisY + fs*.7, bht = Math.min(H*.14, w*2.6);
+  for (let i = 0; i < 12; i++) {
+    const g = Kit.mk('g', {}, svg);
+    const bxx = x0 + cell*i + (cell - w)/2;
+    const p = Kit.mk('path', {d: bulletPath(bxx, btop, w, bht), stroke: 'currentColor', 'stroke-width': Math.max(1.5, fs*.09)}, g);
+    Kit.mk('line', {x1: bxx, x2: bxx + w, y1: btop + bht*.42, y2: btop + bht*.42, stroke: 'currentColor', 'stroke-width': Math.max(1, fs*.06), opacity: .5}, g);
+    bullets.push({g, p, cx: bxx + w/2, cy: btop + bht*.5});
+  }
+  G = {W, H, fs, x0, cell, btop, bht};
+  // the count
+  const cY = btop + bht + fs*1.9;
+  countTxt = Kit.mk('text', {x: W/2, y: cY, 'text-anchor': 'middle', fill: RED, 'font-size': fs*1.35, 'font-weight': 800, style: 'font-family:var(--display)'}, svg);
+  // the crowd: first row is the nearest to the building
+  const ctop = cY + fs*.9, avail = Math.max(H*.99 - ctop, fs*3);
+  const rows = [8, 7, 8], rowH = avail/3;
+  const r = Math.max(3, Math.min(rowH*.24, W/(8*4.6)));
+  rows.forEach((n, ri) => {
+    const ry = ctop + rowH*ri;
+    for (let k = 0; k < n; k++) {
+      const cx = W*(ri === 1 ? .12 : .07) + (W*(ri === 1 ? .76 : .86))*(k/(n - 1));
+      const g = Kit.mk('g', {fill: 'currentColor', opacity: .55}, svg);
+      Kit.mk('circle', {cx, cy: ry + r*1.1, r}, g);
+      Kit.mk('path', {d: `M${cx - 1.8*r},${ry + 3.6*r} Q${cx},${ry + 1.5*r} ${cx + 1.8*r},${ry + 3.6*r} Z`}, g);
+      heads.push({g, cx, cy: ry + r*1.1});
+    }
+  });
+  paint();
+}
+
+function paint(){
+  bullets.forEach((b, i) => {
+    const on = revealed ? i < RIGHT : i < pick;
+    b.p.setAttribute('fill', on ? RED : 'none');
+    b.p.setAttribute('stroke', on ? RED : 'currentColor');
+    b.g.setAttribute('opacity', revealed && i >= RIGHT ? .45 : 1);
+  });
+  heads.forEach((h, i) => {
+    const hit = revealed && i < RIGHT;
+    h.g.setAttribute('fill', hit ? RED : 'currentColor');
+    h.g.setAttribute('opacity', hit ? .95 : .55);
+  });
+  countTxt.textContent = revealed ? '11 for the first in the crowd' : pick < 0 ? '? for the crowd' : `${pick} for the crowd`;
+}
+
+function fire(){
+  if (Kit.calm) return;
+  const svg = Kit.$('pic');
+  heads.slice(0, RIGHT).forEach(h => { h.g.setAttribute('fill', 'currentColor'); h.g.setAttribute('opacity', .55); });
+  for (let i = 0; i < RIGHT; i++) {
+    const b = bullets[i], h = heads[i];
+    const d = Kit.mk('circle', {cx: b.cx, cy: b.cy, r: Math.max(3, G.fs*.25), fill: RED}, svg);
+    gsap.to(d, {attr: {cx: h.cx, cy: h.cy}, duration: .55, delay: .15 + i*.08, ease: 'power2.in', onComplete: () => {
+      d.remove(); h.g.setAttribute('fill', RED);
+      gsap.fromTo(h.g, {opacity: .55}, {opacity: .95, duration: .25});
+    }});
+  }
+  gsap.from(countTxt, {opacity: 0, y: '+=8', duration: .5, delay: .2});
+}
+
+function setFrom(e){
+  if (revealed || !G) return;
+  const rect = Kit.$('pic').getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (G.W / rect.width);
+  const n = Math.max(1, Math.min(12, Math.floor((x - G.x0) / G.cell) + 1));
+  if (n !== pick) { pick = n; Kit.haptic('selection'); paint(); }
+  if (!armed) { armed = true; sure.on(); }
+}
+let dragging = false;
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => { dragging = true; try { pic.setPointerCapture(e.pointerId); } catch(_){} setFrom(e); });
+pic.addEventListener('pointermove', e => { if (dragging) setFrom(e); });
+pic.addEventListener('pointerup', () => { dragging = false; });
+pic.addEventListener('pointercancel', () => { dragging = false; });
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(bullets.map(b => b.g), {opacity: 0, y: -12, stagger: .05, duration: .35, ease: 'power3.out'});
+  gsap.from(heads.map(h => h.g), {opacity: 0, stagger: .015, duration: .3, delay: .3});
+};
+Kit.play.card = async () => {
+  const rect = pic.getBoundingClientRect();
+  const sx = rect.width / G.W;
+  const x = rect.left + (G.x0 + G.cell*10.5) * sx, y = rect.top + (G.btop + G.bht/2) * sx;
+  pic.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  pic.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

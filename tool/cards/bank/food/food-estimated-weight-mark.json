@@ -1,0 +1,37 @@
+{
+  "id": "food-estimated-weight-mark",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.labels",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A pack says 500 g ℮. Is it likelier to weigh less or more?",
+  "answer": "The ℮ mark means the weight is an estimate, so one pack may be off by up to 15 g either way. But on average the content must never be below the label. So the packs pile up on the printed weight or just above it, and 500 g or a bit more is the likelier outcome.",
+  "move": "℮ allows ±15 g, but on average you get at least what’s printed.",
+  "keywords": [
+    "packaged food",
+    "net weight",
+    "e mark",
+    "labelling rules",
+    "weighing packs"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A pack labelled 500 g ℮. Is it likelier to weigh less than 500 g, 500 g or a bit more, or are the odds equal? Choose one, rate your confidence, then watch 60 packs get weighed."
+  },
+  "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=yqEeMsCXrus&t=36s",
+  "written": "2026-11-03"
+}

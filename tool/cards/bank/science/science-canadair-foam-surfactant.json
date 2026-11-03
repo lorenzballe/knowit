@@ -1,0 +1,37 @@
+{
+  "id": "science-canadair-foam-surfactant",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What does a Canadair mix with its water to make foam?",
+  "answer": "A second tank on a Canadair holds a foaming agent, a surfactant of the same kind found in household detergents, and it is mixed into the water. Water alone can do little against fires over 1000 °C, which is why the foam is needed. The answer is a surfactant, like dish soap, not sea salt or fine sand.",
+  "move": "Canadair foam is water plus a detergent-like surfactant from its own tank.",
+  "keywords": [
+    "canadair",
+    "surfactant",
+    "foam",
+    "firefighting",
+    "dish soap"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card titled Firefighting, asking what a Canadair mixes with its water to make foam. Options: sea salt, a surfactant like dish soap (listed twice), and fine sand. The reader picks the option for the small tank's contents, then rates how sure they are."
+  },
+  "source": "Geopop, “Come funziona il Canadair e quando interviene nelle missioni antincendio?” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=ABswZpkL2SY&t=268s",
+  "written": "2026-11-03"
+}

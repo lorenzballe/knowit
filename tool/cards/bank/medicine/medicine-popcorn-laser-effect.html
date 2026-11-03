@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-popcorn-laser-effect -->
+<title>Astute · The popcorn effect</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#box{flex:1;min-height:0;position:relative;border-radius:2cqh;overflow:hidden}
+#box svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#cap{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);min-height:calc(3 * 1.3 * max(2cqh,13px));overflow-wrap:break-word}
+#cap.why{font-weight:500}
+#scrub{display:flex;flex-direction:column;gap:.6cqh}
+#rng{-webkit-appearance:none;appearance:none;width:100%;height:max(4.4cqh,30px);background:transparent;margin:0;cursor:pointer;touch-action:none}
+#rng::-webkit-slider-runnable-track{height:max(1cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#rng::-moz-range-track{height:max(1cqh,6px);border-radius:99px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#rng::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,26px);height:max(4cqh,26px);border-radius:50%;background:var(--k);margin-top:calc((max(1cqh,6px) - max(4cqh,26px))/2);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--c) 70%,transparent)}
+#rng::-moz-range-thumb{width:max(4cqh,26px);height:max(4cqh,26px);border-radius:50%;background:var(--k);border:0}
+#ticks{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.1 var(--mono);color:var(--muted);text-transform:uppercase}
+#ticks span.on{color:var(--k)}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LASER REMOVAL</span></div>
+    <h2 class="q">What is the 'popcorn' effect during laser tattoo removal?</h2>
+    <div class="stagebox" id="stage">
+      <div id="box"><svg id="pic"></svg></div>
+      <p id="cap">A tattoo: clumps of ink sit in the dermis, under the skin's surface.</p>
+      <div id="scrub">
+        <input id="rng" type="range" min="0" max="1000" value="0" aria-label="Timeline of one laser pulse">
+        <div id="ticks"><span class="on">Ink</span><span>Pulse</span><span>Pop</span><span>Still there</span><span>Clean-up</span></div>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the dot to fire the laser and watch, step by step.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The white "popcorn" flash is ink breaking up, not ink leaving.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CL = [[.22,.57],[.38,.73],[.52,.54],[.67,.71],[.81,.56]];
+const FR = CL.map(() => Array.from({length:14}, () => ({a:Kit.rnd()*6.283, d0:Kit.rnd()*.55, d1:.9+Kit.rnd()*1.5, s:.75+Kit.rnd()*.5, e:Kit.rnd()})));
+const FROST = Array.from({length:46}, () => [ .12+Kit.rnd()*.76, Kit.rnd(), .5+Kit.rnd() ]);
+const MSTART = [[-.15,.9],[.3,1.25],[.55,1.3],[.85,1.3],[1.15,.85]];
+const CAPS = [
+  "A tattoo: clumps of ink sit in the dermis, under the skin's surface.",
+  "The laser fires a pulse straight into the ink.",
+  "The ink particles shatter. You can hear them crackle, like popcorn.",
+  "At once the skin turns white where the laser hit. Crackle + whitening: the popcorn effect.",
+  "It looks like the tattoo is vanishing. It isn't: the pigment is still there, only in pieces.",
+  "The laser has woken the immune system: macrophages come back and digest the smaller pieces more easily."
+];
+const WHY = "The crackle is the ink particles breaking apart, and the sudden white is the skin reacting to the laser. The pigment hasn't gone anywhere yet: the macrophages clear the fragments away afterwards.";
+let T = 0, G = null, done = false, lastCap = -1, popped = false, ac = null;
+const cl = v => Math.max(0, Math.min(1, v));
+const p = (a,b) => cl((T-a)/(b-a));
+const ez = v => v<.5 ? 2*v*v : 1-Math.pow(-2*v+2,2)/2;
+
+function crackle(){
+  try{
+    ac = ac || new (window.AudioContext||window.webkitAudioContext)();
+    for(let i=0;i<9;i++){
+      const at = ac.currentTime + i*.035 + Math.random()*.03, n = Math.floor(ac.sampleRate*.02);
+      const b = ac.createBuffer(1,n,ac.sampleRate), d = b.getChannelData(0);
+      for(let j=0;j<n;j++) d[j] = (Math.random()*2-1)*Math.pow(1-j/n,4);
+      const s = ac.createBufferSource(), g = ac.createGain(); s.buffer = b; g.gain.value = .5;
+      s.connect(g).connect(ac.destination); s.start(at);
+    }
+  }catch(e){}
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W,H} = Kit.fitSvg(svg), mk = Kit.mk;
+  const y0 = H*.22, y1 = H*.36, R = Math.min(W,H)*.065, fs = Math.max(12, H*.042);
+  const defs = mk('defs',{},svg);
+  const lg = mk('linearGradient',{id:'beam',x1:0,y1:0,x2:0,y2:1},defs);
+  mk('stop',{offset:0,'stop-color':'#7dffb0','stop-opacity':.95},lg);
+  mk('stop',{offset:1,'stop-color':'#2bd97a','stop-opacity':.35},lg);
+  const wave = y => { let d = `M0 ${y}`; for(let x=0;x<=W;x+=W/12) d += ` L${x} ${y + Math.sin(x/W*12)*H*.006}`; return d; };
+  mk('rect',{x:0,y:0,width:W,height:H,fill:'#20263f'},svg);
+  mk('path',{d:wave(y1)+` L${W} ${H} L0 ${H}Z`,fill:'#e4a184'},svg);
+  mk('path',{d:wave(y0)+` L${W} ${y1} L0 ${y1}Z`,fill:'#f4cdae'},svg);
+  const t1 = mk('text',{x:W*.03,y:y0+(y1-y0)*.62,'font-size':fs,'font-family':'var(--mono)','font-weight':700,fill:'#7a4a33'},svg); t1.textContent='EPIDERMIS';
+  const t2 = mk('text',{x:W*.03,y:H-fs*.7,'font-size':fs,'font-family':'var(--mono)','font-weight':700,fill:'#8a4a32'},svg); t2.textContent='DERMIS';
+  const beam = mk('rect',{x:W*.1,y:0,width:W*.8,height:H*.85,fill:'url(#beam)',opacity:0,rx:W*.05},svg);
+  const fg = mk('g',{},svg), frags = [];
+  CL.forEach((c,i) => FR[i].forEach(f => frags.push({f, c:i, el: mk('circle',{fill:'#14172b'},fg)})));
+  const clipM = mk('clipPath',{id:'cm'},defs); mk('rect',{x:0,y:0,width:W,height:H},clipM);
+  const mg = mk('g',{'clip-path':'url(#cm)'},svg);
+  mg.style.display = 'none';
+  const macros = CL.map(() => mk('circle',{r:R*1.35,fill:'rgba(255,244,214,.55)',stroke:'#fff4d6','stroke-width':Math.max(2,R*.08),opacity:0},mg));
+  const wg = mk('g',{opacity:0},svg);
+  mk('path',{d:wave(y0)+` L${W*.9} ${y1} L${W*.1} ${y1}Z`,fill:'#fff','clip-path':'none'},wg);
+  const clipW = mk('clipPath',{id:'cw'},defs); mk('rect',{x:W*.1,y:0,width:W*.8,height:H},clipW);
+  wg.setAttribute('clip-path','url(#cw)');
+  FROST.forEach(q => mk('circle',{cx:q[0]*W,cy:y0+H*.01+q[1]*(y1-y0-H*.02),r:q[2]*H*.008,fill:'#dfe9ff'},wg));
+  const pops = [['pop!',.22],['crack!',.5],['pop!',.78]].map(([s,x]) => {
+    const e = mk('text',{x:x*W,y:y0*.55,'text-anchor':'middle','dominant-baseline':'middle','font-size':fs*1.35,'font-family':'var(--hand)','font-weight':700,fill:'#ffe680',opacity:0},svg); e.textContent = s; return e; });
+  const still = mk('text',{x:W/2,y:y0*.55,'text-anchor':'middle','dominant-baseline':'middle','font-size':fs,'font-family':'var(--body)','font-weight':700,fill:'#fff',opacity:0},svg);
+  still.textContent = 'ink still there, in pieces ↓';
+  G = {W,H,R,beam,frags,macros,mg,wg,pops,still};
+  render();
+};
+
+function render(){
+  if(!G) return;
+  const {W,H,R} = G;
+  G.beam.setAttribute('opacity', (p(.15,.24)*(1-p(.38,.45))*(.75+.25*Math.sin(T*90))).toFixed(3));
+  const sh = ez(p(.28,.45)), mv = ez(p(.78,.95)), eat = p(.88,1);
+  const mpos = CL.map((c,i) => [ (MSTART[i][0]+(c[0]-MSTART[i][0])*mv)*W, (MSTART[i][1]+(c[1]-MSTART[i][1])*mv)*H ]);
+  const mo = p(.76,.82);
+  G.mg.style.display = mo > 0 ? '' : 'none';
+  G.macros.forEach((m,i) => { m.setAttribute('cx',mpos[i][0]); m.setAttribute('cy',mpos[i][1]); m.setAttribute('opacity',mo); });
+  G.frags.forEach(({f,c,el}) => {
+    const cx = CL[c][0]*W, cy = CL[c][1]*H, d = R*(f.d0 + (f.d1-f.d0)*sh);
+    let x = cx + Math.cos(f.a)*d, y = cy + Math.sin(f.a)*d;
+    const g = cl(eat*1.4 - f.e*.4);
+    x += (mpos[c][0] + Math.cos(f.a)*R*.35 - x)*g; y += (mpos[c][1] + Math.sin(f.a)*R*.35 - y)*g;
+    el.setAttribute('cx',x); el.setAttribute('cy',y);
+    el.setAttribute('r', (R*f.s*(.55 - .36*sh)).toFixed(2));
+    el.setAttribute('opacity', (1 - .6*g).toFixed(2));
+  });
+  G.wg.setAttribute('opacity', (p(.4,.52)*.92).toFixed(3));
+  const pv = p(.3,.36)*(1-p(.62,.7));
+  G.pops.forEach((e,i) => { e.setAttribute('opacity',pv); e.setAttribute('transform',`rotate(${(i-1)*8} ${e.getAttribute('x')} ${e.getAttribute('y')})`); });
+  G.still.setAttribute('opacity', p(.7,.76)*(1-p(.86,.9)));
+}
+
+function update(v){
+  const prev = T; T = v/1000; render();
+  if(prev < .32 && T >= .32 && !popped){ popped = true; crackle(); Kit.haptic('light'); }
+  if(T < .2) popped = false;
+  const i = T<.15?0 : T<.3?1 : T<.42?2 : T<.62?3 : T<.8?4 : 5;
+  const end = T >= .97;
+  const key = end ? 6 : i;
+  if(key !== lastCap){
+    lastCap = key; const cap = Kit.$('cap');
+    cap.textContent = end ? WHY : CAPS[i]; cap.classList.toggle('why', end);
+    if(i !== 0) Kit.haptic('selection');
+  }
+  const ti = T<.15?0 : T<.42?1 : T<.62?2 : T<.86?3 : 4;
+  [...Kit.$('ticks').children].forEach((s,k) => s.classList.toggle('on', k===ti));
+  if(end && !done){ done = true; Kit.hide('say'); Kit.show('keep'); Kit.haptic('success'); }
+}
+Kit.$('rng').addEventListener('input', e => update(+e.target.value));
+Kit.onEnter.card = () => { if(!Kit.calm) gsap.from('#box', {opacity:0, scale:.97, duration:.5, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const r = Kit.$('rng');
+  for(const v of [300, 500, 750, 1000]){ r.value = v; r.dispatchEvent(new Event('input',{bubbles:true})); await new Promise(z => setTimeout(z, 120)); }
+  await new Promise(z => setTimeout(z, 400));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "medicine-soft-robot-throat",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a growing robot find the right tube inside your throat?",
+  "answer": "The robot lengthens from its tip, and its side branch is soft. When the branch hits the throat wall, it bends and slides along the wall into the opening. The body's own shape does the steering, so no exact map is needed. Engineers call this passive, or mechanical, intelligence.",
+  "move": "A soft robot lets the body guide it, so it finds the way without knowing the shape.",
+  "keywords": [
+    "soft robot",
+    "throat",
+    "trachea",
+    "veritasium"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A growing robot inside a model of the human throat, with a soft side branch. Tap Grow to lengthen the robot one step at a time and watch the branch bend along the wall into the tube opening. Question: how does the robot find the right tube?"
+  },
+  "source": "Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=qevIIQHrJZg&t=591s",
+  "written": "2026-11-03"
+}

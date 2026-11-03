@@ -1,0 +1,38 @@
+{
+  "id": "food-estimated-weight-tolerance",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.labels",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How far from 500 g can a 500 g pack really weigh?",
+  "answer": "The small ℮ beside a package's weight means the weight is estimated, not exact. EU rules cap the gap, so a 500 g pack can hold anywhere from 485 to 515 g, at most 15 g either way. On average, packs are also not lighter than their label says.",
+  "move": "℮ means estimated, within ±15 g on 500 g, and usually a bit more, not less.",
+  "keywords": [
+    "estimated quantity mark",
+    "eu",
+    "500 g pack",
+    "weight tolerance",
+    "packaged food"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A food package label reads 500 g with a small ℮ beside the weight. A draggable scale shows how wide the allowed weight gap is around 500 g, from 485 to 515 g. The reader is asked how far from 500 g a pack can really weigh.",
+    "graded": false
+  },
+  "source": "Geopop, “Avete mai notato questo simbolo di fianco al peso dei prodotti confezionati? #alimenti #scienze” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=yqEeMsCXrus&t=18s",
+  "written": "2026-11-03"
+}

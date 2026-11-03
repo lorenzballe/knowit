@@ -1,0 +1,184 @@
+<!doctype html>
+<!-- slug: technology-traction-control-slip -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · Traction control</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#draw{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;margin-top:1cqh}
+#thr{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px)}
+#tc{font:800 max(1.9cqh,13px)/1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 35%,transparent);border-radius:1.6cqh;padding:1.3cqh 3.5cqw;cursor:pointer;white-space:nowrap}
+#tc.on{background:var(--k);color:var(--c);box-shadow:none}
+.lab{font:700 max(1.6cqh,12px)/1 var(--body)}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.ink{fill:var(--k)} .sk{stroke:var(--k);fill:none}
+.inkc{fill:var(--c)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · explore">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOTOGP</span></div>
+    <h2 class="q">What electronic aid stops the rear wheel spinning when you accelerate?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="draw"></svg>
+      <div id="ctl">
+        <span class="lab">GAS</span>
+        <input type="range" id="thr" min="0" max="100" value="0" aria-label="Throttle">
+        <button id="tc" aria-pressed="false">TC OFF</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Traction control</p><p class="body">Sensors see when the rear wheel turns faster than the bike moves: it is slipping. The control unit then cuts engine torque, so leaned over at full gas the tyre keeps its grip. That's why, as Rossi says, rear slides on acceleration are now much rarer.</p></div>
+    </div>
+    <p class="say" id="say">Open the gas with TC off, leaned over. Then switch TC on and try again.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Traction control trims power the moment the rear wheel starts to slip.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const GRIP = 55, RED = '#e5484d', GREEN = '#2fb36b';
+const S = {thr: 0, tc: false, sawSlip: false, done: false, ds: 3, dt: 0, ang: 0, dash: 0};
+let G = null;
+
+function model() {
+  const asked = S.thr;
+  const torque = S.tc ? Math.min(asked, GRIP - 4) : asked;
+  const excess = Math.max(0, torque - GRIP);
+  const slip = excess > 0 ? 3 + excess * 1.4 : 3 * torque / GRIP;
+  return {asked, torque, slip, cut: S.tc && asked > GRIP - 4};
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('draw'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .8), mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const txt = (s, a, p) => { const e = mk('text', Object.assign({'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)', class: 'ink'}, a), p); e.textContent = s; return e; };
+  G = {W, H, fs};
+
+  // Schematic: sensor -> TC -> engine
+  const y0 = fs * 1.6, bw = W * .27, bh = fs * 2.1;
+  G.sch = mk('g', {});
+  const xs = [W * .16, W * .5, W * .84], names = ['SENSOR', 'TC UNIT', 'ENGINE'];
+  G.boxes = xs.map((x, i) => {
+    const r = mk('rect', {x: x - bw / 2, y: y0 - bh / 2, width: bw, height: bh, rx: fs * .5, class: 'sk', 'stroke-width': 2}, G.sch);
+    txt(names[i], {x, y: y0 + fs * .35, 'text-anchor': 'middle'}, G.sch);
+    return r;
+  });
+  [0, 1].forEach(i => {
+    const a = xs[i] + bw / 2 + 3, b = xs[i + 1] - bw / 2 - 3;
+    mk('line', {x1: a, y1: y0, x2: b - 5, y2: y0, class: 'sk', 'stroke-width': 2}, G.sch);
+    mk('path', {d: `M${b} ${y0} l-7 -5 v10z`, class: 'ink'}, G.sch);
+  });
+
+  // Road, wheel, bars
+  const roadY = H * .66, top = y0 + bh / 2 + fs * 1.6;
+  const r = Math.min(W * .22, (roadY - top) * .5);
+  const cx = W * .3, cy = roadY - r;
+  G.cx = cx; G.cy = cy; G.r = r; G.roadY = roadY;
+  G.dashes = mk('g', {});
+  G.dashRects = [];
+  for (let i = 0; i < 7; i++) G.dashRects.push(mk('rect', {x: i * W / 7, y: roadY + 6, width: W / 16, height: 4, class: 'ink', opacity: .35}, G.dashes));
+  mk('line', {x1: 0, y1: roadY, x2: W, y2: roadY, class: 'sk', 'stroke-width': 3});
+  G.smoke = mk('g', {});
+  G.puffs = [0, 1, 2, 3, 4].map(i => mk('circle', {cx: cx - r * .2, cy: roadY - 6, r: r * .2, fill: '#999', opacity: 0}, G.smoke));
+  G.glow = mk('circle', {cx, cy, r: r + 7, fill: 'none', stroke: RED, 'stroke-width': 6, opacity: 0});
+  mk('circle', {cx, cy, r: r - r * .09, class: 'sk', 'stroke-width': r * .18});
+  mk('circle', {cx, cy, r: r * .7, class: 'sk', 'stroke-width': 2, opacity: .5});
+  G.spokes = mk('g', {});
+  for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5; mk('line', {x1: cx, y1: cy, x2: cx + Math.cos(a) * r * .7, y2: cy + Math.sin(a) * r * .7, class: 'sk', 'stroke-width': 3}, G.spokes); }
+  mk('circle', {cx, cy, r: r * .12, class: 'ink'});
+
+  // Bars: gas asked vs torque sent
+  const bx = [W * .66, W * .84], bwid = W * .1, bTop = top, bBot = roadY - fs * 1.8;
+  G.bTop = bTop; G.bBot = bBot;
+  G.bars = bx.map((x, i) => {
+    mk('rect', {x: x - bwid / 2, y: bTop, width: bwid, height: bBot - bTop, rx: 4, class: 'sk', 'stroke-width': 2, opacity: .4});
+    txt(i ? 'TORQUE' : 'GAS', {x, y: bBot + fs * 1.3, 'text-anchor': 'middle'});
+    return mk('rect', {x: x - bwid / 2, y: bBot, width: bwid, height: 0, rx: 4, class: 'ink'});
+  });
+  G.gripY = bBot - (bBot - bTop) * GRIP / 100;
+  mk('line', {x1: bx[0] - bwid * .8, y1: G.gripY, x2: bx[1] + bwid * .8, y2: G.gripY, stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '5 4'});
+  G.cutT = txt('CUT', {x: (bx[0] + bx[1]) / 2, y: bTop - fs * .4, 'text-anchor': 'middle', fill: RED, class: '', opacity: 0});
+
+  // Slip gauge
+  const gy = roadY + (H - roadY) * .62, gx0 = W * .06, gx1 = W * .94, gh = Math.max(10, fs * .9);
+  G.gx0 = gx0; G.gx1 = gx1;
+  txt('REAR WHEEL SLIP', {x: gx0, y: gy - gh / 2 - fs * .7});
+  G.slipT = txt('0%', {x: gx1, y: gy - gh / 2 - fs * .7, 'text-anchor': 'end'});
+  const lim = gx0 + (gx1 - gx0) * .12;
+  mk('rect', {x: gx0, y: gy - gh / 2, width: lim - gx0, height: gh, fill: GREEN, opacity: .35});
+  mk('rect', {x: lim, y: gy - gh / 2, width: gx1 - lim, height: gh, fill: RED, opacity: .2});
+  mk('rect', {x: gx0, y: gy - gh / 2, width: gx1 - gx0, height: gh, class: 'sk', 'stroke-width': 2});
+  G.mark = mk('rect', {x: gx0, y: gy - gh, width: 5, height: gh * 2, class: 'ink'});
+  update(true);
+};
+
+function update(instant) {
+  if (!G) return;
+  const m = model();
+  G.sch.setAttribute('opacity', S.tc ? 1 : .3);
+  G.boxes[1].setAttribute('stroke', m.cut ? RED : ''); G.boxes[1].style.stroke = m.cut ? RED : '';
+  const hb = v => (G.bBot - G.bTop) * v / 100;
+  const set = (el, v) => instant ? (el.setAttribute('y', G.bBot - hb(v)), el.setAttribute('height', hb(v)))
+    : gsap.to(el, {attr: {y: G.bBot - hb(v), height: hb(v)}, duration: .25, overwrite: true});
+  set(G.bars[0], m.asked); set(G.bars[1], m.torque);
+  G.bars[1].style.fill = m.torque > GRIP ? RED : '';
+  G.cutT.setAttribute('opacity', m.cut ? 1 : 0);
+  if (m.slip > 10) S.sawSlip = !S.tc || S.sawSlip;
+  if (!S.tc && m.slip > 10) S.sawSlip = true;
+  if (!S.done && S.sawSlip && S.tc && S.thr >= 85) finish();
+}
+
+function finish() {
+  S.done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4});
+}
+
+gsap.ticker.add(() => {
+  if (!G) return;
+  const m = model();
+  S.ds += (m.slip - S.ds) * .15;
+  const ground = Math.min(m.torque, GRIP) / GRIP * 6;
+  const wheel = ground * (1 + S.ds / 25);
+  S.ang += wheel * 1.4; S.dash = (S.dash + ground) % (G.W / 7);
+  G.spokes.setAttribute('transform', `rotate(${S.ang} ${G.cx} ${G.cy})`);
+  G.dashRects.forEach((d, i) => {
+    let x = i * G.W / 7 - S.dash; if (x < 0) x += G.W;
+    d.setAttribute('x', x); d.setAttribute('width', Math.max(0, Math.min(G.W / 16, G.W - x)));
+  });
+  const red = Math.min(1, Math.max(0, (S.ds - 6) / 20));
+  G.glow.setAttribute('opacity', red);
+  G.puffs.forEach((p, i) => {
+    const t = ((performance.now() / 600) + i / 5) % 1;
+    const pr = G.r * (.12 + t * .35);
+    p.setAttribute('cx', Math.max(pr, G.cx - G.r * .2 - t * G.r * 1.3));
+    p.setAttribute('cy', G.roadY - 6 - t * G.r * .6);
+    p.setAttribute('r', pr);
+    p.setAttribute('opacity', red * (1 - t) * .6);
+  });
+  const s = Math.min(S.ds, 60);
+  G.mark.setAttribute('x', G.gx0 + (G.gx1 - G.gx0) * s / 60 - 2.5);
+  G.slipT.textContent = Math.round(S.ds) + '%' + (S.ds > 7.5 ? ' · SLIDING' : '');
+  G.slipT.style.fill = S.ds > 7.5 ? RED : '';
+});
+
+Kit.$('thr').addEventListener('input', e => { S.thr = +e.target.value; update(); });
+Kit.$('tc').addEventListener('click', () => {
+  S.tc = !S.tc; const b = Kit.$('tc');
+  b.classList.toggle('on', S.tc); b.textContent = S.tc ? 'TC ON' : 'TC OFF';
+  b.setAttribute('aria-pressed', S.tc); Kit.haptic('selection'); update();
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#draw', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms)), thr = Kit.$('thr');
+  const go = v => { thr.value = v; thr.dispatchEvent(new Event('input', {bubbles: true})); };
+  go(100); await wait(500);
+  Kit.$('tc').click(); go(0); await wait(100); go(100); await wait(700);
+};
+Kit.single();
+</script>
+</html>

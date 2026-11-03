@@ -1,0 +1,113 @@
+<!doctype html>
+<!-- slug: psychology-effort-means-learning -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#plot{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.ax{stroke:var(--k);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.axl{fill:var(--k);font-family:var(--body);font-weight:800}
+.lab{fill:var(--k);font-family:var(--body);font-weight:700}
+.trend{stroke:var(--k);stroke-width:2;stroke-dasharray:6 6;fill:none;opacity:.45}
+.dotA{fill:var(--c);stroke:var(--k);stroke-width:3}
+.dotB{fill:var(--k)}
+.qm{fill:var(--k);opacity:.18;font-family:var(--display);font-weight:800}
+.br{stroke:var(--k);stroke-width:2;fill:none}
+.brl{fill:var(--k);font-family:var(--hand);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LEARNING</span></div>
+    <h2 class="q">Which science video made students learn more?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plot"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">A clear explanation, no wrong ideas</button>
+        <button class="opt" data-i="1">A dialogue that airs the wrong ideas first</button>
+        <button class="opt" data-i="2">Both about the same</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">The dialogue with misconceptions</p>
+        <p class="body">Students who watched it rated their mental effort a whole point higher. That extra effort turned into more learning. The easy, clear video felt fine but asked less of them.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the video you think taught more, then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A video that makes you think hard teaches more than one that feels easy.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Khan Academy and the Effectiveness of Science Videos” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, revealed = false;
+const svg = Kit.$('plot');
+let G = null;
+
+function draw(animate){
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W,H,f} = Kit.fitSvg(svg);
+  const fs = Math.max(13, Math.min(f, H*0.075));
+  const L = fs*2.4, R = 12, T = fs*0.8, B = fs*2.4;
+  const x0 = L, y0 = H-B, x1 = W-R, y1 = T;
+  const px = u => x0 + (x1-x0)*u, py = v => y0 - (y0-y1)*v;
+  // axes
+  Kit.mk('path',{class:'ax',d:`M${x0} ${y1} L${x0} ${y0} L${x1} ${y0}`},svg);
+  Kit.mk('path',{class:'ax',d:`M${x0-6} ${y1+9} L${x0} ${y1} L${x0+6} ${y1+9}`},svg);
+  Kit.mk('path',{class:'ax',d:`M${x1-9} ${y0-6} L${x1} ${y0} L${x1-9} ${y0+6}`},svg);
+  const xl = Kit.mk('text',{class:'axl',x:(x0+x1)/2,y:y0+fs*1.7,'text-anchor':'middle','font-size':fs},svg); xl.textContent='Mental effort';
+  const yl = Kit.mk('text',{class:'axl',x:0,y:0,'text-anchor':'middle','font-size':fs,transform:`translate(${x0-fs*0.9} ${(y0+y1)/2}) rotate(-90)`},svg); yl.textContent='Learning';
+  if (!revealed){
+    const qs = Math.max(0, Math.min(fs*4.5, (y0-y1)*0.75));
+    const q = Kit.mk('text',{class:'qm',x:(x0+x1)/2,y:(y0+y1)/2+qs*0.36,'text-anchor':'middle','font-size':qs},svg); q.textContent='?';
+    return;
+  }
+  const A = {x:px(.24), y:py(.26)}, Bp = {x:px(.76), y:py(.78)};
+  const r = Math.max(7, fs*0.55);
+  const trend = Kit.mk('path',{class:'trend',d:`M${px(.06)} ${py(.08)} L${px(.94)} ${py(.96)}`},svg);
+  // effort bracket on the x axis
+  const by = y0 - fs*0.8;
+  const br = Kit.mk('path',{class:'br',d:`M${A.x} ${by-6} L${A.x} ${by} L${Bp.x} ${by} L${Bp.x} ${by-6}`},svg);
+  const brl = Kit.mk('text',{class:'brl',x:(A.x+Bp.x)/2,y:by-fs*0.5,'text-anchor':'middle','font-size':fs*1.05},svg); brl.textContent='+1 point of effort';
+  const dA = Kit.mk('circle',{class:'dotA',cx:A.x,cy:A.y,r},svg);
+  const dB = Kit.mk('circle',{class:'dotB',cx:Bp.x,cy:Bp.y,r},svg);
+  const lA = Kit.mk('text',{class:'lab',x:A.x+r+6,y:A.y-r-4,'font-size':fs},svg); lA.textContent='Clear explanation';
+  const lB = Kit.mk('text',{class:'lab',x:Bp.x-r-6,y:Bp.y+fs*0.35,'text-anchor':'end','font-size':fs},svg); lB.textContent='Misconception dialogue';
+  if (animate && !Kit.calm){
+    const tl = gsap.timeline();
+    tl.from([dA,lA],{opacity:0,duration:.35})
+      .from(dB,{attr:{cx:A.x,cy:A.y},duration:.9,ease:'power3.out'})
+      .from(lB,{opacity:0,duration:.3},'-=.3')
+      .from([br,brl],{opacity:0,y:6,duration:.35},'-=.2')
+      .from(trend,{opacity:0,duration:.5},'-=.1');
+  }
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  revealed = true; draw(true);
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: it was the dialogue`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "science-landslide-depth-volume",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "How does the depth of the surface of rupture affect a landslide's speed?",
+  "answer": "The shallow one is faster. The deeper the surface of rupture, the more rock sits above it, so a deep slide puts a larger volume on the move. More volume tends to make a landslide move more slowly.",
+  "move": "Deep cut, big volume, slow slide. Shallow cut, small volume, fast slide.",
+  "keywords": [
+    "landslide",
+    "rupture surface",
+    "rock volume",
+    "hillside",
+    "sicily"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Same hill, two landslide cuts: one shallow and one deep surface of rupture. The question asks which slide moves faster, with options: the shallow one, the deep one."
+  },
+  "source": "Geopop, “La spiegazione geologica della frana di Niscemi in Sicilia” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=v98N4kQ52io&t=780s",
+  "written": "2026-11-03"
+}

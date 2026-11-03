@@ -1,0 +1,37 @@
+{
+  "id": "technology-rbmk-crane-dome",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Chernobyl's reactor have no strong containment dome over it?",
+  "answer": "The RBMK was also built to make military plutonium. Pulling out the fuel where plutonium formed, without stopping the reactor, needed a huge crane above the core. A dome big enough to cover that crane would have been enormous and far too costly, so it was left out.",
+  "move": "Refuelling non-stop for plutonium meant a giant crane, and no dome to cover it.",
+  "keywords": [
+    "chernobyl",
+    "rbmk_reactor",
+    "plutonium",
+    "containment_dome",
+    "refuelling"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card asking why Chernobyl's reactor had no strong containment dome. Two choices: Stop to refuel, or Refuel while running. A slider lets the reader slide right to let the reactor swap fuel without stopping."
+  },
+  "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ksyOBogBKvc&t=933s",
+  "written": "2026-11-03"
+}

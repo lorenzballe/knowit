@@ -1,0 +1,170 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-prison-forced-labour -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font:700 max(2.8cqh,17px)/1.15 var(--display)}
+#why .body{font:400 max(1.85cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FORCED LABOUR</span></div>
+    <h2 class="q">Prisoners made shoes and bags. Who got the money from their work?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A prisoner making shoes; the earnings fall into three bins: state, prisoners, director"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The state</button>
+        <button class="opt" data-i="1">The prisoners</button>
+        <button class="opt" data-i="2">The director</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The director</p><p class="body">Prisoners were forced to work in the fields and to make shoes and bags. Almost all the money went neither to the state nor to the prisoners, but into the director's own pockets.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the bin the money fell into. Then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Forced labour turned the prison into a private business for one man.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, idle = null, G = null;
+const GOLD = '#f2c14e', RED = '#d64545';
+const NS = 'http://www.w3.org/2000/svg';
+
+function shoe(p, s){
+  const g = Kit.mk('g', {}, p);
+  Kit.mk('path', {d:`M0,0 L0,${-s*.55} L${s*.38},${-s*.55} L${s*.48},${-s*.22} L${s},${-s*.12} L${s},0 Z`, fill:'var(--k)'}, g);
+  Kit.mk('rect', {x:-s*.02, y:-s*.06, width:s*1.04, height:s*.1, fill:RED}, g);
+  return g;
+}
+function bag(p, s){
+  const g = Kit.mk('g', {}, p);
+  Kit.mk('path', {d:`M${s*.25},${-s*.6} Q${s*.5},${-s*1.05} ${s*.75},${-s*.6}`, fill:'none', stroke:'var(--k)', 'stroke-width':Math.max(2,s*.08)}, g);
+  Kit.mk('rect', {x:0, y:-s*.62, width:s, height:s*.62, rx:s*.08, fill:'var(--k)'}, g);
+  Kit.mk('rect', {x:s*.1, y:-s*.4, width:s*.8, height:s*.08, fill:RED}, g);
+  return g;
+}
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (idle) { idle.kill(); idle = null; }
+  gsap.killTweensOf('#pic *');
+  svg.innerHTML = '';
+  const fs = Math.max(f*.8, 12), fsb = Math.max(f*.85, 12);
+  const sw = Math.max(1.5, Math.min(W,H)*.006);
+  // workshop
+  const bx = W*.04, by = H*.03, bw = W*.92, bh = H*.4;
+  Kit.mk('rect', {x:bx, y:by, width:bw, height:bh, rx:Math.min(W,H)*.03, fill:'color-mix(in srgb,var(--k) 7%,transparent)', stroke:'var(--k)', 'stroke-width':sw}, svg);
+  const t1 = Kit.mk('text', {x:bx+W*.03, y:by+fs*1.3, 'font-size':fs, 'font-family':'var(--mono)', fill:'var(--k)', 'font-weight':700}, svg);
+  t1.textContent = 'PRISON WORKSHOP';
+  // bars on the window
+  for (let i=0;i<4;i++) Kit.mk('line', {x1:W*(.72+i*.05), y1:by+H*.03, x2:W*(.72+i*.05), y2:by+H*.13, stroke:'var(--k)', 'stroke-width':sw, opacity:.5}, svg);
+  // bench and conveyor
+  const benchY = by+bh*.78;
+  Kit.mk('rect', {x:W*.1, y:benchY, width:W*.8, height:H*.018, fill:'var(--k)'}, svg);
+  // prisoner
+  const px = W*.18, s0 = Math.min(H*.09, W*.1);
+  Kit.mk('circle', {cx:px, cy:benchY-s0*2.1, r:s0*.32, fill:'var(--k)'}, svg);
+  Kit.mk('rect', {x:px-s0*.32, y:benchY-s0*1.7, width:s0*.64, height:s0*1.7, rx:s0*.15, fill:'var(--k)'}, svg);
+  for (let i=0;i<3;i++) Kit.mk('line', {x1:px-s0*.32, y1:benchY-s0*(1.4-i*.45), x2:px+s0*.32, y2:benchY-s0*(1.4-i*.45), stroke:'var(--c)', 'stroke-width':sw}, svg);
+  const sx = px+s0*.2, sy = benchY-s0*1.45;
+  const arm = Kit.mk('g', {}, svg);
+  Kit.mk('line', {x1:sx, y1:sy, x2:sx+s0*.75, y2:sy+s0*.55, stroke:'var(--k)', 'stroke-width':s0*.16, 'stroke-linecap':'round'}, arm);
+  Kit.mk('rect', {x:sx+s0*.65, y:sy+s0*.3, width:s0*.35, height:s0*.18, fill:RED}, arm);
+  const work = shoe(svg, s0*.8); work.setAttribute('transform', `translate(${px+s0*.6},${benchY})`);
+  // goods sliding along
+  const goods = [];
+  for (let i=0;i<4;i++){ const g = (i%2? bag : shoe)(svg, s0*.7); g.setAttribute('transform', `translate(${W*.42},${benchY})`); g.style.opacity = 0; goods.push(g); }
+  // slot to the bins
+  const slotX = W*.86;
+  // bins
+  const cx = [W*.18, W*.5, W*.82], binW = W*.24, top = H*.6, bot = H*.88;
+  const names = ['STATE', 'PRISONERS', 'DIRECTOR'];
+  const bins = [], fills = [], notes = [];
+  cx.forEach((c,i) => {
+    const fl = Kit.mk('rect', {x:c-binW/2+sw, y:bot, width:binW-2*sw, height:0, fill:GOLD}, svg);
+    const b = Kit.mk('path', {d:`M${c-binW/2},${top} L${c-binW/2+binW*.06},${bot} L${c+binW/2-binW*.06},${bot} L${c+binW/2},${top}`, fill:'none', stroke:'var(--k)', 'stroke-width':sw*1.4, 'stroke-linejoin':'round'}, svg);
+    const lb = Kit.mk('text', {x:c, y:H-fsb*.35, 'font-size':fsb, 'font-family':'var(--body)', 'font-weight':700, 'text-anchor':'middle', fill:'var(--k)'}, svg);
+    lb.textContent = names[i];
+    const nt = Kit.mk('text', {x:c, y:top-fs*.6, 'font-size':fs, 'font-family':'var(--hand)', 'text-anchor':'middle', fill:i===2?RED:'var(--k)', 'font-weight':700}, svg);
+    nt.textContent = i===2 ? 'almost all' : 'not here';
+    nt.style.opacity = 0;
+    bins.push(b); fills.push(fl); notes.push(nt);
+  });
+  // dashed drop line from the workshop
+  Kit.mk('line', {x1:slotX, y1:by+bh, x2:slotX, y2:top-fs*1.8, stroke:'var(--k)', 'stroke-width':sw, 'stroke-dasharray':`${sw*3} ${sw*3}`, opacity:.4}, svg);
+  const coinLayer = Kit.mk('g', {}, svg);
+  G = {W, H, sw, cx, top, bot, binW, fills, bins, notes, coinLayer, slotX, slotY: by+bh, r: Math.min(W,H)*.028};
+  markPick();
+  if (done) { showEnd(true); }
+  if (!Kit.calm) {
+    gsap.to(arm, {rotation:-28, svgOrigin:`${sx} ${sy}`, duration:.28, yoyo:true, repeat:-1, ease:'power2.in'});
+    idle = gsap.timeline({repeat:-1});
+    goods.forEach((g,i) => {
+      idle.fromTo(g, {x:0, opacity:0}, {x:slotX-W*.42-s0*.35, opacity:1, duration:2.4, ease:'none'}, i*0.9)
+          .to(g, {opacity:0, duration:.3}, i*0.9+2.4);
+    });
+  }
+}
+
+function markPick(){
+  if (!G) return;
+  G.bins.forEach((b,i) => b.setAttribute('stroke', i===pick ? RED : 'var(--k)'));
+  G.bins.forEach((b,i) => b.setAttribute('stroke-width', G.sw*(i===pick ? 2.6 : 1.4)));
+}
+
+function showEnd(instant){
+  const {fills, notes, bot, top, coinLayer, slotX, slotY, cx, r} = G;
+  const fullH = (bot-top)*.85;
+  if (instant || Kit.calm) {
+    fills[2].setAttribute('y', bot-fullH); fills[2].setAttribute('height', fullH);
+    notes.forEach(n => n.style.opacity = 1);
+    return;
+  }
+  const N = 22, dur = .9, gap = .09;
+  for (let i=0;i<N;i++){
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', 0); c.setAttribute('cy', 0); c.setAttribute('r', r);
+    c.setAttribute('fill', GOLD); c.setAttribute('stroke', 'var(--k)'); c.setAttribute('stroke-width', G.sw);
+    coinLayer.appendChild(c);
+    const tx = cx[2] + (Kit.rnd()-.5)*G.binW*.5, ty = bot - r - Kit.rnd()*fullH*.3;
+    gsap.set(c, {x:slotX, y:slotY, opacity:0});
+    gsap.to(c, {opacity:1, duration:.1, delay:i*gap});
+    gsap.to(c, {x:tx, duration:dur, delay:i*gap, ease:'power1.out'});
+    gsap.to(c, {y:ty, duration:dur, delay:i*gap, ease:'power2.in'});
+    gsap.to(c, {opacity:0, duration:.25, delay:i*gap+dur});
+  }
+  gsap.to(fills[2], {attr:{y:bot-fullH, height:fullH}, duration:N*gap+dur, ease:'none'});
+  gsap.to(notes, {opacity:1, duration:.4, stagger:.2, delay:N*gap*.6});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  done = true;
+  Kit.haptic('success');
+  showEnd(false);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); markPick(); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 3400)); };
+Kit.single();
+</script>
+</html>

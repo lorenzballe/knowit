@@ -1,0 +1,118 @@
+<!doctype html>
+<!-- slug: science-ocean-salt-mass -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#g{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEA SALT</span></div>
+    <h2 class="q">How much sodium chloride is dissolved in the world’s oceans?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="g"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">About 4 billion kg</button>
+        <button class="opt" data-i="1">About 4 million billion kg</button>
+        <button class="opt" data-i="2">About 40 billion billion kg</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">≈ 4 × 10¹⁹ kg</p>
+        <p class="body">That is 40 billion billion kilograms: 40 × 1,000,000,000 × 1,000,000,000. Sodium in nature is not a shiny metal: it sits dissolved in seas and oceans as sodium chloride, salt.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess the mass of the salt, then pull it out of the sea.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Nature’s sodium hides in the sea as salt: about 4 × 10¹⁹ kg.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, geo = null, twinkle = null;
+const N = 150, G = [];
+for (let i = 0; i < N; i++) G.push({u: Kit.rnd(), v: Kit.rnd(), s: Kit.rnd(), t: Kit.rnd(), z: .5 + Kit.rnd() * .8});
+const LANDS = [
+  [[-.62,-.5],[-.25,-.72],[0,-.45],[-.12,-.12],[-.42,0],[-.72,-.22]],
+  [[.18,.08],[.55,-.08],[.74,.28],[.48,.72],[.26,.5]],
+  [[-.32,.34],[-.06,.3],[-.1,.66],[-.36,.6]],
+  [[.3,-.62],[.6,-.55],[.5,-.36],[.28,-.4]]
+];
+function startPos(p){ const a = 2*Math.PI*p.u, d = Math.sqrt(p.v)*.88*geo.r; return [geo.cx + Math.cos(a)*d, geo.cy + Math.sin(a)*d]; }
+function heapPos(p){
+  let s = p.s, t = p.t; if (s + t > 1){ s = 1 - s; t = 1 - t; }
+  const r = geo.r, A = [0, -.55*r], B = [-.75*r, 0], C = [.75*r, 0];
+  return [geo.cx + A[0] + s*(B[0]-A[0]) + t*(C[0]-A[0]), geo.by + A[1] + s*(B[1]-A[1]) + t*(C[1]-A[1])];
+}
+function draw(){
+  const svg = Kit.$('g'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.max(20, Math.min(W*.32, (H - 2.6*f)/2.72));
+  const cx = W/2, cy = H - r - 3, by = cy - r - r*.14, ay = by - r*.55;
+  geo = {W, H, f, r, cx, cy, by, ay};
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'globeclip'}, defs);
+  Kit.mk('circle', {cx, cy, r}, cp);
+  const ocean = Kit.mk('circle', {cx, cy, r, fill: '#1c63a8'}, svg);
+  ocean.style.stroke = 'var(--k)'; ocean.style.strokeWidth = Math.max(2, r*.025);
+  const land = Kit.mk('g', {'clip-path': 'url(#globeclip)'}, svg);
+  LANDS.forEach(L => Kit.mk('polygon', {points: L.map(q => (cx + q[0]*r) + ',' + (cy + q[1]*r)).join(' '), fill: '#3d9460'}, land));
+  Kit.mk('ellipse', {cx: cx - r*.35, cy: cy - r*.4, rx: r*.28, ry: r*.14, fill: '#fff', opacity: .14, transform: `rotate(-30 ${cx - r*.35} ${cy - r*.4})`}, svg);
+  const heap = Kit.mk('polygon', {id: 'heap', points: `${cx},${ay} ${cx - .75*r},${by} ${cx + .75*r},${by}`, fill: '#f4f6f8', opacity: done ? 1 : 0}, svg);
+  heap.style.stroke = 'var(--k)'; heap.style.strokeWidth = Math.max(1.5, r*.015);
+  const gg = Kit.mk('g', {id: 'grains'}, svg);
+  G.forEach(p => {
+    const [x, y] = done ? heapPos(p) : startPos(p);
+    p.el = Kit.mk('circle', {cx: x, cy: y, r: Math.max(1.3, r*.02*p.z), fill: '#ffffff', opacity: done ? .9 : .6}, gg);
+  });
+  const nacl = Kit.mk('text', {id: 'nacl', x: cx, y: by - r*.13, 'text-anchor': 'middle', 'font-size': Math.max(12, f*.9), 'font-weight': 800, opacity: done ? 1 : 0}, svg);
+  nacl.style.fill = '#16324f'; nacl.style.fontFamily = 'var(--body)'; nacl.textContent = 'NaCl';
+  const lab = Kit.mk('text', {id: 'lab', x: cx, y: Math.max(f*1.3, ay - f*.6), 'text-anchor': 'middle', 'font-size': Math.max(14, f*1.35), 'font-weight': 800, opacity: done ? 1 : 0}, svg);
+  lab.style.fill = 'var(--k)'; lab.style.fontFamily = 'var(--display)'; lab.textContent = '4 × 10¹⁹ kg of salt';
+  if (!done && !Kit.calm){
+    if (twinkle) twinkle.kill();
+    twinkle = gsap.to(G.map(p => p.el), {opacity: .2, duration: 1.2, yoyo: true, repeat: -1, stagger: {each: .02, from: 'random'}, ease: 'sine.inOut'});
+  }
+}
+function reveal(){
+  done = true; if (twinkle){ twinkle.kill(); twinkle = null; }
+  if (Kit.calm){ draw(); return; }
+  G.forEach((p, i) => {
+    const [x, y] = heapPos(p);
+    gsap.to(p.el, {attr: {cx: x, cy: y}, opacity: .9, duration: 1.1, delay: i*.006, ease: 'power3.inOut'});
+  });
+  gsap.to('#heap', {opacity: 1, duration: .5, delay: 1.1});
+  gsap.to('#nacl', {opacity: 1, duration: .4, delay: 1.4});
+  gsap.fromTo('#lab', {opacity: 0, y: 8}, {opacity: 1, y: 0, duration: .5, delay: 1.3, ease: 'back.out(2)'});
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic('success');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2200)); };
+Kit.single();
+</script>
+</html>

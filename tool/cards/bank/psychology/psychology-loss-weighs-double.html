@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: psychology-loss-weighs-double -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#scale{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;align-items:center;gap:3cqw;padding:1cqh 1cqw}
+#ctl .lab{font:700 max(2.1cqh,13px)/1.2 var(--body);color:var(--k);white-space:nowrap;min-width:max(15cqw,92px)}
+#ctl .lab b{font-family:var(--mono);font-size:max(2.6cqh,15px)}
+#win{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);color:var(--k);margin:0}
+</style>
+<article class="card" id="card" data-topic="psychology" data-kind="Scrub · balance">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LOSS AVERSION</span></div>
+    <h2 class="q">How much more heavily do people weight losses than gains?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="scale"></svg>
+      <div id="ctl"><span class="lab">Win: <b id="wv">$10</b></span><input id="win" type="range" min="10" max="40" step="1" value="10" aria-label="Amount you could win"></div>
+    </div>
+    <p class="say" id="say">A coin flip: lose $10 or win more. Drag the win up until the bet feels fair.</p>
+    <div id="why" class="gone"><p class="body">Losses are felt much more intensely than gains. Most people weight a loss around twice as heavily, so an even 50/50 bet feels bad. It varies: one person in the video wanted about $100 to risk $10.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A loss weighs about twice a gain, so we turn down good bets.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Would You Take This Bet?” (YouTube, 2015)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LOSS='#d23c3c', GAIN='#23955a';
+const st = {x:10, ang:-14};
+let D = null, done = false;
+const target = x => -14 * Math.max(-1, Math.min(1, (20 - x) / 10));
+
+function verdict(x){ return x < 20 ? 'Feels like a bad bet' : x === 20 ? 'Finally feels even' : 'Feels worth it'; }
+
+function render(){
+  if (!D) return;
+  const {cx, cy, L, s, pw, bw, u, f, g} = D;
+  const a = st.ang * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
+  const le = {x: cx - L*c, y: cy - L*sn}, re = {x: cx + L*c, y: cy + L*sn};
+  g.beam.setAttribute('x1', le.x); g.beam.setAttribute('y1', le.y);
+  g.beam.setAttribute('x2', re.x); g.beam.setAttribute('y2', re.y);
+  const pan = (e, P) => {
+    const py = e.y + s;
+    P.s1.setAttribute('d', `M${e.x},${e.y}L${e.x - pw/2},${py}M${e.x},${e.y}L${e.x + pw/2},${py}`);
+    P.dish.setAttribute('d', `M${e.x - pw/2},${py}Q${e.x},${py + pw*.22} ${e.x + pw/2},${py}Z`);
+    P.lab.setAttribute('x', e.x); P.lab.setAttribute('y', py + pw*.11 + f*1.4);
+    P.sub.setAttribute('x', e.x); P.sub.setAttribute('y', py + pw*.11 + f*2.75);
+    return py;
+  };
+  const lp = pan(le, g.L), rp = pan(re, g.R);
+  const h10 = 10*u;
+  // loss pan: the real $10 plus the extra sting
+  g.lossA.setAttribute('x', le.x - bw/2); g.lossA.setAttribute('y', lp - h10); g.lossA.setAttribute('height', h10);
+  g.lossB.setAttribute('x', le.x - bw/2); g.lossB.setAttribute('y', lp - 2*h10 - 2); g.lossB.setAttribute('height', h10);
+  g.tA.setAttribute('x', le.x); g.tA.setAttribute('y', lp - h10/2);
+  g.tB.setAttribute('x', le.x); g.tB.setAttribute('y', lp - 1.5*h10 - 2);
+  const hg = st.x*u;
+  g.gain.setAttribute('x', re.x - bw/2); g.gain.setAttribute('y', lp === lp ? rp - hg : 0); g.gain.setAttribute('height', hg);
+  g.tG.setAttribute('x', re.x); g.tG.setAttribute('y', rp - hg/2);
+  g.tG.textContent = '$' + st.x;
+  g.R.lab.textContent = 'WIN $' + st.x;
+  g.R.sub.textContent = 'feels +$' + st.x;
+  g.ver.textContent = verdict(st.x);
+  g.ver.setAttribute('fill', st.x < 20 ? LOSS : st.x === 20 ? 'var(--k)' : GAIN);
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('scale');
+  svg.innerHTML = '';
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(12, Math.min(f0, H*0.055));
+  const L = Math.min(W*0.36, H*0.42), cx = W/2, cy = H*0.22, s = H*0.38;
+  const pw = L*0.8, bw = pw*0.78, u = s*0.85/40;
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const g = {};
+  g.ver = mk('text', {x: cx, y: f*1.1, 'text-anchor': 'middle', 'font-family': 'var(--display)', 'font-weight': 700, 'font-size': f*1.15});
+  // fulcrum
+  mk('path', {d: `M${cx},${cy}L${cx - L*.16},${H*.9}L${cx + L*.16},${H*.9}Z`, fill: 'var(--k)', opacity: .85});
+  mk('rect', {x: cx - L*.3, y: H*.9, width: L*.6, height: Math.max(4, H*.02), rx: 3, fill: 'var(--k)'});
+  const mkPan = () => {
+    const P = {};
+    P.s1 = mk('path', {stroke: 'var(--k)', 'stroke-width': Math.max(1.5, f*.1), fill: 'none', opacity: .7});
+    P.dish = mk('path', {fill: 'var(--k)'});
+    P.lab = mk('text', {'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': f, fill: 'var(--k)'});
+    P.sub = mk('text', {'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 600, 'font-size': f*.9, fill: 'var(--k)', opacity: .75});
+    return P;
+  };
+  g.L = mkPan(); g.R = mkPan();
+  g.L.lab.textContent = 'LOSE $10'; g.L.sub.textContent = 'feels −$20';
+  g.beam = mk('line', {stroke: 'var(--k)', 'stroke-width': Math.max(4, f*.38), 'stroke-linecap': 'round'});
+  mk('circle', {cx, cy, r: Math.max(4, f*.35), fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(2, f*.15)});
+  const tx = (fill) => mk('text', {'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': Math.min(f, 10*u*.7), fill});
+  g.lossB = mk('rect', {width: bw, rx: 4, fill: LOSS, opacity: .55, stroke: LOSS, 'stroke-width': 2, 'stroke-dasharray': '5 3'});
+  g.lossA = mk('rect', {width: bw, rx: 4, fill: LOSS});
+  g.gain = mk('rect', {width: bw, rx: 4, fill: GAIN});
+  g.tA = tx('#fff'); g.tA.textContent = '$10';
+  g.tB = tx('#fff'); g.tB.textContent = '+ sting';
+  g.tG = tx('#fff');
+  D = {cx, cy, L, s, pw, bw, u, f, g};
+  render();
+};
+
+function setWin(x){
+  st.x = x; Kit.$('wv').textContent = '$' + x;
+  gsap.to(st, {ang: target(x), duration: Kit.calm ? 0 : .7, ease: 'elastic.out(1,.55)', overwrite: true, onUpdate: render});
+  render();
+  if (!done && x >= 20){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  } else Kit.haptic('selection');
+}
+let last = 10;
+Kit.$('win').addEventListener('input', e => { const x = +e.target.value; if (x !== last){ last = x; setWin(x); } });
+
+Kit.onEnter.card = () => {
+  if (Kit.calm){ st.ang = target(st.x); render(); return; }
+  st.ang = 0; render();
+  gsap.to(st, {ang: target(st.x), delay: .5, duration: 1.2, ease: 'bounce.out', onUpdate: render});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('win'); r.value = 25; r.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(res => setTimeout(res, 900));
+};
+Kit.single();
+</script>
+</html>

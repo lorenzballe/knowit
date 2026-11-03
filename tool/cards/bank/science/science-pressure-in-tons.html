@@ -1,0 +1,145 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-pressure-in-tons -->
+<title>Astute free card · Pressure in tons</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.1cqh;flex:1;min-height:0}
+#reads{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
+.rd{background:color-mix(in srgb,var(--k) 8%,transparent);border-radius:1.4cqh;padding:.8cqh 2.4cqw;min-width:0}
+.rd small{display:block;font:600 max(1.4cqh,12px)/1.2 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rd b{display:block;font:800 max(2.3cqh,14px)/1.15 var(--display);color:var(--k);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#wrap{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#dial{display:flex;align-items:center;gap:3cqw}
+#dial span{font:700 max(1.5cqh,12px)/1 var(--mono);color:var(--muted);white-space:nowrap}
+#depth{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer;margin:0}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{margin:0;font:500 max(1.85cqh,13px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn a dial">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">DEEP PRESSURE</span></div>
+    <h2 class="q">How much weight presses on one square metre at 3,500 metres deep?</h2>
+    <div class="stagebox" id="stage">
+      <div id="reads">
+        <div class="rd"><small>Depth</small><b id="rDepth">0 m</b></div>
+        <div class="rd"><small>Pressure</small><b id="rAtm">0 atm</b></div>
+        <div class="rd"><small>Load</small><b id="rTon">0 t/m²</b></div>
+      </div>
+      <div id="wrap"><canvas id="cv"></canvas></div>
+      <div id="dial"><span>0 m</span><input id="depth" type="range" min="0" max="3500" step="10" value="0" aria-label="Depth in metres"><span>3,500 m</span></div>
+    </div>
+    <p class="say" id="say">Drag the dial down to Titan's depth and watch the cars pile up.</p>
+    <div id="why" class="gone"><p class="body">At 3,500 m the sea presses with 350 atmospheres. That is 3,500 tons on every square metre: about the weight of 2,000 cars stacked on a patch the size of a small table.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>At Titan's depth, each square metre carries about 2,000 cars.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Com'è avvenuta l'implosione del sottomarino Titan? La spiegazione tecnica con immagini inedite in 3D” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), dial = Kit.$('depth');
+let fit = null, depth = 0, done = false, lastStep = 0;
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const COLS = ['#ff5a4e','#ffc83d','#4fd1c5','#f2f2f2','#7aa7ff','#ff8fb1'];
+
+function mix(a, b, t){ return a.map((v,i)=>Math.round(v+(b[i]-v)*t)); }
+
+function draw(){
+  if (!fit) return;
+  const {x, W, H} = fit, t = depth / 3500;
+  const n = Math.round(depth * 2000 / 3500);
+  const top = mix([86,170,220],[8,40,70],t), bot = mix([30,110,170],[2,10,22],t);
+  const g = x.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,`rgb(${top})`); g.addColorStop(1,`rgb(${bot})`);
+  x.fillStyle = g; x.fillRect(0,0,W,H);
+  // drifting specks for depth feel
+  x.fillStyle = 'rgba(255,255,255,.12)';
+  for (let i=0;i<26;i++){ const px=((i*97)%100)/100*W, py=((i*53+depth*.02)%100)/100*H; x.fillRect(px,py,2,2); }
+
+  const fs = Math.max(12, Math.min(W,H)*0.05);
+  const pw = Math.min(W*0.3, H*0.3), cx = W/2;
+  const baseY = H - Math.max(fs*2.6, H*0.14);
+  const topY = Math.max(fs*3.2, H*0.17);
+  const maxH = baseY - topY;
+  const cw = pw*1.35, carH0 = pw*0.5;
+  const h = n*carH0 <= maxH ? carH0 : maxH / Math.max(n,1);
+  const squash = Math.min(t*0.5, 0.5);
+
+  // plate (1 m²), slight perspective, thinner under load
+  const dep = pw*0.28, th = Math.max(4, pw*0.12*(1-squash));
+  x.fillStyle = '#c9ced6';
+  x.beginPath(); x.moveTo(cx-pw/2,baseY); x.lineTo(cx+pw/2,baseY); x.lineTo(cx+pw/2+dep*.6,baseY+dep*.5); x.lineTo(cx-pw/2+dep*.6,baseY+dep*.5); x.closePath(); x.fill();
+  x.fillStyle = '#8a929e';
+  x.fillRect(cx-pw/2+dep*.6, baseY+dep*.5, pw, th);
+  if (t > .55){ // cracks
+    x.strokeStyle = `rgba(20,20,20,${(t-.55)*1.8})`; x.lineWidth = 1.4; x.beginPath();
+    x.moveTo(cx, baseY+2); x.lineTo(cx+pw*.12, baseY+dep*.25); x.lineTo(cx+pw*.05, baseY+dep*.45);
+    x.moveTo(cx-pw*.2, baseY+3); x.lineTo(cx-pw*.1, baseY+dep*.3); x.stroke();
+  }
+
+  // the tower of cars
+  for (let i=0;i<n;i++){
+    const y = baseY - (i+1)*h, c = COLS[i%COLS.length];
+    if (h >= 9){
+      const L = cx-cw/2;
+      x.fillStyle = c;
+      x.beginPath(); x.roundRect(L, y+h*.38, cw, h*.38, h*.08); x.fill();
+      x.beginPath(); x.moveTo(L+cw*.22,y+h*.4); x.lineTo(L+cw*.34,y+h*.1); x.lineTo(L+cw*.68,y+h*.1); x.lineTo(L+cw*.8,y+h*.4); x.closePath(); x.fill();
+      x.fillStyle = 'rgba(180,220,255,.85)';
+      x.fillRect(L+cw*.36,y+h*.15,cw*.14,h*.22); x.fillRect(L+cw*.53,y+h*.15,cw*.14,h*.22);
+      x.fillStyle = '#111';
+      for (const wx of [.22,.78]){ x.beginPath(); x.arc(L+cw*wx, y+h*.8, h*.14, 0, 7); x.fill(); }
+    } else {
+      x.fillStyle = c; x.globalAlpha = h < 1.5 ? .9 : 1;
+      x.fillRect(cx-cw/2, y, cw, Math.max(h, .6));
+      x.globalAlpha = 1;
+    }
+  }
+  if (n > 0 && h < 9){ // shading on the dense column
+    const sg = x.createLinearGradient(cx-cw/2,0,cx+cw/2,0);
+    sg.addColorStop(0,'rgba(0,0,0,.35)'); sg.addColorStop(.5,'rgba(0,0,0,0)'); sg.addColorStop(1,'rgba(0,0,0,.4)');
+    x.fillStyle = sg; x.fillRect(cx-cw/2, baseY-n*h, cw, n*h);
+  }
+
+  // labels
+  x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+  x.font = `800 ${fs*1.35}px ${getComputedStyle(document.body).getPropertyValue('--display') || 'sans-serif'}`;
+  const headY = Math.max(fs*1.5, (n ? baseY - n*h : baseY) - fs*0.7);
+  x.fillText(`${fmt(n)} ${n===1?'car':'cars'}`, cx, Math.min(headY, topY - fs*0.4));
+  x.font = `600 ${fs*.8}px sans-serif`;
+  x.fillStyle = 'rgba(255,255,255,.85)';
+  x.fillText('1 m × 1 m', cx, baseY + dep*.5 + th + fs*1.25);
+}
+
+function setDepth(d){
+  depth = d;
+  Kit.$('rDepth').textContent = fmt(d) + ' m';
+  Kit.$('rAtm').textContent = fmt(d/10) + ' atm';
+  Kit.$('rTon').textContent = fmt(d) + ' t/m²';
+  const step = Math.floor(d/500);
+  if (step !== lastStep){ lastStep = step; Kit.haptic('light'); }
+  draw();
+  if (!done && d >= 3490){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why','#keep'], {opacity:0, y:8, stagger:.12, duration:.45, ease:'power3.out'});
+  }
+}
+dial.addEventListener('input', () => setDepth(+dial.value));
+
+Kit.onShow.card = () => { fit = Kit.fitCanvas(cv); draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {d:0};
+  gsap.to(o, {d:300, duration:.9, ease:'power2.out', yoyo:true, repeat:1, delay:.3,
+    onUpdate(){ if (!done){ dial.value = o.d; setDepth(Math.round(o.d/10)*10); } }});
+};
+Kit.play.card = async () => {
+  dial.value = 3500; dial.dispatchEvent(new Event('input', {bubbles:true}));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

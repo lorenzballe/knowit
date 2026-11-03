@@ -1,0 +1,121 @@
+<!doctype html>
+<!-- slug: technology-sky-airspace-blocks -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#sw{display:flex;align-self:center;background:color-mix(in srgb,var(--k) 10%,transparent);border-radius:99px;padding:.5cqh;gap:.5cqh}
+#sw button{font:700 max(2cqh,13px)/1.1 var(--body);color:var(--k);background:transparent;border:0;border-radius:99px;padding:1.2cqh 5cqw;cursor:pointer}
+#sw button.on{background:var(--k);color:var(--c)}
+#box{flex:1;min-height:0;position:relative}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block}
+#read{font:700 max(1.8cqh,12px)/1.3 var(--mono);text-align:center;color:var(--k);overflow-wrap:anywhere}
+#why{font:500 max(1.9cqh,13px)/1.35 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">AIR TRAFFIC</span></div>
+    <h2 class="q">How is the sky organized for air traffic control?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw"><button data-s="0" class="on">One big sky</button><button data-s="1">Blocks</button></div>
+      <div id="box"><svg id="sky"></svg></div>
+      <div id="read">1 block · 1 controller · all 12 planes to watch</div>
+    </div>
+    <p class="say" id="say">Flip the switch to slice the sky, and watch who looks after each plane.</p>
+    <p id="why" class="gone">The sky is split into horizontal and vertical blocks, a 3D grid. Each block is the job of one or more controllers at the area control center, who follow it on radar. Two planes over the same spot can sit in different blocks.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The sky is a 3D grid of blocks, each with its own controllers.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dentro la cabina dal decollo all’atterraggio - tutto quello che non si vede di un volo di linea” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const COLS=['#ff6b6b','#ffd93d','#5fd07a','#4d96ff','#c77dff','#ff9f43'];
+const ZL=0.7, ZT=1.4;
+const PLANES=[[0.5,0.4,0.3],[2.4,0.5,1.0],[1.5,1.5,0.3],[1.5,1.5,1.1],[0.4,2.5,1.0],[2.5,2.4,0.35],[1.4,0.4,0.5],[0.5,1.4,1.15],[2.5,1.5,0.9],[1.5,2.6,0.45],[0.6,0.6,1.2],[2.3,2.6,1.2]];
+const colOf=(i,j,k)=>COLS[(i+2*j+3*k)%6];
+let state=0, seen=false, P=[];
+const svg=Kit.$('sky');
+function ink(){return getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim()||'#111';}
+function draw(){
+  svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg);
+  const u=Math.min(W*0.9/5.2,H*0.86/4.5);
+  const ox=W/2, oy=(H-4.4*u)/2+ZT*u;
+  const p=(x,y,z)=>[ox+(x-y)*u*0.866, oy+(x+y)*u*0.5-z*u];
+  const pts=a=>a.map(q=>p(...q).map(v=>v.toFixed(1)).join(',')).join(' ');
+  const K='var(--k)';
+  // ground
+  Kit.mk('polygon',{points:pts([[0,0,0],[3,0,0],[3,3,0],[0,3,0]]),fill:K,'fill-opacity':.08},svg);
+  for(let t=0;t<=3;t++){
+    const a=p(t,0,0),b=p(t,3,0),c=p(0,t,0),d=p(3,t,0);
+    Kit.mk('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:K,'stroke-opacity':.3,'stroke-width':1},svg);
+    Kit.mk('line',{x1:c[0],y1:c[1],x2:d[0],y2:d[1],stroke:K,'stroke-opacity':.3,'stroke-width':1},svg);
+  }
+  const box=(g,x0,x1,y0,y1,z0,z1,col)=>{
+    const faces=[[[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]],[[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]],[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]]];
+    const op=[.22,.3,.38];
+    faces.forEach((fc,n)=>Kit.mk('polygon',{points:pts(fc),fill:col,'fill-opacity':op[n],stroke:col,'stroke-width':1.4,'stroke-linejoin':'round'},g));
+  };
+  const one=Kit.mk('g',{id:'one'},svg);
+  box(one,0,3,0,3,0,ZT,ink());
+  const many=Kit.mk('g',{id:'many'},svg);
+  const cells=[];
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<2;k++)cells.push([i,j,k]);
+  cells.sort((a,b)=>(a[0]+a[1])-(b[0]+b[1])||a[2]-b[2]);
+  cells.forEach(([i,j,k])=>{const g=Kit.mk('g',{class:'blk'},many);box(g,i+.04,i+.96,j+.04,j+.96,k*ZL+.02,(k+1)*ZL-.02,colOf(i,j,k));});
+  // planes
+  P=[];
+  const r=Math.max(u*0.085,5);
+  PLANES.forEach(([x,y,z])=>{
+    const a=p(x,y,z), g0=p(x,y,0);
+    Kit.mk('line',{x1:a[0],y1:a[1],x2:g0[0],y2:g0[1],stroke:K,'stroke-opacity':.35,'stroke-dasharray':'3 3','stroke-width':1},svg);
+    Kit.mk('ellipse',{cx:g0[0],cy:g0[1],rx:r*.8,ry:r*.4,fill:K,'fill-opacity':.25},svg);
+    const c=Kit.mk('circle',{cx:a[0],cy:a[1],r:r,fill:ink(),stroke:'var(--c)','stroke-width':2},svg);
+    c.dataset.col=colOf(Math.floor(x),Math.floor(y),z<ZL?0:1);
+    P.push(c);
+  });
+  // label for the stacked pair
+  const fs=Math.max(f*0.85,12), a=p(1.5,1.5,1.1), b=p(1.5,1.5,0.3);
+  const lx=Math.min(a[0]+r+6, W-fs*7.5);
+  const lab=Kit.mk('g',{id:'lab'},svg);
+  const t1=Kit.mk('text',{x:p(3,0,ZT)[0]-fs*0.2,y:Math.max(p(3,0,ZT)[1]-fs*0.6,fs),'text-anchor':'end',fill:K,'font-family':'var(--mono)','font-weight':700,'font-size':fs},lab);
+  t1.textContent='';
+  const my=(a[1]+b[1])/2;
+  const tl=Kit.mk('text',{x:lx,y:my-fs*0.95,fill:K,'font-family':'var(--mono)','font-weight':700,'font-size':fs,'dominant-baseline':'middle'},lab);
+  tl.textContent='← same spot,';
+  const tl2=Kit.mk('text',{x:lx+fs*1.1,y:my+fs*0.95,fill:K,'font-family':'var(--mono)','font-weight':700,'font-size':fs,'dominant-baseline':'middle'},lab);
+  tl2.textContent='2 blocks';
+  apply(true);
+}
+function apply(now){
+  const d=(now||Kit.calm)?0:1;
+  if(state){
+    gsap.to('#one',{opacity:0,duration:.4*d});
+    gsap.fromTo('#many .blk',{opacity:0},{opacity:1,duration:.35*d,stagger:.04*d,ease:'power2.out'});
+    P.forEach((c,n)=>gsap.to(c,{attr:{fill:c.dataset.col},duration:.4*d,delay:(.3+n*.04)*d}));
+    gsap.to('#lab',{opacity:1,duration:.4*d,delay:.8*d});
+  }else{
+    gsap.to('#one',{opacity:1,duration:.4*d});
+    gsap.to('#many .blk',{opacity:0,duration:.3*d});
+    P.forEach(c=>gsap.to(c,{attr:{fill:ink()},duration:.3*d}));
+    gsap.to('#lab',{opacity:0,duration:.2*d});
+  }
+}
+Kit.$('sw').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const s=+b.dataset.s; if(s===state) return;
+  state=s; Kit.haptic('selection');
+  [...Kit.$('sw').children].forEach(x=>x.classList.toggle('on',+x.dataset.s===s));
+  Kit.$('read').textContent=s?'18 blocks · each with its own controllers · 1 plane each':'1 block · 1 controller · all 12 planes to watch';
+  apply(false);
+  if(s&&!seen){seen=true;Kit.hide('say');Kit.show('why');Kit.show('keep');Kit.haptic('success');}
+});
+Kit.onShow.card=()=>draw();
+Kit.onEnter.card=()=>{ if(!Kit.calm) gsap.from(P,{opacity:0,scale:0,transformOrigin:'center',stagger:.05,duration:.4,ease:'back.out(2)'}); };
+Kit.play.card=async()=>{ Kit.$('sw').children[1].click(); await new Promise(r=>setTimeout(r,1800)); };
+Kit.single();
+</script>
+</html>

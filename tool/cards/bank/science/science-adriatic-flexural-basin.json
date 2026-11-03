@@ -1,0 +1,37 @@
+{
+  "id": "science-adriatic-flexural-basin",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Adriatic Sea considered a flexural basin?",
+  "answer": "The Apennines are heavy. As they rose, their weight bent the crust beneath them downward, opening a depression in front of the chain, a foreland basin. Water filled that depression, and that is the Adriatic.",
+  "move": "Heavy mountains bend the crust; the sag in front of them becomes a basin.",
+  "keywords": [
+    "adriatic sea",
+    "apennines",
+    "flexural basin",
+    "foreland basin",
+    "crust"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Cross-section of the Apennine mountains. Tap the picture to add weight to the chain and see the crust bend downward in front of it. Asks: why is the Adriatic Sea considered a flexural basin?"
+  },
+  "source": "Geopop, “La storia geologica dell’Italia da 250 milioni di anni fa ad oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=DTOssDc8keo&t=964s",
+  "written": "2026-11-03"
+}

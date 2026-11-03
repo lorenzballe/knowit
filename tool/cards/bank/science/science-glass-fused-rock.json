@@ -1,0 +1,37 @@
+{
+  "id": "science-glass-fused-rock",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is glass, scientifically?",
+  "answer": "Glass is rock that has been melted and then cooled too quickly to grow crystals. Cooled slowly, the atoms line up into crystalline minerals, but when molten rock is plunged into water, it freezes into a disordered amorphous structure. Volcanic obsidian is an example of this kind of glass.",
+  "move": "Glass is rock melted and cooled too fast to grow any crystals.",
+  "keywords": [
+    "obsidian",
+    "volcanic glass",
+    "lava",
+    "minerals",
+    "amorphous structure"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A close-up of a piece of obsidian showing its smooth, glassy surface. The page asks: what is glass, scientifically? It explains that molten rock cooled slowly forms crystal minerals, while rock plunged into water freezes into a disordered amorphous structure."
+  },
+  "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=64s",
+  "written": "2026-11-03"
+}

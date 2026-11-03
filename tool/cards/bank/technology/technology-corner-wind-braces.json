@@ -1,0 +1,37 @@
+{
+  "id": "technology-corner-wind-braces",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did corner wind strain Citicorp's braces more than head-on wind?",
+  "answer": "When wind hits the corner, it splits into two pushes of F/√2, one on each face. In half the diagonal braces these pushes cancel, and in the other half they add to 2 × F/√2 ≈ 1.41 F. That is 40% above the head-on load LeMessurier had calculated.",
+  "move": "Wind on the corner, not on a face, loaded Citicorp's braces hardest: 40% more.",
+  "keywords": [
+    "citicorp",
+    "lemessurier",
+    "wind",
+    "braces",
+    "skyscraper"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A tower with diagonal braces and a wind arrow you drag around it. Question: why does wind hitting the corner strain the braces more than wind head-on? The force splits into two pushes that add to about 1.41 times the head-on load."
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=849s",
+  "written": "2026-11-03"
+}

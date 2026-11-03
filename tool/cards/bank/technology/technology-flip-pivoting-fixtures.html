@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-flip-pivoting-fixtures -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#read{font:700 max(1.8cqh,12px)/1.2 var(--mono);color:var(--k);text-align:center}
+#read .bad{color:#d9443a}
+#read .ok{color:#1f8f50}
+#ctl{display:flex;align-items:center;gap:3cqw}
+#tilt{flex:1;min-width:0;accent-color:var(--k);height:max(4cqh,28px);margin:0}
+#lock{font:700 max(1.8cqh,12px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 3.4cqw;cursor:pointer;white-space:nowrap}
+#lock.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.sea{fill:#2f78c4;opacity:.55}
+.wl{stroke:#2f78c4;fill:none}
+.hull{fill:var(--k);stroke:none}
+.mark{fill:var(--c);stroke:none}
+.room{fill:color-mix(in srgb,var(--k) 5%,transparent);stroke:var(--k)}
+.port{fill:color-mix(in srgb,#2f78c4 35%,transparent);stroke:var(--k)}
+.fx{fill:var(--c);stroke:#1f8f50;stroke-linejoin:round}
+.fx.bad{stroke:#d9443a}
+.water{stroke:#2f78c4;fill:none;stroke-linecap:round}
+.brk{stroke:var(--k);stroke-linecap:round;opacity:.6}
+.pin{fill:var(--k);stroke:var(--c)}
+.lbl{font-family:var(--mono);font-weight:700;fill:var(--muted)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FLIP SHIP</span></div>
+    <h2 class="q">On a ship that flips upright, how does the toilet still work?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="read"></div>
+      <div id="ctl">
+        <input id="tilt" type="range" min="0" max="90" step="1" value="0" aria-label="Tilt the ship">
+        <button id="lock">Pivots: free</button>
+      </div>
+    </div>
+    <p class="say" id="say">Drag to tip the ship upright. Then lock the pivots and try again.</p>
+    <div id="why" class="gone"><p class="body">On FLIP, fridges, stoves, pantries and even toilets were mounted on pivots. As the ship swung from horizontal to vertical, each one turned on its pin and stayed upright.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>When the whole room turns 90°, the furniture turns back.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come funziona la manovra della FLIP, la "nave" che si immergeva in verticale sul mare” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {a: 0, p: 1};
+let R = null, done = false, locked = false;
+const slider = Kit.$('tilt'), lockBtn = Kit.$('lock');
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, f * .8);
+  const band = H * .27, wy = band * .5;
+  // ship band
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'cl'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: band}, cp);
+  const top = Kit.mk('g', {'clip-path': 'url(#cl)'}, svg);
+  const L = Math.min(W * .6, band * 2.4), t = Math.max(6, L * .07);
+  const px = W / 2 + .3 * L;
+  const ship = Kit.mk('g', {}, top);
+  const st0 = -.8 * L, bw = .2 * L;
+  Kit.mk('path', {class: 'hull', d: `M${st0} ${-t/2} L${bw - t*1.6} ${-t/2} L${bw} 0 L${bw - t*1.6} ${t/2} L${st0} ${t/2} Z`}, ship);
+  Kit.mk('rect', {class: 'mark', x: bw - t*3.4, y: -t*.3, width: t*.6, height: t*.6}, ship);
+  Kit.mk('rect', {class: 'sea', x: 0, y: wy, width: W, height: band}, top);
+  Kit.mk('line', {class: 'wl', x1: 0, x2: W, y1: wy, y2: wy, 'stroke-width': 2}, top);
+  Kit.mk('text', {class: 'lbl', x: 6, y: fs * 1.1, 'font-size': fs}, svg).textContent = 'THE SHIP';
+  // cabin
+  const ch = H - band, cx = W / 2, cy = band + ch / 2;
+  const s = Math.min(W / 2, ch / 2) / 1.47, c = s * .75, sw = Math.max(2, s * .035);
+  const room = Kit.mk('g', {}, svg);
+  Kit.mk('rect', {class: 'room', x: -s, y: -s, width: 2*s, height: 2*s, rx: s*.06, 'stroke-width': sw*1.6}, room);
+  Kit.mk('circle', {class: 'port', cx: .35*s, cy: -s + s*.22, r: s*.1, 'stroke-width': sw}, room);
+  const fixtures = [];
+  // toilet in floor/back-wall corner
+  const tx = -s + c/2 + s*.04, ty = s - c/2;
+  Kit.mk('line', {class: 'brk', x1: tx, y1: ty, x2: tx, y2: s, 'stroke-width': sw*1.4}, room);
+  const tg = Kit.mk('g', {}, room);
+  const tb = Kit.mk('g', {class: 'fx', 'stroke-width': sw}, tg), b = c/2;
+  Kit.mk('rect', {x: -.36*c, y: -.42*c, width: .22*c, height: .52*c, rx: .03*c}, tb);
+  Kit.mk('path', {d: `M${-.14*c} ${0} L${.36*c} 0 Q${.33*c} ${.3*c} ${.08*c} ${.32*c} L${.06*c} ${b} L${-.12*c} ${b} Z`}, tb);
+  Kit.mk('rect', {x: -.15*c, y: -.05*c, width: .53*c, height: .05*c, rx: .02*c}, tb);
+  Kit.mk('line', {class: 'water', x1: -.06*c, x2: .27*c, y1: .07*c, y2: .07*c, 'stroke-width': sw*1.2}, tg);
+  Kit.mk('circle', {class: 'pin', cx: 0, cy: 0, r: .055*c, 'stroke-width': sw*.7}, tg);
+  fixtures.push({g: tg, b: tb, x: tx, y: ty});
+  // fridge on the floor
+  const fx = .32*s, fy = s - c/2;
+  Kit.mk('line', {class: 'brk', x1: fx, y1: fy, x2: fx, y2: s, 'stroke-width': sw*1.4}, room);
+  const fg = Kit.mk('g', {}, room);
+  const fb = Kit.mk('g', {class: 'fx', 'stroke-width': sw}, fg);
+  Kit.mk('rect', {x: -.26*c, y: -.46*c, width: .52*c, height: .96*c, rx: .05*c}, fb);
+  Kit.mk('line', {x1: -.26*c, x2: .26*c, y1: -.12*c, y2: -.12*c}, fb);
+  Kit.mk('line', {x1: .17*c, x2: .17*c, y1: -.36*c, y2: -.2*c}, fb);
+  Kit.mk('line', {x1: .17*c, x2: .17*c, y1: -.02*c, y2: .2*c}, fb);
+  Kit.mk('circle', {class: 'pin', cx: 0, cy: 0, r: .055*c, 'stroke-width': sw*.7}, fg);
+  fixtures.push({g: fg, b: fb, x: fx, y: fy});
+  R = {ship, px, wy, room, cx, cy, fixtures};
+  render();
+}
+
+function render(){
+  if (!R) return;
+  const a = st.a, p = st.p;
+  R.ship.setAttribute('transform', `translate(${R.px},${R.wy}) rotate(${-a})`);
+  R.room.setAttribute('transform', `translate(${R.cx},${R.cy}) rotate(${-a})`);
+  const err = (1 - p) * a, bad = err > 12;
+  R.fixtures.forEach(F => {
+    F.g.setAttribute('transform', `translate(${F.x},${F.y}) rotate(${p * a})`);
+    F.b.classList.toggle('bad', bad);
+  });
+  const pose = a < 3 ? 'lying flat' : a > 87 ? 'upright' : 'tilting';
+  Kit.$('read').innerHTML = `${Math.round(a)}° ${pose} · <span class="${bad ? 'bad' : 'ok'}">${bad ? 'fixtures tipped over!' : 'fixtures level'}</span>`;
+}
+
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+slider.addEventListener('input', () => {
+  const v = +slider.value;
+  gsap.to(st, {a: v, duration: Kit.calm ? 0 : .25, ease: 'power2.out', overwrite: 'auto', onUpdate: render});
+  if (v >= 88) finish();
+});
+lockBtn.addEventListener('click', () => {
+  locked = !locked;
+  lockBtn.classList.toggle('on', locked);
+  lockBtn.textContent = locked ? 'Pivots: locked' : 'Pivots: free';
+  Kit.haptic('selection');
+  gsap.to(st, {p: locked ? 0 : 1, duration: Kit.calm ? 0 : .6, ease: 'power2.inOut', overwrite: 'auto', onUpdate: render});
+});
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, duration: .5});
+  gsap.to(st, {a: 20, duration: .7, delay: .3, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: render});
+};
+Kit.play.card = async () => {
+  slider.value = 90; slider.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<!-- slug: human_body-egg-breaks-spell -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:manipulation;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Try it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FERTILISATION</span></div>
+    <h2 class="q">What happens to the egg's chemical signals once one sperm gets in?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Tap a sperm to send it through the egg's wall.</p>
+    <div id="why" class="gone">
+      <p class="big">The egg breaks the spell.</p>
+      <p class="body">The moment one sperm is inside, the egg switches off all the chemical signals that drew sperm in. The wall closes, and the rest literally bump into it and can't get in.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One sperm in, signals off, wall shut: only one gets through.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const N = 8, TARGET = 1.42;
+const sperm = [];
+for (let i = 0; i < N; i++) {
+  sperm.push({a: (i / N) * Math.PI * 2 + 0.35 + (Kit.rnd() - .5) * .3, d: 2.9 + Kit.rnd() * .5,
+    ph: Kit.rnd() * 6.28, op: 1, tailOp: 1, chosen: false, el: null});
+}
+let G = null, waves = [], phase = 'idle', entered = false;
+
+function spermShape(g, R) {
+  const h = R * .13;
+  const tail = Kit.mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1.2, R * .022), 'stroke-linecap': 'round'}, g);
+  const head = Kit.mk('ellipse', {cx: 0, cy: 0, rx: h * .62, ry: h * .4, fill: '#fff', stroke: 'var(--k)', 'stroke-width': Math.max(1, R * .014)}, g);
+  return {tail, head, h};
+}
+
+Kit.onShow.card = () => {
+  waves.forEach(w => gsap.killTweensOf(w));
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 12);
+  const top = fs * 2.2;
+  const cx = W / 2, cy = top + (H - top) / 2;
+  const R = Math.min(W * .26, (H - top) * .3);
+  const room = Math.min(cx, W - cx, cy, H - cy);
+  G = {W, H, cx, cy, R, fs};
+  G.lim = Math.max(TARGET, (room - R * .6) / R);
+  const wsw = Math.max(2, R * .035);
+  const wMax = Math.min(R * 2.3, room - wsw);
+  // status
+  G.status = Kit.mk('text', {x: cx, y: fs * 1.3, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800,
+    'font-family': 'var(--body)', fill: 'var(--k)'}, svg);
+  // waves (chemical signals)
+  const wg = Kit.mk('g', {}, svg);
+  waves = [0, 1, 2].map(() => Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#fff', 'stroke-width': wsw, opacity: 0}, wg));
+  if (!entered) {
+    if (Kit.calm) waves.forEach((w, i) => { w.setAttribute('r', Math.min(R * (1.35 + i * .3), wMax)); w.setAttribute('opacity', .45 - i * .12); });
+    else waves.forEach((w, i) => gsap.fromTo(w, {attr: {r: R * 1.05}, opacity: .8}, {attr: {r: wMax}, opacity: 0, duration: 2.4, ease: 'sine.out', repeat: -1, delay: i * .8}));
+  }
+  // corona radiata: the "forest"
+  const cg = Kit.mk('g', {}, svg);
+  for (let i = 0; i < 46; i++) {
+    const a = i / 46 * Math.PI * 2, rr = R * (1.13 + .08 * Math.sin(i * 2.7));
+    Kit.mk('circle', {cx: cx + Math.cos(a) * rr, cy: cy + Math.sin(a) * rr, r: R * (.045 + .02 * Math.abs(Math.sin(i * 1.3))),
+      fill: 'color-mix(in srgb,var(--k) 22%,transparent)'}, cg);
+  }
+  // zona pellucida: the wall
+  G.glow = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#fff', 'stroke-width': R * .2, opacity: entered ? 0 : .3}, svg);
+  G.zona = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: entered ? 'var(--k)' : '#fff', 'stroke-width': R * (entered ? .12 : .08)}, svg);
+  G.seal = Kit.mk('circle', {cx, cy, r: R, fill: 'none', stroke: '#fff', 'stroke-width': R * .03,
+    'stroke-dasharray': `${R * .12} ${R * .1}`, opacity: entered ? .8 : 0}, svg);
+  G.egg = Kit.mk('circle', {cx, cy, r: R * .93, fill: '#fff4e3'}, svg);
+  Kit.mk('circle', {cx: cx - R * .22, cy: cy - R * .18, r: R * .24, fill: 'color-mix(in srgb,var(--k) 18%,#fff4e3)'}, svg);
+  Kit.mk('text', {x: cx, y: cy + R * .55, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 700,
+    'font-family': 'var(--body)', fill: '#5a4636'}, svg).textContent = 'EGG';
+  // sperm
+  const sg = Kit.mk('g', {}, svg);
+  sperm.forEach(s => { s.el = Kit.mk('g', {}, sg); Object.assign(s, spermShape(s.el, R)); });
+  setStatus();
+  render(0);
+};
+
+function setStatus() {
+  if (!G) return;
+  G.status.textContent = entered ? 'Signals OFF · wall locked' : 'Chemical signals ON · “come here!”';
+}
+
+function render(t) {
+  if (!G) return;
+  const {cx, cy, R} = G;
+  sperm.forEach(s => {
+    if (!s.el) return;
+    const wob = (phase === 'idle' || phase === 'arrive') && !Kit.calm ? .03 * Math.sin(t * 3 + s.ph) : 0;
+    const d = Math.min(s.d + wob, G.lim) * R;
+    const x = cx + Math.cos(s.a) * d, y = cy + Math.sin(s.a) * d;
+    const rot = s.a * 180 / Math.PI + 180;
+    s.el.setAttribute('transform', `translate(${x},${y}) rotate(${rot})`);
+    s.el.setAttribute('opacity', s.op);
+    const L = R * .42, amp = R * .05, h = s.h;
+    let p = `M${-h * .55},0`;
+    for (let k = 1; k <= 12; k++) {
+      const xx = -h * .55 - L * k / 12;
+      const yy = Kit.calm ? 0 : Math.sin(k * .8 - t * 12 + s.ph) * amp * (k / 12);
+      p += ` L${xx.toFixed(1)},${yy.toFixed(1)}`;
+    }
+    s.tail.setAttribute('d', p);
+    s.tail.setAttribute('opacity', s.tailOp);
+  });
+}
+gsap.ticker.add(t => render(t));
+
+function breakSpell() {
+  entered = true; phase = 'done';
+  Kit.haptic('success');
+  waves.forEach(w => { gsap.killTweensOf(w); gsap.to(w, {opacity: 0, duration: .25}); });
+  gsap.to(G.glow, {opacity: 0, duration: .25});
+  gsap.to(G.zona, {attr: {stroke: 'var(--k)', 'stroke-width': G.R * .12}, duration: .3});
+  gsap.to(G.seal, {opacity: .8, duration: .4, delay: .15});
+  gsap.fromTo(G.egg, {attr: {fill: '#ffffff'}}, {attr: {fill: '#fff4e3'}, duration: .8});
+  setStatus();
+  if (!Kit.calm) gsap.fromTo(G.status, {opacity: 0}, {opacity: 1, duration: .4});
+  sperm.filter(s => !s.chosen).forEach((s, i) => {
+    gsap.timeline({delay: i * .06})
+      .to(s, {d: 1.2, duration: .35, ease: 'power2.in'})
+      .to(s, {d: 3.2, op: 0, duration: 1.4, ease: 'power2.out'});
+  });
+  setTimeout(() => { Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }, 1700);
+}
+
+function pick(i) {
+  if (phase === 'go' || phase === 'done') return;
+  phase = 'go';
+  Kit.haptic('selection');
+  const s = sperm[i]; s.chosen = true;
+  sperm.forEach(o => gsap.killTweensOf(o));
+  gsap.timeline()
+    .to(s, {d: 1.05, duration: .5, ease: 'power1.in'})
+    .to(s, {d: .3, tailOp: 0, duration: .55, ease: 'power2.out'})
+    .add(breakSpell, '-=.35');
+  sperm.forEach(o => { if (!o.chosen) gsap.to(o, {d: TARGET, duration: .4}); });
+}
+
+svg.addEventListener('pointerdown', e => {
+  if (!G) return;
+  const b = svg.getBoundingClientRect();
+  const x = (e.clientX - b.left) / b.width * G.W - G.cx, y = (e.clientY - b.top) / b.height * G.H - G.cy;
+  const ang = Math.atan2(y, x);
+  let best = 0, bd = 9;
+  sperm.forEach((s, i) => { let d = Math.abs(Math.atan2(Math.sin(s.a - ang), Math.cos(s.a - ang))); if (d < bd) { bd = d; best = i; } });
+  pick(best);
+});
+
+Kit.onEnter.card = () => {
+  if (phase !== 'idle') return;
+  if (Kit.calm) { sperm.forEach(s => s.d = TARGET); return; }
+  phase = 'arrive';
+  sperm.forEach((s, i) => gsap.to(s, {d: TARGET, duration: 2.2 + i * .12, ease: 'power2.out', onComplete: () => { if (phase === 'arrive') phase = 'idle'; }}));
+};
+
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect();
+  svg.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, clientX: b.left + b.width * .85, clientY: b.top + b.height * .5}));
+  await new Promise(r => setTimeout(r, 3600));
+};
+Kit.single();
+</script>
+</html>

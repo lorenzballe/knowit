@@ -1,0 +1,37 @@
+{
+  "id": "history-turing-weather-crib",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did weather reports help Alan Turing break Enigma?",
+  "answer": "Weather reports gave Turing a guessed piece of text. An Enigma key never lights its own lamp, so a letter can't encrypt to itself, which rules out every spot but one. There the letter pairs form a loop, R→E→T→R, and only correct settings bring R back to R.",
+  "move": "Boring, predictable messages gave away the unbreakable machine.",
+  "keywords": [
+    "enigma",
+    "alan turing",
+    "weather report",
+    "crib",
+    "codebreaking"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable Enigma wiring diagram showing three machines linked in a loop of letters R, E, T, R. The reader drags the guessed weather report until no letter sits on itself, so only the correct setting closes the loop back to R."
+  },
+  "source": "Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=JsBZOcqZerk&t=1574s",
+  "written": "2026-11-03"
+}

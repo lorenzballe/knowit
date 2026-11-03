@@ -1,0 +1,221 @@
+<!doctype html>
+<!-- slug: history-atmosphere-fusion-fire -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sky{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#060a18;cursor:pointer;touch-action:none}
+#sky canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#legend{display:flex;flex-direction:column;gap:.5cqh}
+#legend .row{display:flex;flex-wrap:wrap;gap:.4cqh 4cqw;font:700 max(1.7cqh,12px)/1.3 var(--body);color:var(--k)}
+#legend .note{font:500 max(1.5cqh,12px)/1.3 var(--body);color:var(--muted)}
+.dot{display:inline-block;width:max(1.2cqh,9px);height:max(1.2cqh,9px);border-radius:50%;margin-right:1.4cqw;vertical-align:-.1em;box-shadow:0 0 0 .15cqh rgba(0,0,0,.25)}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex-shrink:0;min-width:0}
+#why .big{overflow-wrap:anywhere;margin:0;font-size:max(2.8cqh,17px);line-height:1.15}
+#why .body{margin:0;font-size:max(1.9cqh,13px);line-height:1.3}
+.say{min-height:2.6em}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MANHATTAN PROJECT</span></div>
+    <h2 class="q">What did scientists fear one bomb could do to Earth's atmosphere?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sky"><canvas id="cv"></canvas></div>
+      <div id="legend">
+        <div class="row">
+          <span><i class="dot" style="background:#ffffff"></i>hydrogen</span>
+          <span><i class="dot" style="background:#4fb3ff"></i>water vapor</span>
+          <span><i class="dot" style="background:#8f9bb3"></i>nitrogen</span>
+        </div>
+        <div class="note">Not to scale: hydrogen is just 1 part in 2 million of the air.</div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">A runaway fusion fire</p>
+        <p class="body">The bomb's heat might make the air's hydrogen fuse. Each fusion's energy would fuse more, and split water vapor to feed the fire, until the whole atmosphere became one giant fusion bomb. Oppenheimer feared the nitrogen in the air could join in too.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap anywhere on the picture to set off one bomb.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The fear wasn't one blast, but a chain that feeds itself.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv'), sky = Kit.$('sky');
+let G = null, a0 = null, tl = null, done = false;
+const st = {t: 0};
+const END = 7;
+
+// Air particles, in polar coordinates inside the atmosphere band.
+const parts = [], stars = [];
+(function build(){
+  const add = (n, type) => { for (let i = 0; i < n; i++) parts.push({type, a: Kit.rnd()*Math.PI*2, r: Kit.rnd(), j: Kit.rnd(), ti: Infinity, par: null}); };
+  add(230, 'N'); add(46, 'H'); add(26, 'W');
+  for (let i = 0; i < 90; i++) stars.push({x: Kit.rnd(), y: Kit.rnd(), s: .4 + Kit.rnd()*1.1, a: .2 + Kit.rnd()*.6});
+})();
+
+function geom(){
+  const {W, H} = G, R = Math.min(W, H*1.05)*0.3, A = R*0.32;
+  return {cx: W/2, cy: H/2, R, A, s: Math.max(R/100, .8)};
+}
+function pos(p, g){ const rr = g.R + g.A*(.12 + .8*p.r); return [g.cx + Math.cos(p.a)*rr, g.cy + Math.sin(p.a)*rr]; }
+function angDist(a, b){ let d = Math.abs(a - b) % (Math.PI*2); return d > Math.PI ? Math.PI*2 - d : d; }
+
+function arm(angle){
+  a0 = angle;
+  const fuel = parts.filter(p => p.type !== 'N');
+  fuel.forEach(p => { const d = angDist(p.a, a0); p.ti = .5 + d/Math.PI*5 + p.j*.35 + (p.type === 'W' ? .3 : 0); });
+  fuel.sort((p, q) => p.ti - q.ti);
+  fuel.forEach((p, i) => {
+    let best = null, bd = 1e9;
+    for (let k = 0; k < i; k++) { const q = fuel[k]; const d = angDist(p.a, q.a) + Math.abs(p.r - q.r)*.2; if (d < bd) { bd = d; best = q; } }
+    p.par = (best && bd < .5) ? best : null;
+  });
+}
+
+function draw(){
+  if (!G) return;
+  const {x, W, H} = G, g = geom(), t = st.t, now = performance.now()/1000;
+  x.clearRect(0, 0, W, H);
+  const bg = x.createRadialGradient(g.cx, g.cy, g.R*.5, g.cx, g.cy, Math.max(W, H)*.75);
+  bg.addColorStop(0, '#0d1630'); bg.addColorStop(1, '#03050c');
+  x.fillStyle = bg; x.fillRect(0, 0, W, H);
+  stars.forEach(s => { x.globalAlpha = s.a; x.fillStyle = '#fff'; x.fillRect(s.x*W, s.y*H, s.s, s.s); });
+  x.globalAlpha = 1;
+
+  const ring = (alpha, col, a1, a2) => {
+    x.beginPath();
+    if (a1 === undefined) { x.arc(g.cx, g.cy, g.R + g.A, 0, Math.PI*2); x.arc(g.cx, g.cy, g.R, 0, Math.PI*2, true); }
+    else { x.arc(g.cx, g.cy, g.R + g.A, a1, a2); x.arc(g.cx, g.cy, g.R, a2, a1, true); x.closePath(); }
+    x.fillStyle = col; x.globalAlpha = alpha; x.fill(); x.globalAlpha = 1;
+  };
+  // the thin shell of air
+  ring(1, 'rgba(110,170,255,.13)');
+
+  // the burning sector, spreading both ways from the bomb
+  if (a0 !== null) {
+    const front = Math.min(Math.PI, Math.max(0, (t - .5)/5*Math.PI));
+    if (front > 0) {
+      ring(.42, '#ff7a1f', a0 - front, a0 + front);
+      ring(.22, '#ffd27a', a0 - front*.7, a0 + front*.7);
+    }
+    if (t >= 5.8) { const k = Math.min(1, (t - 5.8)/1.2); ring(.55*k, '#ffe2a8'); }
+  }
+
+  // Earth
+  const eg = x.createRadialGradient(g.cx - g.R*.35, g.cy - g.R*.4, g.R*.1, g.cx, g.cy, g.R);
+  eg.addColorStop(0, '#3f8fd6'); eg.addColorStop(.7, '#174a80'); eg.addColorStop(1, '#0b2546');
+  x.beginPath(); x.arc(g.cx, g.cy, g.R, 0, Math.PI*2); x.fillStyle = eg; x.fill();
+  x.save(); x.beginPath(); x.arc(g.cx, g.cy, g.R, 0, Math.PI*2); x.clip();
+  x.fillStyle = 'rgba(70,150,90,.55)';
+  [[-.3,-.2,.35,.22],[.25,.15,.3,.2],[-.05,.45,.22,.12],[.35,-.4,.18,.12]].forEach(([u,v,a,b]) => { x.beginPath(); x.ellipse(g.cx+u*g.R, g.cy+v*g.R, a*g.R, b*g.R, .5, 0, Math.PI*2); x.fill(); });
+  x.restore();
+
+  // energy links: each fusion lighting the next
+  if (a0 !== null) {
+    const bx = g.cx + Math.cos(a0)*g.R, by = g.cy + Math.sin(a0)*g.R;
+    x.lineWidth = Math.max(1, 1.3*g.s); x.strokeStyle = '#ffd27a';
+    parts.forEach(p => {
+      if (p.type === 'N' || t < p.ti || t > p.ti + .6) return;
+      const k = 1 - (t - p.ti)/.6, [px, py] = pos(p, g);
+      const [qx, qy] = p.par ? pos(p.par, g) : [bx, by];
+      x.globalAlpha = k; x.beginPath(); x.moveTo(qx, qy); x.lineTo(px, py); x.stroke();
+    });
+    x.globalAlpha = 1;
+  }
+
+  // particles
+  parts.forEach(p => {
+    const [px, py] = pos(p, g);
+    if (p.type === 'N') {
+      x.fillStyle = (a0 !== null && t > 5.8) ? 'rgba(255,220,170,.55)' : 'rgba(150,162,190,.5)';
+      x.beginPath(); x.arc(px, py, 1.1*g.s, 0, Math.PI*2); x.fill(); return;
+    }
+    const lit = t >= p.ti;
+    if (!lit) {
+      x.fillStyle = p.type === 'H' ? '#ffffff' : '#4fb3ff';
+      x.beginPath(); x.arc(px, py, (p.type === 'H' ? 2.2 : 2.6)*g.s, 0, Math.PI*2); x.fill(); return;
+    }
+    const age = t - p.ti, pulse = Math.max(0, 1 - age/.8);
+    const rr = (2.4 + 7*pulse)*g.s;
+    const gl = x.createRadialGradient(px, py, 0, px, py, rr*2);
+    gl.addColorStop(0, 'rgba(255,245,200,1)'); gl.addColorStop(.4, 'rgba(255,150,40,.8)'); gl.addColorStop(1, 'rgba(255,90,20,0)');
+    x.fillStyle = gl; x.beginPath(); x.arc(px, py, rr*2, 0, Math.PI*2); x.fill();
+    if (p.type === 'W') { // water splits: its hydrogen flies apart and fuses
+      const sp = Math.min(1, age/.5)*4*g.s;
+      x.fillStyle = '#fff3c8';
+      x.beginPath(); x.arc(px - sp, py - sp*.4, 1.6*g.s, 0, Math.PI*2); x.fill();
+      x.beginPath(); x.arc(px + sp, py + sp*.4, 1.6*g.s, 0, Math.PI*2); x.fill();
+    }
+  });
+
+  // the bomb
+  if (a0 !== null) {
+    const bx = g.cx + Math.cos(a0)*g.R, by = g.cy + Math.sin(a0)*g.R;
+    if (t < 1.4) {
+      const k = t/1.4, rr = g.A*(.3 + 1.4*k);
+      const fl = x.createRadialGradient(bx, by, 0, bx, by, rr);
+      fl.addColorStop(0, `rgba(255,255,255,${1-k})`); fl.addColorStop(.5, `rgba(255,190,90,${.8*(1-k)})`); fl.addColorStop(1, 'rgba(255,120,40,0)');
+      x.fillStyle = fl; x.beginPath(); x.arc(bx, by, rr, 0, Math.PI*2); x.fill();
+    }
+    x.fillStyle = '#fff'; x.beginPath(); x.arc(bx, by, 2.4*g.s, 0, Math.PI*2); x.fill();
+  } else {
+    // a pulsing hint on Earth's rim
+    const ha = -Math.PI/2, hx = g.cx + Math.cos(ha)*g.R, hy = g.cy + Math.sin(ha)*g.R;
+    const k = (now*.8) % 1;
+    x.strokeStyle = `rgba(255,210,120,${1-k})`; x.lineWidth = Math.max(1.5, 2*g.s);
+    x.beginPath(); x.arc(hx, hy, (4 + 14*k)*g.s, 0, Math.PI*2); x.stroke();
+    x.fillStyle = '#ffd27a'; x.beginPath(); x.arc(hx, hy, 3*g.s, 0, Math.PI*2); x.fill();
+  }
+}
+
+const say = Kit.$('say');
+let phase = -1;
+const captions = [
+  [0,   'The bomb makes the air hot enough for its hydrogen to fuse…'],
+  [1.6, 'Each fusion releases energy that fuses more hydrogen…'],
+  [3.2, 'The heat splits water vapor, and its hydrogen fuses too…'],
+  [5.6, 'Until the whole atmosphere is one giant fusion bomb.']
+];
+function caption(){
+  let i = -1; captions.forEach((c, k) => { if (st.t >= c[0]) i = k; });
+  if (i !== phase) { phase = i; say.textContent = captions[i][1]; if (!Kit.calm) gsap.fromTo(say, {opacity: 0}, {opacity: 1, duration: .3}); }
+}
+function finish(){
+  if (done) return; done = true;
+  Kit.haptic('success');
+  Kit.hide('legend'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+  refit();
+}
+
+sky.addEventListener('pointerdown', e => {
+  if (a0 !== null || !G) return;
+  const rect = cv.getBoundingClientRect(), g = geom();
+  const px = (e.clientX - rect.left)*(G.W/rect.width), py = (e.clientY - rect.top)*(G.H/rect.height);
+  arm(Math.atan2(py - g.cy, px - g.cx));
+  Kit.haptic('light');
+  tl = gsap.to(st, {t: END, duration: Kit.calm ? 2 : END, ease: 'none', onUpdate: caption, onComplete: finish});
+  caption();
+});
+
+function refit(){ G = Kit.fitCanvas(cv); draw(); }
+new ResizeObserver(() => refit()).observe(sky);
+gsap.ticker.add(draw);
+
+Kit.onShow.card = () => refit();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#sky', {opacity: 0, scale: .97, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const r = cv.getBoundingClientRect();
+  sky.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, clientX: r.left + r.width*.85, clientY: r.top + r.height*.4}));
+  await new Promise(res => setTimeout(res, 150));
+  if (tl) tl.progress(1);
+  finish();
+  await new Promise(res => setTimeout(res, 700));
+};
+Kit.single();
+</script>
+</html>

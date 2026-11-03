@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-bombe-single-loop -->
+<title>The Bombe's electrical test</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#svgbox{flex:1;min-height:0;position:relative}
+#svgbox svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+#res{font:600 max(2cqh,13px)/1.3 var(--body);color:var(--k);margin:0;min-height:2.6em}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.box{fill:color-mix(in srgb,var(--k) 6%,transparent);stroke:var(--k);stroke-opacity:.35;stroke-dasharray:6 5}
+.rot{fill:none;stroke:var(--k);stroke-opacity:.18}
+.lab{fill:var(--k);fill-opacity:.6;font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+.w{stroke:var(--k);stroke-opacity:.22;stroke-linecap:round}
+.won{stroke:var(--k);stroke-linecap:round}
+.dot{fill:var(--c);stroke:var(--k);stroke-opacity:.6}
+.dot.out{stroke-opacity:.2}
+.dot.win{fill:var(--k);stroke-opacity:1}
+.lt{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.lt.out{fill-opacity:.25}
+.lt.win{fill:var(--c)}
+.x{stroke:var(--k);stroke-opacity:.55;stroke-linecap:round}
+.p{fill:none;stroke:var(--k);stroke-linecap:round}
+.gl{fill:none;stroke:var(--k);stroke-opacity:.22;stroke-linecap:round}
+.hit{fill:transparent;cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Tap · test a guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CODEBREAKING</span></div>
+    <h2 class="q">How could a simple circuit test a guess about Enigma's plugboard?</h2>
+    <div class="stagebox" id="stage">
+      <div id="svgbox"><svg id="pic"></svg></div>
+      <p id="res">The three rotors loop one of these letters back into itself. Which one?</p>
+      <div id="why" class="gone"><p class="big">One live wire: R is plugged to Z</p><p class="body">The rotors alone turn Z back into Z, so the current closes into a single loop. A wrong guess sets many wires live, as if R were plugged to many letters at once. That's impossible, so every one of them is ruled out together.</p></div>
+    </div>
+    <p class="say" id="say">Guess what R is plugged to: tap a letter's wire.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Right guess: one loop. Wrong guess: many live wires, a contradiction.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const L = ['A','E','K','M','Q','T','W','Z'];
+const MAP = {A:'K',K:'Q',Q:'A',E:'W',W:'T',T:'M',M:'E',Z:'Z'};
+const out = new Set();
+let lit = [], busy = false, done = false;
+const svg = Kit.$('pic');
+let G = null;
+
+function chainOf(c){ const ch=[c]; let n=MAP[c]; while(n!==c){ ch.push(n); n=MAP[n]; } return ch; }
+
+function hopPath(a,b){
+  const xa=G.x[a], xb=G.x[b], bt=G.bt, h=G.bb-G.bt;
+  if(a===b){ const s=G.span*.9, dd=h*.85; return `M${xa},${bt} C${xa-s},${bt+dd} ${xa+s},${bt+dd} ${xa},${bt}`; }
+  const dist=Math.abs(L.indexOf(a)-L.indexOf(b))/7;
+  const d=h*(.35+.5*dist);
+  return `M${xa},${bt} C${xa},${bt+d} ${xb},${bt+d} ${xb},${bt}`;
+}
+
+function draw(anim){
+  const {W,H,f} = Kit.fitSvg(svg);
+  svg.innerHTML='';
+  const m=W*.05, n=L.length, step=(W-2*m)/n;
+  const r=Math.max(Math.min(step*.4, H*.075), 13);
+  const x={}; L.forEach((c,i)=>x[c]=m+step*(i+.5));
+  const ly=r+3, bt=H*.44, bb=H-2;
+  const fs=Math.max(f*.8,12);
+  G={x,bt,bb,span:step,ly,r};
+  const lw=Math.max(W*.006,2.5);
+  // the box of three Enigmas (rotors only)
+  Kit.mk('rect',{x:m*.4,y:bt,width:W-m*.8,height:bb-bt,rx:fs*.8,class:'box'},svg);
+  const ry=bt+(bb-bt)*.5, rr=Math.min(W*.1,(bb-bt)*.26);
+  [.28,.5,.72].forEach(p=>Kit.mk('circle',{cx:W*p,cy:ry,r:rr,class:'rot','stroke-width':lw*1.6},svg));
+  const t=Kit.mk('text',{x:W/2,y:bb-fs*.7,class:'lab','text-anchor':'middle','font-size':fs},svg);
+  t.textContent='THREE ENIGMAS · ROTORS ONLY';
+  // idle wires
+  L.forEach(c=>Kit.mk('line',{x1:x[c],y1:ly+r,x2:x[c],y2:bt,class:'w','stroke-width':lw},svg));
+  // live current
+  const parts=[];
+  lit.forEach((c,k)=>{
+    const wire=Kit.mk('line',{x1:x[c],y1:ly+r,x2:x[c],y2:bt,class:'won','stroke-width':lw*1.6},svg);
+    const d=hopPath(c,MAP[c]);
+    const g=Kit.mk('path',{d,class:'gl','stroke-width':lw*5},svg);
+    const p=Kit.mk('path',{d,class:'p','stroke-width':lw*1.6},svg);
+    parts.push({wire,g,p});
+  });
+  // letters
+  L.forEach(c=>{
+    const isOut=out.has(c), win=done&&c==='Z';
+    Kit.mk('circle',{cx:x[c],cy:ly,r,class:'dot'+(isOut?' out':'')+(win?' win':''),'stroke-width':lw},svg);
+    const tx=Kit.mk('text',{x:x[c],y:ly,class:'lt'+(isOut?' out':'')+(win?' win':''),'font-size':Math.max(r*1.05,12)},svg);
+    tx.textContent=c;
+    if(isOut){ const k=r*.75;
+      Kit.mk('line',{x1:x[c]-k,y1:ly-k,x2:x[c]+k,y2:ly+k,class:'x','stroke-width':lw},svg);
+      Kit.mk('line',{x1:x[c]+k,y1:ly-k,x2:x[c]-k,y2:ly+k,class:'x','stroke-width':lw},svg); }
+    const hit=Kit.mk('rect',{x:x[c]-step/2,y:0,width:step,height:bt,class:'hit'},svg);
+    hit.addEventListener('click',()=>tap(c));
+  });
+  if(!anim) return Promise.resolve();
+  return new Promise(res=>{
+    const tl=gsap.timeline({onComplete:res});
+    parts.forEach((o,k)=>{
+      const len=o.p.getTotalLength();
+      gsap.set([o.p,o.g],{attr:{'stroke-dasharray':len,'stroke-dashoffset':len}});
+      gsap.set(o.wire,{opacity:k===0?0:0});
+      tl.to(o.wire,{opacity:1,duration:.25});
+      tl.to([o.p,o.g],{attr:{'stroke-dashoffset':0},duration:.55,ease:'power1.inOut'});
+    });
+    // the current returns to the first wire
+    tl.to(parts[0].wire,{opacity:.4,duration:.12,yoyo:true,repeat:3});
+  });
+}
+
+async function tap(c){
+  if(busy||done||out.has(c)) return;
+  busy=true; Kit.haptic('light');
+  lit=chainOf(c);
+  Kit.$('res').textContent=`Guess R ↔ ${c}: wire ${c} goes live…`;
+  await draw(!Kit.calm);
+  if(lit.length===1){
+    done=true; draw(false); Kit.haptic('success');
+    Kit.hide('res'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  } else {
+    lit.forEach(l=>out.add(l));
+    draw(false);
+    Kit.$('res').textContent=`${lit.join(', ')} all went live. R can't be plugged to ${lit.length} letters at once, so all are ruled out.`;
+  }
+  busy=false;
+}
+
+Kit.onShow.card = () => { draw(false); };
+Kit.onEnter.card = () => { if(!Kit.calm) gsap.from('#pic .dot',{scale:.4,opacity:0,transformOrigin:'50% 50%',stagger:.05,duration:.4,ease:'back.out(2)'}); };
+Kit.play.card = async () => {
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  tap('A'); while(busy) await wait(50);
+  await wait(200);
+  tap('Z'); while(busy) await wait(50);
+  await wait(400);
+};
+Kit.single();
+</script>
+</html>

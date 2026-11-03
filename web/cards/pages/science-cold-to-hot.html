@@ -1,0 +1,380 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;min-height:0}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;outline:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{margin:0}
+#pic text{font-family:var(--body);fill:var(--k)}
+#pic .lbl{font-weight:800;letter-spacing:.09em;fill:var(--muted)}
+#pic .num{font-family:var(--display);font-weight:800}
+#pic .mut{fill:var(--muted)}
+#pic .bold{font-weight:800}
+#pic .tint{fill:var(--k);transition:fill-opacity .25s}
+#pic .frame{fill:none;stroke:var(--k);stroke-opacity:.4;stroke-width:1.5}
+#pic .tile{fill:var(--k);fill-opacity:.1}
+#pic .tile2{fill:var(--k);fill-opacity:.16}
+#pic .pk{fill:var(--k)}
+#pic .bi{fill:var(--k);fill-opacity:.42}
+#pic .bh{fill:var(--hot)}
+#pic .hl{fill:var(--k)}
+#pic .mk{fill:var(--k);stroke:var(--c);stroke-width:2.5}
+#pic .hl.hot,#pic .mk.hot{fill:var(--hot)}
+#pic .ax{stroke:var(--k);stroke-opacity:.5;stroke-width:1.5}
+#pic .sl{stroke:var(--k);stroke-opacity:.65;stroke-width:1.5;stroke-dasharray:3 3}
+#pic .rn{font-family:var(--display);font-weight:800;fill:var(--hot)}
+#pic .trk{stroke:var(--k);stroke-opacity:.3;stroke-width:2.5;stroke-linecap:round}
+#pic .trk2{stroke:var(--k);stroke-opacity:.45;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.1 6}
+#pic .notch{fill:var(--k);fill-opacity:.45}
+#pic .pillbg{fill:var(--k)}
+#pic .pillbg.f{stroke:var(--hot);stroke-width:3}
+#pic .pilltx{fill:var(--c);font-weight:800}
+#pic .hit{cursor:grab;outline:none}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name. The id stays "card". -->
+<article class="card" id="card" data-topic="science" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAT FLOW</span></div>
+    <h2 class="q">How likely is a spontaneous cold‑to‑hot energy transfer?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" role="group" aria-label="Two bars of atoms trading packets of energy, above a chart of how many ways each split can happen"></svg>
+      <div id="why" class="gone"><p class="body">Random hops land mostly on even splits, which have far more arrangements. Add atoms and the odds get overwhelming.</p></div>
+    </div>
+    <p class="say" id="say">Drag the slider to give each bar more atoms.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Heat flows hot to cold by sheer odds, not by force.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Most Misunderstood Concept in Physics” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const card = Kit.$('card'), svg = Kit.$('pic'), LAST = 10, HMAX = .95;
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const f1 = v => Math.round(v * 10) / 10;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+function txt(p, x, y, s, a) { const t = mk('text', Object.assign({x: f1(x), y: f1(y)}, a), p); t.textContent = s; return t; }
+function lines(p, x, y, arr, lh, a) { const t = mk('text', Object.assign({x: f1(x), y: f1(y)}, a), p); arr.forEach((s, i) => { mk('tspan', {x: f1(x), dy: i ? f1(lh) : 0}, t).textContent = s; }); return t; }
+
+// ---- The count, as in the video: each atom holds any number of packets, every arrangement equally likely.
+// Steps 0..9: 8m atoms per bar, 10m packets, 7m of them in the hot bar. Step 10: a real bar (too many to draw).
+const LF = [0]; for (let i = 1; i < 260; i++) LF[i] = LF[i - 1] + Math.log(i);
+const lC = (a, b) => LF[a] - LF[b] - LF[a - b];
+function model(st) {
+  const every = st >= LAST, h = [];
+  let N = 0, q = 400, s = 280, p = 0;
+  if (every) for (let k = 0; k <= q; k++) { const z = (k / q - .5) / .0035; h.push(Math.exp(-z * z / 2)); }
+  else {
+    const m = st + 1; N = 8 * m; q = 10 * m; s = 7 * m;
+    const lw = []; for (let k = 0; k <= q; k++) lw.push(lC(k + N - 1, N - 1) + lC(q - k + N - 1, N - 1));
+    const mx = Math.max(...lw); let tot = 0, tail = 0;
+    lw.forEach((v, k) => { const e = Math.exp(v - mx); h.push(e); tot += e; if (k > s) tail += e; });
+    p = 100 * tail / tot;   // 8 atoms: 10.5 %   80 atoms: 0.05 %
+  }
+  const pf = x => { const u = Math.max(0, Math.min(1, x)) * q, k = Math.min(q - 1, Math.floor(u)), t = u - k; return h[k] + (h[k + 1] - h[k]) * t; };
+  return {N, q, s, h, p, pf, every};
+}
+const MODELS = Array.from({length: LAST + 1}, (_, i) => model(i));
+
+let step = 0, M = MODELS[0], from = null, revealed = false, simOn = false, touched = false, shown = false, drag = false;
+const hist = {t: 1}, ro = {lv: Math.log(MODELS[0].p)}, live = {sh: .7};
+let N = 0, q = 0, s = 0, n = [], dots = [], qL = 0, acc = 0, hintTw = null;
+let L = null, E = {}, lastKey = '';
+
+// ---- The packets: pick two atoms at random; if the first has a packet, it hops to the second.
+function resetSim() {
+  gsap.killTweensOf(live); live.sh = .7; acc = 0;
+  if (M.every) return;
+  N = M.N; q = M.q; s = M.s; qL = s; n = new Array(2 * N).fill(0);
+  spread(0, s); spread(N, q - s);
+}
+function spread(off, k) {
+  const tot = k + N - 1, idx = Array.from({length: tot}, (_, i) => i);
+  for (let i = 0; i < N - 1; i++) { const j = i + Math.floor(Kit.rnd() * (tot - i)), t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
+  const cut = idx.slice(0, N - 1).sort((a, b) => a - b);
+  let prev = -1; cut.forEach((c, i) => { n[off + i] = c - prev - 1; prev = c; }); n[off + N - 1] = tot - prev - 1;
+}
+function attempt() {
+  const A = 2 * N, i = Math.floor(Kit.rnd() * A), j = Math.floor(Kit.rnd() * A);
+  if (i === j || !n[i]) return;
+  n[i]--; n[j]++;
+  if (dots.length === 2 * N && dots[i].length) { const d = dots[i].pop(); dots[j].push(d); layoutAtom(i, true); layoutAtom(j, true, d); }
+  if ((i < N) !== (j < N)) { qL += j < N ? 1 : -1; updateBars(); placeMarker(true); }
+}
+gsap.ticker.add((t, dt) => {
+  if (!simOn || M.every || !L || n.length !== 2 * N) return;
+  acc += Math.min(dt, 70) / 1000 * N * (2.6 + 1.4 * step / 9);
+  let c = 0; while (acc >= 1 && c++ < 40) { acc -= 1; attempt(); }
+  if (acc > 1) acc = 0;
+});
+
+const P9 = [[-1,-1],[0,-1],[1,-1],[-1,0],[0,0],[1,0],[-1,1],[0,1],[1,1]];
+const PIPS = [[], [[0,0]], [[-1,-1],[1,1]], [[-1,-1],[0,0],[1,1]], [[-1,-1],[1,-1],[-1,1],[1,1]], [[-1,-1],[1,-1],[0,0],[-1,1],[1,1]],
+  [[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1]], [[-1,-1],[1,-1],[-1,0],[0,0],[1,0],[-1,1],[1,1]], [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]], P9];
+const pip = (c, i) => c <= 9 ? PIPS[c][i] : (P9[i] || [0, 0]);
+function atomXY(a) { const b = a < N ? 0 : 1, k = a % N; return [L.gx[b] + (k % L.cols + .5) * L.cell, L.gy + (Math.floor(k / L.cols) + .5) * L.cell]; }
+function layoutAtom(a, anim, flyer) {
+  const list = dots[a], c = list.length; if (!c) return;
+  const [cx, cy] = atomXY(a), u = L.cell * .27;
+  list.forEach((d, i) => {
+    const [ox, oy] = pip(c, i), x = f1(cx + ox * u), y = f1(cy + oy * u);
+    if (!anim || Kit.calm) { d.setAttribute('cx', x); d.setAttribute('cy', y); }
+    else gsap.to(d, {attr: {cx: x, cy: y}, duration: d === flyer ? .36 - .16 * step / 9 : .16, ease: d === flyer ? 'power2.inOut' : 'power2.out', overwrite: 'auto'});
+  });
+}
+
+// ---- Drawing
+const Xs = (Mo, sh) => { const bw = L.pw / (Mo.q + 1); return L.x0 + bw / 2 + sh * (L.pw - bw); };
+const curH = sh => { const hv = M.pf(sh); return from && hist.t < 1 ? from(sh) + (hv - from(sh)) * hist.t : hv; };
+function snapshot() {
+  const S = 400, a = new Float32Array(S + 1);
+  for (let i = 0; i <= S; i++) a[i] = curH(i / S);
+  return x => { const u = Math.max(0, Math.min(1, x)) * S, k = Math.min(S - 1, Math.floor(u)), t = u - k; return a[k] + (a[k + 1] - a[k]) * t; };
+}
+function pickHot() {
+  let bg = [240, 236, 228];
+  try {
+    const pr = document.createElement('i'); pr.style.cssText = 'position:absolute;width:0;height:0;color:var(--c)'; card.appendChild(pr);
+    const col = getComputedStyle(pr).color; pr.remove();
+    const cv = document.createElement('canvas'); cv.width = cv.height = 1;
+    const x = cv.getContext('2d'); x.fillStyle = '#7f7f7f'; x.fillStyle = col; x.fillRect(0, 0, 1, 1);
+    const d = x.getImageData(0, 0, 1, 1).data; bg = [d[0], d[1], d[2]];
+  } catch (e) {}
+  const lin = v => { v /= 255; return v <= .04045 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); };
+  const lum = c => .2126 * lin(c[0]) + .7152 * lin(c[1]) + .0722 * lin(c[2]);
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const lb = lum(bg); let best = null, bc = 0, pick = null;
+  // The first warm red that stands out from the card's colour; failing that, the one that stands out most.
+  for (const h of ['#c0141c', '#b3141c', '#ff6a3d', '#ff8f4d', '#9e1c10', '#ffad5c']) {
+    const l = lum(hex(h)), c = (Math.max(l, lb) + .05) / (Math.min(l, lb) + .05);
+    if (!pick && c >= 3.5) pick = h;
+    if (c > bc) { bc = c; best = h; }
+  }
+  svg.style.setProperty('--hot', pick || (bc >= 2.6 ? best : 'var(--k)'));
+}
+function build() {
+  if (!shown) return;
+  gsap.killTweensOf(svg.querySelectorAll('*'));
+  svg.replaceChildren();
+  const {W, H, f} = Kit.fitSvg(svg);
+  lastKey = Math.round(W) + 'x' + Math.round(H);
+  pickHot();
+  const fs = Math.max(12, Math.min(20, f || 14)), sm = Math.max(10.5, fs * .78);
+  const x0 = 1, x1 = W - 1, pw = x1 - x0, scrH = fs * 2.4, roH = fs * 2.65;
+  // Full: the two bars of atoms on top. Compact (a short stage, once the why is in): the chart alone.
+  let full = true, atomsH = Math.max(fs * 3.6, Math.min(H * .23, fs * 8.5)), axH = sm * 2.95;
+  if (H - scrH - axH - roH - atomsH - fs * .7 < fs * 4.5) { full = false; atomsH = 0; axH = sm * 1.6; }
+  const roTop = full ? atomsH + fs * .7 : 0, plotTop = roTop + roH, plotBot = H - scrH - axH;
+  L = {W, H, fs, sm, full, x0, x1, pw, scrH, axH, atomsH, roTop, plotTop, plotBot, ph: plotBot - plotTop, scrTop: H - scrH - sm * .5};
+  E = {};
+  const defs = mk('defs', {}, svg), tp = Math.max(2.6, (atomsH - fs * 1.5) / 18);
+  const pat = mk('pattern', {id: 'dense', width: f1(tp), height: f1(tp), patternUnits: 'userSpaceOnUse'}, defs);
+  mk('rect', {x: f1(tp * .14), y: f1(tp * .14), width: f1(tp * .72), height: f1(tp * .72), rx: f1(tp * .22), class: 'tile2'}, pat);
+  E.gA = mk('g', {}, svg);
+  buildPlot(); buildScrub(); buildAtoms(false);
+  renderHist(); setRO(); moveStart(false); movePill(false); updateAria();
+}
+function buildAtoms(fade) {
+  const g = E.gA; gsap.killTweensOf(g.querySelectorAll('*')); g.replaceChildren();
+  if (!L.full) { dots = []; E.bars = null; return; }
+  const {fs, sm, x0, pw, atomsH} = L;
+  const gap = Math.max(fs * 1.3, pw * .07), bwid = (pw - gap) / 2, top = fs * 1.5, bh = atomsH - top, rr = Math.min(bh, bwid) * .12;
+  E.bars = [];
+  for (let b = 0; b < 2; b++) {
+    const bx = x0 + b * (bwid + gap);
+    txt(g, bx, fs * 1.0, b ? 'COLD BAR' : 'HOT BAR', {class: 'lbl', 'font-size': f1(sm * .95)});
+    const cnt = txt(g, bx + bwid, fs * 1.08, '', {class: 'num', 'font-size': f1(fs * 1.3), 'text-anchor': 'end'});
+    const tint = mk('rect', {x: f1(bx), y: f1(top), width: f1(bwid), height: f1(bh), rx: f1(rr), class: 'tint'}, g);
+    if (M.every) mk('rect', {x: f1(bx), y: f1(top), width: f1(bwid), height: f1(bh), rx: f1(rr), fill: 'url(#dense)'}, g);
+    mk('rect', {x: f1(bx), y: f1(top), width: f1(bwid), height: f1(bh), rx: f1(rr), class: 'frame'}, g);
+    E.bars.push({cnt, tint});
+  }
+  if (M.every) { dots = []; updateBars(); if (fade && !Kit.calm) gsap.fromTo(g, {opacity: .25}, {opacity: 1, duration: .3}); return; }
+  const pad = Math.min(bh, bwid) * .08, iw = bwid - 2 * pad, ih = bh - 2 * pad;
+  let best = null;
+  for (let c = 1; c <= N; c++) if (N % c === 0) { const r = N / c, cell = Math.min(iw / c, ih / r); if (!best || cell > best.cell) best = {c, r, cell}; }
+  const c = best.cell; L.cell = c; L.cols = best.c;
+  const gw = best.c * c, gh = best.r * c;
+  L.gx = [x0 + pad + (iw - gw) / 2, x0 + bwid + gap + pad + (iw - gw) / 2]; L.gy = top + pad + (ih - gh) / 2;
+  let d = ''; const ts = c * .86, tr = c * .2, sd = ts - 2 * tr;
+  for (let a = 0; a < 2 * N; a++) {
+    const [cx, cy] = atomXY(a), x = cx - ts / 2, y = cy - ts / 2;
+    d += `M${f1(x + tr)} ${f1(y)}h${f1(sd)}a${f1(tr)} ${f1(tr)} 0 0 1 ${f1(tr)} ${f1(tr)}v${f1(sd)}a${f1(tr)} ${f1(tr)} 0 0 1 ${f1(-tr)} ${f1(tr)}h${f1(-sd)}a${f1(tr)} ${f1(tr)} 0 0 1 ${f1(-tr)} ${f1(-tr)}v${f1(-sd)}a${f1(tr)} ${f1(tr)} 0 0 1 ${f1(tr)} ${f1(-tr)}Z`;
+  }
+  mk('path', {d, class: 'tile'}, g);
+  const r = f1(Math.max(1.3, c * .12));
+  dots = Array.from({length: 2 * N}, () => []);
+  for (let a = 0; a < 2 * N; a++) for (let i = 0; i < n[a]; i++) dots[a].push(mk('circle', {r, cx: 0, cy: 0, class: 'pk'}, g));
+  for (let a = 0; a < 2 * N; a++) layoutAtom(a, false);
+  updateBars();
+  if (fade && !Kit.calm) gsap.fromTo(g, {opacity: .25}, {opacity: 1, duration: .3});
+}
+function buildPlot() {
+  const {fs, sm, x0, x1, pw, roTop, plotTop, plotBot} = L, g = mk('g', {}, svg);
+  E.pI = mk('path', {class: 'bi'}, g); E.pH = mk('path', {class: 'bh'}, g);
+  E.hl = mk('rect', {class: 'hl', x: 0, y: 0, width: 0, height: 0}, g);
+  mk('line', {x1: f1(x0), x2: f1(x1), y1: f1(plotBot), y2: f1(plotBot), class: 'ax'}, g);
+  E.sl = mk('line', {x1: 0, x2: 0, y1: f1(plotBot), y2: f1(plotTop), class: 'sl'}, g);
+  // The row above the chart: what the bars count on the left, the chance on the right, over the red bars.
+  E.rn = txt(g, x1, roTop + fs * 2.05, '', {class: 'rn', 'font-size': f1(fs * 2.2), 'text-anchor': 'end'});
+  let nw = 0; for (const v of ['10.5%', '0.05%', '≈ 0%']) { E.rn.textContent = v; nw = Math.max(nw, E.rn.getComputedTextLength()); }
+  lines(g, x1 - nw - fs * .45, roTop + fs * 1.0, ['chance the hot bar', 'ends up hotter'], sm * 1.2, {'font-size': f1(sm), 'font-weight': 700, 'text-anchor': 'end'});
+  if (L.full) lines(g, x0, roTop + fs * 1.0, ['ways to share', 'the packets'], sm * 1.2, {class: 'mut', 'font-size': f1(sm), 'font-weight': 700});
+  const ay = plotBot + sm * 1.2;
+  txt(g, x0, ay, '0', {class: 'mut', 'font-size': f1(sm), 'font-weight': 700});
+  txt(g, x0 + pw / 2, ay, 'even', {class: 'mut', 'font-size': f1(sm), 'font-weight': 700, 'text-anchor': 'middle'});
+  E.tStart = txt(g, x0, ay, 'start', {class: 'bold', 'font-size': f1(sm), 'text-anchor': 'middle'});
+  txt(g, x1, ay, 'all', {class: 'mut', 'font-size': f1(sm), 'font-weight': 700, 'text-anchor': 'end'});
+  if (L.full) txt(g, x0 + pw / 2, plotBot + sm * 2.65, 'packets in the hot bar', {class: 'mut', 'font-size': f1(sm), 'text-anchor': 'middle'});
+  E.mk = mk('circle', {r: f1(Math.max(5, fs * .42)), cx: 0, cy: 0, class: 'mk'}, g);
+}
+function buildScrub() {
+  const {fs, x0, x1, W, H} = L, g = mk('g', {}, svg), yT = H - L.scrH * .5, ph2 = fs * 1.85, md = Math.max(12, fs * .9);
+  const probe = txt(g, 0, 0, '80 atoms', {class: 'pilltx', 'font-size': f1(md)});
+  let wm = probe.getComputedTextLength(); probe.textContent = 'real bar'; wm = Math.max(wm, probe.getComputedTextLength(), md * 4); probe.remove();
+  const pwid = wm + fs * 1.8, a = x0 + pwid / 2, b = x1 - pwid / 2;
+  L.NX = Array.from({length: LAST + 1}, (_, i) => i < LAST ? a + (b - a) * .8 * i / (LAST - 1) : b);
+  mk('line', {x1: f1(L.NX[0]), x2: f1(L.NX[LAST - 1]), y1: f1(yT), y2: f1(yT), class: 'trk'}, g);
+  mk('line', {x1: f1(L.NX[LAST - 1]), x2: f1(L.NX[LAST]), y1: f1(yT), y2: f1(yT), class: 'trk2'}, g);
+  L.NX.forEach((x, i) => mk('circle', {cx: f1(x), cy: f1(yT), r: f1(i >= LAST - 1 ? fs * .26 : fs * .16), class: 'notch'}, g));
+  E.hit = mk('rect', {x: 0, y: f1(L.scrTop), width: f1(W), height: f1(H - L.scrTop), fill: 'transparent', class: 'hit', tabindex: 0, role: 'slider', 'aria-label': 'Atoms in each bar', 'aria-valuemin': 0, 'aria-valuemax': LAST}, g);
+  E.pill = mk('g', {}, g); E.pin = mk('g', {}, E.pill);
+  E.pbg = mk('rect', {x: f1(-pwid / 2), y: f1(yT - ph2 / 2), width: f1(pwid), height: f1(ph2), rx: f1(ph2 / 2), class: 'pillbg'}, E.pin);
+  E.ptxt = txt(E.pin, 0, yT + md * .36, '', {class: 'pilltx', 'font-size': f1(md), 'text-anchor': 'middle'});
+  E.hit.addEventListener('focus', () => E.pbg.classList.add('f'));
+  E.hit.addEventListener('blur', () => E.pbg.classList.remove('f'));
+}
+function renderHist() {
+  if (!L || !E.pI) return;
+  const Mo = M, Q = Mo.q, bw = L.pw / (Q + 1), gp = bw > 9 ? bw * .18 : bw > 4 ? 1 : 0, base = L.plotBot, ph = L.ph * HMAX;
+  const t = hist.t, fr = from && t < 1 ? from : null;
+  let dI = '', dH = '';
+  for (let k = 0; k <= Q; k++) {
+    const sh = k / Q; let hv = Mo.h[k]; if (fr) { const a = fr(sh); hv = a + (hv - a) * t; }
+    const hp = hv * ph; if (hp < .35) continue;
+    const w = Math.max(.7, bw - gp), x = Xs(Mo, sh) - w / 2, y = base - hp, r = bw > 9 ? Math.min(w * .3, hp) : 0;
+    const seg = r ? `M${f1(x)} ${f1(base)}V${f1(y + r)}Q${f1(x)} ${f1(y)} ${f1(x + r)} ${f1(y)}H${f1(x + w - r)}Q${f1(x + w)} ${f1(y)} ${f1(x + w)} ${f1(y + r)}V${f1(base)}Z`
+                  : `M${f1(x)} ${f1(base)}V${f1(y)}H${f1(x + w)}V${f1(base)}Z`;
+    if (k > Mo.s) dH += seg; else dI += seg;
+  }
+  E.pI.setAttribute('d', dI); E.pH.setAttribute('d', dH);
+  placeMarker(false);
+}
+function placeMarker(anim) {
+  if (!L || !E.mk) return;
+  const sh = M.every ? live.sh : qL / q, x = f1(Xs(M, sh)), y = f1(L.plotBot - curH(sh) * L.ph * HMAX), hot = !M.every && qL > s;
+  E.mk.classList.toggle('hot', hot);
+  if (anim && !Kit.calm) gsap.to(E.mk, {attr: {cx: x, cy: y}, duration: .12, ease: 'power2.out', overwrite: 'auto'});
+  else { gsap.killTweensOf(E.mk); E.mk.setAttribute('cx', x); E.mk.setAttribute('cy', y); }
+  if (M.every) { E.hl.setAttribute('height', 0); return; }
+  const bw = L.pw / (q + 1), gp = bw > 9 ? bw * .18 : bw > 4 ? 1 : 0, w = Math.max(.7, bw - gp), hh = Math.max(0, L.plotBot - y);
+  E.hl.classList.toggle('hot', hot);
+  E.hl.setAttribute('x', f1(x - w / 2)); E.hl.setAttribute('width', f1(w)); E.hl.setAttribute('y', y); E.hl.setAttribute('height', f1(hh));
+  E.hl.setAttribute('rx', bw > 9 ? f1(Math.min(w * .3, hh / 2)) : 0);
+}
+function updateBars() {
+  if (!E.bars) return;
+  const shL = M.every ? live.sh : qL / q;
+  const v = M.every ? [Math.round(shL * 100) + '%', Math.round((1 - shL) * 100) + '%'] : [qL, q - qL];
+  E.bars.forEach((b, i) => { b.cnt.textContent = v[i]; const sh = i ? 1 - shL : shL; b.tint.style.fillOpacity = (M.every ? .04 + .42 * sh : .02 + .16 * sh).toFixed(3); });
+}
+const fmtP = p => p < .005 ? '≈ 0%' : p >= 1 ? p.toFixed(1) + '%' : p.toFixed(2) + '%';
+function setRO() { if (E.rn) E.rn.textContent = fmtP(Math.exp(ro.lv)); }
+function tweenRO() {
+  gsap.killTweensOf(ro);
+  const to = Math.log(M.every ? .003 : M.p);
+  if (Kit.calm) { ro.lv = to; setRO(); return; }
+  gsap.to(ro, {lv: to, duration: M.every ? 1.2 : .5, ease: M.every ? 'power1.in' : 'power2.out', onUpdate: setRO, onComplete: setRO});
+}
+function moveStart(anim) {
+  if (!E.sl) return;
+  const bw = L.pw / (M.q + 1), xs = Xs(M, M.s / M.q), xl = f1(xs + bw / 2);
+  const go = (el, at) => anim && !Kit.calm ? gsap.to(el, {attr: at, duration: .5, ease: 'power3.out'}) : gsap.set(el, {attr: at});
+  go(E.sl, {x1: xl, x2: xl}); go(E.tStart, {x: f1(xs)});
+}
+function movePill(anim) {
+  if (!E.pill) return;
+  E.ptxt.textContent = step >= LAST ? 'real bar' : 8 * (step + 1) + ' atoms';
+  const x = f1(L.NX[step]);
+  if (anim && !Kit.calm) gsap.to(E.pill, {x, duration: .22, ease: 'power3.out', overwrite: 'auto'}); else gsap.set(E.pill, {x});
+}
+function updateAria() {
+  if (!E.hit) return;
+  E.hit.setAttribute('aria-valuenow', step);
+  E.hit.setAttribute('aria-valuetext', step >= LAST ? 'A real bar: cold to hot practically never happens' : `${8 * (step + 1)} atoms per bar: ${fmtP(M.p)} chance the hot bar ends up hotter`);
+}
+function startEveryday() {
+  gsap.killTweensOf(live); live.sh = .7;
+  const up = () => { updateBars(); placeMarker(false); };
+  if (Kit.calm) { live.sh = .5; up(); return; }
+  up(); gsap.to(live, {sh: .5, duration: 2.2, ease: 'power2.inOut', onUpdate: up});
+}
+function reveal() {
+  if (revealed) return; revealed = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, duration: .5, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform'});
+}
+function hint() { if (touched || Kit.calm || !E.pin) return; hintTw = gsap.to(E.pin, {x: L.fs * .8, duration: .35, ease: 'sine.inOut', yoyo: true, repeat: 5, delay: 1.6}); }
+function killHint() { if (hintTw) { hintTw.kill(); hintTw = null; } if (E.pin) gsap.set(E.pin, {x: 0}); }
+function setStep(i) {
+  i = Math.max(0, Math.min(LAST, i));
+  if (i === step) return;
+  touched = true; killHint();
+  from = snapshot();
+  step = i; M = MODELS[i];
+  Kit.haptic('selection');
+  gsap.killTweensOf(hist);
+  if (Kit.calm) { hist.t = 1; from = null; }
+  else { hist.t = 0; gsap.to(hist, {t: 1, duration: .6, ease: 'power3.out', onUpdate: renderHist, onComplete: () => { from = null; }}); }
+  resetSim();
+  if (L) { buildAtoms(true); moveStart(true); movePill(true); renderHist(); }
+  tweenRO(); updateAria();
+  if (M.every) { startEveryday(); if (!revealed) gsap.delayedCall(1.1, reveal); }
+}
+
+// ---- The slider: drag (or tap) along the bottom band; arrow keys too.
+const toSvg = e => { const r = svg.getBoundingClientRect(); return {x: (e.clientX - r.left) * L.W / r.width, y: (e.clientY - r.top) * L.H / r.height}; };
+function scrubTo(x) { let b = 0, bd = Infinity; L.NX.forEach((v, i) => { const d = Math.abs(v - x); if (d < bd) { bd = d; b = i; } }); setStep(b); }
+svg.addEventListener('pointerdown', e => {
+  if (!L) return; const p = toSvg(e); if (p.y < L.scrTop) return;
+  drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  e.preventDefault(); scrubTo(p.x);
+});
+svg.addEventListener('pointermove', e => { if (drag && L) scrubTo(toSvg(e).x); });
+const stop = () => { drag = false; };
+svg.addEventListener('pointerup', stop); svg.addEventListener('pointercancel', stop); window.addEventListener('pointerup', stop);
+svg.addEventListener('keydown', e => {
+  const k = e.key, d = k === 'ArrowRight' || k === 'ArrowUp' ? 1 : k === 'ArrowLeft' || k === 'ArrowDown' ? -1 : k === 'Home' ? -LAST : k === 'End' ? LAST : 0;
+  if (!d) return; e.preventDefault(); setStep(step + d);
+});
+new ResizeObserver(() => { if (!shown) return; const r = svg.getBoundingClientRect(); if (Math.round(r.width) + 'x' + Math.round(r.height) !== lastKey) build(); }).observe(svg);
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => build()); } catch (_) {}
+
+resetSim();
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => { shown = true; build(); };
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  from = () => 0; hist.t = 0;
+  gsap.to(hist, {t: 1, duration: .9, ease: 'power3.out', onUpdate: renderHist, onComplete: () => { from = null; }});
+  gsap.from(svg.querySelectorAll('.pk'), {attr: {r: 0}, duration: .35, stagger: .025, ease: 'back.out(2)'});
+  gsap.delayedCall(.9, () => { simOn = true; });
+  hint();
+};
+// Plays the card through for the checker: drags the slider from 8 atoms to a real bar.
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), kx = r.width / L.W, ky = r.height / L.H, y = r.top + (L.H - L.scrH * .5) * ky;
+  const ev = (type, i) => svg.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, clientX: r.left + L.NX[i] * kx, clientY: y, pointerId: 9, pointerType: 'touch', isPrimary: true, button: 0, buttons: type === 'pointerup' ? 0 : 1}));
+  ev('pointerdown', 0);
+  for (let i = 1; i <= LAST; i++) { await wait(150); ev('pointermove', i); }
+  await wait(60); ev('pointerup', LAST);
+  await wait(2700);
+};
+Kit.single();
+</script>
+</html>

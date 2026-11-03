@@ -1,0 +1,38 @@
+{
+  "id": "science-truck-car-forces",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When a truck hits a car, which one pushes harder?",
+  "answer": "The truck and the car push each other exactly equally hard. At every instant the truck pushes the car just as hard as the car pushes the truck, whatever their size. The car's speed changes far more only because it has far less mass to move.",
+  "move": "Forces come in equal, opposite pairs; mass only decides who moves more.",
+  "keywords": [
+    "newton",
+    "truck",
+    "car",
+    "collision",
+    "third law"
+  ],
+  "era": "early_modern",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card: in a truck-and-car crash, which one pushes harder? Three choices: the truck, they push equally, or the car. The reader picks one, then rates how sure they are. Holding reveals that the forces are exactly equal.",
+    "graded": false
+  },
+  "source": "Veritasium, “Three Incorrect Laws of Motion” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=Yf0BN0kq7OU&t=100s",
+  "written": "2026-11-03"
+}

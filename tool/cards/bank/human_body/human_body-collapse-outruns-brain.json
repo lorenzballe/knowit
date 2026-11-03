@@ -1,0 +1,37 @@
+{
+  "id": "human_body-collapse-outruns-brain",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How fast does a submersible collapse, and could the brain notice?",
+  "answer": "The walls of the submersible rushed inward at about 2,400 km/h, so the whole collapse took about one millisecond. The brain needs about 0.25 seconds to process a stimulus, which is 250 times longer. The collapse was over before anyone inside could perceive it.",
+  "move": "The collapse (1 ms) ends 250 times faster than the brain can notice (0.25 s).",
+  "keywords": [
+    "submersible",
+    "implosion",
+    "brain",
+    "reaction time",
+    "millisecond"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Text card on the 2023 submersible implosion, with a draggable bar strip that plays the first millisecond of the collapse. It asks the reader to compare the 1 ms collapse with the 0.25 s the brain needs to notice a stimulus."
+  },
+  "source": "Geopop, “Quanto tempo è durata l'implosione del Titan e perché si è verificata solo alla 5a immersione?” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=OXsSoR6fX3A&t=47s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "nature-trench-volcano-food",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do animals survive in the deep, cold, food-poor trench?",
+  "answer": "At the bottom of the trench the water is very cold. Undersea volcanoes erupt and warm it, and the material they expel carries the essential elements abyssal species need to survive. Down in the trench, volcanoes are both the heater and the food supply.",
+  "move": "Down in the trench, volcanoes are both the heater and the food supply.",
+  "keywords": [
+    "deep sea",
+    "undersea volcanoes",
+    "mariana trench",
+    "abyssal species",
+    "trench"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Diagram of a deep ocean trench with an undersea volcano releasing minerals that feed nearby fish and invertebrates. Tap the volcano three times to add each layer.",
+    "ground": "#06121f"
+  },
+  "source": "Geopop, “FOSSA DELLE MARIANNE, come si è formata e perché è cosi profonda” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=6rdDnFsCYSo&t=275s",
+  "written": "2026-11-03"
+}

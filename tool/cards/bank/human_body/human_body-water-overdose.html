@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- slug: human_body-water-overdose -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#pic:active{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+.foot{padding-right:112px}
+.src{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WATER POISON</span></div>
+    <h2 class="q">What happens if you drink 10 liters of water a day for a week?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A glass filling day by day as you drag along a seven-day timeline"></svg>
+      <div id="why" class="gone">
+        <p class="big">Hyperhydration: an overdose of water.</p>
+        <p class="body">Taking in far too much liquid, for too long, pushes the body into hyperhydration. At that dose water stops being harmless and becomes a real poison that can kill.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the glass's timeline from day 0 to day 7.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Even water is a poison: it's the dose that kills.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede se si beve troppa acqua? Cos’è l’iperidratazione e l’iponatriemia” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+let t = 0, lastDay = 0, done = false, G = null, dragging = false;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const BLUE = '#2e8ff0', TOX = '#7cbf1e';
+const STATUS = [
+  ['Day 0:', 'an empty glass'],
+  ['Day 1:', '10 L of water'],
+  ['Day 2:', '10 L again'],
+  ['Day 3:', 'too much…'],
+  ['Day 4:', '…for too long'],
+  ['Day 5:', 'hyperhydration'],
+  ['Day 6:', 'water turns toxic'],
+  ['Day 7:', 'water overdose']
+];
+
+function draw() {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f} = Kit.fitSvg(svg);
+  const ink = 'var(--k)';
+  const small = Math.max(12, f * .78);
+  const trackY = H - Math.max(small * 2.4, f * 2.4);
+  const top = f * .6, bottom = trackY - Math.max(f * 1.8, 22);
+  const gH = Math.max(40, bottom - top);
+  const gW = Math.min(W * .48, gH * .78);
+  const gx = W * .05, cx = gx + gW / 2;
+  const bw = gW * .76;
+  const P = [[gx, top], [gx + gW, top], [cx + bw / 2, top + gH], [cx - bw / 2, top + gH]];
+  const pts = P.map(p => p.join(',')).join(' ');
+  const defs = Kit.mk('defs', {}, svg);
+  const clip = Kit.mk('clipPath', {id: 'gclip'}, defs);
+  Kit.mk('polygon', {points: pts}, clip);
+  // glass back
+  Kit.mk('polygon', {points: pts, fill: 'color-mix(in srgb,var(--k) 6%,transparent)'}, svg);
+  const wg = Kit.mk('g', {'clip-path': 'url(#gclip)'}, svg);
+  const water = Kit.mk('rect', {x: gx - 4, width: gW + 8, y: top + gH, height: 0, fill: BLUE}, wg);
+  const surf = Kit.mk('rect', {x: gx - 4, width: gW + 8, y: top + gH, height: Math.max(3, f * .25), fill: '#fff', opacity: .35}, wg);
+  // glass outline + shine
+  Kit.mk('polygon', {points: pts, fill: 'none', stroke: ink, 'stroke-width': Math.max(2.5, f * .2), 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('line', {x1: gx + gW * .14, y1: top + gH * .1, x2: gx + gW * .2, y2: top + gH * .75, stroke: '#fff', 'stroke-width': Math.max(3, f * .3), 'stroke-linecap': 'round', opacity: .45}, svg);
+  // drop
+  const drop = Kit.mk('path', {d: `M0,${-f * .9} C${f * .6},${-f * .1} ${f * .55},${f * .55} 0,${f * .55} C${-f * .55},${f * .55} ${-f * .6},${-f * .1} 0,${-f * .9}Z`, fill: BLUE, opacity: 0}, svg);
+  // skull & crossbones
+  const s = gW * .3, sk = Kit.mk('g', {opacity: 0}, svg);
+  const skIn = Kit.mk('g', {}, sk);
+  const bone = (a) => {
+    const b = Kit.mk('g', {transform: `rotate(${a})`}, skIn);
+    Kit.mk('rect', {x: -s * 1.15, y: -s * .1, width: s * 2.3, height: s * .2, rx: s * .1, fill: '#fff', stroke: '#111', 'stroke-width': Math.max(1.5, s * .05)}, b);
+    [-1, 1].forEach(e => [-1, 1].forEach(v => Kit.mk('circle', {cx: e * s * 1.15, cy: v * s * .12, r: s * .15, fill: '#fff', stroke: '#111', 'stroke-width': Math.max(1.5, s * .05)}, b)));
+  };
+  bone(30); bone(-30);
+  Kit.mk('rect', {x: -s * .38, y: s * .25, width: s * .76, height: s * .42, rx: s * .1, fill: '#fff', stroke: '#111', 'stroke-width': Math.max(1.5, s * .05)}, skIn);
+  Kit.mk('circle', {cx: 0, cy: -s * .1, r: s * .58, fill: '#fff', stroke: '#111', 'stroke-width': Math.max(1.5, s * .05)}, skIn);
+  Kit.mk('rect', {x: -s * .34, y: s * .25, width: s * .68, height: s * .2, fill: '#fff'}, skIn);
+  [-1, 1].forEach(e => Kit.mk('circle', {cx: e * s * .24, cy: -s * .1, r: s * .17, fill: '#111'}, skIn));
+  Kit.mk('path', {d: `M0,${s * .1} l${-s * .08},${s * .14} h${s * .16}Z`, fill: '#111'}, skIn);
+  [-.2, 0, .2].forEach(x => Kit.mk('line', {x1: x * s, y1: s * .45, x2: x * s, y2: s * .65, stroke: '#111', 'stroke-width': Math.max(1.2, s * .04)}, skIn));
+  // right column
+  const x0 = gx + gW + W * .06, colW = W - x0 - W * .04;
+  const big = Math.max(24, Math.min(gH * .2, colW * .36));
+  const stF = Math.max(13, Math.min(f * 1.05, colW / 8.5));
+  const y1 = top + small;
+  const y2 = y1 + small * .5 + big;
+  const y3 = y2 + Math.max(small * 1.7, big * .4 + small * 1.25);
+  const y4 = y3 + stF * 2.2;
+  const y5 = y4 + stF * 1.45;
+  const T = (x, y, txt, size, w, fill, fam) => { const e = Kit.mk('text', {x, y, 'font-size': size, 'font-weight': w, fill: fill || ink, 'font-family': fam || 'var(--body)'}, svg); e.textContent = txt; return e; };
+  T(x0, y1, 'DRUNK SO FAR', small, 700, 'var(--muted)');
+  const num = T(x0, y2, '0 L', big, 800, ink, 'var(--display)');
+  T(x0, y3, '10 L a day', small, 600, 'var(--muted)');
+  const s1 = T(x0, y4, '', stF, 800);
+  const s2 = T(x0, y5, '', stF, 800);
+  // timeline
+  const tx0 = W * .08, tx1 = W * .92, X = v => tx0 + (tx1 - tx0) * v / 7;
+  Kit.mk('line', {x1: tx0, y1: trackY, x2: tx1, y2: trackY, stroke: 'color-mix(in srgb,var(--k) 25%,transparent)', 'stroke-width': Math.max(5, f * .4), 'stroke-linecap': 'round'}, svg);
+  const prog = Kit.mk('line', {x1: tx0, y1: trackY, x2: tx0, y2: trackY, stroke: BLUE, 'stroke-width': Math.max(5, f * .4), 'stroke-linecap': 'round'}, svg);
+  for (let i = 0; i <= 7; i++) {
+    Kit.mk('circle', {cx: X(i), cy: trackY, r: Math.max(3, f * .22), fill: ink}, svg);
+    const l = T(X(i), trackY + small * 1.9, i ? 'D' + i : '0', small, 700, 'var(--muted)');
+    l.setAttribute('text-anchor', 'middle');
+  }
+  const knob = Kit.mk('circle', {cx: tx0, cy: trackY, r: Math.max(12, f * .95), fill: '#fff', stroke: ink, 'stroke-width': Math.max(2.5, f * .2)}, svg);
+  G = {W, H, f, top, gH, gx, gW, cx, water, surf, drop, sk, skIn, s, num, s1, s2, prog, knob, X, tx0, tx1, trackY};
+  update();
+}
+
+function update() {
+  if (!G) return;
+  const p = t / 7, lvl = G.top + G.gH - G.gH * .92 * p;
+  const tox = clamp((t - 2.5) / 4.5, 0, 1);
+  const col = gsap.utils.interpolate(BLUE, TOX, tox);
+  G.water.setAttribute('y', lvl); G.water.setAttribute('height', G.top + G.gH - lvl + 4);
+  G.water.setAttribute('fill', col);
+  G.surf.setAttribute('y', lvl); G.surf.setAttribute('opacity', p > 0.01 ? .35 : 0);
+  const op = clamp((t - 3) / 3.5, 0, 1);
+  G.sk.setAttribute('opacity', op);
+  G.sk.setAttribute('transform', `translate(${G.cx},${G.top + G.gH * .52}) scale(${.55 + .45 * op})`);
+  G.num.textContent = Math.round(t * 10) + ' L';
+  const d = clamp(Math.round(t), 0, 7);
+  G.s1.textContent = STATUS[d][0]; G.s2.textContent = STATUS[d][1];
+  const bad = d >= 5;
+  G.s2.setAttribute('fill', bad ? '#d42a2a' : 'var(--k)');
+  G.num.setAttribute('fill', bad ? '#d42a2a' : 'var(--k)');
+  G.prog.setAttribute('x2', G.X(t)); G.prog.setAttribute('stroke', col);
+  G.knob.setAttribute('cx', G.X(t));
+}
+
+function dropIn() {
+  if (!G || Kit.calm) return;
+  const y0 = G.top - G.f * 1.5, y1 = G.top + G.gH * (1 - .92 * t / 7);
+  gsap.killTweensOf(G.drop);
+  gsap.fromTo(G.drop, {attr: {transform: `translate(${G.cx},${y0})`}, opacity: 1}, {attr: {transform: `translate(${G.cx},${y1})`}, opacity: 0, duration: .45, ease: 'power2.in'});
+}
+
+function setT(v) {
+  t = clamp(v, 0, 7);
+  const d = Math.floor(t + .001);
+  if (d !== lastDay) { if (d > lastDay) dropIn(); lastDay = d; Kit.haptic('selection'); }
+  update();
+  if (t >= 6.95 && !done) finish();
+}
+
+function finish() {
+  done = true;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { if (!Kit.calm && G) gsap.fromTo(G.skIn, {scale: 1}, {scale: 1.18, yoyo: true, repeat: 3, duration: .22, transformOrigin: '50% 50%'}); });
+  if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+
+function tFromX(clientX) {
+  const r = svg.getBoundingClientRect();
+  const x = (clientX - r.left) * (G.W / r.width);
+  return (x - G.tx0) / (G.tx1 - G.tx0) * 7;
+}
+svg.addEventListener('pointerdown', e => { if (!G) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(proxy); setT(tFromX(e.clientX)); });
+svg.addEventListener('pointermove', e => { if (dragging) setT(tFromX(e.clientX)); });
+const proxy = {v: 0};
+const release = () => {
+  if (!dragging) return; dragging = false;
+  proxy.v = t;
+  gsap.to(proxy, {v: Math.round(t), duration: .2, ease: 'power2.out', onUpdate: () => setT(proxy.v)});
+};
+svg.addEventListener('pointerup', release);
+svg.addEventListener('pointercancel', release);
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.knob, {attr: {r: +G.knob.getAttribute('r')}}, {attr: {r: +G.knob.getAttribute('r') * 1.3}, yoyo: true, repeat: 3, duration: .35, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), k = r.width / G.W;
+  const at = v => r.left + G.X(v) * k, y = r.top + G.trackY * k;
+  const ev = (type, x) => svg.dispatchEvent(new PointerEvent(type, {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  ev('pointerdown', at(0));
+  for (let i = 1; i <= 14; i++) { ev('pointermove', at(i / 2)); await new Promise(r => setTimeout(r, 30)); }
+  ev('pointerup', at(7));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

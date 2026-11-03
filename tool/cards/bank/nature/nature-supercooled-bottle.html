@@ -1,0 +1,204 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The bottle that waits</title>
+<!-- A bottle of pure water, chilled below 0 °C, still liquid. A tap on it makes the first crystal and a
+     front of ice grows through it (a branching growth drawn at 60°, as ice branches). The freezing gives
+     off heat: the thermometer climbs back to 0 °C and stops, with only about 1/80 of the water frozen
+     per degree of chill, an eighth at −10 °C. Slush, not a block. Then clouds: drops that wait for a seed,
+     and the wing that gives them one. Inspired by Veritasium, "Supercooled Water - Explained!".
+     Touch: taps (the bottle and the three temperatures). -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#lab{flex:1;min-height:0;display:flex;gap:4cqw}
+#jar{flex:1.15;min-width:0;position:relative;cursor:pointer;touch-action:manipulation}
+#hint{position:absolute;width:max(6cqh,34px);height:max(6cqh,34px);margin:calc(max(6cqh,34px)/-2) 0 0 calc(max(6cqh,34px)/-2);border-radius:50%;box-shadow:inset 0 0 0 .4cqh rgba(16,16,12,.7);animation:ping 1.8s ease-out infinite;pointer-events:none}
+@keyframes ping{0%{transform:scale(.6);opacity:.35}30%{opacity:.95}100%{transform:scale(1.35);opacity:.1}}
+#side{flex:.85;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:1.1cqh}
+#temp{font:900 max(5.6cqh,28px)/1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lbl{font:700 max(1.5cqh,11.5px)/1.2 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+#bar{height:max(1.3cqh,8px);border-radius:9px;background:color-mix(in srgb,var(--k) 14%,transparent);overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--k);border-radius:9px}
+#frac{font:800 max(2.1cqh,13px)/1.2 var(--body)}
+#chips{display:flex;align-items:center;gap:2cqw}
+#chips .lbl{flex:none;margin-right:1cqw}
+.chip{flex:1;font:800 max(1.9cqh,13px)/1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 9%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 32%,transparent);border-radius:99px;padding:max(1.3cqh,9px) 0;cursor:pointer;font-variant-numeric:tabular-nums}
+.chip.on{background:var(--k);color:var(--c);box-shadow:none}
+.say b{font-weight:800}
+.answered .q{font-size:max(2.6cqh,16px)}
+@container (max-height:520px){
+  .answered .in{gap:1.6cqh}
+  .answered #chips .lbl,.answered #inb{display:none}
+  .answered #side{gap:.7cqh}
+  .answered .chip{padding:8px 0}
+}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap the bottle · supercooled water">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TAP THE BOTTLE</span></div>
+    <h2 class="q">Why can water stay liquid at −10&nbsp;°C, then freeze the moment you tap it?</h2>
+    <div class="stagebox" id="stage">
+      <div id="lab">
+        <div id="jar" data-tap role="button" aria-label="Tap the bottle"><canvas id="cv" class="full" aria-hidden="true"></canvas><i id="hint" aria-hidden="true"></i></div>
+        <div id="side">
+          <span class="lbl" id="inb">In the bottle</span>
+          <span id="temp">−10.0&nbsp;°C</span>
+          <span class="lbl" id="state">still liquid</span>
+          <div id="bar" aria-hidden="true"><i></i></div>
+          <span id="frac">ice: none</span>
+        </div>
+      </div>
+      <div id="chips"><span class="lbl">Chill to</span><button class="chip" data-t="-5">−5&nbsp;°C</button><button class="chip on" data-t="-10">−10&nbsp;°C</button><button class="chip" data-t="-15">−15&nbsp;°C</button></div>
+    </div>
+    <p class="say" id="say">Try it at home: purified water left about 2–3&nbsp;hours in a freezer can stay liquid below 0&nbsp;°C. This bottle is at −10&nbsp;°C. Tap it.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Freezing gives off heat, so supercooled water turns only part to ice, about 1/80 per degree, then sits at 0&nbsp;°C.</div>
+    <div class="foot"><span class="src">Source · Engineering ToolBox, latent heat of ice (334&nbsp;J/g); Christian Science Monitor (2018)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const cv = Kit.$('cv'), jar = Kit.$('jar'), say = Kit.$('say'), card = Kit.$('card');
+  const INK = '#10100c', ICE = '#ffffff';
+  const C_WATER = 4.2, L_ICE = 334;               // J per gram per degree; J per gram to freeze
+  let ctx = null, W = 1, H = 1, B = null;         // B: the bottle on this phone
+  let T0 = -10, temp = -10, frozen = false, growing = false, segs = [], drawn = 0, t0 = 0, seedAt = null, freezes = 0;
+  let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const now = () => performance.now() / 1000;
+  const fmt = v => (v < -0.04 ? '−' : '') + Math.abs(v).toFixed(1) + '\u00a0°C', deg = t => (t < 0 ? '−' : '') + Math.abs(t) + '\u00a0°C';
+  const share = t => C_WATER * -t / L_ICE;        // the part of the water that freezes before it is back at 0 °C
+
+  function bottle() {
+    const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+    const bw = Math.min(W * .82, H * .5), bh = H * .78, bx = (W - bw) / 2, by = H - bh - 2;
+    const nw = bw * .4, nh = H * .1, cap = H * .07;
+    const r = Math.min(bw * .22, 22); B = {bx, by, bw, bh, nw, nh, cap, r, water: by + Math.max(r, bh * .08) + 2};
+    const hint = Kit.$('hint'); hint.style.left = (bx + bw / 2) + 'px'; hint.style.top = (by + bh * .55) + 'px';
+  }
+  function bodyPath() {
+    const {bx, by, bw, bh, nw, nh, r} = B, cx = bx + bw / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - nw / 2, by - nh); ctx.lineTo(cx - nw / 2, by - nh * .25);
+    ctx.quadraticCurveTo(bx, by - nh * .1, bx, by + r);
+    ctx.lineTo(bx, by + bh - r); ctx.quadraticCurveTo(bx, by + bh, bx + r, by + bh);
+    ctx.lineTo(bx + bw - r, by + bh); ctx.quadraticCurveTo(bx + bw, by + bh, bx + bw, by + bh - r);
+    ctx.lineTo(bx + bw, by + r); ctx.quadraticCurveTo(bx + bw, by - nh * .1, cx + nw / 2, by - nh * .25);
+    ctx.lineTo(cx + nw / 2, by - nh);
+  }
+  const inWater = (x, y) => {
+    const {bx, bw, by, bh, water, r} = B, m = 3;
+    if (x < bx + m || x > bx + bw - m || y < water + m || y > by + bh - m) return false;
+    if (y > by + bh - r) { const cx = x < bx + r ? bx + r : x > bx + bw - r ? bx + bw - r : x; if (Math.hypot(x - cx, y - (by + bh - r)) > r - m) return false; }
+    return true;
+  };
+
+  // The ice: a tree of needles from the seed. Every needle sprouts side needles at 60°, as ice does, and
+  // stops where ice already is, so the tree fills the water; the colder the water, the closer the needles.
+  function grow(sx, sy, f) {
+    const step = Math.max(3.2, Math.min(8, 9 - 40 * f)), g = step * .74, cols = Math.ceil(W / g) + 1, used = new Uint8Array(cols * (Math.ceil(H / g) + 2));
+    const cell = (x, y) => Math.floor(y / g) * cols + Math.floor(x / g);
+    const out = [], tips = [], every = [2, 2, 3];
+    const a0 = rnd() * Math.PI / 3;
+    for (let k = 0; k < 6; k++) tips.push({x: sx, y: sy, a: a0 + k * Math.PI / 3, d: 0, gen: 0, n: 0});
+    used[cell(sx, sy)] = 1;
+    // First in, first out: every needle is one step long, so the front grows evenly, nearest the seed first.
+    let head = 0;
+    while (head < tips.length && out.length < 12000) {
+      const p = tips[head++];
+      const a = p.a + (rnd() - .5) * .14, nx = p.x + Math.cos(a) * step, ny = p.y + Math.sin(a) * step, c = cell(nx, ny);
+      if (!inWater(nx, ny) || used[c]) continue;
+      used[c] = 1;
+      out.push({x1: p.x, y1: p.y, x2: nx, y2: ny, d: p.d + step, gen: p.gen});
+      tips.push({x: nx, y: ny, a: p.a + (rnd() - .5) * .04, d: p.d + step, gen: p.gen, n: p.n + 1});
+      if (p.gen < 3 && (p.n + 1) % every[p.gen] === 0) for (const side of [-1, 1]) if (rnd() < .85) tips.push({x: nx, y: ny, a: p.a + side * Math.PI / 3, d: p.d + step, gen: p.gen + 1, n: 0});
+    }
+    return out;                                    // already in order of distance from the seed
+  }
+
+  function scene() {
+    ctx.clearRect(0, 0, W, H);
+    const {bx, by, bw, bh, nw, nh, cap} = B, cx = bx + bw / 2;
+    // Water, the air above it, the bottle, its cap.
+    ctx.save(); bodyPath(); ctx.closePath(); ctx.clip();
+    ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(bx - 2, B.water, bw + 4, by + bh - B.water + 2);
+    if (frozen || growing) { ctx.fillStyle = `rgba(255,255,255,${.1 * Math.min(1, drawn / Math.max(1, segs.length))})`; ctx.fillRect(bx - 2, B.water, bw + 4, by + bh - B.water + 2); }
+    ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(bx, B.water); ctx.lineTo(bx + bw, B.water); ctx.stroke();
+    ctx.restore();
+    ctx.lineWidth = 2.6; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; bodyPath(); ctx.stroke();
+    ctx.fillStyle = INK; ctx.beginPath(); const cw = nw * 1.12; ctx.roundRect ? ctx.roundRect(cx - cw / 2, by - nh - cap, cw, cap, 3) : ctx.rect(cx - cw / 2, by - nh - cap, cw, cap); ctx.fill();
+    // A glint down the side.
+    ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(bx + bw * .14, by + bh * .18); ctx.lineTo(bx + bw * .14, by + bh * .55); ctx.stroke();
+    paintIce(drawn);
+  }
+  function paintIce(n) {
+    if (!n) return;
+    ctx.save(); bodyPath(); ctx.closePath(); ctx.clip(); ctx.lineCap = 'round';
+    const wide = [5, 3.6, 2.6, 2], thin = [2, 1.4, 1, .8];
+    for (const pass of [0, 1]) for (let gen = 0; gen < 4; gen++) {
+      ctx.beginPath();
+      for (let i = 0; i < n; i++) { const s = segs[i]; if (s.gen !== gen) continue; ctx.moveTo(s.x1, s.y1); ctx.lineTo(s.x2, s.y2); }
+      ctx.strokeStyle = pass ? ICE : 'rgba(255,255,255,.22)'; ctx.lineWidth = (pass ? thin : wide)[gen]; ctx.stroke();
+    }
+    ctx.restore();
+    if (seedAt && n < segs.length) { ctx.fillStyle = ICE; ctx.beginPath(); ctx.arc(seedAt[0], seedAt[1], 3.2, 0, Math.PI * 2); ctx.fill(); }
+  }
+
+  function readout() {
+    Kit.$('temp').textContent = fmt(temp);
+    const p = frozen || growing ? Math.min(1, drawn / Math.max(1, segs.length)) : 0, f = share(T0) * p;
+    Kit.$('bar').firstElementChild.style.width = (f * 100) + '%';
+    Kit.$('frac').textContent = f > 0 ? `ice: ${Math.round(f * 100)}% of it` : 'ice: none';
+    Kit.$('state').textContent = frozen ? 'slush, at 0\u00a0°C' : growing ? 'freezing…' : 'still liquid';
+  }
+
+  const FRACTION = {'-5': 'a sixteenth', '-10': 'an eighth', '-15': 'almost a fifth'};
+  function finish() {
+    growing = false; frozen = true; drawn = segs.length; temp = 0; scene(); readout(); freezes++;
+    if (freezes === 1) {
+      say.innerHTML = `<b>Ice needs a seed:</b> the tap gave one, as a plane’s wing does to cloud drops below 0\u00a0°C. Ice raced through, then stopped at 0\u00a0°C, ${FRACTION[T0]} frozen.`;
+      card.classList.add('answered'); Kit.show('keep'); Kit.haptic('success');
+    } else {
+      say.innerHTML = `At ${deg(T0)}, ${FRACTION[T0]} froze before the water was back at 0\u00a0°C: each degree of chill buys about 1/80 of it as ice.`;
+      Kit.haptic('light');
+    }
+  }
+  function tick() {
+    if (!growing) return;
+    const t = now() - t0, total = segs.length ? segs[segs.length - 1].d : 1, reach = t / 1.7 * total;
+    let n = drawn; while (n < segs.length && segs[n].d <= reach) n++;
+    drawn = n; temp = T0 * (1 - drawn / Math.max(1, segs.length));
+    scene(); readout();
+    if (drawn >= segs.length) finish(); else requestAnimationFrame(tick);
+  }
+  function tap(x, y) {
+    if (frozen || growing) { if (frozen) { Kit.haptic('light'); } return; }
+    if (!inWater(x, y)) { x = B.bx + B.bw / 2; y = B.water + B.bh * .12; }
+    Kit.hide('hint'); seedAt = [x, y]; seed = 5 + Math.round(-T0); segs = grow(x, y, share(T0)); drawn = 0;
+    Kit.haptic('light');
+    if (Kit.calm) { finish(); return; }
+    growing = true; t0 = now(); requestAnimationFrame(tick);
+  }
+  jar.addEventListener('click', e => { const r = cv.getBoundingClientRect(); tap(e.clientX - r.left, e.clientY - r.top); });
+  Kit.$('chips').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b || growing) return;
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b));
+    T0 = temp = +b.dataset.t; frozen = false; segs = []; drawn = 0; seedAt = null;
+    scene(); readout(); Kit.haptic('selection'); Kit.$('hint').classList.remove('gone');
+    say.innerHTML = `A fresh bottle, chilled to ${deg(T0)} and still liquid. Tap it.`;
+  });
+
+  function draw() {
+    const keepSeed = seedAt && B ? [(seedAt[0] - B.bx) / B.bw, (seedAt[1] - B.by) / B.bh] : null;
+    bottle();
+    if (keepSeed) { seedAt = [B.bx + keepSeed[0] * B.bw, B.by + keepSeed[1] * B.bh]; seed = 5 + Math.round(-T0); segs = grow(seedAt[0], seedAt[1], share(T0)); drawn = frozen ? segs.length : Math.min(drawn, segs.length); }
+    scene(); readout();
+  }
+  Kit.onShow.card = draw;
+  let lastBox = '';
+  new ResizeObserver(() => { const b = jar.getBoundingClientRect(), k = Math.round(b.width) + 'x' + Math.round(b.height); if (k !== lastBox && B) { lastBox = k; draw(); } }).observe(jar);
+  Kit.play.card = async () => { tap(B.bx + B.bw * .5, B.water + B.bh * .1); await new Promise(r => setTimeout(r, Kit.calm ? 60 : 2300)); };
+})();
+Kit.single();
+</script>
+</html>

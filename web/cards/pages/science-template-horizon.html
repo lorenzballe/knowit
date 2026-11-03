@@ -1,0 +1,168 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-template-horizon -->
+<title>Astute free card: the template horizon</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#sec{flex:1;min-height:0;width:100%;display:block}
+#ctrl{display:flex;flex-direction:column;gap:.8cqh}
+#scrub{width:100%;accent-color:var(--k);height:max(3.6cqh,24px);margin:0;cursor:pointer}
+#steps{display:flex;justify-content:space-between;font:700 max(1.5cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#steps span.on{color:var(--k)}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:2.6em;margin:0;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.6cqh}
+#why .body{font:500 max(1.85cqh,13px)/1.3 var(--body);margin:0}
+.lab{font-family:var(--body);font-weight:800}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Scrub · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">What is a ‘template horizon’ in drawing a geological cross-section?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sec" aria-label="A geological cross-section built step by step"></svg>
+      <div id="ctrl">
+        <input id="scrub" type="range" min="0" max="400" value="0" step="1" aria-label="Step through the construction">
+        <div id="steps"><span class="on">START</span><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <p id="cap">A blank section: only the ground surface is known.</p>
+      <div id="why" class="gone">
+        <p class="body">The template horizon is a key layer, like a particular sandstone or limestone, found more or less across the whole section.</p>
+        <p class="body">You draw it first. Every other horizon is then built from it, so the layers stay continuous and consistent.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the slider to build the section, step by step.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Draw one key layer first, and let it guide all the rest.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Costruzione di sezioni geologiche - video-corso” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const CAPS = [
+  'A blank section: only the ground surface is known.',
+  'Step 1 · Split the section into domains, one per formation, in simple colours.',
+  'Step 2 · Put on all the data you have: where layers reach the surface, and how they dip.',
+  'Step 3 · Draw the template horizon: the key layer, present across most of the section. It goes first.',
+  'Step 4 · Now draw every other horizon, guided by the template.'
+];
+const FILLS = ['#e9d3a3', '#d98f5f', '#f0c35a', '#8fb3c8', '#a9c38c'];
+const TPL = 1; // index of the template horizon
+let G = null, done = false, lastStep = -1;
+const svg = Kit.$('sec');
+const clamp = v => Math.max(0, Math.min(1, v));
+
+Kit.onShow.card = () => {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const top = x => H * .2 + H * .045 * Math.sin(x / W * 5 + 1) + H * .02 * Math.sin(x / W * 13);
+  const A = H * .11;
+  const hy = (i, x) => H * (.33 + .14 * i) + A * Math.sin(x / W * Math.PI * 2 + .6);
+  const xs = []; for (let x = 0; x <= W + .1; x += Math.max(2, W / 160)) xs.push(Math.min(x, W));
+  const line = fn => xs.map((x, j) => (j ? 'L' : 'M') + x.toFixed(1) + ',' + fn(x).toFixed(1)).join('');
+  const N = 4;
+
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'ground'}, defs);
+  Kit.mk('path', {d: line(top) + `L${W},${H}L0,${H}Z`}, cp);
+
+  // ground (blank)
+  Kit.mk('path', {d: line(top) + `L${W},${H}L0,${H}Z`, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'}, svg);
+  // domains
+  const dom = Kit.mk('g', {'clip-path': 'url(#ground)', opacity: 0}, svg);
+  for (let k = 0; k <= N; k++) {
+    const upper = k === 0 ? (x => 0) : (x => hy(k - 1, x));
+    const lower = k === N ? (x => H) : (x => hy(k, x));
+    const d = line(upper) + xs.slice().reverse().map(x => 'L' + x.toFixed(1) + ',' + lower(x).toFixed(1)).join('') + 'Z';
+    Kit.mk('path', {d, fill: FILLS[k]}, dom);
+  }
+  // other horizons
+  const others = [];
+  const hg = Kit.mk('g', {'clip-path': 'url(#ground)'}, svg);
+  for (let i = 0; i < N; i++) {
+    if (i === TPL) continue;
+    const p = Kit.mk('path', {d: line(x => hy(i, x)), fill: 'none', stroke: '#1d1a17', 'stroke-width': Math.max(2, H * .006), 'stroke-linecap': 'round'}, hg);
+    others.push(p);
+  }
+  // template horizon
+  const tpl = Kit.mk('path', {d: line(x => hy(TPL, x)), fill: 'none', stroke: '#c8281e', 'stroke-width': Math.max(4.5, H * .014), 'stroke-linecap': 'round'}, hg);
+  // topography
+  Kit.mk('path', {d: line(top), fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(2.5, H * .008), 'stroke-linejoin': 'round'}, svg);
+  // data: outcrops with dip ticks
+  const data = Kit.mk('g', {opacity: 0}, svg);
+  const dots = [];
+  for (let i = 0; i < N; i++) {
+    for (let j = 1; j < xs.length; j++) {
+      const a = hy(i, xs[j - 1]) - top(xs[j - 1]), b = hy(i, xs[j]) - top(xs[j]);
+      if (a * b < 0) {
+        const x = xs[j - 1] + (xs[j] - xs[j - 1]) * a / (a - b), y = top(x);
+        if (x < W * .04 || x > W * .96) continue;
+        const s = (hy(i, x + 1) - hy(i, x - 1)) / 2, L = H * .06, n = Math.hypot(1, s);
+        const g = Kit.mk('g', {}, data);
+        Kit.mk('line', {x1: x, y1: y, x2: x + L / n * (s > 0 ? 1 : -1) * 1, y2: y + Math.abs(L * s / n), stroke: 'var(--k)', 'stroke-width': Math.max(2.5, H * .008), 'stroke-linecap': 'round'}, g);
+        Kit.mk('circle', {cx: x, cy: y, r: Math.max(4, H * .013), fill: 'var(--k)'}, g);
+        dots.push(g);
+      }
+    }
+  }
+  // labels
+  const fs = Math.max(13, f);
+  const topLab = Kit.mk('text', {x: W * .03, y: Math.max(fs, top(W * .03) - fs * .7), class: 'lab', 'font-size': fs, fill: 'var(--k)'}, svg);
+  topLab.textContent = 'Ground surface';
+  const lx = W * .5;
+  const ly = hy(TPL, lx) + fs * 1.5;
+  const tlab = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'middle', class: 'lab', 'font-size': fs * 1.05, fill: '#fff', stroke: '#c8281e', 'stroke-width': fs * .45, 'paint-order': 'stroke', 'stroke-linejoin': 'round', opacity: 0}, svg);
+  tlab.textContent = 'TEMPLATE HORIZON';
+
+  const tl = tpl.getTotalLength();
+  tpl.setAttribute('stroke-dasharray', tl); 
+  const ol = others.map(p => { const l = p.getTotalLength(); p.setAttribute('stroke-dasharray', l); return l; });
+  G = {dom, data, dots, tpl, tl, others, ol, tlab};
+  render(+Kit.$('scrub').value);
+};
+
+function render(v) {
+  if (!G) return;
+  const s = v / 100;
+  G.dom.setAttribute('opacity', (clamp(s) * .9).toFixed(3));
+  const d = clamp(s - 1);
+  G.data.setAttribute('opacity', d > 0 ? 1 : 0);
+  G.dots.forEach((g, i) => g.setAttribute('opacity', clamp(d * G.dots.length - i * .8).toFixed(3)));
+  const t = clamp((s - 2) * 1.15);
+  G.tpl.setAttribute('stroke-dashoffset', (G.tl * (1 - t)).toFixed(1));
+  G.tlab.setAttribute('opacity', clamp((s - 2.6) * 3).toFixed(3));
+  const o = clamp(s - 3);
+  G.others.forEach((p, i) => p.setAttribute('stroke-dashoffset', (G.ol[i] * (1 - clamp(o * 1.6 - i * .3))).toFixed(1)));
+
+  const step = Math.min(4, Math.floor(s + .02));
+  if (step !== lastStep) {
+    lastStep = step;
+    Kit.$('cap').textContent = CAPS[step];
+    [...Kit.$('steps').children].forEach((e, i) => e.classList.toggle('on', i <= step));
+    Kit.haptic('selection');
+  }
+  if (v >= 395 && !done) {
+    done = true; Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from('#why .body', {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
+  } else if (v < 380 && done) {
+    done = false; Kit.show('cap'); Kit.show('say'); Kit.hide('why'); Kit.hide('keep');
+  }
+}
+Kit.$('scrub').addEventListener('input', e => render(+e.target.value));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#sec', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'});
+  const o = {v: 0};
+  gsap.to(o, {v: 30, duration: .5, delay: .6, yoyo: true, repeat: 1, ease: 'power2.inOut',
+    onUpdate: () => { if (+Kit.$('scrub').value <= 30) { Kit.$('scrub').value = Math.round(o.v); render(o.v); } }});
+};
+
+Kit.play.card = async () => {
+  const r = Kit.$('scrub');
+  for (let v = 0; v <= 400; v += 20) { r.value = v; r.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(z => setTimeout(z, 30)); }
+  await new Promise(z => setTimeout(z, 600));
+};
+Kit.single();
+</script>
+</html>

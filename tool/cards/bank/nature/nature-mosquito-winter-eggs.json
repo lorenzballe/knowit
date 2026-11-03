@@ -1,0 +1,37 @@
+{
+  "id": "nature-mosquito-winter-eggs",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.pests",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Tiger mosquitoes can't stand the cold. So how are they back every spring?",
+  "answer": "The adult tiger mosquito dies in the cold. Before winter, it lays eggs that resist freezing and drying out. The eggs stay dormant through winter and hatch when warmth returns in spring.",
+  "move": "The adults die in winter; the eggs carry the species to spring.",
+  "keywords": [
+    "tiger mosquito",
+    "aedes albopictus",
+    "mosquito eggs",
+    "winter",
+    "spring"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled Winter Eggs asks how tiger mosquitoes come back each spring when they cannot tolerate cold. Three options are offered: adults hide and sleep, eggs wait out winter, or they fly to warmer places. The reader picks one, rates confidence, then watches a winter timeline."
+  },
+  "source": "Geopop, “Dove vanno le #zanzare d’inverno? Saperlo, può aiutarci a ridurne la proliferazione” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=W4at5XxD9y0&t=48s",
+  "written": "2026-11-03"
+}

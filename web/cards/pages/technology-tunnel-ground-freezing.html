@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-tunnel-ground-freezing -->
+<title>Freezing the ground to dig a tunnel</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1cqh;flex:1;min-height:0}
+#step{font:700 max(2cqh,13px)/1.25 var(--body);min-height:2.5em;margin:0;color:var(--k)}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ew-resize;display:block}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess a number · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TUNNELS</span></div>
+    <h2 class="q">How do you dig a tunnel under a river without it flooding?</h2>
+    <div class="stagebox" id="stage">
+      <p id="step">Under the river Isarco, the soil is soaked with water.</p>
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="why" class="gone"><p class="body">The water in the soil would pour into the dig. Liquid nitrogen at −196 °C freezes it into a solid shell, then brine keeps it below −10 °C. Both stay inside the pipes: soil and groundwater are untouched.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the marker: how cold is the liquid they pump into the ground?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Freeze the water in wet ground and it becomes a wall you can dig inside.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const T1 = -250, REAL = -196, BRINE = -10;
+let guess = -60, locked = false, moved = false, revealed = false, phase = 0, done = false, dragging = false;
+let G = {}, calls = [];
+const svg = Kit.$('pic');
+const DROPS = Array.from({length: 70}, () => [Kit.rnd(), Kit.rnd()]);
+const STEPS = [
+  'Under the river Isarco, the soil is soaked with water.',
+  '1 · Drill holes all around the future tunnel.',
+  '2 · Pipes in the holes carry liquid nitrogen at −196 °C.',
+  '3 · The water in the soil freezes: the ground turns solid.',
+  '4 · Brine replaces the nitrogen, keeping it below −10 °C.',
+  '5 · Now dig safely inside the frozen shell.'
+];
+const ink = 'fill:var(--k)';
+function tx(t){ return G.x0 + (t / T1) * (G.x1 - G.x0); }
+function lab(x, y, s, size, extra){
+  const w = s.length * size * 0.56; let a = 'middle';
+  if (x - w/2 < 4){ x = 4; a = 'start'; } else if (x + w/2 > G.W - 4){ x = G.W - 4; a = 'end'; }
+  return Kit.mk('text', {x, y, 'text-anchor': a, 'font-size': size, style: (extra || ink) + ';font-family:var(--body);font-weight:700'}, svg).textContent = s;
+}
+function draw(){
+  const {W, H, f} = Kit.fitSvg(svg); svg.innerHTML = '';
+  const fs = Math.max(f * 0.85, 12);
+  const scaleH = fs * 5.4, picH = Math.max(0, H - scaleH);
+  G = {W, H, f, fs, picH, x0: fs * 1.4, x1: W - fs * 1.4};
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'cp'}, defs);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: picH, rx: fs * .8}, cp);
+  const gr = Kit.mk('linearGradient', {id: 'tg', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#ff8a3d'}, gr);
+  Kit.mk('stop', {offset: .5, 'stop-color': '#7fb8ff'}, gr);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#37e6ff'}, gr);
+  const pic = Kit.mk('g', {'clip-path': 'url(#cp)'}, svg);
+  const rivH = picH * .14;
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: picH, fill: '#6b4629'}, pic);
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: rivH, fill: '#2f7fd1'}, pic);
+  if (rivH >= fs * 1.2){
+    const rt = Kit.mk('text', {x: fs * .7, y: rivH / 2 + fs * .35, 'font-size': fs, fill: '#fff', style: 'font-family:var(--body);font-weight:700'}, pic);
+    rt.textContent = 'River Isarco';
+  }
+  const cx = W / 2, cy = rivH + (picH - rivH) * .54;
+  const r = Math.max(0, Math.min(W * .2, (picH - rivH) * .26)), rh = r * 1.25, rz = r * 1.55;
+  Object.assign(G, {cx, cy, r});
+  const fz = Kit.mk('circle', {id: 'fz', cx, cy, r: rz, fill: '#cdeffd', opacity: phase >= 3 ? .62 : 0}, pic);
+  DROPS.forEach(([u, v]) => {
+    const x = u * W, y = rivH + fs * .5 + v * (picH - rivH - fs);
+    const inz = Math.hypot(x - cx, y - cy) < rz;
+    Kit.mk('circle', {cx: x, cy: y, r: Math.max(2.2, r * .045), fill: inz && phase >= 3 ? '#ffffff' : '#5fb8ff', class: inz ? 'dz' : 'd'}, pic);
+  });
+  const hc = phase >= 4 ? '#c38bff' : phase >= 2 ? '#7df9ff' : '#1d140c';
+  for (let i = 0; i < 14; i++){
+    const a = i / 14 * Math.PI * 2;
+    Kit.mk('circle', {cx: cx + Math.cos(a) * rh, cy: cy + Math.sin(a) * rh, r: Math.max(3.5, r * .08), fill: hc, stroke: '#fff', 'stroke-width': 1.5, class: 'hole', opacity: phase >= 1 ? 1 : 0}, pic);
+  }
+  Kit.mk('circle', {id: 'tun', cx, cy, r, fill: phase >= 5 ? '#141414' : 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-dasharray': phase >= 5 ? 'none' : '6 5'}, pic);
+  if (r >= fs * 1.2){
+    const tt = Kit.mk('text', {x: cx, y: cy + fs * .35, 'text-anchor': 'middle', 'font-size': fs, fill: '#fff', style: 'font-family:var(--body);font-weight:700'}, pic);
+    tt.textContent = phase >= 5 ? 'safe to dig' : 'tunnel';
+  }
+  // temperature scale
+  const ty = picH + fs * 2.3;
+  Kit.mk('line', {x1: G.x0, x2: G.x1, y1: ty, y2: ty, stroke: 'url(#tg)', 'stroke-width': fs * .45, 'stroke-linecap': 'round'}, svg);
+  for (let t = 0; t >= T1; t -= 50){
+    Kit.mk('line', {x1: tx(t), x2: tx(t), y1: ty + fs * .3, y2: ty + fs * .6, style: 'stroke:var(--k)', 'stroke-width': 1.5}, svg);
+    const l = Kit.mk('text', {x: tx(t), y: ty + fs * 1.6, 'text-anchor': t === 0 ? 'start' : t === T1 ? 'end' : 'middle', 'font-size': fs, style: ink + ';font-family:var(--mono);opacity:.7'}, svg);
+    l.textContent = t === 0 ? '0 °C' : (t + '').replace('-', '−');
+  }
+  const gm = Kit.mk('g', {id: 'gm'}, svg);
+  Kit.mk('circle', {cx: tx(guess), cy: ty, r: fs * .62, fill: '#fff', style: 'stroke:var(--k)', 'stroke-width': 3}, gm);
+  lab(tx(guess), ty - fs * 1.05, (revealed ? 'you: ' : 'your guess ') + (guess + ' °C').replace('-', '−'), fs);
+  if (revealed){
+    const rm = Kit.mk('g', {id: 'rm'}, svg);
+    Kit.mk('path', {d: `M${tx(REAL)} ${ty - fs * .25}l${-fs * .5} ${-fs * .8}h${fs}z`, fill: '#00b7d6', stroke: '#fff', 'stroke-width': 1.5}, rm);
+    lab(tx(REAL), ty + fs * 3.2, '−196 °C nitrogen', fs, 'fill:#0096b3');
+    if (phase >= 4){
+      Kit.mk('path', {id: 'bm', d: `M${tx(BRINE)} ${ty - fs * .25}l${-fs * .5} ${-fs * .8}h${fs}z`, fill: '#a06bff', stroke: '#fff', 'stroke-width': 1.5}, svg);
+      lab(tx(BRINE), ty + fs * 3.2, '−10 °C brine', fs, 'fill:#8a52f0');
+    }
+  }
+}
+function setGuess(cx){
+  const b = svg.getBoundingClientRect(), x = (cx - b.left) * (G.W / b.width);
+  guess = Math.round(Math.max(0, Math.min(1, (x - G.x0) / (G.x1 - G.x0))) * T1);
+  draw();
+  if (!moved){ moved = true; sure.on(); }
+}
+svg.addEventListener('pointerdown', e => {
+  if (locked) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch(_){}
+  Kit.haptic('selection'); setGuess(e.clientX);
+});
+svg.addEventListener('pointermove', e => { if (dragging && !locked) setGuess(e.clientX); });
+svg.addEventListener('pointerup', () => { dragging = false; });
+svg.addEventListener('pointercancel', () => { dragging = false; });
+
+function goPhase(p){
+  phase = p; Kit.$('step').textContent = STEPS[p]; draw(); Kit.haptic('light');
+  if (Kit.calm) return;
+  if (p === 1) gsap.from('.hole', {opacity: 0, scale: 0, transformOrigin: '50% 50%', stagger: .05, duration: .3});
+  if (p === 2) gsap.from('.hole', {attr: {fill: '#1d140c'}, stagger: .04, duration: .4});
+  if (p === 3){ gsap.from('#fz', {attr: {r: G.r * 1.1}, opacity: 0, duration: .9, ease: 'power2.out'}); gsap.from('.dz', {attr: {fill: '#5fb8ff'}, stagger: .02, duration: .4}); }
+  if (p === 4){ gsap.from('.hole', {attr: {fill: '#7df9ff'}, stagger: .04, duration: .4}); gsap.from('#bm', {opacity: 0, y: -8, duration: .4}); }
+  if (p === 5) gsap.from('#tun', {attr: {r: 0}, duration: .8, ease: 'power2.out'});
+}
+function finish(){
+  if (done) return; done = true;
+  calls.forEach(c => c.kill()); calls = [];
+  phase = 5; Kit.hide('step'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  draw(); Kit.haptic('success');
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  locked = true; revealed = true;
+  const ok = Math.abs(guess - REAL) <= 30, said = (guess + ' °C').replace('-', '−');
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  sure.grade(ok, pct, `${said}, ${ok ? 'close' : 'off'}: it is −196 °C`);
+  Kit.hide('say'); draw();
+  if (Kit.calm){ finish(); return; }
+  gsap.from('#rm', {opacity: 0, y: -12, duration: .5, ease: 'back.out'});
+  for (let p = 1; p <= 5; p++) calls.push(gsap.delayedCall(.9 + (p - 1) * 1.5, () => goPhase(p)));
+  calls.push(gsap.delayedCall(.9 + 5 * 1.5, finish));
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.fromTo('#gm', {opacity: 0}, {opacity: 1, duration: .5});
+  gsap.from('.d,.dz', {opacity: 0, stagger: .01, duration: .3});
+};
+Kit.play.card = async () => {
+  const b = svg.getBoundingClientRect();
+  const X = t => b.left + tx(t) * b.width / G.W, Y = b.top + (G.picH + G.fs * 2.3) * b.height / G.H;
+  const ev = (n, t) => svg.dispatchEvent(new PointerEvent(n, {clientX: X(t), clientY: Y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', -80); ev('pointermove', -150); ev('pointermove', -180); ev('pointerup', -180);
+  await new Promise(r => setTimeout(r, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 400));
+  finish();
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

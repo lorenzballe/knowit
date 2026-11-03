@@ -1,0 +1,37 @@
+{
+  "id": "history-celluloid-fire",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Why was celluloid, the first plastic, so dangerous to make?",
+  "answer": "In 1863 American inventor John Wesley Hyatt created celluloid, the first ancestor of plastic. It was revolutionary, but it caught fire so easily that making it was very risky. The danger was its extreme flammability, not poison gas or shattering.",
+  "move": "The first plastic was a breakthrough and a fire hazard at once.",
+  "keywords": [
+    "celluloid",
+    "john wesley hyatt",
+    "plastic",
+    "flammability",
+    "factory fire"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice question asking why celluloid, the first plastic, was so dangerous to make. Four options: it gave off poison gas, it caught fire extremely easily, it shattered like glass, or it was extremely flammable. The reader picks the danger, then watches a workshop."
+  },
+  "source": "Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=MRju0pJp3mk&t=51s",
+  "written": "2026-11-03"
+}

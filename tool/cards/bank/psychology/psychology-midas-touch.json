@@ -1,0 +1,37 @@
+{
+  "id": "psychology-midas-touch",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.reciprocity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a light touch from your waiter change how much you tip?",
+  "answer": "In a 1984 study in Mississippi, a waitress who touched a diner lightly while handing back change got bigger tips than one who did not touch. Waitresses who repeated the order word for word also got bigger tips (van Baaren, 2003). Touched diners tipped more but rated the waitress no higher.",
+  "move": "Touched diners tipped more but rated the waitress no higher. Money moved; opinions didn’t.",
+  "keywords": [
+    "waitress",
+    "tipping",
+    "light_touch",
+    "restaurants",
+    "mississippi"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive page asking whether a light touch from a waiter changes tipping. Choices: no touch, shoulder, or palm. The reader drags the waitress's hand onto a diner or taps a receipt to see the effect."
+  },
+  "source": "Diventare Strong, “►MiniCorso: Come Capire Se Piaci A Qualcuno con il Linguaggio Del Corpo (completo)” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=i8FeDp1g5Ic",
+  "written": "2026-11-03"
+}

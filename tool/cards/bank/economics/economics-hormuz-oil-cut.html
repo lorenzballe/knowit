@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-hormuz-oil-cut -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#g{flex:1;min-height:0;width:100%;display:block}
+#scrub{display:flex;flex-direction:column;gap:.6cqh;padding:0 2cqw}
+#t{width:100%;margin:0;accent-color:var(--k);height:max(3.6cqh,26px);cursor:pointer}
+.ticks{display:flex;justify-content:space-between;font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:5.2cqh;margin:0;overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Scrub · timeline">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OIL SUPPLY</span></div>
+    <h2 class="q">What would a prolonged total closure of Hormuz cut from global oil supply?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="g"></svg>
+      <div id="scrub">
+        <input type="range" id="t" min="0" max="1000" value="0" aria-label="Time since the strait closed">
+        <div class="ticks"><span>Open</span><span>Closed</span><span>Long closure</span></div>
+      </div>
+      <p id="cap">Strait open: tankers pass, the world gets all its oil.</p>
+      <div id="why" class="gone"><p class="body">A big share of the world's oil sails through this one narrow strait. Block it for long and 15–20% of global supply can't reach buyers. Brent already hit almost $94 a barrel, up 8%.</p></div>
+    </div>
+    <p class="say" id="say">Drag the timeline: keep the strait shut longer and longer.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One strait carries up to a fifth of the world's oil.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#d6453d';
+let P = 0, done = false, R = null;
+const st = {p: 0};
+
+function arcPath(cx, cy, r, v0, v1) {
+  const pt = v => { const a = Math.PI * (1 - v / 100); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
+  const [x0, y0] = pt(v0), [x1, y1] = pt(v1);
+  const large = (v1 - v0) > 100 ? 1 : 0;
+  return `M${x0.toFixed(2)},${y0.toFixed(2)} A${r},${r} 0 ${large} 1 ${x1.toFixed(2)},${y1.toFixed(2)}`;
+}
+
+function render(p) {
+  if (!R) return;
+  const q = Math.max(0, Math.min(1, (p - 0.15) / 0.85));
+  const lo = 100 - 20 * q, hi = 100 - 15 * q;
+  const {cx, cy, r} = R;
+  R.solid.setAttribute('d', arcPath(cx, cy, r, 0, lo));
+  R.band.setAttribute('d', q > 0.001 ? arcPath(cx, cy, r, lo, hi) : '');
+  R.lost.setAttribute('d', q > 0.001 ? arcPath(cx, cy, r, hi, 100) : '');
+  R.band.style.opacity = q > 0.001 ? 1 : 0;
+  R.big.textContent = q < 0.02 ? '100%' : `${Math.round(lo)}–${Math.round(hi)}%`;
+  R.sub.textContent = q < 0.02 ? 'nothing lost' : `−${Math.round(15 * q)}–${Math.round(20 * q)}% lost`;
+  R.sub.style.fill = q < 0.02 ? 'var(--muted)' : RED;
+  // tankers: flow while open, stop and pile up when closed
+  const cap = Kit.$('cap');
+  cap.textContent = p < 0.12 ? 'Strait open: tankers pass, the world gets all its oil.'
+    : p < 0.55 ? 'The strait closes. A short block plays out fast, both ways.'
+    : p < 0.97 ? 'The block drags on: the oil that sails through Hormuz goes missing.'
+    : 'Prolonged total closure: 15–20% of world oil supply is gone.';
+}
+
+function setP(p) {
+  P = p; render(p);
+  if (p >= 0.97 && !done) {
+    done = true; Kit.haptic('success');
+    Kit.hide('cap'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, duration: .45, stagger: .1, ease: 'power3.out'});
+  }
+}
+
+Kit.$('t').addEventListener('input', e => { setP(+e.target.value / 1000); });
+Kit.$('t').addEventListener('pointerdown', () => Kit.haptic('selection'));
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('g');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.max(40, Math.min(W * 0.4, H * 0.66));
+  const sw = r * 0.2;
+  const cx = W / 2, cy = Math.min(H - f * 2.2, H * 0.5 + r * 0.55);
+  const mk = (t, a) => Kit.mk(t, a, svg);
+  mk('path', {d: arcPath(cx, cy, r, 0, 100), style: `fill:none;stroke:var(--k);stroke-opacity:.1;stroke-width:${sw}px`});
+  const solid = mk('path', {style: `fill:none;stroke:var(--k);stroke-width:${sw}px`});
+  const band = mk('path', {style: `fill:none;stroke:${RED};stroke-opacity:.45;stroke-width:${sw}px`});
+  const lost = mk('path', {style: `fill:none;stroke:${RED};stroke-width:${sw}px`});
+  // ticks at 80 and 85
+  [80, 85].forEach(v => {
+    const a = Math.PI * (1 - v / 100);
+    mk('line', {x1: cx + (r - sw / 2 - 2) * Math.cos(a), y1: cy - (r - sw / 2 - 2) * Math.sin(a), x2: cx + (r + sw / 2 + 2) * Math.cos(a), y2: cy - (r + sw / 2 + 2) * Math.sin(a), style: 'stroke:var(--c);stroke-width:2px'});
+  });
+  const fs = Math.max(12, f);
+  const tl = (x, y, s, txt, anchor, w) => { const t = mk('text', {x, y, 'text-anchor': anchor, style: `font:${w} ${s}px var(--body);fill:var(--k)`}); t.textContent = txt; return t; };
+  tl(cx - r, cy + fs * 1.5, fs, '0%', 'middle', 700).style.fill = 'var(--muted)';
+  tl(cx + r, cy + fs * 1.5, fs, '100%', 'middle', 700).style.fill = 'var(--muted)';
+  const bs = Math.max(20, Math.min(r * 0.3, f * 2.8));
+  const big = tl(cx, cy - fs * 1.7, bs, '100%', 'middle', 800);
+  big.style.fontFamily = 'var(--display)';
+  const sub = tl(cx, cy, fs, 'nothing lost', 'middle', 700);
+  const lab = tl(cx, cy - fs * 1.7 - bs * 1.25, fs, 'WORLD OIL SUPPLY', 'middle', 700);
+  lab.style.letterSpacing = '.08em'; lab.style.fill = 'var(--muted)';
+  R = {cx, cy, r, solid, band, lost, big, sub};
+  render(P);
+};
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#g', {opacity: 0, scale: .96, transformOrigin: '50% 60%', duration: .5, ease: 'power3.out'});
+  gsap.fromTo('#t', {x: 0}, {x: 6, duration: .25, repeat: 3, yoyo: true, delay: .7, ease: 'sine.inOut'});
+};
+
+Kit.play.card = async () => {
+  const t = Kit.$('t');
+  for (let v = 0; v <= 1000; v += 100) { t.value = v; t.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 40)); }
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

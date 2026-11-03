@@ -1,0 +1,148 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-ocean-salt-cube -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#map{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.2cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{font:700 max(2cqh,14px)/1.25 var(--body)}
+#cube{cursor:grab}
+#cube.drag{cursor:grabbing}
+.lbl{font-family:var(--body);font-weight:800;letter-spacing:.06em}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Drag · see it">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN SALT</span></div>
+    <h2 class="q">If all the oceans' salt were one cube, how big would it be?</h2>
+    <div class="stagebox" id="stage"><svg id="map" aria-label="Map of Sicily with a draggable block of salt"></svg></div>
+    <p class="say" id="say">Drag the salt block onto Sicily and watch it rise.</p>
+    <div id="why" class="gone"><p class="big">265 km on each side</p><p class="body">Pile up every grain of salt dissolved in the seas and you get a cube about as wide as all of Sicily. Standing beside Etna, you would look up at a wall of salt.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The oceans hold an island-sized cube of salt: about 265 km a side.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché il sodio esplode a contatto con l’acqua? La reazione chimica spiegata con un esperimento” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SIDE = 265, TX = 10, TN = -45, Z0 = 12;
+const st = {x: -80, n: 300, z: Z0, placed: false, done: false};
+const SIC = [[12.42,37.80],[12.50,38.02],[12.73,38.18],[12.88,38.03],[13.30,38.23],[13.37,38.12],[14.02,38.04],[14.75,38.16],[15.24,38.26],[15.65,38.27],[15.55,38.19],[15.29,37.85],[15.09,37.50],[15.22,37.23],[15.29,37.07],[15.13,36.69],[14.85,36.72],[14.25,37.06],[13.94,37.10],[13.58,37.27],[13.08,37.50],[12.59,37.65]]
+  .map(([lo, la]) => [(lo - 12.42) * 88, (la - 36.69) * 111, 0]);
+let G = null, E = {};
+const svg = Kit.$('map');
+function P(x, n, z = 0) { return [G.ox + G.s * (x + 0.3 * n), G.oy - G.s * (0.5 * n + z)]; }
+function pts(a) { return a.map(p => P(p[0], p[1], p[2] || 0).map(v => v.toFixed(1)).join(',')).join(' '); }
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const pad = Math.max(8, f * .6);
+  const sw = 372, sh = 415;
+  const s = Math.min((W - 2 * pad) / sw, (H - 2 * pad) / sh);
+  G = {W, H, f, s, ox: (W - sw * s) / 2 + 14 * s, oy: (H - sh * s) / 2 + 385 * s};
+  const k = 'var(--k)';
+  Kit.mk('rect', {x: 0, y: 0, width: W, height: H, rx: f * .8, fill: `color-mix(in srgb, ${k} 8%, transparent)`}, svg);
+  // waves
+  const wg = Kit.mk('g', {stroke: `color-mix(in srgb, ${k} 18%, transparent)`, 'stroke-width': Math.max(1, f * .08), fill: 'none', 'stroke-linecap': 'round'}, svg);
+  [[290, 60], [-40, 120], [230, 280], [-20, 420], [200, -20]].forEach(([x, n]) => {
+    const [a, b] = P(x, n); const w = f * 1.2;
+    Kit.mk('path', {d: `M${a},${b} q${w / 4},${-w / 4} ${w / 2},0 t${w / 2},0`}, wg);
+  });
+  E.land = Kit.mk('polygon', {points: pts(SIC), fill: `color-mix(in srgb, ${k} 30%, var(--c))`, stroke: k, 'stroke-width': Math.max(1.5, f * .12), 'stroke-linejoin': 'round'}, svg);
+  const [lx, ly] = P(95, 75);
+  E.sic = Kit.mk('text', {x: lx, y: ly, 'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * .95}, svg); E.sic.textContent = 'SICILY';
+  const [ex, ey] = P(226, 118);
+  E.etna = Kit.mk('g', {}, svg);
+  Kit.mk('path', {d: `M${ex - f * .5},${ey} L${ex},${ey - f * .7} L${ex + f * .5},${ey} Z`, fill: k}, E.etna);
+  const et = Kit.mk('text', {x: ex, y: ey + f * 1.1, 'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * .75}, E.etna); et.textContent = 'Etna';
+  E.ghost = Kit.mk('polygon', {points: pts([[TX, TN], [TX + SIDE, TN], [TX + SIDE, TN + SIDE], [TX, TN + SIDE]]), fill: 'none', stroke: k, 'stroke-width': Math.max(1.5, f * .12), 'stroke-dasharray': `${f * .5} ${f * .4}`, opacity: st.placed ? 0 : .7}, svg);
+  E.cube = Kit.mk('g', {id: 'cube'}, svg);
+  const sw2 = Math.max(1.5, f * .13);
+  E.front = Kit.mk('polygon', {fill: '#ffffff', 'fill-opacity': .9, stroke: k, 'stroke-width': sw2, 'stroke-linejoin': 'round'}, E.cube);
+  E.east = Kit.mk('polygon', {fill: '#dfe7ee', 'fill-opacity': .9, stroke: k, 'stroke-width': sw2, 'stroke-linejoin': 'round'}, E.cube);
+  E.top = Kit.mk('polygon', {fill: '#f6f9fc', 'fill-opacity': .92, stroke: k, 'stroke-width': sw2, 'stroke-linejoin': 'round'}, E.cube);
+  E.name = Kit.mk('text', {'text-anchor': 'middle', fill: '#1a1a1a', class: 'lbl', 'font-size': f * .85, 'pointer-events': 'none'}, E.cube); E.name.textContent = 'ALL OCEAN SALT';
+  E.dimB = Kit.mk('text', {'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * 1.05}, svg);
+  E.dimV = Kit.mk('text', {'text-anchor': 'middle', fill: k, class: 'lbl', 'font-size': f * 1.05}, svg);
+  E.cube.addEventListener('pointerdown', down);
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {x, n, z} = st, x1 = x + SIDE, n1 = n + SIDE, f = G.f;
+  E.front.setAttribute('points', pts([[x, n, 0], [x1, n, 0], [x1, n, z], [x, n, z]]));
+  E.east.setAttribute('points', pts([[x1, n, 0], [x1, n1, 0], [x1, n1, z], [x1, n, z]]));
+  E.top.setAttribute('points', pts([[x, n, z], [x1, n, z], [x1, n1, z], [x, n1, z]]));
+  const t = Math.min(1, Math.max(0, (z - 40) / 120));
+  const a = P(x + SIDE / 2, n + SIDE / 2, z), b = P(x + SIDE / 2, n, z / 2);
+  E.name.setAttribute('x', a[0] + (b[0] - a[0]) * t);
+  E.name.setAttribute('y', a[1] + (b[1] - a[1]) * t + f * .3);
+  const on = st.placed && z > 30;
+  const [bx, by] = P(x + SIDE / 2, n, 0);
+  E.dimB.setAttribute('x', bx); E.dimB.setAttribute('y', by + f * 1.4);
+  E.dimB.textContent = on ? '← 265 km →' : '';
+  const [vx, vy] = P(x, n, z / 2);
+  E.dimV.setAttribute('transform', `translate(${vx - f * .7},${vy}) rotate(-90)`);
+  E.dimV.textContent = on ? `${Math.round(z)} km` : '';
+}
+
+let drag = null;
+function down(e) {
+  if (st.placed) return;
+  e.preventDefault();
+  drag = {sx: e.clientX, sy: e.clientY, x: st.x, n: st.n, moved: false, id: e.pointerId};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  E.cube.classList.add('drag'); Kit.haptic('selection');
+}
+svg.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const r = svg.getBoundingClientRect(), sc = G.W / r.width;
+  const dX = (e.clientX - drag.sx) * sc, dY = (e.clientY - drag.sy) * sc;
+  if (Math.hypot(dX, dY) > 6) drag.moved = true;
+  const dn = -dY / (0.5 * G.s), dx = dX / G.s - 0.3 * dn;
+  st.x = drag.x + dx; st.n = drag.n + dn; render();
+});
+function up() {
+  if (!drag) return;
+  const moved = drag.moved; drag = null; E.cube.classList.remove('drag');
+  if (!moved || Math.hypot(st.x - TX, st.n - TN) < 120) place();
+  else Kit.$('say').textContent = 'Closer: drop it on the dashed square over Sicily.';
+}
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+function place() {
+  if (st.placed) return;
+  st.placed = true; Kit.haptic('light');
+  gsap.killTweensOf(E.ghost); gsap.to(E.ghost, {opacity: 0, duration: .3});
+  if (Kit.calm) { Object.assign(st, {x: TX, n: TN, z: SIDE}); render(); finish(); return; }
+  gsap.to(st, {x: TX, n: TN, duration: .45, ease: 'power3.out', onUpdate: render, onComplete: () =>
+    gsap.to(st, {z: SIDE, duration: 2, ease: 'power2.inOut', onUpdate: render, onComplete: finish})});
+}
+function finish() {
+  if (st.done) return; st.done = true; render();
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
+}
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || st.placed || !E.ghost) return;
+  gsap.fromTo(E.ghost, {opacity: .25}, {opacity: .85, duration: .8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  gsap.from(E.cube, {opacity: 0, y: -G.f, duration: .6, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const r = E.top.getBoundingClientRect();
+  const o = {bubbles: true, pointerId: 1, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2};
+  E.top.dispatchEvent(new PointerEvent('pointerdown', o));
+  svg.dispatchEvent(new PointerEvent('pointerup', o));
+  await new Promise(res => setTimeout(res, Kit.calm ? 300 : 3200));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,402 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     Copy it beside the card's JSON as tool/cards/bank/<topic>/<id>.html, give the JSON a "web"
+     object (docs/REMOTE.md, Free cards) and make the page the story's. Then:
+       python3 tool/cards/check.py                                  the gate
+       node tool/cards/card_check.cjs tool/cards/bank/<topic>/<id>.html   three phones, start and end
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched: the app puts
+     the kit and the fonts inside the page, and the checker serves them from docs/cards/kit/. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<!-- Libraries: only what the card uses, from kit/vendor/ (docs/cards/kit/LIBRERIE.md). -->
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{position:relative;display:block;min-height:0}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize;outline:none;border-radius:max(2cqh,10px)}
+#cv:focus-visible{box-shadow:0 0 0 max(.3cqh,2px) var(--k)}
+#why .body{margin:0}
+</style>
+<!-- data-topic is the card's topic: the kit dresses the card in the subject's colour, mark and name
+     (in the app, in the reader's language). The id stays "card". -->
+<article class="card" id="card" data-topic="science" data-kind="Drag · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LIGHT WAVES</span></div>
+    <!-- Word for word the card's own question: the app shows it on the poster before the page is drawn. -->
+    <h2 class="q">What pattern appears on the screen when two narrow slits are used?</h2>
+    <div class="stagebox" id="stage">
+      <canvas id="cv" tabindex="0" role="slider" aria-label="Light meter on the screen at the bottom of the box" aria-valuemin="-100" aria-valuemax="100" aria-valuenow="-68"></canvas>
+    </div>
+    <p class="say" id="say">Drag along the screen to see where the light lands.</p>
+    <div id="why" class="gone"><p class="body"><b>One bright middle, not two lines.</b> There both trips are equal, so the waves arrive in step and add up. Half a wave longer, they cancel; a whole wave, they add up again.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Two slits, one bright middle: light waves that arrive in step add up.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Original Double Slit Experiment” (YouTube, 2013)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv');
+const TAU = Math.PI * 2, OM = TAU / 1.2, hyp = Math.hypot;
+// Sunlight as seven colours: wavelength (against the middle green) and its share of red, green, blue.
+const SPEC = [[.80, .25, 0, 1], [.855, 0, .45, 1], [.91, 0, 1, .6], [.964, .3, 1, 0], [1.036, .95, 1, 0], [1.09, 1, .55, 0], [1.164, 1, 0, 0]]
+  .map(s => [s[0], s[1] / 3.5, s[2] / 4, s[3] / 2.6]);
+const AMBER = '#ffb547', SKY = '#5cc8ff', N = 120;
+const seen = new Float32Array(N), lit = new Float32Array(N);   // which parts of the screen the reader has looked at
+const S = {px: -.68, t: 0, mix: 0, reveal: 0, ghost: 1, fieldA: .55, path: 1, read: 1, lab: 0, pulse: 2,
+  touched: false, drag: false, done: false, pending: false, st: -1, buzz: 0};
+const G = {}, F = {};
+let ctx = null, W = 0, H = 0, fs = 13, body = 'system-ui,sans-serif', hand = 'cursive', ready = false, running = false, last = 0;
+
+const sinc = z => Math.abs(z) < 1e-4 ? 1 : Math.sin(z) / z;
+const env = (s, lam) => sinc(Math.PI * G.a * s / lam);          // how much of one slit's wave heads that way
+
+// The two trips, from each slit to a point x (px from the middle) of the screen.
+function trips(x) {
+  const y = G.L, x1 = x + G.d / 2, x2 = x - G.d / 2, r1 = hyp(x1, y), r2 = hyp(x2, y), dl = r1 - r2, q = Math.abs(dl) / G.lam;
+  return {r1, r2, q, psi: TAU * dl / G.lam, A1: env(x1 / r1, G.lam), A2: env(x2 / r2, G.lam), c: Math.cos(Math.PI * q) ** 2};
+}
+function fmtQ(q) {
+  const h = Math.round(q * 2) / 2;
+  if (h > 0 && Math.abs(q - h) < .07) { const w = Math.floor(h); return `${w || ''}${h - w ? '½' : ''} ${h > 1 ? 'waves' : 'wave'}`; }
+  return `${q.toFixed(1)} waves`;
+}
+const line1 = P => P.q < .08 ? 'Both trips equal' : `One trip ${fmtQ(P.q)} longer`;
+const line2 = P => P.c > .75 ? 'In step: they add up' : P.c < .25 ? 'Out of step: they cancel' : 'Partly out of step';
+
+function rr(x, y, w, h, r) {
+  const c = ctx; r = Math.max(0, Math.min(r, w / 2, h / 2));
+  c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+}
+function txt(s, x, y, size, weight, color, align, fam) {
+  const c = ctx; c.font = `${weight} ${size}px ${fam || body}`; c.fillStyle = color; c.textAlign = align || 'left'; c.textBaseline = 'middle';
+  c.fillText(s, x, y);
+}
+function fit(s, size, weight, maxW) {
+  let z = size; ctx.font = `${weight} ${z}px ${body}`;
+  while (z > 10 && ctx.measureText(s).width > maxW) { z -= .5; ctx.font = `${weight} ${z}px ${body}`; }
+  return z;
+}
+function tri(x, y, dir, s) { const c = ctx; c.beginPath(); c.moveTo(x + dir * s, y); c.lineTo(x, y - s * .8); c.lineTo(x, y + s * .8); c.closePath(); c.fill(); }
+
+// ---------- geometry, at the card's real size ----------
+function layout() {
+  cv.style.width = cv.style.height = '';
+  const f = Kit.fitCanvas(cv); ctx = f.x; W = f.W; H = f.H;
+  if (!ctx || W < 60 || H < 90) return;
+  const card = Kit.$('card'), cq = (card.clientHeight || 600) / 100, cs = getComputedStyle(card);
+  fs = Math.max(13, Math.min(18, 1.9 * cq));
+  body = cs.getPropertyValue('--body').trim() || body;
+  hand = cs.getPropertyValue('--hand').trim() || body;
+  G.R = Math.max(10, 2 * cq); G.cx = W / 2;
+  G.sunH = Math.max(14, Math.min(64, H * .11));
+  G.cardT = Math.max(4, Math.min(9, H * .02));
+  G.slitY = G.sunH + G.cardT;
+  G.gap = Math.max(4, H * .012);
+  G.readH = H < 230 ? fs * 2.5 : Math.max(fs * 2.9, Math.min(H * .16, fs * 4));
+  G.floorH = Math.max(12, Math.min(30, H * .07));
+  G.floorY = H - G.readH - G.floorH;
+  G.L = Math.max(30, G.floorY - G.slitY);
+  G.fx0 = W * .05; G.fx1 = W * .95; G.half = (G.fx1 - G.fx0) / 2;
+  G.d = Math.max(18, Math.min(34, W * .075)); G.a = G.d / 2;   // slits close together, each half as wide as the gap
+  // the wavelength that puts the screen's edge 1.72 waves off: centre, two side bands, then dark
+  G.lam = (hyp(G.half + G.d / 2, G.L) - hyp(G.half - G.d / 2, G.L)) / 1.72;
+  let lo = 0, hi = G.half;                                        // where one trip is a whole wave longer
+  for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (hyp(m + G.d / 2, G.L) - hyp(m - G.d / 2, G.L) < G.lam) lo = m; else hi = m; }
+  G.x1 = lo; G.x1n = lo / G.half;
+  G.lamD = Math.max(12, Math.min(22, G.L * .055));                // drawn ripple length
+  G.amp = Math.max(2.4, Math.min(4.5, G.lamD * .2));
+  G.lw = Math.max(1.6, Math.min(2.6, W * .006));
+  G.thumbW = Math.max(16, W * .055);
+  G.slitW = Math.max(3, Math.min(5, W * .011));
+  buildField(); buildScreen();
+  const P = trips(S.px * G.half); cv.setAttribute('aria-valuetext', `${line1(P)}. ${line2(P)}.`);
+  draw();
+}
+
+// The light in the box: each slit's wave on its own (mix 0) or the two added together (mix 1).
+function buildField() {
+  const sc = 3, fw = Math.max(8, Math.round(W / sc)), fh = Math.max(4, Math.round(G.L / sc));
+  if (!F.cv) F.cv = document.createElement('canvas');
+  F.cv.width = fw; F.cv.height = fh; F.x = F.cv.getContext('2d'); F.img = F.x.createImageData(fw, fh); F.w = fw; F.h = fh;
+  const n = fw * fh, sx = W / fw, sy = G.L / fh, kd = TAU / G.lamD, R0 = .22 * G.L;
+  F.sep = new Float32Array(n * 3); F.int = new Float32Array(n * 3);
+  F.cm = new Float32Array(n); F.sm = new Float32Array(n); F.rm = new Float32Array(n); F.maxR = hyp(W / 2, G.L);
+  for (let j = 0; j < fh; j++) {
+    const y = (j + .5) * sy;
+    for (let i = 0; i < fw; i++) {
+      const x = (i + .5) * sx - G.cx, k = j * fw + i, x1 = x + G.d / 2, x2 = x - G.d / 2;
+      const r1 = hyp(x1, y), r2 = hyp(x2, y), dl = r1 - r2, rm = hyp(x, y), s1 = x1 / r1, s2 = x2 / r2;
+      const g1 = 1 / Math.sqrt(1 + r1 / R0), g2 = 1 / Math.sqrt(1 + r2 / R0);
+      let a = 0, b = 0, c = 0, p = 0, q = 0, r = 0;
+      for (const [f, wr, wg, wb] of SPEC) {
+        const lam = G.lam * f, A1 = env(s1, lam) * g1, A2 = env(s2, lam) * g2;
+        const Is = (A1 * A1 + A2 * A2) / 4, Ii = Is + A1 * A2 * Math.cos(TAU * dl / lam) / 2;
+        a += wr * Is; b += wg * Is; c += wb * Is; p += wr * Ii; q += wg * Ii; r += wb * Ii;
+      }
+      F.sep[k * 3] = a; F.sep[k * 3 + 1] = b; F.sep[k * 3 + 2] = c;
+      F.int[k * 3] = p; F.int[k * 3 + 1] = q; F.int[k * 3 + 2] = r;
+      F.cm[k] = Math.cos(kd * rm); F.sm[k] = Math.sin(kd * rm); F.rm[k] = rm;
+    }
+  }
+}
+function screenRGB(x, out) {
+  const y = G.L, x1 = x + G.d / 2, x2 = x - G.d / 2, r1 = hyp(x1, y), r2 = hyp(x2, y), dl = r1 - r2, s1 = x1 / r1, s2 = x2 / r2;
+  out[0] = out[1] = out[2] = 0;
+  for (const [f, wr, wg, wb] of SPEC) {
+    const lam = G.lam * f, A1 = env(s1, lam), A2 = env(s2, lam), I = (A1 * A1 + A2 * A2 + 2 * A1 * A2 * Math.cos(TAU * dl / lam)) / 4;
+    out[0] += wr * I; out[1] += wg * I; out[2] += wb * I;
+  }
+}
+function buildScreen() {
+  const n = Math.max(32, Math.round((G.fx1 - G.fx0) / 2)), rows = 12, o = [0, 0, 0], K = 2.4, nrm = 1 - Math.exp(-K);
+  if (!F.scv) F.scv = document.createElement('canvas');
+  F.scv.width = n; F.scv.height = rows; F.sx = F.scv.getContext('2d'); F.simg = F.sx.createImageData(n, rows);
+  F.sw = n; F.rows = rows; F.scol = new Float32Array(n * 3); F.prof = [];
+  for (let i = 0; i < n; i++) {
+    screenRGB(((i + .5) / n * 2 - 1) * G.half, o);
+    for (let k = 0; k < 3; k++) F.scol[i * 3 + k] = (1 - Math.exp(-K * o[k])) / nrm;
+  }
+  for (let r = 0; r < rows; r++) { const z = (r - (rows - 1) / 2) / (rows * .3); F.prof.push(Math.exp(-z * z)); }
+}
+function litAt(xn) {
+  const f = (xn + 1) / 2 * (N - 1), i = Math.max(0, Math.min(N - 2, Math.floor(f))), u = Math.max(0, Math.min(1, f - i));
+  return lit[i] * (1 - u) + lit[i + 1] * u;
+}
+
+// ---------- drawing ----------
+function draw() {
+  if (!ctx || !G.half || !F.img) return;
+  const c = ctx;
+  c.save(); c.clearRect(0, 0, W, H);
+  rr(0, 0, W, H, G.R); c.clip();
+  c.fillStyle = '#080a11'; c.fillRect(0, 0, W, H);
+  drawSun(); drawField(); drawSlits(); drawGhost(); drawFloor(); drawTrips(); drawThumb(); drawRead();
+  c.restore();
+  rr(.75, .75, W - 1.5, H - 1.5, G.R); c.strokeStyle = 'rgba(255,255,255,.12)'; c.lineWidth = 1.5; c.stroke();
+}
+function drawSun() {
+  const c = ctx, h = G.sunH, g = c.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, '#fff4c8'); g.addColorStop(1, '#ffb443');
+  c.fillStyle = g; c.fillRect(0, 0, W, h);
+  c.save(); c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 1.2; c.setLineDash([h * .3, h * .25]);
+  c.lineDashOffset = Kit.calm ? 0 : -S.t * h * 1.2;
+  for (let i = 0; i < 12; i++) { const x = (i + .5) * W / 12; c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); }
+  c.restore();
+  if (h > fs * 1.7) {
+    const y = h * .5, col = '#5a3405';
+    txt('sunlight', G.fx0, y, fs * .85, 700, col);
+    txt('two narrow slits', G.cx, y, fs * .85, 700, col, 'center');
+  }
+}
+function drawField() {
+  const d = F.img.data, n = F.w * F.h, m = S.mix, calm = Kit.calm, C = Math.cos(OM * S.t), Sn = Math.sin(OM * S.t);
+  const pr = S.pulse * F.maxR, pw = .08 * G.L, doP = S.pulse < 1.25, base = S.fieldA * 4.6, sep = F.sep, int = F.int;
+  for (let k = 0; k < n; k++) {
+    let mod = calm ? .8 : .62 + .38 * (F.cm[k] * C + F.sm[k] * Sn);
+    if (doP) { const z = (F.rm[k] - pr) / pw; mod += 1.1 * Math.exp(-z * z); }
+    const f = base * mod, k3 = k * 3, o = k * 4;
+    d[o] = 255 * (1 - Math.exp(-f * (sep[k3] + (int[k3] - sep[k3]) * m)));
+    d[o + 1] = 255 * (1 - Math.exp(-f * (sep[k3 + 1] + (int[k3 + 1] - sep[k3 + 1]) * m)));
+    d[o + 2] = 255 * (1 - Math.exp(-f * (sep[k3 + 2] + (int[k3 + 2] - sep[k3 + 2]) * m)));
+    d[o + 3] = 255;
+  }
+  F.x.putImageData(F.img, 0, 0);
+  const c = ctx; c.save(); c.globalCompositeOperation = 'lighter'; c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';
+  c.drawImage(F.cv, 0, G.slitY, W, G.L); c.restore();
+}
+function drawSlits() {
+  const c = ctx, y = G.sunH, t = G.cardT;
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (const sg of [-1, 1]) {
+    const x = G.cx + sg * G.d / 2, r = G.d * 1.2, g = c.createRadialGradient(x, G.slitY, 0, x, G.slitY, r);
+    g.addColorStop(0, 'rgba(255,248,225,.55)'); g.addColorStop(1, 'rgba(255,248,225,0)');
+    c.fillStyle = g; c.fillRect(x - r, G.slitY, r * 2, r);
+  }
+  c.restore();
+  c.fillStyle = '#16110c'; c.fillRect(0, y, W, t);
+  c.fillStyle = 'rgba(255,255,255,.3)'; c.fillRect(0, y, W, 1);
+  c.fillStyle = '#fff8dc';
+  for (const sg of [-1, 1]) c.fillRect(G.cx + sg * G.d / 2 - G.slitW / 2, y, G.slitW, t);
+}
+function drawGhost() {          // the obvious guess: straight through, two lines
+  if (S.ghost < .01) return;
+  const c = ctx; c.save(); c.globalAlpha = S.ghost;
+  c.setLineDash([3, 5]); c.strokeStyle = 'rgba(255,255,255,.42)'; c.lineWidth = 1.3;
+  for (const sg of [-1, 1]) { const x = G.cx + sg * G.d / 2; c.beginPath(); c.moveTo(x, G.slitY + 3); c.lineTo(x, G.floorY - 3); c.stroke(); }
+  c.setLineDash([]);
+  txt('two lines?', G.cx - G.d / 2 - 7, G.floorY - fs, fs * 1.1, 400, 'rgba(255,255,255,.82)', 'right', hand);
+  c.restore();
+}
+function drawFloor() {
+  const c = ctx, w = G.fx1 - G.fx0;
+  rr(G.fx0, G.floorY, w, G.floorH, G.floorH / 2); c.fillStyle = '#161c2a'; c.fill();
+  const n = F.sw, rows = F.rows, d = F.simg.data;
+  for (let i = 0; i < n; i++) {
+    const v = 255 * Math.max(S.reveal, litAt((i + .5) / n * 2 - 1));
+    for (let r = 0; r < rows; r++) {
+      const p = v * F.prof[r], o = (r * n + i) * 4;
+      d[o] = p * F.scol[i * 3]; d[o + 1] = p * F.scol[i * 3 + 1]; d[o + 2] = p * F.scol[i * 3 + 2]; d[o + 3] = 255;
+    }
+  }
+  F.sx.putImageData(F.simg, 0, 0);
+  c.save(); c.globalCompositeOperation = 'lighter'; c.imageSmoothingEnabled = true;
+  c.globalAlpha = .5; c.drawImage(F.scv, G.fx0, G.floorY - G.floorH, w, G.floorH * 3);
+  c.globalAlpha = 1; c.drawImage(F.scv, G.fx0, G.floorY, w, G.floorH);
+  c.restore();
+  txt('screen', G.fx1, G.floorY - fs * .75, fs * .8, 700, 'rgba(255,255,255,.55)', 'right');
+}
+function drawTrips() {          // the wave's two trips, from each slit to the meter
+  if (S.path < .01) return;
+  const c = ctx, x = S.px * G.half, P = trips(x), ex = G.cx + x, ey = G.floorY, tt = Kit.calm ? 0 : OM * S.t;
+  c.save(); c.globalAlpha = S.path; c.lineWidth = G.lw; c.lineCap = 'round'; c.lineJoin = 'round';
+  for (const [sg, r, col] of [[-1, P.r1, AMBER], [1, P.r2, SKY]]) {
+    const sx = G.cx + sg * G.d / 2, sy = G.slitY, ux = (ex - sx) / r, uy = (ey - sy) / r;
+    const k = (TAU * Math.max(1, Math.round(r / G.lamD)) + (TAU * r / G.lam) % TAU) / r;   // leaves in step, arrives with its true phase
+    const n = Math.max(24, Math.ceil(r / 2.5));
+    c.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const s = r * i / n, w = G.amp * Math.min(1, s / G.lamD) * Math.sin(k * s - tt);
+      const X = sx + ux * s - uy * w, Y = sy + uy * s + ux * w;
+      i ? c.lineTo(X, Y) : c.moveTo(X, Y);
+    }
+    c.strokeStyle = col; c.stroke();
+  }
+  c.restore();
+}
+function drawThumb() {
+  const c = ctx, px = G.cx + S.px * G.half, tw = G.thumbW, cy = G.floorY + G.floorH / 2;
+  rr(px - tw / 2, G.floorY - 5, tw, G.floorH + 10, Math.min(8, tw / 2));
+  c.fillStyle = 'rgba(255,255,255,.07)'; c.fill(); c.lineWidth = 2; c.strokeStyle = '#fff'; c.stroke();
+  c.beginPath(); c.arc(px, G.floorY, 2.6, 0, TAU); c.fillStyle = '#fff'; c.fill();
+  if (!S.touched) {
+    const s = Math.max(5, G.floorH * .3), o = tw / 2 + 5 + (Kit.calm ? 0 : 2.5 * (1 + Math.sin(S.t * 4)));
+    c.save(); c.fillStyle = '#fff'; tri(px - o, cy, -1, s); tri(px + o, cy, 1, s); c.restore();
+  }
+}
+function wave(x0, cy, w, amp, ph, tt, col, lw) {
+  const c = ctx, n = Math.max(20, Math.ceil(w / 2));
+  c.beginPath();
+  for (let i = 0; i <= n; i++) { const u = i / n, y = cy - amp * Math.cos(TAU * 2.2 * u - tt + ph); i ? c.lineTo(x0 + u * w, y) : c.moveTo(x0, y); }
+  c.strokeStyle = col; c.lineWidth = lw; c.lineCap = 'round'; c.stroke();
+}
+function drawRead() {
+  const c = ctx, top = G.floorY + G.floorH + G.gap, h = H - top - G.gap, cy = top + h / 2;
+  if (S.read > .01) {           // what reaches the meter: the two waves and their sum
+    const P = trips(S.px * G.half), gx = G.fx0, gw = Math.min((G.fx1 - G.fx0) * .34, h * 3), s = h * .2, tt = Kit.calm ? 0 : OM * S.t;
+    const ph = P.psi / 2, M = Math.sqrt(Math.max(0, P.A1 * P.A1 + P.A2 * P.A2 + 2 * P.A1 * P.A2 * Math.cos(P.psi)));
+    const phs = Math.atan2((P.A1 - P.A2) * Math.sin(ph), (P.A1 + P.A2) * Math.cos(ph));
+    c.save(); c.globalAlpha = S.read;
+    c.fillStyle = 'rgba(255,255,255,.14)'; c.fillRect(gx, cy - .5, gw, 1);
+    wave(gx, cy, gw, s * M, phs, tt, '#fff', Math.max(2.4, G.lw * 1.4));
+    wave(gx, cy, gw, s * P.A1, ph, tt, AMBER, G.lw * .85);
+    wave(gx, cy, gw, s * P.A2, -ph, tt, SKY, G.lw * .85);
+    const tx = gx + gw + Math.max(10, W * .04), mw = G.fx1 - tx, l1 = line1(P), l2 = line2(P);
+    txt(l1, tx, cy - fs * .62, fit(l1, fs * .85, 600, mw), 600, 'rgba(255,255,255,.65)');
+    txt(l2, tx, cy + fs * .6, fit(l2, fs, 800, mw), 800, '#fff');
+    c.restore();
+  }
+  if (S.lab > .01) {            // the end: what the screen shows
+    c.save(); c.globalAlpha = S.lab;
+    const z = fs, z2 = fs * .82, y1 = cy - fs * .55, y2 = cy + fs * .62;
+    c.font = `600 ${z2}px ${body}`; const wS = c.measureText('strongest').width, wW = c.measureText('weaker').width;
+    c.font = `800 ${z}px ${body}`; const wR = c.measureText('rainbow').width, ws = Math.max(wR, wW);
+    const xl = Math.min(W / 2 - ws / 2 - 4, Math.max(G.x1 * 1.04, wS / 2 + ws / 2 + 8));
+    txt('white', G.cx, y1, z, 800, '#fff', 'center');
+    txt('strongest', G.cx, y2, z2, 600, 'rgba(255,255,255,.65)', 'center');
+    const cols = ['#a08cff', '#56b6ff', '#4fe3a6', '#ffe169', '#ffa04a', '#ff5f5f'];
+    for (const sg of [-1, 1]) {
+      const X = G.cx + sg * xl, g = c.createLinearGradient(X - sg * wR / 2, 0, X + sg * wR / 2, 0);
+      cols.forEach((col, i) => g.addColorStop(i / (cols.length - 1), col));
+      txt('rainbow', X, y1, z, 800, g, 'center');
+      txt('weaker', X, y2, z2, 600, 'rgba(255,255,255,.65)', 'center');
+    }
+    c.restore();
+  }
+}
+
+// ---------- motion ----------
+function frame() {
+  const now = performance.now(), dt = Math.min(.05, Math.max(0, (now - last) / 1000)); last = now;
+  S.t += dt;
+  const e = Math.min(1, dt * 8), e2 = Math.min(1, dt * 5), on = !S.done || S.drag;
+  for (let i = 0; i < N; i++) lit[i] += (seen[i] - lit[i]) * e;
+  S.read += ((on ? 1 : 0) - S.read) * e2;
+  S.lab = S.done ? 1 - S.read : 0;
+  S.path += ((on ? 1 : .4) - S.path) * e2;
+  draw();
+}
+function settle() { lit.set(seen); const on = !S.done || S.drag; S.read = on ? 1 : 0; S.lab = S.done ? 1 - S.read : 0; S.path = on ? 1 : .4; }
+function start() { if (running || Kit.calm) return; running = true; last = performance.now(); gsap.ticker.add(frame); }
+
+// ---------- the reader's hand ----------
+function toXn(clientX) { const r = cv.getBoundingClientRect(); return ((clientX - r.left) * (W / (r.width || 1)) - G.cx) / G.half; }
+function setProbe(xn, span) {
+  if (!G.half || !isFinite(xn)) return;
+  xn = Math.max(-.97, Math.min(.97, xn));
+  const rad = G.thumbW / 2 / G.half, a = span ? S.px : xn, lo = Math.min(a, xn) - rad, hi = Math.max(a, xn) + rad;
+  for (let i = 0; i < N; i++) { const u = i / (N - 1) * 2 - 1; if (u >= lo && u <= hi) seen[i] = 1; }
+  S.px = xn; S.touched = true;
+  const P = trips(xn * G.half), st = P.c > .75 ? 2 : P.c < .25 ? 0 : 1;
+  if (st !== S.st) { const now = performance.now(); if (st === 2 && now - S.buzz > 160) { Kit.haptic('light'); S.buzz = now; } S.st = st; }
+  cv.setAttribute('aria-valuenow', Math.round(xn * 100));
+  cv.setAttribute('aria-valuetext', `${line1(P)}. ${line2(P)}.`);
+  check();
+  if (!running) { settle(); draw(); }
+}
+function check() {              // the middle and one side band seen: the picture is complete
+  if (S.done || S.pending) return;
+  let cen = false, side = false, cov = 0;
+  for (let i = 0; i < N; i++) {
+    if (!seen[i]) continue; cov++;
+    const u = Math.abs(i / (N - 1) * 2 - 1);
+    if (u < .05) cen = true;
+    if (Math.abs(u - G.x1n) < .06) side = true;
+  }
+  if ((cen && side) || cov > N * .7) { S.pending = true; setTimeout(finish, 450); }
+}
+function finish() {
+  S.done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  const to = {reveal: 1, mix: 1, ghost: 0, fieldA: .9};
+  if (!running) { Object.assign(S, to); settle(); draw(); return; }
+  gsap.to(S, {...to, duration: 1.5, ease: 'power2.inOut'});
+  gsap.from('#why, #keep', {opacity: 0, y: 10, duration: .5, stagger: .12, ease: 'power3.out', clearProps: 'opacity,transform'});
+}
+cv.addEventListener('pointerdown', e => {
+  e.preventDefault(); S.drag = true;
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  start(); setProbe(toXn(e.clientX), false);
+});
+cv.addEventListener('pointermove', e => { if (S.drag) setProbe(toXn(e.clientX), true); });
+const up = () => { if (!S.drag) return; S.drag = false; if (!running) { settle(); draw(); } };
+cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up); cv.addEventListener('lostpointercapture', up);
+cv.addEventListener('keydown', e => {
+  const k = {ArrowLeft: -1, ArrowRight: 1}[e.key]; if (!k) return;
+  e.preventDefault(); start(); setProbe(S.px + k * .04, true);
+});
+if (window.ResizeObserver) new ResizeObserver(() => { if (ready) layout(); }).observe(Kit.$('stage'));
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => { ready = true; layout(); };
+// Motion the reader should see starts here: in the app the card is drawn before it comes up.
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  start(); S.pulse = 0;
+  gsap.to(S, {pulse: 1.3, duration: 2.4, ease: 'power1.out'});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = cv.getBoundingClientRect(), k = r.width / (W || 1), y = r.top + (G.floorY + G.floorH / 2) * k;
+  const fire = (type, xn) => cv.dispatchEvent(new PointerEvent(type, {bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch', isPrimary: true, clientX: r.left + (G.cx + xn * G.half) * k, clientY: y}));
+  const a = S.px, b = .8;
+  fire('pointerdown', a);
+  for (let i = 1; i <= 26; i++) { fire('pointermove', a + (b - a) * i / 26); await wait(32); }
+  fire('pointerup', b);
+  await wait(2400);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "history-swiss-nazi-gold",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Switzerland keep trading with Nazi Germany?",
+  "answer": "Switzerland was surrounded and dependent on imports from Germany and Italy, so it traded to survive. Its banks also bought Reich gold that it knew was partly taken from occupied countries and Holocaust victims, and they kept Nazi leaders' money, which was self-interest. Each fact can be weighed as survival or self-interest.",
+  "move": "Swiss wartime neutrality was chiaroscuro: survival and profit, side by side.",
+  "keywords": [
+    "switzerland",
+    "nazi-germany",
+    "gold",
+    "swiss-banks",
+    "neutrality"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card titled SWISS GOLD asks why Switzerland kept trading with Nazi Germany. A balance with two pans shows survival on one side and self-interest on the other, and the reader weighs each fact."
+  },
+  "source": "Geopop, “Perché la Svizzera è neutrale? Capiamo i motivi storici e geopolitici della sua imparzialità” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=2Y0RgQmmESI&t=398s",
+  "written": "2026-11-03"
+}

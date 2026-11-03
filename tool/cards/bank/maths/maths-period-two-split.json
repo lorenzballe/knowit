@@ -1,0 +1,37 @@
+{
+  "id": "maths-period-two-split",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.compounding",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to the logistic map when the growth rate R passes 3?",
+  "answer": "Past R = 3, the population never settles on one value. Year after year it flips between a high level and a low level. Above R = 3, one equilibrium becomes two, and the population alternates.",
+  "move": "Above R = 3 one equilibrium becomes two, and the population alternates.",
+  "keywords": [
+    "logistic map",
+    "population",
+    "growth rate",
+    "equilibrium",
+    "alternation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A graph titled 'The logistic map' asks what happens when growth rate R passes 3. A control sets R, with marks at 2.5, 2.8, 3 and 3.4, and a Run button plays 30 years of population, which alternates between high and low levels once R is above 3."
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=244s",
+  "written": "2026-11-03"
+}

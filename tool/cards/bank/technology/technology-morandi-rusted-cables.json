@@ -1,0 +1,38 @@
+{
+  "id": "technology-morandi-rusted-cables",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "What percentage of cables in Pile 9's stay were found to be corroded?",
+  "answer": "Investigators studied fragment 132 of the fallen Morandi bridge and found that 99% of the steel cables inside Pile 9's stays were corroded. The stay did not break at one weak spot. Almost all of its steel had already been eaten away.",
+  "move": "Pile 9 failed because nearly all its steel was rusted, not one bad spot.",
+  "keywords": [
+    "ponte_morandi",
+    "genoa",
+    "pile_9",
+    "corrosion",
+    "stay_cable"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A row of 100 dots, each standing for 1% of the steel cables in Pile 9's stay of the Morandi bridge. The reader drags to guess what percentage were corroded, then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “Il crollo del Ponte Morandi a Genova, l'inedita ricostruzione video in 3D al momento del collasso” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=mh5JHir3bYQ&t=299s",
+  "written": "2026-11-03"
+}

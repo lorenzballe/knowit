@@ -1,0 +1,37 @@
+{
+  "id": "science-tiny-earth-wobble",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Earth and Moon pull each other equally hard. Why does Earth barely wobble?",
+  "answer": "Earth and the Moon pull on each other equally hard. Earth barely wobbles because its effect is the pull divided by its mass, and Earth's huge mass gives it huge inertia, so the Moon's pull barely moves it. Dragging to make Earth heavier shows its wobble shrinking.",
+  "move": "A tiny effect isn't a tiny force: effect = force ÷ mass.",
+  "keywords": [
+    "earth",
+    "moon",
+    "inertia",
+    "newton"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Earth and the Moon, shown pulling on each other with equal force. A draggable control makes Earth heavier while its wobble is shown. Asks: why does Earth barely wobble?",
+    "ground": "#0b1026"
+  },
+  "source": "Veritasium, “Best Film on Newton's Third Law. Ever.” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=8bTdMmNZm2M",
+  "written": "2026-11-03"
+}

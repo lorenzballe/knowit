@@ -1,0 +1,38 @@
+{
+  "id": "human_body-coca-hunger-thirst",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.hunger_signals",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Chewing coca leaves, how many hours do Potosí miners go without food or water?",
+  "answer": "In the Potosí silver mine, miners chew coca leaves to avoid eating and drinking, because the leaves make hunger and thirst go away. So they work 12 to 14 hour shifts on nothing. Coca doesn't feed the miners; it silences their hunger and thirst.",
+  "move": "Coca doesn't feed the miners; it silences their hunger and thirst.",
+  "keywords": [
+    "coca leaves",
+    "potosi",
+    "silver mine",
+    "miners",
+    "bolivia"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute free card, titled Tap to count. It asks how many hours Potosí miners go without food or water while chewing coca leaves. A clock to tap, one tap per hour, with an inner ring for your guess and an outer ring for the miners.",
+    "graded": false
+  },
+  "source": "Geopop, “Viaggio a Potosi, nella miniera d'argento boliviana: una realtá sconcertante” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=88cWsU7e7js&t=612s",
+  "written": "2026-11-03"
+}

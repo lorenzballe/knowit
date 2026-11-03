@@ -1,0 +1,37 @@
+{
+  "id": "science-carbon-in-steel",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do tiny carbon atoms make iron so much harder?",
+  "answer": "Carbon atoms are much smaller than iron atoms, so they fit inside the iron's crystal. Trapped there, they push the lattice outward and put the steel under stress, so more carbon makes steel harder and more rigid. The cost is that it also turns brittle.",
+  "move": "Small carbon atoms wedged in iron push outward; that stress is what makes steel hard.",
+  "keywords": [
+    "steel",
+    "carbon",
+    "iron",
+    "lattice",
+    "hardness"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Asks how tiny carbon atoms make iron so much harder. Shows a steel blade; tapping the blade zooms in to its atoms, with carbon atoms wedged inside the iron crystal."
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA&t=969s",
+  "written": "2026-11-03"
+}

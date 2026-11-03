@@ -1,0 +1,37 @@
+{
+  "id": "psychology-loss-weighs-double",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.stress_and_choices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much more heavily do people weight losses than gains?",
+  "answer": "Losses are felt much more intensely than gains. Most people weight a loss around twice as heavily, so an even 50/50 bet feels bad. One person in the video wanted about $100 to risk $10.",
+  "move": "A loss weighs about twice a gain, so we turn down good bets.",
+  "keywords": [
+    "coin-flip",
+    "bet",
+    "losses",
+    "gains",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A coin-flip bet: lose $10 or win a larger amount. A draggable slider sets the win amount, and the reader drags it up until the bet feels fair. The page explains that losses weigh about twice as much as gains."
+  },
+  "source": "Veritasium, “Would You Take This Bet?” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=vBX-KulgJ1o&t=152s",
+  "written": "2026-11-03"
+}

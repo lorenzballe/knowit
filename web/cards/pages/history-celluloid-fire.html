@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-celluloid-fire -->
+<title>Celluloid's fatal flaw</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3.2cqh,20px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRST PLASTIC</span></div>
+    <h2 class="q">Why was celluloid, the first plastic, so dangerous to make?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">It gave off poison gas</button>
+        <button class="opt" data-i="1">It caught fire extremely easily</button>
+        <button class="opt" data-i="2">It shattered like glass</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Extremely flammable</p><p class="body">In 1863 the American inventor John Wesley Hyatt created celluloid, the first ancestor of plastic. It was revolutionary, but it caught fire so easily that making it was very risky.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick the danger, then watch the workshop.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The first plastic was a breakthrough and a fire hazard at once.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Addio alla plastica monouso: origine e produzione del materiale che ha causato danni e inquinamento” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, burned = false, G = null, loops = [];
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  burn(true);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function flamePath(x, y, w, h){
+  return `M${x},${y} Q${x-w*.1},${y-h*.55} ${x+w*.3},${y-h*.75} Q${x+w*.35},${y-h*.45} ${x+w*.5},${y-h} Q${x+w*.65},${y-h*.5} ${x+w*.75},${y-h*.7} Q${x+w*1.1},${y-h*.5} ${x+w},${y} Z`;
+}
+
+function draw(){
+  loops.forEach(t => t.kill()); loops = [];
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (!W || !H) return;
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  const glow = mk('rect', {x: 0, y: 0, width: W, height: H, rx: f*.8, style: 'fill:#ff6a00;opacity:0'});
+  // Labels, top left
+  const fs = Math.max(f*1.9, 18), fs2 = Math.max(f*.95, 12);
+  mk('text', {x: W*.05, y: fs*1.05, style: `font:800 ${fs}px var(--display);fill:var(--k)`}).textContent = '1863';
+  mk('text', {x: W*.05, y: fs*1.05 + fs2*1.6, style: `font:600 ${fs2}px var(--body);fill:var(--k);opacity:.75`}).textContent = 'a celluloid workshop';
+  const top = fs*1.05 + fs2*2.6;
+  const gy = H - Math.max(2, f*.3), x0 = W*.06, x1 = W*.94;
+  const wallTop = top + (gy - top)*.28;
+  // Roof (sawtooth) and chimney
+  const n = 4, step = (x1 - x0)/n;
+  let d = `M${x0},${wallTop}`;
+  for (let i = 0; i < n; i++) d += ` L${x0+step*i+step*.75},${top+(wallTop-top)*.25} L${x0+step*(i+1)},${wallTop}`;
+  const chX = x1 - step*.35, chW = Math.max(W*.05, 10), chTop = Math.max(top - (wallTop-top)*.2, fs*.4);
+  const smoke = mk('g', {});
+  mk('rect', {x: chX, y: chTop, width: chW, height: wallTop - chTop, style: 'fill:var(--k)'});
+  mk('path', {d: d + ` L${x1},${gy} L${x0},${gy} Z`, style: 'fill:color-mix(in srgb,var(--k) 10%,var(--c));stroke:var(--k);stroke-width:' + Math.max(2, f*.18) + ';stroke-linejoin:round'});
+  // Windows in roof teeth
+  const wins = [];
+  for (let i = 0; i < n; i++) {
+    const wx = x0 + step*i + step*.45, wy = top + (wallTop-top)*.55;
+    wins.push(mk('rect', {x: wx, y: wy, width: step*.22, height: (wallTop-top)*.32, style: 'fill:var(--k);opacity:.25'}));
+  }
+  // Hanging lamp with a spark
+  const lx = x0 + step*.55, ly = wallTop + (gy-wallTop)*.14;
+  mk('line', {x1: lx, y1: wallTop, x2: lx, y2: ly, style: 'stroke:var(--k);stroke-width:' + Math.max(1.5, f*.1)});
+  mk('path', {d: `M${lx-f*.7},${ly+f*.6} L${lx-f*.3},${ly} L${lx+f*.3},${ly} L${lx+f*.7},${ly+f*.6} Z`, style: 'fill:var(--k)'});
+  const spark = mk('circle', {cx: lx, cy: ly + f*.85, r: Math.max(3, f*.28), style: 'fill:#ffb000'});
+  // Sheets of celluloid on racks
+  const m = 5, gap = (x1 - x0)/m, sw = gap*.62, sh = (gy - wallTop)*.5, sy = gy - sh;
+  const flames = [], sheets = [];
+  for (let i = 0; i < m; i++) {
+    const sx = x0 + gap*i + (gap - sw)/2;
+    sheets.push(mk('rect', {x: sx, y: sy, width: sw, height: sh, rx: f*.2, style: 'fill:#e9b04a;opacity:.7;stroke:var(--k);stroke-width:' + Math.max(1.5, f*.12)}));
+    mk('line', {x1: sx - gap*.12, y1: gy, x2: sx + sw + gap*.12, y2: gy, style: 'stroke:var(--k);stroke-width:' + Math.max(2, f*.25)});
+    const g = mk('g', {});
+    const fh = sh*1.5 + (i%2)*sh*.25;
+    mk('path', {d: flamePath(sx - sw*.15, gy, sw*1.3, fh), style: 'fill:#ff5a1f'}, g);
+    mk('path', {d: flamePath(sx + sw*.12, gy, sw*.76, fh*.62), style: 'fill:#ffd23a'}, g);
+    gsap.set(g, {transformOrigin: '50% 100%', scale: 0});
+    flames.push(g);
+  }
+  for (let i = 0; i < 3; i++) {
+    const c = mk('circle', {cx: chX + chW/2, cy: chTop, r: chW*.7, style: 'fill:var(--k);opacity:0'}, smoke);
+    loops.push(c);
+  }
+  G = {flames, sheets, wins, spark, glow, smoke: [...smoke.children], lx, ly, f, gy, chTop, x0, gap, sw, chW};
+  // idle spark flicker
+  if (!Kit.calm) loops.push(gsap.to(spark, {opacity: .25, duration: .18, repeat: -1, yoyo: true, ease: 'none'}));
+  if (burned) burn(false);
+}
+
+function burn(anim){
+  burned = true;
+  if (!G) return;
+  const {flames, sheets, wins, spark, glow, smoke} = G;
+  const instant = !anim || Kit.calm;
+  const tl = gsap.timeline();
+  loops.push(tl);
+  if (instant) {
+    gsap.set(spark, {opacity: 0});
+    gsap.set(flames, {scale: 1});
+    gsap.set(sheets, {style: 'fill:#3a1a08;opacity:.85'});
+    gsap.set(wins, {style: 'fill:#ff8a1f;opacity:1'});
+    gsap.set(glow, {opacity: .18});
+    smoke.forEach((c, i) => gsap.set(c, {opacity: .35 - i*.1, attr: {cy: G.chTop - G.chW*(1.2 + i*1.4), r: G.chW*(.9 + i*.4)}}));
+  } else {
+    Kit.haptic('light');
+    const tx = G.x0 + G.gap*.5, ty = G.gy - G.f;
+    tl.to(spark, {attr: {cx: tx, cy: ty}, opacity: 1, duration: .35, ease: 'power2.in'})
+      .set(spark, {opacity: 0})
+      .to(flames, {scale: 1, duration: .25, stagger: .09, ease: 'back.out(2)'})
+      .to(sheets, {style: 'fill:#3a1a08;opacity:.85', duration: .3, stagger: .09}, '<')
+      .to(wins, {style: 'fill:#ff8a1f;opacity:1', duration: .2, stagger: .06}, '<.1')
+      .to(glow, {opacity: .18, duration: .4}, '<');
+    smoke.forEach((c, i) => tl.to(c, {opacity: .35 - i*.1, attr: {cy: G.chTop - G.chW*(1.2 + i*1.4), r: G.chW*(.9 + i*.4)}, duration: .8}, '<.1'));
+    tl.call(() => Kit.haptic('success'));
+  }
+  if (!Kit.calm) flames.forEach((g, i) => loops.push(gsap.to(g, {scaleY: .82, scaleX: 1.06, duration: .14 + (i%3)*.04, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: instant ? 0 : .8 + i*.09})));
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1800)); };
+Kit.single();
+</script>
+</html>

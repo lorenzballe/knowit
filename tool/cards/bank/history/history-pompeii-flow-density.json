@@ -1,0 +1,36 @@
+{
+  "id": "history-pompeii-flow-density",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the pyroclastic flow fill the spaces of Pompeii?",
+  "answer": "The burning clouds that hit Pompeii, at 500–600 °C, were very dense. They did not pass over the town: they flooded it, filling every street, room and upper floor, from the ground to the rooftops.",
+  "move": "A dense flow doesn't pass over a city: it fills every space in it.",
+  "keywords": [
+    "pompeii",
+    "pyroclastic flow",
+    "vesuvius",
+    "density"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A slider running from thin cloud to very dense flow, with percentages from 0% to 100% for air and filled space. It asks how the pyroclastic flow filled the spaces of Pompeii, and the reader slides the cloud to see where it gets in."
+  },
+  "source": "Geopop, “\"Lo sapevate che i corpi di Pompei in realtà non sono “pietrificati”?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=mpjXhnluCv4&t=42s",
+  "written": "2026-11-03"
+}

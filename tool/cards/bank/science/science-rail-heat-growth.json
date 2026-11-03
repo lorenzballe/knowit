@@ -1,0 +1,37 @@
+{
+  "id": "science-rail-heat-growth",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much does a 12 m rail grow when it warms 40 °C?",
+  "answer": "A 40 °C rise makes 12 m of steel rail about 6 mm longer. Steel grows about 0.5 mm for every metre when it warms 40 °C. Over kilometres of track, people feared that growth would buckle the line.",
+  "move": "A 40 °C rise makes 12 m of steel rail about 6 mm longer.",
+  "keywords": [
+    "steel",
+    "rail",
+    "railway track",
+    "thermal expansion",
+    "veritasium"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A rail drawn beside a slider running from +0 °C to +40 °C. Question: how much does a 12 m rail grow when it warms 40 °C? Drag the slider to heat the rail from winter to summer."
+  },
+  "source": "Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Rdj5-6t6QI8&t=142s",
+  "written": "2026-11-03"
+}

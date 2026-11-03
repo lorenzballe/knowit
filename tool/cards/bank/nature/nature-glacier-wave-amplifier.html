@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-glacier-wave-amplifier -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#sw{display:flex;gap:2cqw}
+.sw{flex:1;font:700 max(2cqh,13px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3cqw;cursor:pointer}
+.sw.on{background:var(--k);color:var(--c);box-shadow:none}
+.sw small{display:block;font:500 max(1.5cqh,12px)/1.2 var(--body);opacity:.75;margin-top:.3cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Switch · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
+    <h2 class="q">What effect does a landslide hitting a glacier have on tsunami size?</h2>
+    <div class="stagebox" id="stage">
+      <div id="sw">
+        <button class="sw" data-m="0">Rock only<small>bare slope</small></button>
+        <button class="sw" data-m="1">Rock hits glacier<small>Lituya Bay, 1958</small></button>
+      </div>
+      <svg id="pic"></svg>
+    </div>
+    <p class="say" id="say">Flip between the two cases and watch the wave.</p>
+    <div id="why" class="gone"><p class="body">The rockslide alone was only 55 million m³. Striking the glacier tore loose ice and water too: the missing 245 million m³. Far more mass shoved into the bay makes a far taller wave.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A slide that hits ice drags the ice in with it: more volume, bigger wave.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let mode = -1, S = null, tl = null;
+const seen = new Set();
+const C = {sky:'#e8f3f8', rock:'#7a5236', rockE:'#4a3020', mtn:'#5b6370', mtnE:'#3c424c', ice:'#f2fbff', iceE:'#8fc3da', sea:'#1d5c8f', seaTop:'#3d86c0', drop:'#5fb0e6', ink:'#16202b', brown:'#a8683c', blue:'#2f8fd6'};
+
+function build(){
+  if (tl) tl.kill();
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const sea = H * .64, sx = W * .38;
+  const T = {x: W * .03, y: H * .3};
+  const dx = sx - T.x, dy = sea - T.y, L = Math.hypot(dx, dy);
+  const p = t => ({x: T.x + dx * t, y: T.y + dy * t});
+  const n = {x: dy / L, y: -dx / L};
+  const ang = Math.atan2(dy, dx) * 180 / Math.PI;
+  S = {W, H, fs, sea, sx, p, n, d: {x: dx / L, y: dy / L}, ang};
+  const m = (t, a, par) => Kit.mk(t, a, par || svg);
+  m('rect', {x: 0, y: 0, width: W, height: H, rx: Math.min(W, H) * .04, fill: C.sky});
+  // water
+  S.water = m('path', {fill: C.sea});
+  S.surf = m('path', {fill: 'none', stroke: C.seaTop, 'stroke-width': Math.max(2, H * .008), 'stroke-linejoin': 'round'});
+  // crest marks
+  S.lines = m('g', {});
+  // mountain
+  const tb = (H - T.y) / dy, pb = p(tb);
+  m('polygon', {points: [[0, H], [0, T.y + H * .04], [T.x, T.y], [sx, sea], [pb.x, pb.y]].map(a => a.join(',')).join(' '), fill: C.mtn, stroke: C.mtnE, 'stroke-width': 1.5});
+  // glacier
+  const th = H * .075, fx = sx + W * .07;
+  const g1 = p(.5), g2 = p(1);
+  S.glac = m('g', {});
+  m('polygon', {points: [[g1.x, g1.y], [g2.x, g2.y], [fx, sea], [fx, sea - th * 1.2], [g2.x + n.x * th, g2.y + n.y * th], [g1.x + n.x * th * .35, g1.y + n.y * th * .35]].map(a => a.join(',')).join(' '), fill: C.ice, stroke: C.iceE, 'stroke-width': 2, 'stroke-linejoin': 'round'}, S.glac);
+  for (const t of [.62, .74, .86]) {
+    const q = p(t), k = th * (.35 + (t - .5) * 1.3);
+    m('line', {x1: q.x + n.x * k * .25, y1: q.y + n.y * k * .25, x2: q.x + n.x * k * .85, y2: q.y + n.y * k * .85, stroke: C.iceE, 'stroke-width': 1.5}, S.glac);
+  }
+  // rock
+  const a = W * .065, b = H * .07;
+  S.rock = m('g', {});
+  m('polygon', {points: [[-a, 0], [-a * .75, -b * .8], [-a * .1, -b * 1.15], [a * .6, -b * .85], [a, -b * .2], [a, 0]].map(q => q.join(',')).join(' '), fill: C.rock, stroke: C.rockE, 'stroke-width': 2, 'stroke-linejoin': 'round'}, S.rock);
+  m('line', {x1: -a * .3, y1: -b * .3, x2: a * .3, y2: -b * .6, stroke: C.rockE, 'stroke-width': 1.5}, S.rock);
+  S.parts = m('g', {});
+  S.flash = m('circle', {cx: 0, cy: 0, r: 0, fill: '#fff', opacity: 0});
+  // volume bar
+  const bx0 = W * .46, bx1 = W * .95, bw = bx1 - bx0, by = H * .05 + fs * 1.4, bh = fs * 1.1;
+  m('text', {x: bx1, y: H * .05 + fs, 'text-anchor': 'end', fill: C.ink, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)', style: 'font-family:var(--body)'}).textContent = 'Volume into the sea';
+  m('rect', {x: bx0, y: by, width: bw, height: bh, rx: bh / 2, fill: '#fff', stroke: '#b9cbd6'});
+  S.bR = m('rect', {x: bx0, y: by, width: 0, height: bh, fill: C.brown});
+  S.bI = m('rect', {x: bx0 + bw * 55 / 300, y: by, width: 0, height: bh, fill: C.blue});
+  S.bw = bw;
+  S.val = m('text', {x: bx1, y: by + bh + fs * 1.35, 'text-anchor': 'end', fill: C.ink, 'font-size': fs, 'font-weight': 600, style: 'font-family:var(--body)'});
+  S.w = {A: 0, c: sx, wd: W * .09};
+  reset(mode < 0 ? 1 : mode, true);
+  drawLines();
+}
+
+function wave(){
+  const {W, H, sea, sx, w} = S; let d = '';
+  for (let i = 0; i <= 60; i++) {
+    const x = sx - W * .05 + (W - sx + W * .05) * i / 60;
+    const y = sea - w.A * Math.exp(-(((x - w.c) / w.wd) ** 2));
+    d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+  }
+  S.surf.setAttribute('d', d);
+  S.water.setAttribute('d', d + `L${W},${H}L${sx - W * .05},${H}Z`);
+}
+function placeRock(t, lift){
+  const q = S.p(t), l = lift || 0;
+  S.rock.setAttribute('transform', `translate(${q.x + S.n.x * l},${q.y + S.n.y * l}) rotate(${S.ang})`);
+}
+function setVol(v){
+  const k = S.bw / 300;
+  S.bR.setAttribute('width', Math.min(v, 55) * k);
+  S.bI.setAttribute('width', Math.max(0, v - 55) * k);
+  S.val.textContent = v <= 55 ? `${Math.round(v)} million m³ · rock` : `55 + ${Math.round(v - 55)} = ${Math.round(v)} million m³`;
+}
+function drawLines(){
+  S.lines.innerHTML = '';
+  for (const m of seen) {
+    const y = S.sea - S.H * (m ? .3 : .1);
+    Kit.mk('line', {x1: S.sx + S.W * .05, x2: S.W * .97, y1: y, y2: y, stroke: m ? C.blue : C.brown, 'stroke-width': Math.max(2, S.H * .007), 'stroke-dasharray': '6 5'}, S.lines);
+  }
+}
+const rk = {t: .08};
+function reset(m){
+  rk.t = .08; placeRock(rk.t);
+  S.rock.setAttribute('opacity', 1);
+  S.glac.setAttribute('opacity', m ? 1 : 0);
+  S.glac.setAttribute('transform', '');
+  S.parts.innerHTML = '';
+  S.w.A = 0; S.w.c = S.sx; wave();
+  setVol(0); S.val.textContent = m ? 'Rock slide + glacier' : 'Rock slide on bare slope';
+}
+
+function play(m){
+  if (tl) tl.kill();
+  mode = m; reset(m);
+  const {W, H, sea, sx, p, d} = S, w = S.w, vol = {v: 0}, g = {s: 0};
+  tl = gsap.timeline({onComplete: () => { seen.add(m); drawLines(); done(); }});
+  const upd = () => placeRock(rk.t);
+  if (!m) {
+    tl.to(rk, {t: 1.12, duration: 1.1, ease: 'power2.in', onUpdate: upd})
+      .to(vol, {v: 55, duration: .5, onUpdate: () => setVol(vol.v)}, '-=.4')
+      .to(S.rock, {attr: {opacity: .45}, duration: .3}, '-=.2')
+      .to(w, {A: H * .1, duration: .4, ease: 'power2.out', onUpdate: wave}, '-=.2')
+      .to(w, {c: W + w.wd * 2, duration: 1.8, ease: 'none', onUpdate: wave}, '-=.1');
+  } else {
+    const hit = p(.5);
+    tl.to(rk, {t: .44, duration: .9, ease: 'power2.in', onUpdate: upd})
+      .add(() => {
+        Kit.haptic('light');
+        gsap.fromTo(S.flash, {attr: {cx: hit.x, cy: hit.y - H * .03, r: 0, opacity: .9}}, {attr: {cx: hit.x, cy: hit.y - H * .03, r: W * .12, opacity: 0}, duration: .5});
+        shards(hit);
+      })
+      .to(vol, {v: 300, duration: 1.2, ease: 'power1.inOut', onUpdate: () => setVol(vol.v)})
+      .to(g, {s: 1, duration: 1, ease: 'power2.in', onUpdate: () => {
+        S.glac.setAttribute('transform', `translate(${d.x * W * .12 * g.s},${d.y * W * .12 * g.s})`);
+        S.glac.setAttribute('opacity', 1 - g.s);
+      }}, '<')
+      .to(rk, {t: 1.12, duration: .9, ease: 'power2.in', onUpdate: upd}, '<')
+      .to(S.rock, {attr: {opacity: .45}, duration: .3}, '-=.2')
+      .to(w, {A: H * .3, duration: .6, ease: 'power2.out', onUpdate: wave}, '-=.35')
+      .to(w, {c: W + w.wd * 2, duration: 2, ease: 'none', onUpdate: wave}, '-=.1');
+  }
+  if (Kit.calm) tl.progress(1);
+}
+
+function shards(hit){
+  const {W, H, sea, sx, p} = S, ps = [];
+  for (let i = 0; i < 42; i++) {
+    const ice = i % 3 !== 0, q = p(.5 + Kit.rnd() * .5);
+    const x0 = q.x + S.n.x * H * .04, y0 = q.y + S.n.y * H * .04;
+    const x1 = sx + W * (.04 + Kit.rnd() * .4), tt = .9 + Kit.rnd() * .4;
+    const gr = H * 2.4, vy = (sea - y0 - .5 * gr * tt * tt) / tt;
+    const s = H * (ice ? .012 + Kit.rnd() * .016 : .007 + Kit.rnd() * .008);
+    const el = ice
+      ? Kit.mk('polygon', {points: `${-s},${-s * .6} ${s * .7},${-s} ${s},${s * .5} ${-s * .4},${s}`, fill: C.ice, stroke: C.iceE, 'stroke-width': 1.2}, S.parts)
+      : Kit.mk('circle', {cx: 0, cy: 0, r: s, fill: C.drop}, S.parts);
+    ps.push({el, x0, y0, vx: (x1 - x0) / tt, vy, gr, tt, rot: Kit.rnd() * 720 - 360});
+  }
+  const o = {k: 0};
+  gsap.to(o, {k: 1.4, duration: 1.4, ease: 'none', onUpdate: () => {
+    for (const q of ps) {
+      const t = Math.min(o.k, q.tt), x = q.x0 + q.vx * t, y = q.y0 + q.vy * t + .5 * q.gr * t * t;
+      q.el.setAttribute('transform', `translate(${x},${y}) rotate(${q.rot * t})`);
+      q.el.setAttribute('opacity', o.k > q.tt ? Math.max(0, 1 - (o.k - q.tt) * 4) : 1);
+    }
+  }});
+}
+
+function done(){
+  if (seen.size === 2 && Kit.$('why').classList.contains('gone')) {
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  }
+}
+
+Kit.$('sw').addEventListener('click', e => {
+  const b = e.target.closest('.sw'); if (!b) return;
+  for (const x of Kit.$('sw').children) x.classList.toggle('on', x === b);
+  Kit.haptic('selection'); play(+b.dataset.m);
+});
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sw', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const bs = Kit.$('sw').children, wait = ms => new Promise(r => setTimeout(r, ms));
+  bs[0].click(); await wait(200); if (tl) tl.progress(1);
+  bs[1].click(); await wait(200); if (tl) tl.progress(1);
+  await wait(600);
+};
+Kit.single();
+</script>
+</html>

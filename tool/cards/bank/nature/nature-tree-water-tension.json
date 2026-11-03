@@ -1,0 +1,36 @@
+{
+  "id": "nature-tree-water-tension",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How low can the pressure become in a tree’s xylem?",
+  "answer": "Water evaporating from the pores in a leaf's cell walls tugs on the water behind it, so the water column is stretched rather than pushed. In an average tree the column reaches about −15 atmospheres, while the air outside pushes in with just 1. Dragging the slider increases how much water the leaf evaporates.",
+  "move": "Trees don’t push water up: evaporation pulls it, at about −15 atm.",
+  "keywords": [
+    "trees",
+    "xylem",
+    "leaves",
+    "evaporation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A tree's water column drawn as stretched water molecules, labeled about −15 atm in the xylem against 1 atm of outside air. A slider sets how much water the leaf evaporates. The page asks how low the pressure in a tree's xylem can become."
+  },
+  "source": "Veritasium, “How Trees Bend the Laws of Physics” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=BickMFHAZR0&t=170s",
+  "written": "2026-11-03"
+}

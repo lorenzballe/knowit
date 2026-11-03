@@ -1,0 +1,138 @@
+<!doctype html>
+<!-- slug: history-kiev-cradle-rus -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kiev, the cradle of Rus'</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#mapbox{flex:1;min-height:0;position:relative}
+#map{display:block;width:100%;height:100%;touch-action:none;cursor:pointer}
+#meter{font:700 max(2.4cqh,15px)/1.2 var(--display);color:var(--k);text-align:center;margin:0}
+#meter span{font-family:var(--mono)}
+#ctl{display:flex;justify-content:center;min-height:max(5.4cqh,36px)}
+#go{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.3cqh 5cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+#why .big{margin:0}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CRADLE OF RUS'</span></div>
+    <h2 class="q">Why does Russia see Ukraine as a wound, not just a neighbor?</h2>
+    <div class="stagebox" id="stage">
+      <p id="meter">Kiev, capital for <span id="cent">0.0</span> centuries</p>
+      <div id="mapbox"><svg id="map"></svg></div>
+      <div id="ctl"><button id="go" class="gone">Draw today's border</button></div>
+      <div id="why" class="gone">
+        <p class="big">Russia was born in Kiev.</p>
+        <p class="body">Kiev was the capital of the first great Russian state for about four centuries, from the late 800s to the early 1200s. So it is seen as the cradle of the Russian people and of the later empire, and that cradle lies in Ukraine.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag along the timeline and watch Kiev's state grow.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Russia's story starts in Kiev, so Ukraine feels like its birthplace, not a neighbor.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Crisi Ucraina-Russia: come e perché si è arrivati a una minaccia così concreta? I motivi geopolitici” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let t = 0, bordered = false, G = null, dragging = false, revealed = false;
+const svg = Kit.$('map');
+
+function blobPath(g, tt){
+  const s = Math.max(tt, .07), R = g.R * s, cx = g.kx, cy = g.ky - .4 * R;
+  let d = '';
+  for (let i = 0; i <= 48; i++){
+    const a = i / 48 * Math.PI * 2;
+    const r = R * (1 + .18 * Math.sin(3 * a + 1) + .1 * Math.cos(2 * a));
+    d += (i ? 'L' : 'M') + (cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1);
+  }
+  return d + 'Z';
+}
+
+function setT(v){
+  t = Math.max(0, Math.min(1, v));
+  Kit.$('cent').textContent = t >= .995 ? '≈ 4' : (4 * t).toFixed(1);
+  if (!G) return;
+  G.blob.setAttribute('d', blobPath(G, t));
+  const x = G.x0 + (G.x1 - G.x0) * t;
+  G.knob.setAttribute('cx', x); G.fill.setAttribute('x2', x);
+  G.rus.setAttribute('opacity', t > .35 ? 1 : 0);
+  G.rus.setAttribute('y', G.ky - .4 * G.R * t - .15 * G.R * t);
+  if (t >= .995 && !bordered && !revealed){ revealed = true; Kit.show('go'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 8, duration: .4, ease: 'power3.out'}); }
+}
+
+Kit.onShow.card = () => {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const band = Math.max(3.6 * f, .18 * H), Hm = H - band;
+  const R = Math.min(.3 * W, .36 * Hm), kx = .4 * W, ky = .66 * Hm;
+  const ty = Hm + band * .35, x0 = .08 * W, x1 = .92 * W;
+  const ink = 'var(--k)';
+  const mk = (tag, a, p = svg) => Kit.mk(tag, a, p);
+  // Ukraine side (south-west of today's border)
+  const bP = `M0,${.28 * Hm} Q${.45 * W},${.36 * Hm} ${W},${.6 * Hm}`;
+  const ukr = mk('path', {d: bP + ` L${W},${Hm} L0,${Hm}Z`, fill: ink, opacity: 0, style: 'fill-opacity:.1'});
+  const blob = mk('path', {d: '', fill: ink, 'fill-opacity': .22, stroke: ink, 'stroke-width': Math.max(2, f * .14), 'stroke-linejoin': 'round'});
+  const border = mk('path', {d: bP, fill: 'none', stroke: ink, 'stroke-width': Math.max(3, f * .22), 'stroke-linecap': 'round', opacity: 0});
+  const rus = mk('text', {x: kx, y: ky, 'text-anchor': 'middle', fill: ink, opacity: 0, style: `font:700 ${Math.max(f * .85, 12)}px var(--display);letter-spacing:.06em`});
+  rus.textContent = "KIEVAN RUS'";
+  const lR = mk('text', {x: W - 6, y: Math.max(f * 1.2, .1 * Hm), 'text-anchor': 'end', fill: ink, opacity: 0, style: `font:800 ${Math.max(f, 13)}px var(--display);letter-spacing:.12em`});
+  lR.textContent = 'RUSSIA TODAY';
+  const lU = mk('text', {x: 6, y: Hm - f * .5, fill: ink, opacity: 0, style: `font:800 ${Math.max(f, 13)}px var(--display);letter-spacing:.12em`});
+  lU.textContent = 'UKRAINE TODAY';
+  mk('circle', {cx: kx, cy: ky, r: Math.max(5, f * .38), fill: ink});
+  mk('circle', {cx: kx, cy: ky, r: Math.max(9, f * .7), fill: 'none', stroke: ink, 'stroke-width': 2});
+  const kl = mk('text', {x: kx + Math.max(13, f * .95), y: ky + f * .35, fill: ink, style: `font:800 ${Math.max(f * .95, 13)}px var(--body)`});
+  kl.textContent = 'KIEV';
+  // timeline
+  mk('line', {x1: x0, y1: ty, x2: x1, y2: ty, stroke: ink, 'stroke-opacity': .25, 'stroke-width': Math.max(6, f * .45), 'stroke-linecap': 'round'});
+  const fill = mk('line', {x1: x0, y1: ty, x2: x0, y2: ty, stroke: ink, 'stroke-width': Math.max(6, f * .45), 'stroke-linecap': 'round'});
+  const knob = mk('circle', {cx: x0, cy: ty, r: Math.max(11, f * .8), fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(3, f * .22)});
+  const ls = `font:600 ${Math.max(f * .8, 12)}px var(--mono)`;
+  const a = mk('text', {x: x0 - 4, y: ty + Math.max(f * 1.9, 26), fill: ink, style: ls}); a.textContent = 'late 800s';
+  const b = mk('text', {x: x1 + 4, y: ty + Math.max(f * 1.9, 26), 'text-anchor': 'end', fill: ink, style: ls}); b.textContent = 'early 1200s';
+  G = {W, H, Hm, R, kx, ky, x0, x1, ty, blob, knob, fill, rus, ukr, border, lR, lU};
+  setT(t);
+  if (bordered){ [ukr, border, lR, lU].forEach(e => e.setAttribute('opacity', 1)); }
+};
+
+function fromEvent(e){
+  const r = svg.getBoundingClientRect();
+  setT((e.clientX - r.left - G.x0) / (G.x1 - G.x0));
+}
+svg.addEventListener('pointerdown', e => { if (bordered) return; dragging = true; svg.setPointerCapture?.(e.pointerId); fromEvent(e); Kit.haptic('selection'); });
+svg.addEventListener('pointermove', e => { if (dragging) fromEvent(e); });
+svg.addEventListener('pointerup', () => dragging = false);
+svg.addEventListener('pointercancel', () => dragging = false);
+
+Kit.$('go').addEventListener('click', () => {
+  if (bordered) return; bordered = true; Kit.haptic('light');
+  Kit.hide('go'); Kit.hide('ctl'); Kit.hide('say');
+  const d = Kit.calm ? 0 : 1;
+  const len = G.border.getTotalLength();
+  G.border.setAttribute('opacity', 1);
+  gsap.fromTo(G.border, {strokeDasharray: len, strokeDashoffset: len}, {strokeDashoffset: 0, duration: 1 * d, ease: 'power2.inOut',
+    onComplete: () => G.border.removeAttribute('style')});
+  gsap.to([G.ukr, G.lU, G.lR], {attr: {opacity: 1}, duration: .5 * d, delay: .8 * d});
+  setTimeout(() => {
+    Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .4, ease: 'power3.out'});
+  }, 1100 * d);
+});
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.knob, {attr: {r: +G.knob.getAttribute('r')}}, {attr: {r: +G.knob.getAttribute('r') * 1.35}, duration: .5, yoyo: true, repeat: 3, ease: 'sine.inOut'});
+};
+
+Kit.play.card = async () => {
+  for (let i = 1; i <= 10; i++){ setT(i / 10); await new Promise(r => setTimeout(r, 30)); }
+  Kit.$('go').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

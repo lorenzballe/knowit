@@ -1,0 +1,126 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-nazare-canyon-wave -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#sea{flex:1;min-height:0;width:100%;display:block}
+#meters{display:grid;grid-template-columns:auto 1fr;gap:.9cqh 3cqw;align-items:center}
+#meters span{font:700 max(1.8cqh,12px)/1.2 var(--body);color:var(--k)}
+.bar{height:max(1.4cqh,9px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 12%,transparent);overflow:hidden}
+.bar i{display:block;height:100%;width:50%;border-radius:1cqh;background:var(--k)}
+#hb i{background:#e8553a}
+#push{width:100%;accent-color:var(--k);height:max(3.6cqh,26px);margin:0;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);overflow-wrap:break-word}
+.foot{padding-right:96px}
+.src{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Slide · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OCEAN WAVES</span></div>
+    <h2 class="q">How does the Nazaré canyon make a wave grow so tall?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sea" aria-label="A wave crossing a deep canyon toward the coast"></svg>
+      <div id="meters">
+        <span>Water under the crest</span><div class="bar" id="db"><i></i></div>
+        <span>Wave height</span><div class="bar" id="hb"><i></i></div>
+      </div>
+      <input id="push" type="range" min="0" max="1000" value="0" aria-label="Push the wave toward the coast">
+    </div>
+    <p class="say" id="say">Slide to push the wave out of the deep canyon toward the coast.</p>
+    <div id="why" class="gone"><p class="body">Over the deep canyon, the wave's circling motion fades before it ever touches the floor. Near Nazaré the floor rises fast: the circles hit bottom, the water column is squeezed, and the wave has nowhere to go but up.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Less water under a wave squeezes it upward: the crest grows taller.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Perché le onde più alte del mondo si formano proprio a Nazarè in Portogallo? E come si creano?” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {p: 0, t: 0};
+let G = null, done = false;
+const slider = Kit.$('push');
+
+function bot(u){
+  const {H, y0} = G, yD = H*0.96, yS = y0 + H*0.15;
+  if (u < 0.5) return yD;
+  if (u < 0.86){ const k = (u-0.5)/0.36; return yS + (yD-yS)*(0.5+0.5*Math.cos(Math.PI*k)); }
+  const k = Math.min(1,(u-0.86)/0.14); return yS + (y0+3-yS)*k;
+}
+function state(){
+  const u = 0.07 + S.p*0.77, xc = u*G.W;
+  const d = bot(u) - G.y0, dMax = G.H*0.96 - G.y0;
+  const A0 = G.H*0.055, A = A0*Math.pow(dMax/d, 0.62);
+  return {u, xc, d, dMax, A, Amax: A0*Math.pow(dMax/(G.H*0.15),0.62)};
+}
+function draw(){
+  if (!G) return;
+  const {W, H, y0, g} = G, st = state();
+  g.innerHTML = '';
+  // seabed
+  let pb = `M0 ${H} `;
+  for (let i=0;i<=120;i++){ const u=i/120; pb += `L${u*W} ${bot(u)} `; }
+  pb += `L${W} ${H} Z`;
+  // water surface with crest
+  const s = W*0.11*(1 - 0.35*S.p);
+  let ps = `M0 ${H} `;
+  for (let i=0;i<=160;i++){ const x=i/160*W; const y=y0 - st.A*Math.exp(-(((x-st.xc)/s)**2)); ps += `L${x} ${Math.min(y,bot(x/W))} `; }
+  ps += `L${W} ${H} Z`;
+  Kit.mk('path',{d:ps,style:'fill:color-mix(in srgb,var(--k) 22%,transparent)'},g);
+  Kit.mk('path',{d:pb,style:'fill:var(--k)'},g);
+  // crest outline
+  let pl = '';
+  for (let i=0;i<=160;i++){ const x=i/160*W; const y=y0 - st.A*Math.exp(-(((x-st.xc)/s)**2)); pl += (i?'L':'M')+`${x} ${Math.min(y,bot(x/W))} `; }
+  Kit.mk('path',{d:pl,style:'fill:none;stroke:var(--k);stroke-width:'+Math.max(2,H*0.008)+';stroke-linejoin:round'},g);
+  // orbital circles under the crest
+  const floor = bot(st.u), sp = H*0.105;
+  for (let k=0;k<6;k++){
+    const cy = y0 + st.A*0.15 + k*sp + sp*0.35;
+    let r = Math.max(st.A*0.85*Math.exp(-k*0.5), 3);
+    if (cy - r*0.3 > floor) break;
+    let ry = r, hit = false;
+    if (cy + r > floor - 2){ ry = Math.max(2.5,(floor-2-cy+r)/2); hit = true; }
+    const ccy = hit ? floor - 2 - ry : cy;
+    const col = hit ? '#e8553a' : 'var(--k)';
+    Kit.mk('ellipse',{cx:st.xc,cy:ccy,rx:r,ry:ry,style:`fill:none;stroke:${col};stroke-width:${Math.max(1.5,H*0.005)};opacity:.85`},g);
+    const a = S.t*2.2 - k*0.4;
+    Kit.mk('circle',{cx:st.xc+r*Math.cos(a),cy:ccy+ry*Math.sin(a),r:Math.max(2.5,H*0.011),style:`fill:${col}`},g);
+  }
+  // labels
+  const f = G.f;
+  Kit.mk('text',{x:W*0.03,y:H*0.09,style:`font:700 ${f}px var(--body);fill:var(--k)`},g).textContent='Open ocean';
+  const tn = Kit.mk('text',{x:W*0.97,y:H*0.09,'text-anchor':'end',style:`font:700 ${f}px var(--body);fill:var(--k)`},g); tn.textContent='Nazaré coast →';
+  Kit.mk('text',{x:W*0.04,y:H*0.9,style:`font:700 ${f}px var(--body);fill:var(--c)`},g).textContent='Deep canyon';
+  // meters
+  Kit.$('db').firstChild.style.width = (st.d/st.dMax*100).toFixed(1)+'%';
+  Kit.$('hb').firstChild.style.width = (st.A/st.Amax*100).toFixed(1)+'%';
+}
+function setP(v){
+  S.p = v; draw();
+  if (v > 0.97 && !done){
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+slider.addEventListener('input', () => { setP(slider.value/1000); Kit.haptic('selection'); });
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('sea'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  G = {W, H, f: Math.max(12, Math.min(f, H*0.07)), y0: H*0.34, g: Kit.mk('g', {}, svg)};
+  draw();
+};
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.ticker.add(() => { S.t += 0.016; draw(); });
+  const o = {v: 0};
+  gsap.to(o, {v: 0.12, duration: 1.2, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: () => { if (+slider.value < 5) { S.p = o.v; draw(); } }});
+};
+Kit.play.card = async () => {
+  slider.value = 1000; slider.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

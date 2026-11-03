@@ -1,0 +1,37 @@
+{
+  "id": "technology-bullet-splitting-sword",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a Japanese sword slice a bullet in half?",
+  "answer": "The sword is made of high-carbon steel with a layered grain. This makes the edge very hard, and it stays sharp, so it parts the bullet's core instead of giving way.",
+  "move": "A blade cuts what is softer than its edge, so hardness is everything.",
+  "keywords": [
+    "japanese-sword",
+    "bullet",
+    "high-carbon-steel",
+    "layered-grain",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two blades seen from above, edges turned toward an incoming bullet. A control fires at both blades so the reader can watch the cut in slow motion. The page asks why a Japanese sword can slice a bullet in half."
+  },
+  "source": "Veritasium, “How Japanese Masters Turn Sand Into Swords” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=Tt6WQYtefXA",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "medicine-heart-period-doubling",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "On the road to fibrillation, how does a heart's rhythm change?",
+  "answer": "The rhythm splits rather than speeding up or turning random at once. It goes from one beat per cycle to pairs of beats, then fours, and then chaos. Rabbit hearts followed this period-doubling route, just like the logistic map. Researchers used chaos theory to time shocks that brought the heart back to a regular beat.",
+  "move": "Fibrillation isn't sudden noise: the beat splits 1, 2, 4, then chaos.",
+  "keywords": [
+    "heart",
+    "fibrillation",
+    "logistic_map",
+    "period_doubling",
+    "chaos_theory"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Astute card on how a heart's rhythm changes on the road to fibrillation. Three choices: it speeds up, it splits into pairs then fours, or it turns random all at once. Below is a heart trace to watch after picking one. Light background.",
+    "graded": false
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=762s",
+  "written": "2026-11-03"
+}

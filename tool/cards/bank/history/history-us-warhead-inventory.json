@@ -1,0 +1,38 @@
+{
+  "id": "history-us-warhead-inventory",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.leaders_under_pressure",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How many US nuclear warheads are actually ready to use?",
+  "answer": "Of the 3,708 US nuclear warheads, 1,770 are on high alert and ready to use. The other 1,938 are stored and would need maintenance before they could be deployed. Russia has more warheads in total, 4,489, but a smaller share of them is ready.",
+  "move": "Fewer than half of US warheads are ready; the rest wait in storage.",
+  "keywords": [
+    "us_nuclear_arsenal",
+    "warheads",
+    "russia",
+    "high_alert",
+    "nuclear_storage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A grid of squares, each standing for 20 US nuclear warheads, out of 3,708 total. A draggable guess asks how many of the 3,708 are ready to use on high alert.",
+    "graded": false
+  },
+  "source": "Geopop, “Cos’è la valigetta nucleare e come funziona il lancio dell'atomica negli USA e nella Russia di Putin” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=l4RqFtMYvjo&t=59s",
+  "written": "2026-11-03"
+}

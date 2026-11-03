@@ -1,0 +1,37 @@
+{
+  "id": "science-scotch-tape-graphene",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did two scientists get a sheet of carbon one atom thick?",
+  "answer": "Graphite is many sheets of carbon stacked loosely. Tape pulls the top sheets away, and peeling again and again leaves some flakes only one atom thick. In 2004, Geim and Novoselov made graphene this way, with no complex chemistry.",
+  "move": "Graphene was first made by peeling graphite with tape down to one layer.",
+  "keywords": [
+    "graphene",
+    "graphite",
+    "geim",
+    "novoselov",
+    "scotch tape"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A stack of 16 carbon layers labelled graphite. Tapping Peel removes layers one at a time until only one, a single-atom sheet of graphene, is left."
+  },
+  "source": "Veritasium, “How To Make Graphene” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=PifL8bAybyc&t=79s",
+  "written": "2026-11-03"
+}

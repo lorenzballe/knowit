@@ -1,0 +1,37 @@
+{
+  "id": "maths-st-petersburg",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.paradoxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "The pot starts at $2 and doubles at every heads; at the first tails you take it. How much would you pay to play?",
+  "answer": "The pot starts at $2 and doubles at every heads, and you take it at the first tails. Each extra heads doubles the prize but halves its odds, so the average never settles and keeps growing the longer you play. Bernoulli described the game in 1738, and Feller analysed it in 1945.",
+  "move": "When each doubled prize is half as likely, the average never settles. It grows the longer you play.",
+  "keywords": [
+    "st petersburg",
+    "bernoulli",
+    "feller",
+    "coin toss",
+    "average"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A coin-toss game whose pot starts at $2 and doubles at every heads, ending at the first tails. Asks how much you would pay to play, choosing from $2, $5, $10, $25 or $100, with a button to play 1,000 games."
+  },
+  "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
+  "written": "2026-11-03"
+}

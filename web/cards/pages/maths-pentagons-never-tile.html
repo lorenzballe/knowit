@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-pentagons-never-tile -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#read{font:700 max(2cqh,13px)/1.25 var(--mono);text-align:center;color:var(--k);min-height:2.6em;display:flex;align-items:center;justify-content:center;overflow-wrap:anywhere}
+#read .bad{color:#e5484d}
+#shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:2cqw}
+.sh{display:flex;flex-direction:column;align-items:center;gap:.6cqh;font:700 max(1.7cqh,12px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.1cqh 1cqw;cursor:pointer;overflow-wrap:anywhere}
+.sh svg{width:max(4.2cqh,26px);height:max(4.2cqh,26px)}
+.sh.on{background:var(--k);color:var(--c);box-shadow:none}
+.sh.on polygon{fill:var(--c)}
+.sh polygon{fill:var(--k)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Try it · tiling">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIVE-FOLD</span></div>
+    <h2 class="q">Why do periodic crystals never have five-fold symmetry?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="read">One point on a floor. 360° to fill around it.</div>
+      <div id="shapes">
+        <button class="sh" data-n="3"><svg viewBox="-1 -1 2 2"><polygon/></svg>Triangle</button>
+        <button class="sh" data-n="4"><svg viewBox="-1 -1 2 2"><polygon/></svg>Square</button>
+        <button class="sh" data-n="5"><svg viewBox="-1 -1 2 2"><polygon/></svg>Pentagon</button>
+        <button class="sh" data-n="6"><svg viewBox="-1 -1 2 2"><polygon/></svg>Hexagon</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">108° doesn't go into 360°.</p>
+        <p class="body">Triangles, squares and hexagons close around a point exactly. Pentagons always leave a gap or overlap, so no repeating crystal can be built from five-fold symmetry. Only quasicrystals, whose pattern never repeats, have it.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap a shape: can its copies close around one corner?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A repeating pattern needs corners that fit 360° exactly; pentagons never do.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e5484d';
+let cur = 0, tl = null, fast = false, explained = false;
+const svg = Kit.$('svg');
+
+// icons
+document.querySelectorAll('.sh').forEach(b => {
+  const n = +b.dataset.n, p = [];
+  for (let i = 0; i < n; i++) { const t = -Math.PI / 2 + i * 2 * Math.PI / n; p.push((.9 * Math.cos(t)).toFixed(3) + ',' + (.9 * Math.sin(t) + (n === 3 ? .15 : 0)).toFixed(3)); }
+  b.querySelector('polygon').setAttribute('points', p.join(' '));
+});
+
+function polyPts(n, s) {
+  const pts = []; let x = 0, y = 0, d = 0;
+  for (let i = 0; i < n; i++) { pts.push(x.toFixed(2) + ',' + y.toFixed(2)); x += s * Math.cos(d); y += s * Math.sin(d); d += 2 * Math.PI / n; }
+  return pts.join(' ');
+}
+const reach = {3: 1, 4: 1.414, 5: 1.618, 6: 2};
+
+function draw(animate) {
+  if (tl) { tl.kill(); tl = null; }
+  const {W, H} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const cx = W / 2, cy = H / 2, R = Math.min(W, H) * .46;
+  Kit.mk('circle', {cx, cy, r: R * .98, fill: 'none', stroke: 'var(--k)', 'stroke-opacity': .25, 'stroke-width': 2, 'stroke-dasharray': '6 7'}, svg);
+  const layer = Kit.mk('g', {}, svg);
+  const dot = () => Kit.mk('circle', {cx, cy, r: Math.max(5, R * .035), fill: 'var(--k)', stroke: 'var(--c)', 'stroke-width': 2}, svg);
+  if (!cur) { dot(); return; }
+  const n = cur, a = (n - 2) * 180 / n, s = R / reach[n];
+  const fit = Math.floor(360 / a + 1e-6), pts = polyPts(n, s);
+  const total = n === 5 ? 4 : fit;
+  const els = [];
+  // gap wedge (pentagon)
+  let wedge = null;
+  if (n === 5) {
+    const r = s * .95, a0 = 3 * a * Math.PI / 180, a1 = 2 * Math.PI;
+    wedge = Kit.mk('path', {d: `M${cx},${cy} L${cx + r * Math.cos(a0)},${cy + r * Math.sin(a0)} A${r},${r} 0 0 1 ${cx + r * Math.cos(a1)},${cy + r * Math.sin(a1)} Z`, fill: RED, 'fill-opacity': .35, stroke: RED, 'stroke-width': 3, opacity: 0}, layer);
+  }
+  for (let k = 0; k < total; k++) {
+    const over = k >= fit;
+    const g = Kit.mk('g', {opacity: 0}, layer);
+    Kit.mk('polygon', {points: pts, fill: over ? RED : 'var(--k)', 'fill-opacity': over ? .55 : (k % 2 ? .62 : .9), stroke: over ? RED : 'var(--c)', 'stroke-width': 3, 'stroke-linejoin': 'round'}, g);
+    els.push(g);
+  }
+  dot();
+  const set = (g, r, o) => { g.setAttribute('transform', `translate(${cx},${cy}) rotate(${r})`); g.setAttribute('opacity', o); };
+  const msgFit = `${fit} × ${a}° = ${fit * a}°. Closed, no gap.`;
+  const msgGap = `3 × 108° = 324°. <span class="bad">A 36° gap.</span>`;
+  const msgOver = `4 × 108° = 432°. <span class="bad">They overlap.</span>`;
+  const read = Kit.$('read');
+  const finish = () => { if (n === 5) explain(); };
+  if (!animate || Kit.calm) {
+    els.forEach((g, k) => set(g, k * a, 1));
+    if (wedge) wedge.setAttribute('opacity', 0);
+    read.innerHTML = n === 5 ? msgOver : msgFit;
+    if (animate) finish();
+    return;
+  }
+  els.forEach(g => set(g, 0, 0));
+  read.textContent = `Corner: ${a}°`;
+  const d = fast ? .02 : .45, p = fast ? .01 : .12;
+  tl = gsap.timeline({onComplete: finish});
+  els.forEach((g, k) => {
+    const o = {r: Math.max(0, (k - 1) * a), v: 0};
+    if (k === fit && n === 5) {
+      tl.add(() => { wedge.setAttribute('opacity', 1); read.innerHTML = msgGap; Kit.haptic('light'); });
+      tl.fromTo(wedge, {attr: {opacity: 0}}, {attr: {opacity: 1}, duration: fast ? .01 : .3, repeat: fast ? 0 : 3, yoyo: true});
+      tl.to({}, {duration: fast ? .02 : .9});
+    }
+    tl.to(o, {r: k * a, v: 1, duration: d, ease: 'power3.out', onUpdate: () => set(g, o.r, o.v),
+      onComplete: () => { if (k < fit) read.textContent = `${k + 1} × ${a}° = ${(k + 1) * a}°`; }}, '+=' + p);
+    if (k === fit) tl.add(() => { wedge.setAttribute('opacity', 0); read.innerHTML = msgOver; Kit.haptic('light'); });
+  });
+  if (n !== 5) tl.add(() => { read.textContent = msgFit; Kit.haptic('success'); });
+}
+
+function explain() {
+  if (explained) return; explained = true;
+  setTimeout(() => {
+    Kit.hide('shapes'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4});
+  }, fast ? 50 : 900);
+}
+
+Kit.$('shapes').addEventListener('click', e => {
+  const b = e.target.closest('.sh'); if (!b) return;
+  document.querySelectorAll('.sh').forEach(x => x.classList.toggle('on', x === b));
+  cur = +b.dataset.n; Kit.haptic('selection'); draw(true);
+});
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.sh', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  fast = true;
+  document.querySelector('.sh[data-n="5"]').click();
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

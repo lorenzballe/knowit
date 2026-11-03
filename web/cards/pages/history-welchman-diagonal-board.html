@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- slug: history-welchman-diagonal-board -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · The diagonal board</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#grid{flex:1;min-height:0;width:100%;display:block}
+#stat{font:700 max(2.1cqh,13px)/1.25 var(--body);text-align:center;color:var(--k);min-height:2.6cqh}
+#stat b{font-family:var(--mono)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.btn{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;width:100%}
+.cell{fill:color-mix(in srgb,var(--k) 9%,transparent);stroke:color-mix(in srgb,var(--k) 35%,transparent);stroke-width:1.2;cursor:pointer;transition:fill .25s}
+.cell.diag{fill:color-mix(in srgb,var(--k) 22%,transparent);stroke:none;cursor:default}
+.cell.live{fill:var(--k);stroke:var(--k)}
+.ct{fill:var(--k);font-family:var(--mono);font-weight:700;pointer-events:none;text-anchor:middle;dominant-baseline:central}
+.ct.live{fill:var(--c)}
+.ax{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle;dominant-baseline:central}
+.lk{stroke:var(--k);stroke-opacity:.35;stroke-width:2;stroke-linecap:round;fill:none;pointer-events:none}
+.lk.live{stroke-opacity:1;stroke-width:4}
+.dot{fill:var(--c);stroke:var(--k);stroke-width:3;pointer-events:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Try it · tap a guess">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CODEBREAKING</span></div>
+    <h2 class="q">How did linking wires in pairs make the Bombe give fewer false answers?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="grid"></svg>
+      <div id="stat">Each square is one guess: <b>row</b> letter plugged to <b>column</b> letter.</div>
+    </div>
+    <p class="say" id="say">Tap a square to test that plugboard guess.</p>
+    <button class="btn gone" id="board">Add Welchman’s diagonal board</button>
+    <div id="why" class="gone"><p class="body">Guessing R is plugged to Y is the same guess as Y plugged to R. Welchman wired each such pair together, so one live wire makes its twin live too. The same input rules out more plugboard swaps: about 4 stops to check instead of 100.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Wire together facts that must agree, and false answers die faster.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Insane Real Engineering of the Nazi Enigma Machine” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const L = 'ENRSTY'.split(''), n = L.length;
+let board = false, phase = 0, done = false;
+let lit = new Set();
+let geo = null;
+const svg = Kit.$('grid');
+const key = (i, j) => i + ',' + j;
+
+function center(i, j) { return [geo.ox + (j + .5) * geo.c, geo.oy + (i + .5) * geo.c]; }
+
+function draw(animLinks) {
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const lab = Math.max(f * 1.05, 14);
+  const c = Math.min((W - lab * 2) / n, (H - lab * 2) / n);
+  const g = c * n;
+  const ox = (W - g + lab * 1.6) / 2, oy = (H - g + lab * 1.6) / 2;
+  geo = {c, ox, oy};
+  L.forEach((ch, k) => {
+    const a = Kit.mk('text', {class: 'ax', x: ox + (k + .5) * c, y: oy - lab * .8, 'font-size': lab}, svg); a.textContent = ch;
+    const b = Kit.mk('text', {class: 'ax', x: ox - lab * .8, y: oy + (k + .5) * c, 'font-size': lab}, svg); b.textContent = ch;
+  });
+  const fs = Math.max(Math.min(c * .3, lab), 12);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    const live = lit.has(key(i, j)), d = i === j;
+    const r = Kit.mk('rect', {class: 'cell' + (d ? ' diag' : '') + (live ? ' live' : ''), x: ox + j * c + 2, y: oy + i * c + 2, width: c - 4, height: c - 4, rx: c * .14, 'data-i': i, 'data-j': j}, svg);
+    if (!d) { const t = Kit.mk('text', {class: 'ct' + (live ? ' live' : ''), x: ox + (j + .5) * c, y: oy + (i + .5) * c, 'font-size': fs, id: 't' + i + j}, svg); t.textContent = L[i] + L[j]; }
+  }
+  if (board) {
+    const links = [];
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+      const [x1, y1] = center(i, j), [x2, y2] = center(j, i);
+      const live = lit.has(key(i, j)) && lit.has(key(j, i));
+      const p = Kit.mk('path', {class: 'lk' + (live ? ' live' : ''), d: `M${x1 + (x2 - x1) * .18},${y1 + (y2 - y1) * .18}L${x1 + (x2 - x1) * .82},${y1 + (y2 - y1) * .82}`, id: 'l' + i + j}, svg);
+      links.push(p);
+    }
+    if (animLinks && !Kit.calm) links.forEach((p, k) => { const len = p.getTotalLength(); gsap.fromTo(p, {attr: {'stroke-dasharray': len, 'stroke-dashoffset': len}}, {attr: {'stroke-dashoffset': 0}, duration: .5, delay: k * .04, ease: 'power2.out'}); });
+  }
+}
+
+function setLive(i, j, on) {
+  const r = svg.querySelector(`rect[data-i="${i}"][data-j="${j}"]`), t = Kit.$('t' + i + j);
+  if (r) r.classList.toggle('live', on); if (t) t.classList.toggle('live', on);
+}
+
+function stat(html) { Kit.$('stat').innerHTML = html; }
+
+function finish() {
+  if (done) return; done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  stat('Live wires: <b>2</b> · stops to check: <b id="stops">100</b>');
+  const o = {v: 100};
+  gsap.to(o, {v: 4, duration: Kit.calm ? 0 : 1.4, ease: 'power3.out', onUpdate: () => { const s = Kit.$('stops'); if (s) s.textContent = Math.round(o.v); }});
+}
+
+svg.addEventListener('click', e => {
+  const r = e.target.closest('rect[data-i]'); if (!r) return;
+  const i = +r.dataset.i, j = +r.dataset.j; if (i === j) return;
+  Kit.haptic('light');
+  if (!board) {
+    lit.forEach(k => { const [a, b] = k.split(',').map(Number); setLive(a, b, false); });
+    lit = new Set([key(i, j)]); setLive(i, j, true);
+    stat(`Live wires: <b>1</b>. “${L[i]} to ${L[j]}” is live, but its twin “${L[j]} to ${L[i]}” stays dark.`);
+    if (phase === 0) { phase = 1; Kit.$('say').textContent = 'Same guess, two wires. Now link them.'; Kit.show('board'); if (!Kit.calm) gsap.from('#board', {opacity: 0, y: 8, duration: .35}); }
+    return;
+  }
+  lit.add(key(i, j)); setLive(i, j, true);
+  const [x1, y1] = center(i, j), [x2, y2] = center(j, i);
+  const dot = Kit.mk('circle', {class: 'dot', cx: x1, cy: y1, r: geo.c * .13}, svg);
+  const lk = Kit.$('l' + Math.min(i, j) + Math.max(i, j));
+  gsap.to(dot, {attr: {cx: x2, cy: y2}, duration: Kit.calm ? 0 : .55, ease: 'power2.inOut', onComplete: () => {
+    dot.remove(); lit.add(key(j, i)); setLive(j, i, true); if (lk) lk.classList.add('live');
+    if (!done) stat(`Live wires: <b>2</b>. “${L[i]} to ${L[j]}” lit its twin “${L[j]} to ${L[i]}” at once.`);
+    setTimeout(finish, Kit.calm ? 0 : 700);
+  }});
+});
+
+Kit.$('board').addEventListener('click', () => {
+  board = true; lit = new Set(); Kit.hide('board'); Kit.haptic('selection');
+  Kit.$('say').textContent = 'Each guess is now wired to its mirror. Tap a guess again.';
+  stat('Each line joins a guess to its twin across the diagonal.');
+  draw(true);
+});
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#grid rect', {opacity: 0, scale: .8, transformOrigin: '50% 50%', stagger: .012, duration: .35, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const tap = (i, j) => svg.querySelector(`rect[data-i="${i}"][data-j="${j}"]`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  tap(2, 5); await w(200);
+  Kit.$('board').click(); await w(900);
+  tap(2, 5); await w(2600);
+};
+Kit.single();
+</script>
+</html>

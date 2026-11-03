@@ -1,0 +1,38 @@
+{
+  "id": "history-prison-forced-labour",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.workers",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Prisoners made shoes and bags. Who got the money from their work?",
+  "answer": "The money went to the director. Prisoners were forced to work in the fields and to make shoes and bags. Almost all of the money went neither to the state nor to the prisoners, but into the director's own pockets.",
+  "move": "Forced labour turned the prison into a private business for one man.",
+  "keywords": [
+    "forced labour",
+    "prison camp",
+    "shoes and bags",
+    "the director",
+    "south korea"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled 'Forced Labour' says prisoners made shoes and bags and asks who got the money from their work. Three bins are shown: the state, the prisoners, and the director. The reader picks one bin, then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=_pZ1C8ag1YM&t=362s",
+  "written": "2026-11-03"
+}

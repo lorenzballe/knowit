@@ -1,0 +1,38 @@
+{
+  "id": "science-globe-water-film",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Why is there very little friction on the globe’s bottom?",
+  "answer": "The globe is supported on a thin layer of water, not on its base. The water acts as a lubricant, so friction drops dramatically and a small push keeps it spinning.",
+  "move": "A thin layer of liquid between two surfaces makes friction almost vanish.",
+  "keywords": [
+    "globe",
+    "friction",
+    "water",
+    "lubrication",
+    "ball bearings"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Cross-section of a globe resting on a thin water film, with friction arrows. Asks why there is so little friction under the globe's base, with choices to pick from.",
+    "graded": false
+  },
+  "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ&t=16s",
+  "written": "2026-11-03"
+}

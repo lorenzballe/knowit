@@ -1,0 +1,37 @@
+{
+  "id": "technology-louvre-blind-spots",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.surveillance",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many rooms in the Louvre's Richelieu wing have no camera?",
+  "answer": "A French Court of Auditors report found that about 75% of rooms in the Richelieu wing and 60% in the Sully wing are not covered by cameras. So the answer for Richelieu is about 3 in 4, which leaves most rooms as blind spots thieves can use. The red rooms on the floor plan mark these unwatched spaces.",
+  "move": "Security is only as strong as its blind spots.",
+  "keywords": [
+    "louvre",
+    "cctv",
+    "museum-security",
+    "richelieu-wing",
+    "france"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Floor plan of the Louvre's Richelieu wing, with rooms without cameras lit red. The reader picks one of four guesses for the share of rooms without cameras (about 1 in 4, about half, about 3 in 4), then sees which rooms are unwatched."
+  },
+  "source": "Geopop, “Furto di gioielli in pieno giorno al Louvre, com'è stato possibile? L’inedita ricostruzione 3D” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=eoBKuUMG2WU",
+  "written": "2026-11-03"
+}

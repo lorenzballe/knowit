@@ -1,0 +1,140 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-sea-level-drop -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#read{display:flex;align-items:baseline;gap:3cqw;flex-wrap:wrap}
+#num{font:800 max(4.6cqh,24px)/1 var(--display);color:var(--k)}
+#when{font:600 max(1.9cqh,13px)/1.2 var(--body);color:var(--muted)}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.6cqh 4cqw;cursor:pointer;width:100%}
+#go:active{transform:scale(.98)}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:anywhere}
+.lab{font-family:var(--body);font-weight:700;paint-order:stroke;stroke-linejoin:round}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Tap to build · watch it grow">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ICE AGES</span></div>
+    <h2 class="q">How much lower was sea level 20,000 years ago?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <div id="read"><span id="num">0 m</span><span id="when">today's sea level</span></div>
+      <button id="go">Lock 20 m of sea water in ice</button>
+      <div id="why" class="gone"><p class="body">At the peak of the last ice age, so much water sat in glaciers on land that the sea stood about 120 m lower. Shallow sea floor became dry land. Since then the ice melted and the sea rose 120 m.</p></div>
+    </div>
+    <p class="say" id="say">Tap to turn sea water into ice, 20 m at a time.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Ice on land is water taken from the sea: 20,000 years ago, the sea was 120 m lower.</div>
+    <div class="foot"><span class="src">Source · Geopop, “LE ERE GLACIALI - VI SPIEGO COME, QUANDO E PERCHÉ AVVENGONO” (YouTube, 2020).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 6, STEP = 20;
+let step = 0, busy = false;
+const lvl = {m: 0};
+const P = [[0,280],[0.06,380],[0.13,430],[0.2,300],[0.27,60],[0.33,0],[0.42,-30],[0.52,-80],[0.6,-110],[0.68,-95],[0.76,-40],[0.83,0],[0.9,40],[1,60]];
+let G = null;
+
+function elevAt(x){
+  for (let i = 1; i < P.length; i++) if (x <= P[i][0]) {
+    const [x0,e0] = P[i-1], [x1,e1] = P[i], t = (x - x0) / (x1 - x0); return e0 + (e1 - e0) * t;
+  }
+  return P[P.length-1][1];
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('svg'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const y0 = H * 0.42, yb = H * 0.97;
+  const kd = (yb - y0) / 150, ku = (y0 - H * 0.08) / 450;
+  const yOf = e => e >= 0 ? y0 - e * ku : y0 - e * kd;
+  const fs = Math.max(f * 0.9, 12);
+  let d = `M0,${H} `;
+  for (let i = 0; i <= 80; i++) { const x = i / 80; d += `L${(x*W).toFixed(1)},${yOf(elevAt(x)).toFixed(1)} `; }
+  d += `L${W},${H} Z`;
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'terr'}, defs); Kit.mk('path', {d}, cp);
+  const water = Kit.mk('rect', {x: 0, width: W, fill: '#2a7bd0'}, svg);
+  Kit.mk('path', {d, fill: '#4a3f35'}, svg);
+  const sand = Kit.mk('rect', {x: 0, width: W, y: y0, height: 0, fill: '#e8bf5a', 'clip-path': 'url(#terr)'}, svg);
+  const ice = Kit.mk('path', {fill: '#ffffff', stroke: '#9fd3ff', 'stroke-width': Math.max(1.5, H * .006), 'stroke-linejoin': 'round'}, svg);
+  Kit.mk('line', {x1: 0, x2: W, y1: y0, y2: y0, stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '6 5', opacity: .75}, svg);
+  const sw = Math.max(3, fs * .3);
+  const today = Kit.mk('text', {x: W - 6, y: y0 + fs * 1.15, 'text-anchor': 'end', 'font-size': fs, fill: '#fff', stroke: '#4a3f35', 'stroke-width': sw, class: 'lab'}, svg);
+  today.textContent = "today's sea";
+  const cur = Kit.mk('text', {x: W * 0.56, 'text-anchor': 'middle', 'font-size': fs, fill: '#fff', stroke: '#2a7bd0', 'stroke-width': sw, class: 'lab', opacity: 0}, svg);
+  const newl = Kit.mk('text', {x: W * 0.5, y: yOf(-58), 'text-anchor': 'middle', 'font-size': fs, fill: '#4a3f35', stroke: '#e8bf5a', 'stroke-width': sw, class: 'lab', opacity: 0}, svg);
+  newl.textContent = 'new dry land';
+  const iceLab = Kit.mk('text', {x: W * 0.13, 'text-anchor': 'middle', 'font-size': fs, fill: '#1d4f80', stroke: '#fff', 'stroke-width': sw, class: 'lab'}, svg);
+  iceLab.textContent = 'ice';
+  const drops = Kit.mk('g', {}, svg);
+  G = {W, H, fs, y0, yOf, water, sand, ice, cur, newl, iceLab, drops};
+  render();
+};
+
+function render(){
+  if (!G) return;
+  const {W, H, y0, yOf, water, sand, ice, cur, newl, iceLab, fs} = G;
+  const m = lvl.m, sy = yOf(-m);
+  water.setAttribute('y', sy); water.setAttribute('height', Math.max(0, H - sy));
+  sand.setAttribute('height', Math.max(0, sy - y0));
+  const th = H * (0.018 + 0.085 * m / 120);
+  let top = '', bot = '';
+  const a = 0.03, b = 0.235;
+  for (let i = 0; i <= 30; i++) {
+    const x = a + (b - a) * i / 30, s = Math.sin(Math.PI * i / 30);
+    top += `${i ? 'L' : 'M'}${(x*W).toFixed(1)},${(yOf(elevAt(x)) - th * Math.pow(s, .6)).toFixed(1)} `;
+  }
+  for (let i = 30; i >= 0; i--) { const x = a + (b - a) * i / 30; bot += `L${(x*W).toFixed(1)},${yOf(elevAt(x)).toFixed(1)} `; }
+  ice.setAttribute('d', top + bot + 'Z');
+  iceLab.setAttribute('y', yOf(elevAt(0.13)) - th - fs * 0.45);
+  cur.setAttribute('y', sy - fs * 0.45);
+  cur.textContent = `sea −${Math.round(m)} m`;
+  cur.setAttribute('opacity', m > 4 ? 1 : 0);
+  newl.setAttribute('opacity', m >= 100 ? Math.min(1, (m - 100) / 15) : 0);
+  Kit.$('num').textContent = (m > 0.5 ? '−' : '') + Math.round(m) + ' m';
+}
+
+function droplets(){
+  if (Kit.calm || !G) return;
+  const {W, yOf, drops, H} = G, sy = yOf(-lvl.m), tx = W * 0.13, ty = yOf(elevAt(0.13));
+  for (let i = 0; i < 6; i++) {
+    const c = Kit.mk('circle', {cx: W * (0.4 + 0.5 * Kit.rnd()), cy: sy, r: Math.max(3, H * .012), fill: '#bfe3ff'}, drops);
+    gsap.to(c, {attr: {cx: tx + (Kit.rnd() - .5) * W * .08, cy: ty}, duration: .8, delay: i * .06, ease: 'power2.inOut'});
+    gsap.to(c, {opacity: 0, duration: .25, delay: .65 + i * .06, onComplete: () => c.remove()});
+  }
+}
+
+function tap(){
+  if (busy || step >= N) return;
+  busy = true; step++;
+  Kit.haptic(step === N ? 'success' : 'light');
+  droplets();
+  gsap.to(lvl, {m: step * STEP, duration: Kit.calm ? 0 : .9, ease: 'power2.inOut', onUpdate: render, onComplete: () => {
+    render(); busy = false;
+    if (step === N) finish();
+    else Kit.$('go').textContent = `Lock 20 more metres in ice (${step}/${N})`;
+  }});
+}
+
+function finish(){
+  Kit.$('when').textContent = '20,000 years ago';
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('go').addEventListener('click', tap);
+Kit.$('pic').addEventListener('click', tap);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#go', {opacity: 0, y: 10, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < N; i++) { Kit.$('go').click(); await new Promise(r => setTimeout(r, 1100)); }
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

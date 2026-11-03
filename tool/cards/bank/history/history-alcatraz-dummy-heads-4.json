@@ -1,0 +1,38 @@
+{
+  "id": "history-alcatraz-dummy-heads-4",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did they fool the guards for 6 months?",
+  "answer": "The prisoners made a fake head from soap, toilet paper, and the cement dust from their digging, then painted it pink with the paint kit. They placed it under the sheets in the dark. A guard's quick flashlight check saw what looked like a sleeping man, so the deception held for six months.",
+  "move": "A fake only has to survive the look it will actually get.",
+  "keywords": [
+    "alcatraz",
+    "prison escape",
+    "dummy head",
+    "night guard",
+    "flashlight"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A dark bed with a sleeping shape under the sheets. Hold to shine a flashlight on the bed; release to move on. Asks: can a quick night check tell the sleeper from a fake head?",
+    "ground": "#161d30"
+  },
+  "source": "Geopop, “Fuga da Alcatraz: la verità sul tentativo di evasione dal carcere più famoso della storia” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=Q8GEU8YQSiE&t=381s",
+  "written": "2026-11-03"
+}

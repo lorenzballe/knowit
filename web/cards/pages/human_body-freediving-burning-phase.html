@@ -1,0 +1,196 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-freediving-burning-phase -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#sea{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#ctl{display:flex;flex-direction:column;align-items:center;gap:1cqh}
+#kick{font:800 max(2.3cqh,15px)/1 var(--body);letter-spacing:.08em;color:var(--c);background:var(--k);border:0;border-radius:99px;padding:1.7cqh 9cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .08s}
+#kick.on{transform:scale(.94)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.32 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Build it · freediving">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FREEDIVING</span></div>
+    <h2 class="q">Why is the phase around 35–40 m the most dangerous?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="sea" aria-label="A diver rising from 100 metres, with an oxygen gauge and a danger trail"></svg>
+    </div>
+    <div id="ctl">
+      <p class="say" id="say">Press and hold KICK to swim the diver up from 100 m.</p>
+      <button id="kick" aria-label="Kick">KICK</button>
+    </div>
+    <div id="why" class="gone"><p class="body">On the way up you must still beat the pull that dragged you to the bottom, so every stroke and kick burns oxygen. Around 35–40 m that effort meets a tank already running low: hypoxia sets in, air hunger hits and the diaphragm starts to contract.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The danger is not the bottom but the hard climb back, when oxygen runs out.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Immergersi in apnea a 100 metri di profondità. Le tecniche del freediving con Antonio Mogavero” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#ff4d4f', O2C = '#3fd0ea';
+const S = {d: 100, o2: 1, hold: false, done: false, fast: 1, trail: {}, warned: false};
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const smooth = t => t * t * (3 - 2 * t);
+// effort: the pull to the bottom you must fight, strong deep, easing above ~40 m
+const effort = d => smooth(clamp((d - 22) / 20, 0, 1));
+// oxygen left on the way up: spent as you climb
+const o2model = d => (15 + 45 * d / 100) / 60;
+const danger = (d, o2) => effort(d) * (1 - o2);
+const DMAX = 0.44;
+let G = null;
+
+function draw() {
+  const svg = Kit.$('sea');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 12), pad = fs * .4;
+  const colX = W * .2, colW = W * .4, trX = W * .64, trW = W * .2, gX = W * .89, gW = Math.min(W * .07, 26);
+  const y0 = pad + fs * 3.1, y1 = H - pad;
+  const Y = d => y0 + (y1 - y0) * d / 100;
+  const defs = Kit.mk('defs', {}, svg);
+  const lg = Kit.mk('linearGradient', {id: 'wat', x1: 0, y1: 0, x2: 0, y2: 1}, defs);
+  Kit.mk('stop', {offset: 0, 'stop-color': '#2b8fd6'}, lg);
+  Kit.mk('stop', {offset: 1, 'stop-color': '#061a3a'}, lg);
+  Kit.mk('rect', {x: colX, y: y0, width: colW, height: y1 - y0, rx: fs * .4, fill: 'url(#wat)'}, svg);
+  // ruler
+  for (let d = 0; d <= 100; d += 20) {
+    Kit.mk('line', {x1: colX - fs * .35, x2: colX, y1: Y(d), y2: Y(d), stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+    const t = Kit.mk('text', {x: colX - fs * .5, y: Y(d) + fs * .35, 'text-anchor': 'end', fill: 'var(--k)', 'font-family': 'var(--mono)', 'font-size': fs * .85}, svg);
+    t.textContent = d + ' m';
+  }
+  // headers
+  const st = Kit.mk('text', {x: colX - fs * 3, y: pad + fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}, svg);
+  const h1 = Kit.mk('text', {x: trX, y: pad + fs * 2.4, fill: RED, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .85}, svg);
+  h1.textContent = 'danger';
+  const h2 = Kit.mk('text', {x: gX + gW / 2, y: pad + fs * 2.4, 'text-anchor': 'middle', fill: O2C, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .85}, svg);
+  h2.textContent = 'O₂';
+  Kit.mk('line', {x1: trX, x2: trX, y1: y0, y2: y1, stroke: 'var(--k)', 'stroke-opacity': .3, 'stroke-width': 1.5}, svg);
+  // oxygen gauge
+  Kit.mk('rect', {x: gX, y: y0, width: gW, height: y1 - y0, rx: gW / 2, fill: 'none', stroke: 'var(--k)', 'stroke-opacity': .4, 'stroke-width': 1.5}, svg);
+  const gFill = Kit.mk('rect', {x: gX + 3, width: gW - 6, rx: (gW - 6) / 2, fill: O2C}, svg);
+  const trailG = Kit.mk('g', {}, svg);
+  // band (revealed at the end)
+  const band = Kit.mk('g', {opacity: S.done ? 1 : 0}, svg);
+  Kit.mk('rect', {x: colX, y: Y(35), width: trX + trW - colX, height: Y(40) - Y(35), fill: RED, 'fill-opacity': .25, stroke: RED, 'stroke-width': 2, 'stroke-dasharray': '6 4'}, band);
+  const bt = Kit.mk('text', {x: colX + fs * .4, y: Y(35) - fs * .45, fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs * .9}, band);
+  bt.textContent = 'burning phase';
+  // diver
+  const s = Math.min(colW * .09, (y1 - y0) * .035);
+  const dv = Kit.mk('g', {}, svg);
+  const body = Kit.mk('g', {}, dv);
+  Kit.mk('line', {x1: -s * .3, y1: -s * 1.2, x2: -s * .25, y2: -s * 2.6, stroke: '#ffd166', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, body);
+  Kit.mk('line', {x1: s * .3, y1: -s * 1.2, x2: s * .25, y2: -s * 2.6, stroke: '#ffd166', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, body);
+  Kit.mk('rect', {x: -s * .45, y: -s * 1.2, width: s * .9, height: s * 2.1, rx: s * .4, fill: '#111'}, body);
+  Kit.mk('circle', {cx: 0, cy: -s * 1.75, r: s * .48, fill: '#111'}, body);
+  Kit.mk('rect', {x: -s * .38, y: -s * 1.95, width: s * .76, height: s * .3, rx: s * .12, fill: O2C}, body);
+  const legs = Kit.mk('g', {}, body);
+  [-1, 1].forEach(k => {
+    Kit.mk('line', {x1: k * s * .2, y1: s * .8, x2: k * s * .25, y2: s * 2.2, stroke: '#111', 'stroke-width': s * .35, 'stroke-linecap': 'round'}, legs);
+    Kit.mk('path', {d: `M${k * s * .1},${s * 2.1} L${k * s * .45},${s * 2.1} L${k * s * .3},${s * 3.3} Z`, fill: '#ffd166'}, legs);
+  });
+  const warn = Kit.mk('g', {opacity: 0}, dv);
+  const ws = Math.max(s, 10);
+  Kit.mk('path', {d: `M${s * 1.2},${-s * .2} l${ws * .9},${-ws * 1.6} l${ws * .9},${ws * 1.6} Z`, fill: RED, stroke: '#fff', 'stroke-width': 1.5, 'stroke-linejoin': 'round'}, warn);
+  const wt = Kit.mk('text', {x: s * 1.2 + ws * .9, y: -s * .2 - ws * .2, 'text-anchor': 'middle', fill: '#fff', 'font-weight': 900, 'font-family': 'var(--body)', 'font-size': ws * 1.2}, warn);
+  wt.textContent = '!';
+  G = {svg, Y, colX, colW, trX, trW, y0, y1, gFill, trailG, band, dv, body, legs, warn, st, fs, s};
+  Object.keys(S.trail).forEach(k => addBar(+k));
+  update();
+}
+
+function addBar(b) {
+  const v = clamp(S.trail[b] / DMAX, 0, 1), {Y, trX, trW} = G;
+  let r = G.trailG.querySelector(`[data-b="${b}"]`);
+  if (!r) r = Kit.mk('rect', {'data-b': b, x: trX, fill: RED}, G.trailG);
+  r.setAttribute('y', Y(b * 2)); r.setAttribute('height', Math.max(1, Y(2) - Y(0) - .5));
+  r.setAttribute('width', Math.max(1, trW * v)); r.setAttribute('fill-opacity', .35 + .65 * v);
+}
+
+function update() {
+  if (!G) return;
+  const {Y, colX, colW, gFill, y0, y1} = G;
+  G.dv.setAttribute('transform', `translate(${colX + colW * .42},${Y(S.d)})`);
+  const h = (y1 - y0 - 6) * S.o2;
+  gFill.setAttribute('y', y1 - 3 - h); gFill.setAttribute('height', Math.max(0, h));
+  gFill.setAttribute('fill', S.o2 < .55 ? RED : O2C);
+  const dz = danger(S.d, S.o2) / DMAX;
+  G.warn.setAttribute('opacity', !S.done && dz > .75 ? 1 : 0);
+  let msg;
+  if (S.done) msg = 'Surface. Breathe.';
+  else if (S.d >= 99 && !S.hold) msg = 'At the bottom, 100 m';
+  else if (dz > .75) msg = 'Burning: effort + low O₂';
+  else if (effort(S.d) > .9) msg = 'Fighting the pull down';
+  else if (S.d > 22) msg = 'Air hunger, diaphragm kicks';
+  else msg = 'Effort easing';
+  G.st.textContent = msg;
+  G.st.setAttribute('fill', dz > .75 && !S.done ? RED : 'var(--k)');
+}
+
+let t0 = 0;
+function tick() {
+  if (S.done || !G) return;
+  const dt = Math.min(gsap.ticker.deltaRatio() / 60, .05) * S.fast;
+  t0 += dt;
+  const e = effort(S.d);
+  if (S.hold) {
+    const prev = S.d;
+    S.d = Math.max(0, S.d - (15 - 8 * e) * dt);
+    S.o2 = Math.min(S.o2, o2model(S.d));
+    for (let x = Math.floor(S.d); x <= Math.floor(prev); x++) {
+      const b = Math.floor(x / 2); if (b > 49) continue;
+      const v = danger(x, S.o2);
+      if (!(S.trail[b] >= v)) { S.trail[b] = v; addBar(b); }
+    }
+    G.legs.setAttribute('transform', `scale(${1 + .25 * Math.sin(t0 * 18)},1)`);
+  } else if (e > 0 && S.d < 100) {
+    S.d = Math.min(100, S.d + 3 * e * dt); // the pull drags you back down
+  }
+  const dz = danger(S.d, S.o2) / DMAX;
+  if (dz > .75 && !S.warned) { S.warned = true; Kit.haptic('light'); }
+  // air hunger: the diaphragm contracts, the body jolts
+  if (!Kit.calm && S.o2 < .6) G.body.setAttribute('transform', `translate(${Math.sin(t0 * 9) > .85 ? G.s * .15 : 0},0)`);
+  update();
+  if (S.d <= 0.5) finish();
+}
+
+function finish() {
+  S.done = true; S.hold = false; S.d = 0;
+  Kit.$('kick').classList.remove('on');
+  G.body.removeAttribute('transform'); G.legs.removeAttribute('transform');
+  update();
+  Kit.hide('ctl'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (Kit.calm) G.band.setAttribute('opacity', 1);
+  else gsap.to(G.band, {attr: {opacity: 1}, duration: .6, ease: 'power2.out'});
+}
+
+const kick = Kit.$('kick');
+const up = () => { S.hold = false; kick.classList.remove('on'); };
+kick.addEventListener('pointerdown', e => {
+  if (S.done) return; e.preventDefault();
+  try { kick.setPointerCapture(e.pointerId); } catch (_) {}
+  S.hold = true; kick.classList.add('on'); Kit.haptic('selection');
+});
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => kick.addEventListener(n, up));
+gsap.ticker.add(tick);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (!Kit.calm && G) gsap.from(G.dv, {opacity: 0, duration: .6, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  S.fast = 4;
+  kick.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerId: 1}));
+  S.hold = true;
+  const t = Date.now();
+  while (!S.done && Date.now() - t < 12000) await new Promise(r => setTimeout(r, 50));
+  await new Promise(r => setTimeout(r, 700));
+};
+Kit.single();
+</script>
+</html>

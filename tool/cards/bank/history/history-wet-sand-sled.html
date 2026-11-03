@@ -1,0 +1,188 @@
+<!doctype html>
+<!-- slug: history-wet-sand-sled -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.jar{cursor:grab}
+.jar.drag{cursor:grabbing}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PYRAMIDS</span></div>
+    <h2 class="q">How did wetting the sand help the Egyptians drag huge stones?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="why" class="gone"><p class="big">Half the pull</p><p class="body">A heavy stone on a sled makes a lot of friction on dry sand. Experiments show that wetting the sand in front of the sled cuts the pulling force needed by half. Same stone, half the crew.</p></div>
+    <p class="say" id="say">Drag the water jar onto the sand in front of the lower sled.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water poured in front of the sled halved the pull.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {wet: false, busy: false, done: false, fast: 1};
+let G = {}, loop = null;
+const INK = 'var(--k)', DRY = '#e8c179', WET = '#8a5a2e', STONE = '#efe6d2', CLAY = '#b5582f', WATER = '#3d7fd6';
+const dur = d => Kit.calm ? 0 : d * S.fast;
+
+function figure(parent, x, g, s, ry) {
+  const grp = Kit.mk('g', {}, parent);
+  const st = `stroke:${INK};stroke-width:${Math.max(2, s * .065)};stroke-linecap:round;fill:none`;
+  const hip = [x - s * .05, g - s * .45], sh = [x + s * .17, g - s * .82];
+  Kit.mk('line', {x1: hip[0], y1: hip[1], x2: x - s * .2, y2: g, style: st}, grp);
+  Kit.mk('line', {x1: hip[0], y1: hip[1], x2: x + s * .1, y2: g, style: st}, grp);
+  Kit.mk('line', {x1: hip[0], y1: hip[1], x2: sh[0], y2: sh[1], style: st}, grp);
+  Kit.mk('line', {x1: sh[0], y1: sh[1], x2: x - s * .12, y2: ry, style: st}, grp);
+  Kit.mk('circle', {cx: x + s * .25, cy: g - s * .96, r: s * .11, style: `fill:${INK}`}, grp);
+  return grp;
+}
+
+function lane(svg, i, W, H, f) {
+  const y0 = i ? H * .515 : 0, h = H * .485;
+  const g = y0 + h * .78, sb = y0 + h * .98;
+  const top = y0 + f * 4.3;
+  const s = Math.max(24, Math.min(h * .44, g - top));
+  const ry = g - s * .5;
+  Kit.mk('rect', {x: 0, y: y0, width: W, height: h, rx: f * .8, style: `fill:color-mix(in srgb,${INK} 5%,transparent)`}, svg);
+  Kit.mk('rect', {x: 0, y: g, width: W, height: sb - g, rx: f * .5, style: `fill:${DRY}`}, svg);
+  const sx1 = W * .04, bw = W * .3, sx2 = sx1 + bw;
+  const wet = Kit.mk('rect', {x: sx2 + 2, y: g, width: W * .96 - sx2, height: sb - g, rx: f * .4, style: `fill:${WET}`, opacity: (i && S.wet) ? 1 : 0}, svg);
+  const isWet = i && S.wet;
+  const t1 = Kit.mk('text', {x: f * .7, y: y0 + f * 1.4, style: `font:800 ${f}px var(--body);fill:${INK}`}, svg);
+  t1.textContent = i ? (isWet ? 'WET SAND' : 'SAND · NOT WET YET') : 'DRY SAND';
+  const t2 = Kit.mk('text', {x: f * .7, y: y0 + f * 2.8, style: `font:600 ${f * .9}px var(--body);fill:${INK}`}, svg);
+  t2.textContent = `pull needed: ${isWet ? 50 : 100}%`;
+  const bwid = W * .4;
+  Kit.mk('rect', {x: f * .7, y: y0 + f * 3.3, width: bwid, height: f * .45, rx: f * .22, style: `fill:color-mix(in srgb,${INK} 15%,transparent)`}, svg);
+  const bar = Kit.mk('rect', {x: f * .7, y: y0 + f * 3.3, width: bwid * (isWet ? .5 : 1), height: f * .45, rx: f * .22, style: `fill:${isWet ? '#2f8f7a' : '#c4472b'}`}, svg);
+  // crew and sled move together
+  const mover = Kit.mk('g', {}, svg);
+  const bh = s * .62, rt = s * .09;
+  const sled = Kit.mk('g', {}, mover);
+  Kit.mk('rect', {x: sx1 + bw * .08, y: g - rt - bh, width: bw * .84, height: bh, rx: 3, style: `fill:${STONE};stroke:${INK};stroke-width:2`}, sled);
+  Kit.mk('line', {x1: sx1 + bw * .35, y1: g - rt - bh, x2: sx1 + bw * .35, y2: g - rt, style: `stroke:color-mix(in srgb,${INK} 25%,transparent);stroke-width:1.5`}, sled);
+  Kit.mk('line', {x1: sx1 + bw * .08, y1: g - rt - bh * .5, x2: sx1 + bw * .92, y2: g - rt - bh * .5, style: `stroke:color-mix(in srgb,${INK} 25%,transparent);stroke-width:1.5`}, sled);
+  Kit.mk('path', {d: `M${sx1} ${g - rt} L${sx2 - rt} ${g - rt} Q${sx2} ${g - rt} ${sx2 + rt} ${g - rt * 2.6} L${sx2 + rt * .4} ${g - rt * 2.6} Q${sx2 - rt * .4} ${g} ${sx2 - rt * 1.4} ${g} L${sx1} ${g} Z`, style: `fill:#7a4b25;stroke:${INK};stroke-width:2;stroke-linejoin:round`}, sled);
+  const n = 8, px = k => W * .5 + k * (W * .44 / 7);
+  const crew = [];
+  for (let k = 0; k < n; k++) {
+    if (isWet && k % 2) continue;
+    crew[k] = figure(mover, px(k), g, s, ry);
+  }
+  const last = isWet ? 6 : 7;
+  const rope = Kit.mk('line', {x1: sx2 + rt * .6, y1: ry, x2: px(last) - s * .12, y2: ry, style: `stroke:#5a3a1a;stroke-width:${Math.max(2, s * .05)};stroke-linecap:round`}, mover);
+  mover.insertBefore(rope, mover.firstChild.nextSibling);
+  return {y0, h, g, sb, s, sx2, wet, t1, t2, bar, bwid, crew, rope, px, mover, W, f};
+}
+
+function draw() {
+  const svg = Kit.$('pic');
+  if (loop) { loop.forEach(t => t.kill()); loop = null; }
+  svg.innerHTML = '';
+  let {W, H, f} = Kit.fitSvg(svg);
+  f = Math.max(13, Math.min(f, H * .042, W * .045));
+  const A = lane(svg, 0, W, H, f), B = lane(svg, 1, W, H, f);
+  G = {svg, A, B, W, H, f};
+  if (!S.wet) {
+    const zx = B.sx2 + 4, zw = B.px(0) - B.s * .3 - zx;
+    G.zone = Kit.mk('rect', {x: zx, y: B.g + 2, width: Math.max(zw, W * .1), height: B.sb - B.g - 4, rx: f * .4, style: `fill:none;stroke:${WATER};stroke-width:2.5;stroke-dasharray:6 5`}, svg);
+    G.zc = {x: zx + Math.max(zw, W * .1) / 2, y: (B.g + B.sb) / 2};
+    if (!Kit.calm) gsap.to(G.zone, {opacity: .35, duration: .7, repeat: -1, yoyo: true});
+    const js = f * 1.15;
+    const jar = Kit.mk('g', {class: 'jar'}, svg);
+    Kit.mk('ellipse', {cx: 0, cy: js * .25, rx: js * .62, ry: js * .78, style: `fill:${CLAY};stroke:${INK};stroke-width:2`}, jar);
+    Kit.mk('rect', {x: -js * .25, y: -js * .85, width: js * .5, height: js * .4, style: `fill:${CLAY};stroke:${INK};stroke-width:2`}, jar);
+    Kit.mk('ellipse', {cx: 0, cy: -js * .85, rx: js * .38, ry: js * .14, style: `fill:${WATER};stroke:${INK};stroke-width:2`}, jar);
+    Kit.mk('path', {d: `M${-js * .4} ${js * .1} Q0 ${js * .3} ${js * .4} ${js * .1}`, style: `fill:none;stroke:#f3d9b0;stroke-width:2`}, jar);
+    Kit.mk('circle', {cx: 0, cy: 0, r: js * 1.6, style: 'fill:transparent'}, jar);
+    G.jar = jar; G.js = js;
+    G.home = {x: W * .66, y: B.y0 + f * 2.2};
+    gsap.set(jar, {x: G.home.x, y: G.home.y});
+    if (!Kit.calm) G.bob = gsap.to(jar, {y: G.home.y - f * .3, duration: .6, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    jar.addEventListener('pointerdown', down);
+  } else if (S.done && !Kit.calm) {
+    loop = [A, B].map(L => gsap.to(L.mover, {x: W * .025, duration: 1.1, repeat: -1, yoyo: true, ease: 'sine.inOut'}));
+  }
+}
+
+function pt(e) {
+  const p = G.svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+  return p.matrixTransform(G.svg.getScreenCTM().inverse());
+}
+let off = null;
+function down(e) {
+  if (S.busy || S.wet) return;
+  e.preventDefault();
+  if (G.bob) G.bob.kill();
+  const p = pt(e), x = gsap.getProperty(G.jar, 'x'), y = gsap.getProperty(G.jar, 'y');
+  off = {x: x - p.x, y: y - p.y};
+  G.jar.classList.add('drag'); Kit.haptic('light');
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up);
+}
+function move(e) { if (!off) return; const p = pt(e); gsap.set(G.jar, {x: p.x + off.x, y: p.y + off.y}); }
+function up(e) {
+  window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up);
+  if (!off) return; off = null; G.jar.classList.remove('drag');
+  const x = gsap.getProperty(G.jar, 'x'), y = gsap.getProperty(G.jar, 'y');
+  const dx = x - G.zc.x, dy = y - G.zc.y;
+  if (Math.hypot(dx, dy) < Math.max(G.W * .2, G.f * 5) && y > G.B.y0 + G.B.h * .3) pour();
+  else gsap.to(G.jar, {x: G.home.x, y: G.home.y, duration: .4, ease: 'back.out(1.6)'});
+}
+
+function pour() {
+  S.busy = true; S.wet = true; Kit.haptic('selection');
+  const {B, svg, f, js} = G;
+  const jx = G.zc.x - js * .6, jy = B.g - js * 2.2;
+  const tl = gsap.timeline({onComplete: finish});
+  gsap.killTweensOf(G.zone); tl.to(G.zone, {opacity: 0, duration: dur(.2)}, 0);
+  tl.to(G.jar, {x: jx, y: jy, duration: dur(.3), ease: 'power2.out'}, 0);
+  tl.to(G.jar, {rotation: 75, transformOrigin: '50% 50%', duration: dur(.35)}, dur(.3));
+  for (let i = 0; i < 9; i++) {
+    const d = Kit.mk('circle', {cx: jx + js * .9, cy: jy - js * .2, r: f * .22, style: `fill:${WATER}`}, svg);
+    tl.to(d, {attr: {cy: B.g + (B.sb - B.g) * .4, cx: jx + js * .9 + (i % 3 - 1) * f * .8}, duration: dur(.4), ease: 'power2.in'}, dur(.6 + i * .06));
+    tl.to(d, {opacity: 0, duration: dur(.15)}, '>');
+  }
+  tl.to(B.wet, {opacity: 1, duration: dur(.8)}, dur(.8));
+  tl.to(G.jar, {opacity: 0, duration: dur(.3)}, dur(1.4));
+  tl.add(() => { B.t1.textContent = 'WET SAND'; B.bar.style.fill = '#2f8f7a'; }, dur(1.5));
+  const o = {v: 100};
+  tl.to(o, {v: 50, duration: dur(.9), ease: 'power2.inOut', onUpdate: () => { B.t2.textContent = `pull needed: ${Math.round(o.v)}%`; B.bar.setAttribute('width', B.bwid * o.v / 100); }}, dur(1.6));
+  const gone = B.crew.filter((c, k) => k % 2);
+  tl.to(gone, {opacity: 0, y: -f, duration: dur(.5), stagger: dur(.08)}, dur(1.9));
+  tl.to(B.rope, {attr: {x2: B.px(6) - B.s * .12}, duration: dur(.4)}, dur(2.4));
+}
+
+function finish() {
+  S.done = true; S.busy = false;
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => {
+    draw();
+    if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+  });
+}
+
+Kit.onShow.card = () => { if (!S.busy) draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm && G.jar && !S.wet) gsap.from(G.jar, {scale: 0, transformOrigin: '50% 50%', duration: .5, ease: 'back.out(2)'}); };
+Kit.play.card = async () => {
+  S.fast = .25;
+  const r = G.jar.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const zr = G.zone.getBoundingClientRect(), zx = zr.left + zr.width / 2, zy = zr.top + zr.height / 2;
+  const ev = (t, x, y) => new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1, isPrimary: true});
+  G.jar.dispatchEvent(ev('pointerdown', cx, cy));
+  window.dispatchEvent(ev('pointermove', (cx + zx) / 2, (cy + zy) / 2));
+  window.dispatchEvent(ev('pointermove', zx, zy - 10));
+  window.dispatchEvent(ev('pointerup', zx, zy - 10));
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

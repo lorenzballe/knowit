@@ -1,0 +1,37 @@
+{
+  "id": "science-tyres-stir-cesium",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can heavy vehicles reactivate old radiation in Belarus?",
+  "answer": "Cesium-137 from Chernobyl fell on the land in 1986 and, over decades, settled into the soil. Heavy tyres churn that soil up, and the cesium rides the dust back into the air. With the war with Russia, heavy vehicles have done exactly this in recent years.",
+  "move": "Buried radiation is not gone: disturb the soil and it moves again.",
+  "keywords": [
+    "cesium-137",
+    "chernobyl",
+    "belarus",
+    "heavy-vehicles",
+    "soil"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Animated scene of a truck driving across a field, with a close-up of its tyres churning up soil and dust rising into the air. Asks how heavy vehicles can reactivate old radiation in Belarus."
+  },
+  "source": "Geopop, “Chernobyl non è finita: cosa è successo davvero dal 1986 a oggi” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=ksyOBogBKvc&t=1400s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-neutral-temperature-welding -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:12cqh;position:relative}
+#art{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;gap:3cqw}
+.btn{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer}
+.btn.main{background:var(--k);color:var(--c);box-shadow:none}
+.btn:disabled{opacity:.4;cursor:default}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font-size:max(2.6cqh,16px);line-height:1.15}
+#why .body{font-size:max(1.8cqh,13px);line-height:1.3}
+#again{align-self:flex-start;font:700 max(1.7cqh,13px)/1.2 var(--body);color:var(--k);background:none;border:0;text-decoration:underline;padding:.4cqh 0;cursor:pointer}
+.say,.keep,.body,.big{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Try it · weld the rail">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RAIL WELDING</span></div>
+    <h2 class="q">Why do crews weld rail at its neutral temperature?</h2>
+    <div class="stagebox" id="stage"><svg id="art"></svg></div>
+    <div id="ctl">
+      <button class="btn" id="wait">Wait an hour</button>
+      <button class="btn main" id="weld">Weld now</button>
+    </div>
+    <div id="why" class="gone">
+      <p class="big" id="res">Welded at neutral: zero stress</p>
+      <p class="body">A rail has no stress at its neutral temperature. Weld it there and it starts out relaxed, with no force locked in as it cools. That's why crews in a German summer weld at night.</p>
+      <button id="again">Try another hour</button>
+    </div>
+    <p class="say" id="say">Tap Wait to let the summer rail cool. Tap Weld when you choose.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Join the rail when it is stress-free, so cooling locks in no force.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why don't trains make that clacking noise anymore?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TEMPS=[0.9,0.78,0.66,0.54,0.42,0.3], TN=0.3;
+const NAMES=['Afternoon sun','Late afternoon','Evening','Dusk','Late evening','Night'];
+const svg=Kit.$('art');
+let W=0,H=0,f=14, step=0, welded=false, Tw=0, busy=false;
+const st={T:TEMPS[0],d:0,spark:0,bead:0};
+const stars=[...Array(18)].map(()=>[Kit.rnd(),Kit.rnd()*0.8,0.6+Kit.rnd()]);
+const sparks=[...Array(16)].map(()=>[-Math.PI*(0.1+0.8*Kit.rnd()),0.5+Kit.rnd()]);
+
+function hx(h){return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));}
+function mix(a,b,t){t=Math.max(0,Math.min(1,t));const A=hx(a),B=hx(b);return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')+')';}
+const M=(t,a,p)=>Kit.mk(t,a,p||svg);
+const txt=(s,x,y,F,fill,anchor,w)=>{const e=M('text',{x,y,fill,'text-anchor':anchor||'start'});e.setAttribute('style',`font:${w||700} ${F}px var(--body)`);e.textContent=s;return e;};
+
+function render(){
+  if(!W) return;
+  svg.innerHTML='';
+  const F=Math.max(f,12), pad=Math.max(W*0.03,8);
+  // thermometer
+  const tbw=Math.max(W*0.05,12), cx=pad+tbw/2+2, ty=pad+F*0.4, r=tbw*0.95, by=H-pad-r;
+  const yOf=T=>by-r-(by-r-ty-tbw/2)*T;
+  M('rect',{x:cx-tbw/2,y:ty,width:tbw,height:by-ty,rx:tbw/2,fill:'#fff',stroke:'currentColor','stroke-width':2,style:'color:var(--k)'});
+  const col=mix('#3d86e0','#e8452f',st.T), iw=tbw*0.5;
+  M('rect',{x:cx-iw/2,y:yOf(st.T),width:iw,height:by-yOf(st.T),rx:iw/2,fill:col});
+  M('circle',{cx,cy:by,r,fill:col,stroke:'currentColor','stroke-width':2,style:'color:var(--k)'});
+  M('circle',{cx,cy:by,r:r*0.62,fill:col});
+  const lx=cx+tbw/2+F*0.4, ny=yOf(TN);
+  M('line',{x1:cx-tbw/2-5,x2:cx+tbw/2+5,y1:ny,y2:ny,stroke:'currentColor','stroke-width':3,style:'color:var(--k)'});
+  txt('neutral',lx,ny+F*0.35,F,'var(--k)');
+  if(welded && Math.abs(yOf(Tw)-ny)>F*1.5){
+    const wy=yOf(Tw);
+    M('polygon',{points:`${cx+tbw/2+2},${wy} ${cx+tbw/2+9},${wy-5} ${cx+tbw/2+9},${wy+5}`,fill:'#e8452f'});
+    txt('welded',lx+4,wy+F*0.35,F,'#e8452f');
+  }
+  // scene
+  const sx=lx+F*4.4, ex=W-pad, sw=ex-sx, top=pad, bot=H-pad, hy=top+(bot-top)*0.56, mx=sx+sw/2;
+  const defs=M('defs',{}); const cp=M('clipPath',{id:'clip'},defs);
+  M('rect',{x:sx,y:top,width:sw,height:bot-top,rx:F*0.9},cp);
+  const g=M('g',{'clip-path':'url(#clip)'});
+  const d=st.d;
+  const sky=d<.55?mix('#ffd88a','#f08a5d',d/.55):mix('#f08a5d','#18203f',(d-.55)/.45);
+  M('rect',{x:sx,y:top,width:sw,height:hy-top+2,fill:sky},g);
+  if(d>0.7) stars.forEach(s=>M('circle',{cx:sx+s[0]*sw,cy:top+s[1]*(hy-top),r:s[2],fill:'#fff',opacity:(d-0.7)/0.3},g));
+  const sr=Math.min(sw,hy-top)*0.11;
+  M('circle',{cx:sx+sw*(0.55+0.35*d),cy:top+(hy-top)*(0.28+0.95*Math.pow(d,1.3)),r:sr,fill:mix('#fff2a8','#ff5a30',d)},g);
+  if(d>0.85){
+    const o=(d-0.85)/0.15, mcx=sx+sw*0.82, mcy=top+(hy-top)*0.32;
+    M('circle',{cx:mcx,cy:mcy,r:sr*0.8,fill:'#f4f1dc',opacity:o},g);
+    M('circle',{cx:mcx+sr*0.35,cy:mcy-sr*0.2,r:sr*0.7,fill:sky,opacity:o},g);
+  }
+  txt(NAMES[Math.round(d*5)],sx+F*0.7,top+F*1.5,F,d<.55?'#2a1d10':'#fff');
+  // ground
+  M('rect',{x:sx,y:hy,width:sw,height:bot-hy,fill:mix('#5b4f43','#25211d',d)},g);
+  const gh=bot-hy, railH=Math.max(F*1.1,gh*0.13), railY=hy+gh*0.2;
+  const n=9; for(let i=0;i<n;i++){const x=sx+sw*(i+0.5)/n; M('rect',{x:x-sw*0.025,y:railY+railH,width:sw*0.05,height:F*0.7,fill:'#2b1c12'},g);}
+  // rail
+  const s=welded?st.T-Tw:0, mag=Math.min(Math.abs(s)/0.6,1);
+  const steel=mix('#a7b0ba','#e8452f',mag*0.9);
+  M('rect',{x:sx-5,y:railY,width:sw+10,height:railH,fill:steel},g);
+  M('rect',{x:sx-5,y:railY,width:sw+10,height:railH*0.38,fill:mix('#dfe5ea','#ff8a70',mag*0.9)},g);
+  M('rect',{x:sx-5,y:railY+railH*0.82,width:sw+10,height:railH*0.18,fill:'rgba(0,0,0,.25)'},g);
+  if(st.bead<0.01) M('line',{x1:mx,x2:mx,y1:railY,y2:railY+railH,stroke:'#1a1a1a','stroke-width':2.5},g);
+  else M('ellipse',{cx:mx,cy:railY+railH/2,rx:F*0.45*st.bead,ry:railH*0.62,fill:mix('#8d949b','#ffb030',st.spark<1?1-st.spark*0.6:0.4*(1-st.bead)+0)},g);
+  if(st.spark>0&&st.spark<1){
+    const p=st.spark;
+    sparks.forEach(a=>{const L=F*3.2*a[1]*p; M('line',{x1:mx,y1:railY,x2:mx+Math.cos(a[0])*L,y2:railY+Math.sin(a[0])*L,stroke:'#ffd84a','stroke-width':2,opacity:1-p},g);});
+  }
+  // force
+  const ay=railY+railH+F*1.9;
+  let label='Two rails, just touching';
+  if(welded){
+    if(Math.abs(s)<0.02) label='No stress in the rail';
+    else {
+      label=s<0?'Pulled tight: wants to shrink':'Squeezed: wants to grow';
+      const L=F*0.8+mag*sw*0.3;
+      [-1,1].forEach(dir=>{
+        const a0=mx+dir*F*0.5, a1=a0+dir*L, tip=s<0?a1:a0, back=s<0?-dir:dir;
+        M('line',{x1:a0,x2:a1,y1:ay,y2:ay,stroke:'#ff6b5a','stroke-width':Math.max(3,F*0.25)},g);
+        M('polygon',{points:`${tip+(s<0?dir:-dir)*F*0.5},${ay} ${tip},${ay-F*0.45} ${tip},${ay+F*0.45}`,fill:'#ff6b5a'},g);
+      });
+    }
+  }
+  txt(label,mx,ay+F*1.7,F,'#fff','middle');
+}
+
+function setButtons(){Kit.$('wait').disabled=step>=5;}
+function wait(){
+  if(busy||welded||step>=5) return;
+  step++; Kit.haptic('light'); setButtons();
+  gsap.to(st,{T:TEMPS[step],d:step/5,duration:Kit.calm?0:.6,ease:'power2.out',onUpdate:render,onComplete:render});
+  Kit.$('say').textContent=step>=5?'The rail has cooled to its neutral temperature. Weld now?':'Tap Wait to cool it more, or Weld now.';
+}
+function weld(){
+  if(busy||welded) return;
+  busy=true; welded=true; Tw=TEMPS[step]; st.T=Tw; Kit.haptic('selection'); Kit.hide('ctl');
+  Kit.$('say').textContent='Welded. Now the rail sits at its neutral temperature…';
+  const c=Kit.calm?0:1, tl=gsap.timeline({onUpdate:render,onComplete:()=>{
+    render(); busy=false;
+    const ok=Tw===TN;
+    Kit.$('res').textContent=ok?'Welded at neutral: zero stress':'Welded hot: force locked in at neutral';
+    Kit.haptic(ok?'success':'light');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }});
+  tl.to(st,{spark:1,bead:1,duration:.8*c,ease:'power1.out'})
+    .to(st,{T:TN,d:1,duration:1.4*c,ease:'power2.inOut'},'+=.15');
+}
+function reset(){
+  step=0; welded=false; busy=false; Object.assign(st,{T:TEMPS[0],d:0,spark:0,bead:0});
+  Kit.hide('why'); Kit.hide('keep'); Kit.show('ctl'); Kit.show('say');
+  Kit.$('say').textContent='Tap Wait to let the summer rail cool. Tap Weld when you choose.';
+  setButtons(); render();
+}
+Kit.$('wait').addEventListener('click',wait);
+Kit.$('weld').addEventListener('click',weld);
+Kit.$('again').addEventListener('click',reset);
+setButtons();
+Kit.onShow.card=()=>{({W,H,f}=Kit.fitSvg(svg)); render();};
+Kit.onEnter.card=()=>{ if(!Kit.calm) gsap.from('#art',{opacity:0,y:10,duration:.5,ease:'power3.out'}); };
+Kit.play.card=async()=>{
+  const z=ms=>new Promise(r=>setTimeout(r,ms));
+  for(let i=0;i<5;i++){Kit.$('wait').click(); await z(Kit.calm?30:700);}
+  Kit.$('weld').click(); await z(Kit.calm?200:2800);
+};
+Kit.single();
+</script>
+</html>

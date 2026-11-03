@@ -1,0 +1,186 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-radiation-cancer -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column}
+#cell{flex:1;min-height:0;width:100%;display:block;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,18px)/1.15 var(--display);color:var(--k)}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);color:var(--k)}
+.say{font:700 max(2cqh,14px)/1.25 var(--body)}
+.foot .src{display:block;padding-right:110px}
+.mem{fill:color-mix(in srgb,var(--k) 9%,transparent);stroke:var(--k)}
+.nuc{fill:color-mix(in srgb,var(--k) 14%,transparent);stroke:var(--k);stroke-opacity:.55}
+.strand{fill:none;stroke:var(--k);stroke-linecap:round}
+.rung{stroke:var(--k);stroke-opacity:.7;stroke-linecap:round}
+.mut{stroke:#e23a3f;stroke-linecap:round}
+.cmem{fill:color-mix(in srgb,#e23a3f 30%,transparent);stroke:#e23a3f}
+.cnuc{fill:color-mix(in srgb,#e23a3f 45%,transparent);stroke:#e23a3f;stroke-opacity:.7}
+.ray{stroke:#f5b400;stroke-linecap:round}
+.lab{fill:var(--k);font-family:var(--body);font-weight:800;text-anchor:middle}
+.lab.red{fill:#e23a3f}
+.lead{stroke:#e23a3f;stroke-dasharray:3 3}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Tap · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">RADIATION</span></div>
+    <h2 class="q">What is a major consequence of radiation exposure?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="cell" aria-label="A cell with DNA in its nucleus"></svg>
+    </div>
+    <p class="say" id="say">Tap the cell to hit its DNA with radiation.</p>
+    <div id="why" class="gone"><p class="big">Radiation can cause cancer.</p><p class="body">Radiation damages the DNA inside cells: those changes are mutations. They can ruin tissues and turn a healthy cell into a cancer cell.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Radiation mutates cells, and mutations can become cancer.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “How Damaging is Radiation?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('cell');
+const N = 8, ORDER = [1, 3, 6], RED = '#e23a3f';
+const st = {hits: 0, done: false, busy: false};
+let G = null;
+
+function blob(cx, cy, r, seed) {
+  let d = '';
+  for (let j = 0; j <= 64; j++) {
+    const a = j / 64 * Math.PI * 2;
+    const rr = r * (1 + .09 * Math.sin(5 * a + seed) + .05 * Math.sin(9 * a + 2 * seed));
+    d += (j ? 'L' : 'M') + (cx + Math.cos(a) * rr).toFixed(1) + ' ' + (cy + Math.sin(a) * rr).toFixed(1);
+  }
+  return d + 'Z';
+}
+
+function draw(anim) {
+  while (svg.firstChild) svg.firstChild.remove();
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const r = Math.max(30, Math.min(W * .26, (H - fs * 4.2) / 2));
+  const cx = W / 2, cy = H / 2 + fs * .1;
+  const rn = r * .52, L = rn * 1.5, A = rn * .45, nx = cx, ny = cy;
+  const sw = Math.max(1.5, r * .025);
+  G = {W, H, fs, r, cx, cy, nx, ny, L, A};
+  const rung = i => { const t = (i + .5) / N * 3 * Math.PI; return {y: ny - L / 2 + (i + .5) / N * L, dx: A * Math.sin(t)}; };
+  G.rung = rung;
+
+  // clones: the cancer cell dividing
+  const clones = [];
+  if (st.done) {
+    const angs = [0, -.62, .62, Math.PI, Math.PI - .62, Math.PI + .62];
+    angs.forEach((a, k) => {
+      const tx = cx + Math.cos(a) * r * 1.45, ty = cy + Math.sin(a) * r * 1.38, cr = r * .36;
+      const g = Kit.mk('g', {}, svg);
+      const m = Kit.mk('path', {d: blob(0, 0, cr, k + 1), class: 'cmem', 'stroke-width': sw}, g);
+      Kit.mk('circle', {cx: 0, cy: 0, r: cr * .45, class: 'cnuc'}, g);
+      g.setAttribute('transform', `translate(${tx},${ty})`);
+      clones.push({g, tx, ty});
+    });
+  }
+
+  // the cell
+  const body = Kit.mk('g', {}, svg);
+  if (st.done) {
+    Kit.mk('path', {d: blob(cx, cy, r, 0), class: 'cmem', 'stroke-width': sw * 1.4}, body);
+    Kit.mk('circle', {cx: nx, cy: ny, r: rn, class: 'cnuc', 'stroke-width': sw}, body);
+  } else {
+    Kit.mk('circle', {cx, cy, r, class: 'mem', 'stroke-width': sw * 1.4}, body);
+    Kit.mk('circle', {cx: nx, cy: ny, r: rn, class: 'nuc', 'stroke-width': sw}, body);
+  }
+  // DNA ladder
+  [1, -1].forEach(s => {
+    let d = '';
+    for (let j = 0; j <= 48; j++) {
+      const t = j / 48 * 3 * Math.PI, y = ny - L / 2 + j / 48 * L;
+      d += (j ? 'L' : 'M') + (nx + s * A * Math.sin(t)).toFixed(1) + ' ' + y.toFixed(1);
+    }
+    Kit.mk('path', {d, class: 'strand', 'stroke-width': sw * 1.3, style: st.done ? `stroke:${RED}` : ''}, body);
+  });
+  const hitN = st.done ? 3 : st.hits;
+  const mutated = ORDER.slice(0, hitN);
+  for (let i = 0; i < N; i++) {
+    const {y, dx} = rung(i);
+    if (mutated.includes(i)) {
+      const gap = Math.max(3, A * .18);
+      const s = Math.sign(dx) || 1;
+      Kit.mk('line', {x1: nx - dx, y1: y, x2: nx - s * gap * .5, y2: y + 2, class: 'mut', 'stroke-width': sw * 2.2}, body);
+      Kit.mk('line', {x1: nx + s * gap * .5, y1: y - 2, x2: nx + dx, y2: y, class: 'mut', 'stroke-width': sw * 2.2}, body);
+    } else {
+      Kit.mk('line', {x1: nx - dx, y1: y, x2: nx + dx, y2: y, class: 'rung', 'stroke-width': sw}, body);
+    }
+  }
+
+  // labels
+  if (hitN > 0) {
+    const last = rung(ORDER[hitN - 1]);
+    const ty = cy - r * (st.done ? 1.12 : 1) - fs * .75;
+    Kit.mk('line', {x1: cx, y1: ty + fs * .3, x2: nx + last.dx * .2, y2: last.y, class: 'lead', 'stroke-width': Math.max(1, sw * .7)}, svg);
+    const t = Kit.mk('text', {x: cx, y: ty, class: 'lab red', 'font-size': fs * 1.1}, svg);
+    t.textContent = hitN > 1 ? `Mutation ×${hitN}` : 'Mutation';
+  }
+  const bl = Kit.mk('text', {x: cx, y: cy + r * (st.done ? 1.12 : 1) + fs * 1.45, class: 'lab' + (st.done ? ' red' : ''), 'font-size': fs * 1.1}, svg);
+  bl.textContent = st.done ? 'Cancer cell' : 'Healthy cell';
+
+  if (anim && !Kit.calm && st.done) {
+    gsap.from(body, {scale: .9, transformOrigin: '50% 50%', duration: .6, ease: 'elastic.out(1,.5)'});
+    clones.forEach((c, k) => {
+      gsap.fromTo(c.g, {attr: {transform: `translate(${cx},${cy}) scale(0.1)`}, opacity: 0},
+        {attr: {transform: `translate(${c.tx},${c.ty}) scale(1)`}, opacity: 1, duration: .7, delay: .25 + k * .14, ease: 'back.out(1.6)'});
+    });
+    gsap.from(bl, {opacity: 0, y: 8, duration: .4, delay: .2});
+  }
+}
+
+function flash(x, y) {
+  if (Kit.calm) return;
+  const c = Kit.mk('circle', {cx: x, cy: y, r: 2, fill: 'none', stroke: '#f5b400', 'stroke-width': 3}, svg);
+  gsap.to(c, {attr: {r: G.r * .35}, opacity: 0, duration: .5, ease: 'power2.out', onComplete: () => c.remove()});
+}
+
+const SAYS = ['', 'A mutation: the DNA is broken. Hit it again.', 'Two mutations. Once more.'];
+
+function land(tx, ty) {
+  st.hits++; st.busy = false; Kit.haptic('light');
+  draw(false); flash(tx, ty);
+  if (st.hits < 3) Kit.$('say').textContent = SAYS[st.hits];
+  else { st.busy = true; Kit.$('say').textContent = 'Too much damage…'; setTimeout(cancer, Kit.calm ? 50 : 450); }
+}
+
+function fire() {
+  if (st.busy || st.done || !G) return;
+  st.busy = true;
+  const i = ORDER[st.hits], {y, dx} = G.rung(i);
+  const tx = G.nx + dx * .3, ty = y;
+  if (Kit.calm) { land(tx, ty); return; }
+  const a = -Math.PI * (.15 + Kit.rnd() * .7) + (Kit.rnd() < .5 ? 0 : Math.PI * 1.0);
+  const sx = G.cx + Math.cos(a) * G.W, sy = G.cy + Math.sin(a) * G.H;
+  const ln = Kit.mk('line', {x1: sx, y1: sy, x2: sx, y2: sy, class: 'ray', 'stroke-width': Math.max(2.5, G.r * .04)}, svg);
+  gsap.to(ln, {attr: {x2: tx, y2: ty}, duration: .22, ease: 'power1.in', onComplete: () => {
+    gsap.to(ln, {attr: {x1: tx, y1: ty}, duration: .12, onComplete: () => { ln.remove(); land(tx, ty); }});
+  }});
+}
+
+function cancer() {
+  st.done = true; st.busy = false;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  requestAnimationFrame(() => draw(true));
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 10, stagger: .12, duration: .45, delay: .5, ease: 'power3.out'});
+}
+
+svg.addEventListener('click', fire);
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(svg.children, {opacity: 0, scale: .85, transformOrigin: '50% 50%', duration: .6, stagger: .02, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let k = 0; k < 3; k++) { svg.dispatchEvent(new MouseEvent('click', {bubbles: true})); await w(700); }
+  await w(2200);
+};
+Kit.single();
+</script>
+</html>

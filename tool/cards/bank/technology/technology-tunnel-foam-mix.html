@@ -1,0 +1,186 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-tunnel-foam-mix -->
+<title>Astute · 3% foam in the tunnel</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;border-radius:1.6cqh;overflow:hidden}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{font:700 max(2cqh,14px)/1.25 var(--body)}
+.keep{font:600 max(1.8cqh,13px)/1.3 var(--body)}
+.src{font-size:max(1.4cqh,12px)}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · see what it does">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TUNNEL SAFETY</span></div>
+    <h2 class="q">How does a tunnel's fire system turn plain water into foam?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of a road tunnel: a water duct feeds a sector room, a pipe rises to nozzles above a fire"></svg>
+      <div id="why" class="gone">
+        <p class="big">Pipe, then mix, then spray.</p>
+        <p class="body">Water reaches the room of the hit sector through special pipes. There it is mixed with 3% fire foam, then rises into the tunnel and is sprayed. The tunnel has 61 such rooms, about one every 127 m.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the 3% foam into the sector room under the fire.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Water comes by pipe, the room adds 3% foam, the tunnel gets the spray.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dove portano le uscite di emergenza delle gallerie autostradali? Quelle con le luci verdi” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let G = {}, done = false, busy = false, entered = false, dragging = false, off = {x:0, y:0};
+const BLUE = '#3aa0ff', FOAM = '#ffffff', ROCK = '#4a3f36', DARK = '#161c28', PIPE = '#7b8796';
+
+function build(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(f, H * 0.05));
+  const m = (t, a, p) => Kit.mk(t, a, p || svg);
+  const roadY = H * .44, ceilY = H * .06, ductY = H * .9, dw = Math.max(8, H * .05);
+  const cx0 = W * .52, cx1 = W * .95, cy0 = roadY + H * .12, cy1 = roadY + H * .36;
+  const midX = (cx0 + cx1) / 2, riserX = cx1 - W * .07;
+  G = {W, H, fs, roadY, cy0, cy1, cx0, cx1, midX};
+
+  m('rect', {x:0, y:0, width:W, height:H, fill:ROCK});
+  m('rect', {x:0, y:ceilY, width:W, height:roadY - ceilY, fill:DARK});
+  m('rect', {x:0, y:roadY, width:W, height:H * .025, fill:'#2b2b2b'});
+  m('line', {x1:0, y1:roadY + H * .012, x2:W, y2:roadY + H * .012, stroke:'#f2d24b', 'stroke-width':2, 'stroke-dasharray':'10 10'});
+
+  // fire
+  const fire = m('g', {transform:`translate(${W * .46},${roadY})`});
+  const fw = W * .07, fh = H * .2;
+  const flame = (w, h, c) => m('path', {d:`M${-w},0 Q${-w},${-h * .55} 0,${-h} Q${w},${-h * .55} ${w},0 Z`, fill:c}, fire);
+  G.flames = [flame(fw, fh, '#ff5a1f'), flame(fw * .6, fh * .7, '#ffb21f'), flame(fw * .3, fh * .4, '#fff3a0')];
+  G.fire = fire;
+
+  // foam blanket (final)
+  G.blanket = m('g', {opacity:0});
+  for (let i = 0; i < 26; i++){
+    const x = W * .2 + i * (W * .6 / 25), r = H * (.02 + Kit.rnd() * .025);
+    m('circle', {cx:x, cy:roadY - r * .6, r, fill:FOAM, opacity:.95}, G.blanket);
+  }
+
+  // water duct
+  const dpath = `M0,${ductY} H${midX} V${cy1}`;
+  m('path', {d:dpath, fill:'none', stroke:PIPE, 'stroke-width':dw + 6, 'stroke-linejoin':'round'});
+  m('path', {d:dpath, fill:'none', stroke:'#1f4f7d', 'stroke-width':dw, 'stroke-linejoin':'round'});
+  G.flow = m('path', {d:dpath, fill:'none', stroke:BLUE, 'stroke-width':dw * .45, 'stroke-dasharray':'14 12', 'stroke-linecap':'round'});
+  m('text', {x:12, y:ductY - dw / 2 - fs * .5, fill:'#cfe6ff', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}).textContent = 'WATER IN →';
+
+  // riser to ceiling + nozzles
+  const nozY = ceilY + H * .035;
+  const rpath = `M${riserX},${cy0} V${nozY} H${W * .2}`;
+  m('path', {d:rpath, fill:'none', stroke:PIPE, 'stroke-width':dw * .7 + 4, 'stroke-linejoin':'round'});
+  m('path', {d:rpath, fill:'none', stroke:'#2a313d', 'stroke-width':dw * .7, 'stroke-linejoin':'round'});
+  G.riser = m('path', {d:rpath, fill:'none', stroke:FOAM, 'stroke-width':dw * .5, 'stroke-linejoin':'round'});
+  const len = G.riser.getTotalLength();
+  G.riser.setAttribute('stroke-dasharray', len); G.riser.setAttribute('stroke-dashoffset', len); G.len = len;
+  G.noz = [.28, .4, .52, .64].map(k => W * k);
+  G.nozY = nozY;
+  G.noz.forEach(x => m('path', {d:`M${x - 6},${nozY} L${x + 6},${nozY} L${x + 3},${nozY + 10} L${x - 3},${nozY + 10} Z`, fill:'#c9d2dc'}));
+  G.parts = m('g');
+  G.drops = [];
+  G.noz.forEach(x => { for (let i = 0; i < 7; i++) G.drops.push(m('circle', {cx:x + (i - 3) * 4, cy:nozY + 10, r:2, fill:FOAM, opacity:0}, G.parts)); });
+  m('text', {x:12, y:ceilY + H * .035 + fs * 2.2, fill:'#9fb0c6', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs}).textContent = 'TUNNEL';
+
+  // sector room
+  G.room = m('rect', {x:cx0, y:cy0, width:cx1 - cx0, height:cy1 - cy0, rx:6, fill:'#2c3440', stroke:'#dfe6ee', 'stroke-width':3});
+  const wy = cy0 + (cy1 - cy0) * .5;
+  G.fill = m('rect', {x:cx0 + 3, y:wy, width:cx1 - cx0 - 6, height:cy1 - wy - 3, fill:BLUE});
+  G.bub = m('g', {opacity:0});
+  for (let i = 0; i < 14; i++) m('circle', {cx:cx0 + 10 + Kit.rnd() * (cx1 - cx0 - 20), cy:cy0 + fs * 2 + Kit.rnd() * (cy1 - cy0 - fs * 2.6), r:2 + Kit.rnd() * 4, fill:'none', stroke:'#b8c7d8', 'stroke-width':1.5}, G.bub);
+  m('text', {x:cx0 + 8, y:cy0 + fs * 1.25, fill:'#e8eef6', 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs * .9}).textContent = 'SECTOR ROOM';
+  G.mix = m('text', {x:midX, y:cy1 - fs * .7, 'text-anchor':'middle', fill:DARK, 'font-family':'var(--body)', 'font-weight':800, 'font-size':fs * .9, opacity:0});
+  G.mix.textContent = 'water + 3% foam';
+
+  // foam token
+  const r = Math.max(30, Math.min(W, H) * .09);
+  G.home = {x:W * .2, y:(cy0 + cy1) / 2};
+  G.ring = m('circle', {cx:G.home.x, cy:G.home.y, r:r + 5, fill:'none', stroke:'#e8eef6', 'stroke-width':2, 'stroke-dasharray':'5 5', opacity:.6});
+  G.tok = m('g', {style:'cursor:grab'});
+  m('circle', {r, fill:'#ffd23f', stroke:'#fff', 'stroke-width':3}, G.tok);
+  m('text', {y:-r * .15, 'text-anchor':'middle', fill:DARK, 'font-family':'var(--display)', 'font-weight':900, 'font-size':Math.max(14, r * .62)}, G.tok).textContent = '3%';
+  m('text', {y:r * .6, 'text-anchor':'middle', fill:DARK, 'font-family':'var(--body)', 'font-weight':800, 'font-size':Math.max(12, r * .32)}, G.tok).textContent = 'FOAM';
+  gsap.set(G.tok, {x:G.home.x, y:G.home.y});
+  G.tok.addEventListener('pointerdown', down);
+
+  gsap.to(G.flow, {attr:{'stroke-dashoffset':-52}, duration:1, repeat:-1, ease:'none'});
+  if (done) final(); else if (entered && !Kit.calm) flicker();
+}
+function down(e){
+  if (done || busy) return;
+  dragging = true; Kit.haptic('selection');
+  const p = pt(e); off = {x:gsap.getProperty(G.tok, 'x') - p.x, y:gsap.getProperty(G.tok, 'y') - p.y};
+  G.room.setAttribute('stroke', '#ffd23f'); G.room.setAttribute('stroke-dasharray', '8 6');
+  e.preventDefault();
+}
+function pt(e){ const s = Kit.$('pic').getBoundingClientRect(); return {x:e.clientX - s.left, y:e.clientY - s.top}; }
+window.addEventListener('pointermove', e => { if (!dragging) return; const p = pt(e); gsap.set(G.tok, {x:p.x + off.x, y:p.y + off.y}); });
+window.addEventListener('pointerup', e => {
+  if (!dragging) return; dragging = false;
+  G.room.setAttribute('stroke', '#dfe6ee'); G.room.removeAttribute('stroke-dasharray');
+  const x = gsap.getProperty(G.tok, 'x'), y = gsap.getProperty(G.tok, 'y'), pad = 30;
+  if (x > G.cx0 - pad && x < G.cx1 + pad && y > G.cy0 - pad && y < G.cy1 + pad) pour();
+  else gsap.to(G.tok, {x:G.home.x, y:G.home.y, duration:.4, ease:'back.out(2)'});
+});
+
+function flicker(){
+  G.flames.forEach((fl, i) => gsap.to(fl, {scaleY:1.15, scaleX:.92, transformOrigin:'50% 100%', duration:.22 + i * .07, repeat:-1, yoyo:true, ease:'sine.inOut'}));
+}
+
+function pour(){
+  busy = true; Kit.haptic('light');
+  const {cy0, cy1, cx0, cx1, midX, roadY, fs} = G;
+  const tl = gsap.timeline({onComplete:finish});
+  tl.to(G.tok, {x:midX, y:(cy0 + cy1) / 2, scale:.3, opacity:0, duration:.45, ease:'power2.in'})
+    .to(G.ring, {opacity:0, duration:.3}, '<')
+    .to(G.fill, {attr:{fill:FOAM, y:cy0 + fs * 1.7, height:cy1 - cy0 - fs * 1.7 - 3}, duration:.7, ease:'power2.out'})
+    .to(G.bub, {opacity:1, duration:.4}, '<.2')
+    .to(G.mix, {opacity:1, duration:.3}, '<.2')
+    .to(G.riser, {attr:{'stroke-dashoffset':0}, duration:1, ease:'none'})
+    .fromTo(G.drops, {opacity:1, attr:{r:2}}, {attr:{cy:i => roadY - 14 - (i % 7) * 3, cx:(i, el) => +el.getAttribute('cx') + ((i % 7) - 3) * 6, r:9}, opacity:.9, duration:.9, stagger:.02, ease:'power1.in'})
+    .to(G.blanket, {opacity:1, duration:.6}, '-=.4')
+    .to(G.fire, {opacity:0, duration:.7}, '<')
+    .to(G.drops, {opacity:0, duration:.4});
+  if (Kit.calm) tl.progress(1);
+}
+function final(){
+  const {cy0, cy1, fs} = G;
+  gsap.set(G.tok, {opacity:0, display:'none'}); gsap.set(G.ring, {opacity:0, display:'none'});
+  G.fill.setAttribute('fill', FOAM); G.fill.setAttribute('y', cy0 + fs * 1.7); G.fill.setAttribute('height', cy1 - cy0 - fs * 1.7 - 3);
+  gsap.set([G.bub, G.mix, G.blanket], {opacity:1}); gsap.set(G.fire, {opacity:0});
+  G.riser.setAttribute('stroke-dashoffset', 0);
+}
+function finish(){
+  done = true; busy = false; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  build();
+}
+
+Kit.onShow.card = () => {
+  build();
+};
+Kit.onEnter.card = () => {
+  entered = true;
+  if (Kit.calm || done) return;
+  flicker();
+  gsap.fromTo(G.tok, {scale:1}, {scale:1.08, duration:.6, repeat:3, yoyo:true, ease:'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const s = Kit.$('pic').getBoundingClientRect(), t = G.tok.getBoundingClientRect();
+  const ev = (type, x, y, el) => el.dispatchEvent(new PointerEvent(type, {bubbles:true, clientX:x, clientY:y, pointerId:1, isPrimary:true}));
+  const x0 = t.left + t.width / 2, y0 = t.top + t.height / 2;
+  const x1 = s.left + G.midX, y1 = s.top + (G.cy0 + G.cy1) / 2;
+  ev('pointerdown', x0, y0, G.tok);
+  ev('pointermove', (x0 + x1) / 2, (y0 + y1) / 2, window);
+  ev('pointermove', x1, y1, window);
+  ev('pointerup', x1, y1, window);
+  await new Promise(r => setTimeout(r, Kit.calm ? 400 : 4200));
+};
+Kit.single();
+</script>
+</html>

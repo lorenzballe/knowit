@@ -1,0 +1,38 @@
+{
+  "id": "life-jerks-dont-climb",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.kindness",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do jerks get ahead? Bet: who holds more power at work 14 years after university?",
+  "answer": "Being a jerk does not buy power. Pushiness helps a person at work, but coldness costs about as much, so the selfish, combative, manipulative graduate gains no advantage. The study covers graduates of a few US universities, and in the first study only a third of those asked replied.",
+  "move": "Being a jerk buys no power: pushiness helps, coldness costs about as much.",
+  "keywords": [
+    "workplace",
+    "power",
+    "kindness",
+    "jerks",
+    "graduates"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question card: Do jerks get ahead? Choose who will hold more power at work 14 years after university: the selfish, combative, manipulative jerk, a tie, or the warm, trusting, generous kind one. Then rate how sure you are.",
+    "graded": false
+  },
+  "source": "Diventare Strong, “Come Diventare STRONZI - 4 Metodi Insoliti !” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=O1qjBAMe1nQ",
+  "written": "2026-11-03"
+}

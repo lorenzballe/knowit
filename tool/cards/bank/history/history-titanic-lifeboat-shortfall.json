@@ -1,0 +1,36 @@
+{
+  "id": "history-titanic-lifeboat-shortfall",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Titanic's lifeboats: how many of the 2 200 aboard could they carry?",
+  "answer": "The 20 lifeboats could hold at most 1 178 people, while 2 200 were aboard. Even in the best case, about half of those aboard had nowhere to go.",
+  "move": "Titanic's 20 lifeboats could carry only about half of the 2 200 aboard.",
+  "keywords": [
+    "titanic",
+    "lifeboats",
+    "shipwreck",
+    "passengers"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Titanic's lifeboats: a counter shows seats filled and boats lowered, starting at 0. Tap to lower each of the 20 lifeboats one by one. The page asks how many of the 2 200 people aboard the lifeboats could carry."
+  },
+  "source": "Geopop, “Titanic, la ricostruzione del naufragio della nave \"inaffondabile\" il cui relitto giace nell'Oceano” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=hR2yfGGHniY&t=194s",
+  "written": "2026-11-03"
+}

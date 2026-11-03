@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-low-pressure-lifting -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:.8cqh}
+#ctl label{font:700 max(2.1cqh,14px)/1.2 var(--body);color:var(--k);display:flex;justify-content:space-between;gap:3cqw}
+#ctl label b{font-family:var(--mono)}
+#area{width:100%;accent-color:var(--k);height:max(4cqh,28px);cursor:pointer;touch-action:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);color:var(--k);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:break-word}
+.keep{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · grow the pad">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SOFT ROBOTS</span></div>
+    <h2 class="q">How much pressure is needed to lift a human?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A soft air pad under a 1000 kilogram load"></svg>
+      <div id="ctl">
+        <label for="area"><span>Pad area</span><b id="aval">0.20 m²</b></label>
+        <input id="area" type="range" min="1" max="100" step="1" value="20">
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Just 0.1 atmosphere.</p>
+        <p class="body">Pressure is a push on each patch of surface. A tenth of an atmosphere is gentle, but spread over a whole square meter the pushes add up to about 1000 kilograms, and the pad stays soft.</p>
+      </div>
+    </div>
+    <p class="say" id="say">The air inside pushes at a fixed 0.1 atm. Drag to make the pad wider.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Lifting force is pressure times area: go wide, not hard.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This Unstoppable Robot Could Save Your Life” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {v: 20, lift: 0};
+let G = null, done = false;
+const svg = Kit.$('pic'), inp = Kit.$('area');
+
+function render() {
+  if (!G) return;
+  const {W, H, f} = G;
+  svg.innerHTML = '';
+  const fs = Math.max(12, f), small = Math.max(12, f * .85);
+  const area = st.v / 100, kg = Math.round(1000 * area), s = Math.sqrt(area);
+  const gy = H - small * 2;
+  const Pw = Math.min(W * .86, H * 1.05);
+  // readouts
+  Kit.mk('text', {x: W / 2, y: fs * 1.2, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--mono);fill:var(--k)`}, svg).textContent = `0.1 atm × ${area.toFixed(2)} m²`;
+  Kit.mk('text', {x: W / 2, y: fs * 1.2 + fs * 2.1, 'text-anchor': 'middle', style: `font:800 ${fs * 1.6}px var(--display);fill:var(--k)`}, svg).textContent = `lifts ${kg} kg`;
+  Kit.mk('text', {x: W / 2, y: fs * 3.3 + fs * 1.6, 'text-anchor': 'middle', style: `font:600 ${small}px var(--body);fill:var(--k);opacity:.7`}, svg).textContent = kg < 1000 ? `${1000 - kg} kg short of the load` : 'enough: up it goes';
+  // ground
+  Kit.mk('line', {x1: 0, x2: W, y1: gy, y2: gy, style: `stroke:var(--k);stroke-width:${Math.max(2, f * .15)}`}, svg);
+  Kit.mk('text', {x: W / 2, y: gy + small * 1.45, 'text-anchor': 'middle', style: `font:600 ${small}px var(--body);fill:var(--k);opacity:.75`}, svg).textContent = 'air inside: 0.1 atm above outside';
+  // ghost of 1 m²
+  const gh = H * .03;
+  Kit.mk('rect', {x: W / 2 - Pw / 2, y: gy - gh, width: Pw, height: gh, rx: gh / 2, style: `fill:none;stroke:var(--k);stroke-dasharray:4 4;opacity:.35;stroke-width:1.5`}, svg);
+  // keep the stack below the readouts
+  const top0 = fs * 4.9 + small * .7;
+  let ch = Math.min(H * .18, fs * 4), ph = Math.min(H * .13, fs * 3);
+  const base = H * .03 + H * .006 * area;
+  const room = gy - top0 - base - ch - ph;
+  if (room < 0) { const k = Math.max(.4, (gy - top0 - base) / (ch + ph)); ch *= k; ph *= k; }
+  const ext = Math.min(H * .13 * st.lift, Math.max(0, room));
+  // pad
+  const padW = Pw * Math.max(s, .06), padH = base + ext;
+  Kit.mk('rect', {x: W / 2 - padW / 2, y: gy - padH, width: padW, height: padH, rx: Math.min(padH / 2, padW / 2), style: `fill:color-mix(in srgb,var(--k) ${18 + 20 * st.lift}%,transparent);stroke:var(--k);stroke-width:${Math.max(2, f * .14)}`}, svg);
+  const n = Math.max(1, Math.round(10 * s)), t = Math.min(padH * .55, f * .7), cy = gy - padH / 2;
+  for (let i = 0; i < n; i++) {
+    const x = W / 2 - padW / 2 + padW * (i + .5) / n;
+    Kit.mk('path', {d: `M${x - t / 2},${cy + t / 2} L${x},${cy - t / 2} L${x + t / 2},${cy + t / 2}Z`, style: 'fill:var(--k)'}, svg);
+  }
+  // load
+  const cw = Pw * .8, cb = gy - padH;
+  Kit.mk('rect', {x: W / 2 - cw / 2, y: cb - ch, width: cw, height: ch, rx: f * .4, style: 'fill:var(--k)'}, svg);
+  Kit.mk('text', {x: W / 2, y: cb - ch / 2 + fs * .42, 'text-anchor': 'middle', style: `font:800 ${fs * 1.2}px var(--display);fill:var(--c)`}, svg).textContent = '1000 kg';
+  // a person standing on top
+  const px = W / 2 + cw * .3, top = cb - ch, sw = Math.max(2, f * .18);
+  const ln = (x1, y1, x2, y2) => Kit.mk('line', {x1, y1, x2, y2, style: `stroke:var(--k);stroke-width:${sw};stroke-linecap:round`}, svg);
+  ln(px - ph * .12, top, px, top - ph * .45); ln(px + ph * .12, top, px, top - ph * .45);
+  ln(px, top - ph * .45, px, top - ph * .8);
+  ln(px - ph * .18, top - ph * (.55 + .2 * st.lift), px, top - ph * .72); ln(px + ph * .18, top - ph * (.55 + .2 * st.lift), px, top - ph * .72);
+  Kit.mk('circle', {cx: px, cy: top - ph * .9, r: ph * .1, style: 'fill:var(--k)'}, svg);
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  if (Kit.calm) { st.lift = 1; render(); }
+  else gsap.to(st, {lift: 1, duration: 1.4, ease: 'elastic.out(1,0.55)', onUpdate: render});
+  Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => Kit.onShow.card());
+}
+
+inp.addEventListener('input', () => {
+  if (done) return;
+  st.v = +inp.value;
+  Kit.$('aval').textContent = (st.v / 100).toFixed(2) + ' m²';
+  if (st.v % 10 === 0) Kit.haptic('selection');
+  render();
+  if (st.v >= 100) finish();
+});
+
+Kit.onShow.card = () => { G = Kit.fitSvg(svg); render(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (const v of [40, 70, 100]) { inp.value = v; inp.dispatchEvent(new Event('input', {bubbles: true})); await new Promise(r => setTimeout(r, 150)); }
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: space-moon-flag-wave -->
+<title>Why the Moon flag seems to wave</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#view{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#05070d}
+#view canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctl{display:flex;flex-direction:column;gap:1cqh}
+#modes{display:flex;gap:2cqw}
+.md{flex:1;font:700 max(1.9cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 2cqw;cursor:pointer}
+.md.on{background:var(--k);color:var(--c);box-shadow:none}
+#plant{font:800 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer}
+#plant:disabled{opacity:.45;cursor:default}
+#res{display:flex;gap:2cqw;font:700 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k)}
+#res span{flex:1;padding:.8cqh 2cqw;border-radius:1.2cqh;background:color-mix(in srgb,var(--k) 8%,transparent);overflow-wrap:anywhere}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.4cqh,15px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Try it · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MOON LANDING</span></div>
+    <h2 class="q">Why does the flag seem to wave on the airless Moon?</h2>
+    <div class="stagebox" id="stage">
+      <div id="view"><canvas id="cv"></canvas></div>
+      <div id="res"><span id="rv">Moon: — s</span><span id="ra">Earth: — s</span></div>
+      <div id="ctl">
+        <div id="modes"><button class="md on" data-m="vac">Moon · no air</button><button class="md" data-m="air">Earth · air</button></div>
+        <button id="plant">Plant the pole</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">No wind. Just the push of planting.</p>
+        <p class="body">Driving the pole into the lunar soil shakes it, and the shake passes into the cloth. With no air to brake it, the fabric keeps swinging, slowly and freely, long after the hands let go.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Plant the pole on the Moon. Time how long the flag keeps moving.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>On the Moon the flag moves because it was shaken, and nothing stops it.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const cv = Kit.$('cv');
+let G = null, stars = [], dust = [];
+let mode = 'vac', run = null, speed = 1, simT = 0, last = 0;
+const res = {vac: null, air: null};
+const P = {vac: {tau: 2.6, w: 2.1, name: 'NO AIR'}, air: {tau: .34, w: 3.4, name: 'AIR'}};
+
+function amp(e, tau){ return (1 - Math.exp(-e / .18)) * Math.exp(-e / tau); }
+
+function draw(){
+  if (!G) return;
+  const {x, W, H} = G, f = Math.max(12, H * .042);
+  x.clearRect(0, 0, W, H);
+  const sky = x.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, mode === 'vac' ? '#02030a' : '#2a4f86');
+  sky.addColorStop(1, mode === 'vac' ? '#0b1020' : '#8fb6e0');
+  x.fillStyle = sky; x.fillRect(0, 0, W, H);
+  if (mode === 'vac') { x.fillStyle = '#fff'; stars.forEach(s => { x.globalAlpha = s.a; x.fillRect(s.x * W, s.y * H, s.r, s.r); }); x.globalAlpha = 1; }
+  const gy = H * .8;
+  x.fillStyle = mode === 'vac' ? '#9a9890' : '#9c8a6a'; x.fillRect(0, gy, W, H - gy);
+  x.fillStyle = 'rgba(0,0,0,.18)';
+  for (let i = 0; i < 9; i++) { x.beginPath(); x.ellipse(((i * 137) % 100) / 100 * W, gy + (H - gy) * (.3 + (i % 3) * .22), W * .04, H * .012, 0, 0, 7); x.fill(); }
+
+  let e = run ? simT - run.t0 : 99, tau = run ? P[run.m].tau : 1, w = run ? P[run.m].w : 2;
+  const A = run ? amp(e, tau) : 0;
+  const shake = run ? Math.exp(-e / .22) * Math.sin(e * 42) : 0;
+  const px = W * .26 + shake * W * .012;
+  const top = H * .14, fw = Math.min(W * .58, H * .9), fh = fw * .56;
+  // pole
+  x.strokeStyle = '#e9e9ec'; x.lineWidth = Math.max(3, W * .011); x.lineCap = 'round';
+  x.beginPath(); x.moveTo(W * .26, gy + H * .02); x.lineTo(px, top); x.stroke();
+  x.beginPath(); x.moveTo(px, top + 2); x.lineTo(px + fw, top + 2); x.stroke();
+  // flag in slices
+  const N = 44, ys = [];
+  for (let i = 0; i <= N; i++) { const u = i / N; ys.push(u); }
+  for (let i = 0; i < N; i++) {
+    const u0 = i / N, u1 = (i + 1) / N;
+    const ph0 = u0 * 7 - simT * w, ph1 = u1 * 7 - simT * w;
+    const d0 = A * u0 * Math.sin(ph0) * fh * .14, d1 = A * u1 * Math.sin(ph1) * fh * .14;
+    const sx0 = A * u0 * Math.cos(ph0) * fw * .02, sx1 = A * u1 * Math.cos(ph1) * fw * .02;
+    const light = 1 + .32 * A * Math.cos(u0 * 7 - simT * w);
+    const X0 = px + u0 * fw + sx0 + shake * W * .006 * (1 - u0), X1 = px + u1 * fw + sx1 + shake * W * .006 * (1 - u1) + .6;
+    for (let s = 0; s < 13; s++) {
+      const v0 = s / 13, v1 = (s + 1) / 13;
+      const canton = u0 < .4 && s < 7;
+      const base = canton ? [40, 60, 140] : (s % 2 ? [245, 245, 245] : [200, 30, 45]);
+      const c = base.map(k => Math.min(255, Math.round(k * light)));
+      x.fillStyle = `rgb(${c})`;
+      x.beginPath();
+      x.moveTo(X0, top + v0 * fh + d0 * v0); x.lineTo(X1, top + v0 * fh + d1 * v0);
+      x.lineTo(X1, top + v1 * fh + d1 * v1); x.lineTo(X0, top + v1 * fh + d0 * v1);
+      x.closePath(); x.fill();
+    }
+  }
+  // dust (falls in clean arcs)
+  x.fillStyle = mode === 'vac' ? '#c9c6bc' : '#b9a581';
+  dust.forEach(d => { if (d.y < gy + 2) { x.globalAlpha = d.o; x.beginPath(); x.arc(d.x, d.y, d.r, 0, 7); x.fill(); } });
+  x.globalAlpha = 1;
+  // labels
+  x.font = `700 ${f}px ${getComputedStyle(document.body).getPropertyValue('--mono') || 'monospace'}`;
+  x.fillStyle = '#fff'; x.textBaseline = 'top';
+  x.textAlign = 'right'; x.fillText(P[mode].name, W - f * .7, H - f * 1.7);
+  x.textAlign = 'left';
+  const moving = run && !run.done ? Math.min(e, 99) : (run ? run.T : 0);
+  x.fillText(run ? `moving ${moving.toFixed(1)} s` : 'ready', f * .7, H - f * 1.7);
+}
+
+function tick(){
+  const now = performance.now() / 1000, dt = Math.min(.05, now - (last || now)); last = now;
+  simT += dt * speed;
+  const g = G ? G.H * (mode === 'vac' ? .25 : 1.6) : 1;
+  dust.forEach(d => { d.vy += g * dt * speed; if (mode === 'air') { d.vx *= .96; } d.x += d.vx * dt * speed; d.y += d.vy * dt * speed; d.o = Math.max(0, d.o - (mode === 'air' ? .6 : .15) * dt * speed); });
+  dust = dust.filter(d => d.o > 0 && G && d.y < G.H * .8 + 3);
+  if (run && !run.done) {
+    const e = simT - run.t0;
+    if (e > .4 && amp(e, P[run.m].tau) < .05) { run.done = true; run.T = e; finish(run.m, e); }
+  }
+  draw();
+}
+
+function finish(m, T){
+  res[m] = T;
+  Kit.$(m === 'vac' ? 'rv' : 'ra').textContent = `${m === 'vac' ? 'Moon' : 'Earth'}: ${T.toFixed(1)} s`;
+  Kit.$('plant').disabled = false; speed = 1; Kit.haptic('light');
+  if (res.vac != null && res.air != null) {
+    Kit.hide('ctl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4});
+  } else if (m === 'vac') {
+    Kit.$('say').textContent = 'Now plant it in air, and compare.'; setMode('air');
+  } else {
+    Kit.$('say').textContent = 'Now plant it on the Moon, and compare.'; setMode('vac');
+  }
+}
+
+function setMode(m){
+  if (run && !run.done) return;
+  mode = m; run = null;
+  document.querySelectorAll('.md').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  draw();
+}
+Kit.$('modes').addEventListener('click', e => { const b = e.target.closest('.md'); if (b) { setMode(b.dataset.m); Kit.haptic('selection'); } });
+Kit.$('plant').addEventListener('click', () => {
+  if (run && !run.done) return;
+  run = {m: mode, t0: simT, done: false};
+  Kit.$('plant').disabled = true; Kit.haptic('selection');
+  if (G) for (let i = 0; i < 18; i++) dust.push({x: G.W * .26, y: G.H * .8, vx: (Kit.rnd() - .5) * G.W * .5, vy: -G.H * (.15 + Kit.rnd() * .35), r: 1 + Kit.rnd() * 2, o: 1});
+});
+
+Kit.onShow.card = () => {
+  G = Kit.fitCanvas(cv);
+  if (!stars.length) for (let i = 0; i < 70; i++) stars.push({x: Kit.rnd(), y: Kit.rnd() * .75, r: Kit.rnd() < .2 ? 2 : 1, a: .3 + Kit.rnd() * .7});
+  draw();
+};
+gsap.ticker.add(tick);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#ctl > *', {opacity: 0, y: 10, stagger: .08, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  speed = 25; Kit.$('plant').click();
+  while (res.vac == null) await wait(50);
+  speed = 25; Kit.$('plant').click();
+  while (res.air == null) await wait(50);
+  await wait(600);
+};
+Kit.single();
+</script>
+</html>

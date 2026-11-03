@@ -1,0 +1,36 @@
+{
+  "id": "science-moon-water-land",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the Moon affect water more than land?",
+  "answer": "The Moon pulls on the whole Earth, but liquid particles can flow, so the sea piles up into a bulge. Solid ground is locked together and barely moves. That is why tides show up in the sea.",
+  "move": "Water can flow, so it piles up under the Moon; rock can't.",
+  "keywords": [
+    "moon",
+    "tides",
+    "sea",
+    "earth"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two side-by-side views of Earth under the Moon's pull: water bulging up toward the Moon, and solid ground that barely moves. Asks why the Moon affects water more than land."
+  },
+  "source": "Geopop, “Mont Saint-Michel: la magia delle maree di oltre 10 metri” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=jlAFmfMFSDE&t=82s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-graphene-relativistic-electrons",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Einstein's relativity apply to electrons in graphene?",
+  "answer": "In graphene, the carbon bonds form a nearly perfect lattice, so nothing slows the electrons down. They move fast enough to act like massless particles, and only Einstein's relativity describes their motion. In copper, defects in the lattice keep scattering electrons, so they crawl.",
+  "move": "A perfect lattice lets electrons run free, fast enough to need Einstein.",
+  "keywords": [
+    "graphene",
+    "electrons",
+    "relativity",
+    "copper",
+    "lattice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card titled Graphene asking why Einstein's relativity applies to electrons in graphene. A hold-to-push button sends electrons through copper and graphene lattices to compare how fast they move."
+  },
+  "source": "Veritasium, “How To Make Graphene” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=PifL8bAybyc&t=137s",
+  "written": "2026-11-03"
+}

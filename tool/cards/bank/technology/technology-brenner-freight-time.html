@@ -1,0 +1,129 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-brenner-freight-time -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#row{display:flex;align-items:center;gap:3cqw}
+#row .lab{font:700 max(1.7cqh,12px)/1.1 var(--mono);color:var(--k);white-space:nowrap}
+#sl{flex:1;-webkit-appearance:none;appearance:none;height:max(1cqh,8px);border-radius:1cqh;background:color-mix(in srgb,var(--k) 18%,transparent);outline:none;margin:0;touch-action:none}
+#sl::-webkit-slider-thumb{-webkit-appearance:none;width:max(4cqh,28px);height:max(4cqh,28px);border-radius:50%;background:var(--k);box-shadow:0 0 0 .5cqh color-mix(in srgb,var(--c) 70%,transparent);cursor:grab}
+#sl::-moz-range-thumb{width:max(4cqh,28px);height:max(4cqh,28px);border:0;border-radius:50%;background:var(--k);cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);color:var(--k);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.35 var(--body);color:var(--k);margin:0}
+.dial{fill:none;stroke:color-mix(in srgb,var(--k) 22%,transparent)}
+.tick{stroke:color-mix(in srgb,var(--k) 45%,transparent);stroke-linecap:round}
+.old{fill:color-mix(in srgb,var(--k) 38%,transparent)}
+.new{fill:var(--k)}
+.goal{fill:none;stroke:var(--k);stroke-dasharray:3 4;opacity:.55}
+.hd{fill:var(--k);font-family:var(--body);font-weight:800;text-anchor:middle}
+.num{fill:var(--k);font-family:var(--display);font-weight:800;text-anchor:middle;dominant-baseline:central}
+.sub{fill:var(--k);font-family:var(--mono);font-weight:700;text-anchor:middle;opacity:.8}
+.trk{stroke:color-mix(in srgb,var(--k) 30%,transparent);stroke-linecap:round}
+.st{fill:var(--k);font-family:var(--mono);font-weight:700}
+.badge{fill:var(--c);font-family:var(--mono);font-weight:800;text-anchor:middle;dominant-baseline:central}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Drag · watch the clocks">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BRENNER TUNNEL</span></div>
+    <h2 class="q">How much faster will freight trains cross the Brenner through the new tunnel?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="row"><span class="lab">0</span><input id="sl" type="range" min="0" max="105" step="1" value="0" aria-label="Minutes since departure"><span class="lab">105 min</span></div>
+      <div id="why" class="gone"><p class="big">105 → 35 minutes</p><p class="body">The Brenner Base Tunnel will link Fortezza in Italy with Innsbruck in Austria. Freight trains save 70 minutes, two-thirds of the trip, which cuts costs. Passengers drop from 80 to 25 minutes.</p></div>
+    </div>
+    <p class="say" id="say">Drag the slider: both freight trains leave Fortezza at once.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Through the base tunnel, freight does the trip in a third of the time.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Siamo letteralmente entrati dentro le Alpi per mostrarvi gli scavi delle gallerie del Brennero” (YouTube, 2025).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const OLD = 105, NEW = 35, DIAL = 120;
+let t = 0, G = null, newDone = false, ended = false;
+const sl = Kit.$('sl');
+
+function arc(cx, cy, r, frac) {
+  frac = Math.max(0, Math.min(frac, .99999));
+  if (frac <= 0) return '';
+  const a = frac * Math.PI * 2 - Math.PI / 2;
+  const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+  return `M${cx},${cy} L${cx},${cy - r} A${r},${r} 0 ${frac > .5 ? 1 : 0} 1 ${x},${y} Z`;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const r = Math.max(20, Math.min(W * 0.2, (H - f * 9) / 2));
+  const hy = f * 1.2, cy = hy + f * 0.9 + r;
+  const cxs = [W * 0.27, W * 0.73];
+  const specs = [{tot: OLD, cls: 'old', hd: 'Old line', sub: '105 min trip'}, {tot: NEW, cls: 'new', hd: 'Base tunnel', sub: '35 min trip'}];
+  G = {clocks: [], trains: []};
+  specs.forEach((s, i) => {
+    const cx = cxs[i];
+    Kit.mk('text', {x: cx, y: hy, class: 'hd', 'font-size': f * 1.05}, svg).textContent = s.hd;
+    Kit.mk('circle', {cx, cy, r, class: 'dial', 'stroke-width': Math.max(2, r * .05)}, svg);
+    Kit.mk('path', {d: arc(cx, cy, r * .96, s.tot / DIAL), class: 'goal', 'stroke-width': 1.5}, svg);
+    const sec = Kit.mk('path', {d: '', class: s.cls}, svg);
+    for (let k = 0; k < 8; k++) {
+      const a = k / 8 * Math.PI * 2 - Math.PI / 2, r1 = r * (k % 2 ? .9 : .82);
+      Kit.mk('line', {x1: cx + r1 * Math.cos(a), y1: cy + r1 * Math.sin(a), x2: cx + r * Math.cos(a), y2: cy + r * Math.sin(a), class: 'tick', 'stroke-width': Math.max(1.5, r * .03)}, svg);
+    }
+    const disc = Kit.mk('circle', {cx, cy, r: r * .42, style: 'fill:var(--c)'}, svg);
+    const num = Kit.mk('text', {x: cx, y: cy, class: 'num', 'font-size': Math.min(r * .4, f * 2)}, svg);
+    Kit.mk('text', {x: cx, y: cy + r + f * 1.5, class: 'sub', 'font-size': f * .85}, svg).textContent = s.sub;
+    G.clocks.push({cx, cy, r, sec, num, tot: s.tot});
+  });
+  // track: Fortezza -> Innsbruck, one lane per train
+  const x0 = W * 0.08, x1 = W * 0.92, y1 = cy + r + f * 3.3, y2 = y1 + f * 1.5;
+  [y1, y2].forEach((y, i) => {
+    Kit.mk('line', {x1: x0, y1: y, x2: x1, y2: y, class: 'trk', 'stroke-width': Math.max(3, f * .25)}, svg);
+    const g = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: -f * 1.6, y: -f * .5, width: f * 3.2, height: f, rx: f * .3, class: specs[i].cls}, g);
+    G.trains.push({g, x0, x1, y, tot: specs[i].tot});
+  });
+  Kit.mk('text', {x: x0, y: y2 + f * 1.7, class: 'st', 'font-size': f * .85}, svg).textContent = 'Fortezza (IT)';
+  Kit.mk('text', {x: x1, y: y2 + f * 1.7, class: 'st', 'font-size': f * .85, 'text-anchor': 'end'}, svg).textContent = 'Innsbruck (AT)';
+  draw();
+};
+
+function draw() {
+  if (!G) return;
+  G.clocks.forEach(c => {
+    const m = Math.min(t, c.tot);
+    c.sec.setAttribute('d', arc(c.cx, c.cy, c.r * .96, m / DIAL));
+    c.num.textContent = Math.round(m);
+  });
+  G.trains.forEach(tr => {
+    const p = Math.min(t / tr.tot, 1);
+    tr.g.setAttribute('transform', `translate(${tr.x0 + (tr.x1 - tr.x0) * p},${tr.y})`);
+  });
+}
+
+function setT(v) {
+  t = v; draw();
+  if (t >= NEW && !newDone) { newDone = true; Kit.haptic('light'); if (!Kit.calm) gsap.fromTo(G.clocks[1].sec, {opacity: .4}, {opacity: 1, duration: .5, repeat: 1, yoyo: true}); }
+  if (t >= OLD && !ended) {
+    ended = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+  }
+}
+sl.addEventListener('input', () => setT(+sl.value));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  const o = {v: 0};
+  gsap.to(o, {v: 10, duration: .6, delay: .4, yoyo: true, repeat: 1, ease: 'power2.inOut', onUpdate: () => { if (+sl.value < 11 && !ended) { sl.value = Math.round(o.v); t = o.v; draw(); } }});
+};
+Kit.play.card = async () => {
+  sl.value = 105; sl.dispatchEvent(new Event('input', {bubbles: true}));
+  await new Promise(r => setTimeout(r, 800));
+};
+Kit.single();
+</script>
+</html>

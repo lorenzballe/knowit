@@ -1,0 +1,168 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-heat-runaway-loop -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:.8cqh}
+#legend{display:flex;flex-wrap:wrap;gap:.6cqh 4cqw;font:700 max(1.6cqh,12px)/1.25 var(--body);color:var(--k)}
+#legend span{display:inline-flex;align-items:center;gap:1.6cqw}
+#legend i{display:inline-block;width:5cqw;min-width:16px;height:max(.5cqh,3px);border-radius:2px}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#msg{min-height:max(8.4cqh,62px);display:flex;align-items:center}
+#phase,#why{font:600 max(1.8cqh,12px)/1.3 var(--body);color:var(--k);margin:0;overflow-wrap:anywhere}
+#why b{color:#c8321f}
+.dial{display:flex;align-items:center;gap:3cqw;font:800 max(1.6cqh,12px)/1.2 var(--body);color:var(--k)}
+.dial span{white-space:nowrap}
+#fuel{flex:1;min-width:0;height:max(4cqh,28px);accent-color:#e8432e;cursor:pointer;touch-action:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Turn a dial · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FIRE PHYSICS</span></div>
+    <h2 class="q">In a room fire, why does the temperature suddenly rise out of control?</h2>
+    <div class="stagebox" id="stage">
+      <div id="legend"><span><i style="background:#2f7fd8"></i>Heat soaked up by walls</span><span><i style="background:#e8432e"></i>Air temperature</span></div>
+      <svg id="pic"></svg>
+      <div id="msg">
+        <p id="phase">The walls and furniture soak up the heat. The air warms slowly.</p>
+        <p id="why" class="gone">Walls and furniture soak up heat only until they are full. Then surfaces shed it as <b>hot, flammable gas</b> under the ceiling, whose radiation makes more gas: the temperature runs away.</p>
+      </div>
+      <label class="dial"><span>🔥 Feed the fire</span><input id="fuel" type="range" min="0" max="100" value="0"></label>
+    </div>
+    <p class="say" id="say">Slide to grow the fire. Watch where the heat goes.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Once a room can't absorb more heat, the heat starts feeding itself.</div>
+    <div class="foot"><span class="src">Source · Geopop, “L’incendio di Crans-Montana: perché 40 persone non sono riuscite a salvarsi?” (YouTube, 2026)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED='#e8432e', ORA='#ff9a1f', BLUE='#2f7fd8';
+const st={t:0}; let G=null, done=false, clock=0, lastPhase=-1;
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const A=t=>Math.tanh(t/0.28)/Math.tanh(1/0.28);
+const T=t=>0.15*t+0.85*Math.max(0,Math.exp((t-0.5)*6)-1)/(Math.exp(3)-1);
+const gasOf=t=>cl((t-0.5)/0.45);
+const mix=(a,b,p)=>{const h=s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16));const x=h(a),y=h(b);return '#'+x.map((v,i)=>Math.round(v+(y[i]-v)*p).toString(16).padStart(2,'0')).join('')};
+const PH=['The walls and furniture soak up the heat. The air warms slowly.',
+ 'The walls are filling up: less and less heat fits in.',
+ 'Walls full. Surfaces breathe out hot, flammable gas under the ceiling.',
+ 'The gas radiates heat down, furniture heats, more gas comes out: a loop.',
+ 'The temperature shoots up until everything ignites.'];
+
+function build(){
+  const svg=Kit.$('pic'); svg.innerHTML='';
+  const {W,H,f}=Kit.fitSvg(svg); const g={W,H,f};
+  const ink=getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim()||'#111';
+  // room
+  const rx=W*0.04, rw=W*0.92, ry=f*0.2, rh=H*0.44, wt=Math.max(6,W*0.03);
+  const floorY=ry+rh;
+  Object.assign(g,{rx,rw,ry,rh,wt,floorY});
+  Kit.mk('rect',{x:rx,y:ry,width:rw,height:rh,rx:4,fill:'#fff',opacity:.55},svg);
+  g.gas=Kit.mk('rect',{x:rx+wt,y:ry+wt,width:rw-2*wt,height:0,fill:'#4a1d12',opacity:0},svg);
+  g.gasT=Kit.mk('text',{x:rx+rw/2,y:ry+wt+f*1.1,'text-anchor':'middle',fill:'#fff','font-size':Math.max(12,f*0.8),'font-weight':800,'font-family':'var(--body)',opacity:0},svg);
+  g.gasT.textContent='hot, flammable gas';
+  // radiation waves
+  g.rad=[];
+  for(let i=0;i<6;i++){g.rad.push(Kit.mk('path',{fill:'none',stroke:ORA,'stroke-width':Math.max(1.6,f*0.12),'stroke-linecap':'round','stroke-dasharray':'4 5',opacity:0},svg));}
+  // walls as sponges
+  const wallC=Kit.mk('g',{},svg);
+  const wl=[[rx,ry,wt,rh],[rx+rw-wt,ry,wt,rh],[rx,ry,rw,wt]];
+  wl.forEach(r=>Kit.mk('rect',{x:r[0],y:r[1],width:r[2],height:r[3],fill:'#d9d4cc'},wallC));
+  g.wf=[Kit.mk('rect',{x:rx,y:floorY,width:wt,height:0,fill:BLUE},wallC),
+        Kit.mk('rect',{x:rx+rw-wt,y:floorY,width:wt,height:0,fill:BLUE},wallC),
+        Kit.mk('rect',{x:rx,y:ry,width:rw,height:wt,fill:BLUE,opacity:0},wallC)];
+  Kit.mk('rect',{x:rx,y:ry,width:rw,height:rh,rx:4,fill:'none',stroke:ink,'stroke-width':Math.max(2,f*0.15)},svg);
+  // furniture
+  const fw=rw*0.18, fh=rh*0.16;
+  g.furn=[[rx+rw*0.55,floorY-fh,fw,fh],[rx+rw*0.77,floorY-fh*1.5,fw*0.8,fh*1.5]].map(r=>Kit.mk('rect',{x:r[0],y:r[1],width:r[2],height:r[3],rx:3,fill:'#8a7f73'},svg));
+  g.furnR=[[rx+rw*0.55,floorY-fh,fw,fh],[rx+rw*0.77,floorY-fh*1.5,fw*0.8,fh*1.5]];
+  g.wisp=[];
+  g.furnR.forEach(r=>{for(let k=0;k<2;k++)g.wisp.push({p:Kit.mk('path',{fill:'none',stroke:'#6b3a2a','stroke-width':Math.max(1.5,f*0.1),'stroke-linecap':'round',opacity:0},svg),x:r[0]+r[2]*(0.3+0.4*k),y:r[1]});});
+  g.ff=g.furnR.map(()=>Kit.mk('path',{fill:ORA,opacity:0},svg));
+  // fire
+  g.fx=rx+rw*0.26; g.fire=Kit.mk('path',{fill:RED},svg); g.fireIn=Kit.mk('path',{fill:ORA},svg);
+  // graph
+  const gx0=W*0.05, gx1=W*0.96, gyB=H-f*1.6, gyT=H*0.52+f*1.3;
+  Object.assign(g,{gx0,gx1,gyB,gyT});
+  const X=t=>gx0+t*(gx1-gx0), Y=v=>gyB-v*(gyB-gyT); g.X=X; g.Y=Y;
+  Kit.mk('line',{x1:gx0,y1:gyB,x2:gx1,y2:gyB,stroke:ink,'stroke-width':2},svg);
+  Kit.mk('line',{x1:gx0,y1:gyB,x2:gx0,y2:gyT-f*1.2,stroke:ink,'stroke-width':2},svg);
+  Kit.mk('line',{x1:gx0,y1:Y(1),x2:gx1,y2:Y(1),stroke:RED,'stroke-width':1.5,'stroke-dasharray':'5 4'},svg);
+  const lt=Kit.mk('text',{x:gx0+f*0.5,y:Y(1)-f*0.45,fill:RED,'font-size':Math.max(12,f*0.8),'font-weight':800,'font-family':'var(--body)'},svg); lt.textContent='Everything ignites';
+  const kx=X(0.55);
+  Kit.mk('line',{x1:kx,y1:gyB,x2:kx,y2:Y(0.62),stroke:ink,'stroke-width':1,'stroke-dasharray':'2 4',opacity:.6},svg);
+  const kt=Kit.mk('text',{x:kx,y:gyB+f*1.15,'text-anchor':'middle',fill:ink,'font-size':Math.max(12,f*0.75),'font-weight':700,'font-family':'var(--body)'},svg); kt.textContent='walls full';
+  const path=fn=>{let d='';for(let i=0;i<=100;i++){const t=i/100;d+=(i?'L':'M')+X(t).toFixed(1)+','+Y(fn(t)).toFixed(1);}return d;};
+  const aF=t=>A(t)*0.5;
+  Kit.mk('path',{d:path(aF),fill:'none',stroke:BLUE,'stroke-width':Math.max(2,f*0.18),opacity:.18},svg);
+  Kit.mk('path',{d:path(T),fill:'none',stroke:RED,'stroke-width':Math.max(2,f*0.18),opacity:.18},svg);
+  const len=Math.max(gx1-gx0,1)*3;
+  g.aP=Kit.mk('path',{d:path(aF),fill:'none',stroke:BLUE,'stroke-width':Math.max(3,f*0.25),'stroke-linecap':'round'},svg);
+  g.tP=Kit.mk('path',{d:path(T),fill:'none',stroke:RED,'stroke-width':Math.max(3,f*0.25),'stroke-linecap':'round'},svg);
+  g.aL=g.aP.getTotalLength(); g.tL=g.tP.getTotalLength();
+  [[g.aP,g.aL],[g.tP,g.tL]].forEach(([p,l])=>{p.setAttribute('stroke-dasharray',l+' '+(l+len));});
+  g.aD=Kit.mk('circle',{r:Math.max(4,f*0.35),fill:BLUE,stroke:'#fff','stroke-width':2},svg);
+  g.tD=Kit.mk('circle',{r:Math.max(4,f*0.35),fill:RED,stroke:'#fff','stroke-width':2},svg);
+  G=g; render();
+}
+
+function partLen(p,t){ // length up to x(t)
+  const n=40;let lo=0,hi=p===G.aP?G.aL:G.tL,x=G.X(t);
+  for(let i=0;i<n;i++){const m=(lo+hi)/2;if(p.getPointAtLength(m).x<x)lo=m;else hi=m;}return lo;
+}
+function flame(x,y,s,w){return `M${x-s*0.5},${y} C${x-s*0.6},${y-s*0.6} ${x-s*0.1+w},${y-s*0.8} ${x+w*1.5},${y-s*1.6} C${x+s*0.2+w},${y-s*0.9} ${x+s*0.6},${y-s*0.6} ${x+s*0.5},${y} Z`;}
+
+function render(){
+  if(!G) return; const g=G, t=st.t, a=A(t), tp=T(t), gs=gasOf(t), w=Math.sin(clock*7)*g.f*0.15;
+  // walls fill
+  g.wf[0].setAttribute('y',g.floorY-a*g.rh); g.wf[0].setAttribute('height',a*g.rh);
+  g.wf[1].setAttribute('y',g.floorY-a*g.rh); g.wf[1].setAttribute('height',a*g.rh);
+  g.wf[2].setAttribute('opacity',cl((a-0.85)/0.15));
+  // gas layer
+  const gh=gs*g.rh*0.5; g.gas.setAttribute('height',gh); g.gas.setAttribute('opacity',gs?0.55+0.4*gs:0);
+  g.gasT.setAttribute('opacity',cl((gs-0.25)*4));
+  // radiation
+  const gy=g.ry+g.wt+gh;
+  g.rad.forEach((p,i)=>{const x=g.rx+g.wt+(g.rw-2*g.wt)*(0.1+i*0.16);let d=`M${x},${gy+2}`;const L=g.floorY-gy-4,n=5;
+    for(let k=1;k<=n;k++)d+=` Q${x+(k%2?1:-1)*g.f*0.35},${gy+L*(k-0.5)/n} ${x},${gy+L*k/n}`;
+    p.setAttribute('d',d);p.setAttribute('opacity',cl((gs-0.3)*2)*0.9);p.setAttribute('stroke-dashoffset',-clock*30);});
+  // furniture heat, off-gassing, ignition
+  const fc=mix('#8a7f73',ORA,cl(tp*1.3));
+  g.furn.forEach(r=>r.setAttribute('fill',fc));
+  g.wisp.forEach((o,i)=>{const s=g.f*1.4,ph=(clock*1.2+i*0.37)%1,y=o.y-ph*s;
+    o.p.setAttribute('d',`M${o.x},${y} q${g.f*0.4},${-s*0.3} 0,${-s*0.6} q${-g.f*0.4},${-s*0.3} 0,${-s*0.6}`);
+    o.p.setAttribute('opacity',cl((t-0.55)*4)*(1-ph)*0.9);});
+  const ign=cl((tp-0.8)/0.2);
+  g.ff.forEach((p,i)=>{const r=g.furnR[i];p.setAttribute('d',flame(r[0]+r[2]/2,r[1],r[2]*0.8*ign+0.01,w*(i?1:-1)));p.setAttribute('opacity',ign);});
+  // fire
+  const s=g.rh*(0.18+0.42*t);
+  g.fire.setAttribute('d',flame(g.fx,g.floorY-1,s,w)); g.fireIn.setAttribute('d',flame(g.fx,g.floorY-1,s*0.55,w*0.6));
+  // graph
+  g.aP.setAttribute('stroke-dasharray',partLen(g.aP,t)+' 99999');
+  g.tP.setAttribute('stroke-dasharray',partLen(g.tP,t)+' 99999');
+  g.aD.setAttribute('cx',g.X(t));g.aD.setAttribute('cy',g.Y(a*0.5));
+  g.tD.setAttribute('cx',g.X(t));g.tD.setAttribute('cy',g.Y(tp));
+  // words
+  const ph=t<0.3?0:t<0.55?1:t<0.78?2:t<0.95?3:4;
+  if(ph!==lastPhase&&!done){lastPhase=ph;Kit.$('phase').textContent=PH[ph];if(ph)Kit.haptic('light');}
+  if(t>=0.97&&!done){done=true;Kit.haptic('success');
+    setTimeout(()=>{Kit.hide('phase');Kit.show('why');Kit.hide('say');Kit.show('keep');
+      if(!Kit.calm)gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.45,ease:'power3.out'});},500);}
+}
+
+Kit.$('fuel').addEventListener('input',e=>{
+  const v=e.target.value/100;
+  if(Kit.calm){st.t=v;render();} else gsap.to(st,{t:v,duration:.35,ease:'power2.out',onUpdate:render,overwrite:true});
+});
+Kit.onShow.card=()=>build();
+let ro=null;
+Kit.onEnter.card=()=>{
+  if(!ro&&window.ResizeObserver){ro=new ResizeObserver(()=>build());ro.observe(Kit.$('pic'));}
+  if(!Kit.calm){gsap.ticker.add(()=>{clock+=gsap.ticker.deltaRatio()/60;render();});
+    gsap.from('#legend span',{opacity:0,y:8,stagger:.1,duration:.4,ease:'power3.out'});}
+};
+Kit.play.card=async()=>{const s=Kit.$('fuel');for(const v of [40,70,100]){s.value=v;s.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,450));}await new Promise(r=>setTimeout(r,1200));};
+Kit.single();
+</script>
+</html>

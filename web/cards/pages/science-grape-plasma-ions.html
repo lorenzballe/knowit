@@ -1,0 +1,174 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-grape-plasma-ions -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#view{position:relative;flex:1;min-height:0;border-radius:2cqh;overflow:hidden;background:#0d0b1a}
+#view canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:3cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.4cqh,15px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{flex:1;font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 3cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Race · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PLASMA</span></div>
+    <h2 class="q">How does a strong electric field turn air into glowing plasma?</h2>
+    <div class="stagebox" id="stage">
+      <div id="view"><canvas id="cv"></canvas></div>
+      <div id="opts">
+        <button class="opt" data-i="0">Weak field</button>
+        <button class="opt" data-i="1">Strong field</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The strong field wins</p><p class="body">It tears air molecules apart into ions: those are the sparks. Ions can then take in more energy from the microwaves, and that energy makes them glow as plasma.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Same microwaves, same air. Which gap makes plasma first?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Strong fields make ions; ions soak up microwave energy; that glow is plasma.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Microwaving Grapes Makes Plasma” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, D = 3.4;
+let pick = -1, ctx = null, W = 0, H = 0;
+let running = false, t = 0, last = 0, clock = 0, done = false;
+
+function mkSide(strong){
+  const m = [];
+  while (m.length < 30){
+    const x = (Kit.rnd() - .5) * 2.4, y = (Kit.rnd() - .5) * 3.0;
+    if (Math.hypot(x - 1.25, y) < 1.1 || Math.hypot(x + 1.25, y) < 1.1) continue;
+    m.push({x, y, ion: false, e: 0, fl: 0, j: Kit.rnd() * 6, ex: 0, ey: 0});
+  }
+  return {strong, m};
+}
+const S = [mkSide(false), mkSide(true)];
+
+function step(dt){
+  if (!running) return;
+  t = Math.min(1, t + dt / D);
+  const s = S[1];
+  if (t > .08) for (const p of s.m){
+    if (!p.ion){
+      const w = Math.exp(-(p.x * p.x + p.y * p.y) / .9);
+      if (Kit.rnd() < (0.6 + 5 * w) * dt * (0.4 + 2 * t)){ p.ion = true; p.fl = 1; p.ex = (Kit.rnd() - .5) * .3; p.ey = (Kit.rnd() - .5) * .3; }
+    } else p.e = Math.min(1, p.e + dt * 0.9);
+    p.fl = Math.max(0, p.fl - dt * 5);
+  }
+  if (t >= 1 && !done){ done = true; running = false; finish(); }
+}
+
+function draw(){
+  if (!ctx) return;
+  const now = performance.now() / 1000, dt = Math.min(.05, last ? now - last : 0); last = now;
+  clock += dt; step(dt);
+  const x = ctx, pw = W / 2, fs = Math.max(12, H * .042), ph = clock * 2 * Math.PI * 1.3;
+  const on = running || done, sgn = Math.sin(ph);
+  x.clearRect(0, 0, W, H); x.fillStyle = '#0d0b1a'; x.fillRect(0, 0, W, H);
+  x.strokeStyle = 'rgba(255,255,255,.12)'; x.lineWidth = 1; x.beginPath(); x.moveTo(pw, H * .05); x.lineTo(pw, H * .95); x.stroke();
+  S.forEach((s, i) => {
+    const cx = pw * (i + .5), cy = H * .47, R = Math.min(pw * .19, H * .15);
+    let glow = 0, ions = 0; s.m.forEach(p => { glow += p.e; if (p.ion) ions++; }); glow /= s.m.length;
+    // label
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.font = `700 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif'}`;
+    x.fillStyle = s.strong ? '#ffd23f' : '#9aa0bd';
+    x.fillText(s.strong ? 'STRONG FIELD' : 'WEAK FIELD', cx, H * .07);
+    // grapes
+    [-1, 1].forEach(d => {
+      const gx = cx + d * 1.25 * R;
+      const g = x.createRadialGradient(gx - R * .3, cy - R * .35, R * .1, gx, cy, R);
+      g.addColorStop(0, '#b06ae0'); g.addColorStop(1, '#4a1a78');
+      x.fillStyle = g; x.beginPath(); x.arc(gx, cy, R, 0, 7); x.fill();
+    });
+    // plasma glow
+    if (glow > .01){
+      const pulse = Kit.calm ? 1 : 1 + .12 * Math.sin(clock * 9) + .06 * Math.sin(clock * 23);
+      const r = R * (.4 + 1.5 * glow) * pulse;
+      x.globalCompositeOperation = 'lighter';
+      const g = x.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, `rgba(255,245,255,${.9 * glow})`); g.addColorStop(.35, `rgba(255,110,210,${.7 * glow})`); g.addColorStop(1, 'rgba(120,60,255,0)');
+      x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill();
+      x.globalCompositeOperation = 'source-over';
+    }
+    // field arrows in the gap, flipping with the microwaves
+    const dir = on ? (sgn >= 0 ? 1 : -1) : 1, al = s.strong ? .95 : .4;
+    x.strokeStyle = s.strong ? `rgba(255,210,63,${on ? al : .35})` : `rgba(154,160,189,${on ? al : .25})`;
+    x.fillStyle = x.strokeStyle; x.lineWidth = s.strong ? Math.max(2, R * .07) : 1.2;
+    for (let k = -1; k <= 1; k++){
+      const ay = cy + k * R * .5, L = R * .55, a0 = cx - dir * L / 2, a1 = cx + dir * L / 2;
+      x.beginPath(); x.moveTo(a0, ay); x.lineTo(a1, ay); x.stroke();
+      const hs = s.strong ? R * .14 : R * .09;
+      x.beginPath(); x.moveTo(a1, ay); x.lineTo(a1 - dir * hs, ay - hs * .7); x.lineTo(a1 - dir * hs, ay + hs * .7); x.fill();
+    }
+    // air molecules, ions, electrons
+    s.m.forEach(p => {
+      const jit = on ? R * .03 : R * .015;
+      const bx = cx + p.x * R + Math.sin(clock * 7 + p.j) * jit, by = cy + p.y * R + Math.cos(clock * 6 + p.j * 2) * jit;
+      const sw = Kit.calm ? 0 : Math.sin(ph);
+      if (!p.ion){
+        x.fillStyle = '#7d839e'; x.beginPath(); x.arc(bx, by, Math.max(2, R * .07), 0, 7); x.fill();
+      } else {
+        const ix = bx + p.e * R * .1 * sw;
+        x.fillStyle = `rgba(255,170,60,${.25 + .4 * p.e})`; x.beginPath(); x.arc(ix, by, R * (.1 + .12 * p.e), 0, 7); x.fill();
+        x.fillStyle = '#ffb340'; x.beginPath(); x.arc(ix, by, Math.max(2.4, R * .08), 0, 7); x.fill();
+        const exx = bx + p.ex * R - p.e * R * .3 * sw, eyy = by + p.ey * R;
+        x.fillStyle = '#6ee7ff'; x.beginPath(); x.arc(exx, eyy, Math.max(1.6, R * .045), 0, 7); x.fill();
+        if (p.fl > 0){
+          x.strokeStyle = `rgba(255,255,255,${p.fl})`; x.lineWidth = 2; x.beginPath();
+          x.moveTo(bx - R * .2, by - R * .1); x.lineTo(bx - R * .03, by + R * .06); x.lineTo(bx + R * .05, by - R * .06); x.lineTo(bx + R * .22, by + R * .1); x.stroke();
+        }
+      }
+    });
+    // readout
+    x.fillStyle = s.strong ? '#ffd23f' : '#9aa0bd';
+    x.font = `700 ${fs}px sans-serif`;
+    x.fillText(`IONS ${ions}`, cx, H * .79);
+    const bw = pw * .66, bh = Math.max(6, H * .028), by0 = H * .87;
+    x.fillStyle = 'rgba(255,255,255,.12)'; x.fillRect(cx - bw / 2, by0, bw, bh);
+    x.fillStyle = s.strong ? '#ff6ed2' : '#9aa0bd'; x.fillRect(cx - bw / 2, by0, bw * glow, bh);
+    if (s.strong && glow > .55){ x.fillStyle = '#ffffff'; x.font = `800 ${fs * 1.05}px sans-serif`; x.fillText('PLASMA!', cx, H * .145); }
+  });
+  x.fillStyle = 'rgba(255,255,255,.55)'; x.font = `600 ${Math.max(12, H * .034)}px sans-serif`; x.textAlign = 'center';
+  x.fillText(on ? 'microwaves ON · energy taken in ↓' : 'microwaves off', W / 2, H * .965);
+}
+
+function finish(){
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.show('why'); sure.grade(ok, curPct, `${said}, ${ok ? 'right' : 'wrong'}`); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why', {opacity: 0, y: 8, duration: .4});
+}
+
+let curPct = 0;
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  curPct = pct;
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say');
+  if (Kit.calm){
+    S[1].m.forEach(p => { p.ion = true; p.e = 1; p.fl = 0; });
+    t = 1; done = true; finish();
+  } else { running = true; Kit.haptic('light'); }
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { const r = Kit.fitCanvas(Kit.$('cv')); ctx = r.x; W = r.W; H = r.H; draw(); };
+gsap.ticker.add(draw);
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, D * 1000 + 900));
+};
+Kit.single();
+</script>
+</html>

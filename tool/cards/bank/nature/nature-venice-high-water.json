@@ -1,0 +1,37 @@
+{
+  "id": "nature-venice-high-water",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What piled Venice's water 187 cm high in November 2019?",
+  "answer": "On 12–13 November 2019, a peak astronomical tide met a strong south-east scirocco wind pushing water north, along with a low-pressure system. Together they raised the water to 187 cm. Roughly 40–50 cm of that came from the weather.",
+  "move": "The tide sets the base; wind and low pressure stack on top.",
+  "keywords": [
+    "venice",
+    "scirocco",
+    "acqua alta",
+    "storm surge",
+    "high tide"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive bar chart of Venice's 187 cm flood in November 2019. Tap the tide, wind, and low-pressure causes to stack each onto the water and see how they add up."
+  },
+  "source": "Geopop, “ACQUA ALTA VENEZIA:  L'ANALISI SCIENTIFICA DELLE CAUSE” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=j6YkctHvs9U&t=558s",
+  "written": "2026-11-03"
+}

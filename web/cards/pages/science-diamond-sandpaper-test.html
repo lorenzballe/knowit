@@ -1,0 +1,189 @@
+<!doctype html>
+<!-- slug: science-diamond-sandpaper-test -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute · The sandpaper test</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#tabs{display:flex;gap:2.4cqw}
+.tab{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3cqw;cursor:pointer}
+.tab.on{background:var(--k);color:var(--c);box-shadow:none}
+#wrap{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;color:var(--k)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0}
+.spark{transform-box:fill-box;transform-origin:center;animation:tw 1.8s ease-in-out infinite}
+@keyframes tw{0%,100%{transform:scale(.55);opacity:.5}50%{transform:scale(1.1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.spark{animation:none}}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Try it · rub and see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SANDPAPER TEST</span></div>
+    <h2 class="q">What happens when a real diamond is rubbed on sandpaper?</h2>
+    <div class="stagebox" id="stage">
+      <div id="tabs">
+        <button class="tab on" data-m="0">Real diamond</button>
+        <button class="tab" data-m="1">Fake stone</button>
+      </div>
+      <div id="wrap"><svg id="pic"></svg></div>
+    </div>
+    <p class="say" id="say">Drag the stone back and forth across the sandpaper.</p>
+    <div id="why" class="gone"><p class="body">A real diamond is harder than the grains of sandpaper, so the grains wear flat and the stone stays clean. A fake is softer than the grit, so the grit scratches it.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A real diamond dulls the sandpaper; the sandpaper scratches a fake.</div>
+    <div class="foot"><span class="src">Source · Geopop, “COME RICONOSCERE UN DIAMANTE FAKE” (YouTube, 2019).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const N = 56, GRIT = [], SPECK = [], SCR = [];
+for (let i = 0; i < N; i++) GRIT.push({x: (i + .2 + Kit.rnd() * .6) / N, h: .55 + .45 * Kit.rnd(), w: .6 + .4 * Kit.rnd()});
+for (let i = 0; i < 140; i++) SPECK.push({x: Kit.rnd(), y: Kit.rnd(), r: .4 + Kit.rnd()});
+for (let i = 0; i < 38; i++) {
+  const v = .04 + .42 * Math.pow(Kit.rnd(), .7);          // height above the tip, in s
+  const half = v;                                       // pavilion half-width at that height
+  const u = (Kit.rnd() * 2 - 1) * half * .9;
+  const len = .05 + .13 * Kit.rnd(), a = (Kit.rnd() - .5) * .5;
+  SCR.push({u, v, dx: Math.cos(a) * len, dy: Math.sin(a) * len});
+}
+const mkState = () => ({dist: 0, wear: new Array(N).fill(0), done: false});
+const S = {mode: 0, x: .5, st: [mkState(), mkState()], fin: false};
+let G = null; // geometry and elements
+
+function build() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  const gy = H * .7, gh = Math.max(H * .045, 8);
+  const tipY = gy - gh * .55;
+  const s = Math.max(40, Math.min(W * .42, (tipY - fs * 4.4) / .74));
+  const x0 = W * .03, x1 = W * .97;
+  const ns = 'http://www.w3.org/2000/svg';
+  const defs = Kit.mk('defs', {}, svg);
+  const cp = Kit.mk('clipPath', {id: 'pav'}, defs);
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`}, cp);
+  // sandpaper body
+  Kit.mk('rect', {x: x0, y: gy, width: x1 - x0, height: H * .97 - gy, rx: 6, fill: '#6b5440'}, svg);
+  const sp = Kit.mk('g', {}, svg);
+  SPECK.forEach(d => Kit.mk('circle', {cx: x0 + d.x * (x1 - x0), cy: gy + 4 + d.y * (H * .97 - gy - 8), r: d.r * 1.4, fill: d.r > .9 ? '#3a2d22' : '#8d7259'}, sp));
+  // grit bumps
+  const grit = GRIT.map(() => Kit.mk('path', {}, svg));
+  // stone
+  const stone = Kit.mk('g', {}, svg);
+  const sw = Math.max(1.5, s * .014);
+  Kit.mk('ellipse', {cx: 0, cy: gh * .3, rx: s * .3, ry: gh * .25, fill: '#000', opacity: .18}, stone);
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s}`, fill: '#eef8ff'}, stone);
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} 0,${-.5*s} 0,0`, fill: '#b9daf1'}, stone);
+  Kit.mk('polygon', {points: `0,${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#e2f1fb'}, stone);
+  Kit.mk('polygon', {points: `${-.28*s},${-.72*s} 0,${-.5*s} ${.28*s},${-.72*s}`, fill: '#ffffff'}, stone);
+  const scr = Kit.mk('g', {'clip-path': 'url(#pav)'}, stone);
+  const scLines = SCR.map(d => Kit.mk('line', {x1: (d.u - d.dx / 2) * s, y1: -(d.v - d.dy / 2) * s, x2: (d.u + d.dx / 2) * s, y2: -(d.v + d.dy / 2) * s, stroke: '#4a5560', 'stroke-width': Math.max(1, s * .008), 'stroke-linecap': 'round', opacity: 0}, scr));
+  const frost = Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${.5*s},${-.5*s} 0,0`, fill: '#ffffff', opacity: 0}, stone);
+  const L = (a, b, c, d) => Kit.mk('line', {x1: a * s, y1: b * s, x2: c * s, y2: d * s, stroke: 'currentColor', 'stroke-width': sw * .6, opacity: .55}, stone);
+  L(-.28, -.72, -.25, -.5); L(.28, -.72, .25, -.5); L(0, 0, -.25, -.5); L(0, 0, .25, -.5);
+  Kit.mk('polygon', {points: `${-.5*s},${-.5*s} ${-.28*s},${-.72*s} ${.28*s},${-.72*s} ${.5*s},${-.5*s} 0,0`, fill: 'none', stroke: 'currentColor', 'stroke-width': sw, 'stroke-linejoin': 'round'}, stone);
+  Kit.mk('line', {x1: -.5 * s, y1: -.5 * s, x2: .5 * s, y2: -.5 * s, stroke: 'currentColor', 'stroke-width': sw}, stone);
+  const k = s * .07;
+  const spark = Kit.mk('path', {class: 'spark', d: `M${-.16*s},${-.66*s-k} L${-.16*s+k*.25},${-.66*s-k*.25} L${-.16*s+k},${-.66*s} L${-.16*s+k*.25},${-.66*s+k*.25} L${-.16*s},${-.66*s+k} L${-.16*s-k*.25},${-.66*s+k*.25} L${-.16*s-k},${-.66*s} L${-.16*s-k*.25},${-.66*s-k*.25} Z`, fill: '#fff', stroke: '#9cc8e8', 'stroke-width': 1}, stone);
+  // labels
+  const t1 = Kit.mk('text', {x: W * .03, y: fs * 1.3, fill: 'currentColor', style: `font:700 ${fs}px var(--body)`}, svg);
+  const t2 = Kit.mk('text', {x: W * .03, y: fs * 3.0, fill: 'currentColor', style: `font:700 ${fs}px var(--body)`}, svg);
+  G = {W, H, gy, gh, tipY, s, x0, x1, grit, stone, scLines, frost, spark, t1, t2};
+  render();
+}
+
+const col = gsap.utils.interpolate('#2a211b', '#b3a698');
+function render() {
+  if (!G) return;
+  const {W, gy, gh, tipY, s, x0, x1} = G, st = S.st[S.mode], p = Math.min(1, st.dist);
+  const bw = (x1 - x0) / N * .62;
+  let flat = 0;
+  GRIT.forEach((g, i) => {
+    const w = st.wear[i], x = x0 + g.x * (x1 - x0), h = gh * g.h * (1 - .82 * w), b = bw * g.w * (1 + .5 * w);
+    if (w > .6) flat++;
+    G.grit[i].setAttribute('d', `M${x - b},${gy + 1} L${x - b * .3 * w},${gy - h} L${x + b * .3 * w},${gy - h} L${x + b},${gy + 1} Z`);
+    G.grit[i].setAttribute('fill', col(w));
+  });
+  G.stone.setAttribute('transform', `translate(${S.x * W},${tipY})`);
+  const n = S.mode ? Math.round(p * SCR.length) : 0;
+  G.scLines.forEach((l, i) => l.setAttribute('opacity', i < n ? .85 : 0));
+  G.frost.setAttribute('opacity', S.mode ? p * .45 : 0);
+  G.spark.style.opacity = S.mode ? 1 - p * .9 : 1;
+  G.t1.textContent = n ? `Stone: ${n} scratches` : 'Stone: no scratches';
+  G.t2.textContent = flat ? `Sandpaper: ${flat} grains worn flat` : 'Sandpaper: grit still sharp';
+}
+
+function rub(dx) {
+  const st = S.st[S.mode], {W, x0, x1, s} = G, ad = Math.abs(dx) * W;
+  st.dist += ad / (W * 2.4);
+  if (S.mode === 0) {
+    const sx = S.x * W;
+    GRIT.forEach((g, i) => {
+      const bx = x0 + g.x * (x1 - x0);
+      if (Math.abs(bx - sx) < s * .08) st.wear[i] = Math.min(1, st.wear[i] + ad / (s * 1.2));
+    });
+  }
+  if (!st.done && st.dist >= 1) {
+    st.done = true; Kit.haptic('success');
+    const b = Kit.$('tabs').children[S.mode]; b.textContent += ' ✓';
+    if (S.st[0].done && S.st[1].done) finish();
+    else Kit.$('say').textContent = S.mode === 0 ? 'Now pick the fake stone and rub it too.' : 'Now pick the real diamond and rub it too.';
+  }
+  render();
+}
+
+function finish() {
+  if (S.fin) return; S.fin = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+}
+
+let drag = null;
+svg.addEventListener('pointerdown', e => {
+  if (!G) return;
+  drag = {px: e.clientX, sx: S.x};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  svg.style.cursor = 'grabbing';
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const nx = Math.max(.12, Math.min(.88, drag.sx + (e.clientX - drag.px) / G.W));
+  const dx = nx - S.x; S.x = nx;
+  if (dx) rub(dx);
+});
+const up = () => { drag = null; svg.style.cursor = 'grab'; };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+Kit.$('tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  const m = +b.dataset.m; if (m === S.mode) return;
+  S.mode = m; Kit.haptic('selection');
+  [...Kit.$('tabs').children].forEach((t, i) => t.classList.toggle('on', i === m));
+  S.x = .5; render();
+  if (!Kit.calm && G) gsap.from(G.stone, {opacity: 0, duration: .35});
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  const o = {x: .5};
+  gsap.to(o, {x: .58, duration: .35, yoyo: true, repeat: 3, ease: 'sine.inOut', delay: .3,
+    onUpdate: () => { if (!drag && S.st[0].dist === 0) { S.x = o.x; render(); } },
+    onComplete: () => { if (S.st[0].dist === 0) { S.x = .5; render(); } }});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rubIt = async () => {
+    const r = svg.getBoundingClientRect(), y = r.top + r.height * .6;
+    const ev = (t, x) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+    ev('pointerdown', r.left + r.width * .5);
+    for (let k = 0; k < 9; k++) for (let j = 0; j <= 12; j++) ev('pointermove', r.left + r.width * (k % 2 ? .85 - .7 * j / 12 : .15 + .7 * j / 12) - (r.width * .35) + r.width * .35);
+    ev('pointerup', r.left + r.width * .5);
+  };
+  Kit.$('tabs').children[0].click(); await rubIt(); await wait(100);
+  Kit.$('tabs').children[1].click(); await rubIt(); await wait(700);
+};
+Kit.single();
+</script>
+</html>

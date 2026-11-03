@@ -1,0 +1,38 @@
+{
+  "id": "science-tunnel-or-bridge",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a tunnel under the Strait riskier than a bridge?",
+  "answer": "A tunnel runs through the rock, so it inevitably crosses several faults. If one slips and makes a step of 2–4 metres, as in 1908, the tube is cut. A bridge only touches the ground at its towers, and it can be designed to absorb the step far more easily.",
+  "move": "What crosses a fault breaks; what spans over it can flex.",
+  "keywords": [
+    "messina-strait",
+    "1908-messina-earthquake",
+    "fault-line",
+    "tunnel",
+    "bridge",
+    "seismic-fault"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: why is a tunnel under the Strait riskier than a bridge? A diagram shows a tunnel crossing a fault line and a bridge spanning over a fault step. A control slips the fault under the tunnel, then switches to the bridge."
+  },
+  "source": "Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=4cJ9IdeTZ2A&t=588s",
+  "written": "2026-11-03"
+}

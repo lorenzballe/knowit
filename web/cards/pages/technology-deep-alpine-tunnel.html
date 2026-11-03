@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-deep-alpine-tunnel -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k)}
+#seg{display:flex;gap:2cqw;justify-content:center}
+.sw{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 3cqw;cursor:pointer}
+.sw.on{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font-size:max(2.6cqh,16px)}
+#why .body{font-size:max(1.8cqh,12px);overflow-wrap:break-word}
+#pic text{font-family:var(--body);font-weight:700;fill:currentColor}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Flip · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ALPINE TUNNEL</span></div>
+    <h2 class="q">At what depth and gradient will the Turin–Lyon tunnel run, and why?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="seg">
+        <button class="sw on" data-m="over">Over the top</button>
+        <button class="sw" data-m="deep">Deep under</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">1,000–2,200 m deep · 2–12 % slope</p>
+        <p class="body">So deep below the peaks, the track never has to climb up the mountains. Its slope stays gentle, so it runs more like a railway on a plain than a mountain line.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Flip between climbing over the Alps and boring deep under them.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Dig deep enough and the Alps become a flat railway.</div>
+    <div class="foot"><span class="src">Source · Geopop, “TAV Torino-Lione: a che punto è? Gli aspetti tecnici di cui non si parla (quasi) mai” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let mode = 'over', seen = {over: true}, done = false, tw = null, G = null;
+const svg = Kit.$('pic');
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const P = (x, y) => [x * W, y * H];
+  const ridge = [[0,.75],[.06,.75],[.2,.42],[.3,.5],[.45,.12],[.6,.4],[.68,.52],[.78,.46],[.9,.66],[.94,.75],[1,.75]];
+  const poly = ridge.concat([[1,1],[0,1]]).map(p => P(p[0], p[1]).join(',')).join(' ');
+  Kit.mk('polygon', {points: poly, fill: 'currentColor', 'fill-opacity': .14, stroke: 'currentColor', 'stroke-width': Math.max(1.5, f * .12), 'stroke-linejoin': 'round'}, svg);
+
+  // over-the-top route: hugs the ridge just above it
+  const up = ridge.map(p => P(p[0], p[1] - (p[0] > .03 && p[0] < .97 ? .035 : .005)));
+  let dOver = `M${up[0]}`; for (let i = 1; i < up.length; i++) dOver += ` L${up[i]}`;
+  const gOver = Kit.mk('g', {}, svg);
+  const pOver = Kit.mk('path', {d: dOver, fill: 'none', stroke: 'currentColor', 'stroke-width': f * .28, 'stroke-dasharray': `${f*.6} ${f*.35}`, 'stroke-linejoin': 'round'}, gOver);
+  const tOver = Kit.mk('text', {x: .62 * W, y: .2 * H, 'font-size': f}, gOver); tOver.textContent = 'steep climb';
+  const tOver2 = Kit.mk('text', {x: .62 * W, y: .2 * H + f * 1.4, 'font-size': f}, gOver); tOver2.textContent = 'to the peaks';
+
+  // base tunnel
+  const gDeep = Kit.mk('g', {}, svg);
+  const [ax, ay] = P(.06, .75), [cx, cy] = P(.5, .70), [bx, by] = P(.94, .75);
+  const pDeep = Kit.mk('path', {d: `M${ax},${ay} Q${cx},${cy} ${bx},${by}`, fill: 'none', stroke: 'currentColor', 'stroke-width': f * .55, 'stroke-linecap': 'round'}, gDeep);
+  const yAt = x => { const t = (x - .06) / .88; return (1-t)*(1-t)*.75 + 2*t*(1-t)*.70 + t*t*.75; };
+  const arrow = (x, yTop, label, anchor, ly) => {
+    const y1 = (yTop + .025) * H, y2 = (yAt(x) - .03) * H, X = x * W, s = f * .35;
+    Kit.mk('line', {x1: X, y1, x2: X, y2, stroke: 'currentColor', 'stroke-width': Math.max(1.5, f * .12)}, gDeep);
+    Kit.mk('path', {d: `M${X-s},${y1+s} L${X},${y1} L${X+s},${y1+s} M${X-s},${y2-s} L${X},${y2} L${X+s},${y2-s}`, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(1.5, f * .12)}, gDeep);
+    const t = Kit.mk('text', {x: X + (anchor === 'start' ? f * .6 : -f * .6), y: ly * H, 'font-size': f * 1.1, 'text-anchor': anchor}, gDeep); t.textContent = label;
+  };
+  arrow(.45, .12, '2,200 m', 'start', .42);
+  arrow(.78, .46, '1,000 m', 'end', .62);
+  const ts = Kit.mk('text', {x: .5 * W, y: .84 * H, 'font-size': f, 'text-anchor': 'middle'}, gDeep); ts.textContent = 'slope only 2–12 %';
+  const tb = Kit.mk('text', {x: .5 * W, y: .84 * H + f * 1.4, 'font-size': f * .9, 'text-anchor': 'middle', 'fill-opacity': .75}, gDeep); tb.textContent = 'of rock above the track';
+  tb.textContent = 'rock above: 1,000–2,200 m';
+
+  const train = Kit.mk('circle', {r: f * .5, fill: 'var(--c)', stroke: 'currentColor', 'stroke-width': f * .22}, svg);
+  G = {gOver, gDeep, pOver, pDeep, train};
+  apply(false);
+}
+
+function apply(anim) {
+  if (!G) return;
+  const deep = mode === 'deep';
+  const d = anim && !Kit.calm ? .5 : 0;
+  gsap.to(G.gDeep, {opacity: deep ? 1 : 0, duration: d});
+  gsap.to(G.gOver, {opacity: deep ? .18 : 1, duration: d});
+  if (tw) tw.kill();
+  const path = deep ? G.pDeep : G.pOver, L = path.getTotalLength(), o = {p: 0};
+  const place = () => { const pt = path.getPointAtLength(o.p * L); G.train.setAttribute('cx', pt.x); G.train.setAttribute('cy', pt.y); };
+  place();
+  if (!Kit.calm) tw = gsap.to(o, {p: 1, duration: deep ? 3 : 7, ease: 'none', repeat: -1, onUpdate: place});
+  else { o.p = .5; place(); }
+}
+
+Kit.$('seg').addEventListener('click', e => {
+  const b = e.target.closest('.sw'); if (!b || b.dataset.m === mode) return;
+  mode = b.dataset.m; seen[mode] = true;
+  document.querySelectorAll('.sw').forEach(x => x.classList.toggle('on', x === b));
+  Kit.haptic('selection'); apply(true);
+  if (!done && seen.over && seen.deep) {
+    done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+    if (!Kit.calm) gsap.from('#why,#keep', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+  }
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { document.querySelector('.sw[data-m="deep"]').click(); await new Promise(r => setTimeout(r, 700)); };
+Kit.single();
+</script>
+</html>

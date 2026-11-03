@@ -1,0 +1,124 @@
+<!doctype html>
+<!-- slug: maths-pools-of-rock -->
+<!-- Note for the editor: the video says 17 km³ is "about 6,800 Olympic pools". That figure is 1,000 times too small.
+     An Olympic pool (50 × 25 × 2 m) holds about 2,500 m³. 17 km³ is 17,000,000,000 m³, which is about 6.8 million pools.
+     6,800 pools is only 0.017 km³. The card keeps the video's 17 km³, shows its 6,800 pools as the small cube,
+     and gives the corrected count as the answer. -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#picbox{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex-shrink:0}
+#why .big{margin:0}
+#why .body{overflow-wrap:anywhere;margin:0;font-size:max(1.9cqh,12px);line-height:1.3}
+.opt{font:700 max(2.1cqh,13px)/1.15 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SCALE</span></div>
+    <h2 class="q">How much rock is 17 cubic kilometers?</h2>
+    <div class="stagebox" id="stage">
+      <div id="picbox"><svg id="pic"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">About 6,800 pools</button>
+        <button class="opt" data-i="1">About 68,000 pools</button>
+        <button class="opt" data-i="2">About 6.8 million pools</button>
+      </div>
+      <div id="why" class="gone"><p class="big">About 6.8 million pools</p><p class="body">A pool holds about 2,500 m³; 17 km³ is 17 billion m³. The video's 6,800 pools fill only the small blue cube.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Guess how many Olympic pools that block of rock would fill.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>1 km³ is a billion m³, about 400,000 Olympic pools.</div>
+    <div class="foot"><span class="src">Source · Geopop, “La futura eruzione sottomarina del Marsili e le cause del rischio tsunami - l'animazione realistica” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1;
+let G = null;
+const st = {small: 0, fill: 0};
+const BLUE = ['#7cc4ff', '#2f8fe6', '#1b6cbd'];
+
+function draw() {
+  if (!G) return;
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H} = G, fs = Math.max(G.f, 12);
+  const S = Math.max(24, Math.min(W * .84 / 1.732, (H - 4.6 * fs) / 2));
+  const s = S / 10;
+  const A = {x: W / 2, y: H / 2 + S};
+  const P = (x, y, z) => [A.x + (x - y) * .866, A.y + (x + y) * .5 - z];
+  const poly = (pts, fill, op, stroke, sw) => Kit.mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill, 'fill-opacity': op, stroke: stroke || 'none', 'stroke-width': sw || 0, 'stroke-linejoin': 'round'}, svg);
+  const box = (x0, y0, z0, dx, dy, dz, fills, op, stroke, sw) => {
+    const x1 = x0 + dx, y1 = y0 + dy, z1 = z0 + dz;
+    poly([P(x0, y0, z1), P(x1, y0, z1), P(x1, y1, z1), P(x0, y1, z1)], fills[0], op, stroke, sw);
+    poly([P(x1, y0, z0), P(x1, y1, z0), P(x1, y1, z1), P(x1, y0, z1)], fills[1], op, stroke, sw);
+    poly([P(x0, y1, z0), P(x1, y1, z0), P(x1, y1, z1), P(x0, y1, z1)], fills[2], op, stroke, sw);
+  };
+  const text = (x, y, t, anchor, size, col, op) => {
+    const e = Kit.mk('text', {x, y, 'text-anchor': anchor, fill: col || 'var(--k)', 'fill-opacity': op == null ? 1 : op, style: `font:700 ${size}px var(--body)`}, svg);
+    e.textContent = t; return e;
+  };
+  // the rock block
+  const k = 'var(--k)';
+  poly([P(-S, -S, S), P(0, -S, S), P(0, 0, S), P(-S, 0, S)], k, .10);
+  poly([P(0, -S, 0), P(0, 0, 0), P(0, 0, S), P(0, -S, S)], k, .20);
+  poly([P(-S, 0, 0), P(0, 0, 0), P(0, 0, S), P(-S, 0, S)], k, .30);
+  // pools pouring in
+  if (st.fill > 0) box(-S, -S, 0, S, S, S * st.fill, BLUE, .93);
+  // the video's 6,800 pools
+  if (st.small > 0) { const a = s * st.small; box(-a, -a, 0, a, a, a, BLUE, 1, '#fff', Math.max(1, fs * .06)); }
+  // rock edges on top
+  box(-S, -S, 0, S, S, S, ['none', 'none', 'none'], 0, k, Math.max(1.5, fs * .12));
+  // labels
+  let top = '17 km³ of rock';
+  if (st.fill > 0) top = '17 km³ ≈ ' + Math.round(Math.max(6800, 6.8e6 * st.fill) / 100 * 100).toLocaleString('en-US') + ' pools';
+  text(A.x, A.y - 2 * S - fs * .9, top, 'middle', fs * 1.1);
+  text(A.x - .433 * S - fs * .3, A.y - .25 * S + fs * 1.4, '2.6 km a side', 'end', fs * .9, k, .75);
+  if (st.small > 0 && st.fill < .03) {
+    text(A.x + .866 * s + fs * .5, A.y - .5 * s, '6,800 pools', 'start', fs, '#fff', st.small).setAttribute('style', `font:700 ${fs}px var(--body);paint-order:stroke;stroke:${BLUE[2]};stroke-width:${fs * .35}px`);
+  }
+}
+
+function reveal() {
+  if (Kit.calm) { st.small = 1; st.fill = 1; draw(); return; }
+  gsap.timeline({onUpdate: draw, onComplete: draw})
+    .to(st, {small: 1, duration: .7, ease: 'back.out(2)'})
+    .to(st, {fill: 1, duration: 2.4, ease: 'power1.inOut'}, '+=1.1');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  requestAnimationFrame(() => { if (G) G = Kit.fitSvg(Kit.$('pic')); draw(); reveal(); });
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { G = Kit.fitSvg(Kit.$('pic')); draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('#pic', {opacity: 0, scale: .94, transformOrigin: '50% 50%', duration: .6, ease: 'power3.out'});
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out', delay: .2});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 4600));
+};
+Kit.single();
+</script>
+</html>

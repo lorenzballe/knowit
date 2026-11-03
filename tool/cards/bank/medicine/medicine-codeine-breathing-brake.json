@@ -1,0 +1,37 @@
+{
+  "id": "medicine-codeine-breathing-brake",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What life-threatening effect can high doses of codeine cause?",
+  "answer": "Codeine doesn't only hold back the cough: it holds back breathing too. In large doses it depresses breathing and circulation, a danger to life that in extreme cases ends in death.",
+  "move": "Codeine's brake on coughing is also a brake on breathing.",
+  "keywords": [
+    "codeine",
+    "breathing",
+    "cough syrup",
+    "overdose",
+    "opioid"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A lung silhouette fades as a dosage meter is dragged upward. The question asks what life-threatening effect high doses of codeine can cause, with the answer that it can stop you breathing."
+  },
+  "source": "Geopop, “Lean, la droga viola che si fa dallo sciroppo per la tosse con la codeina: cosa fa la Purple Drank” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=XUgqO5XKzB0&t=459s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "medicine-popcorn-laser-effect",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the 'popcorn' effect during laser tattoo removal?",
+  "answer": "The popcorn effect is the white flash seen when a laser pulse hits tattoo ink clumps sitting in the dermis, under the skin's surface. The flash is the ink breaking up into smaller pieces. The ink is still there after the pop and is dealt with in the clean-up step.",
+  "move": "The white \"popcorn\" flash is ink breaking up, not ink leaving.",
+  "keywords": [
+    "laser",
+    "tattoo",
+    "tattoo ink",
+    "dermis",
+    "popcorn effect"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Interactive: drag a dot to fire a laser at tattoo ink clumps in the skin, stepping through Ink, Pulse, Pop, Still there, and Clean-up. It asks what the white popcorn flash during laser tattoo removal is."
+  },
+  "source": "Geopop, “Come si fanno i tatuaggi, cosa succede al corpo e come si rimuovono: storia e procedure” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=S0ZTLBLhG6Y&t=708s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "history-pile-one-reactor",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.small_causes_big_effects",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Pile-1 held 375 tons of uranium and graphite. How much power did it make?",
+  "answer": "Pile-1 made about half a watt, far less than the 500 watts, 500 kilowatts or 500 megawatts offered as choices. Fermi's team was not after power. On 2 December 1942 they proved a chain reaction could be started and kept under control, and that proof was the achievement.",
+  "move": "Pile-1's power was tiny; its proof, a controlled chain reaction, was huge.",
+  "keywords": [
+    "pile-1",
+    "fermi",
+    "chain reaction",
+    "uranium",
+    "graphite"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card on Pile-1, the first nuclear reactor. The reader picks its power output from half a watt, 500 watts, 500 kilowatts or 500 megawatts, then rates how sure they are."
+  },
+  "source": "Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=Xzv84ZdtlE0&t=883s",
+  "written": "2026-11-03"
+}

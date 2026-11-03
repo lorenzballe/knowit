@@ -1,0 +1,36 @@
+{
+  "id": "science-cold-deodorant-spray",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a deodorant spray feel cold?",
+  "answer": "The cold doesn't come from the deodorant. It comes from the propane gas in the can, which is packed in tight and expands as it leaves the nozzle. An expanding gas pulls in heat, just like a fridge's refrigerant. Propane also burns, so never use the spray near a flame.",
+  "move": "The cold isn't the deodorant: it's the propane expanding.",
+  "keywords": [
+    "deodorant",
+    "propane",
+    "aerosol",
+    "refrigerant"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Question: why does a deodorant spray feel cold? Three glowing spots can be tapped: the can, the nozzle, and the mist. Tapping each one reveals how propane gas expands and pulls in heat."
+  },
+  "source": "Geopop, “Deodorante o antitraspirante? Come funzionano i sali di alluminio e perché non dobbiamo preoccuparci” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=1P8szAIszo0&t=500s",
+  "written": "2026-11-03"
+}

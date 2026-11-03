@@ -1,0 +1,37 @@
+{
+  "id": "science-mercury-period-doubling",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What physical experiment first confirmed period-doubling in the logistic map?",
+  "answer": "Albert Libchaber heated a box of mercury from below, and the fluid turned in convection rolls. Raising the temperature gradient made the rolls wobble at half the frequency, producing spikes of two heights, then four, then eight. A real fluid doubled its period just as the logistic map predicts.",
+  "move": "A real fluid doubled its period just as the logistic map predicts.",
+  "keywords": [
+    "libchaber",
+    "mercury",
+    "convection",
+    "logistic-map",
+    "period-doubling"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A diagram of a heated mercury box with rolling convection cylinders that split from two patterns into four. The page asks which physical experiment first confirmed period-doubling in the logistic map."
+  },
+  "source": "Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=ovJcsL7vyrk&t=681s",
+  "written": "2026-11-03"
+}

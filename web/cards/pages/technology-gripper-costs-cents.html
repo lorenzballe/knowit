@@ -1,0 +1,174 @@
+<!doctype html>
+<!-- slug: technology-gripper-costs-cents -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{display:block;width:100%;flex:1;min-height:0;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Guess · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GUESS THE PRICE</span></div>
+    <h2 class="q">How much would this bending plastic gripper cost to make?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="why" class="gone">
+        <p class="big">Just cents</p>
+        <p class="body">It bends instead of using hinges, so it's a single piece of plastic. Injection molded, it would cost cents. Its flat shape could even be extruded and chopped off, one gripper at a time.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the price tag to your guess, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One bending piece instead of many parts makes a machine cost cents.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('pic');
+const st = {v: 10, moved: false, done: false};
+let G = null, tagG = null, tagT = null;
+const L = -2, R = 2;
+const INK = 'var(--k)', SOFT = 'color-mix(in srgb,var(--k) 28%,transparent)';
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const xOf = v => G.x0 + (Math.log10(v) - L) / (R - L) * (G.x1 - G.x0);
+const vOf = x => { const t = Math.max(0, Math.min(1, (x - G.x0) / (G.x1 - G.x0))); return Math.pow(10, L + t * (R - L)); };
+const fmt = v => v < 0.995 ? Math.max(1, Math.round(v * 100)) + '¢' : v < 9.95 ? '$' + v.toFixed(2) : '$' + Math.round(v);
+
+function line(p, a, b, w, col) {
+  return Kit.mk('line', {x1: a[0], y1: a[1], x2: b[0], y2: b[1], style: `stroke:${col};stroke-width:${w};stroke-linecap:round`}, p);
+}
+// A compliant gripper: thick plastic links joined by thin bending flexures, all one piece.
+function gripper(parent, cx, cy, s, col) {
+  const g = Kit.mk('g', {}, parent);
+  const P = (x, y) => [cx + (x - 50) * s, cy + (y - 52) * s];
+  const T = Math.max(7 * s, 3), t = Math.max(2 * s, 1.2);
+  const side = m => {
+    const X = x => m ? 100 - x : x;
+    line(g, P(X(22), 88), P(X(42), 88), T, col);
+    line(g, P(X(28), 88), P(X(28), 81), t, col);
+    line(g, P(X(28), 81), P(X(20), 50), T, col);
+    line(g, P(X(20), 50), P(X(22), 43), t, col);
+    line(g, P(X(22), 43), P(X(38), 16), T, col);
+    line(g, P(X(38), 16), P(X(46), 16), T, col);
+    line(g, P(50, 62), P(X(21), 55), t, col);
+  };
+  side(false); side(true);
+  line(g, P(50, 98), P(50, 62), T, col);
+  return g;
+}
+function slab(parent, cx, cy, s) {
+  const g = Kit.mk('g', {}, parent);
+  gripper(g, cx + s * 3.2, cy + s * 3.2, s, SOFT);
+  gripper(g, cx, cy, s, INK);
+  return g;
+}
+
+function placeTag() {
+  if (!tagG) return;
+  tagG.setAttribute('transform', `translate(${xOf(st.v)},0)`);
+  tagT.textContent = fmt(st.v);
+}
+
+function draw(animate) {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13);
+  G = {W, H, f: fs, x0: W * 0.1, x1: W * 0.9, ay: H - fs * 3.5};
+  const ay = G.ay, th = fs * 1.9, tw = fs * 4.4, top = fs * 0.4;
+  const gb = ay - th - fs * 1.3;
+
+  // Axis: a price scale where every step is ten times dearer.
+  line(svg, [G.x0, ay], [G.x1, ay], Math.max(fs * .18, 2), INK);
+  [[0.01, '1¢'], [0.1, '10¢'], [1, '$1'], [10, '$10'], [100, '$100']].forEach(([v, s]) => {
+    const x = xOf(v);
+    line(svg, [x, ay - fs * .35], [x, ay + fs * .35], Math.max(fs * .14, 1.5), INK);
+    Kit.mk('text', {x, y: ay + fs * 1.45, 'text-anchor': 'middle', style: `font:700 ${fs * .9}px var(--mono);fill:${INK}`}, svg).textContent = s;
+  });
+
+  // Picture: one gripper while guessing, a row of chopped-off copies at the end.
+  const pics = [];
+  if (!st.done) {
+    const s = Math.max(Math.min(W * 0.5, gb - top) / 108, 0.3);
+    pics.push(slab(svg, W / 2, (top + gb) / 2, s));
+  } else {
+    const n = W > 420 ? 6 : 5, cell = (W * 0.9) / n;
+    const rb = gb - fs * 1.7;
+    const s = Math.max(Math.min(cell * 0.82, rb - top) / 108, 0.2);
+    for (let i = 0; i < n; i++) pics.push(slab(svg, W * 0.05 + cell * (i + .5), (top + rb) / 2, s));
+    const lab = Kit.mk('text', {x: W / 2, y: gb - fs * .35, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:${INK}`}, svg);
+    lab.textContent = 'Extrude it, chop it: cents each';
+    pics.push(lab);
+    // The truth on the scale: a few cents.
+    const a = xOf(0.02), b = xOf(0.09);
+    const band = Kit.mk('rect', {x: a, y: ay - fs * .45, width: b - a, height: fs * .9, rx: fs * .45, style: `fill:${INK}`}, svg);
+    const tl = Kit.mk('text', {x: Math.max(a, 4), y: ay + fs * 2.9, 'text-anchor': 'start', style: `font:800 ${fs * .95}px var(--body);fill:${INK}`}, svg);
+    tl.textContent = '▲ real cost: a few cents';
+    if (animate && !Kit.calm) {
+      gsap.from(band, {scaleX: 0, transformOrigin: 'left center', duration: .5, ease: 'power3.out'});
+      gsap.from(tl, {opacity: 0, y: 6, duration: .4, delay: .3});
+      gsap.from(pics.slice(0, -1), {x: -W * .35, opacity: 0, duration: .45, stagger: .1, ease: 'power3.out'});
+      gsap.from(pics[pics.length - 1], {opacity: 0, duration: .4, delay: .6});
+    }
+  }
+
+  // The price tag the reader drags.
+  tagG = Kit.mk('g', {}, svg);
+  const inner = Kit.mk('g', {id: 'tagIn'}, tagG);
+  const yb = ay - fs * .55, yt = yb - th;
+  Kit.mk('path', {d: `M${-tw / 2},${yt} H${tw / 2} V${yb} H${fs * .5} L0,${ay - fs * .05} L${-fs * .5},${yb} H${-tw / 2} Z`,
+    style: `fill:${INK};stroke:none`}, inner);
+  Kit.mk('circle', {cx: -tw / 2 + fs * .55, cy: (yt + yb) / 2, r: fs * .18, style: 'fill:var(--c)'}, inner);
+  tagT = Kit.mk('text', {x: fs * .25, y: (yt + yb) / 2 + fs * .34, 'text-anchor': 'middle', style: `font:800 ${fs}px var(--mono);fill:var(--c)`}, inner);
+  placeTag();
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = st.v <= 0.10, said = fmt(st.v);
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  st.done = true;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `You said ${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  draw(true);
+});
+
+let drag = false;
+function move(e) {
+  const r = svg.getBoundingClientRect();
+  st.v = vOf(e.clientX - r.left); placeTag();
+  if (!st.moved) { st.moved = true; sure.on(); Kit.haptic('selection'); }
+}
+svg.addEventListener('pointerdown', e => {
+  if (st.done || !G) return;
+  drag = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+  move(e);
+});
+svg.addEventListener('pointermove', e => { if (drag && !st.done) move(e); });
+const up = () => { drag = false; };
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => {
+  if (Kit.calm || st.moved) return;
+  gsap.from('#pic g', {opacity: 0, duration: .5, ease: 'power2.out'});
+  gsap.fromTo('#tagIn', {x: -10}, {x: 10, duration: .35, yoyo: true, repeat: 3, ease: 'sine.inOut', delay: .5, onComplete: () => gsap.set('#tagIn', {x: 0})});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), y = r.top + G.ay - G.f;
+  const fire = (t, x) => svg.dispatchEvent(new PointerEvent(t, {clientX: r.left + x, clientY: y, bubbles: true, pointerId: 1}));
+  fire('pointerdown', xOf(10)); fire('pointermove', xOf(1)); fire('pointermove', xOf(0.05)); fire('pointerup', xOf(0.05));
+  await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1600);
+};
+Kit.single();
+</script>
+</html>

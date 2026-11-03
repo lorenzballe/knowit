@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- slug: medicine-quit-smoking-combo -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#go{align-self:center;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.4cqh 7cqw;cursor:pointer;transition:opacity .2s}
+#go:disabled{opacity:.3;cursor:default}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0;min-width:0}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);overflow-wrap:break-word}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Guess · tap to count">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">QUITTING SMOKING</span></div>
+    <h2 class="q">Willpower alone: 4 in 100 smokers quit. With medication plus support, how many?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="go" disabled>Reveal</button>
+      <div id="why" class="gone">
+        <p class="big">Up to 60 in 100: 15 times more.</p>
+        <p class="body">Medication works better paired with behavioural support, which teaches you to spot when you're at risk of relapse. Together they reach up to 60% success, against 4% on willpower alone.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the right grid to fill in your guess, then reveal.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To quit smoking, combine medication and support: willpower alone rarely works.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il 96% delle persone non riesce a smettere di fumare da solo: perché e quali sono i metodi migliori” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 60, WILL = 4;
+let guess = 0, revealed = false, dragging = false;
+let rightDots = [], leftDots = [], numR = null;
+
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13), big = fs * 2.1;
+  const titleH = fs * 1.35 * 2 + fs * .5;
+  const bottomH = big * 1.1 + fs * 2.5;
+  const gap = Math.max(W * .07, 16);
+  const s = Math.max(60, Math.min((W - gap) / 2, H - titleH - bottomH));
+  const ox = (W - 2 * s - gap) / 2, oy = titleH + Math.max(0, (H - titleH - bottomH - s) / 2) * .5;
+  const c = s / 10, r = c * .36;
+  const ink = 'var(--k)';
+  const T = (x, y, txt, size, weight, extra = {}) => {
+    const t = Kit.mk('text', Object.assign({x, y, 'text-anchor': 'middle', style: `fill:${ink};font:${weight} ${size}px var(--body)`}, extra), svg);
+    t.textContent = txt; return t;
+  };
+  const grids = [
+    {x: ox, lines: ['Willpower', 'alone']},
+    {x: ox + s + gap, lines: ['Medication', '+ support']}
+  ];
+  grids.forEach(g => {
+    T(g.x + s / 2, fs * 1.1, g.lines[0], fs, 700);
+    T(g.x + s / 2, fs * 1.1 + fs * 1.35, g.lines[1], fs, 700);
+  });
+  leftDots = []; rightDots = [];
+  for (let i = 0; i < 100; i++) {
+    const cx = (i % 10 + .5) * c, cy = oy + (Math.floor(i / 10) + .5) * c;
+    // left grid: willpower
+    const lit = i < WILL;
+    const d = Kit.mk('circle', {cx: grids[0].x + cx, cy, r, style: `fill:${ink};opacity:${lit ? 1 : .14}`}, svg);
+    if (lit) leftDots.push(d);
+    // right grid: guess / real
+    const x = grids[1].x + cx;
+    let st;
+    if (!revealed) st = i < guess ? `fill:${ink};opacity:.55` : `fill:${ink};opacity:.14`;
+    else if (i < REAL) st = `fill:${ink};opacity:1`;
+    else if (i < guess) st = `fill:none;stroke:${ink};stroke-width:${Math.max(1.5, r * .35)};opacity:.7`;
+    else st = `fill:${ink};opacity:.14`;
+    const rd = Kit.mk('circle', {cx: x, cy, r, style: st + ';pointer-events:none'}, svg);
+    rightDots.push(rd);
+    if (!revealed) Kit.mk('rect', {class: 'hit', 'data-i': i, x: x - c / 2, y: cy - c / 2, width: c, height: c, fill: 'transparent'}, svg);
+  }
+  if (revealed && guess > 0) {
+    const i = guess - 1, cx = grids[1].x + (i % 10 + .5) * c, cy = oy + (Math.floor(i / 10) + .5) * c;
+    Kit.mk('circle', {cx, cy, r: r * 1.55, style: `fill:none;stroke:${ink};stroke-width:${Math.max(2, r * .3)}`}, svg);
+  }
+  const by = oy + s + big * 1.0;
+  T(grids[0].x + s / 2, by, WILL + '%', big, 800);
+  T(grids[0].x + s / 2, by + fs * 2, 'quit', fs * .95, 600, {opacity: .75});
+  numR = T(grids[1].x + s / 2, by, revealed ? REAL + '%' : (guess ? guess + '%' : '?'), big, 800);
+  T(grids[1].x + s / 2, by + fs * 2, revealed ? `you guessed ${guess}` : 'your guess', fs * .95, 600, {opacity: .75});
+}
+
+function setGuess(n) {
+  if (revealed || n === guess) return;
+  guess = n; Kit.haptic('selection');
+  Kit.$('go').disabled = guess === 0;
+  rightDots.forEach((d, i) => d.setAttribute('style', `fill:var(--k);opacity:${i < guess ? .55 : .14};pointer-events:none`));
+  if (numR) numR.textContent = guess + '%';
+}
+
+const pic = Kit.$('pic');
+pic.addEventListener('pointerdown', e => {
+  const h = e.target.closest && e.target.closest('[data-i]'); if (!h) return;
+  dragging = true; setGuess(+h.dataset.i + 1);
+});
+pic.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  const h = el && el.closest && el.closest('[data-i]'); if (h) setGuess(+h.dataset.i + 1);
+});
+addEventListener('pointerup', () => dragging = false);
+
+Kit.$('go').addEventListener('click', () => {
+  if (revealed || !guess) return;
+  revealed = true; Kit.haptic('success');
+  Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => {
+    draw();
+    if (!Kit.calm) {
+      gsap.from(rightDots.slice(0, REAL), {opacity: 0, scale: .2, transformOrigin: '50% 50%', transformBox: 'fill-box', stagger: .012, duration: .35, ease: 'back.out(2)'});
+      const o = {v: WILL};
+      gsap.to(o, {v: REAL, duration: 1, ease: 'power2.out', onUpdate: () => numR && (numR.textContent = Math.round(o.v) + '%')});
+      gsap.from('#why', {opacity: 0, duration: .5, delay: .3, clearProps: 'opacity'});
+    }
+  });
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from(leftDots, {opacity: 0, scale: .2, transformOrigin: '50% 50%', transformBox: 'fill-box', stagger: .12, duration: .4, ease: 'back.out(2)'});
+};
+Kit.play.card = async () => {
+  const h = Kit.$('pic').querySelector('[data-i="19"]');
+  h.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}));
+  dispatchEvent(new PointerEvent('pointerup'));
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('go').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

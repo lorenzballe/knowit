@@ -1,0 +1,176 @@
+<!doctype html>
+<!-- slug: food-cchbc-bottle-code -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card · CCHBC 70</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;display:flex}
+#pic{width:100%;height:100%;display:block;touch-action:none;cursor:ew-resize}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="food" data-kind="Guess a number">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">BOTTLE CODE</span></div>
+    <h2 class="q">What does the code CCHBC 70 on a Coca-Cola bottle mean?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">The “70” is a size. Drag the marker to guess how big the bottle is.</p>
+    <div id="why" class="gone">
+      <p class="big">70 means a 2-litre bottle</p>
+      <p class="body">CCHBC is Coca-Cola HBC, the company that bottles the drink. The number after it tells the bottle's size, and 70 is the 2-litre one.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>CCHBC names the bottler; the number names the size: 70 is 2 litres.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Controllate se la vostra prossima bottiglia di Coca-Cola ha la sigla CCHBC 70: ecco cosa significa” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 2, VMIN = 0.25, VMAX = 3, RED = '#d81f26';
+let guess = 0.5, armed = false, locked = false, revealed = false, dragging = false;
+const disp = {v: guess};
+let G = null;
+const fmt = v => (Math.round(v * 100) / 100).toString();
+const BODY = 'M -6 -92 L 6 -92 L 6 -84 C 6 -76 20 -72 20 -58 L 20 -40 C 17 -36 17 -32 20 -28 L 20 -8 C 20 -2 14 0 8 0 L -8 0 C -14 0 -20 -2 -20 -8 L -20 -28 C -17 -32 -17 -36 -20 -40 L -20 -58 C -20 -72 -6 -76 -6 -84 Z';
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  locked = true;
+  const ok = Math.abs(guess - REAL) <= 0.25;
+  Kit.answer({choice: fmt(guess) + ' L', correct: ok, sure: pct});
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${fmt(guess)} L, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+});
+
+function X(v){ return G.x0 + (v - VMIN) / (VMAX - VMIN) * (G.x1 - G.x0); }
+function S(v){ return G.hmax * Math.cbrt(v / VMAX) / 100; }
+
+function bottle(parent, ghost){
+  const g = Kit.mk('g', {}, parent);
+  if (ghost){
+    Kit.mk('path', {d: BODY, fill: 'none', stroke: 'var(--k)', 'stroke-width': 2, 'stroke-dasharray': '5 4', 'vector-effect': 'non-scaling-stroke', opacity: .7}, g);
+    return g;
+  }
+  Kit.mk('path', {d: BODY, fill: '#2a120a', stroke: 'var(--k)', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke'}, g);
+  Kit.mk('rect', {x: -20, y: -55, width: 40, height: 17, fill: RED}, g);
+  Kit.mk('path', {d: 'M -20 -45 C -10 -52 0 -40 20 -49', fill: 'none', stroke: '#fff', 'stroke-width': 2.2}, g);
+  Kit.mk('path', {d: 'M -14 -24 L -14 -10', stroke: '#fff', 'stroke-opacity': .25, 'stroke-width': 3, 'stroke-linecap': 'round'}, g);
+  Kit.mk('path', {d: 'M -13 -66 C -11 -70 -8 -73 -5 -76', fill: 'none', stroke: '#fff', 'stroke-opacity': .3, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, g);
+  Kit.mk('rect', {x: -7.5, y: -101, width: 15, height: 9, rx: 1.5, fill: RED}, g);
+  return g;
+}
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  G = {W, H, f: fs, svg};
+  G.sy = H - 2.4 * fs;
+  G.x0 = W * .08; G.x1 = W * .92;
+  G.by = G.sy - 1.7 * fs;
+  G.top = H * .04;
+  G.hmax = Math.max(40, Math.min(G.by - G.top - fs * .5, W * .95));
+  G.bx = W * .5;
+  // axis
+  Kit.mk('line', {x1: G.x0, x2: G.x1, y1: G.sy, y2: G.sy, stroke: 'var(--k)', 'stroke-width': 2.5, 'stroke-linecap': 'round'}, svg);
+  for (let v = 0.5; v <= 3.001; v += 0.5){
+    Kit.mk('line', {x1: X(v), x2: X(v), y1: G.sy - fs * .35, y2: G.sy + fs * .35, stroke: 'var(--k)', 'stroke-width': 2}, svg);
+    const t = Kit.mk('text', {x: X(v), y: G.sy + fs * 1.7, 'text-anchor': 'middle', fill: 'var(--k)', 'font-family': 'var(--mono)', 'font-size': fs, 'font-weight': 700}, svg);
+    t.textContent = v === 3 ? '3 L' : fmt(v);
+  }
+  G.ghost = bottle(svg, true);
+  G.ghost.style.display = revealed ? '' : 'none';
+  G.real = bottle(svg, false);
+  // callout with the code
+  const cw = fs * 6.6, ch = fs * 1.9;
+  G.cx = W * .96 - cw; G.cy = G.top;
+  G.lead = Kit.mk('line', {stroke: 'var(--k)', 'stroke-width': 1.5}, svg);
+  G.dot = Kit.mk('circle', {r: 3, fill: 'var(--k)'}, svg);
+  Kit.mk('rect', {x: G.cx, y: G.cy, width: cw, height: ch, rx: ch / 2, fill: 'var(--k)'}, svg);
+  const ct = Kit.mk('text', {x: G.cx + cw / 2, y: G.cy + ch * .66, 'text-anchor': 'middle', fill: 'var(--c)', 'font-family': 'var(--mono)', 'font-size': fs * 1.05, 'font-weight': 800}, svg);
+  ct.textContent = 'CCHBC 70';
+  // readout
+  G.r1 = Kit.mk('text', {x: W * .04, y: G.top + fs, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * .9, 'font-weight': 700, 'letter-spacing': '.06em'}, svg);
+  G.r2 = Kit.mk('text', {x: W * .04, y: G.top + fs + Math.min(2.1 * fs, W * .08) * 1.15, fill: 'var(--k)', 'font-family': 'var(--display)', 'font-size': Math.min(2.1 * fs, W * .08), 'font-weight': 800}, svg);
+  G.r3 = Kit.mk('text', {x: W * .04, y: G.top + fs + Math.min(2.1 * fs, W * .08) * 1.15 + fs * 1.5, fill: 'var(--k)', 'font-family': 'var(--body)', 'font-size': fs * .9, 'font-weight': 600, opacity: .8}, svg);
+  // real marker and handle
+  G.realMark = Kit.mk('line', {x1: X(REAL), x2: X(REAL), y1: G.sy - fs * .9, y2: G.sy + fs * .5, stroke: RED, 'stroke-width': 4, 'stroke-linecap': 'round'}, svg);
+  G.realMark.style.display = revealed ? '' : 'none';
+  G.handle = Kit.mk('circle', {cy: G.sy, r: Math.max(fs * .85, 11), fill: 'var(--k)', stroke: 'var(--c)', 'stroke-width': 3}, svg);
+  update();
+}
+
+function place(g, v){ g.setAttribute('transform', `translate(${G.bx},${G.by}) scale(${S(v)})`); }
+
+function update(){
+  if (!G) return;
+  place(G.real, disp.v); place(G.ghost, guess);
+  G.handle.setAttribute('cx', X(guess));
+  const s = S(disp.v), nx = G.bx + 7.5 * s, ny = G.by - 96 * s;
+  G.lead.setAttribute('x1', G.cx + G.f); G.lead.setAttribute('y1', G.cy + G.f * 1.9);
+  G.lead.setAttribute('x2', nx); G.lead.setAttribute('y2', ny);
+  G.dot.setAttribute('cx', nx); G.dot.setAttribute('cy', ny);
+  if (revealed){
+    G.r1.textContent = 'CCHBC 70 IS';
+    G.r2.textContent = fmt(disp.v) + ' L';
+    G.r3.textContent = 'you said ' + fmt(guess) + ' L';
+  } else {
+    G.r1.textContent = 'YOUR GUESS';
+    G.r2.textContent = fmt(guess) + ' L';
+    G.r3.textContent = '';
+  }
+}
+
+function setFrom(e){
+  const r = G.svg.getBoundingClientRect();
+  const x = (e.clientX - r.left) * G.W / r.width;
+  let v = VMIN + (x - G.x0) / (G.x1 - G.x0) * (VMAX - VMIN);
+  v = Math.max(VMIN, Math.min(VMAX, Math.round(v * 20) / 20));
+  if (v !== guess){ guess = v; disp.v = v; Kit.haptic('selection'); update(); }
+}
+
+function reveal(){
+  revealed = true;
+  G.ghost.style.display = ''; G.realMark.style.display = '';
+  if (Kit.calm){ disp.v = REAL; update(); return; }
+  update();
+  gsap.from(G.realMark, {opacity: 0, duration: .4});
+  gsap.to(disp, {v: REAL, duration: 1.2, ease: 'power2.inOut', onUpdate: update, onComplete: () => Kit.haptic('success')});
+}
+
+Kit.$('pic').addEventListener('pointerdown', e => {
+  if (locked || !G) return;
+  dragging = true; setFrom(e);
+  try { Kit.$('pic').setPointerCapture(e.pointerId); } catch (_) {}
+});
+window.addEventListener('pointermove', e => { if (dragging && !locked) setFrom(e); });
+window.addEventListener('pointerup', () => {
+  if (!dragging) return; dragging = false;
+  if (!armed){ armed = true; sure.on(); Kit.$('say').textContent = 'Drag again if you like, then say how sure you are.'; }
+});
+
+Kit.onShow.card = () => { if (!revealed) disp.v = guess; draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from(G.real, {opacity: 0, duration: .5});
+  gsap.fromTo(G.handle, {attr: {r: Math.max(G.f * .85, 11)}}, {attr: {r: Math.max(G.f * 1.15, 14)}, duration: .45, yoyo: true, repeat: 3, ease: 'sine.inOut', delay: .4});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = G.svg.getBoundingClientRect();
+  const cx = r.left + X(1.2) * r.width / G.W, cy = r.top + G.sy * r.height / G.H;
+  const o = {clientX: cx, clientY: cy, bubbles: true, pointerId: 1, isPrimary: true};
+  G.svg.dispatchEvent(new PointerEvent('pointerdown', o));
+  window.dispatchEvent(new PointerEvent('pointerup', o));
+  await wait(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1500);
+};
+Kit.single();
+</script>
+</html>

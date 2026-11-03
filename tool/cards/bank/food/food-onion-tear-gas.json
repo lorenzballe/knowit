@@ -1,0 +1,37 @@
+{
+  "id": "food-onion-tear-gas",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.taste_and_smell",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Why do onion vapors go straight for your eyes when you cut one?",
+  "answer": "Cutting an onion starts a reaction that makes propanethial S-oxide, the \"tear factor\". This molecule is volatile: it evaporates and drifts up to your eyes, which sting and water. Goggles stop it as a physical wall.",
+  "move": "Onion tears travel by air: block the air, keep dry eyes.",
+  "keywords": [
+    "onion",
+    "propanethial s-oxide",
+    "lachrymatory factor",
+    "tears",
+    "goggles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Card asking why onion vapors go straight for your eyes when you cut one. Three options: juice splashes into the eye, a molecule evaporates and floats up to the eye, or the nose smells the onion and tells the eyes to cry. The reader picks one, then rates how sure they are."
+  },
+  "source": "Geopop, “CASA GEOPOP Ep. 2: puntata integrale della prima serata di Geopop” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=GDR2odTE7dM&t=582s",
+  "written": "2026-11-03"
+}

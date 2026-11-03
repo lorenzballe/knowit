@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: technology-smart-road-link -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;color:var(--k);touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.nlab{font-family:var(--body);font-weight:800;letter-spacing:.04em}
+.slab{font-family:var(--body);font-weight:600}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Tap to connect">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SMART ROAD</span></div>
+    <h2 class="q">Why will the Salerno–Reggio Calabria be Italy's first hands-free motorway?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A motorway, a car, a driver and a wireless network"></svg>
+    </div>
+    <p class="say" id="say">Tap the driver, the car and the road to link each one to the network.</p>
+    <div id="why" class="gone">
+      <p class="big">The road talks to the car</p>
+      <p class="body">A last-generation wireless network will link road, user and vehicle, making it Italy's first smart road. The irony: a motorway famous for delays, slowed by money and politics but also by cliffs over the sea and ever-changing rock.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Hands-free needs a road that shares data with the car, not just a smarter car.</div>
+    <div class="foot"><span class="src">Source · Geopop, “i motivi dei tempi biblici della Salerno - Reggio Calabria? Sono anche geologici! #shorts” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const linked = new Set();
+let done = false, carT = 0.12, tweens = [], hits = {};
+const CAR0 = 0.12, CAR1 = 0.93, SENS = 0.76;
+
+function draw(){
+  tweens.forEach(t => t.kill()); tweens = [];
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const m = Math.min(W, H);
+  const fs = Math.max(f * 0.8, 12);
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+
+  // sea and mountains
+  mk('rect', {x: 0, y: H * .9, width: W, height: H * .1, style: 'fill:currentColor;opacity:.13'});
+  mk('path', {d: `M0,${H*.9} L${W*.08},${H*.62} L${W*.2},${H*.74} L${W*.34},${H*.52} L${W*.48},${H*.7} L${W*.62},${H*.54} L${W*.76},${H*.7} L${W*.88},${H*.58} L${W},${H*.78} L${W},${H*.9} Z`, style: 'fill:currentColor;opacity:.12'});
+
+  // road
+  const d = `M${W*.03},${H*.86} C${W*.25},${H*.86} ${W*.25},${H*.64} ${W*.45},${H*.66} S${W*.72},${H*.8} ${W*.97},${H*.7}`;
+  const road = mk('path', {d, style: `fill:none;stroke:currentColor;stroke-width:${m*.05};stroke-linecap:round`});
+  mk('path', {d, style: `fill:none;stroke:var(--c);stroke-width:${m*.007};stroke-dasharray:${m*.03} ${m*.03}`});
+  const L = road.getTotalLength();
+  const at = t => road.getPointAtLength(L * t);
+
+  // place labels
+  const p0 = at(0), pe = at(1);
+  mk('text', {x: p0.x, y: Math.min(H * .97, p0.y + m*.05 + fs), class: 'slab', style: `fill:currentColor;font-size:${fs}px`}).textContent = 'Salerno';
+  mk('text', {x: pe.x, y: pe.y + m*.05 + fs, 'text-anchor': 'end', class: 'slab', style: `fill:currentColor;font-size:${fs}px`}).textContent = 'Reggio C.';
+
+  const hub = {x: W * .5, y: H * .2};
+  const ps = at(SENS);
+  const pos = {
+    user: () => ({x: W * .15, y: H * .42}),
+    car: () => at(carT),
+    road: () => ps
+  };
+
+  // links
+  const lines = {};
+  for (const k of ['user', 'car', 'road']) {
+    const p = pos[k](), on = linked.has(k);
+    lines[k] = mk('line', {x1: hub.x, y1: hub.y, x2: p.x, y2: p.y, style: on
+      ? `stroke:currentColor;stroke-width:${m*.012};stroke-linecap:round`
+      : `stroke:currentColor;stroke-width:${m*.006};stroke-dasharray:${m*.015} ${m*.02};opacity:.35`});
+  }
+
+  // hub: antenna with waves
+  const r = m * .075;
+  mk('circle', {cx: hub.x, cy: hub.y, r, style: 'fill:currentColor'});
+  for (let i = 1; i <= 2; i++) {
+    const rr = r * (.25 + i * .22);
+    mk('path', {d: `M${hub.x - rr},${hub.y - rr*.2} A${rr},${rr} 0 0 1 ${hub.x + rr},${hub.y - rr*.2}`, style: `fill:none;stroke:var(--c);stroke-width:${r*.1};stroke-linecap:round`});
+  }
+  mk('circle', {cx: hub.x, cy: hub.y + r*.12, r: r*.12, style: 'fill:var(--c)'});
+  mk('text', {x: hub.x, y: hub.y + r + fs * 1.15, 'text-anchor': 'middle', class: 'nlab', style: `fill:currentColor;font-size:${fs}px`}).textContent = 'WIRELESS NETWORK';
+  const top = mk('text', {x: hub.x, y: hub.y - r - fs * .6, 'text-anchor': 'middle', class: 'nlab', style: `fill:currentColor;font-size:${fs*1.1}px;opacity:${done ? 1 : 0}`});
+  top.textContent = 'HANDS-FREE';
+
+  // sensor on the road
+  mk('rect', {x: ps.x - m*.022, y: ps.y - m*.022, width: m*.044, height: m*.044, rx: m*.008, style: `fill:var(--c);stroke:currentColor;stroke-width:${m*.008}`});
+  const roadY = ps.y - m*.05 - fs*.3;
+  const roadLab = mk('text', {x: ps.x, y: roadY, 'text-anchor': 'middle', class: 'nlab', style: `fill:currentColor;font-size:${fs}px`});
+  roadLab.textContent = 'ROAD';
+  let roadW = fs * 3;
+  try { roadW = roadLab.getComputedTextLength() || roadW; } catch (e) {}
+
+  // user: a person
+  const pu = pos.user();
+  const ug = mk('g', {});
+  mk('circle', {cx: pu.x, cy: pu.y - m*.03, r: m*.022, style: 'fill:currentColor'}, ug);
+  mk('path', {d: `M${pu.x - m*.04},${pu.y + m*.045} Q${pu.x},${pu.y - m*.025} ${pu.x + m*.04},${pu.y + m*.045} Z`, style: 'fill:currentColor'}, ug);
+  mk('text', {x: pu.x, y: pu.y + m*.045 + fs*1.2, 'text-anchor': 'middle', class: 'nlab', style: `fill:currentColor;font-size:${fs}px`}).textContent = 'USER';
+
+  // car
+  const cw = m * .1, ch = m * .045;
+  const car = mk('g', {});
+  mk('rect', {x: -cw/2, y: -ch, width: cw, height: ch*.7, rx: ch*.2, style: `fill:var(--c);stroke:currentColor;stroke-width:${m*.008}`}, car);
+  mk('path', {d: `M${-cw*.25},${-ch} L${-cw*.15},${-ch*1.45} L${cw*.18},${-ch*1.45} L${cw*.3},${-ch} Z`, style: `fill:var(--c);stroke:currentColor;stroke-width:${m*.008}`}, car);
+  mk('circle', {cx: -cw*.28, cy: -ch*.3, r: ch*.22, style: 'fill:currentColor'}, car);
+  mk('circle', {cx: cw*.28, cy: -ch*.3, r: ch*.22, style: 'fill:currentColor'}, car);
+  const carLab = mk('text', {'text-anchor': 'middle', class: 'nlab', style: `fill:currentColor;font-size:${fs}px`});
+  carLab.textContent = 'VEHICLE';
+  let carW = fs * 5.5;
+  try { carW = carLab.getComputedTextLength() || carW; } catch (e) {}
+  const placeCar = () => {
+    const p = at(carT), q = at(Math.min(1, carT + .01));
+    const a = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
+    car.setAttribute('transform', `translate(${p.x},${p.y}) rotate(${a})`);
+    const lx = Math.max(carW / 2 + 2, Math.min(W - carW / 2 - 2, p.x));
+    let ly = p.y - ch * 1.6 - fs * .6;
+    if (Math.abs(lx - ps.x) < (carW + roadW) / 2 + fs * .5 && Math.abs(ly - roadY) < fs * 1.25) {
+      ly = Math.min(ly, roadY - fs * 1.3);
+    }
+    carLab.setAttribute('x', lx);
+    carLab.setAttribute('y', ly);
+    lines.car.setAttribute('x2', p.x); lines.car.setAttribute('y2', p.y);
+  };
+  placeCar();
+
+  // pulses on linked lines, invitation rings on the others, tap targets
+  for (const k of ['user', 'car', 'road']) {
+    if (linked.has(k)) {
+      for (const dir of [0, 1]) {
+        const dot = mk('circle', {r: m*.014, style: 'fill:var(--c);stroke:currentColor;stroke-width:' + m*.006});
+        const o = {p: 0};
+        const upd = () => { const n = pos[k](), t = dir ? o.p : 1 - o.p;
+          dot.setAttribute('cx', n.x + (hub.x - n.x) * t); dot.setAttribute('cy', n.y + (hub.y - n.y) * t); };
+        upd();
+        if (!Kit.calm) tweens.push(gsap.to(o, {p: 1, duration: 1.1, ease: 'none', repeat: -1, delay: dir * .55, onUpdate: upd}));
+      }
+    } else {
+      const n = pos[k]();
+      const ring = mk('circle', {cx: n.x, cy: n.y - (k === 'user' ? 0 : m*.02), r: m*.07, style: `fill:none;stroke:currentColor;stroke-width:${m*.006}`});
+      if (!Kit.calm) tweens.push(gsap.fromTo(ring, {attr: {r: m*.045}, opacity: .8}, {attr: {r: m*.09}, opacity: 0, duration: 1.2, repeat: -1, ease: 'power1.out'}));
+    }
+    const n = pos[k]();
+    const hit = mk('circle', {cx: n.x, cy: n.y - (k === 'user' ? 0 : m*.02), r: Math.max(m*.09, 26), style: 'fill:#000;fill-opacity:0;cursor:pointer'});
+    hit.addEventListener('click', () => link(k));
+    hits[k] = hit;
+  }
+
+  if (done && carT < CAR1) {
+    const o = {t: carT};
+    tweens.push(gsap.to(o, {t: CAR1, duration: Kit.calm ? .01 : 2.2, ease: 'power1.inOut', onUpdate: () => { carT = o.t; placeCar(); }}));
+    if (!Kit.calm) tweens.push(gsap.from(top, {opacity: 0, y: '+=6', duration: .5}));
+  }
+}
+
+function link(k){
+  if (linked.has(k) || done) return;
+  linked.add(k); Kit.haptic('light');
+  if (linked.size === 3) {
+    done = true; Kit.haptic('success');
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why, #keep', {opacity: 0, y: 8, stagger: .12, duration: .45, ease: 'power3.out'});
+    requestAnimationFrame(draw);
+  } else draw();
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const k of ['user', 'car', 'road']) { hits[k].dispatchEvent(new MouseEvent('click', {bubbles: true})); await w(150); }
+  await w(2700);
+};
+Kit.single();
+</script>
+</html>

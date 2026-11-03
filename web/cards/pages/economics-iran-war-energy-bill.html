@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: economics-iran-war-energy-bill -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pie{width:100%;height:100%;flex:1;min-height:0;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.say,.keep,.q{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="economics" data-kind="Drag · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ENERGY BILLS</span></div>
+    <h2 class="q">What extra cost could the Iran war impose on Italian companies in 2026?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pie" aria-label="Ring of firms' 2025 energy bill with a draggable extra arc"></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the knob round the ring: how much bigger is firms' 2026 energy bill?</p>
+    <div id="why" class="gone"><p class="body">CGIA of Mestre estimates nearly €10 billion more for Italian firms in 2026: €7.2 billion on electricity, €2.6 billion on gas. That is about 13.5% on top of 2025, and it reaches us through the prices of what we buy.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A far-away war lands as about +13.5% on firms' energy bills, then on our shopping.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Guerra in Iran: a noi cosa cambia? Il perché degli aumenti di benzina, gasolio e bollette” (YouTube, 2026).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const TRUE = 13.5, E = 7.2 / 9.8 * TRUE, G = 2.6 / 9.8 * TRUE;
+let pct = 0, dragging = false, armed = false, done = false;
+const rev = {e: 0, g: 0};
+let lay = {cx: 0, cy: 0, rm: 0};
+const svg = Kit.$('pie');
+const ink = a => `color-mix(in srgb,var(--k) ${a}%,transparent)`;
+
+function sect(cx, cy, a0, a1, r0, r1) {
+  a1 = Math.min(a1, 99.99);
+  if (a1 - a0 < 0.05) return '';
+  const p = (a, r) => { const t = a / 100 * 2 * Math.PI - Math.PI / 2; return `${(cx + r * Math.cos(t)).toFixed(2)} ${(cy + r * Math.sin(t)).toFixed(2)}`; };
+  const L = (a1 - a0) > 50 ? 1 : 0;
+  return `M${p(a0, r1)}A${r1} ${r1} 0 ${L} 1 ${p(a1, r1)}L${p(a1, r0)}A${r0} ${r0} 0 ${L} 0 ${p(a0, r0)}Z`;
+}
+
+function draw() {
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 12), lh = fs * 1.6;
+  const legH = lh * 2 + fs * .3;
+  const avail = Math.max(H - legH, 60);
+  const R = Math.max(30, Math.min(W / 2 - fs, avail / 2 - fs * .4));
+  const cx = W / 2, cy = avail / 2;
+  const r0 = R * .82, r1 = R, rm = (r0 + r1) / 2;
+  lay = {cx, cy, rm};
+  // 2025 bill: the inner ring
+  const rb = R * .66, wb = R * .2;
+  Kit.mk('circle', {cx, cy, r: rb, fill: 'none', style: `stroke:${ink(22)};stroke-width:${wb}`}, svg);
+  // outer track
+  Kit.mk('circle', {cx, cy, r: rm, fill: 'none', style: `stroke:${ink(8)};stroke-width:${r1 - r0}`}, svg);
+  // ticks every 10%
+  for (let i = 0; i < 10; i++) {
+    const t = i / 10 * 2 * Math.PI - Math.PI / 2;
+    Kit.mk('line', {x1: cx + (r1 + 2) * Math.cos(t), y1: cy + (r1 + 2) * Math.sin(t), x2: cx + (r1 + fs * .5) * Math.cos(t), y2: cy + (r1 + fs * .5) * Math.sin(t), style: `stroke:${ink(40)};stroke-width:1.5`}, svg);
+  }
+  // guess
+  const gd = sect(cx, cy, 0, pct, r0, r1);
+  if (gd) Kit.mk('path', {d: gd, style: done ? `fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:5 4` : `fill:${ink(70)}`}, svg);
+  // reveal
+  if (done) {
+    const ed = sect(cx, cy, 0, rev.e, r0 - 3, r1 + 3);
+    if (ed) Kit.mk('path', {d: ed, style: 'fill:var(--k)'}, svg);
+    const gd2 = sect(cx, cy, rev.e, rev.e + rev.g, r0 - 3, r1 + 3);
+    if (gd2) Kit.mk('path', {d: gd2, style: `fill:${ink(45)};stroke:var(--k);stroke-width:1.5`}, svg);
+  }
+  // knob
+  if (!done) {
+    const t = pct / 100 * 2 * Math.PI - Math.PI / 2;
+    const kx = cx + rm * Math.cos(t), ky = cy + rm * Math.sin(t);
+    Kit.mk('circle', {cx: kx, cy: ky, r: Math.max(R * .11, 14), style: 'fill:var(--c);stroke:var(--k);stroke-width:3', class: 'knob'}, svg);
+    Kit.mk('circle', {cx: kx, cy: ky, r: Math.max(R * .03, 4), style: 'fill:var(--k)'}, svg);
+  }
+  // centre text
+  const big = done ? `+${(rev.e + rev.g).toFixed(1)}%` : `+${Math.round(pct)}%`;
+  const small = done ? '≈ €10 bn more' : 'on the 2025 bill';
+  const bf = Math.min(fs * 2.2, rb * .55);
+  const t1 = Kit.mk('text', {x: cx, y: cy + bf * .2, 'text-anchor': 'middle', style: `font:800 ${bf}px var(--display);fill:var(--k)`}, svg); t1.textContent = big;
+  const t2 = Kit.mk('text', {x: cx, y: cy + bf * .2 + Math.max(fs * 1.4, bf * .75), 'text-anchor': 'middle', style: `font:600 ${fs}px var(--body);fill:var(--k)`}, svg); t2.textContent = small;
+  // legend
+  const rows = done
+    ? [['var(--k)', 'Electricity  +€7.2 bn', ''], [ink(45), 'Gas  +€2.6 bn', 'var(--k)']]
+    : [[ink(22), '2025 energy bill = full ring', ''], [ink(70), 'Your guess: the 2026 extra', '']];
+  const lx = Math.max(fs * .5, cx - R);
+  rows.forEach((r, i) => {
+    const y = avail + fs * .3 + lh * i + lh * .5;
+    Kit.mk('rect', {x: lx, y: y - fs * .45, width: fs * .9, height: fs * .9, rx: fs * .2, style: `fill:${r[0]};${r[2] ? 'stroke:' + r[2] + ';stroke-width:1.5' : ''}`}, svg);
+    const tx = Kit.mk('text', {x: lx + fs * 1.4, y: y + fs * .35, style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg); tx.textContent = r[1];
+  });
+}
+
+function move(e) {
+  const b = svg.getBoundingClientRect();
+  const dx = e.clientX - b.left - lay.cx, dy = e.clientY - b.top - lay.cy;
+  let a = Math.atan2(dx, -dy); if (a < 0) a += 2 * Math.PI;
+  let p = a / (2 * Math.PI) * 100;
+  if (pct > 75 && p < 25) p = 100;
+  if (pct < 25 && p > 75) p = 0;
+  pct = p; draw();
+  if (!armed && pct > 0.5) { armed = true; sure.on(); }
+}
+svg.addEventListener('pointerdown', e => { if (done) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} move(e); });
+svg.addEventListener('pointermove', e => { if (dragging) move(e); });
+const stop = () => { if (dragging) { dragging = false; Kit.haptic('selection'); } };
+svg.addEventListener('pointerup', stop); svg.addEventListener('pointercancel', stop);
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', s => {
+  if (done) return;
+  done = true;
+  const g = Math.round(pct), ok = Math.abs(pct - TRUE) <= 5;
+  Kit.answer({choice: `+${g}%`, correct: ok, sure: s});
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, s, `+${g}%, ${ok ? 'close' : 'off'} (it's +13.5%)`);
+  Kit.show('keep');
+  requestAnimationFrame(() => {
+    if (Kit.calm) { rev.e = E; rev.g = G; draw(); }
+    else {
+      draw();
+      gsap.timeline({onUpdate: draw})
+        .to(rev, {e: E, duration: .9, ease: 'power2.out', onUpdate: draw})
+        .to(rev, {g: G, duration: .5, ease: 'power2.out', onUpdate: draw});
+    }
+    Kit.haptic('success');
+  });
+});
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pie', {opacity: 0, scale: .94, transformOrigin: '50% 50%', duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const at = p => { const b = svg.getBoundingClientRect(), t = p / 100 * 2 * Math.PI; return {clientX: b.left + lay.cx + lay.rm * Math.sin(t), clientY: b.top + lay.cy - lay.rm * Math.cos(t)}; };
+  const fire = (type, p) => svg.dispatchEvent(new PointerEvent(type, Object.assign({bubbles: true, pointerId: 1, pointerType: 'touch'}, at(p))));
+  fire('pointerdown', 1); await wait(40);
+  for (const p of [5, 10, 15, 20]) { fire('pointermove', p); await wait(30); }
+  fire('pointerup', 20); await wait(100);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await wait(1700);
+};
+Kit.single();
+</script>
+</html>

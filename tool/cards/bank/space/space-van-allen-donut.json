@@ -1,0 +1,38 @@
+{
+  "id": "space-van-allen-donut",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_landing_doubts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Apollo astronauts survive crossing the Van Allen radiation belts?",
+  "answer": "The Van Allen belts are shaped like a donut around Earth's middle, not a shell all around it. Apollo flew out across their thin outer edge, so it spent little time in strong radiation. Going straight through the middle would have picked up far more radiation.",
+  "move": "The belts are a ring, not a wall: you can skirt the thick part.",
+  "keywords": [
+    "van allen belts",
+    "apollo",
+    "earth",
+    "radiation",
+    "trajectory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A 3D diagram of Earth with two donut-shaped radiation belts around its middle and a spacecraft path skimming the thin outer edge. Tap a route to fly it and watch its radiation bar fill.",
+    "ground": "#0b1026"
+  },
+  "source": "Geopop, “L’uomo è mai stato sulla Luna? Sì, ecco cosa dice la scienza in merito alle teorie negazioniste” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=FeVJxB41oNY&t=338s",
+  "written": "2026-11-03"
+}

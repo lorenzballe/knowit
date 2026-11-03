@@ -1,0 +1,37 @@
+{
+  "id": "medicine-isolated-island-illness",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.pandemics",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "How does extreme isolation affect health on Tristan da Cunha?",
+  "answer": "Isolation brings problems, and first of all some illnesses are more widespread than normal. With so little contact with the outside world, diseases spread more easily on Tristan da Cunha than in mainland societies. So being cut off does not mean fewer illnesses; the correct choice is that some illnesses are more common than normal.",
+  "move": "Being cut off is no shield: some illnesses become more common.",
+  "keywords": [
+    "tristan-da-cunha",
+    "isolation",
+    "infectious-disease",
+    "remote-island",
+    "disease-spread"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking how extreme isolation affects health on Tristan da Cunha. Options: fewer illnesses, some illnesses more common than normal, no real difference, or more common than normal. The reader picks an answer and states how sure they are."
+  },
+  "source": "Geopop, “L'insediamento umano più isolato del mondo è su un'isola sperduta nell'Atlantico: Tristan da Cunha” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=c-OafbhvBZM&t=186s",
+  "written": "2026-11-03"
+}

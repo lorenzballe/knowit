@@ -1,0 +1,37 @@
+{
+  "id": "technology-graphene-bionic-limbs",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How will graphene improve prosthetic limbs?",
+  "answer": "Graphene sensors built into the amputated limb pick up the nerve's signals. So the person controls the direction and strength of each movement, almost like a natural limb.",
+  "move": "Graphene nerve sensors let a prosthesis obey the body's own commands.",
+  "keywords": [
+    "graphene",
+    "prosthetic_limb",
+    "nerve_sensors",
+    "amputees",
+    "neural_interface"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A card asking how graphene will improve prosthetic limbs. A draggable dot travels from brain to hand through four stages: think, nerve, sensor, move. The reader drags it to follow one command."
+  },
+  "source": "Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)",
+  "reference": "https://www.youtube.com/watch?v=7xDUOqecmRM&t=167s",
+  "written": "2026-11-03"
+}

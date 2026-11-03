@@ -1,0 +1,37 @@
+{
+  "id": "human_body-thrown-from-car",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a MotoGP crash compare to being thrown from a car?",
+  "answer": "Valentino Rossi describes a big MotoGP crash as like being thrown off a car roof at 150 km/h, with the roof open and the rider in riding leathers. The body leaves at the car's speed, and only the road can stop it. The reader can tap to raise the car's speed 30 km/h at a time and compare.",
+  "move": "A MotoGP crash is your body meeting the road at motorway speed.",
+  "keywords": [
+    "valentino_rossi",
+    "motogp",
+    "motorway",
+    "car_roof",
+    "crash_speed"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive card asking how a MotoGP crash compares to being thrown from a car. A tappable car speed control rises 30 km/h at a time, showing that being thrown off a car roof at 150 km/h is the comparison."
+  },
+  "source": "Geopop, “Intervista integrale a Valentino Rossi: il dio della MotoGP in esclusiva al Pop Corner” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=9AvpiROfyUM&t=1382s",
+  "written": "2026-11-03"
+}

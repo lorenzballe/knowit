@@ -1,0 +1,37 @@
+{
+  "id": "science-decoherence-branching",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the air turn one quantum wave into separate worlds?",
+  "answer": "Every air molecule or photon that bumps the atom carries off a record of it: one version for \"decayed\", one for \"not decayed\". Once the environment holds both records, the two versions can no longer interfere. The wave function of the universe has branched into two slightly different copies.",
+  "move": "Touching the environment entangles a superposition with it, and that splits the worlds.",
+  "keywords": [
+    "decoherence",
+    "superposition",
+    "photons",
+    "air-molecules",
+    "parallel-universes"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A quantum wave drawn as one ripple, with a slider that lets air molecules and photons hit an atom. A counter reads Hits 0 of 30 and Interference 100%. The question asks how the air turns one quantum wave into separate worlds."
+  },
+  "source": "Veritasium, “Why Parallel Universes Are Probably Real” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=kTXTPe3wahc&t=578s",
+  "written": "2026-11-03"
+}

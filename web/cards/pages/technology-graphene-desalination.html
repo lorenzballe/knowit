@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- slug: technology-graphene-desalination -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#viz{position:relative;flex:1;min-height:0}
+#viz canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#legend{display:flex;flex-wrap:wrap;gap:.4cqh 4cqw;justify-content:center;font:600 max(1.6cqh,12px)/1.3 var(--body);color:var(--k)}
+#legend i{display:inline-block;width:max(1.4cqh,10px);height:max(1.4cqh,10px);border-radius:50%;vertical-align:-.15em;margin-right:.4em}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.85cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CLEAN WATER</span></div>
+    <h2 class="q">How can graphene be used for water purification?</h2>
+    <div class="stagebox" id="stage">
+      <div id="viz"><canvas id="cv"></canvas></div>
+      <div id="legend"><span><i style="background:#7fd3ff"></i>water</span><span><i style="background:#ffb547"></i><i style="background:#ff6b8b"></i>salt ions</span><span id="cnt" class="gone"></span></div>
+      <div id="opts">
+        <button class="opt" data-i="0">A graphene oxide membrane lets nothing through</button>
+        <button class="opt" data-i="1">A graphene oxide membrane lets water through and holds salt back</button>
+        <button class="opt" data-i="2">Graphene soaks up the salt like a sponge</button>
+      </div>
+      <div id="why" class="gone"><p class="big">It's a sieve for seawater</p><p class="body">Water molecules slip through a graphene oxide membrane; salt ions stay behind. British researchers used one to desalinate seawater, and the process proved fast and low-cost.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick what graphene does to seawater.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A graphene oxide membrane can turn seawater into fresh water, fast and cheap.</div>
+    <div class="foot"><span class="src">Source · Geopop, “GRAFENE: il materiale del futuro” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1;
+const st = {open: 0, passed: 0, salt: 0};
+const P = [];
+for (let i = 0; i < 50; i++) {
+  const w = i < 36, a = Kit.rnd() * 6.28, s = .0025 + Kit.rnd() * .002;
+  P.push({t: w ? 'w' : (i % 2 ? 'na' : 'cl'), x: .06 + Kit.rnd() * .38, y: .2 + Kit.rnd() * .6,
+    vx: Math.cos(a) * s, vy: Math.sin(a) * s, side: 'L', a: Kit.rnd() * 6.28, m: w ? 1 : (i % 2 ? 1.25 : 1.45)});
+}
+let G = null;
+const MT = .028;
+function step() {
+  if (!G) return;
+  const {W, H, top, bot, r} = G, dr = gsap.ticker.deltaRatio(), asp = W / H, mL = .5 - MT, mR = .5 + MT;
+  for (const p of P) {
+    p.vx += (Kit.rnd() - .5) * .0003; p.vy += (Kit.rnd() - .5) * .0003;
+    if (p.t === 'w' && st.open > .5 && p.side === 'L') p.vx += .00009 * dr;
+    const sp = Math.hypot(p.vx, p.vy), mx = .0055;
+    if (sp > mx) { p.vx *= mx / sp; p.vy *= mx / sp; }
+    if (sp < .0015) { p.vx *= 1.1; p.vy *= 1.1; }
+    p.x += p.vx * dr; p.y += p.vy * dr * asp; p.a += .03 * dr;
+    const rx = r * p.m / W, ry = r * p.m / H;
+    if (p.y < top + ry) { p.y = top + ry; p.vy = Math.abs(p.vy); }
+    if (p.y > bot - ry) { p.y = bot - ry; p.vy = -Math.abs(p.vy); }
+    if (p.x < rx) { p.x = rx; p.vx = Math.abs(p.vx); }
+    if (p.x > 1 - rx) { p.x = 1 - rx; p.vx = -Math.abs(p.vx); }
+    if (p.side === 'L' && p.x + rx > mL) {
+      if (p.t === 'w' && st.open > .5) { p.side = 'M'; p.vx = Math.max(p.vx, .0015) * .5; }
+      else { p.x = mL - rx; p.vx = -Math.abs(p.vx); }
+    } else if (p.side === 'M') {
+      p.vx = Math.max(p.vx, .0012);
+      if (p.x - rx > mR) { p.side = 'R'; st.passed++; Kit.$('cnt').textContent = `through: ${st.passed} water · 0 salt`; }
+    } else if (p.side === 'R' && p.x - rx < mR) { p.x = mR + rx; p.vx = Math.abs(p.vx); }
+  }
+  draw();
+}
+function draw() {
+  const {x, W, H, top, bot, r, fs, font} = G, mL = (.5 - MT) * W, mR = (.5 + MT) * W;
+  x.clearRect(0, 0, W, H);
+  x.save();
+  x.beginPath(); x.roundRect ? x.roundRect(0, 0, W, H, Math.min(W, H) * .05) : x.rect(0, 0, W, H); x.clip();
+  x.fillStyle = '#0b2a4a'; x.fillRect(0, 0, W / 2, H);
+  x.fillStyle = '#0f5578'; x.fillRect(W / 2, 0, W / 2, H);
+  // membrane: stacked graphene oxide flakes
+  x.fillStyle = '#141a20'; x.fillRect(mL, 0, mR - mL, H);
+  x.strokeStyle = `rgba(${Math.round(200 + 55 * st.open)},${Math.round(210 + 30 * st.open)},220,.9)`;
+  x.lineWidth = Math.max(1.5, r * .22);
+  const gap = r * .9;
+  let k = 0;
+  for (let y = top * H; y < bot * H; y += gap, k++) {
+    const off = (k % 2) * (mR - mL) * .35;
+    x.beginPath(); x.moveTo(mL + off, y); x.lineTo(mL + off + (mR - mL) * .6, y); x.stroke();
+  }
+  for (const p of P) {
+    const px = p.x * W, py = p.y * H;
+    if (p.t === 'w') {
+      x.fillStyle = '#ffffff';
+      for (const d of [-.9, .9]) { x.beginPath(); x.arc(px + Math.cos(p.a + d) * r * .95, py + Math.sin(p.a + d) * r * .95, r * .5, 0, 6.29); x.fill(); }
+      x.fillStyle = '#7fd3ff'; x.beginPath(); x.arc(px, py, r, 0, 6.29); x.fill();
+    } else {
+      const rr = r * p.m;
+      x.fillStyle = p.t === 'na' ? '#ffb547' : '#ff6b8b';
+      x.beginPath(); x.arc(px, py, rr, 0, 6.29); x.fill();
+      x.strokeStyle = '#1a1a1a'; x.lineWidth = Math.max(1.5, rr * .22);
+      x.beginPath(); x.moveTo(px - rr * .45, py); x.lineTo(px + rr * .45, py);
+      if (p.t === 'na') { x.moveTo(px, py - rr * .45); x.lineTo(px, py + rr * .45); }
+      x.stroke();
+    }
+  }
+  x.fillStyle = '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = `800 ${fs}px ${font}`;
+  x.fillText('SEAWATER', W * .25, top * H / 2);
+  x.fillText('FRESH WATER', W * .75, top * H / 2);
+  x.font = `600 ${fs * .9}px ${font}`;
+  x.fillText('graphene oxide membrane', W / 2, (bot + (1 - bot) / 2) * H);
+  x.restore();
+}
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why'); Kit.show('cnt');
+  Kit.$('cnt').textContent = 'through: 0 water · 0 salt';
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: it lets water through, not salt`);
+  Kit.show('keep');
+  gsap.to(st, {open: 1, duration: .6, ease: 'power2.out'});
+  Kit.haptic('success');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => {
+  const c = Kit.fitCanvas(Kit.$('cv'));
+  const fs = Math.max(12, Math.min(c.H * .065, c.W * .045));
+  const font = getComputedStyle(document.body).getPropertyValue('--body') || 'sans-serif';
+  const top = Math.min(.3, fs * 2.2 / c.H), bot = 1 - top;
+  const r = Math.max(3.5, Math.min(c.W * .016, c.H * .03));
+  G = {x: c.x, W: c.W, H: c.H, top, bot, r, fs, font};
+  for (const p of P) p.y = Math.min(Math.max(p.y, top + .03), bot - .03);
+  draw();
+};
+let ticking = false;
+Kit.onEnter.card = () => {
+  if (!ticking) { ticking = true; gsap.ticker.add(step); }
+  if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  if (!ticking) { ticking = true; gsap.ticker.add(step); }
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2500));
+};
+Kit.single();
+</script>
+</html>

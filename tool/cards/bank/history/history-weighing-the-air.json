@@ -1,0 +1,38 @@
+{
+  "id": "history-weighing-the-air",
+  "topic": "history",
+  "genre": "history.learn_from_the_past",
+  "strand": "history.learn_from_the_past.who_wrote_it",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "How did climbing a mountain show that air has weight?",
+  "answer": "Pascal's bet was that if air has weight, a summit has less air above it, so the mercury should sink. The source is F. Périer's letter to B. Pascal of 22 September 1648. The point to keep is that air pressure is the weight of the air overhead.",
+  "move": "Air pressure is the weight of the air overhead, so crisp bags puff up high.",
+  "keywords": [
+    "pascal",
+    "perier",
+    "barometer",
+    "air pressure",
+    "mountain"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A draggable marker asks the reader to guess the mercury level at a mountain's summit, to test Pascal's idea that air has weight. The page shows the mercury sinking as a summit has less air above it.",
+    "graded": false
+  },
+  "source": "Veritasium, “World's Longest Straw” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=HUmZrtiXDik",
+  "written": "2026-11-03"
+}

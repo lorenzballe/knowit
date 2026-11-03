@@ -1,0 +1,36 @@
+{
+  "id": "medicine-mri-field-strength",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much stronger is an MRI's magnetic field than Earth's?",
+  "answer": "Inside an MRI you sit in a field 100,000 times more intense than Earth's. That is why it can pull metal objects with dangerous force. The scan itself is safe and non-invasive.",
+  "move": "An MRI is 100,000 Earths of magnetism: leave metal outside.",
+  "keywords": [
+    "mri",
+    "earth",
+    "magnetism",
+    "metal"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A grid of squares, each one equal to Earth's magnetic field, asks how much stronger an MRI's magnetic field is than Earth's. A ×10 button multiplies the field, and the squares grow to show the increase."
+  },
+  "source": "Geopop, “Cosa succede al nostro corpo durante una risonanza magnetica?” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=WS2LAuwpFzM&t=33s",
+  "written": "2026-11-03"
+}

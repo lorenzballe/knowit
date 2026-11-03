@@ -1,0 +1,38 @@
+{
+  "id": "history-directors-light-sentence",
+  "topic": "history",
+  "genre": "history.ordinary_people",
+  "strand": "history.ordinary_people.workers",
+  "kind": "page",
+  "difficulty": "hard",
+  "principle": "none",
+  "question": "The camp's director stole millions in subsidies. How long was his prison sentence?",
+  "answer": "The camp's director was jailed only for embezzling millions of dollars in government subsidies, and his sentence was just 2.5 years. Well connected to the state's top officials, he was never made to answer for the illegal confinement and human rights violations.",
+  "move": "He was punished for the stolen money, never for the people locked up.",
+  "keywords": [
+    "squid game",
+    "south korea",
+    "embezzlement",
+    "subsidies",
+    "human rights"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A slider scale in years for guessing how long the camp director's prison sentence was for embezzling government subsidies. The reader drags a marker to their estimate, and the page reveals the sentence was 2.5 years.",
+    "graded": false
+  },
+  "source": "Geopop, “Squid Game si ispira a una storia vera? Il tragico caso del campo di concentramento in Corea del Sud” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=_pZ1C8ag1YM&t=402s",
+  "written": "2026-11-03"
+}

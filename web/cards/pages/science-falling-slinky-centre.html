@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-falling-slinky-centre -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;cursor:pointer}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:700 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.75cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CENTRE OF MASS</span></div>
+    <h2 class="q">Drop a hanging slinky. When does its centre of mass start falling?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The instant it's let go</button>
+        <button class="opt" data-i="1">Only when the bottom starts to fall</button>
+        <button class="opt" data-i="2">After a short delay, as the tension eases</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The instant it's let go</p><p class="body">Gravity is the only outside force on the slinky, and it was pulling all along; the hand was cancelling it. Let go and the red centre of mass drops on a curve at once, even while the bottom hangs still.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then say how sure you are. The red dot is the centre of mass.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>For the centre of mass, only outside forces count; inside ones cancel.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Does a Falling Slinky Defy Gravity?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0;
+let pick = -1, answered = false;
+
+/* ---- simulate a slinky: N coils, springs that only pull, coils that stack ---- */
+const N = 40, D = 0.005, g = 1;
+const K = g * N * (N - 1) / 2 / (1 - (N - 1) * D);
+const T0 = -0.25, T1 = 1.10, STEP = 0.01;
+const frames = [];
+(function sim(){
+  const y = new Float64Array(N), v = new Float64Array(N), f = new Float64Array(N);
+  for (let i = 0; i < N - 1; i++) y[i + 1] = y[i] + D + (N - 1 - i) * g / K;
+  const snap = t => { let s = 0; for (let i = 0; i < N; i++) s += y[i];
+    frames.push({t, ys: Array.from(y), cm: s / N, top: y[0], bot: y[N - 1]}); };
+  for (let t = T0; t < -1e-9; t += STEP) snap(t);
+  snap(0);
+  const dt = 0.0005, per = Math.round(STEP / dt);
+  let n = 0;
+  for (let t = 0; t < T1 - 1e-9;) {
+    f.fill(g);
+    for (let i = 0; i < N - 1; i++) { const s = y[i + 1] - y[i] - D; if (s > 0) { const T = K * s; f[i] += T; f[i + 1] -= T; } }
+    for (let i = 0; i < N; i++) { v[i] += f[i] * dt; y[i] += v[i] * dt; }
+    for (let pass = 0; pass < 60; pass++) {
+      let hit = false;
+      for (let i = 0; i < N - 1; i++) if (y[i + 1] - y[i] < D - 1e-12) {
+        const vm = (v[i] + v[i + 1]) / 2; v[i] = v[i + 1] = vm;
+        const m = (y[i] + y[i + 1]) / 2; y[i] = m - D / 2; y[i + 1] = m + D / 2; hit = true;
+      }
+      if (!hit) break;
+    }
+    t += dt; n++;
+    if (n % per === 0) snap(+(t).toFixed(4));
+  }
+})();
+const YMAX = Math.max(...frames.map(fr => fr.bot)) + 0.02;
+const P0 = (frames.findIndex(fr => fr.t >= 0)) / (frames.length - 1);
+const S = {p: P0};
+let G = null, tw = null;
+
+const RED = '#e3342f';
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * 0.85, 12);
+  const legH = fs * 1.4;
+  const yT = legH + fs * 1.6, yB = H - fs * 2;
+  const s = (yB - yT) / YMAX;
+  const cx = W * 0.15, rx = W * 0.095;
+  const xg0 = W * 0.31, xg1 = W * 0.97;
+  const tx = t => xg0 + (t - T0) / (T1 - T0) * (xg1 - xg0);
+  const Y = v => yT + v * s;
+  const mk = (t, a, p) => Kit.mk(t, a, p || svg);
+  // legend
+  const leg = [['top', 'var(--muted)', W * 0.02], ['centre of mass', RED, W * 0.24], ['bottom', 'var(--k)', W * 0.70]];
+  leg.forEach(([txt, col, x]) => {
+    mk('line', {x1: x, x2: x + fs * 1.1, y1: legH * 0.6, y2: legH * 0.6, style: `stroke:${col};stroke-width:${Math.max(2, fs * 0.22)};stroke-linecap:round`});
+    mk('text', {x: x + fs * 1.5, y: legH * 0.6 + fs * 0.35, style: `font:700 ${fs}px var(--body);fill:${col === 'var(--muted)' ? 'var(--k)' : col}`}).textContent = txt;
+  });
+  // axes
+  mk('line', {x1: xg0, x2: xg1, y1: yB + fs * 0.3, y2: yB + fs * 0.3, style: 'stroke:var(--k);stroke-opacity:.35;stroke-width:1.5'});
+  mk('line', {x1: tx(0), x2: tx(0), y1: yT - fs * 0.6, y2: yB + fs * 0.3, style: 'stroke:var(--k);stroke-opacity:.45;stroke-width:1.5;stroke-dasharray:4 4'});
+  mk('text', {x: tx(0), y: yB + fs * 1.6, 'text-anchor': 'middle', style: `font:700 ${fs}px var(--body);fill:var(--k)`}).textContent = 'let go';
+  mk('text', {x: xg1, y: yB + fs * 1.6, 'text-anchor': 'end', style: `font:600 ${fs}px var(--body);fill:var(--k);opacity:.7`}).textContent = 'time →';
+  // traces
+  const pth = (col, w, dash) => mk('path', {fill: 'none', style: `stroke:${col};stroke-width:${w};stroke-linecap:round;stroke-linejoin:round${dash ? ';stroke-dasharray:' + dash : ''}`});
+  const pTop = pth('var(--muted)', Math.max(2, fs * 0.18));
+  const pBot = pth('var(--k)', Math.max(2.5, fs * 0.24));
+  const guide = mk('line', {style: `stroke:${RED};stroke-width:1.5;stroke-dasharray:3 4;opacity:.7`});
+  const pCm = pth(RED, Math.max(3, fs * 0.3));
+  // hand
+  const hand = mk('rect', {x: cx - rx * 0.7, y: yT - fs * 1.3, width: rx * 1.4, height: fs * 1.0, rx: fs * 0.4, style: 'fill:var(--k)'});
+  // coils
+  const coils = [];
+  for (let i = 0; i < N; i++) coils.push(mk('ellipse', {cx, rx, ry: Math.max(2, fs * 0.22), fill: 'none', style: `stroke:var(--k);stroke-width:${Math.max(1.4, fs * 0.13)}`}));
+  const dot = mk('circle', {cx, r: Math.max(5, fs * 0.5), style: `fill:${RED};stroke:var(--c);stroke-width:2`});
+  const gdot = mk('circle', {r: Math.max(4, fs * 0.38), style: `fill:${RED}`});
+  G = {Y, tx, pTop, pBot, pCm, guide, hand, coils, dot, gdot, cx, rx};
+  render();
+};
+
+function render(){
+  if (!G) return;
+  const i = Math.max(0, Math.min(frames.length - 1, Math.round(S.p * (frames.length - 1))));
+  const fr = frames[i];
+  fr.ys.forEach((v, j) => G.coils[j].setAttribute('cy', G.Y(v)));
+  G.dot.setAttribute('cy', G.Y(fr.cm));
+  G.hand.style.opacity = fr.t <= 0 ? 1 : 0;
+  const line = key => { let d = ''; for (let j = 0; j <= i; j++) d += (j ? 'L' : 'M') + G.tx(frames[j].t).toFixed(1) + ' ' + G.Y(frames[j][key]).toFixed(1); return d; };
+  G.pTop.setAttribute('d', line('top'));
+  G.pBot.setAttribute('d', line('bot'));
+  G.pCm.setAttribute('d', line('cm'));
+  const gx = G.tx(fr.t), gy = G.Y(fr.cm);
+  G.gdot.setAttribute('cx', gx); G.gdot.setAttribute('cy', gy);
+  G.guide.setAttribute('x1', G.cx + G.rx * 0.2); G.guide.setAttribute('x2', gx);
+  G.guide.setAttribute('y1', gy); G.guide.setAttribute('y2', gy);
+}
+
+function drop(){
+  if (tw) tw.kill();
+  if (Kit.calm) { S.p = 1; render(); return; }
+  S.p = 0; render();
+  tw = gsap.to(S, {p: 1, duration: 5, ease: 'none', onUpdate: render});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  answered = true;
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  drop();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('pic').addEventListener('click', () => { if (answered) { Kit.haptic('light'); drop(); } });
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  gsap.from('#pic ellipse', {opacity: 0, duration: .5, stagger: .01, ease: 'power2.out'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tw) tw.progress(1); S.p = 1; render();
+  await new Promise(r => setTimeout(r, 300));
+};
+Kit.single();
+</script>
+</html>

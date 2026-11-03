@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: human_body-one-strong-beer -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#pic text{fill:var(--k);font-family:var(--body);font-weight:700}
+#ctl{display:flex;gap:3cqw;justify-content:center}
+.btn{font:800 max(2.4cqh,15px)/1.1 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer;touch-action:manipulation}
+.btn.plus{background:var(--k);color:var(--c);box-shadow:none;flex:1;max-width:60cqw}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,18px)/1.15 var(--display);overflow-wrap:break-word}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+.siren{opacity:.18}
+.siren.on{animation:bl .5s steps(1) infinite}
+.siren.on.b{animation-delay:.25s}
+@keyframes bl{0%{opacity:1}50%{opacity:.15}}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Count · compare">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ONE BEER</span></div>
+    <h2 class="q">Can a single 8.6% beer get you arrested for driving in Italy?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Breathalyzer and blood alcohol scale with the 0.5 g/L limit"></svg>
+      <div id="ctl">
+        <button class="btn" id="minus" aria-label="minus 0.1">− 0.1</button>
+        <button class="btn plus" id="plus" aria-label="plus 0.1">+ 0.1 g/L</button>
+      </div>
+      <div id="why" class="gone"><p class="big">1.09 g/L: more than double the limit</p><p class="body">One 44 cl beer at 8.6%, and 15 minutes later the professional breathalyzer read 1.09 g/L. The limit is 0.5, so getting behind the wheel then could mean arrest.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap + to guess the reading 15 minutes after one 44 cl beer.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One strong beer can be enough to make driving illegal.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Abbiamo bevuto una birra da 8,6% e fatto l'alcol test con un etilometro professionale ogni 10 minuti” (YouTube, 2023).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const REAL = 1.09, LIMIT = 0.5, MAX = 1.5;
+const st = {g: 0, real: 0, tapped: false, revealed: false, lit: false, done: false};
+let els = {};
+
+function render(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(13, f);
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  // breathalyzer
+  const dx = W * .05, dw = W * .34, top = H * .12, bot = H * .97;
+  const r = Math.max(4, Math.min(H * .035, dw * .1));
+  mk('rect', {x: dx + dw * .38, y: H * .03, width: dw * .24, height: top - H * .03 + 6, rx: 4, fill: 'var(--k)', opacity: .7});
+  els.s1 = mk('circle', {cx: dx + dw * .17, cy: H * .06, r, fill: '#e3262b', class: 'siren r' + (st.lit ? ' on' : '')});
+  els.s2 = mk('circle', {cx: dx + dw * .83, cy: H * .06, r, fill: '#2a6cf0', class: 'siren b' + (st.lit ? ' on' : '')});
+  mk('rect', {x: dx, y: top, width: dw, height: bot - top, rx: dw * .12, fill: 'var(--k)'});
+  const sx = dx + dw * .1, sw = dw * .8, sy = top + H * .05, sh = Math.min(H * .17, sw * .55);
+  mk('rect', {x: sx, y: sy, width: sw, height: sh, rx: 6, fill: '#d7f0c9'});
+  els.dig = mk('text', {x: sx + sw / 2, y: sy + sh * .7, 'text-anchor': 'middle', style: `font-family:var(--mono);font-size:${Math.max(13, Math.min(sh * .55, sw * .26))}px;fill:#10241a`});
+  const ul = mk('text', {x: dx + dw / 2, y: sy + sh + fs * 1.3, 'text-anchor': 'middle', style: `font-size:${fs * .9}px;fill:var(--c)`}); ul.textContent = 'g/L';
+  // beer glass
+  const gy = sy + sh + fs * 2.2, gb = bot - fs * 2;
+  if (gb - gy > fs * 2) {
+    const gw = dw * .52, gx = dx + dw / 2, gh = gb - gy;
+    mk('path', {d: `M${gx - gw / 2},${gy} L${gx + gw / 2},${gy} L${gx + gw * .38},${gb} L${gx - gw * .38},${gb} Z`, fill: '#f2a516'});
+    mk('rect', {x: gx - gw / 2, y: gy - gh * .06, width: gw, height: gh * .16, rx: gh * .06, fill: '#fff8e6'});
+    const bt = mk('text', {x: gx, y: gy + gh * .62, 'text-anchor': 'middle', style: `font-size:${fs}px;fill:#3a2200`}); bt.textContent = '8.6%';
+    const cl = mk('text', {x: gx, y: bot - fs * .6, 'text-anchor': 'middle', style: `font-size:${fs * .85}px;fill:var(--c)`}); cl.textContent = '44 cl';
+  }
+  // scale
+  const kx = W * .60, kw = W * .09, kt = H * .06, kb = H * .95;
+  const y = v => kb - (v / MAX) * (kb - kt);
+  els.y = y; els.kx = kx; els.kw = kw; els.kb = kb; els.fs = fs;
+  mk('rect', {x: kx, y: kt, width: kw, height: kb - kt, rx: 6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)', stroke: 'var(--k)', 'stroke-width': 2});
+  mk('rect', {x: kx, y: kt, width: kw, height: y(LIMIT) - kt, fill: '#e3262b', opacity: .2});
+  els.fill = mk('rect', {x: kx + 3, width: kw - 6, rx: 4});
+  mk('line', {x1: kx - 6, x2: kx + kw + 6, y1: y(LIMIT), y2: y(LIMIT), stroke: '#c81e1e', 'stroke-width': 3, 'stroke-dasharray': '6 4'});
+  const ll = mk('text', {x: kx + kw + 10, y: y(LIMIT) + fs * .35, style: `font-size:${fs}px;fill:#c81e1e`}); ll.textContent = 'limit 0.5';
+  const zl = mk('text', {x: kx + kw + 10, y: kb, style: `font-size:${fs * .9}px`}); zl.textContent = '0';
+  els.mlab = mk('text', {x: kx + kw + 10, style: `font-size:${fs * 1.1}px;font-weight:800`});
+  els.marker = mk('path', {fill: 'var(--k)'});
+  els.glab = mk('text', {x: kx - 16, 'text-anchor': 'end', style: `font-size:${fs}px`});
+  update();
+}
+
+function update(){
+  if (!els.y) return;
+  const {y, kx, kw, kb, fs} = els;
+  const over = st.real > LIMIT;
+  const top = y(st.real);
+  els.fill.setAttribute('y', top); els.fill.setAttribute('height', Math.max(0, kb - top - 2));
+  els.fill.setAttribute('fill', over ? '#e3262b' : 'var(--k)');
+  if (st.revealed) { els.dig.textContent = st.real.toFixed(2); els.dig.setAttribute('opacity', 1); }
+  else { els.dig.textContent = st.g.toFixed(2); els.dig.setAttribute('opacity', st.tapped ? .5 : .3); }
+  els.mlab.textContent = st.done ? '1.09 measured' : '';
+  els.mlab.setAttribute('y', y(REAL) + fs * .4);
+  els.mlab.setAttribute('style', `font-size:${fs * 1.05}px;font-weight:800;fill:#c81e1e`);
+  const gy = y(st.g), m = fs * .55;
+  els.marker.setAttribute('d', `M${kx - 4},${gy} L${kx - 4 - m * 1.4},${gy - m} L${kx - 4 - m * 1.4},${gy + m} Z`);
+  els.glab.setAttribute('y', gy + fs * .35);
+  els.glab.setAttribute('x', kx - 10 - m * 1.4);
+  els.glab.textContent = st.tapped ? 'you ' + st.g.toFixed(1) : 'you ?';
+}
+
+function reveal(){
+  st.revealed = true;
+  const finish = () => {
+    st.real = REAL; st.done = true; st.lit = true;
+    [els.s1, els.s2].forEach(s => s && s.classList.add('on'));
+    update(); Kit.haptic('success');
+    Kit.show('why'); Kit.show('keep');
+    if (!Kit.calm) gsap.from('#why > *', {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+  };
+  if (Kit.calm) { finish(); return; }
+  gsap.to(st, {real: REAL, duration: 1.6, ease: 'power2.out', onUpdate: update, onComplete: finish});
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = st.g > LIMIT;
+  Kit.answer({choice: st.g.toFixed(1) + ' g/L', correct: ok, sure: pct});
+  Kit.hide('ctl'); Kit.hide('say');
+  sure.grade(ok, pct, `You said ${st.g.toFixed(1)} g/L, ${ok ? 'over the limit: right' : 'under the limit: wrong'}`);
+  reveal();
+});
+
+function step(d){
+  if (st.revealed) return;
+  st.g = Math.min(MAX, Math.max(0, Math.round((st.g + d) * 10) / 10));
+  if (!st.tapped) { st.tapped = true; sure.on(); }
+  Kit.haptic('selection'); update();
+}
+Kit.$('plus').addEventListener('click', () => step(.1));
+Kit.$('minus').addEventListener('click', () => step(-.1));
+
+Kit.onShow.card = render;
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 12, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  for (let i = 0; i < 8; i++) { Kit.$('plus').click(); await new Promise(r => setTimeout(r, 40)); }
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2400));
+};
+Kit.single();
+</script>
+</html>

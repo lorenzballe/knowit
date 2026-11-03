@@ -1,0 +1,37 @@
+{
+  "id": "history-wet-sand-sled",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did wetting the sand help the Egyptians drag huge stones?",
+  "answer": "A heavy stone on a sled makes a lot of friction on dry sand. Experiments show that wetting the sand in front of the sled cuts the pulling force needed by half. That means the same stone needs half the crew.",
+  "move": "Water poured in front of the sled halved the pull.",
+  "keywords": [
+    "pyramids",
+    "egyptians",
+    "sled",
+    "wet sand",
+    "friction"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Question card asking how wetting sand helped Egyptians drag huge stones on sleds. Text says wet sand in front of a sled halves the pulling force, so the same stone needs half the crew. Asks the reader to drag a water jar onto the sand in front of the lower sled."
+  },
+  "source": "Veritasium, “How Were the Pyramids Built?” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=lotbZQ55SgU&t=138s",
+  "written": "2026-11-03"
+}

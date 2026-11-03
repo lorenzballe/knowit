@@ -1,0 +1,37 @@
+{
+  "id": "history-capaci-timing-error",
+  "topic": "history",
+  "genre": "history.decisions_that_changed_history",
+  "strand": "history.decisions_that_changed_history.bad_calls",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Why did the first car explode before Falcone's?",
+  "answer": "The bomb's timing was set during a test run with a car at a steady 160–170 km/h, so the remote fired exactly on the spot at that speed. Falcone was driving at 100–120 km/h, so when the blast came his car had not yet reached the charge, but the lead car had.",
+  "move": "A timing tuned at one speed lands somewhere else at another.",
+  "keywords": [
+    "capaci",
+    "giovanni falcone",
+    "sicily",
+    "car bomb",
+    "convoy"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A page asking why the first car in the 1992 Capaci convoy exploded before Falcone's. The reader picks one of three reasons, then watches a test run and the real convoy at 110 km/h."
+  },
+  "source": "Geopop, “La ricostruzione 3D dell’attentato a Giovanni Falcone – Le dinamiche tecniche della strage Capaci” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=lvja_hkYI6U&t=510s",
+  "written": "2026-11-03"
+}

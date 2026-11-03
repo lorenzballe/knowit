@@ -1,0 +1,37 @@
+{
+  "id": "nature-glass-co2-savings",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.carbon_footprint",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much CO₂ is avoided by recycling six tons of glass?",
+  "answer": "Recycling six tons of glass keeps about one ton of CO₂ out of the air. Melting old glass replaces making new glass from raw sand, which is far more carbon-intensive. So every six tons recycled avoids roughly one ton of CO₂ emissions.",
+  "move": "Six tons of glass recycled ≈ one ton of CO₂ never emitted.",
+  "keywords": [
+    "glass",
+    "recycling",
+    "co2",
+    "sand",
+    "emissions"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A balance scale comparing 6 tons of recycled glass on one side with 1 ton of CO₂ emissions saved on the other. The page asks how much CO₂ is avoided by recycling six tons of glass. Tap to recycle glass one ton at a time and watch the CO₂ avoided."
+  },
+  "source": "Geopop, “Il processo di riciclo del vetro” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=QJNBtzPshVU&t=264s",
+  "written": "2026-11-03"
+}

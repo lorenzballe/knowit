@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: maths-one-seventh-10adic -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.4cqh;flex:1;min-height:0}
+#mult{width:100%;flex:1;min-height:0;display:block}
+#step{font:700 max(2.3cqh,14px)/1.25 var(--mono);text-align:center;min-height:2.6em;color:var(--k);overflow-wrap:anywhere}
+#step .w{opacity:.65;font-weight:600}
+#why{display:flex;flex-direction:column;gap:1.2cqh}
+#why .big{overflow-wrap:anywhere}
+#go{font:700 max(2.3cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;align-self:center;min-width:60%}
+#go:disabled{opacity:.5}
+.dg{fill:var(--k);font-family:var(--mono);font-weight:700;text-anchor:middle;dominant-baseline:central}
+.gh{opacity:.38}
+.cy{fill:var(--k);font-family:var(--mono);font-weight:700;text-anchor:middle;dominant-baseline:central;opacity:.75}
+.rs{fill:var(--k);font-family:var(--mono);font-weight:800;text-anchor:middle;dominant-baseline:central}
+.ln{stroke:var(--k);stroke-width:2.5;stroke-linecap:round}
+.hl{fill:var(--k);opacity:.12}
+.ball{fill:var(--k)}
+.one{fill:var(--c)}
+.oneb{fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Launch · watch it land">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">10-ADIC NUMBERS</span></div>
+    <h2 class="q">How can the endless number …857142857143 be 1/7?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="mult"></svg>
+      <div id="step">Multiply it by 7, digit by digit, from the right.</div>
+      <button id="go">× 7 the first digit</button>
+      <div id="why" class="gone">
+        <p class="big">7 × …857142857143 = …0001</p>
+        <p class="body">Every step writes a 0 and launches a carry to the left, and the carries never run out. So every digit is 0 except the last 1: seven times this number is exactly 1, which is what 1/7 means.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap to multiply one digit and launch its carry left.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>In the 10-adics, a number is 1/7 if 7 times it equals 1.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+// digits right to left: 857142857143, then it keeps repeating …142857 leftwards
+const D = [3,4,1,7,5,8,2,4,1,7,5,8,2,4,1];
+const N = D.length, MAIN = 12;
+const R = [], C = [0]; // result digit, carry INTO column j
+for (let j = 0; j < N; j++) { const v = 7*D[j] + C[j]; R.push(v % 10); C.push(Math.floor(v/10)); }
+let done = 0, busy = false, G = null;
+const svg = Kit.$('mult');
+
+function geo(){
+  const {W,H} = Kit.fitSvg(svg);
+  const left = Math.max(W*0.08, 22);
+  const colW = Math.min((W - left - 6)/N, H*0.11);
+  const fs = Math.max(Math.min(colW*0.95, H*0.12), 12);
+  const rowH = Math.min(H/5.4, fs*1.75);
+  const y0 = H/2 - rowH*2;
+  const xR = W/2 + (left + colW*N)/2 - left; // centre the block
+  const total = left + colW*N, x0 = (W - total)/2 + left;
+  return {W,H,colW,fs,rowH,x:j => x0 + (N-1-j)*colW + colW/2,
+    yC:y0, yN:y0+rowH, yM:y0+rowH*2, yL:y0+rowH*2.6, yR:y0+rowH*3.3, x0};
+}
+function txt(cls, x, y, s, size, extra){ const t = Kit.mk('text', Object.assign({class:cls, x, y, 'font-size':size}, extra||{}), svg); t.textContent = s; return t; }
+
+function draw(){
+  G = geo(); const g = G;
+  svg.innerHTML = '';
+  if (done > 0 && done <= N) Kit.mk('rect',{class:'hl', x:g.x(done-1)-g.colW/2, y:g.yN-g.rowH*0.5, width:g.colW, height:g.yR-g.yN+g.rowH, rx:g.colW*0.25}, svg);
+  txt('dg gh', g.x0 - g.colW*0.6, g.yN, '…', g.fs);
+  txt('rs gh', g.x0 - g.colW*0.6, g.yR, '…', g.fs);
+  for (let j = 0; j < N; j++){
+    txt('dg' + (j >= MAIN ? ' gh' : ''), g.x(j), g.yN, D[j], g.fs, {id:'n'+j});
+    if (j < done){
+      if (j === 0) {
+        Kit.mk('circle',{class:'oneb', cx:g.x(0), cy:g.yR, r:g.fs*0.62, id:'rb0'}, svg);
+        txt('rs one', g.x(0), g.yR, R[j], g.fs, {id:'r0'});
+      } else txt('rs', g.x(j), g.yR, R[j], g.fs, {id:'r'+j});
+    }
+    if (j >= 1 && j <= done && j < N) txt('cy', g.x(j), g.yC, C[j], g.fs*0.62, {id:'c'+j});
+  }
+  txt('dg', g.x(1), g.yM, '×', g.fs);
+  txt('dg', g.x(0), g.yM, '7', g.fs);
+  Kit.mk('line',{class:'ln', x1:g.x0 - g.colW, y1:g.yL, x2:g.x(0)+g.colW/2, y2:g.yL}, svg);
+}
+
+function stepText(j){
+  const c = C[j], v = 7*D[j] + c;
+  return `7 × ${D[j]}${c ? ' + ' + c : ''} = ${v}<br><span class="w">write ${R[j]}, carry ${C[j+1]}</span>`;
+}
+
+function launch(j, dur){
+  return new Promise(res => {
+    const g = G, r = Kit.$('r'+j), ci = Kit.$('c'+(j+1));
+    if (ci) ci.style.opacity = 0;
+    if (Kit.calm || dur === 0){ if (ci) ci.style.opacity = ''; return res(); }
+    gsap.from(r, {opacity:0, scale:0.3, transformOrigin:'center', svgOrigin:`${g.x(j)} ${g.yR}`, duration:dur*0.5, ease:'back.out(2)'});
+    if (j === 0) gsap.from('#rb0', {scale:0, svgOrigin:`${g.x(0)} ${g.yR}`, duration:dur*0.5, ease:'back.out(2)'});
+    const ball = Kit.mk('circle',{class:'ball', r:g.fs*0.2, cx:g.x(j), cy:g.yR}, svg);
+    const ax = g.x(j), ay = g.yR - g.fs*0.5, bx = j+1 < N ? g.x(j+1) : g.x0 - g.colW*0.6, by = g.yC;
+    const peak = g.yC - g.rowH*0.9, o = {t:0};
+    gsap.to(o, {t:1, duration:dur, delay:dur*0.25, ease:'power1.inOut', onUpdate(){
+      const t = o.t, mx = (ax+bx)/2;
+      ball.setAttribute('cx', (1-t)*(1-t)*ax + 2*(1-t)*t*mx + t*t*bx);
+      ball.setAttribute('cy', (1-t)*(1-t)*ay + 2*(1-t)*t*peak + t*t*by);
+    }, onComplete(){
+      ball.remove();
+      if (ci) gsap.fromTo(ci, {opacity:0, scale:1.8}, {opacity:.75, scale:1, svgOrigin:`${bx} ${by}`, duration:.25});
+      res();
+    }});
+  });
+}
+
+async function step(dur){
+  const j = done; done++; draw();
+  Kit.$('step').innerHTML = stepText(j);
+  Kit.haptic('light');
+  await launch(j, dur);
+}
+
+function finish(){
+  Kit.$('step').innerHTML = 'All the rest are 0, forever.';
+  Kit.hide('go'); Kit.hide('say'); Kit.hide('step'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  if (!Kit.calm) gsap.from('#why, #keep', {opacity:0, y:10, stagger:.12, duration:.45, ease:'power3.out'});
+}
+
+Kit.$('go').addEventListener('click', async () => {
+  if (busy || done >= N) return;
+  busy = true; const b = Kit.$('go'); b.disabled = true;
+  if (done < 4){
+    await step(0.7);
+    b.textContent = done < 4 ? '× 7 the next digit' : 'Keep going forever →';
+  } else {
+    while (done < N) await step(0.32);
+    finish();
+  }
+  b.disabled = false; busy = false;
+});
+
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#mult text', {opacity:0, y:8, stagger:.03, duration:.35, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 6 && done < N; i++){ Kit.$('go').click(); while (busy) await w(50); await w(50); }
+  while (busy) await w(50);
+  await w(600);
+};
+Kit.single();
+</script>
+</html>

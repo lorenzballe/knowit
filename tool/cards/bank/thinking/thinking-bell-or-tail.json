@@ -1,0 +1,35 @@
+{
+  "id": "thinking-bell-or-tail",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Nobody is twice your height, yet some people are a million times richer. Bell curve or long tail?",
+  "answer": "Nobody is twice your height, yet some people are a million times richer. Heights bunch near the average in a bell curve, while wealth has a long tail, with a few giants far out. When one case can be 1,000 times the typical, the average will fool you.",
+  "move": "If one case can be 1,000 times the typical, the average will fool you.",
+  "keywords": [
+    "bell curve",
+    "long tail",
+    "heights",
+    "wealth",
+    "average"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card 1 of 8, 'Bell or long tail?' The first slip reads 'Adult heights'. Two boxes: 'Bell curve: most near the average' and 'Long tail: a few giants'. Tap the box whose shape matches."
+  },
+  "source": "Veritasium, “You've (Likely) Been Playing The Game Of Life Wrong” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=HBluLfX2F_k",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,148 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-perfect-triangle-cubes -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#cvbox{flex:1;min-height:0;position:relative}
+#cv{position:absolute;inset:0;width:100%;height:100%}
+#read{display:flex;flex-direction:column;align-items:center;gap:.4cqh;text-align:center}
+#rbig{font:800 max(3.4cqh,20px)/1.1 var(--display);color:var(--k)}
+#rsub{font:700 max(1.9cqh,13px)/1.25 var(--body);color:var(--k);overflow-wrap:anywhere}
+#rsub.dim{color:var(--muted)}
+#track{position:relative;height:max(7.5cqh,52px);margin:0 5cqw;touch-action:none;cursor:pointer}
+#rail{position:absolute;left:0;right:0;top:max(1.8cqh,12px);height:max(.6cqh,4px);border-radius:9px;background:color-mix(in srgb,var(--k) 22%,transparent)}
+#fill{position:absolute;left:0;top:max(1.8cqh,12px);height:max(.6cqh,4px);border-radius:9px;background:var(--k);width:0}
+.tick{position:absolute;top:max(1.2cqh,8px);width:max(.5cqh,3px);height:max(1.8cqh,12px);margin-left:calc(max(.5cqh,3px)/-2);background:var(--k);border-radius:2px;opacity:.55}
+.tl{position:absolute;top:max(3.6cqh,24px);transform:translateX(-50%);font:700 max(1.7cqh,12px)/1 var(--mono);color:var(--k);opacity:.6;white-space:nowrap}
+.tl.last{transform:translateX(-100%)}
+.tl.hit,.tick.hit{opacity:1}
+#thumb{position:absolute;top:max(2.1cqh,14px);left:0;width:max(4cqh,28px);height:max(4cqh,28px);margin:calc(max(4cqh,28px)/-2) 0 0 calc(max(4cqh,28px)/-2);border-radius:50%;background:var(--k);box-shadow:0 0 0 max(.6cqh,4px) color-mix(in srgb,var(--k) 25%,transparent)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:600 max(1.75cqh,12px)/1.3 var(--body)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag · see">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PERFECT NUMBERS</span></div>
+    <h2 class="q">Why are perfect numbers also triangles and stacks of odd cubes?</h2>
+    <div class="stagebox" id="stage">
+      <div id="cvbox"><canvas id="cv"></canvas></div>
+      <div id="read"><div id="rbig">1 dot · 1 row</div><div id="rsub" class="dim">Not perfect. Drag on.</div></div>
+      <div id="track"><div id="rail"></div><div id="fill"></div><div id="thumb"></div></div>
+    </div>
+    <p class="say" id="say">Drag the dot right to stack more rows onto the triangle.</p>
+    <div id="why" class="gone"><p class="body">Each perfect number lands on a triangle with 2<sup>p</sup>−1 rows, so it holds (2<sup>p</sup>−1)·2<sup>p</sup>/2 = 2<sup>p−1</sup>(2<sup>p</sup>−1) dots: the perfect-number formula itself. The first m odd cubes add to m²(2m²−1), the same formula when m² = 2<sup>p−1</sup>: 2, 4, then 8 cubes.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>2<sup>p−1</sup>(2<sup>p</sup>−1) is one shape seen two ways: a triangle and a stack of odd cubes.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Oldest Unsolved Problem in Math” (YouTube, 2024)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 127;
+const MARKS = [
+  {n:3,   v:6,    m:0, sub:'Perfect: 6 = 1 + 2 + 3. The only one with no cube stack.'},
+  {n:7,   v:28,   m:2, sub:'Perfect, and = 1³ + 3³'},
+  {n:31,  v:496,  m:4, sub:'Perfect, and = 1³ + 3³ + 5³ + 7³'},
+  {n:127, v:8128, m:8, sub:'Perfect, and = 1³ + 3³ + 5³ + … + 15³'}
+];
+const st = {n:1, mix:1, t:0};
+let done = false, cv = Kit.$('cv');
+const tri = n => n*(n+1)/2;
+const tOf = n => Math.log(n)/Math.log(MAX);
+const markOf = n => MARKS.find(k => k.n === n);
+
+// ticks
+const track = Kit.$('track');
+MARKS.forEach((k,i) => {
+  const p = (tOf(k.n)*100)+'%';
+  const t = document.createElement('div'); t.className='tick'; t.style.left=p; t.dataset.n=k.n; track.appendChild(t);
+  const l = document.createElement('div'); l.className='tl'+(i===MARKS.length-1?' last':''); l.style.left=p; l.textContent=k.v; l.dataset.n=k.n; track.appendChild(l);
+});
+
+function bounds(m){ // cumulative ends of odd cube bands
+  const b=[]; let s=0; for(let k=1;k<=m;k++){ s+=(2*k-1)**3; b.push(s); } return b;
+}
+function draw(){
+  const {x,W,H} = Kit.fitCanvas(cv);
+  x.clearRect(0,0,W,H);
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const n = st.n, s = Math.min(W/n, H/n);
+  const ox = (W-n*s)/2, oy = (H-n*s)/2;
+  const mk = markOf(n), b = mk && mk.m ? bounds(mk.m) : null;
+  const gap = n<=12 ? s*.09 : n<=40 ? s*.07 : 0;
+  x.fillStyle = ink;
+  let idx = 0;
+  for(let r=1;r<=n;r++){
+    const y = oy+(r-1)*s, xs = ox+(n-r)*s/2;
+    for(let c=0;c<r;c++,idx++){
+      let target = .3;
+      if(mk){
+        if(!b) target = 1;
+        else { let band=0; while(idx>=b[band]) band++; target = band%2 ? .4 : 1; }
+      }
+      x.globalAlpha = .3 + (target-.3)*st.mix;
+      const px = xs+c*s+gap/2, py = y+gap/2, w = s-gap+(gap?0:.4);
+      if(gap && x.roundRect){ x.beginPath(); x.roundRect(px,py,w,w,w*.18); x.fill(); }
+      else x.fillRect(px,py,w,w);
+    }
+  }
+  x.globalAlpha = 1;
+}
+function readout(){
+  const n = st.n, mk = markOf(n), T = tri(n);
+  Kit.$('rbig').textContent = `${T.toLocaleString('en')} dot${T>1?'s':''} · ${n} row${n>1?'s':''}`;
+  const rs = Kit.$('rsub');
+  rs.textContent = mk ? mk.sub : 'Not perfect. Drag on.';
+  rs.classList.toggle('dim', !mk);
+  track.querySelectorAll('[data-n]').forEach(e => { if(+e.dataset.n<=n) e.classList.add('hit'); });
+}
+function place(){
+  const p = (st.t*100)+'%';
+  Kit.$('thumb').style.left = p; Kit.$('fill').style.width = p;
+}
+function setT(t){
+  t = Math.max(0, Math.min(1, t));
+  for(const k of MARKS){ if(Math.abs(t-tOf(k.n))<.035){ t=tOf(k.n); break; } }
+  st.t = t; place();
+  const n = Math.max(1, Math.round(MAX**t));
+  if(n !== st.n){
+    st.n = n;
+    const mk = markOf(n);
+    if(mk){
+      Kit.haptic('light'); st.mix = 0;
+      gsap.killTweensOf(st);
+      if(Kit.calm){ st.mix=1; } else gsap.to(st,{mix:1,duration:.6,ease:'power2.out',onUpdate:draw});
+      if(!Kit.calm) gsap.fromTo('#rbig',{scale:1.15},{scale:1,duration:.4,ease:'back.out(3)'});
+    } else st.mix = 1;
+    draw(); readout();
+    if(n === MAX && !done) finish();
+  }
+}
+function finish(){
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.45,ease:'power3.out'});
+}
+function tFromX(cx){ const r = Kit.$('rail').getBoundingClientRect(); return (cx-r.left)/r.width; }
+let dragging = false;
+track.addEventListener('pointerdown', e => { dragging = true; try{track.setPointerCapture(e.pointerId);}catch(_){} setT(tFromX(e.clientX)); });
+track.addEventListener('pointermove', e => { if(dragging) setT(tFromX(e.clientX)); });
+const stop = () => { dragging = false; };
+track.addEventListener('pointerup', stop); track.addEventListener('pointercancel', stop);
+
+Kit.onShow.card = () => { draw(); place(); };
+Kit.onEnter.card = () => { if(!Kit.calm) gsap.fromTo('#thumb',{scale:1},{scale:1.25,duration:.5,repeat:3,yoyo:true,ease:'sine.inOut'}); };
+Kit.play.card = async () => {
+  const r = Kit.$('rail').getBoundingClientRect(), y = r.top + r.height/2;
+  const ev = (type, x) => track.dispatchEvent(new PointerEvent(type,{clientX:x,clientY:y,bubbles:true,pointerId:1}));
+  ev('pointerdown', r.left+1);
+  for(let i=1;i<=24;i++){ ev('pointermove', r.left + r.width*i/24); await new Promise(z=>setTimeout(z,25)); }
+  ev('pointerup', r.right);
+  await new Promise(z=>setTimeout(z,900));
+};
+readout();
+Kit.single();
+</script>
+</html>

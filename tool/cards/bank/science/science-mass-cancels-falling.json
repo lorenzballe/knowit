@@ -1,0 +1,38 @@
+{
+  "id": "science-mass-cancels-falling",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Drop a medicine ball and a small ball together. Which lands first?",
+  "answer": "Both balls land at the same time. The heavy ball gets more pull from gravity, but it also has just as much more inertia, so the two effects cancel. Dividing force by mass, a = F ÷ m = m·g ÷ m = g, shows that mass drops out.",
+  "move": "More mass means more pull and more inertia; they cancel.",
+  "keywords": [
+    "gravity",
+    "inertia",
+    "medicine ball",
+    "falling objects",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card asking which lands first when a medicine ball and a small ball are dropped together, with choices: the heavy ball, both at the same time, or the light ball. Below are the equations a = F ÷ m = m·g ÷ m = g and a Drop control that shows the balls falling.",
+    "graded": false
+  },
+  "source": "Veritasium, “Misconceptions About Falling Objects” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=_mCC-68LyZM&t=169s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "history-north-korea-classes",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does North Korea classify its 25 million citizens?",
+  "answer": "North Korea's state runs a \"sociopolitical classification\" that sorts all 25 million citizens into three classes. About one in five, roughly 5 million, is elite. The other four in five are split between two lower tiers.",
+  "move": "One state ranking, three classes: only 1 North Korean in 5 is elite.",
+  "keywords": [
+    "north_korea",
+    "social_ranking",
+    "elite_class",
+    "citizens",
+    "pyramid"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A pyramid of three stacked layers showing how North Korea's state ranking sorts its 25 million citizens. The top elite layer is about one in five. Tap each layer to see who belongs to it."
+  },
+  "source": "Geopop, “Intervista esclusiva a un fuggitivo nordcoreano: come si vive e si scappa dalla Corea del Nord?” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=uLqfa27S4TQ&t=202s",
+  "written": "2026-11-03"
+}

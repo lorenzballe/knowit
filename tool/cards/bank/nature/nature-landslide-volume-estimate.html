@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-landslide-volume-estimate -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#opts{display:flex;flex-direction:row;gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body)}
+.opt{flex:1;font:700 max(2cqh,13px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.6cqh 1cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+.lbl{font-family:var(--body);font-weight:700;fill:var(--k)}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TSUNAMI</span></div>
+    <h2 class="q">How much rock did the first 1958 Alaska landslide drop into the bay?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sv"></svg></div>
+      <div id="opts">
+        <button class="opt" data-i="0">5.5 × 10⁵ m³</button>
+        <button class="opt" data-i="1">5.5 × 10⁷ m³</button>
+        <button class="opt" data-i="2">5.5 × 10⁹ m³</button>
+      </div>
+      <div id="why" class="gone"><p class="big">5.5 × 10⁷ m³: 55 million m³</p><p class="body">That is what the professor estimated for the rock that fell: a block about 380 m on each side. With the depth and shape of the bay's floor, it was a key number for simulating the wave.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a volume: the block on the cliff shows how big it is.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>To simulate a tsunami you need how much rock fell and the shape of the seafloor.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Lo tsunami più alto del mondo - Alaska 1958, la simulazione dell'onda più grande mai registrata” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, VOL = [5.5e5, 5.5e7, 5.5e9], TXT = ['5.5×10⁵','5.5×10⁷','5.5×10⁹'];
+let pick = -1, FAST = false;
+const st = {m: 0, p: 0, w: 0, label: 0}; // m = side in metres; p = fall; w = wave
+let G = null;
+const side = v => Math.cbrt(v);
+
+function build(){
+  const sv = Kit.$('sv'); sv.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(sv);
+  const fs = Math.max(f, 12);
+  const g = {W, H, fs, sc: W / 3200, cliffX: W * .3, cliffTop: H * .36, seaY: H * .56, bedY: H * .93, hillX: W * .8};
+  const K = 'var(--k)';
+  // mountain with ledge
+  Kit.mk('path', {d:`M0 ${H*.06} L${g.cliffX*.55} ${g.cliffTop} L${g.cliffX} ${g.cliffTop} L${g.cliffX+W*.035} ${g.bedY} L${g.cliffX+W*.035} ${H} L0 ${H}Z`, fill:'color-mix(in srgb,var(--k) 55%,var(--c))'}, sv);
+  // cube group
+  g.cube = Kit.mk('g', {}, sv);
+  g.front = Kit.mk('path', {fill:'#d9823b', stroke:'#3a1f0c', 'stroke-width':1.5, 'stroke-linejoin':'round'}, g.cube);
+  g.top = Kit.mk('path', {fill:'#f2a865', stroke:'#3a1f0c', 'stroke-width':1.5, 'stroke-linejoin':'round'}, g.cube);
+  g.side = Kit.mk('path', {fill:'#a85a22', stroke:'#3a1f0c', 'stroke-width':1.5, 'stroke-linejoin':'round'}, g.cube);
+  // water
+  g.water = Kit.mk('path', {fill:'#1f6fb5', 'fill-opacity':.78}, sv);
+  g.surf = Kit.mk('path', {fill:'none', stroke:'#d8ecff', 'stroke-width':2.5}, sv);
+  // seabed and far hill
+  Kit.mk('path', {d:`M${g.cliffX+W*.035} ${g.bedY} Q${W*.55} ${g.bedY+H*.03} ${g.hillX} ${g.bedY} L${W} ${H*.14} L${W} ${H} L${g.cliffX} ${H}Z`, fill:'color-mix(in srgb,var(--k) 55%,var(--c))'}, sv);
+  g.run = Kit.mk('path', {fill:'none', stroke:'#ffffff', 'stroke-width':5, 'stroke-linecap':'round', opacity:.95}, sv);
+  // scale bar: 500 m
+  const bar = 500 * g.sc, bx = g.cliffX + W*.08, by = g.bedY - fs*.9;
+  Kit.mk('path', {d:`M${bx} ${by-5} V${by} H${bx+bar} V${by-5}`, fill:'none', stroke:'#fff', 'stroke-width':2}, sv);
+  const t0 = Kit.mk('text', {x:bx+bar+6, y:by+fs*.35, class:'lbl', 'font-size':fs, fill:'#fff', style:'fill:#fff'}, sv); t0.textContent = '500 m';
+  // readout
+  const rx = W * .64;
+  g.r1 = Kit.mk('text', {x:rx, y:fs*1.4, class:'lbl', 'font-size':fs*1.05, 'text-anchor':'middle'}, sv);
+  g.r2 = Kit.mk('text', {x:rx, y:fs*1.4 + fs*1.5, class:'lbl', 'font-size':fs, 'text-anchor':'middle', opacity:.75}, sv);
+  G = g; render();
+}
+
+function render(){
+  if (!G) return;
+  const g = G, L = st.m * g.sc, d = L * .35, dd = d * .8, p = st.p;
+  const ax = g.cliffX + p * (L * .7 + g.W * .06), ay = g.cliffTop + p * (g.bedY - g.cliffTop - 2);
+  g.cube.setAttribute('transform', `translate(${ax} ${ay}) rotate(${p * 28})`);
+  g.cube.style.display = L > 0 ? '' : 'none';
+  g.front.setAttribute('d', `M${-L} 0 H0 V${-L} H${-L}Z`);
+  g.top.setAttribute('d', `M${-L} ${-L} H0 L${d} ${-L-dd} H${-L+d}Z`);
+  g.side.setAttribute('d', `M0 0 V${-L} L${d} ${-L-dd} V${-dd}Z`);
+  // wave
+  const w = st.w, hmax = Math.min(Math.max(L * .55, 6), g.H * .3);
+  const xw = g.cliffX + w * (g.hillX - g.cliffX), h = w > 0 ? hmax * (1 - w * .45) * Math.min(1, w * 6) : 0, ww = g.W * .09;
+  let pts = [];
+  for (let x = g.cliffX - 4; x <= g.W + 1; x += 4) pts.push([x, g.seaY - h * Math.exp(-(((x - xw) / ww) ** 2))]);
+  const top = pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ');
+  g.water.setAttribute('d', top + ` L${g.W} ${g.H} L${g.cliffX-4} ${g.H}Z`);
+  g.surf.setAttribute('d', top);
+  // run-up on far hill
+  const run = Math.max(0, (w - .82) / .18), hr = hmax * 1.6 * run;
+  const slope = (g.bedY - g.H * .14) / (g.W - g.hillX);
+  const xAt = y => g.hillX + (g.bedY - y) / slope;
+  g.run.setAttribute('d', hr > 0 ? `M${xAt(g.seaY)} ${g.seaY} L${xAt(g.seaY - hr)} ${g.seaY - hr}` : '');
+  // readout
+  if (st.m <= 0) { g.r1.textContent = 'Pick a volume'; g.r2.textContent = ''; }
+  else {
+    g.r1.textContent = `≈ ${Math.round(st.m).toLocaleString('en')} m per side`;
+    g.r2.textContent = st.label ? 'the estimate: 5.5×10⁷ m³' : `a cube of ${TXT[pick]} m³`;
+  }
+}
+
+function grow(v, dur){
+  const target = side(v);
+  if (Kit.calm || FAST) { st.m = target; render(); return Promise.resolve(); }
+  return new Promise(r => gsap.to(st, {m: target, duration: dur, ease: 'power2.inOut', onUpdate: render, onComplete: r}));
+}
+
+async function finale(){
+  st.label = 1;
+  await grow(VOL[RIGHT], .8);
+  if (Kit.calm || FAST) { st.p = 1; st.w = 1; render(); return; }
+  gsap.timeline({onUpdate: render})
+    .to(st, {p: 1, duration: 1.1, ease: 'power2.in'})
+    .to(st, {w: 1, duration: 2.2, ease: 'power1.out'}, '-=0.35');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  finale();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+  grow(VOL[pick], .7);
+});
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  FAST = true;
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

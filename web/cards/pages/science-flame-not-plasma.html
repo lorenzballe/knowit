@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-flame-not-plasma -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#pic{width:100%;height:100%;flex:1;min-height:0;display:block;cursor:pointer;touch-action:manipulation}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.reg{fill:color-mix(in srgb,var(--k) 7%,transparent);stroke:var(--k);stroke-width:2.5}
+.reg.in{fill:color-mix(in srgb,var(--k) 16%,transparent)}
+.reg.hit{fill:color-mix(in srgb,var(--k) 30%,transparent)}
+.lab{fill:var(--k);font-family:var(--body);font-weight:800;letter-spacing:.04em}
+.sub{fill:var(--k);font-family:var(--body);font-weight:600;opacity:.85}
+.ghost path{fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:4 3}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PLASMA?</span></div>
+    <h2 class="q">A candle flame holds ions. Does that make it a true plasma?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap the zone where the candle flame belongs.</p>
+    <div id="why" class="gone"><p class="big" id="verdict">Ions, but not plasma</p><p class="body">A flame does contain ions: strong electric fields pull its charges apart. But it isn't hot enough and its ions aren't dense enough to count as a true plasma.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Having ions isn't enough: plasma needs great heat and dense ions.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What's In A Candle Flame?” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, NAMES = ['No ions at all', 'Has ions, not plasma', 'True plasma'];
+let pick = -1, gdx = 0, gdy = 0, done = false, G = null, animReveal = false;
+
+function flame(parent, x, y, s, ghost){
+  const o = Kit.mk('g', {transform:`translate(${x},${y})`}, parent);
+  const g = Kit.mk('g', {class: ghost ? 'ghost' : 'fl'}, o);
+  const d = k => `M0,${-s*k} C${s*.45*k},${-s*.4*k} ${s*.5*k},${s*.3*k} 0,${s*.5*k} C${-s*.5*k},${s*.3*k} ${-s*.45*k},${-s*.4*k} 0,${-s*k} Z`;
+  if (ghost){ Kit.mk('path', {d:d(1)}, g); }
+  else {
+    Kit.mk('path', {d:d(1), fill:'#ff8a1e', stroke:'#7a2c00', 'stroke-width':1.5}, g);
+    Kit.mk('path', {d:d(.62), fill:'#ffd84a', transform:`translate(0,${s*.12})`}, g);
+    Kit.mk('path', {d:d(.25), fill:'#3b6dff', transform:`translate(0,${s*.38})`}, g);
+  }
+  return g;
+}
+function regionAt(x, y){
+  if (Math.hypot(x-G.icx, y-G.cy) < G.ir) return 2;
+  if (Math.hypot(x-G.cx, y-G.cy) < G.R) return 1;
+  return 0;
+}
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f:f0} = Kit.fitSvg(svg), f = Math.max(13, f0), fs = Math.max(12, f*.85);
+  const R = Math.min(W*.45, H*.46), cx = W/2 + R*.04, cy = H/2 + H*.02, ir = R*.5, icx = cx + R*.4;
+  G = {W, H, f, R, cx, cy, ir, icx};
+  const outer = Kit.mk('circle', {cx, cy, r:R, class:'reg'+(pick===1?' hit':'')}, svg);
+  const inner = Kit.mk('circle', {cx:icx, cy, r:ir, class:'reg in'+(pick===2?' hit':'')}, svg);
+  G.outer = outer; G.inner = inner;
+  const no = Kit.mk('text', {x:Math.max(6, W*.02), y:f*1.2, class:'lab', 'font-size':f}, svg); no.textContent = 'NO IONS';
+  if (pick===0) no.setAttribute('text-decoration','underline');
+  const has = Kit.mk('text', {x:cx-R*.56, y:cy-R*.36, class:'lab', 'font-size':f, 'text-anchor':'middle'}, svg); has.textContent = 'HAS IONS';
+  const pl = Kit.mk('text', {x:icx, y:cy-(done?f*.7:-f*.35), class:'lab', 'font-size':f, 'text-anchor':'middle'}, svg); pl.textContent = 'TRUE PLASMA';
+  G.subs = [];
+  if (done){
+    [['much hotter', cy+f*.75], ['many more ions', cy+f*.75+fs*1.7]].forEach(([t, yy]) => {
+      const s = Kit.mk('text', {x:icx, y:yy, class:'sub', 'font-size':fs, 'text-anchor':'middle'}, svg); s.textContent = t; G.subs.push(s);
+    });
+  }
+  const s = R*.2;
+  if (pick >= 0 && !(done && pick===RIGHT)) G.gh = flame(svg, cx+gdx*R, cy+gdy*R, s, true);
+  if (done){
+    const tx = cx-R*.56, ty = cy+R*.12;
+    G.real = flame(svg, tx, ty, s, false);
+    const c = Kit.mk('text', {x:tx, y:ty+s*.5+fs*1.4, class:'sub', 'font-size':fs, 'text-anchor':'middle'}, svg); c.textContent = 'candle flame';
+    G.cap = c; G.from = {x:cx+gdx*R-tx, y:cy+gdy*R-ty};
+  } else if (pick >= 0){
+    G.real = null;
+  }
+}
+Kit.$('pic').addEventListener('click', e => {
+  if (pick >= 0 || !G) return;
+  const r = Kit.$('pic').getBoundingClientRect();
+  const x = (e.clientX-r.left)*G.W/r.width, y = (e.clientY-r.top)*G.H/r.height;
+  pick = regionAt(x, y); gdx = (x-G.cx)/G.R; gdy = (y-G.cy)/G.R;
+  Kit.haptic('selection'); draw(); sure.on();
+  Kit.$('say').textContent = 'Your guess: ' + NAMES[pick].toLowerCase() + '.';
+  if (!Kit.calm && G.gh) gsap.from(G.gh, {scale:.3, opacity:0, transformOrigin:'50% 50%', duration:.35, ease:'back.out(2)'});
+});
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT;
+  Kit.answer({choice: NAMES[pick], correct: ok, sure: pct});
+  done = true; draw();
+  Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${NAMES[pick]}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep'); Kit.haptic(ok ? 'success' : 'light');
+  if (!Kit.calm){
+    if (pick !== RIGHT) gsap.from(G.real, {x:G.from.x, y:G.from.y, duration:.9, ease:'power3.inOut'});
+    else gsap.from(G.real, {scale:1.4, transformOrigin:'50% 50%', duration:.5, ease:'back.out(2)'});
+    gsap.from([G.cap, ...G.subs], {opacity:0, y:6, stagger:.15, delay:.6, duration:.4});
+    gsap.to(G.real, {scaleY:1.06, transformOrigin:'50% 100%', yoyo:true, repeat:-1, duration:.5, delay:1.1, ease:'sine.inOut'});
+  }
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.from([G.outer, G.inner], {scale:.6, opacity:0, transformOrigin:'50% 50%', stagger:.15, duration:.6, ease:'back.out(1.6)'});
+  gsap.from('#pic text', {opacity:0, stagger:.08, delay:.3, duration:.4});
+};
+Kit.play.card = async () => {
+  const r = Kit.$('pic').getBoundingClientRect();
+  const x = r.left + G.icx*r.width/G.W, y = r.top + G.cy*r.height/G.H;
+  Kit.$('pic').dispatchEvent(new MouseEvent('click', {clientX:x, clientY:y, bubbles:true}));
+  await new Promise(res => setTimeout(res, 150));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(res => setTimeout(res, 1400));
+};
+Kit.single();
+</script>
+</html>

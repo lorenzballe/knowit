@@ -1,0 +1,37 @@
+{
+  "id": "maths-penrose-golden-ratio",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Count Penrose kites and darts. What number does kites ÷ darts approach?",
+  "answer": "Kites ÷ darts approaches 1.618, the golden ratio φ. Kites and darts are cut from pentagons whose diagonal ÷ edge is φ, so the number is built into the pieces. Because φ is irrational, the ratio can never settle into a repeating pattern of whole numbers.",
+  "move": "Kites ÷ darts → 1.618, an irrational number, so the pattern never repeats.",
+  "keywords": [
+    "penrose tiles",
+    "golden ratio",
+    "kites and darts",
+    "pentagons",
+    "irrational numbers"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Penrose kite and dart tiles. A counter shows kites 5 and darts 0, with a Split button and 0 of 5 splits done. It asks what number kites divided by darts approaches."
+  },
+  "source": "Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=48sCx-wBs34&t=753s",
+  "written": "2026-11-03"
+}

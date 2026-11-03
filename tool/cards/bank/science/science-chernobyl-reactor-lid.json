@@ -1,0 +1,36 @@
+{
+  "id": "science-chernobyl-reactor-lid",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What massive object was blown off by the explosion?",
+  "answer": "A steam explosion blew the reactor's 1000-tonne lid into the air. The blast wrecked the roof and let a great amount of radioactive material escape. A slider plays the explosion in slow motion.",
+  "move": "A steam explosion threw off the reactor‑tonne lid.",
+  "keywords": [
+    "chernobyl",
+    "reactor-4",
+    "steam-explosion",
+    "radioactive-release"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Before and after diagrams of Reactor 4, whose core is sealed by a huge lid. A slider plays the explosion in slow motion. The question asks what massive object the explosion blew off."
+  },
+  "source": "Geopop, “Ricostruzione del disastro di Chernobyl, come e perché si è arrivati all'esplosione del reattore 4” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=4G-cqJy_6_o&t=592s",
+  "written": "2026-11-03"
+}

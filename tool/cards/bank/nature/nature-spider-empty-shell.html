@@ -1,0 +1,162 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-spider-empty-shell -->
+<title>Astute free card · The prey's empty shell</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .big{font-size:max(3cqh,18px)}
+#why .body{font-size:max(1.9cqh,13px);line-height:1.3}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SPIDER SUPPER</span></div>
+    <h2 class="q">What is left after a spider eats its prey?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A fly caught in a spider's web, with the spider at the hub"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Nothing at all</button>
+        <button class="opt" data-i="1">Only the wings and legs</button>
+        <button class="opt" data-i="2">The insect's whole shell, empty</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The empty shell</p><p class="body">A spider doesn't chew its prey: it drinks it. Its juices turn the soft insides to liquid, and it sucks them up. The hard exoskeleton stays in the web, hollow.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick one, then watch the spider at dinner.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A spider drinks its prey and leaves the empty shell behind.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Ragnatele in 3D: ecco come fanno i ragni a crearle così geometriche, letali e resistenti” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, done = false, tl = null, G = {};
+
+function draw(){
+  if (tl) { tl.kill(); tl = null; }
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const cx = W/2, cy = H*0.47, R = Math.min(W*0.46, H*0.46);
+  const lw = Math.max(1, R*0.007);
+  // web
+  const web = Kit.mk('g', {stroke:'var(--k)', 'stroke-opacity':.4, fill:'none', 'stroke-width':lw, 'stroke-linecap':'round'}, svg);
+  const N = 14, pts = [];
+  for (let i = 0; i < N; i++) {
+    const a = i/N*Math.PI*2 + .1, rr = R*(0.92 + 0.08*Math.sin(i*2.3));
+    pts.push(a);
+    Kit.mk('line', {x1:cx, y1:cy, x2:cx+Math.cos(a)*rr, y2:cy+Math.sin(a)*rr}, web);
+  }
+  for (let r = R*0.13; r < R*0.9; r += R*0.072) {
+    let d = '';
+    for (let i = 0; i <= N; i++) {
+      const a = pts[i % N], b = pts[(i+1) % N] + (i+1 === N ? Math.PI*2 : 0);
+      const x = cx+Math.cos(a)*r, y = cy+Math.sin(a)*r;
+      if (i === 0) d += `M${x},${y}`;
+      if (i < N) {
+        const m = (a + b)/2, x2 = cx+Math.cos(b)*r, y2 = cy+Math.sin(b)*r;
+        d += `Q${cx+Math.cos(m)*r*0.9},${cy+Math.sin(m)*r*0.9} ${x2},${y2}`;
+      }
+    }
+    Kit.mk('path', {d}, web);
+  }
+  // fly
+  const s = R*0.18, fx = cx + R*0.33, fy = cy + R*0.12;
+  const fly = Kit.mk('g', {transform:`translate(${fx},${fy})`}, svg);
+  const ink = 'var(--k)';
+  const legs = Kit.mk('g', {stroke:ink, 'stroke-width':lw*1.6, fill:'none', 'stroke-linecap':'round'}, fly);
+  [[-1,-.2],[-1,.2],[-1,.6],[1,-.2],[1,.2],[1,.6]].forEach(([sd, y]) => {
+    Kit.mk('polyline', {points:`${sd*s*.3},${y*s} ${sd*s*.75},${(y-.15)*s} ${sd*s*1.0},${(y+.25)*s}`}, legs);
+  });
+  const wings = Kit.mk('g', {fill:ink, 'fill-opacity':.12, stroke:ink, 'stroke-width':lw*1.3}, fly);
+  Kit.mk('ellipse', {cx:-s*.42, cy:s*.15, rx:s*.28, ry:s*.62, transform:`rotate(25 ${-s*.42} ${s*.15})`}, wings);
+  Kit.mk('ellipse', {cx:s*.42, cy:s*.15, rx:s*.28, ry:s*.62, transform:`rotate(-25 ${s*.42} ${s*.15})`}, wings);
+  const body = g => {
+    Kit.mk('circle', {cx:0, cy:-s*.78, r:s*.27}, g);
+    Kit.mk('ellipse', {cx:0, cy:-s*.25, rx:s*.36, ry:s*.36}, g);
+    Kit.mk('ellipse', {cx:0, cy:s*.5, rx:s*.38, ry:s*.6}, g);
+  };
+  const cid = 'drain' + Math.round(W);
+  const clip = Kit.mk('clipPath', {id:cid}, svg);
+  const lvl = Kit.mk('rect', {x:-s, y:-s*1.1, width:s*2, height:s*2.4}, clip);
+  const fill = Kit.mk('g', {fill:ink, 'clip-path':`url(#${cid})`}, fly); body(fill);
+  const shell = Kit.mk('g', {fill:'none', stroke:ink, 'stroke-width':lw*1.8}, fly); body(shell);
+  // silk wrap
+  const silk = Kit.mk('g', {stroke:'var(--c)', 'stroke-width':lw*1.2, fill:'none', opacity:0}, fly);
+  for (let i = 0; i < 6; i++) {
+    const y = -s*.85 + i*s*.3;
+    Kit.mk('path', {d:`M${-s*.45},${y} Q0,${y+s*.18} ${s*.45},${y-s*.05}`}, silk);
+  }
+  // spider
+  const sR = R*0.075;
+  const sp = Kit.mk('g', {}, svg);
+  const spi = Kit.mk('g', {}, sp);
+  const sl = Kit.mk('g', {stroke:ink, 'stroke-width':lw*2, fill:'none', 'stroke-linecap':'round', 'stroke-linejoin':'round'}, spi);
+  for (let i = 0; i < 4; i++) for (const sd of [-1, 1]) {
+    const a = (-60 + i*38)*Math.PI/180;
+    const kx = sd*Math.cos(a)*sR*1.8, ky = Math.sin(a)*sR*1.6 - sR*.6;
+    const ex = sd*Math.cos(a)*sR*2.8, ey = Math.sin(a)*sR*2.2 + sR*.4;
+    Kit.mk('polyline', {points:`0,0 ${kx},${ky} ${ex},${ey}`}, sl);
+  }
+  Kit.mk('circle', {cx:0, cy:0, r:sR*.75, fill:ink}, spi);
+  Kit.mk('ellipse', {cx:0, cy:sR*1.5, rx:sR*1.05, ry:sR*1.25, fill:ink}, spi);
+  gsap.set(sp, {x:cx, y:cy});
+  // label
+  const lab = Kit.mk('text', {x:Math.min(fx, W - fs*5.2), y:Math.min(fy + s*1.3 + fs, H - fs*0.4), 'text-anchor':'middle', fill:ink, opacity:0, style:`font:700 ${fs}px var(--body)`}, svg);
+  lab.textContent = 'empty exoskeleton';
+  G = {sp, spi, silk, lvl, lab, fill, cx, cy, fx, fy, s, sR};
+  if (done) {
+    gsap.set(silk, {opacity:1}); gsap.set(lvl, {attr:{y:s*1.3}}); gsap.set(lab, {opacity:1});
+  }
+}
+
+function feast(){
+  done = true;
+  const {sp, spi, silk, lvl, lab, cx, cy, fx, fy, s, sR} = G;
+  if (Kit.calm) { draw(); return; }
+  const nx = fx - s*.95, ny = fy - s*.95;
+  tl = gsap.timeline();
+  tl.to(sp, {x:nx, y:ny, duration:.9, ease:'power2.inOut'})
+    .to(silk, {opacity:1, duration:.6}, '+=.1')
+    .to(spi, {rotation:8, yoyo:true, repeat:3, duration:.12, transformOrigin:'50% 50%'}, '<')
+    .to(spi, {scale:1.12, yoyo:true, repeat:7, duration:.22, transformOrigin:'50% 50%', ease:'sine.inOut'}, '+=.1')
+    .to(lvl, {attr:{y:s*1.3}, duration:1.8, ease:'power1.in'}, '<')
+    .to(sp, {x:cx, y:cy, duration:.9, ease:'power2.inOut'})
+    .to(lab, {opacity:1, duration:.5}, '<.3');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  feast();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => { draw(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'});
+  if (!done && G.spi) gsap.to(G.spi, {rotation:6, yoyo:true, repeat:3, duration:.25, transformOrigin:'50% 50%'});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[2].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 300));
+  if (tl) tl.progress(1);
+  await new Promise(r => setTimeout(r, 400));
+};
+Kit.single();
+</script>
+</html>

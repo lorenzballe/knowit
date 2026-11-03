@@ -1,0 +1,246 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Weighing the air</title>
+<!-- 19 September 1648: Florin Périer carries a mercury tube up the Puy de Dôme for Blaise Pascal while a
+     friar watches a second tube in the Minims' garden in Clermont. Garden: 26 pouces 3½ lignes (71.2 cm);
+     summit, about 500 toises (~1,000 m) higher: 23 pouces 2 lignes (62.7 cm). 1 pouce = 27.07 mm.
+     Between the two readings the column follows the air's own thinning (exponential in height), fitted
+     to Périer's two numbers. 8.5 / 71.2 = 12%: an eighth of the air above the garden is below the summit.
+     At 8.5 cm per ~1,000 m, the 71.2 cm column would be used up 71.2 / 8.5 x 1,000 = ~8,400 m up.
+     The reader first drags the mercury to a guess for the summit (Kit.sure, Kit.answer; right within 3 cm).
+     Inspired by Veritasium, "World's Longest Straw" (2012). Touch: drags. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column}
+#plate{flex:1;min-height:0;width:100%;display:block;overflow:visible;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#plate.drag{cursor:grabbing}
+.answered .q{font-size:max(2.5cqh,15px)}
+@container (max-height:520px){
+  .answered .in{gap:1.5cqh}
+}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Guess, then climb · the weight of the air">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SEPTEMBER 1648</span></div>
+    <h2 class="q">How did climbing a mountain show that air has weight?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="plate" data-drag role="img" aria-label="A mercury tube beside the Puy de Dôme. Drag the climber up the path: the mercury sinks."></svg>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pascal’s bet: if air has weight, a summit has less of it above, so the mercury should sink. Drag it to your guess for the top.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Air pressure is the weight of the air overhead, so crisp bags puff up high.</div>
+    <div class="foot"><span class="src">Source · F. Périer, letter to B. Pascal, 22 Sept 1648; Linda Hall Library, “Florin Périer”</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  // Périer's two readings, in cm (1 pouce = 2.707 cm, 1 ligne = a twelfth of it).
+  const GARDEN = 26 * 2.707 + 3.5 * 2.707 / 12, TOP = 23 * 2.707 + 2 * 2.707 / 12;   // 71.17 and 62.71
+  const RATIO = TOP / GARDEN;                                                            // 0.881
+  const level = f => GARDEN * Math.pow(RATIO, f);          // the column at a fraction f of the climb
+  const INK = '#10100c', svg = Kit.$('plate'), say = Kit.$('say'), card = Kit.$('card');
+  let a = 0, phase = 'guess', guess = GARDEN, moved = false, done = false, dragging = false, G = null, hint = null, bet = null;
+  const mk = (tag, at, p) => Kit.mk(tag, at, p || svg);
+  const txt = (p, x, y, s, at) => { const e = mk('text', Object.assign({x, y, fill: INK}, at), p); e.textContent = s; return e; };
+  const cm = v => v.toFixed(1) + ' cm';
+
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg);
+    const fs = Math.max(11.5, Math.min(13, H / 24)), big = Math.max(21, Math.min(30, H / 11)), tall = H >= 200;
+    const CARD = getComputedStyle(card).getPropertyValue('--c').trim() || '#FFB000';
+    // ---- the tube, at the right of its column: the gap label on its left, the scale on its right ----
+    const bw = Math.max(70, W * .24), tw = Math.max(12, W * .04), tx = bw - tw - 15;
+    const yIn = 4, y0 = H - 9, y80 = yIn + 6;
+    const ycm = v => y0 - v / 80 * (y0 - y80);
+    const defs = mk('defs', {});
+    const mg = mk('linearGradient', {id: 'hg', x1: 0, x2: 1, y1: 0, y2: 0}, defs);
+    [['0', '#4a4d55'], ['.45', '#d9dce2'], ['1', '#5d616a']].forEach(([o, c]) => mk('stop', {offset: o, 'stop-color': c}, mg));
+    const hp = mk('pattern', {id: 'hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(35)'}, defs);
+    mk('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: INK, 'stroke-width': 1, 'stroke-opacity': .22}, hp);
+    // ---- the readings, top left of the sky (two lines more where there is room) ----
+    const gx = bw + 6, SW = W - gx, rx = gx + 2;
+    const y1 = fs + 1, y2 = y1 + fs * .3 + big * .95 + 3, y3 = y2 + big * .33 + fs * 1.05, y4 = y3 + fs * 1.4;
+    const head = txt(svg, rx, y1, '', {'font-size': fs * .95, 'font-weight': 800, 'font-family': 'Figtree', 'letter-spacing': '.08em', opacity: .75});
+    const val = txt(svg, rx, y2, '', {'font-size': big, 'font-weight': 800, 'font-family': 'Fraunces'});
+    const old = tall ? txt(svg, rx, y3, '', {'font-size': fs, 'font-weight': 600, 'font-family': 'Figtree', opacity: .8}) : null;
+    const fri = tall ? txt(svg, rx, y4, '', {'font-size': fs, 'font-weight': 600, 'font-family': 'Figtree', opacity: .8}) : null;
+    const wide = Math.max(fs * 13, big * 4.2);
+    const readBottom = (tall ? y4 : y2) + fs * .35, readRight = rx + wide;
+    // ---- the mountain, wholly inside the frame ----
+    const yG = H - 10, sx = gx + SW * .72;
+    const clear = sx - 22 > readRight + 6;
+    const yS = Math.min(yG - 40, Math.max(clear ? readBottom + 6 : readBottom + 36, H * .26));
+    const yAlt = f => yG - f * (yG - yS);
+    const hwL = SW * .6, hwR = Math.min(SW * .6, W - 4 - sx);
+    const flank = (f, side) => sx + side * (side < 0 ? hwL : hwR) * Math.pow(1 - f, .62);
+    // A lower puy behind, for depth.
+    const bcx = gx + SW * .26, bhw = SW * .25, by = yAlt(.4);
+    mk('path', {d: `M${gx},${yG} C${bcx - bhw * .5},${yG} ${bcx - bhw * .5},${by} ${bcx},${by} S${bcx + bhw * .55},${yG} ${bcx + bhw},${yG}Z`, fill: '#FFC54A', stroke: INK, 'stroke-width': 1.4, 'stroke-opacity': .5});
+    // The Puy de Dôme, closed down to the ground on both sides.
+    const pts = [];
+    for (let i = 0; i <= 28; i++) { const f = i / 28; pts.push([flank(f, -1), yAlt(f)]); }
+    for (let i = 27; i >= 0; i--) { const f = i / 28; pts.push([flank(f, 1), yAlt(f)]); }
+    const dome = 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join('L') + 'Z';
+    mk('path', {d: dome, fill: '#F29A00'});
+    mk('path', {d: dome, fill: 'url(#hatch)'});
+    mk('path', {d: dome, fill: 'none', stroke: INK, 'stroke-width': 2, 'stroke-linejoin': 'round'});
+    // The ground and Clermont at its foot.
+    mk('line', {x1: gx - 2, y1: yG, x2: W - 1, y2: yG, stroke: INK, 'stroke-width': 2});
+    const hs = Math.max(7, Math.min(10, H / 32));
+    [[.0, 1], [.06, 1.2], [.13, .9]].forEach(([fx, k]) => {
+      const x = gx + SW * fx, w = hs * 1.2 * k, h = hs * k;
+      mk('path', {d: `M${x},${yG} V${yG - h} L${x + w / 2},${yG - h - hs * .7 * k} L${x + w},${yG - h} V${yG}Z`, fill: '#FFD27A', stroke: INK, 'stroke-width': 1.3, 'stroke-linejoin': 'round'});
+    });
+    // The garden: the friar and the tube that stays.
+    const fx0 = gx + SW * .21;
+    mk('line', {x1: fx0 + 4, y1: yG, x2: fx0 + 4, y2: yG - hs * 1.7, stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round'});
+    mk('circle', {cx: fx0, cy: yG - hs * 1.25, r: 2.6, fill: INK});
+    mk('path', {d: `M${fx0},${yG - hs * 1.25 + 2} V${yG}`, stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round'});
+    // The path: from the garden, switchbacks up the west flank to the summit.
+    const path = [], g0 = [gx + SW * .3, yG - 1];
+    for (let i = 0; i <= 60; i++) {
+      const f = i / 60, L = flank(f, -1), wdt = sx - L, zig = .35 + .22 * Math.sin(f * Math.PI * 5);
+      const px = f === 1 ? sx : L + wdt * zig * (1 - f), blend = Math.min(1, f / .08);
+      path.push([g0[0] * (1 - blend) + px * blend, yAlt(f) - (1 - f)]);
+    }
+    mk('path', {d: 'M' + path.map(p => p.map(v => v.toFixed(1)).join(',')).join('L'), fill: 'none', stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '1.5 4', 'stroke-linecap': 'round', opacity: .75});
+    // ---- the air left below the climber, and its share on a solid pill ----
+    const bandRect = mk('rect', {x: gx - 2, width: W - gx + 1, fill: INK, 'fill-opacity': .1});
+    const bandLine = mk('line', {x1: gx - 2, x2: W - 1, stroke: INK, 'stroke-width': 1.2, 'stroke-dasharray': '4 4'});
+    const pillH = fs * 1.75, pill = mk('rect', {x: gx + 6, height: pillH, rx: pillH / 2, fill: INK});
+    const pillTxt = txt(svg, gx + 6 + fs * .6, 0, '', {'font-size': fs, 'font-weight': 800, 'font-family': 'Figtree', fill: CARD});
+    // ---- the tube ----
+    mk('rect', {x: tx - 5, y: y0 - 2, width: tw + 10, height: H - y0 + 1, rx: 3, fill: 'url(#hg)', stroke: INK, 'stroke-width': 1.6});
+    for (let v = 0; v <= 75; v += 5) { const y = ycm(v), l = v % 10 ? 4 : 7; mk('line', {x1: tx + tw + 2, y1: y, x2: tx + tw + 2 + l, y2: y, stroke: INK, 'stroke-width': 1.2, opacity: .6}); }
+    const merc = mk('rect', {x: tx + 2, width: tw - 4, fill: 'url(#hg)'});
+    mk('path', {d: `M${tx},${y0} V${yIn + tw / 2} A${tw / 2},${tw / 2} 0 0 1 ${tx + tw},${yIn + tw / 2} V${y0}`, fill: 'rgba(255,255,255,.28)', stroke: INK, 'stroke-width': 2});
+    const gLine = mk('line', {x1: tx - 9, x2: tx + tw + 9, y1: ycm(GARDEN), y2: ycm(GARDEN), stroke: INK, 'stroke-width': 1.6, 'stroke-dasharray': '3 3'});
+    // The reader's guess: a white bar across the tube with a handle.
+    const gq = mk('g', {});
+    mk('line', {x1: tx - 6, x2: tx + tw + 6, y1: 0, y2: 0, stroke: '#fff', 'stroke-width': 3.2, 'stroke-linecap': 'round'}, gq);
+    mk('line', {x1: tx - 6, x2: tx + tw + 6, y1: 0, y2: 0, stroke: INK, 'stroke-width': 1, 'stroke-linecap': 'round'}, gq);
+    const gHalo = mk('circle', {cx: tx - 12, cy: 0, r: 8, fill: '#fff', stroke: INK, 'stroke-width': 1.6}, gq);
+    const brk = mk('path', {fill: 'none', stroke: INK, 'stroke-width': 1.6});
+    const brkTxt = txt(svg, tx - 10, 0, '', {'font-size': fs, 'font-weight': 800, 'font-family': 'Figtree', 'text-anchor': 'end'});
+    // ---- the climber ----
+    const who = mk('g', {});
+    const halo = mk('circle', {r: 15, fill: INK, 'fill-opacity': .12, stroke: INK, 'stroke-opacity': .35, 'stroke-width': 1.2}, who);
+    mk('circle', {cx: 0, cy: -9, r: 3.2, fill: INK}, who);
+    mk('path', {d: 'M0,-6 L0,2 M0,2 L-3,8 M0,2 L3,8 M0,-3 L-4,1', stroke: INK, 'stroke-width': 2, 'stroke-linecap': 'round', fill: 'none'}, who);
+    mk('line', {x1: -1, y1: -13, x2: 6, y2: 4, stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round'}, who);
+    G = {fs, H, yG, yS, yAlt, ycm, y0, y80, tx, tw, path, merc, gLine, gq, gHalo, brk, brkTxt, head, val, old, fri, who, bandRect, bandLine, pill, pillH, pillTxt};
+    hint = phase === 'guess' ? gHalo : halo;
+    place();
+  }
+
+  // Everything that follows the reader: the guess first, then the climber's height.
+  function place() {
+    if (!G) return;
+    const {fs, yG, yAlt, ycm, y0, tx, tw, path, merc, gLine, gq, brk, brkTxt, head, val, old, fri, who, bandRect, bandLine, pill, pillH, pillTxt} = G;
+    const n = path.length - 1, i = Math.min(n, Math.round(a * n)), [px, py] = path[i];
+    who.setAttribute('transform', `translate(${px.toFixed(1)},${(py - 8).toFixed(1)})`);
+    const v = level(a), ym = ycm(v);
+    merc.setAttribute('y', ym.toFixed(1)); merc.setAttribute('height', (y0 - ym).toFixed(1));
+    gq.setAttribute('transform', `translate(0,${ycm(guess).toFixed(1)})`);
+    gq.setAttribute('opacity', phase === 'guess' ? 1 : .85);
+    if (phase === 'guess') {
+      head.textContent = 'YOUR GUESS FOR THE TOP';
+      val.textContent = moved ? cm(guess) : '?';
+      if (old) old.textContent = 'in the garden: 71.2 cm';
+      if (fri) fri.textContent = '';
+    } else {
+      head.textContent = 'PÉRIER’S TUBE';
+      val.textContent = cm(v);
+      if (old) old.textContent = a <= .001 ? '26 pouces 3½ lignes' : a >= .999 ? '23 pouces 2 lignes' : `${Math.round(a * 100) * 10} m up`;
+      if (fri) fri.textContent = 'the friar’s, in the garden: 71.2';
+    }
+    gLine.setAttribute('opacity', 1);
+    // The bracket from the garden's level down to this one, once there is a gap to show.
+    const yg = ycm(GARDEN), gap = ym - yg;
+    if (gap > 7) {
+      const bx = tx - 5;
+      brk.setAttribute('d', `M${bx + 3},${yg} H${bx} V${ym} H${bx + 3}`); brk.setAttribute('opacity', 1);
+      brkTxt.textContent = '−' + (GARDEN - v).toFixed(1); brkTxt.setAttribute('y', ((yg + ym) / 2 + fs * .35).toFixed(1)); brkTxt.setAttribute('opacity', 1);
+    } else { brk.setAttribute('opacity', 0); brkTxt.textContent = ''; }
+    // The air now below him: what the tube lost, as a share of what it held in the garden.
+    const yb = yAlt(a), share = Math.round((1 - v / GARDEN) * 100), showBand = a > .04, room = yG - yb > pillH + 10;
+    bandRect.setAttribute('y', yb.toFixed(1)); bandRect.setAttribute('height', Math.max(0, yG - yb).toFixed(1));
+    bandLine.setAttribute('y1', yb.toFixed(1)); bandLine.setAttribute('y2', yb.toFixed(1));
+    bandRect.setAttribute('opacity', showBand ? 1 : 0); bandLine.setAttribute('opacity', showBand ? .7 : 0);
+    pillTxt.textContent = showBand && room ? `air below him: ${share}%` : '';
+    const pw = pillTxt.textContent ? pillTxt.getComputedTextLength() + fs * 1.2 : 0;
+    pill.setAttribute('width', pw.toFixed(1)); pill.setAttribute('y', (yb + 5).toFixed(1)); pill.setAttribute('opacity', pw ? 1 : 0);
+    pillTxt.setAttribute('y', (yb + 5 + pillH / 2 + fs * .36).toFixed(1));
+  }
+
+  function fromY(clientY) {
+    if (!G) return;
+    const r = svg.getBoundingClientRect(), y = clientY - r.top;
+    if (phase === 'guess') {
+      guess = Math.max(0, Math.min(79, (G.y0 - y) / (G.y0 - G.y80) * 80));
+      if (!moved) { moved = true; sure.on(); }
+      place(); return;
+    }
+    if (phase !== 'climb' && !done) return;
+    a = Math.max(0, Math.min(1, (G.yG - 8 - y) / (G.yG - G.yS)));
+    if (a > .97) a = 1;
+    place();
+    if (a === 1 && !done) finish();
+  }
+  svg.addEventListener('pointerdown', e => { dragging = true; svg.classList.add('drag'); try { svg.setPointerCapture(e.pointerId); } catch (_) {} stopHint(); fromY(e.clientY); e.preventDefault(); });
+  svg.addEventListener('pointermove', e => { if (dragging) fromY(e.clientY); });
+  const up = () => { dragging = false; svg.classList.remove('drag'); };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+  // How sure, then the climb.
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const ok = Math.abs(guess - TOP) <= 3;
+    bet = {ok, pct, said: cm(guess)};
+    Kit.answer({choice: cm(guess), correct: ok, sure: pct});
+    phase = 'climb';
+    Kit.hide('sure');
+    say.innerHTML = 'Now drag Florin Périer up the Puy de Dôme, about 1,000&nbsp;m.';
+    hint = G && G.who.firstChild; place(); startHint();
+  });
+
+  let pulse = null;
+  function startHint() {
+    if (Kit.calm || typeof gsap === 'undefined' || !hint || done) return;
+    stopHint();
+    const r0 = +hint.getAttribute('r');
+    pulse = gsap.to(hint, {attr: {r: r0 + 5}, duration: .9, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+    pulse.r0 = r0;
+  }
+  function stopHint() { if (pulse) { pulse.kill(); if (hint) hint.setAttribute('r', pulse.r0); pulse = null; } }
+
+  function finish() {
+    done = true; phase = 'done';
+    stopHint();
+    Kit.haptic('success');
+    say.innerHTML = `At the top it stood <b>8.5 cm</b> lower. An eighth of the air was now below him, so an eighth less weight held the mercury up. If air never thinned, it would end about 8&nbsp;km up.`;
+    if (bet) sure.grade(bet.ok, bet.pct, `${bet.said}, ${bet.ok ? 'right' : 'wrong'}`);
+    card.classList.add('answered');
+    Kit.show('keep');
+    requestAnimationFrame(() => draw());
+  }
+
+  Kit.onShow.card = () => { stopHint(); draw(); if (!done) startHint(); };
+  Kit.onEnter.card = () => startHint();
+  Kit.play.card = async () => {
+    stopHint();
+    guess = 50; moved = true; sure.on(); place();
+    await new Promise(r => setTimeout(r, 60));
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    if (Kit.calm || typeof gsap === 'undefined') { a = 1; place(); finish(); return; }
+    await new Promise(res => gsap.to({v: 0}, {v: 1, duration: 1.2, ease: 'power1.inOut', onUpdate() { a = this.targets()[0].v; place(); }, onComplete: res}));
+    a = 1; place(); if (!done) finish();
+    if (typeof gsap !== 'undefined') { gsap.killTweensOf('#keep'); gsap.set('#keep', {opacity: 1, y: 0}); }
+    await new Promise(r => setTimeout(r, 300));
+  };
+})();
+Kit.single();
+</script>
+</html>

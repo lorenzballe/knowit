@@ -1,0 +1,162 @@
+<!doctype html>
+<!-- slug: medicine-codeine-to-morphine -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:manipulation}
+#info{font:500 max(1.9cqh,13px)/1.3 var(--body);color:var(--k);min-height:calc(3 * max(1.9cqh,13px) * 1.3);margin:.6cqh 0 0;overflow-wrap:anywhere}
+#info b{font-weight:800}
+.foot{padding-right:max(27cqw,112px)}
+.node{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Tap to uncover">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CODEINE</span></div>
+    <h2 class="q">What share of codeine does your liver turn into morphine?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Codeine's path: gut, blood, liver"></svg>
+      <p id="info"></p>
+    </div>
+    <p class="say" id="say">Tap the gut: swallow the cough syrup.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Only about 10% of codeine becomes morphine, in the liver.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Lean, la droga viola che si fa dallo sciroppo per la tosse con la codeina: cosa fa la Purple Drank” (YouTube, 2024).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const N = 20, MORPH = new Set([3, 14]);
+const PURPLE = '#8b3dff';
+let step = 0, G = null;
+// fixed spots inside a disc for each molecule
+const OFF = [];
+for (let i = 0; i < N; i++) { const a = i * 2.39996, rr = Math.sqrt((i + .5) / N); OFF.push([Math.cos(a) * rr, Math.sin(a) * rr]); }
+const INFO = [
+  '',
+  '<b>Gut.</b> The codeine in the syrup is absorbed mainly through the walls of the gut, and ends up in the blood.',
+  '<b>Blood.</b> The circulation carries it all over the body, and so it also reaches the liver.',
+  '<b>Liver.</b> Here about 1 in 10 codeine molecules is turned into morphine. The other 9 stay codeine, and the morphine strengthens the opioid effect.'
+];
+const SAY = ['Tap the gut: swallow the cough syrup.', 'Now tap the blood.', 'Now tap the liver.'];
+const st = (o) => Object.entries(o).map(([k, v]) => k + ':' + v).join(';');
+
+function spot(i, where) {
+  if (where < 3) { const n = G.nodes[where]; return [n.x + OFF[i][0] * G.r * .6, n.y + OFF[i][1] * G.r * .6]; }
+  const m = MORPH.has(i), o = G.outs[m ? 1 : 0];
+  const k = m ? [...MORPH].indexOf(i) : i;
+  const off = m ? [[-.4, 0], [.4, 0]][k] : OFF[k];
+  return [o.x + off[0] * o.r * .62, o.y + off[1] * o.r * .62];
+}
+
+function pulse() {
+  G.rings.forEach((rg, j) => { gsap.killTweensOf(rg); gsap.set(rg, {opacity: 0}); });
+  if (step < 3 && !Kit.calm) {
+    const rg = G.rings[step];
+    gsap.fromTo(rg, {opacity: .9, attr: {r: G.r}}, {opacity: 0, attr: {r: G.r * 1.35}, duration: 1.2, repeat: -1, ease: 'power1.out'});
+  } else if (step < 3) gsap.set(G.rings[step], {opacity: .9});
+}
+
+function showLabels(upTo) {
+  G.subs.forEach((s, j) => s.style.opacity = j < upTo ? 1 : 0);
+  G.outGroup.style.opacity = upTo >= 3 ? 1 : 0;
+}
+
+Kit.onShow.card = () => {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  if (G) G.rings.forEach(rg => gsap.killTweensOf(rg));
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(13, Math.min(f0, H * .06));
+  const r = Math.min(W * .12, H * .085);
+  const cx = W * .34;
+  const nodes = [{x: cx, y: H * .11}, {x: cx, y: H * .34}, {x: cx, y: H * .57}];
+  const outs = [{x: W * .15, y: H * .76, r: r * .82}, {x: W * .6, y: H * .76, r: r * .62}];
+  G = {W, H, f, r, nodes, outs, rings: [], subs: [], dots: []};
+  const ink = 'var(--k)';
+  // links
+  const lk = (a, b, g) => Kit.mk('line', {x1: a.x, y1: a.y, x2: b.x, y2: b.y, style: st({stroke: ink, 'stroke-width': Math.max(2, r * .05), 'stroke-dasharray': `${r * .12} ${r * .12}`, opacity: .45})}, g || svg);
+  lk(nodes[0], nodes[1]); lk(nodes[1], nodes[2]);
+  const og = Kit.mk('g', {}, svg); G.outGroup = og;
+  lk(nodes[2], outs[0], og); lk(nodes[2], outs[1], og);
+  // outputs
+  outs.forEach((o, j) => {
+    Kit.mk('circle', {cx: o.x, cy: o.y, r: o.r, style: st({fill: 'var(--c)', stroke: j ? PURPLE : ink, 'stroke-width': Math.max(2, r * .06)})}, og);
+    const t1 = Kit.mk('text', {x: o.x, y: o.y + o.r + f * 1.15, 'text-anchor': 'middle', style: st({font: `700 ${f}px var(--body)`, fill: ink})}, og);
+    t1.textContent = j ? 'Morphine' : 'Codeine';
+    const t2 = Kit.mk('text', {x: o.x, y: o.y + o.r + f * 3.0, 'text-anchor': 'middle', style: st({font: `800 ${f * 1.2}px var(--display)`, fill: j ? PURPLE : ink})}, og);
+    t2.textContent = j ? '≈ 10%' : '≈ 90%';
+  });
+  // nodes
+  const names = ['Gut', 'Blood', 'Liver'], subs = ['absorbs it', 'carries it everywhere', 'codeine → morphine'];
+  const glyph = [
+    s => `M${-.5*s},${-.3*s} q${.25*s},${-.3*s} ${.5*s},0 t${.5*s},0 M${-.5*s},${.05*s} q${.25*s},${-.3*s} ${.5*s},0 t${.5*s},0 M${-.5*s},${.4*s} q${.25*s},${-.3*s} ${.5*s},0 t${.5*s},0`,
+    s => `M0,${-.55*s} C${.35*s},${-.1*s} ${.45*s},${.1*s} ${.45*s},${.25*s} A${.45*s},${.45*s} 0 0 1 ${-.45*s},${.25*s} C${-.45*s},${.1*s} ${-.35*s},${-.1*s} 0,${-.55*s}Z`,
+    s => `M${-.6*s},${-.1*s} C${-.5*s},${-.5*s} ${.4*s},${-.55*s} ${.62*s},${-.2*s} C${.5*s},${.2*s} ${-.1*s},${.55*s} ${-.45*s},${.3*s} C${-.6*s},${.2*s} ${-.62*s},${.05*s} ${-.6*s},${-.1*s}Z`
+  ];
+  nodes.forEach((n, j) => {
+    const g = Kit.mk('g', {class: 'node', 'data-i': j}, svg);
+    G.rings.push(Kit.mk('circle', {cx: n.x, cy: n.y, r: r, style: st({fill: 'none', stroke: ink, 'stroke-width': Math.max(2, r * .05), opacity: 0})}, g));
+    Kit.mk('circle', {cx: n.x, cy: n.y, r: r, style: st({fill: 'var(--c)', stroke: ink, 'stroke-width': Math.max(2.5, r * .07)})}, g);
+    Kit.mk('path', {d: glyph[j](r), transform: `translate(${n.x},${n.y})`, style: st({fill: j ? ink : 'none', stroke: ink, 'stroke-width': Math.max(2, r * .07), 'stroke-linecap': 'round', opacity: .18})}, g);
+    const lx = n.x + r + f * .7;
+    const t = Kit.mk('text', {x: lx, y: n.y - f * .1, style: st({font: `800 ${f * 1.15}px var(--display)`, fill: ink})}, g);
+    t.textContent = names[j];
+    const s = Kit.mk('text', {x: lx, y: n.y + f * 1.3, style: st({font: `600 ${Math.max(12, f * .85)}px var(--body)`, fill: ink, opacity: 0})}, g);
+    s.textContent = subs[j]; G.subs.push(s);
+    Kit.mk('rect', {x: n.x - r, y: n.y - r, width: W - (n.x - r), height: 2 * r, style: 'fill:transparent'}, g);
+  });
+  // molecules
+  const dr = Math.max(2.6, r * .11);
+  for (let i = 0; i < N; i++) {
+    const where = step === 0 ? 0 : (step === 3 ? 3 : step - 1);
+    const [x, y] = spot(i, where);
+    const m = step === 3 && MORPH.has(i);
+    G.dots.push(Kit.mk('circle', {cx: x, cy: y, r: step === 0 ? 0 : dr, style: st({fill: m ? PURPLE : 'var(--c)', stroke: m ? PURPLE : ink, 'stroke-width': Math.max(1.5, dr * .45)})}, svg));
+  }
+  G.dr = dr;
+  showLabels(step);
+  pulse();
+};
+
+function advance(j) {
+  if (j !== step || step >= 3) return;
+  step++; Kit.haptic(step === 3 ? 'success' : 'light');
+  const d = Kit.calm ? 0 : 1;
+  pulse();
+  G.subs[step - 1].style.opacity = 1;
+  Kit.$('info').innerHTML = INFO[step];
+  if (step === 1) {
+    G.dots.forEach((c, i) => gsap.to(c, {attr: {r: G.dr}, duration: .35 * d, delay: i * .025 * d, ease: 'back.out(2)'}));
+  } else if (step === 2) {
+    G.dots.forEach((c, i) => { const [x, y] = spot(i, 1); gsap.to(c, {attr: {cx: x, cy: y}, duration: .7 * d, delay: i * .02 * d, ease: 'power2.inOut'}); });
+  } else {
+    const tl = gsap.timeline();
+    G.dots.forEach((c, i) => { const [x, y] = spot(i, 2); tl.to(c, {attr: {cx: x, cy: y}, duration: .6 * d, ease: 'power2.inOut'}, i * .015 * d); });
+    tl.add(() => { G.outGroup.style.opacity = 1; });
+    tl.to([...MORPH].map(i => G.dots[i]), {fill: PURPLE, stroke: PURPLE, attr: {r: G.dr * 1.25}, duration: .35 * d});
+    G.dots.forEach((c, i) => { const [x, y] = spot(i, 3); tl.to(c, {attr: {cx: x, cy: y, r: G.dr}, duration: .7 * d, ease: 'power2.inOut'}, `>-${.68 * d}`); });
+    Kit.hide('say'); Kit.show('keep');
+    return;
+  }
+  Kit.$('say').textContent = SAY[step];
+}
+
+Kit.$('pic').addEventListener('click', e => {
+  const g = e.target.closest('.node'); if (!g) return;
+  advance(+g.dataset.i);
+});
+
+Kit.onEnter.card = () => { if (!Kit.calm && G) gsap.from(Kit.$('pic').querySelectorAll('.node'), {opacity: 0, y: 12, stagger: .1, duration: .45, ease: 'power3.out'}); };
+
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let j = 0; j < 3; j++) {
+    Kit.$('pic').querySelector(`.node[data-i="${j}"] rect`).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    await w(j < 2 ? 1000 : 2400);
+  }
+};
+Kit.single();
+</script>
+</html>

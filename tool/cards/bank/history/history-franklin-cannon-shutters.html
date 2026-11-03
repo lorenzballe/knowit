@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: history-franklin-cannon-shutters -->
+<title>Franklin's cannons at dawn</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FRANKLIN 1784</span></div>
+    <h2 class="q">What bizarre measures did Benjamin Franklin propose in 1784 to save candle oil?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A Paris house at sunrise, shutters closed, a cannon in the street"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">Move every clock one hour forward</button>
+        <button class="opt" data-i="1">Fire cannons at dawn and tax window shutters</button>
+        <button class="opt" data-i="2">Make candles cheaper so evenings cost less</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Cannons at dawn, a tax on shutters</p>
+        <p class="body">Franklin saw Parisians sleep through sunny mornings and burn candles at night. His joke in the Journal de Paris: wake them with cannons, tax their shutters. He never moved a clock.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick Franklin's idea, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Franklin's "daylight saving" was a joke about late risers, not about clocks.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Dall'ora legale all'ora solare: i pro e contro del cambio orario e perché si parla di abolizione” (YouTube, 2022).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+let pick = -1, done = false;
+const RED = '#c8372d', SUN = '#f2a900';
+
+function draw(){
+  const svg = Kit.$('pic');
+  const {W, H, f} = Kit.fitSvg(svg);
+  svg.innerHTML = '';
+  const fs = Math.max(f, 13), m = Math.min(W, H);
+  const ground = H * .9;
+  // ground
+  Kit.mk('line', {x1: 0, x2: W, y1: ground, y2: ground, stroke: 'var(--k)', 'stroke-width': Math.max(2, m*.012), 'stroke-linecap': 'round'}, svg);
+  // sun
+  const r = m * .085, scx = W * .17, scy = Math.max(H * .26, r + fs * 2.4);
+  const sun = Kit.mk('g', {id: 'sun'}, svg);
+  for (let i = 0; i < 10; i++){
+    const a = i / 10 * Math.PI * 2;
+    Kit.mk('line', {x1: scx + Math.cos(a)*r*1.25, y1: scy + Math.sin(a)*r*1.25, x2: scx + Math.cos(a)*r*1.6, y2: scy + Math.sin(a)*r*1.6, stroke: SUN, 'stroke-width': Math.max(2, r*.12), 'stroke-linecap': 'round'}, sun);
+  }
+  Kit.mk('circle', {cx: scx, cy: scy, r, fill: SUN}, sun);
+  const lab = Kit.mk('text', {x: scx, y: scy - r*1.6 - fs*.4, 'text-anchor': 'middle', fill: 'var(--k)', style: `font:700 ${fs}px var(--body)`}, svg);
+  lab.textContent = 'Paris, 1784: sun up';
+  // house
+  const x0 = W * .44, x1 = W * .96, y0 = H * .2, hw = x1 - x0, hh = ground - y0;
+  Kit.mk('polygon', {points: `${x0 - hw*.03},${y0} ${x0 + hw*.12},${y0 - hh*.13} ${x1 - hw*.12},${y0 - hh*.13} ${x1 + hw*.03},${y0}`, fill: 'var(--k)'}, svg);
+  Kit.mk('rect', {x: x0, y: y0, width: hw, height: hh, fill: 'color-mix(in srgb,var(--k) 10%,var(--c))', stroke: 'var(--k)', 'stroke-width': Math.max(2, m*.01)}, svg);
+  const ww = hw * .3, wh = hh * .3;
+  const cols = [x0 + hw*.27, x0 + hw*.73], rows = [y0 + hh*.1, y0 + hh*.52];
+  const tight = hh * .42 < fs * 1.4;
+  rows.forEach((ry, ri) => cols.forEach(cx => {
+    const wx = cx - ww/2;
+    Kit.mk('rect', {x: wx, y: ry, width: ww, height: wh, class: 'glass', fill: 'var(--k)'}, svg);
+    if (!(tight && ri > 0)){
+      const z = Kit.mk('text', {x: cx, y: ry - fs*.35, 'text-anchor': 'middle', class: 'zzz', fill: 'var(--k)', style: `font:700 ${fs}px var(--hand)`}, svg);
+      z.textContent = 'zzz';
+    }
+    ['L', 'R'].forEach(s => {
+      Kit.mk('rect', {x: s === 'L' ? wx : cx, y: ry, width: ww/2, height: wh, class: 'shut' + s, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, m*.007)}, svg);
+    });
+  }));
+  // cannon
+  const wr = m * .06, wcx = W * .17, wcy = ground - wr;
+  const barrel = Kit.mk('g', {transform: `rotate(-22 ${wcx} ${wcy})`}, svg);
+  const bl = W * .2, bh = wr * .95;
+  Kit.mk('rect', {x: wcx - bl*.3, y: wcy - bh/2, width: bl, height: bh, rx: bh*.4, fill: 'var(--k)'}, barrel);
+  const mx = wcx + bl*.7, my = wcy;
+  const flash = Kit.mk('g', {id: 'flash', opacity: 0}, barrel);
+  Kit.mk('polygon', {points: `${mx},${my-bh*.6} ${mx+bh*1.6},${my-bh*1.1} ${mx+bh*1.1},${my} ${mx+bh*1.8},${my+bh*.9} ${mx},${my+bh*.6}`, fill: SUN}, flash);
+  Kit.mk('circle', {cx: wcx, cy: wcy, r: wr, fill: 'var(--c)', stroke: 'var(--k)', 'stroke-width': Math.max(2, wr*.3)}, svg);
+  Kit.mk('circle', {cx: wcx, cy: wcy, r: wr*.2, fill: 'var(--k)'}, svg);
+  const boom = Kit.mk('text', {id: 'boom', x: W * .3, y: ground - wr*2 - bl*.45 - fs*.4, 'text-anchor': 'middle', fill: RED, opacity: 0, style: `font:800 ${fs*1.35}px var(--display)`}, svg);
+  boom.textContent = 'BOOM!';
+  // stamp
+  const sx = x0 + hw/2, sy = y0 + hh*.46, sw = hw*.92, sh = fs*2.3;
+  const stamp = Kit.mk('g', {id: 'stamp', opacity: 0}, svg);
+  const inner = Kit.mk('g', {transform: `rotate(-10 ${sx} ${sy})`}, stamp);
+  Kit.mk('rect', {x: sx - sw/2, y: sy - sh/2, width: sw, height: sh, rx: sh*.2, fill: 'var(--c)', stroke: RED, 'stroke-width': Math.max(2.5, fs*.22)}, inner);
+  const st = Kit.mk('text', {x: sx, y: sy + fs*.36, 'text-anchor': 'middle', fill: RED, style: `font:800 ${Math.max(13, Math.min(fs, sw/9))}px var(--mono)`}, inner);
+  st.textContent = 'TAX ON SHUTTERS';
+  if (done) finalState();
+}
+
+function finalState(){
+  gsap.set('.shutL', {scaleX: .18, transformOrigin: '0% 50%'});
+  gsap.set('.shutR', {scaleX: .18, transformOrigin: '100% 50%'});
+  gsap.set('.glass', {fill: SUN});
+  gsap.set('.zzz', {opacity: 0});
+  gsap.set(['#boom', '#stamp'], {opacity: 1});
+}
+
+function reveal(){
+  done = true;
+  if (Kit.calm){ finalState(); return; }
+  const tl = gsap.timeline();
+  tl.to('#flash', {opacity: 1, duration: .08, yoyo: true, repeat: 3})
+    .fromTo('#boom', {opacity: 0, scale: .3, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .45, ease: 'back.out(3)'}, '<')
+    .to('.zzz', {opacity: 0, y: -10, duration: .3}, '<.1')
+    .to('.shutL', {scaleX: .18, transformOrigin: '0% 50%', duration: .5, ease: 'power3.out', stagger: .06}, '<.1')
+    .to('.shutR', {scaleX: .18, transformOrigin: '100% 50%', duration: .5, ease: 'power3.out', stagger: .06}, '<')
+    .to('.glass', {fill: SUN, duration: .4}, '<.2')
+    .fromTo('#stamp', {opacity: 0, scale: 1.8, transformOrigin: '50% 50%'}, {opacity: 1, scale: 1, duration: .35, ease: 'power4.in'}, '+=.15');
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, ok ? 'Cannons and shutters: right' : 'Not that one: it was cannons and shutters');
+  Kit.show('keep');
+  Kit.haptic(ok ? 'success' : 'light');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  gsap.from('#sun', {y: 30, opacity: 0, duration: 1, ease: 'power2.out'});
+  gsap.to('.zzz', {y: -4, duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut', stagger: .2});
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 1800));
+};
+Kit.single();
+</script>
+</html>

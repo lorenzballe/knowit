@@ -1,0 +1,164 @@
+<!doctype html>
+<!-- slug: history-vajont-lake-710 -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh}
+#pic{flex:1;min-height:0;position:relative}
+#pic svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:ns-resize}
+#act{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 4cqw;cursor:pointer;align-self:flex-start}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(3.2cqh,18px)/1.1 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="history" data-kind="Drag · watch">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">VAJONT 1963</span></div>
+    <h2 class="q">How high did the Vajont lake rise before Monte Toc gave way?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="svg"></svg></div>
+      <button id="act" class="gone">26 Sept 1963 · Lower the lake</button>
+      <div id="why" class="gone">
+        <p class="big">Up to 710 m</p>
+        <p class="body">The lake behind the dam was raised to 710 m while the slope of Monte Toc above it was creeping 2 cm a day. It was brought back to a safe level on 26 September, but too late: on 9 October, 270 million m³ of rock broke away.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag up on the picture to fill the lake.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>At Vajont, lowering the water came after the mountain had already started to move.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Il disastro del Vajont: l’analisi geologica e la ricostruzione della tragedia del 9 ottobre 1963” (YouTube, 2021).</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {L: .08, s: 0, crack: 0};
+let phase = 0, G = null, E = {}, status = '', fs = 14;
+
+function mk(t, a, p) { return Kit.mk(t, a, p); }
+
+function build() {
+  const svg = Kit.$('svg');
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  fs = Math.max(12, f);
+  G = {W, H, fl: H * .9, top: H * .4, xl0: 0, yl0: H * .2, xl1: W * .44, xr0: W * .56, xr1: W, yr1: H * .24};
+  G.lx = y => G.xl0 + (y - G.yl0) / (G.fl - G.yl0) * (G.xl1 - G.xl0);
+  G.rx = y => G.xr0 + (G.fl - y) / (G.fl - G.yr1) * (G.xr1 - G.xr0);
+  E.water = mk('path', {style: 'fill:#2f7fd0;opacity:.9'}, svg);
+  E.ground = mk('path', {style: 'fill:var(--k)'}, svg);
+  E.target = mk('line', {style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:6 5;opacity:.55'}, svg);
+  E.tlab = mk('text', {style: `font:800 ${fs * 1.25}px var(--display);fill:var(--k)`, 'text-anchor': 'middle'}, svg);
+  E.slabG = mk('g', {}, svg);
+  E.slab = mk('path', {style: 'fill:#c9975a;stroke:var(--k);stroke-width:1.5'}, E.slabG);
+  E.arrow = mk('path', {style: 'fill:none;stroke:var(--k);stroke-width:3;stroke-linecap:round;stroke-linejoin:round'}, E.slabG);
+  E.crack = mk('path', {style: 'fill:none;stroke:#e8482f;stroke-width:3;stroke-dasharray:7 5'}, svg);
+  E.lake = mk('text', {style: `font:700 ${fs}px var(--body);fill:#fff;letter-spacing:.1em`, 'text-anchor': 'middle'}, svg);
+  E.toc = mk('text', {style: `font:700 ${fs}px var(--body);fill:var(--c);letter-spacing:.08em`}, svg);
+  E.toc.textContent = 'MONTE TOC';
+  E.creep = mk('text', {style: `font:700 ${fs}px var(--body);fill:#e8482f`}, svg);
+  E.stat = mk('text', {style: `font:700 ${fs}px var(--body);fill:var(--k)`}, svg);
+  E.hand = mk('g', {}, svg);
+  mk('circle', {r: fs * 1.1, style: 'fill:var(--c);stroke:var(--k);stroke-width:2.5'}, E.hand);
+  mk('path', {d: `M0 ${fs * .5}V${-fs * .5}M${-fs * .4} ${-fs * .1}L0 ${-fs * .5}L${fs * .4} ${-fs * .1}`, style: 'fill:none;stroke:var(--k);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round'}, E.hand);
+  render();
+}
+
+function render() {
+  if (!G) return;
+  const {W, H, fl, top} = G;
+  const y = fl - st.L * (fl - top);
+  E.water.setAttribute('d', `M${G.lx(y)} ${y}L${G.rx(y)} ${y}L${G.xr0} ${fl}L${G.xl1} ${fl}Z`);
+  E.ground.setAttribute('d', `M0 ${G.yl0}L${G.xl1} ${fl}L${G.xr0} ${fl}L${W} ${G.yr1}L${W} ${H}L0 ${H}Z`);
+  E.target.setAttribute('x1', G.lx(top)); E.target.setAttribute('x2', G.rx(top));
+  E.target.setAttribute('y1', top); E.target.setAttribute('y2', top);
+  E.tlab.setAttribute('x', W * .5); E.tlab.setAttribute('y', top - fs * .55);
+  E.tlab.textContent = st.L > .97 || phase > 0 ? '710 m' : '';
+  // slab on the left slope
+  const P = t => [G.xl0 + t * (G.xl1 - G.xl0), G.yl0 + t * (fl - G.yl0)];
+  const a = G.xl1 - G.xl0, b = fl - G.yl0, len = Math.hypot(a, b);
+  const th = Math.min(W, H) * .1, nx = -b / len * th, ny = a / len * th;
+  const p1 = P(.2), p2 = P(.97);
+  const q2 = [p2[0] + nx * .35, p2[1] + ny * .35], q1 = [p1[0] + nx, p1[1] + ny];
+  E.slab.setAttribute('d', `M${p1[0]} ${p1[1]}L${p2[0]} ${p2[1]}L${q2[0]} ${q2[1]}L${q1[0]} ${q1[1]}Z`);
+  const m = P(.55), dx = a / len, dy = b / len, al = fs * 1.6, mx = m[0] + nx * .35, my = m[1] + ny * .35;
+  E.arrow.setAttribute('d', `M${mx - dx * al} ${my - dy * al}L${mx + dx * al} ${my + dy * al}M${mx + dx * al - dx * fs * .7 - dy * fs * .5} ${my + dy * al - dy * fs * .7 + dx * fs * .5}L${mx + dx * al} ${my + dy * al}L${mx + dx * al - dx * fs * .7 + dy * fs * .5} ${my + dy * al - dy * fs * .7 - dx * fs * .5}`);
+  E.arrow.style.opacity = st.crack * (1 - st.s);
+  E.crack.setAttribute('d', `M${p1[0]} ${p1[1]}L${q1[0]} ${q1[1]}L${q2[0]} ${q2[1]}`);
+  E.crack.style.opacity = st.crack;
+  E.slabG.setAttribute('transform', `translate(${st.s * W * .17} ${st.s * H * .13}) rotate(${st.s * 6} ${p2[0]} ${p2[1]})`);
+  E.lake.setAttribute('x', (G.lx(y) + G.rx(y)) / 2 + W * .03);
+  E.lake.setAttribute('y', (y + fl) / 2 + fs * .35);
+  E.lake.textContent = st.L > .35 && st.s < .3 ? 'LAKE' : '';
+  E.toc.setAttribute('x', fs * .6); E.toc.setAttribute('y', H - fs * .6);
+  E.toc.textContent = (H - fs * 1.7) > (fs * 3.3) || !status ? 'MONTE TOC' : '';
+  E.creep.setAttribute('x', fs * .5); E.creep.setAttribute('y', fs * 1.3);
+  E.creep.textContent = st.crack > .5 ? (phase >= 2 ? 'Slope still creeping' : 'Slope creeping · 2 cm a day') : '';
+  E.stat.setAttribute('x', fs * .5); E.stat.setAttribute('y', fs * 2.75);
+  E.stat.textContent = status;
+  E.hand.setAttribute('transform', `translate(${G.rx(y) - fs * 2.2} ${y})`);
+  E.hand.style.display = phase === 0 ? '' : 'none';
+}
+
+function full() {
+  if (phase) return;
+  phase = 1; Kit.haptic('light');
+  status = 'Lake up to 710 m';
+  gsap.to(st, {L: 1, crack: 1, duration: Kit.calm ? .01 : .8, ease: 'power2.out', onUpdate: render});
+  Kit.$('say').textContent = 'The mountain is moving. Lower the water?';
+  Kit.show('act');
+}
+
+function setFromY(clientY) {
+  if (phase || !G) return;
+  const r = Kit.$('svg').getBoundingClientRect();
+  const y = (clientY - r.top) * G.H / r.height;
+  st.L = Math.max(.08, Math.min(1, (G.fl - y) / (G.fl - G.top)));
+  render();
+  if (st.L >= .97) full();
+}
+const svgEl = Kit.$('svg');
+let dragging = false;
+svgEl.addEventListener('pointerdown', e => { dragging = true; svgEl.setPointerCapture(e.pointerId); setFromY(e.clientY); });
+svgEl.addEventListener('pointermove', e => { if (dragging) setFromY(e.clientY); });
+svgEl.addEventListener('pointerup', () => dragging = false);
+
+Kit.$('act').addEventListener('click', () => {
+  if (phase !== 1) return;
+  phase = 2; Kit.hide('act'); Kit.haptic('selection');
+  const k = Kit.calm ? .01 : 1;
+  status = '26 Sept · back to a safe level';
+  Kit.$('say').textContent = 'Watch what happens next.';
+  gsap.timeline({onUpdate: render})
+    .to(st, {L: .76, duration: 1.3 * k, ease: 'power2.inOut', onUpdate: render})
+    .add(() => { status = '9 Oct · 270 million m³ break away'; render(); }, '+=' + .5 * k)
+    .to(st, {s: 1, duration: 1.4 * k, ease: 'power2.in', onUpdate: render}, '+=' + .3 * k)
+    .add(() => {
+      phase = 3; Kit.haptic('success');
+      Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+      Kit.onShow.card();
+    });
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !E.hand) return;
+  gsap.fromTo(st, {L: .08}, {L: .22, duration: .7, yoyo: true, repeat: 1, ease: 'sine.inOut', onUpdate: render});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const r = svgEl.getBoundingClientRect();
+  const o = {bubbles: true, pointerId: 1, clientX: r.left + r.width * .7};
+  svgEl.dispatchEvent(new PointerEvent('pointerdown', {...o, clientY: r.bottom - 5}));
+  svgEl.dispatchEvent(new PointerEvent('pointermove', {...o, clientY: r.top + r.height * .3}));
+  svgEl.dispatchEvent(new PointerEvent('pointerup', o));
+  full();
+  await wait(1000);
+  Kit.$('act').click();
+  await wait(4500);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "science-flames-standing-wave",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Why do flames change height at different points in the tube?",
+  "answer": "The tallest flames are where there is lots of vibration. Where the air vibrates hard, local pressure and gas flow rise, and the flame grows tall. So flame height follows how strongly the air vibrates at each point in the tube.",
+  "move": "Tall flames mark the strongest vibration.",
+  "keywords": [
+    "standing waves",
+    "flame tube",
+    "vibration",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Page asks why flames change height at different points along a tube, and which points will have the tallest flames. Three choices are offered: little vibration, lots of vibration, or same everywhere."
+  },
+  "source": "Veritasium, “Musical Fire Table!” (YouTube, 2014)",
+  "reference": "https://www.youtube.com/watch?v=2awbKQ2DLRE",
+  "written": "2026-11-03"
+}

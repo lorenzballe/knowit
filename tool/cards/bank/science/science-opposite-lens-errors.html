@@ -1,0 +1,220 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<!-- A free card: one card whose face is this page, shown in the app inside the native card frame.
+     The kit is linked as kit/...; nothing else may be linked, and nothing is fetched. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+/* What this card needs beyond the kit. Sizes in cqh/cqw, so the card is the same on every phone. */
+#stage{display:flex;flex-direction:column;gap:1.3cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;align-self:stretch;position:relative;overflow:hidden;border-radius:2cqh;background:#0b1528}
+#sv{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+#tune{flex:none;align-self:stretch;display:flex;align-items:center;gap:3cqw;padding:0 1cqw}
+#tune .lab{font:700 max(1.7cqh,12px)/1 var(--mono);letter-spacing:.08em;color:var(--k);white-space:nowrap}
+#k{flex:1;min-width:0;margin:0;height:max(5.2cqh,36px);background:none;-webkit-appearance:none;appearance:none;touch-action:none;cursor:pointer;accent-color:#2bb5e8}
+#k:focus{outline:none}
+#k::-webkit-slider-runnable-track{height:max(1.1cqh,7px);border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--k) 18%,transparent),#2bb5e8)}
+#k::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;box-sizing:border-box;width:max(4.4cqh,30px);height:max(4.4cqh,30px);margin-top:calc((max(1.1cqh,7px) - max(4.4cqh,30px)) / 2);border-radius:50%;background:#0b1528;border:max(.55cqh,3.5px) solid #5cd6ff;box-shadow:0 .3cqh 1cqh rgba(0,0,0,.3)}
+#k::-moz-range-track{height:max(1.1cqh,7px);border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--k) 18%,transparent),#2bb5e8)}
+#k::-moz-range-thumb{box-sizing:border-box;width:max(4.4cqh,30px);height:max(4.4cqh,30px);border-radius:50%;background:#0b1528;border:max(.55cqh,3.5px) solid #5cd6ff}
+#why p{margin:0;font:500 max(2cqh,13px)/1.35 var(--body);color:var(--k)}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Slider · tune">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">OPTICS</span></div>
+    <h2 class="q">How can two specially designed lenses nearly cancel spherical aberration?</h2>
+    <div class="stagebox" id="stage">
+      <div id="pic"><svg id="sv" role="img" aria-label="Light rays pass through lens 1 and lens 2 to an image point. Below, lens 1's error curve plus lens 2's error curve equals their sum."></svg></div>
+      <div id="tune"><span class="lab">LENS 2</span><input id="k" type="range" min="0" max="1.6" step="0.01" value="0" aria-label="How strongly lens 2 errs the other way"></div>
+    </div>
+    <div id="why" class="gone"><p>Lens 1 focuses its edge rays too soon. Lens 2 has the same error pointing the other way, so together the errors add up to almost zero.</p></div>
+    <p class="say" id="say">Drag until every ray meets in one point.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Can’t remove an error? Add its exact opposite.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Can You Keep Zooming In Infinitely?” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const svg = Kit.$('sv'), pic = Kit.$('pic'), slider = Kit.$('k');
+const TOL = .07, RHO = [1, .8, .6, .4, .2];
+const C = {ray: '#e6f6ff', glow: '#7fd3ff', l1: '#ffb35c', l2: '#5cd6ff', sum: '#ffffff', txt: '#e9f1ff', mute: '#9fb2cc'};
+const S = {k: 0, zone: false, done: false};
+let G = null, hold = 0, ro = null;
+const mk = (t, a, p) => Kit.mk(t, a, p);
+const at = (el, a) => { for (const n in a) el.setAttribute(n, a[n]); };
+const f1 = v => v.toFixed(1);
+
+function label(x, y, s, fill, px, fam, ls) {
+  const t = mk('text', {x: f1(x), y: f1(y), fill, 'text-anchor': 'middle', style: `font:700 ${f1(px)}px var(${fam});letter-spacing:${ls}`}, svg);
+  t.textContent = s;
+  return t;
+}
+
+// One error curve in a small graph: the center ray on the left, the edge ray on the right.
+function curve(o, s, area) {
+  const g = G, x0 = o.bx + g.gw * .12, w = g.gw * .76;
+  let d = '';
+  for (let j = 0; j <= 20; j++) {
+    const p = j / 20;
+    d += (j ? 'L' : 'M') + f1(x0 + p * w) + ',' + f1(g.base - s * g.amp * p * p);
+  }
+  return area ? d + 'L' + f1(x0 + w) + ',' + f1(g.base) + 'L' + f1(x0) + ',' + f1(g.base) + 'Z' : d;
+}
+
+function build() {
+  const r = pic.getBoundingClientRect();
+  if (r.width < 40 || r.height < 40) return;
+  while (svg.firstChild) svg.firstChild.remove();
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(12.5, Math.min(f || 14, H / 15, W / 21));
+  const pad = fs * .8, top = pad * .7 + fs * 1.6, capH = fs * 1.9, gap = fs * .9;
+  const avail = Math.max(70, H - top - capH - gap - pad * .3);
+  const RH = Math.min(avail * .56, W * .72), GH = Math.min(avail - RH, W * .36);
+  const oy = Math.max(0, (H - top - RH - gap - GH - capH) / 2);
+  const g = G = {W, H, fs};
+  g.x1 = W * .17; g.x2 = W * .5; g.xS = W * .83; g.xL = pad * .6; g.xE = W - pad * .6;
+  g.yc = oy + top + RH / 2; g.R = RH * .4; g.hh = RH * .47; g.A = (g.xS - g.x1) * .24;
+  g.gTop = oy + top + RH + gap; g.gw = Math.min(W * .25, GH * 1.9); g.base = g.gTop + GH / 2; g.amp = GH * .28;
+
+  const defs = mk('defs', {}, svg), rg = mk('radialGradient', {id: 'glw'}, defs);
+  mk('stop', {offset: '0', 'stop-color': '#fff'}, rg);
+  mk('stop', {offset: '.35', 'stop-color': C.glow, 'stop-opacity': '.5'}, rg);
+  mk('stop', {offset: '1', 'stop-color': C.glow, 'stop-opacity': '0'}, rg);
+  g.clip = mk('rect', {x: 0, y: 0, width: W, height: H}, mk('clipPath', {id: 'clp'}, defs));
+  const cl = {'clip-path': 'url(#clp)'};
+
+  // the axis and the plane where the image forms
+  mk('line', {x1: f1(g.xL), y1: f1(g.yc), x2: f1(g.xE), y2: f1(g.yc), stroke: C.mute, 'stroke-opacity': .45, 'stroke-dasharray': '3 5'}, svg);
+  mk('line', {x1: f1(g.xS), y1: f1(g.yc - g.hh), x2: f1(g.xS), y2: f1(g.yc + g.hh), stroke: C.sum, 'stroke-opacity': .5, 'stroke-width': 1.5}, svg);
+
+  // light rays: a soft glow under a bright core, faint after the image plane
+  const gG = mk('g', {fill: 'none', stroke: C.glow, 'stroke-opacity': .2, 'stroke-width': 4.5, 'stroke-linejoin': 'round', ...cl}, svg);
+  const rG = mk('g', {fill: 'none', stroke: C.ray, 'stroke-width': 1.5, 'stroke-linejoin': 'round', ...cl}, svg);
+  const tG = mk('g', {stroke: C.ray, 'stroke-opacity': .3, 'stroke-width': 1.2, ...cl}, svg);
+  g.rays = [];
+  for (const rho of RHO) for (const sg of [1, -1]) g.rays.push({rho, sg, a: mk('polyline', {}, gG), b: mk('polyline', {}, rG), t: mk('line', {}, tG)});
+
+  // lens 1: an ordinary converging lens; lens 2: thin in the middle, flaring at the edges
+  const t1 = Math.max(5, W * .028), x1 = g.x1, yc = g.yc, hh = g.hh;
+  mk('path', {d: `M${f1(x1)},${f1(yc - hh)}Q${f1(x1 + 2 * t1)},${f1(yc)} ${f1(x1)},${f1(yc + hh)}Q${f1(x1 - 2 * t1)},${f1(yc)} ${f1(x1)},${f1(yc - hh)}Z`, fill: C.l1, 'fill-opacity': .22, stroke: C.l1, 'stroke-width': 2}, svg);
+  g.lens2 = mk('path', {fill: C.l2, 'fill-opacity': .22, stroke: C.l2, 'stroke-width': 2, 'stroke-linejoin': 'round'}, svg);
+
+  // the spot of light on the image plane
+  g.halo = mk('ellipse', {cx: f1(g.xS), cy: f1(yc), fill: 'url(#glw)', ...cl}, svg);
+  g.core = mk('rect', {x: f1(g.xS - 1.6), width: 3.2, rx: 1.6, fill: '#fff', ...cl}, svg);
+  const dG = mk('g', {fill: '#fff', ...cl}, svg);
+  for (const ray of g.rays) ray.d = mk('circle', {cx: f1(g.xS), r: 2.2}, dG);
+  g.ring = mk('circle', {cx: f1(g.xS), cy: f1(yc), r: 0, fill: 'none', stroke: '#fff', 'stroke-width': 2, opacity: 0}, svg);
+
+  const yl = oy + pad * .7 + fs;
+  label(g.x1, yl, 'LENS 1', C.l1, fs, '--mono', '.06em');
+  label(g.x2, yl, 'LENS 2', C.l2, fs, '--mono', '.06em');
+  label(g.xS, yl, 'IMAGE', C.txt, fs, '--mono', '.06em');
+
+  // the error curves, each under what it belongs to: lens 1 + lens 2 = the image
+  const col = [C.l1, C.l2, C.sum];
+  g.box = [g.x1, g.x2, g.xS].map((cx, i) => {
+    const o = {bx: cx - g.gw / 2};
+    mk('rect', {x: f1(o.bx), y: f1(g.gTop), width: f1(g.gw), height: f1(GH), rx: f1(fs * .5), fill: '#fff', 'fill-opacity': .05, stroke: '#fff', 'stroke-opacity': .14}, svg);
+    mk('line', {x1: f1(o.bx + 5), y1: f1(g.base), x2: f1(o.bx + g.gw - 5), y2: f1(g.base), stroke: '#fff', 'stroke-opacity': .3, 'stroke-dasharray': '2 4'}, svg);
+    if (i === 1) mk('path', {d: curve(o, -1), fill: 'none', stroke: C.l2, 'stroke-opacity': .45, 'stroke-width': 1.5, 'stroke-dasharray': '3 3'}, svg);
+    if (i === 2) o.glow = mk('path', {fill: 'none', stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-opacity': 0}, svg);
+    o.area = mk('path', {fill: col[i], 'fill-opacity': .16}, svg);
+    o.line = mk('path', {fill: 'none', stroke: col[i], 'stroke-width': i === 2 ? 3 : 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+    return o;
+  });
+  const op = fs * 1.4, yo = g.base + op * .36;
+  label((g.x1 + g.x2) / 2, yo, '+', C.txt, op, '--mono', '0');
+  label((g.x2 + g.xS) / 2, yo, '=', C.txt, op, '--mono', '0');
+  const cap = label(W / 2, g.gTop + GH + fs * 1.35, 'each ray’s focus error, center → edge', C.mute, fs, '--body', '0');
+  try { if (cap.getComputedTextLength() > W - 2 * pad) cap.textContent = 'focus error, center → edge'; } catch (e) {}
+  render();
+}
+
+function render() {
+  const g = G;
+  if (!g) return;
+  const k = S.k, sm = 1 - k, sharp = Math.abs(sm) < .004;
+  let blur = 0;
+  for (const r of g.rays) {
+    const q = r.rho * r.rho, h = r.rho * g.R * r.sg;
+    // lens 1 alone sends the ray across the axis at xS - A*q: edge rays cross too soon
+    const h2 = h * (1 - (g.x2 - g.x1) / (g.xS - g.A * q - g.x1));
+    // lens 2 adds k times the opposite error: the two errors sum to (1 - k)
+    const sl = h2 / (g.xS - sm * g.A * q - g.x2);
+    const hS = h2 - sl * (g.xS - g.x2), hE = h2 - sl * (g.xE - g.x2);
+    blur = Math.max(blur, Math.abs(hS));
+    const p = `${f1(g.xL)},${f1(g.yc - h)} ${f1(g.x1)},${f1(g.yc - h)} ${f1(g.x2)},${f1(g.yc - h2)} ${f1(g.xS)},${f1(g.yc - hS)}`;
+    r.a.setAttribute('points', p);
+    r.b.setAttribute('points', p);
+    at(r.t, {x1: f1(g.xS), y1: f1(g.yc - hS), x2: f1(g.xE), y2: f1(g.yc - hE)});
+    r.d.setAttribute('cy', f1(g.yc - hS));
+  }
+  const w0 = Math.max(1.5, g.W * .006), wc = g.W * .026;
+  let dr = '', dl = '';
+  for (let j = 0; j <= 24; j++) {
+    const y = g.yc - g.hh + 2 * g.hh * j / 24, u = Math.abs(y - g.yc) / g.hh, w = w0 + k * wc * u ** 4;
+    dr += (j ? 'L' : 'M') + f1(g.x2 + w) + ',' + f1(y);
+    dl = 'L' + f1(g.x2 - w) + ',' + f1(y) + dl;
+  }
+  g.lens2.setAttribute('d', dr + dl + 'Z');
+  [1, -k, sm].forEach((s, i) => {
+    const o = g.box[i];
+    o.line.setAttribute('d', curve(o, s));
+    o.area.setAttribute('d', curve(o, s, true));
+  });
+  const o2 = g.box[2];
+  o2.glow.setAttribute('d', curve(o2, sm));
+  o2.glow.setAttribute('stroke-opacity', sharp ? .25 : 0);
+  const b = Math.max(blur, 1.6), hr = g.fs * (sharp ? 1.5 : .85);
+  at(g.halo, {rx: f1(hr), ry: f1(blur + hr)});
+  at(g.core, {y: f1(g.yc - b), height: f1(2 * b)});
+}
+
+function finish() {
+  if (S.done) return;
+  S.done = true;
+  clearTimeout(hold);
+  Kit.haptic('success');
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) setTimeout(() => { if (G) gsap.fromTo(G.ring, {attr: {r: 3}, opacity: .95}, {attr: {r: G.fs * 2.4}, opacity: 0, duration: .9, ease: 'power2.out'}); }, 220);
+}
+
+// The slider sets how strongly lens 2 errs the other way; near the exact match it clicks into place.
+function setK(v) {
+  const t = Math.abs(v - 1) < TOL ? 1 : v, z = t === 1;
+  if (z && !S.zone) Kit.haptic('light');
+  S.zone = z;
+  if (Kit.calm) { gsap.killTweensOf(S); S.k = t; render(); }
+  else gsap.to(S, {k: t, duration: .3, ease: 'power2.out', overwrite: true, onUpdate: render});
+  clearTimeout(hold);
+  if (z && !S.done) hold = setTimeout(finish, 700);
+}
+slider.addEventListener('input', () => setK(+slider.value));
+slider.addEventListener('change', () => { if (Math.abs(+slider.value - 1) < TOL) finish(); });
+
+// Draw at the card's real size here: called once the fonts are in, and again on every resize.
+Kit.onShow.card = () => {
+  build();
+  if (!ro && window.ResizeObserver) { ro = new ResizeObserver(() => build()); ro.observe(pic); }
+};
+// Motion the reader should see starts here: the light sweeps in from the left.
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.clip, {attr: {width: 0}}, {attr: {width: G.W}, duration: 1.2, ease: 'power2.inOut'});
+};
+// Plays the card through for the checker, which photographs the end too.
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const v of [.4, .8, 1.35, 1]) {
+    slider.value = v;
+    slider.dispatchEvent(new Event('input', {bubbles: true}));
+    await w(200);
+  }
+  slider.dispatchEvent(new Event('change', {bubbles: true}));
+  await w(1100);
+};
+Kit.single();
+</script>
+</html>

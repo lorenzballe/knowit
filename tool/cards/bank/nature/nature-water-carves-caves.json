@@ -1,0 +1,37 @@
+{
+  "id": "nature-water-carves-caves",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does plain water carve caves out of solid rock?",
+  "answer": "Limestone is calcium carbonate, and rainwater dissolves it grain by grain. The water sinks through cracks and widens them into passages. When the water is loaded with dissolved rock, it drops some of it again, which is how stalactites and stalagmites grow.",
+  "move": "A cave is rock that water dissolved, and partly built back.",
+  "keywords": [
+    "limestone",
+    "rainwater",
+    "caves",
+    "stalactites",
+    "stalagmites"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Asks how plain water carves caves out of solid rock. Shows rain sinking through cracks in limestone, widening them into passages, and redepositing rock to form stalactites and stalagmites."
+  },
+  "source": "Geopop, “SPELEOLOGIA: ME LA SONO FATTA UN PO' SOTTO, MA CHE AVVENTURA! 🎬” (YouTube, 2020)",
+  "reference": "https://www.youtube.com/watch?v=alSGiLnBsnQ&t=16s",
+  "written": "2026-11-03"
+}

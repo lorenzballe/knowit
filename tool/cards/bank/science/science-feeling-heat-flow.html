@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- slug: science-feeling-heat-flow -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#pic{display:block;width:100%;flex:1;min-height:0}
+#opts{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{margin:0}
+#why .body{margin:0;overflow-wrap:break-word}
+.opt{font:700 max(2.1cqh,14px)/1.2 var(--body);text-align:center;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.5cqh 2cqw;cursor:pointer;overflow-wrap:break-word}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#pic text{font-family:var(--body);font-weight:700}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">HEAT FLOW</span></div>
+    <h2 class="q">A metal hard drive and a book share a room. Which is colder?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The hard drive</button>
+        <button class="opt" data-i="1">The book</button>
+        <button class="opt" data-i="2">Neither: same</button>
+      </div>
+      <div id="why" class="gone"><p class="big">Same temperature</p><p class="body">Both sit at room temperature, and your warmer hand loses heat to each. Metal conducts it away fast, so it feels cold; the book takes it slowly. Same reason a bath mat feels nicer than the towel beside it.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Touch them in your mind. Pick one, then say how sure.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>You don't feel temperature; you feel how fast heat flows to or from you.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Misconceptions About Temperature” (YouTube, 2012)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 2;
+let pick = -1, revealed = false;
+const HEAT = '#e4572e';
+let G = null;
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H} = Kit.fitSvg(svg);
+  const fs = Math.max(12, Math.min(H * .055, W * .042, 18));
+  const ow = Math.min(W * .36, H * .55), oh = H * .21, top = H * .28;
+  const rlY = Math.min(H * .92, H - fs * .7);
+  const tlY = Math.min(H * .81, rlY - fs * 1.35);
+  const cols = [
+    {x: W * .27, feel: 'feels cold', rate: 'heat leaves fast', every: 55, speed: H * .55},
+    {x: W * .73, feel: 'feels warm', rate: 'heat leaves slowly', every: 420, speed: H * .12}
+  ];
+  const ink = 'var(--k)';
+  cols.forEach((c, i) => {
+    const g = Kit.mk('g', {}, svg);
+    // object
+    if (i === 0) {
+      Kit.mk('rect', {x: c.x - ow / 2, y: top, width: ow, height: oh, rx: 5, fill: '#a9b2bc', stroke: ink, 'stroke-width': 2}, g);
+      Kit.mk('circle', {cx: c.x - ow * .08, cy: top + oh / 2, r: oh * .34, fill: '#d6dbe1', stroke: ink, 'stroke-width': 1.5}, g);
+      Kit.mk('circle', {cx: c.x - ow * .08, cy: top + oh / 2, r: oh * .07, fill: ink}, g);
+      Kit.mk('line', {x1: c.x + ow * .22, y1: top + oh * .25, x2: c.x + ow * .22, y2: top + oh * .75, stroke: ink, 'stroke-width': 3, 'stroke-linecap': 'round'}, g);
+    } else {
+      Kit.mk('rect', {x: c.x - ow / 2, y: top, width: ow, height: oh, rx: 4, fill: '#c0492f', stroke: ink, 'stroke-width': 2}, g);
+      Kit.mk('rect', {x: c.x - ow / 2, y: top, width: ow * .1, height: oh, fill: '#8e3121', stroke: ink, 'stroke-width': 2}, g);
+      Kit.mk('rect', {x: c.x + ow / 2 - ow * .06, y: top + oh * .08, width: ow * .06, height: oh * .84, fill: '#f7f1e3', stroke: ink, 'stroke-width': 1}, g);
+      Kit.mk('rect', {x: c.x - ow * .18, y: top + oh * .3, width: ow * .4, height: oh * .12, fill: '#f0c94a', opacity: .9}, g);
+    }
+    // particles layer
+    c.pg = Kit.mk('g', {}, svg);
+    // hand pressing from above
+    const hw = ow * .5;
+    const hand = Kit.mk('g', {}, svg);
+    Kit.mk('rect', {x: c.x - hw / 2, y: -20, width: hw, height: top + 20, rx: hw * .22, fill: '#f1c09a', stroke: ink, 'stroke-width': 2}, hand);
+    for (let k = 1; k <= 3; k++) {
+      const fx = c.x - hw / 2 + hw * k / 4;
+      Kit.mk('line', {x1: fx, y1: top - H * .1, x2: fx, y2: top - 3, stroke: ink, 'stroke-width': 1.3, opacity: .55}, hand);
+    }
+    // labels
+    Kit.mk('text', {x: c.x, y: H * .6, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs, fill: ink}, svg).textContent = c.feel;
+    // thermometer
+    const th = Math.max(8, H * .032), tx = c.x - ow / 2 + th, tw = ow - th * 1.5, ty = Math.min(H * .71, tlY - fs * .6 - th * .9 - 2);
+    Kit.mk('rect', {x: tx, y: ty - th / 2, width: tw, height: th, rx: th / 2, fill: 'none', stroke: ink, 'stroke-width': 1.6}, svg);
+    c.fill = Kit.mk('rect', {x: tx, y: ty - th / 2, width: revealed ? tw * .55 : 0, height: th, rx: th / 2, fill: HEAT}, svg);
+    Kit.mk('circle', {cx: tx, cy: ty, r: th * .9, fill: HEAT, stroke: ink, 'stroke-width': 1.6}, svg);
+    c.tw = tw;
+    c.tl = Kit.mk('text', {x: c.x, y: tlY, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs, fill: ink}, svg);
+    c.tl.textContent = revealed ? 'room temperature' : 'temperature ?';
+    c.rl = Kit.mk('text', {x: c.x, y: rlY, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs, fill: HEAT}, svg);
+    c.rl.textContent = revealed ? c.rate : '';
+    c.y0 = top + 2; c.len = oh * .85; c.hw = hw; c.acc = 0; c.parts = []; c.r = Math.max(2.5, H * .012);
+  });
+  G = {cols};
+  if (revealed && Kit.calm) staticDots();
+}
+
+function staticDots(){
+  G.cols.forEach((c, i) => {
+    const n = i === 0 ? 9 : 2;
+    for (let k = 0; k < n; k++) Kit.mk('circle', {cx: c.x + (Kit.rnd() - .5) * c.hw * .8, cy: c.y0 + c.len * (k + .5) / n, r: c.r, fill: HEAT, opacity: 1 - k / n * .7}, c.pg);
+  });
+}
+
+gsap.ticker.add((t, dt) => {
+  if (!revealed || Kit.calm || !G) return;
+  G.cols.forEach(c => {
+    c.acc += dt;
+    while (c.acc > c.every) {
+      c.acc -= c.every;
+      const el = Kit.mk('circle', {cx: c.x + (Math.random() - .5) * c.hw * .8, cy: c.y0, r: c.r, fill: HEAT}, c.pg);
+      c.parts.push({el, y: c.y0});
+    }
+    c.parts = c.parts.filter(p => {
+      p.y += c.speed * dt / 1000;
+      const u = (p.y - c.y0) / c.len;
+      if (u >= 1) { p.el.remove(); return false; }
+      p.el.setAttribute('cy', p.y); p.el.setAttribute('opacity', 1 - u);
+      return true;
+    });
+  });
+});
+
+function reveal(){
+  revealed = true;
+  G.cols.forEach((c, i) => {
+    gsap.to(c.fill, {attr: {width: c.tw * .55}, duration: Kit.calm ? 0 : 1, delay: i * .15, ease: 'power2.out'});
+    c.tl.textContent = 'room temperature';
+    c.rl.textContent = c.rate;
+    if (!Kit.calm) gsap.from([c.tl, c.rl], {opacity: 0, duration: .5, delay: .6 + i * .15});
+  });
+  if (Kit.calm) staticDots();
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+  reveal();
+  Kit.haptic(ok ? 'success' : 'light');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); };
+Kit.play.card = async () => { Kit.$('opts').children[2].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 1400)); };
+Kit.single();
+</script>
+</html>

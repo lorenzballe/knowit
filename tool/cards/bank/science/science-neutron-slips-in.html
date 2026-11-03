@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-neutron-slips-in -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0;border-radius:2cqh;background:color-mix(in srgb,var(--k) 6%,transparent);overflow:hidden}
+#sim{position:absolute;inset:0;width:100%;height:100%;display:block}
+#stats{display:flex;justify-content:space-between;gap:3cqw;font:700 max(1.8cqh,12px)/1.25 var(--mono);color:var(--k)}
+#stats .p{color:#d9472b}
+#ctrl{display:flex;flex-direction:column;gap:1cqh}
+#modes{display:flex;gap:2.5cqw}
+.mode{flex:1;font:700 max(2cqh,14px)/1.2 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 3cqw;cursor:pointer}
+.mode.on{background:var(--k);color:var(--c);box-shadow:none}
+#fire{font:800 max(2.3cqh,15px)/1.2 var(--body);color:#fff;background:#d9472b;border:0;border-radius:1.8cqh;padding:1.7cqh 4cqw;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .1s}
+#fire.n{background:var(--k);color:var(--c)}
+#fire.down{transform:scale(.97);filter:brightness(1.1)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:break-word}
+.foot{padding-right:112px}
+.say,.q{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Hold · simulate">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">NEUTRON</span></div>
+    <h2 class="q">Why did discovering the neutron in 1932 change nuclear research?</h2>
+    <div class="stagebox" id="stage"><svg id="sim"></svg></div>
+    <div id="stats"><span class="p" id="sp">Protons in: 0 of 0</span><span id="sn">Neutrons in: 0 of 0</span></div>
+    <div id="ctrl">
+      <div id="modes">
+        <button class="mode on" data-m="p">Proton ( + )</button>
+        <button class="mode" data-m="n">Neutron ( 0 )</button>
+      </div>
+      <button id="fire">Hold to fire protons</button>
+    </div>
+    <p class="say" id="say">Pick a particle, then hold the button to fire it at the nucleus.</p>
+    <div id="why" class="gone">
+      <p class="body">The nucleus is positive, so a proton (+) is pushed away before it arrives. The neutron, found in 1932, is about 0.1% heavier than a proton but has no charge: nothing pushes it back, so it slips straight in.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>No charge, no push: the neutron could reach the nucleus and split it.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Man Who Gave us the Power To Destroy Ourselves (Oppenheimer)” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#d9472b';
+let svg, W = 300, H = 300, f = 14, cx, cy, R, V, K;
+let gTrails, gParts, gNuc, ring, flash;
+let parts = [], mode = 'p', firing = false, spawnT = 0, done = false;
+const fired = {p: 0, n: 0}, hits = {p: 0, n: 0};
+
+function ink() { return getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111'; }
+
+function build() {
+  svg = Kit.$('sim');
+  const s = Kit.fitSvg(svg); W = s.W; H = s.H; f = s.f;
+  svg.innerHTML = ''; parts = [];
+  cx = W * 0.66; cy = H * 0.48; R = Math.min(W, H) * 0.13;
+  V = W / 1.5; K = 0.5 * V * V * R * 1.7;
+  const k = ink();
+  ring = Kit.mk('circle', {cx, cy, r: R * 1.7, fill: 'none', stroke: RED, 'stroke-width': Math.max(1.5, f * .12), 'stroke-dasharray': '4 6', opacity: mode === 'p' ? .45 : 0}, svg);
+  gTrails = Kit.mk('g', {}, svg);
+  gNuc = Kit.mk('g', {}, svg);
+  flash = Kit.mk('circle', {cx, cy, r: R, fill: '#ffd166', opacity: 0}, svg);
+  const n = 19, br = R * 0.27;
+  for (let i = 0; i < n; i++) {
+    const a = i * 2.39996, rr = R * 0.78 * Math.sqrt((i + .5) / n);
+    const x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a), pro = i % 2 === 0;
+    Kit.mk('circle', {cx: x, cy: y, r: br, fill: pro ? RED : k, stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1}, gNuc);
+  }
+  const lab = Kit.mk('text', {x: cx, y: cy + R * 1.7 + f * 1.4, 'text-anchor': 'middle', fill: k, 'font-size': Math.max(12, f * .95), 'font-weight': 700, 'font-family': 'var(--body)'}, svg);
+  lab.textContent = 'Nucleus (+)';
+  gParts = Kit.mk('g', {}, svg);
+}
+
+function spawn() {
+  const k = ink(), r = Math.max(5, R * 0.24);
+  const p = {type: mode, x: -r, y: cy + (Kit.rnd() * 2 - 1) * R * 0.75, vx: V, vy: 0, tr: []};
+  p.g = Kit.mk('g', {}, gParts);
+  Kit.mk('circle', {cx: 0, cy: 0, r, fill: mode === 'p' ? RED : k, stroke: '#fff', 'stroke-width': 1.5}, p.g);
+  if (mode === 'p' && r * 1.2 >= 12) { const t = Kit.mk('text', {x: 0, y: r * .4, 'text-anchor': 'middle', fill: '#fff', 'font-size': r * 1.2, 'font-weight': 800, 'font-family': 'sans-serif'}, p.g); t.textContent = '+'; }
+  p.path = Kit.mk('path', {fill: 'none', stroke: mode === 'p' ? RED : k, 'stroke-width': Math.max(1.5, r * .35), 'stroke-linecap': 'round', opacity: .35}, gTrails);
+  parts.push(p); fired[mode]++; stats();
+}
+
+function stats() {
+  Kit.$('sp').textContent = `Protons in: ${hits.p} of ${fired.p}`;
+  Kit.$('sn').textContent = `Neutrons in: ${hits.n} of ${fired.n}`;
+}
+
+function kill(p) { p.dead = true; p.g.remove(); gsap.to(p.path, {opacity: 0, duration: .5, onComplete: () => p.path.remove()}); }
+
+function hit(p) {
+  hits.n++; stats(); kill(p); Kit.haptic('light');
+  gsap.fromTo(flash, {opacity: .8, attr: {r: R * .6}}, {opacity: 0, attr: {r: R * 1.5}, duration: .5, ease: 'power2.out'});
+  gsap.fromTo(gNuc, {scale: 1.12}, {scale: 1, duration: .5, ease: 'elastic.out(1,.4)', svgOrigin: `${cx} ${cy}`});
+}
+
+function tick(t, dtms) {
+  if (!svg) return;
+  const dt = Math.min(dtms, 50) / 1000;
+  if (firing) { spawnT -= dt; if (spawnT <= 0) { spawn(); spawnT = 0.17; } }
+  let near = 0;
+  for (const p of parts) {
+    if (p.dead) continue;
+    const h = dt / 6;
+    for (let s = 0; s < 6 && !p.dead; s++) {
+      const dx = p.x - cx, dy = p.y - cy, r = Math.hypot(dx, dy) || 1;
+      if (p.type === 'p') { const a = K / (r * r); p.vx += a * dx / r * h; p.vy += a * dy / r * h; if (r < R * 2.4) near = 1; }
+      else if (r < R * 0.85) { hit(p); break; }
+      p.x += p.vx * h; p.y += p.vy * h;
+    }
+    if (p.dead) continue;
+    p.g.setAttribute('transform', `translate(${p.x},${p.y})`);
+    p.tr.push([p.x, p.y]); if (p.tr.length > 22) p.tr.shift();
+    p.path.setAttribute('d', 'M' + p.tr.map(q => q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('L'));
+    if (p.x < -40 || p.x > W + 40 || p.y < -40 || p.y > H + 40) kill(p);
+  }
+  parts = parts.filter(p => !p.dead);
+  if (ring) ring.setAttribute('opacity', mode === 'p' ? (near ? .9 : .4) : .12);
+  if (!done && !firing && fired.p >= 5 && fired.n >= 5 && parts.length === 0) finish();
+}
+
+function finish() {
+  done = true; Kit.haptic('success');
+  Kit.hide('say'); Kit.hide('ctrl'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .12, duration: .4});
+}
+
+Kit.$('modes').addEventListener('click', e => {
+  const b = e.target.closest('.mode'); if (!b) return;
+  mode = b.dataset.m; Kit.haptic('selection');
+  document.querySelectorAll('.mode').forEach(x => x.classList.toggle('on', x === b));
+  const fb = Kit.$('fire'); fb.classList.toggle('n', mode === 'n');
+  fb.textContent = mode === 'p' ? 'Hold to fire protons' : 'Hold to fire neutrons';
+});
+const fb = Kit.$('fire');
+const down = e => { e.preventDefault(); firing = true; spawnT = 0; fb.classList.add('down'); };
+const up = () => { firing = false; fb.classList.remove('down'); };
+fb.addEventListener('pointerdown', down);
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => fb.addEventListener(ev, up));
+fb.addEventListener('contextmenu', e => e.preventDefault());
+
+gsap.ticker.add(tick);
+Kit.onShow.card = () => { build(); };
+Kit.onEnter.card = () => { if (!Kit.calm && gNuc) gsap.from(gNuc, {scale: 0, duration: .7, ease: 'back.out(1.6)', svgOrigin: `${cx} ${cy}`}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  const ev = n => fb.dispatchEvent(new PointerEvent(n, {bubbles: true}));
+  ev('pointerdown'); await w(1100); ev('pointerup'); await w(300);
+  document.querySelector('.mode[data-m="n"]').click();
+  ev('pointerdown'); await w(1100); ev('pointerup'); await w(2600);
+};
+Kit.single();
+</script>
+</html>

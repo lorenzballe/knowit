@@ -1,0 +1,36 @@
+{
+  "id": "technology-swaying-tower-stress",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much higher could stress get once the skyscraper sways?",
+  "answer": "The original calculation treated the tower as standing still, but the wind tunnel measured it moving. That motion piled on force, pushing stresses up to 60% above what had been anticipated. Tapping the card lets the wind push the tower further, step by step.",
+  "move": "A building that moves feels more force than one that stands still.",
+  "keywords": [
+    "skyscraper",
+    "wind_tunnel",
+    "wind_load",
+    "structural_stress"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Interactive wind-tunnel page: a skyscraper sways in the wind. It asks how much higher stress could get once the building moves, and tapping lets the wind push the tower further, step by step."
+  },
+  "source": "Veritasium, “This Skyscraper Was Days From Collapsing And No One Knew” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=Q56PMJbCFXQ&t=1089s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "space-spice-stuffy-nose",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.living_on_mars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the food on Artemis II often so spicy?",
+  "answer": "Without weight in orbit, body fluids drift up to the head and stuff the nose, somewhat like a cold. A stuffy nose makes food taste flat, so space food is made spicy and hot to taste of something again.",
+  "move": "In orbit a stuffy head dulls taste; spice gives the flavour back.",
+  "keywords": [
+    "artemis-ii",
+    "microgravity",
+    "space-food",
+    "taste",
+    "spice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two panels of a head, labelled On Earth and In orbit, with fluid drifting up into the nose. The page asks the reader to flip from Earth to orbit, watch the nose, then add spice."
+  },
+  "source": "Geopop, “Cosa si mangia su Artemis II, la navicella spaziale che sta facendo il giro attorno alla luna?” (YouTube, 2026)",
+  "reference": "https://www.youtube.com/watch?v=W7hfmLtz_As&t=71s",
+  "written": "2026-11-03"
+}

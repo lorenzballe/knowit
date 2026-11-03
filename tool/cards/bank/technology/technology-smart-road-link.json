@@ -1,0 +1,37 @@
+{
+  "id": "technology-smart-road-link",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why will the Salerno–Reggio Calabria be Italy's first hands-free motorway?",
+  "answer": "The Salerno–Reggio Calabria motorway will be Italy's first hands-free motorway because a last-generation wireless network will link the road, the user and the vehicle, making it Italy's first smart road. The irony is that this motorway is famous for delays, slowed by money and politics, and also by cliffs over the sea and ever-changing rock.",
+  "move": "Hands-free needs a road that shares data with the car, not just a smarter car.",
+  "keywords": [
+    "salerno-reggio-calabria",
+    "italy",
+    "smart-road",
+    "motorway",
+    "wireless-network"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A card titled SMART ROAD asks why the Salerno–Reggio Calabria motorway will be Italy's first hands-free motorway. The reader can tap the driver, the car and the road to see each one linked to the network by a wireless connection. The card notes the irony of a motorway famous for delays and gives a source."
+  },
+  "source": "Geopop, “i motivi dei tempi biblici della Salerno - Reggio Calabria? Sono anche geologici! #shorts” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=WNXPja-xG8c",
+  "written": "2026-11-03"
+}

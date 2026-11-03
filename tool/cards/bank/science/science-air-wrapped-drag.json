@@ -1,0 +1,37 @@
+{
+  "id": "science-air-wrapped-drag",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What drag coefficient does a projectile wrapped in air get underwater?",
+  "answer": "The water-repelling sphere carries a shell of air, so it moves as a smooth torpedo of gas, not a solid. Researchers measured it in 2017 (Science Advances): a drag coefficient of only 0.02 to 0.03, ten times lower than the same shape made solid.",
+  "move": "Wrap a body in air and its drag in water falls by a whole order of magnitude.",
+  "keywords": [
+    "drag",
+    "air",
+    "water",
+    "projectile",
+    "science advances"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Two spheres sit above a water surface, one solid and one wrapped in a shell of air. The question asks what drag coefficient a projectile wrapped in air gets underwater, and a slider drops both spheres into the water."
+  },
+  "source": "The Action Lab, “Hydrophobic Projectiles Slice Through Water With No Drag” (YouTube, 2021)",
+  "reference": "https://www.youtube.com/watch?v=EQCzO4RfZAM&t=285s",
+  "written": "2026-11-03"
+}

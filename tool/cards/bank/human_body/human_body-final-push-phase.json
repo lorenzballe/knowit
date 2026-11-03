@@ -1,0 +1,37 @@
+{
+  "id": "human_body-final-push-phase",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Final contractions vs the push phase: what's the difference?",
+  "answer": "Final contractions are the uterus squeezing on its own, which opens the cervix, the door at the bottom of the uterus. In the push phase, the mother actively pushes until the head, then the whole baby, comes out.",
+  "move": "Contractions open the door; the mother's pushing moves the baby through it.",
+  "keywords": [
+    "uterus",
+    "cervix",
+    "contractions",
+    "push phase",
+    "birth"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Split-screen question: what is the difference between the final contractions and the push phase of birth? Tap Squeeze three times and watch the cervix at the bottom of the uterus open."
+  },
+  "source": "Geopop, “Come nasce un essere umano: l'incredibile percorso dalla fecondazione al parto” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=vCWzf0yxik8&t=588s",
+  "written": "2026-11-03"
+}

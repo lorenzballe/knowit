@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-fermat-padic-numbers -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;position:relative}
+#sv{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(3cqh,18px)/1.1 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body)}
+.ink{fill:var(--k)}
+.mut{fill:var(--muted)}
+.trk{stroke:color-mix(in srgb,var(--k) 25%,transparent)}
+.tk{stroke:color-mix(in srgb,var(--k) 45%,transparent)}
+.gl{stroke:var(--k);stroke-dasharray:4 4;opacity:.7}
+.bar{fill:var(--k)}
+.flag{fill:var(--c);stroke:var(--k)}
+.hl{fill:color-mix(in srgb,var(--k) 10%,transparent)}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Guess · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FERMAT</span></div>
+    <h2 class="q">How did Fermat’s Last Theorem lead to inventing p‑adic numbers?</h2>
+    <div class="stagebox" id="stage"><svg id="sv"></svg></div>
+    <p class="say" id="say">Drag the flag to how many years you think the proof took.</p>
+    <div id="why" class="gone"><p class="big" id="wbig">358 years</p><p class="body">Fermat’s “marvelous proof” never turned up, and the old tools couldn’t do it. New numbers had to be invented, the p‑adics, and they also gave a systematic way to solve other problems in Diophantus’ Arithmetica.</p></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Some problems only fall when we invent new numbers.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “What happens if you just keep squaring?” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const MAX = 500, REAL = 358;
+let guess = 60, shown = 0, revealed = false, done = false, dragging = false, G = {};
+const svg = Kit.$('sv');
+const S = (n, a) => Kit.mk(n, a, svg);
+function yOf(v){ return G.y0 + (G.y1 - G.y0) * v / MAX; }
+function vOf(clientY){
+  const r = svg.getBoundingClientRect();
+  const y = (clientY - r.top) * (G.H / r.height);
+  return Math.round(Math.max(5, Math.min(MAX, (y - G.y0) / (G.y1 - G.y0) * MAX)));
+}
+function txt(x, y, s, size, cls, anchor, weight, fam){
+  const t = S('text', {x, y, 'font-size': size, 'text-anchor': anchor || 'start', class: cls || 'ink',
+    style: `font-family:${fam || 'var(--body)'};font-weight:${weight || 600}`});
+  t.textContent = s; return t;
+}
+function draw(){
+  const {W, H, f} = Kit.fitSvg(svg);
+  while (svg.firstChild) svg.firstChild.remove();
+  const fs = Math.max(13, Math.min(f, 22)), sm = Math.max(12, fs * .85);
+  G = {W, H, fs, sm, y0: fs * 5.2, y1: H - fs * .9, ax: W * .42};
+  const {ax, y0, y1} = G;
+  txt(W * .04, fs * 1.8, 'xⁿ + yⁿ = zⁿ', fs * 1.7, 'ink', 'start', 800, 'var(--display)');
+  txt(W * .04, fs * 3.3, 'no whole‑number answers for n > 2', sm, 'mut', 'start', 600);
+  S('line', {x1: ax, y1: y0, x2: ax, y2: y1, class: 'trk', 'stroke-width': fs * .5, 'stroke-linecap': 'round'});
+  for (let v = 100; v <= MAX; v += 100){
+    S('line', {x1: ax - fs * .6, x2: ax - fs * .25, y1: yOf(v), y2: yOf(v), class: 'tk', 'stroke-width': 1.5});
+    if (!revealed) txt(ax - fs * .9, yOf(v) + sm * .35, v + ' yrs', sm, 'mut', 'end', 600, 'var(--mono)');
+  }
+  S('circle', {cx: ax, cy: y0, r: fs * .45, class: 'ink'});
+  if (!revealed) txt(ax - fs * .9, y0 + sm * .35, 'margin note', sm, 'mut', 'end', 700);
+  // real bar
+  G.bar = S('rect', {x: ax - fs * .25, y: y0, width: fs * .5, height: Math.max(0, yOf(shown) - y0), rx: fs * .25, class: 'bar'});
+  G.cnt = txt(ax - fs * .9, yOf(shown) + fs * .4, shown + ' years', fs * 1.15, 'ink', 'end', 800, 'var(--display)');
+  G.cnt.style.opacity = revealed ? 1 : 0;
+  G.pad = S('g', {}); G.pad.style.opacity = done ? 1 : 0;
+  const yr = yOf(REAL);
+  txt(ax - fs * .9, yr + fs * 1.75, 'until proved,', sm, 'mut', 'end', 600).remove && null;
+  const lines = [['until proved,', sm, 'mut', 600], ['with new numbers:', sm, 'mut', 600], ['the p‑adics', fs * 1.15, 'ink', 800]];
+  svg.lastChild.remove();
+  let yy = yr + fs * .4;
+  if (revealed) lines.forEach(([s, z, c, w]) => { yy += z * 1.35; const t = txt(ax - fs * .9, yy, s, z, c, 'end', w, w > 700 ? 'var(--display)' : 'var(--body)'); G.pad.appendChild(t); });
+  // guess flag
+  const gy = yOf(guess);
+  G.g = S('g', {});
+  const ln = Kit.mk('line', {x1: ax, x2: W * .96, y1: gy, y2: gy, class: 'gl', 'stroke-width': 2}, G.g);
+  Kit.mk('circle', {cx: ax, cy: gy, r: fs * .7, class: 'flag', 'stroke-width': 3}, G.g);
+  const t1 = Kit.mk('text', {x: ax + fs * 1.3, y: gy - fs * .45, 'font-size': sm, class: 'mut', style: 'font-family:var(--body);font-weight:700'}, G.g);
+  t1.textContent = revealed ? 'your guess' : 'your guess · drag';
+  const t2 = Kit.mk('text', {x: ax + fs * 1.3, y: gy + fs * 1.05, 'font-size': fs * 1.1, class: 'ink', style: 'font-family:var(--display);font-weight:800'}, G.g);
+  t2.textContent = guess + ' years';
+  G.t2 = t2;
+}
+function move(e){ if (!dragging || revealed) return; guess = vOf(e.clientY); draw(); }
+svg.addEventListener('pointerdown', e => {
+  if (revealed) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch(_){}
+  Kit.haptic('selection'); move(e);
+});
+svg.addEventListener('pointermove', move);
+svg.addEventListener('pointerup', e => { if (!dragging || revealed) return; dragging = false; reveal(); });
+function reveal(){
+  revealed = true; Kit.haptic('light');
+  const off = Math.abs(guess - REAL);
+  Kit.$('wbig').textContent = `358 years. You guessed ${guess}.`;
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  draw();
+  const fin = () => { shown = REAL; done = true; draw(); Kit.haptic(off <= 50 ? 'success' : 'light'); };
+  if (Kit.calm){ fin(); return; }
+  const o = {v: 0};
+  gsap.to(o, {v: REAL, duration: 2.2, ease: 'power2.inOut', onUpdate: () => {
+    shown = Math.round(o.v);
+    G.bar.setAttribute('height', Math.max(0, yOf(shown) - G.y0));
+    G.cnt.setAttribute('y', yOf(shown) + G.fs * .4);
+    G.cnt.textContent = shown + ' years'; G.cnt.style.opacity = 1;
+  }, onComplete: () => { fin(); gsap.from(G.pad, {opacity: 0, y: 8, duration: .5}); }});
+}
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm && G.g && !revealed) gsap.fromTo(G.g, {y: -14}, {y: 0, duration: .7, ease: 'bounce.out', repeat: 1, repeatDelay: .6}); };
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), x = r.left + r.width * .6;
+  const at = v => r.top + (G.y0 + (G.y1 - G.y0) * v / MAX) * r.height / G.H;
+  const ev = (t, y) => svg.dispatchEvent(new PointerEvent(t, {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  ev('pointerdown', at(60)); await new Promise(r => setTimeout(r, 60));
+  ev('pointermove', at(200)); await new Promise(r => setTimeout(r, 60));
+  ev('pointerup', at(200)); await new Promise(r => setTimeout(r, 3000));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<!-- slug: science-pinhole-sun-image -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;touch-action:none}
+#opts{display:flex;flex-direction:column;gap:.9cqh}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+.opt{font:700 max(2cqh,14px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.6cqh;padding:1.2cqh 4cqw;cursor:pointer}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+#why .big{font:800 max(2.6cqh,16px)/1.1 var(--display)}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PINHOLE</span></div>
+    <h2 class="q">How does a tiny hole in paper make a picture of the sun?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Sun, a sheet of paper with a tiny hole, and a wall"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">The top of the bright spot</button>
+        <button class="opt" data-i="1">The bottom of the bright spot</button>
+        <button class="opt" data-i="2">All over the spot, evenly</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The bottom of the spot</p><p class="body">Light goes in straight lines. Rays from the sun's top cross through the tiny hole and land low; rays from its bottom land high. So the round spot is a real image of the sun, upside down.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Light leaves the sun's red top edge. Where on the wall does it land?</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A pinhole spot is an upside-down picture of the sun itself.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Can You Solve This Shadow Illusion?” (YouTube, 2011)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1;
+const RED = '#e2412c', BLUE = '#2a6fdb', GOLD = '#ffc21a';
+let pick = -1, revealed = false, sunDY = 0, G = null;
+
+function draw(animate) {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .85, 12);
+  const top = fs * 2;
+  const yh = top + (H - top) / 2;
+  const xs = W * .17, xh = W * .5, xw = W * .84;
+  const k = (xw - xh) / (xh - xs);
+  const r = Math.min((H - top) * .26 / k, W * .12);
+  const lim = (H - top) / 2 - r * k - 4;
+  sunDY = Math.max(-lim, Math.min(lim, sunDY));
+  const ys = yh + sunDY;
+  const ri = r * k, yi = yh - (ys - yh) * k;
+  const ink = 'var(--k)';
+  G = {xs, ys, r, yh, lim, W, H};
+
+  // labels
+  [['SUN', xs], ['TINY HOLE', xh], ['WALL', xw]].forEach(([t, x]) =>
+    Kit.mk('text', {x, y: fs * 1.1, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs, 'letter-spacing': '.08em'}, svg).textContent = t);
+
+  // wall panel
+  Kit.mk('rect', {x: xw - ri - 8, y: top, width: W - (xw - ri - 8) - 2, height: H - top - 2, rx: 6, fill: ink, 'fill-opacity': .08, stroke: ink, 'stroke-opacity': .35, 'stroke-width': 1.5}, svg);
+
+  // light cone
+  if (revealed) {
+    Kit.mk('polygon', {points: `${xs},${ys - r} ${xh},${yh} ${xs},${ys + r}`, fill: GOLD, 'fill-opacity': .22}, svg);
+    Kit.mk('polygon', {points: `${xh},${yh} ${xw},${yi - ri} ${xw},${yi + ri}`, fill: GOLD, 'fill-opacity': .22}, svg);
+  }
+
+  // image spot
+  const spot = Kit.mk('g', {}, svg);
+  if (revealed) {
+    Kit.mk('circle', {cx: xw, cy: yi, r: ri, fill: GOLD, stroke: ink, 'stroke-width': 2}, spot);
+    Kit.mk('circle', {cx: xw, cy: yi + ri, r: Math.max(5, r * .16), fill: RED, stroke: '#fff', 'stroke-width': 2}, spot);
+    Kit.mk('circle', {cx: xw, cy: yi - ri, r: Math.max(5, r * .16), fill: BLUE, stroke: '#fff', 'stroke-width': 2}, spot);
+  } else {
+    Kit.mk('circle', {cx: xw, cy: yi, r: ri, fill: GOLD, 'fill-opacity': .35, stroke: ink, 'stroke-dasharray': '5 5', 'stroke-width': 2}, spot);
+    Kit.mk('text', {x: xw, y: yi + fs * .7, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--display)', 'font-weight': 800, 'font-size': fs * 2}, spot).textContent = '?';
+  }
+
+  // paper with hole
+  const gap = 3;
+  Kit.mk('line', {x1: xh, y1: top, x2: xh, y2: yh - gap, stroke: ink, 'stroke-width': 6, 'stroke-linecap': 'round'}, svg);
+  Kit.mk('line', {x1: xh, y1: yh + gap, x2: xh, y2: H - 4, stroke: ink, 'stroke-width': 6, 'stroke-linecap': 'round'}, svg);
+
+  // rays
+  const rays = [];
+  if (revealed) {
+    [[ys - r, yi + ri, RED], [ys + r, yi - ri, BLUE]].forEach(([a, b, c]) => {
+      rays.push(Kit.mk('polyline', {points: `${xs},${a} ${xh},${yh} ${xw},${b}`, fill: 'none', stroke: c, 'stroke-width': 3.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg));
+    });
+  }
+
+  // sun
+  const sun = Kit.mk('g', {style: revealed ? 'cursor:grab' : ''}, svg);
+  for (let i = 0; i < 12; i++) {
+    const a = i * Math.PI / 6;
+    Kit.mk('line', {x1: xs + Math.cos(a) * r * 1.15, y1: ys + Math.sin(a) * r * 1.15, x2: xs + Math.cos(a) * r * 1.35, y2: ys + Math.sin(a) * r * 1.35, stroke: GOLD, 'stroke-width': 3, 'stroke-linecap': 'round'}, sun);
+  }
+  Kit.mk('circle', {cx: xs, cy: ys, r, fill: GOLD, stroke: ink, 'stroke-width': 2}, sun);
+  Kit.mk('circle', {cx: xs, cy: ys - r, r: Math.max(5, r * .16), fill: RED, stroke: '#fff', 'stroke-width': 2}, sun);
+  if (revealed) Kit.mk('circle', {cx: xs, cy: ys + r, r: Math.max(5, r * .16), fill: BLUE, stroke: '#fff', 'stroke-width': 2}, sun);
+
+  if (animate && !Kit.calm) {
+    rays.forEach((p, i) => {
+      const L = p.getTotalLength();
+      gsap.fromTo(p, {strokeDasharray: L, strokeDashoffset: L}, {strokeDashoffset: 0, duration: 1.1, delay: i * .5, ease: 'power2.inOut'});
+    });
+    gsap.from(spot, {opacity: 0, duration: .6, delay: 1.2});
+  }
+}
+
+// drag the sun once revealed: its picture moves the other way
+let dragging = false;
+const pic = Kit.$('pic');
+const moveTo = e => { const rc = pic.getBoundingClientRect(); sunDY = (e.clientY - rc.top) - G.yh; draw(false); };
+pic.addEventListener('pointerdown', e => { if (!revealed) return; dragging = true; pic.setPointerCapture(e.pointerId); moveTo(e); });
+pic.addEventListener('pointermove', e => { if (dragging) moveTo(e); });
+pic.addEventListener('pointerup', () => { if (dragging) { dragging = false; Kit.haptic('light'); } });
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.show('why');
+  Kit.$('say').textContent = 'Drag the sun up and down: its picture moves the other way.';
+  revealed = true; draw(true);
+  sure.grade(ok, pct, `${said}, ${ok ? 'right' : 'wrong'}`);
+  Kit.show('keep');
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.onShow.card = () => draw(false);
+Kit.onEnter.card = () => { if (!Kit.calm) { gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'}); gsap.from('#pic', {opacity: 0, duration: .5}); } };
+Kit.play.card = async () => { Kit.$('opts').children[1].click(); await new Promise(r => setTimeout(r, 100)); Kit.$('sure').querySelector('[data-v="80"]').click(); await new Promise(r => setTimeout(r, 2000)); };
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- slug: technology-vinyl-stereo-groove -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#groove{flex:1;min-height:0;width:100%;display:block}
+#read{font:600 max(1.9cqh,12px)/1.3 var(--body);color:var(--k);margin:0;min-height:5cqh;overflow-wrap:break-word}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.85cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+#btns{display:flex;gap:2cqw}
+.ch{flex:1;font:700 max(1.9cqh,12px)/1.15 var(--body);color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;border-radius:1.6cqh;padding:1.4cqh 2cqw;cursor:pointer;box-shadow:inset 0 0 0 .25cqh var(--bc,color-mix(in srgb,var(--k) 30%,transparent))}
+.ch[data-m="L"]{--bc:#d9480f}.ch[data-m="R"]{--bc:#1971c2}
+.ch.on{background:var(--k);color:var(--c);box-shadow:inset 0 0 0 .45cqh var(--bc)}
+.ch.done::after{content:" ✓"}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Build it · see why">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">STEREO VINYL</span></div>
+    <h2 class="q">How can one single groove carry both left and right stereo sound?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="groove" aria-label="Cross-section of a V-shaped record groove with a needle in it"></svg>
+      <p id="read">The groove, cut open: a V. The needle's tip touches both walls.</p>
+      <div id="why" class="gone">
+        <p class="body">The groove's two walls slope at about 45°, at right angles to each other: one wall carries the left channel, the other the right.</p>
+        <p class="body">Each wall pushes the needle along its own diagonal, so the pickup can pull the two apart. Same sound in both swings it side to side; differences make it rise and fall.</p>
+      </div>
+    </div>
+    <div id="btns">
+      <button class="ch" data-m="L">Left only</button>
+      <button class="ch" data-m="R">Right only</button>
+      <button class="ch" data-m="B">Both at once</button>
+    </div>
+    <p class="say" id="say">Play each channel and watch which way the needle moves.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>One V-groove, two walls at 45°: one wall per stereo channel.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Come è fatto un vinile e come funziona? Figo! Non lo sapevo” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const LC = '#d9480f', RC = '#1971c2', S2 = Math.SQRT1_2;
+let G = null, mode = null, t = 0, aL = 0, aR = 0, trail = [], tried = new Set(), finished = false;
+const READ = {
+  L: 'Left only: the left wall wiggles. The needle slides along the other wall, on a 45° diagonal.',
+  R: 'Right only: the right wall wiggles. The needle moves on the opposite 45° diagonal.',
+  B: 'Both at once: the needle scribbles a mix, yet each wall still carries just its own channel.'
+};
+function sigL(t){ return .7*Math.sin(2*Math.PI*1.3*t) + .3*Math.sin(2*Math.PI*3.1*t); }
+function sigR(t){ return .7*Math.sin(2*Math.PI*1.7*t + 1) + .3*Math.sin(2*Math.PI*2.3*t + .5); }
+function arrowD(cx, cy, ux, uy, h, hd){
+  const ax = cx - ux*h, ay = cy - uy*h, bx = cx + ux*h, by = cy + uy*h, px = -uy, py = ux;
+  const head = (x, y, sx, sy) => `M${x - sx*hd + px*hd*.6},${y - sy*hd + py*hd*.6}L${x},${y}L${x - sx*hd - px*hd*.6},${y - sy*hd - py*hd*.6}`;
+  return `M${ax},${ay}L${bx},${by}` + head(bx, by, ux, uy) + head(ax, ay, -ux, -uy);
+}
+Kit.onShow.card = () => {
+  const svg = Kit.$('groove'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(f, 12);
+  const sy = Math.max(H*.24, fs*3.2);
+  const D = Math.min(W*.32, H*.66 - sy);
+  const tx = W/2, ty = sy + D, A = D*.13, rb = D*.2;
+  const g = {W, H, fs, sy, D, tx, ty, A, rb};
+  g.slab = Kit.mk('path', {fill: 'var(--k)'}, svg);
+  g.wl = Kit.mk('line', {stroke: LC, 'stroke-linecap': 'round'}, svg);
+  g.wr = Kit.mk('line', {stroke: RC, 'stroke-linecap': 'round'}, svg);
+  // 45° marker at top-left corner
+  const cx0 = tx - D, ar = D*.28;
+  Kit.mk('path', {d: `M${cx0 + ar},${sy}A${ar},${ar} 0 0 1 ${cx0 + ar*S2},${sy + ar*S2}`, fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, fs*.12)}, svg);
+  const t45 = Kit.mk('text', {x: cx0 + ar + fs*.3, y: sy + ar*.42 + fs*.35, 'font-size': fs, 'font-weight': 800, fill: 'var(--k)', 'font-family': 'var(--mono)'}, svg); t45.textContent = '45°';
+  // wall labels on the slab
+  const lab = (x, y, txt, col, anch) => { const e = Kit.mk('text', {x, y, 'font-size': fs, 'font-weight': 800, fill: col, 'text-anchor': anch, 'font-family': 'var(--body)'}, svg); e.textContent = txt; return e; };
+  lab(tx - D*.62 - fs*.4, sy + D*.62, 'LEFT', 'var(--c)', 'end');
+  lab(tx + D*.62 + fs*.4, sy + D*.62, 'RIGHT', 'var(--c)', 'start');
+  lab(tx, ty + Math.min((H - ty)*.55, fs*2.6), 'groove 0.04–0.08 mm deep', 'var(--c)', 'middle').setAttribute('font-weight', 600);
+  // motion arrows, perpendicular to each wall
+  const ml = [tx - D*.5 + S2*D*.16, sy + D*.5 - S2*D*.16], mr = [tx + D*.5 - S2*D*.16, sy + D*.5 - S2*D*.16];
+  const sw = Math.max(2, fs*.16);
+  g.al = Kit.mk('path', {d: arrowD(ml[0], ml[1], S2, -S2, D*.12, fs*.45), fill: 'none', stroke: LC, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .3}, svg);
+  g.ar = Kit.mk('path', {d: arrowD(mr[0], mr[1], -S2, -S2, D*.12, fs*.45), fill: 'none', stroke: RC, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .3}, svg);
+  // trail and needle
+  g.tr = Kit.mk('polyline', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, fs*.12), 'stroke-linejoin': 'round', opacity: .55}, svg);
+  g.ndl = Kit.mk('g', {}, svg);
+  const bcY = ty - rb*Math.SQRT2;
+  Kit.mk('path', {d: `M${tx - rb*.55},${bcY}L${tx - rb*1.1},${-5}L${tx + rb*1.1},${-5}L${tx + rb*.55},${bcY}Z`, fill: '#8a8f98', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, fs*.1)}, g.ndl);
+  Kit.mk('circle', {cx: tx, cy: bcY, r: rb, fill: '#ffd43b', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, fs*.12)}, g.ndl);
+  g.bcY = bcY;
+  // channel meters
+  const my = Math.max(fs*1.2, sy*.42), mw = Math.min(W*.24, tx - rb*1.6 - fs*2.6 - W*.04);
+  g.mw = mw;
+  lab(W*.04, my + fs*.35, 'L', LC, 'start');
+  lab(W*.96, my + fs*.35, 'R', RC, 'end');
+  g.ml = Kit.mk('rect', {x: W*.04 + fs*1.1, y: my - fs*.35, height: fs*.7, rx: fs*.35, fill: LC, width: 0}, svg);
+  g.mr = Kit.mk('rect', {y: my - fs*.35, height: fs*.7, rx: fs*.35, fill: RC, width: 0}, svg);
+  g.mrx = W*.96 - fs*1.1;
+  G = g; trail = []; draw(0, 0);
+};
+function draw(l, r){
+  const g = G; if (!g) return;
+  const dx = g.A*S2*(l + r), dy = g.A*S2*(r - l);
+  const x = g.tx + dx, y = g.ty + dy, h = y - g.sy;
+  g.slab.setAttribute('d', `M0,${g.sy}L${x - h},${g.sy}L${x},${y}L${x + h},${g.sy}L${g.W},${g.sy}L${g.W},${g.H}L0,${g.H}Z`);
+  const sw = g.fs*.2;
+  g.wl.setAttribute('x1', x - h); g.wl.setAttribute('y1', g.sy); g.wl.setAttribute('x2', x); g.wl.setAttribute('y2', y); g.wl.setAttribute('stroke-width', sw*(.4 + 1.6*aL)); g.wl.setAttribute('opacity', .35 + .65*aL);
+  g.wr.setAttribute('x1', x + h); g.wr.setAttribute('y1', g.sy); g.wr.setAttribute('x2', x); g.wr.setAttribute('y2', y); g.wr.setAttribute('stroke-width', sw*(.4 + 1.6*aR)); g.wr.setAttribute('opacity', .35 + .65*aR);
+  g.al.setAttribute('opacity', .25 + .75*aL); g.ar.setAttribute('opacity', .25 + .75*aR);
+  g.ndl.setAttribute('transform', `translate(${dx},${dy})`);
+  if (aL + aR > .02){ trail.push(`${(g.tx + dx).toFixed(1)},${(g.bcY + dy).toFixed(1)}`); if (trail.length > 70) trail.shift(); }
+  else if (trail.length) trail.shift();
+  g.tr.setAttribute('points', trail.join(' '));
+  const wl = g.mw*Math.min(1, Math.abs(l)), wr = g.mw*Math.min(1, Math.abs(r));
+  g.ml.setAttribute('width', Math.max(0, wl));
+  g.mr.setAttribute('width', Math.max(0, wr)); g.mr.setAttribute('x', g.mrx - wr);
+}
+gsap.ticker.add(() => {
+  if (!G) return;
+  t += gsap.ticker.deltaRatio()/60;
+  const tl = mode === 'L' || mode === 'B' ? 1 : 0, trr = mode === 'R' || mode === 'B' ? 1 : 0;
+  aL += (tl - aL)*.08; aR += (trr - aR)*.08;
+  draw(aL*sigL(t), aR*sigR(t));
+});
+Kit.$('btns').addEventListener('click', e => {
+  const b = e.target.closest('.ch'); if (!b) return;
+  mode = b.dataset.m; Kit.haptic('selection');
+  document.querySelectorAll('.ch').forEach(x => x.classList.toggle('on', x === b));
+  b.classList.add('done'); tried.add(mode);
+  const rd = Kit.$('read'); rd.textContent = READ[mode];
+  if (!Kit.calm) gsap.fromTo(rd, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .35});
+  if (tried.size === 3 && !finished){
+    finished = true;
+    setTimeout(() => { Kit.hide('read'); Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+      if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'}); }, 900);
+  }
+});
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#groove', {opacity: 0, y: 12, duration: .6, ease: 'power3.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms)), bs = Kit.$('btns').children;
+  bs[0].click(); await w(500); bs[1].click(); await w(500); bs[2].click(); await w(1500);
+};
+Kit.single();
+</script>
+</html>

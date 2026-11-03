@@ -1,0 +1,37 @@
+{
+  "id": "science-chernobyl-steam-blast",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Chernobyl's reactor number four blow its top off?",
+  "answer": "Runaway fission produced heat far faster than the cooling water could carry it away. The water flashed into steam, and the pressure ripped the reactor open, throwing out radioactive isotopes.",
+  "move": "Too much heat turns cooling water into steam, and trapped steam blows things apart.",
+  "keywords": [
+    "chernobyl",
+    "reactor",
+    "steam",
+    "fission",
+    "isotopes"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "A reactor cross-section with a hold-to-add-heat button. Hold it to heat the core and watch the water turn to steam. The page asks why reactor number four blew its top off."
+  },
+  "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=9DWnjcSo9J0&t=1s",
+  "written": "2026-11-03"
+}

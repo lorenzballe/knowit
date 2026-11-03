@@ -1,0 +1,37 @@
+{
+  "id": "history-ashgabat-star-symbol",
+  "topic": "history",
+  "genre": "history.propaganda",
+  "strand": "history.propaganda.propaganda_today",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What symbol do Ashgabat's big marble buildings all share?",
+  "answer": "All three of Ashgabat's landmark marble buildings, the Wedding Palace among them, carry the same eight-pointed star, the rub el hizb. It is both a religious symbol and a symbol of the government. This star appears on every landmark.",
+  "move": "Ashgabat's marble landmarks share one sign: the eight-pointed rub el hizb star.",
+  "keywords": [
+    "ashgabat",
+    "rub el hizb",
+    "turkmenistan",
+    "marble",
+    "wedding palace"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Close-up of an eight-pointed star on a white marble building in Ashgabat. The question asks what symbol all of the city's big marble buildings share. The reader is invited to tap each point of the star to count them."
+  },
+  "source": "Geopop, “La città con più marmo al mondo è quasi impossibile da visitare: storia di Ashgabat, in Turkmenistan” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=JswYQiixMT8&t=268s",
+  "written": "2026-11-03"
+}

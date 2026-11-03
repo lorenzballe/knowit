@@ -1,0 +1,194 @@
+<!doctype html>
+<!-- slug: science-anthropocene-boundary-layer -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#wrap{flex:1;min-height:0;position:relative}
+#col{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;color:var(--k);overflow:visible}
+#col text{font-family:var(--body);font-weight:700}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Pull apart">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GEOLOGY</span></div>
+    <h2 class="q">What would the line between Holocene and Anthropocene look like in rock?</h2>
+    <div class="stagebox" id="stage">
+      <div id="wrap"><svg id="col" aria-label="Three rock columns with a thin boundary layer"></svg></div>
+      <div id="why" class="gone"><p class="body">A new epoch needs one thin layer found in rock everywhere on Earth, laid down at the same moment. Here it would hold radioactive particles, plastics, and carbon and nitrogen thrown off their natural cycles, partly by fertilizers. Until that signal is confirmed, we are officially still in the Holocene.</p></div>
+    </div>
+    <p class="say" id="say">Drag up or down on the columns to pull the thin dark line apart.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>An epoch becomes official only when one worldwide layer marks the break.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Antropocene - La nuova era geologica sarà ufficiale?” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const st = {p: 0};
+let g = null, done = false, drag = null;
+const clamp = v => Math.max(0, Math.min(1, v));
+const NS = 'http://www.w3.org/2000/svg';
+
+function draw() {
+  const svg = Kit.$('col');
+  const fit = Kit.fitSvg(svg), W = fit.W, H = fit.H;
+  svg.innerHTML = '';
+  const f = Math.max(12, Math.min(fit.f, H * 0.055, W * 0.045));
+  const mt = f * 2, mb = f * 0.4, Hc = H - mt - mb, G = Hc * 0.42, Hc0 = Hc - G, y0 = mt + G / 2;
+  const a = Hc0 * 0.16, b0 = Math.max(6, Hc0 * 0.045), h = Hc0 * 0.5, old = Hc0 - a - b0 - h;
+  const lx = W * 0.02, cx0 = W * 0.38, gap = W * 0.035, cw = (W * 0.985 - cx0 - 2 * gap) / 3;
+  const xs = [0, 1, 2].map(i => cx0 + i * (cw + gap));
+  const FH = b0 + G, sh = FH / 3;
+  const ink = 'currentColor';
+
+  // site names
+  xs.forEach((x, i) => Kit.mk('text', {x: x + cw / 2, y: f * 1.05, 'text-anchor': 'middle', 'font-size': f * 0.9, fill: ink, opacity: .7}, svg).textContent = 'Site ' + 'ABC'[i]);
+
+  const gTop = Kit.mk('g', {}, svg), gBot = Kit.mk('g', {}, svg), gBand = Kit.mk('g', {}, svg), gSub = Kit.mk('g', {}, svg);
+
+  // top: Anthropocene
+  xs.forEach(x => {
+    Kit.mk('rect', {x, y: y0, width: cw, height: a, fill: '#a7adb4', stroke: ink, 'stroke-width': 1.5}, gTop);
+    for (let k = 0; k < 6; k++) Kit.mk('circle', {cx: x + Kit.rnd() * cw, cy: y0 + 3 + Kit.rnd() * (a - 6), r: f * .1, fill: '#6b7178'}, gTop);
+  });
+  const aY = y0 + a / 2 + f * .35;
+  Kit.mk('text', {x: lx, y: aY, 'font-size': f, fill: ink}, gTop).textContent = 'Anthropocene';
+
+  // bottom: Holocene + older rock
+  const yh = y0 + a + b0;
+  const tans = ['#d9b98a', '#c99d68', '#e6cfa6', '#b98a57', '#d4ad7a'];
+  xs.forEach((x, i) => {
+    let y = yh, k = i;
+    while (y < yh + h - 1) {
+      const t = Math.min(h * (0.08 + Kit.rnd() * 0.16), yh + h - y);
+      Kit.mk('rect', {x, y, width: cw, height: t + .5, fill: tans[k++ % tans.length]}, gBot);
+      y += t;
+    }
+    Kit.mk('rect', {x, y: yh, width: cw, height: h, fill: 'none', stroke: ink, 'stroke-width': 1.5}, gBot);
+    Kit.mk('rect', {x, y: yh + h, width: cw, height: old, fill: '#6e5a4b', stroke: ink, 'stroke-width': 1.5}, gBot);
+    for (let k2 = 0; k2 < 5; k2++) Kit.mk('rect', {x: x + Kit.rnd() * (cw - f * .6), y: yh + h + 3 + Kit.rnd() * Math.max(1, old - f * .5), width: f * .6, height: f * .25, rx: f * .1, fill: '#5a4a3e'}, gBot);
+  });
+  const bl = Kit.mk('text', {x: lx, y: yh + f * 1.15, 'font-size': f * .9, fill: '#e4572e'}, gBot);
+  bl.textContent = '◂ the boundary';
+  const holY = yh + h * .62 + f * .35, oldY = yh + h + old / 2 + f * .35;
+  const holT = Kit.mk('text', {x: lx, y: holY, 'font-size': f, fill: ink}, gBot);
+  holT.textContent = 'Holocene';
+  const oldT = Kit.mk('text', {x: lx, y: oldY, 'font-size': f, fill: ink, opacity: .75}, gBot);
+  oldT.textContent = 'Older rock';
+
+  // the boundary band, drawn at full size, squeezed by scale
+  const bandIn = Kit.mk('g', {}, gBand);
+  const cols = ['#e63946', '#1d8fe1', '#f4b400', '#2a9d8f', '#9b5de5'];
+  xs.forEach(x => {
+    Kit.mk('rect', {x, y: 0, width: cw, height: sh, fill: '#16241a'}, bandIn);
+    for (let k = 0; k < 9; k++) {
+      const cx = x + f * .4 + Kit.rnd() * (cw - f * .8), cy = sh * .2 + Kit.rnd() * sh * .6;
+      Kit.mk('circle', {cx, cy, r: f * .38, fill: '#c6f432', opacity: .22}, bandIn);
+      Kit.mk('circle', {cx, cy, r: f * .17, fill: '#d9ff4a'}, bandIn);
+    }
+    Kit.mk('rect', {x, y: sh, width: cw, height: sh, fill: '#f3eee4'}, bandIn);
+    for (let k = 0; k < 10; k++) {
+      const px = x + f * .3 + Kit.rnd() * (cw - f * .9), py = sh * 1.15 + Kit.rnd() * sh * .65;
+      Kit.mk('rect', {x: px, y: py, width: f * (.35 + Kit.rnd() * .4), height: f * .22, rx: f * .06, fill: cols[k % cols.length], transform: `rotate(${(Kit.rnd() - .5) * 70} ${px} ${py})`}, bandIn);
+    }
+    Kit.mk('rect', {x, y: 2 * sh, width: cw, height: sh, fill: '#2b1e17'}, bandIn);
+    let d = '';
+    for (let j = 0; j <= 12; j++) { const px = x + cw * j / 12, py = 2.5 * sh + Math.sin(j * 1.3) * sh * .25; d += (j ? 'L' : 'M') + px + ' ' + py; }
+    Kit.mk('path', {d, fill: 'none', stroke: '#ff9f4a', 'stroke-width': f * .2, 'stroke-linejoin': 'round'}, bandIn);
+    Kit.mk('rect', {x, y: 0, width: cw, height: FH, fill: 'none', stroke: '#e4572e', 'stroke-width': 2}, bandIn);
+  });
+
+  const subs = [['Radionuclides'], ['Plastics'], ['Carbon &', 'nitrogen']].map(lines => {
+    const t = Kit.mk('text', {x: lx, 'font-size': f * .95, fill: ink}, gSub);
+    lines.forEach((s, i) => { const ts = document.createElementNS(NS, 'tspan'); ts.setAttribute('x', lx); ts.setAttribute('dy', i ? f * 1.15 : 0); ts.textContent = s; t.appendChild(ts); });
+    return {t, n: lines.length};
+  });
+
+  // handle
+  const hx = xs[1] + cw / 2;
+  const handle = Kit.mk('g', {}, svg);
+  Kit.mk('circle', {cx: 0, cy: 0, r: f * 1.1, fill: '#e4572e', stroke: '#fff', 'stroke-width': 2}, handle);
+  Kit.mk('path', {d: `M${-f * .4} ${-f * .2}L0 ${-f * .6}L${f * .4} ${-f * .2}M${-f * .4} ${f * .2}L0 ${f * .6}L${f * .4} ${f * .2}`, fill: 'none', stroke: '#fff', 'stroke-width': f * .16, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, handle);
+
+  g = {G, b0, FH, yb0: y0 + a, gTop, gBot, gBand, subs, bl, handle, hx, f, aY, holT, oldT, holY, oldY};
+  render();
+}
+
+function render() {
+  if (!g) return;
+  const p = st.p, {G, b0, FH, yb0} = g;
+  const bandH = b0 + G * p, yb = yb0 - G / 2 * p;
+  g.gTop.setAttribute('transform', `translate(0 ${-G / 2 * p})`);
+  g.gBot.setAttribute('transform', `translate(0 ${G / 2 * p})`);
+  g.gBand.setAttribute('transform', `translate(0 ${yb}) scale(1 ${bandH / FH})`);
+  g.bl.setAttribute('opacity', clamp(1 - p * 3));
+  const o = clamp((p - .55) / .4);
+  let prev = g.aY - G / 2 * p;
+  g.subs.forEach((s, i) => {
+    const nat = yb + bandH * (i + .5) / 3 + g.f * .35 - (s.n - 1) * g.f * .58;
+    const y = Math.max(nat, prev + g.f * 1.2);
+    s.t.setAttribute('y', y);
+    s.t.setAttribute('opacity', o);
+    prev = y + (s.n - 1) * g.f * 1.15;
+  });
+  const off = G / 2 * p;
+  let hy = g.holY + off, oy = g.oldY + off;
+  if (o > 0) { hy = Math.max(hy, prev + g.f * 1.25); oy = Math.max(oy, hy + g.f * 1.2); }
+  g.holT.setAttribute('y', hy - off);
+  g.oldT.setAttribute('y', oy - off);
+  g.handle.setAttribute('transform', `translate(${g.hx} ${yb + bandH / 2})`);
+  g.handle.setAttribute('opacity', clamp(1 - p * 2.5));
+}
+
+function finish() {
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  requestAnimationFrame(() => { draw(); render(); });
+}
+function open() {
+  if (done) return; done = true;
+  Kit.haptic('success');
+  gsap.killTweensOf(st);
+  gsap.to(st, {p: 1, duration: Kit.calm ? 0 : .7, ease: 'power3.out', onUpdate: render, onComplete: finish});
+}
+
+const svg = Kit.$('col');
+svg.addEventListener('pointerdown', e => {
+  if (done || !g) return;
+  gsap.killTweensOf(st);
+  drag = {y: e.clientY, p: st.p, moved: 0};
+  try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+});
+svg.addEventListener('pointermove', e => {
+  if (!drag) return;
+  const dy = Math.abs(e.clientY - drag.y);
+  drag.moved = Math.max(drag.moved, dy);
+  st.p = clamp(drag.p + dy / (g.G * .6)); render();
+});
+const up = () => {
+  if (!drag) return;
+  const d = drag; drag = null;
+  if (d.moved < 6 || st.p > .4) open();
+  else gsap.to(st, {p: 0, duration: .35, ease: 'power2.out', onUpdate: render});
+};
+svg.addEventListener('pointerup', up);
+svg.addEventListener('pointercancel', up);
+
+Kit.onShow.card = () => { draw(); render(); };
+Kit.onEnter.card = () => {
+  if (Kit.calm || done) return;
+  gsap.timeline({delay: .4}).to(st, {p: .12, duration: .45, ease: 'power2.out', onUpdate: render}).to(st, {p: 0, duration: .5, ease: 'power2.in', onUpdate: render});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), x = r.left + r.width * .6, y = r.top + r.height * .4;
+  svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, bubbles: true, pointerId: 1}));
+  svg.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: y + r.height * .3, bubbles: true, pointerId: 1}));
+  svg.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y + r.height * .3, bubbles: true, pointerId: 1}));
+  await new Promise(res => setTimeout(res, 1100));
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-field-light-speed -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#pic{width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
+#why{font:500 max(1.8cqh,12px)/1.3 var(--body);margin:0}
+#why b{font-weight:800}
+.hit{cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Tap · see it happen">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ELECTRICITY</span></div>
+    <h2 class="q">How fast do electric and magnetic fields reach a bulb 1 m away?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Tap the switch to close the circuit.</p>
+    <p id="why" class="gone"><b>A few nanoseconds.</b> What matters is not what happens in the wires but what happens around them. The electric and magnetic fields spread through space at essentially light speed, far faster than the electrons drift.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The fields around the wire light the bulb, at light speed, not the slow electrons.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 3.3;            // 1 m at light speed
+let state = 'idle';        // idle | run | done
+let tw = null, G = {};
+
+function draw() {
+  const svg = Kit.$('pic');
+  if (tw) { tw.kill(); tw = null; if (state === 'run') state = 'done'; }
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 12);
+  const ink = 'var(--k)', mut = 'var(--muted)';
+  const yTop = H * .26, yBot = H * .86;
+  const bx = W * .2, by = H * .55, bh = H * .14;
+  const lx = W * .8, r = Math.min(W * .1, H * .085);
+  const sw = 3.2;
+
+  // clock
+  G.clock = Kit.mk('text', {x: W / 2, y: H * .1, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-weight': 700, 'font-size': fs * 2, fill: ink}, svg);
+  G.clock.textContent = (state === 'done' ? NS : 0).toFixed(1) + ' ns';
+  const sub = Kit.mk('text', {x: W / 2, y: H * .1 + fs * 1.4, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-size': fs * .85, fill: mut}, svg);
+  sub.textContent = 'since the switch closed (slowed a billion times)';
+
+  // wires: they run off far away, the bulb sits just 1 m from the battery
+  const wire = d => Kit.mk('path', {d, fill: 'none', stroke: ink, 'stroke-width': sw, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  const swY = H * .36;
+  wire(`M${bx},${by - bh / 2} L${bx},${swY + H * .03}`);
+  wire(`M${bx},${swY - H * .04} L${bx},${yTop} L0,${yTop}`);
+  wire(`M${bx},${by + bh / 2} L${bx},${yBot} L0,${yBot}`);
+  wire(`M${lx},${by - r} L${lx},${yTop} L${W},${yTop}`);
+  wire(`M${lx},${by + r * .9} L${lx},${yBot} L${W},${yBot}`);
+  const lab = (x, y, t, a) => { const e = Kit.mk('text', {x, y, 'text-anchor': a, 'font-family': 'var(--body)', 'font-size': fs * .85, fill: mut}, svg); e.textContent = t; return e; };
+  lab(4, yTop - fs * .5, '← wire runs far away', 'start');
+  lab(W - 4, yTop - fs * .5, 'and back →', 'end');
+
+  // battery
+  Kit.mk('rect', {x: bx - W * .045, y: by - bh / 2, width: W * .09, height: bh, rx: 6, fill: 'var(--c)', stroke: ink, 'stroke-width': sw}, svg);
+  Kit.mk('rect', {x: bx - W * .02, y: by - bh / 2 - 7, width: W * .04, height: 7, fill: ink}, svg);
+  lab(bx - W * .06, by + fs * .3, 'battery', 'end');
+
+  // switch
+  G.hinge = {x: bx, y: swY + H * .03};
+  Kit.mk('circle', {cx: bx, cy: swY + H * .03, r: 4, fill: ink}, svg);
+  Kit.mk('circle', {cx: bx, cy: swY - H * .04, r: 4, fill: ink}, svg);
+  const L = H * .07;
+  G.lever = Kit.mk('line', {x1: 0, y1: 0, x2: 0, y2: -L, stroke: ink, 'stroke-width': sw + 1, 'stroke-linecap': 'round', transform: `translate(${bx},${swY + H * .03}) rotate(${state === 'idle' ? 40 : 0})`}, svg);
+  G.swLab = lab(bx + W * .06, swY + fs * .3, state === 'idle' ? 'tap: switch' : 'switch', 'start');
+  G.ring = Kit.mk('circle', {cx: bx, cy: swY, r: H * .07, fill: 'none', stroke: ink, 'stroke-width': 2, 'stroke-dasharray': '4 5', opacity: state === 'idle' ? .7 : 0}, svg);
+
+  // wavefront of fields
+  G.waves = [0, 1, 2].map(i => Kit.mk('circle', {cx: bx, cy: swY, r: 0, fill: i ? 'none' : 'rgba(255,210,63,.18)', stroke: '#e0a800', 'stroke-width': i ? 2 : 3.5, opacity: 0}, svg));
+  G.D = Math.hypot(lx - bx, by - swY) - r;
+
+  // bulb
+  G.glow = Kit.mk('circle', {cx: lx, cy: by, r: r * 2.2, fill: 'rgba(255,210,63,.55)', opacity: state === 'done' ? 1 : 0}, svg);
+  G.bulb = Kit.mk('circle', {cx: lx, cy: by, r, fill: state === 'done' ? '#ffd23f' : 'var(--c)', stroke: ink, 'stroke-width': sw}, svg);
+  Kit.mk('path', {d: `M${lx - r * .35},${by + r * .3} L${lx - r * .2},${by - r * .25} L${lx},${by + r * .1} L${lx + r * .2},${by - r * .25} L${lx + r * .35},${by + r * .3}`, fill: 'none', stroke: ink, 'stroke-width': 2}, svg);
+  lab(lx, by - r - fs * .6 > yTop + fs ? by - r - fs * .6 : by + r + fs * 1.3, 'bulb', 'middle');
+
+  // 1 metre
+  const dy = H * .75;
+  Kit.mk('path', {d: `M${bx},${dy - 6} L${bx},${dy + 6} M${bx},${dy} L${lx},${dy} M${lx},${dy - 6} L${lx},${dy + 6}`, stroke: ink, 'stroke-width': 1.5}, svg);
+  const m = Kit.mk('text', {x: (bx + lx) / 2, y: dy - fs * .5, 'text-anchor': 'middle', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs, fill: ink}, svg);
+  m.textContent = '1 metre';
+
+  // an electron in the wire
+  G.e = Kit.mk('circle', {cx: W * .1, cy: yBot, r: 5, fill: '#2b7bff', stroke: ink, 'stroke-width': 1.5}, svg);
+  G.eLab = lab(W * .1, yBot + fs * 1.3, state === 'done' ? 'electron: barely moved' : 'an electron', 'start');
+  G.eLab.setAttribute('x', 4);
+
+  if (state === 'idle' && !Kit.calm) gsap.to(G.ring, {attr: {r: H * .085}, opacity: .25, repeat: -1, yoyo: true, duration: .8});
+}
+
+function flip() {
+  if (state === 'run') return;
+  if (state === 'done') { state = 'idle'; draw(); Kit.$('say').textContent = 'Tap the switch to close the circuit.'; return; }
+  state = 'run'; Kit.haptic('light');
+  gsap.killTweensOf(G.ring); G.ring.setAttribute('opacity', 0);
+  G.swLab.textContent = 'switch';
+  gsap.to(G.lever, {attr: {transform: `translate(${G.hinge.x},${G.hinge.y}) rotate(0)`}, duration: .15});
+  const o = {t: 0}, D = G.D, dur = Kit.calm ? .01 : 2.6;
+  G.waves.forEach(w => w.setAttribute('opacity', 1));
+  tw = gsap.to(o, {t: NS, duration: dur, ease: 'none', onUpdate() {
+    G.clock.textContent = o.t.toFixed(1) + ' ns';
+    G.waves.forEach((w, i) => { const rr = Math.max(0, D * o.t / NS - i * D * .14); w.setAttribute('r', rr); });
+  }, onComplete() {
+    tw = null; state = 'done'; Kit.haptic('success');
+    G.clock.textContent = NS.toFixed(1) + ' ns';
+    G.bulb.setAttribute('fill', '#ffd23f');
+    gsap.to(G.glow, {opacity: 1, duration: Kit.calm ? 0 : .3});
+    gsap.to(G.waves, {opacity: 0, duration: Kit.calm ? 0 : .8, delay: .2});
+    G.eLab.textContent = 'electron: barely moved';
+    Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }});
+}
+
+Kit.$('pic').addEventListener('click', flip);
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('#pic', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'}); };
+Kit.play.card = async () => { flip(); await new Promise(r => setTimeout(r, 3300)); };
+Kit.single();
+</script>
+</html>

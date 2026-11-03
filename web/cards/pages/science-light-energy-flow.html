@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-light-energy-flow -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative;background:#0f1320;border-radius:2cqh;overflow:hidden}
+#wave{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#why{display:flex;flex-direction:column;gap:.8cqh;margin-top:1.2cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.8cqh,12px)/1.3 var(--body);overflow-wrap:anywhere}
+.say{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">LIGHT</span></div>
+    <h2 class="q">Light carries energy. Which way does it flow, compared with its fields?</h2>
+    <div class="stagebox" id="stage"><svg id="wave"></svg></div>
+    <div id="why" class="gone">
+      <p class="big">At right angles to both fields.</p>
+      <p class="body">The energy flows along the Poynting vector, perpendicular to both the electric and the magnetic field. That is the same direction the light travels: from its source out to its destination.</p>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Drag the gold arrow to where the light’s energy flows.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Light’s energy flows at right angles to its E and B fields, along the beam.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Misconception About Electricity” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const RED = '#ff5a5f', BLUE = '#4f9dff', GOLD = '#ffc233', INK = '#eef1f8', DIM = 'rgba(238,241,248,.35)';
+const DIRS = [
+  {n: 'along E', v: [0, 1, 0]}, {n: 'against E', v: [0, -1, 0]},
+  {n: 'along B', v: [0, 0, 1]}, {n: 'against B', v: [0, 0, -1]},
+  {n: 'along the beam', v: [1, 0, 0]}, {n: 'back toward the source', v: [-1, 0, 0]}
+];
+const RIGHT = 4;
+const st = {ang: -2.4, len: 1, pick: -1, done: false, ph: 0, t: 0, sureOn: false};
+const svg = Kit.$('wave');
+let G = null, dragging = false, ticking = false;
+
+const scr = v => { const dx = v[0] - .55 * v[2], dy = -v[1] + .42 * v[2]; return {a: Math.atan2(dy, dx), l: Math.hypot(dx, dy)}; };
+
+function arrow(parent, color, w) {
+  return {line: Kit.mk('line', {stroke: color, 'stroke-width': w, 'stroke-linecap': 'round'}, parent),
+          head: Kit.mk('polygon', {fill: color}, parent), w};
+}
+function setArrow(a, x1, y1, x2, y2) {
+  const dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy) || 1, ux = dx / l, uy = dy / l;
+  const h = Math.min(a.w * 3.2, l * .6), hw = a.w * 1.9;
+  const bx = x2 - ux * h, by = y2 - uy * h;
+  a.line.setAttribute('x1', x1); a.line.setAttribute('y1', y1);
+  a.line.setAttribute('x2', bx); a.line.setAttribute('y2', by);
+  a.head.setAttribute('points', `${x2},${y2} ${bx - uy * hw},${by + ux * hw} ${bx + uy * hw},${by - ux * hw}`);
+}
+
+function build() {
+  svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f, 13);
+  const A = Math.max(20, Math.min(H * .28, W * .19));
+  const cx = W / 2 + .275 * A, cy = H * .5, X = W / 2 - .275 * A - 10;
+  const P = (x, y, z) => [cx + x - .55 * z, cy - y + .42 * z];
+  G = {W, H, fs, A, cx, cy, X, P, L: A * 1.2, lam: X};
+  const a0 = P(-X, 0, 0), a1 = P(X, 0, 0);
+  Kit.mk('line', {x1: a0[0], y1: a0[1], x2: a1[0], y2: a1[1], stroke: DIM, 'stroke-width': 1.5, 'stroke-dasharray': '4 5'}, svg);
+  G.bStem = Kit.mk('path', {stroke: BLUE, 'stroke-opacity': .35, 'stroke-width': 1.4, fill: 'none'}, svg);
+  G.bCurve = Kit.mk('path', {stroke: BLUE, 'stroke-width': 2.4, fill: 'none', 'stroke-opacity': .85}, svg);
+  G.eStem = Kit.mk('path', {stroke: RED, 'stroke-opacity': .35, 'stroke-width': 1.4, fill: 'none'}, svg);
+  G.eCurve = Kit.mk('path', {stroke: RED, 'stroke-width': 2.4, fill: 'none', 'stroke-opacity': .9}, svg);
+  G.dots = Kit.mk('g', {}, svg);
+  G.dotEls = [];
+  for (let i = 0; i < 14; i++) G.dotEls.push(Kit.mk('circle', {fill: GOLD, r: 0, opacity: 0}, G.dots));
+  G.corner = Kit.mk('path', {stroke: INK, 'stroke-width': 1.6, fill: 'none', opacity: st.done ? .8 : 0}, svg);
+  const w = Math.max(3, A * .05);
+  G.eArr = arrow(svg, RED, w); G.bArr = arrow(svg, BLUE, w);
+  G.sArr = arrow(svg, GOLD, w * 1.35);
+  G.handle = Kit.mk('circle', {r: Math.max(14, fs * 1.1), fill: GOLD, 'fill-opacity': .18, stroke: GOLD, 'stroke-width': 2}, svg);
+  Kit.mk('circle', {cx, cy, r: w * 1.2, fill: INK}, svg);
+  const tl = (x, y, txt, col, anchor) => { const t = Kit.mk('text', {x, y, fill: col, 'font-size': fs, 'font-weight': 700, 'font-family': 'var(--body)', 'text-anchor': anchor || 'start'}, svg); t.textContent = txt; return t; };
+  tl(Math.min(W - 8, cx + X), cy - A - .7 * fs, 'E  electric field', RED, 'end');
+  const bl = P(-X, 0, A);
+  tl(Math.max(8, bl[0]), bl[1] + 1.4 * fs, 'B  magnetic field', BLUE);
+  G.sLab = tl(0, 0, '', GOLD, 'middle');
+  draw();
+}
+
+function draw() {
+  if (!G) return;
+  const {A, X, P, L, lam, cx, cy, fs} = G, k = 2 * Math.PI / lam, ph = st.ph;
+  let ec = '', es = '', bc = '', bs = '';
+  const n = 160;
+  for (let i = 0; i <= n; i++) {
+    const x = -X + 2 * X * i / n, v = A * Math.cos(k * x - ph);
+    const pe = P(x, v, 0), pb = P(x, 0, v);
+    ec += (i ? 'L' : 'M') + pe[0].toFixed(1) + ' ' + pe[1].toFixed(1);
+    bc += (i ? 'L' : 'M') + pb[0].toFixed(1) + ' ' + pb[1].toFixed(1);
+  }
+  const stems = 32;
+  for (let i = 0; i <= stems; i++) {
+    const x = -X + 2 * X * i / stems, v = A * Math.cos(k * x - ph), o = P(x, 0, 0), pe = P(x, v, 0), pb = P(x, 0, v);
+    es += `M${o[0]} ${o[1]}L${pe[0]} ${pe[1]}`; bs += `M${o[0]} ${o[1]}L${pb[0]} ${pb[1]}`;
+  }
+  G.eCurve.setAttribute('d', ec); G.bCurve.setAttribute('d', bc);
+  G.eStem.setAttribute('d', es); G.bStem.setAttribute('d', bs);
+  const c0 = Math.cos(-ph), ee = P(0, A * c0, 0), be = P(0, 0, A * c0);
+  setArrow(G.eArr, cx, cy, ee[0], ee[1]); setArrow(G.bArr, cx, cy, be[0], be[1]);
+  let len = L * st.len;
+  if (st.done) len *= .35 + .65 * c0 * c0;
+  const tx = cx + Math.cos(st.ang) * len, ty = cy + Math.sin(st.ang) * len;
+  setArrow(G.sArr, cx, cy, tx, ty);
+  G.handle.setAttribute('cx', tx); G.handle.setAttribute('cy', ty);
+  G.handle.style.display = st.done ? 'none' : '';
+  const lx = cx + Math.cos(st.ang) * (L * st.len + fs * 1.9), ly = cy + Math.sin(st.ang) * (L * st.len + fs * 1.6) + fs * .35;
+  G.sLab.setAttribute('x', Math.min(G.W - fs * 2.6, Math.max(fs * 2.6, lx)));
+  G.sLab.setAttribute('y', Math.min(G.H - fs * .6, Math.max(fs * 1.2, ly)));
+  G.sLab.textContent = st.done ? 'S  energy' : 'energy?';
+  if (st.done) {
+    const s = A * .2, sg = c0 >= 0 ? 1 : -1;
+    const p1 = P(s, 0, 0), p2 = P(s, s * sg, 0), p3 = P(0, s * sg, 0), q2 = P(s, 0, s * sg), q3 = P(0, 0, s * sg);
+    G.corner.setAttribute('d', `M${p1}L${p2}L${p3}M${p1}L${q2}L${q3}`.replace(/,/g, ' '));
+    const N = G.dotEls.length, v = st.ph * lam / (2 * Math.PI);
+    G.dotEls.forEach((d, i) => {
+      let x = ((i / N) * 2 * X + v * 1) % (2 * X); x = x - X;
+      const I = Math.cos(k * x - ph) ** 2, p = P(x, 0, 0);
+      d.setAttribute('cx', p[0]); d.setAttribute('cy', p[1]);
+      d.setAttribute('r', Math.max(1.5, A * .07 * (.3 + I)));
+      d.setAttribute('opacity', (.25 + .75 * I) * Math.min(1, (X - Math.abs(x)) / (X * .1)));
+    });
+  }
+}
+
+function pt(e) { const r = svg.getBoundingClientRect(); st.ang = Math.atan2(e.clientY - r.top - G.cy, e.clientX - r.left - G.cx); st.len = 1; draw(); }
+function nearest() {
+  let best = 0, bd = 9;
+  DIRS.forEach((d, i) => { const s = scr(d.v); let df = Math.abs(Math.atan2(Math.sin(st.ang - s.a), Math.cos(st.ang - s.a))); if (df < bd) { bd = df; best = i; } });
+  return best;
+}
+function snapTo(i, dur) {
+  const s = scr(DIRS[i].v), target = st.ang + Math.atan2(Math.sin(s.a - st.ang), Math.cos(s.a - st.ang));
+  gsap.to(st, {ang: target, len: s.l, duration: Kit.calm ? 0 : dur, ease: 'back.out(2)', onUpdate: draw, onComplete: draw});
+}
+svg.addEventListener('pointerdown', e => { if (st.done || !G) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} gsap.killTweensOf(st); pt(e); });
+svg.addEventListener('pointermove', e => { if (dragging) pt(e); });
+const up = () => {
+  if (!dragging) return; dragging = false;
+  const i = nearest(); st.pick = i; snapTo(i, .35); Kit.haptic('selection');
+  Kit.$('say').textContent = `You say: energy flows ${DIRS[i].n}. How sure are you?`;
+  if (!st.sureOn) { st.sureOn = true; sure.on(); }
+};
+svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+
+function tick(t, dt) { st.ph += dt * .0025; draw(); }
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = st.pick === RIGHT, said = DIRS[st.pick].n;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  st.done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  sure.grade(ok, pct, `Energy ${said}: ${ok ? 'right' : 'wrong'}`);
+  Kit.haptic(ok ? 'success' : 'light');
+  requestAnimationFrame(() => {
+    build(); snapTo(RIGHT, .6);
+    gsap.to(G.corner, {opacity: .8, duration: Kit.calm ? 0 : .6});
+    if (!Kit.calm && !ticking) { ticking = true; gsap.ticker.add(tick); }
+  });
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.handle, {attr: {'stroke-width': 2}}, {attr: {'stroke-width': 6}, duration: .7, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+Kit.play.card = async () => {
+  const r = svg.getBoundingClientRect(), x = r.left + G.cx + G.L, y = r.top + G.cy;
+  svg.dispatchEvent(new PointerEvent('pointerdown', {clientX: x, clientY: y, pointerId: 1, bubbles: true}));
+  svg.dispatchEvent(new PointerEvent('pointermove', {clientX: x, clientY: y + 2, pointerId: 1, bubbles: true}));
+  svg.dispatchEvent(new PointerEvent('pointerup', {clientX: x, clientY: y + 2, pointerId: 1, bubbles: true}));
+  await new Promise(r => setTimeout(r, 400));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 900));
+};
+Kit.single();
+</script>
+</html>

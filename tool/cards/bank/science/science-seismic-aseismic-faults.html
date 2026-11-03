@@ -1,0 +1,205 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: science-seismic-aseismic-faults -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1cqh}
+#pic{flex:1 1 0;min-height:0;width:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,12px)/1.3 var(--body);margin:0;overflow-wrap:anywhere}
+.say,.keep{overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="science" data-kind="Drag · see what happens">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">FAULTS</span></div>
+    <h2 class="q">Messina 1908: how does the West Fault differ from the fault beneath it?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="Cross-section of the crust with a steep red fault above a gentler blue fault"></svg>
+      <div id="why" class="gone">
+        <p class="body">The deep fault creeps all the time, so slowly that it never jolts: it is <b>aseismic</b>. Its creep loads the West Fault above, which is stuck: it bends, then slips all at once. That sudden slip is the earthquake.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Drag the time slider and watch both faults move.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A fault that creeps stays quiet; a fault that sticks and snaps makes quakes.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Identificata la faglia del Terremoto di Messina del 1908 - Vi spiego tutto” (YouTube, 2021)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RED = '#e0352b', BLUE = '#2a6de0', STEP = 1/3;
+const svg = Kit.$('pic');
+let t = 0, tT = 0, slipTarget = 0, quakes = 0, done = false, G = null, amp = 0, ph = 0, dragging = false;
+const S = {slipRed: 0};
+const buf = new Array(90).fill(0);
+
+function draw(){
+  const r = Kit.fitSvg(svg), W = r.W, H = r.H;
+  const fs = Math.max(12, Math.min(r.f, H * 0.048));
+  svg.innerHTML = '';
+  const mk = (tag, a, p) => Kit.mk(tag, a, p || svg);
+  const txt = (p, x, y, s, o = {}) => { const e = mk('text', {x, y, 'text-anchor': o.anchor || 'start', fill: o.fill || 'var(--k)', style: `font:${o.w || 700} ${o.size || fs}px var(--body)`}, p); e.textContent = s; return e; };
+
+  const sh = fs * 3.8;
+  const ys = sh + fs * 1.3;
+  const trackY = H - fs * 1.5;
+  const crustB = trackY - fs * 2.7;
+  const s = Math.min(W * 0.96, (crustB - ys) / 0.72);
+  const ox = (W - s) / 2;
+  const P = (a, b) => [ox + a * s, ys + b * s];
+  const D = 0.1 * s;
+  const tb = Math.tan(20 * Math.PI / 180);
+  const ub = [Math.cos(20 * Math.PI / 180), Math.sin(20 * Math.PI / 180)], ur = [Math.SQRT1_2, Math.SQRT1_2];
+  const blueY = a => 0.52 + (a - 0.70) * tb;
+
+  // seismograph
+  mk('rect', {x: 0, y: 0, width: W, height: sh, rx: fs * .6, fill: 'color-mix(in srgb,var(--k) 7%,transparent)'});
+  const sl = Math.max(12, fs * .85);
+  txt(svg, fs * .7, fs * 1.25, 'SEISMOGRAPH', {size: sl, w: 800, fill: 'var(--muted)'});
+  const count = txt(svg, W - fs * .7, fs * 1.25, '', {size: sl, w: 800, anchor: 'end', fill: RED});
+  const base = sh * 0.64, tamp = sh * 0.3;
+  mk('line', {x1: fs * .7, x2: W - fs * .7, y1: base, y2: base, stroke: 'color-mix(in srgb,var(--k) 18%,transparent)', 'stroke-width': 1});
+  const trace = mk('path', {fill: 'none', stroke: 'var(--k)', 'stroke-width': Math.max(1.5, fs * .13), 'stroke-linejoin': 'round'});
+
+  // crust
+  const cg = mk('g', {});
+  mk('rect', {x: 0, y: ys, width: W, height: crustB - ys, fill: 'color-mix(in srgb,var(--k) 10%,transparent)'}, cg);
+  mk('line', {x1: 0, x2: W, y1: ys, y2: ys, stroke: 'var(--k)', 'stroke-width': fs * .18}, cg);
+
+  const R0 = P(0.18, 0), I = P(0.70, 0.52);
+  const B0 = P(0.02, blueY(0.02)), B1 = P(1.0, blueY(1.0));
+  const lw = fs * .5;
+  mk('path', {d: `M${B0}L${B1}`, stroke: BLUE, 'stroke-width': lw, 'stroke-linecap': 'round'}, cg);
+  const bDash = mk('path', {d: `M${B0}L${B1}`, stroke: 'white', 'stroke-width': fs * .14, 'stroke-dasharray': `${fs * .25} ${fs * 1.1}`, 'stroke-linecap': 'round', opacity: .9}, cg);
+  const redLine = mk('path', {d: `M${R0}L${I}`, stroke: RED, 'stroke-width': lw, 'stroke-linecap': 'round'}, cg);
+  const rDash = mk('path', {d: `M${R0}L${I}`, stroke: 'white', 'stroke-width': fs * .14, 'stroke-dasharray': `${fs * .25} ${fs * 1.1}`, 'stroke-linecap': 'round', opacity: .9}, cg);
+
+  // markers
+  const ms = {stroke: 'var(--k)', 'stroke-width': fs * .24, 'stroke-linecap': 'round', fill: 'none'};
+  const Pm = P(0.518, 0.338), mh = 0.09 * s;
+  mk('line', {x1: Pm[0], y1: Pm[1], x2: Pm[0], y2: Pm[1] + mh, ...ms}, cg);
+  const rUp = mk('path', ms, cg);
+  const Bm = P(0.86, blueY(0.86)), bh = 0.08 * s;
+  mk('line', {x1: Bm[0], y1: Bm[1], x2: Bm[0], y2: Bm[1] + bh, ...ms}, cg);
+  const bUp = mk('line', ms, cg);
+
+  // labels
+  const blx = ox + 0.03 * s, bly = ys + 0.47 * s + fs;
+  const dl = [
+    txt(cg, blx, bly, 'Deeper fault', {fill: BLUE, w: 800}),
+    txt(cg, blx, bly + fs * 1.35, 'aseismic', {w: 600, size: Math.max(12, fs * .9)}),
+    txt(cg, blx, bly + fs * 2.7, 'less inclined', {w: 600, size: Math.max(12, fs * .9)})
+  ];
+  let lx = R0[0] + fs * 4.6;
+  if (bly - fs < ys + fs * 4.4) {
+    let dw = 0;
+    for (const e of dl) { try { dw = Math.max(dw, e.getComputedTextLength()); } catch (_) {} }
+    if (!dw) dw = fs * 7.5;
+    lx = Math.max(lx, blx + dw + fs * 0.8);
+  }
+  txt(cg, lx, ys + fs * 1.35, 'West Fault', {fill: RED, w: 800});
+  txt(cg, lx, ys + fs * 2.7, 'seismic · ~45°', {w: 600, size: Math.max(12, fs * .9)});
+  txt(cg, lx, ys + fs * 4.05, 'stuck', {w: 600, size: Math.max(12, fs * .85), fill: 'var(--muted)'});
+  const gx = lx + fs * 2.9, gw = Math.max(0, Math.min(s * 0.3, W - gx - fs));
+  mk('rect', {x: gx, y: ys + fs * 3.5, width: gw, height: fs * .62, rx: fs * .31, fill: 'color-mix(in srgb,var(--k) 14%,transparent)'}, cg);
+  const gauge = mk('rect', {x: gx, y: ys + fs * 3.5, width: 0, height: fs * .62, rx: fs * .31, fill: RED}, cg);
+
+  const rings = mk('g', {}, cg);
+
+  // slider
+  const tx0 = W * 0.1, tx1 = W * 0.9;
+  txt(svg, tx0, trackY - fs * 1.15, 'time →', {w: 700, size: Math.max(12, fs * .85), fill: 'var(--muted)'});
+  mk('line', {x1: tx0, x2: tx1, y1: trackY, y2: trackY, stroke: 'color-mix(in srgb,var(--k) 18%,transparent)', 'stroke-width': fs * .5, 'stroke-linecap': 'round'});
+  const fill = mk('line', {x1: tx0, x2: tx0, y1: trackY, y2: trackY, stroke: 'var(--k)', 'stroke-width': fs * .5, 'stroke-linecap': 'round'});
+  const knob = mk('circle', {cx: tx0, cy: trackY, r: Math.max(13, fs * 1.0), fill: 'var(--k)', stroke: 'var(--c)', 'stroke-width': fs * .2});
+  const hit = mk('rect', {x: 0, y: trackY - fs * 2.2, width: W, height: fs * 4, fill: 'transparent', style: 'cursor:grab'});
+  hit.addEventListener('pointerdown', down);
+  knob.addEventListener('pointerdown', down);
+  knob.style.cursor = 'grab';
+
+  G = {W, H, fs, s, D, ub, ur, Pm, mh, Bm, bh, rUp, bUp, bDash, rDash, gauge, gw, fill, knob, tx0, tx1, trace, base, tamp, sh, count, cg, rings, redLine, hypo: P(0.44, 0.26)};
+  render();
+}
+
+function render(){
+  if (!G) return;
+  const g = G, Lpx = t * g.D, rpx = S.slipRed * g.D;
+  g.bUp.setAttribute('x1', g.Bm[0] + g.ub[0] * Lpx); g.bUp.setAttribute('y1', g.Bm[1] + g.ub[1] * Lpx);
+  g.bUp.setAttribute('x2', g.Bm[0] + g.ub[0] * Lpx); g.bUp.setAttribute('y2', g.Bm[1] - g.bh + g.ub[1] * Lpx);
+  const N = [g.Pm[0] + g.ur[0] * rpx, g.Pm[1] + g.ur[1] * rpx];
+  const T = [g.Pm[0] + g.ur[0] * Lpx, g.Pm[1] - g.mh + g.ur[1] * Lpx];
+  const C = [g.Pm[0] + g.ur[0] * Lpx, g.Pm[1] - g.mh * .3 + g.ur[1] * Lpx];
+  g.rUp.setAttribute('d', `M${T}Q${C} ${N}`);
+  g.bDash.setAttribute('stroke-dashoffset', -Lpx);
+  g.rDash.setAttribute('stroke-dashoffset', -rpx);
+  const strain = Math.max(0, Math.min(1, (t - S.slipRed) / STEP));
+  g.gauge.setAttribute('width', strain * g.gw);
+  const kx = g.tx0 + t * (g.tx1 - g.tx0);
+  g.knob.setAttribute('cx', kx); g.fill.setAttribute('x2', kx);
+  g.count.textContent = quakes ? `quakes: ${quakes}` : '';
+}
+
+function quake(){
+  quakes++; amp = 1; Kit.haptic('success');
+  gsap.to(S, {slipRed: slipTarget, duration: .14, ease: 'power4.in', onUpdate: render});
+  if (quakes === 1) Kit.$('say').textContent = 'Snap! The red fault jumped. The blue one just keeps creeping.';
+  if (!G || Kit.calm) return;
+  const [hx, hy] = G.hypo;
+  for (let i = 0; i < 3; i++) {
+    const c = Kit.mk('circle', {cx: hx, cy: hy, r: 2, fill: 'none', stroke: RED, 'stroke-width': G.fs * .2}, G.rings);
+    gsap.to(c, {attr: {r: G.s * .45}, opacity: 0, duration: 1, delay: i * .15, ease: 'power2.out', onComplete: () => c.remove()});
+  }
+  gsap.fromTo(G.redLine, {attr: {'stroke-width': G.fs * .9}}, {attr: {'stroke-width': G.fs * .5}, duration: .5});
+  gsap.to(G.cg, {keyframes: {x: [7, -6, 5, -3, 2, 0]}, duration: .45});
+}
+
+function step(nt){
+  nt = Math.min(1, nt); if (nt <= t) return;
+  t = nt;
+  while (t - slipTarget >= STEP - 1e-6 && quakes < 3) { slipTarget += STEP; quake(); }
+  render();
+  if (t >= 1 && !done) { done = true; setTimeout(finish, 800); }
+}
+function finish(){ Kit.hide('say'); Kit.show('why'); Kit.show('keep'); }
+
+function toT(cx){ const r = svg.getBoundingClientRect(); return (cx - r.left - G.tx0) / (G.tx1 - G.tx0); }
+function down(e){ dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} tT = Math.max(tT, Math.min(1, toT(e.clientX))); Kit.haptic('selection'); e.preventDefault(); }
+window.addEventListener('pointermove', e => { if (dragging && G) tT = Math.max(tT, Math.min(1, toT(e.clientX))); });
+window.addEventListener('pointerup', () => { dragging = false; });
+window.addEventListener('pointercancel', () => { dragging = false; });
+
+gsap.ticker.add(() => {
+  if (!G) return;
+  if (tT > t) step(Math.min(tT, t + 0.01));
+  buf.shift(); amp *= 0.93; ph += 1.1;
+  buf.push(amp * Math.sin(ph) * (0.65 + 0.35 * Math.random()) + (Math.random() - .5) * 0.04);
+  const x0 = G.fs * .7, x1 = G.W - G.fs * .7, n = buf.length;
+  let d = '';
+  for (let i = 0; i < n; i++) d += (i ? 'L' : 'M') + (x0 + (x1 - x0) * i / (n - 1)).toFixed(1) + ',' + (G.base - buf[i] * G.tamp).toFixed(1);
+  G.trace.setAttribute('d', d);
+});
+
+Kit.onShow.card = () => draw();
+let rq = 0;
+new ResizeObserver(() => { if (!G) return; cancelAnimationFrame(rq); rq = requestAnimationFrame(draw); }).observe(Kit.$('stage'));
+
+Kit.onEnter.card = () => {
+  if (Kit.calm || !G) return;
+  gsap.fromTo(G.knob, {attr: {r: G.fs * 1.0}}, {attr: {r: G.fs * 1.35}, duration: .5, repeat: 3, yoyo: true, ease: 'sine.inOut'});
+};
+
+Kit.play.card = async () => {
+  const k = G.knob, r = svg.getBoundingClientRect();
+  const y = r.top + +k.getAttribute('cy');
+  const ev = (type, x, tgt) => tgt.dispatchEvent(new PointerEvent(type, {bubbles: true, clientX: x, clientY: y, pointerId: 1, pointerType: 'touch'}));
+  const x0 = r.left + G.tx0, x1 = r.left + G.tx1;
+  ev('pointerdown', x0, k);
+  for (let i = 1; i <= 20; i++) { ev('pointermove', x0 + (x1 - x0 + 4) * i / 20, window); await new Promise(res => setTimeout(res, 30)); }
+  ev('pointerup', x1, window);
+  for (let i = 0; i < 80 && !done; i++) await new Promise(res => setTimeout(res, 50));
+  await new Promise(res => setTimeout(res, 1100));
+};
+Kit.single();
+</script>
+</html>

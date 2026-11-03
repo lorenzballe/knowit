@@ -1,0 +1,34 @@
+{
+  "id": "thinking-known-last-round",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Both players know round 200 is the last. When should they stop cooperating?",
+  "answer": "Round 200 is the last, so there is no future to protect, and both players defect. Round 199 then becomes effectively last, and the reasoning cascades back through every round to round 1. Cooperation already fails in round 1.",
+  "move": "A known end date leaks backward and kills cooperation from the start.",
+  "keywords": [
+    "game theory",
+    "cooperation",
+    "defection",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Quiz card titled Astute free card, Game Theory. It asks when two players who both know round 200 is the last should stop cooperating. Choices: only in round 200, somewhere around round 100, or already in round 1. A reader picks one, then watches 200 rounds reason backward."
+  },
+  "source": "Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)",
+  "reference": "https://www.youtube.com/watch?v=mScpHTIi-kM&t=742s",
+  "written": "2026-11-03"
+}

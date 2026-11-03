@@ -1,0 +1,187 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: maths-period-doubling-chaos -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1cqh}
+#plotbox{flex:1 1 0;min-height:8cqh;position:relative}
+#plot{position:absolute;inset:0;width:100%;height:100%;display:block}
+#sort{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
+#tray{display:flex;flex-wrap:wrap;gap:.7cqh 1.6cqw;justify-content:center;min-height:max(4.2cqh,28px);align-items:center}
+#tray:empty::after{content:"All sorted";font:700 max(1.6cqh,12px)/1.2 var(--mono);color:var(--muted)}
+#bins{display:flex;gap:2.4cqw}
+.bin{flex:1;min-width:0;border-radius:1.6cqh;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);background:color-mix(in srgb,var(--k) 5%,transparent);padding:.8cqh 2.4cqw;min-height:max(8cqh,56px);display:flex;flex-wrap:wrap;gap:.6cqh 1.6cqw;align-content:flex-start}
+.bin h4{width:100%;margin:0 0 .3cqh;font:700 max(1.5cqh,11px)/1.2 var(--mono);letter-spacing:.04em;color:var(--k);overflow-wrap:anywhere}
+.chip{font:700 max(1.8cqh,12px)/1 var(--mono);color:var(--k);background:var(--c);border:0;box-shadow:inset 0 0 0 .22cqh var(--k);border-radius:99px;padding:.8cqh 2.2cqw;cursor:pointer;white-space:nowrap}
+.bin .chip{background:var(--k);color:var(--c);box-shadow:none}
+#why{display:flex;flex-direction:column;gap:.8cqh;flex-shrink:0}
+#why .big{font:800 max(2.3cqh,14px)/1.15 var(--display);margin:0;overflow-wrap:anywhere}
+#why .body{font:500 max(1.6cqh,11.5px)/1.3 var(--body);margin:0}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Sort · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">ROAD TO CHAOS</span></div>
+    <h2 class="q">How does the logistic map transition from regular cycles to chaos as R increases?</h2>
+    <div class="stagebox" id="stage">
+      <div id="plotbox"><canvas id="plot"></canvas></div>
+      <div id="sort">
+        <div id="tray"></div>
+        <div id="bins">
+          <div class="bin" id="binC"><h4>SETTLES INTO A CYCLE</h4></div>
+          <div class="bin" id="binX"><h4>NEVER REPEATS</h4></div>
+        </div>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">1 → 2 → 4 → 8 → 16 … → chaos</p>
+        <p class="body">Each time R crosses a critical value, the cycle splits in two, faster and faster. Past R ≈ 3.57 the population never settles at all. Yet order comes back in windows: at R = 3.83 there is a 3-year cycle.</p>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Tap each growth rate R to sort it. Tap again to switch sides.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Pushing R up doubles the cycle again and again until nothing repeats.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “This equation will change how you see the world (the logistic map)” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const ITEMS = [
+  {r:2.9, cyc:true, lab:'1', row:0},
+  {r:3.2, cyc:true, lab:'2', row:0},
+  {r:3.5, cyc:true, lab:'4', row:0},
+  {r:3.7, cyc:false, lab:'chaos', row:1},
+  {r:3.83, cyc:true, lab:'3', row:0},
+  {r:3.9, cyc:false, lab:'chaos', row:2}
+];
+const R0 = 2.6, R1 = 4.0;
+const tray = Kit.$('tray'), binC = Kit.$('binC'), binX = Kit.$('binX');
+let placed = 0, done = false, sureOn = false;
+const st = {p: 0}; let G = null;
+
+ITEMS.forEach((it, i) => {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.dataset.i = i; b.textContent = 'R = ' + it.r;
+  it.where = 0; tray.appendChild(b);
+});
+
+function moveChip(b){
+  const it = ITEMS[+b.dataset.i];
+  if (it.where === 0) placed++;
+  it.where = it.where === 1 ? 2 : 1;
+  (it.where === 1 ? binC : binX).appendChild(b);
+  if (!Kit.calm) gsap.from(b, {scale: .7, opacity: 0, duration: .3, ease: 'back.out(2)'});
+  Kit.haptic('selection');
+  if (placed === ITEMS.length && !sureOn){ sureOn = true; sure.on(); Kit.$('say').textContent = 'Happy with it? Say how sure you are.'; }
+}
+Kit.$('sort').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b || done) return; moveChip(b);
+});
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  done = true;
+  let n = 0; ITEMS.forEach(it => { it.ok = (it.where === 1) === it.cyc; if (it.ok) n++; });
+  const ok = n === ITEMS.length;
+  Kit.answer({choice: ITEMS.map(it => it.r + ':' + (it.where === 1 ? 'cycle' : 'chaos')).join(' '), correct: ok, sure: pct});
+  Kit.hide('sort'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${n} of ${ITEMS.length} sorted right`);
+  Kit.show('keep');
+  if (Kit.calm){ st.p = 1; render(); }
+  else { gsap.killTweensOf(st); gsap.to(st, {p: 1, duration: 2.6, ease: 'power1.inOut', onUpdate: render}); }
+  Kit.haptic(ok ? 'success' : 'light');
+});
+
+function css(n){ return getComputedStyle(Kit.$('card')).getPropertyValue(n).trim(); }
+
+Kit.onShow.card = () => {
+  const cv = Kit.$('plot');
+  const {x, W, H} = Kit.fitCanvas(cv);
+  const card = Kit.$('card');
+  const f = Math.max(12, card.clientHeight * 0.018);
+  const top = f * 5.2, bot = H - f * 2.2, L = 2, Rr = W - 2;
+  const s = cv.width / W;
+  const off = document.createElement('canvas'); off.width = cv.width; off.height = cv.height;
+  const o = off.getContext('2d'); o.scale(s, s);
+  o.fillStyle = css('--k') || '#111'; o.globalAlpha = .55;
+  const step = 1 / s;
+  for (let px = L; px <= Rr; px += step){
+    const r = R0 + (R1 - R0) * (px - L) / (Rr - L);
+    let v = .5;
+    for (let k = 0; k < 400; k++) v = r * v * (1 - v);
+    for (let k = 0; k < 140; k++){ v = r * v * (1 - v); o.fillRect(px, bot - v * (bot - top), step, step * 1.2); }
+  }
+  G = {x, W, H, f, top, bot, L, Rr, s, off, cv, body: css('--body') || 'sans-serif', k: css('--k') || '#111', muted: css('--muted') || '#777'};
+  if (!done && st.p === 0 && (Kit.calm || !Kit.entered)) st.p = (3.0 - R0) / (R1 - R0);
+  render();
+};
+const xr = r => G.L + (G.Rr - G.L) * (r - R0) / (R1 - R0);
+
+function render(){
+  if (!G) return;
+  const {x, W, H, f, top, bot, L, Rr, s, off, cv, k, muted} = G;
+  x.clearRect(0, 0, W, H);
+  // axis
+  x.globalAlpha = 1; x.strokeStyle = k; x.lineWidth = 1.5;
+  x.beginPath(); x.moveTo(L, bot + 2); x.lineTo(Rr, bot + 2); x.stroke();
+  // diagram up to progress
+  const pxEnd = L + (Rr - L) * st.p;
+  x.save(); x.setTransform(1, 0, 0, 1, 0, 0);
+  const sw = Math.max(1, Math.round(pxEnd * s));
+  x.drawImage(off, 0, 0, sw, cv.height, 0, 0, sw, cv.height);
+  x.restore();
+  x.font = `700 ${f}px ${G.body}`; x.textBaseline = 'top';
+  x.fillStyle = k;
+  x.textAlign = 'left'; x.fillText('R ' + R0, L, bot + f * .5);
+  x.textAlign = 'right'; x.fillText(R1.toFixed(1), Rr, bot + f * .5);
+  if (!done){
+    x.fillStyle = muted; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.font = `800 ${f * 3}px ${G.body}`;
+    const cx = (xr(3.0) + Rr) / 2;
+    if (st.p < .5) x.fillText('?', cx, (top + bot) / 2);
+    x.font = `600 ${f}px ${G.body}`;
+    x.fillText('population over the years', (L + Rr) / 2, f * 1.6);
+    return;
+  }
+  // chaos threshold
+  const c357 = xr(3.57);
+  if (pxEnd >= c357){
+    x.setLineDash([4, 4]); x.strokeStyle = k; x.globalAlpha = .8;
+    x.beginPath(); x.moveTo(c357, top - f * .4); x.lineTo(c357, bot + 2); x.stroke();
+    x.setLineDash([]); x.globalAlpha = 1;
+    x.font = `700 ${f}px ${G.body}`; x.textAlign = 'center'; x.textBaseline = 'top'; x.fillStyle = k;
+    x.fillText('3.57', c357, bot + f * .5);
+  }
+  // markers per item
+  ITEMS.forEach(it => {
+    const px = xr(it.r); if (px > pxEnd) return;
+    x.strokeStyle = it.ok ? k : '#d0342c'; x.lineWidth = 2; x.globalAlpha = .9;
+    const ly = f * .3 + it.row * f * 1.55;
+    x.beginPath(); x.moveTo(px, ly + f * 1.2); x.lineTo(px, bot); x.stroke();
+    x.globalAlpha = 1;
+    const txt = it.lab + (it.ok ? ' ✓' : ' ✗');
+    x.font = `800 ${f}px ${G.body}`;
+    const w = x.measureText(txt).width;
+    const cx = Math.min(Math.max(px, w / 2 + 2), W - w / 2 - 2);
+    x.fillStyle = it.ok ? k : '#d0342c'; x.textAlign = 'center'; x.textBaseline = 'top';
+    x.fillText(txt, cx, ly);
+  });
+}
+
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.chip', {opacity: 0, y: 10, stagger: .06, duration: .4, ease: 'power3.out'});
+  if (!done){ st.p = 0; gsap.to(st, {p: (3.0 - R0) / (R1 - R0), duration: 1, ease: 'power2.out', onUpdate: render}); }
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (const it of ITEMS){
+    const b = tray.querySelector(`[data-i="${ITEMS.indexOf(it)}"]`);
+    b.click(); if (!it.cyc) b.click(); await w(60);
+  }
+  await w(150);
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await w(3000);
+};
+Kit.single();
+</script>
+</html>

@@ -1,0 +1,38 @@
+{
+  "id": "science-vapor-lava-bubbles",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to the vapor the water makes inside lava?",
+  "answer": "Water touching molten rock turns to vapor at once. The vapor expands inside the lava, making bubbles that push the rock up, so the lava seems to breathe. Enough of it and the lava bursts open.",
+  "move": "Water in lava becomes vapor that expands, and expanding vapor can blow lava apart.",
+  "keywords": [
+    "lava",
+    "water",
+    "vapor",
+    "bubbles",
+    "volcanoes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A glowing lava surface with a question above it: what happens to the vapor water makes inside lava? Tapping the lava drops water onto it, up to three drops in all.",
+    "ground": "#140c0a"
+  },
+  "source": "Geopop, “▶️LAVA vs ACQUA : LE IMMAGINI DELLA REAZIONE |GeoPOP🌍” (YouTube, 2018)",
+  "reference": "https://www.youtube.com/watch?v=DdSUTw-a4Ls&t=38s",
+  "written": "2026-11-03"
+}

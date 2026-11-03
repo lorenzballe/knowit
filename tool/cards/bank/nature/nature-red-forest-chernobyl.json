@@ -1,0 +1,37 @@
+{
+  "id": "nature-red-forest-chernobyl",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.forests_and_climate",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Why is the area near the reactor called the Red Forest?",
+  "answer": "Radioactive fallout from the reactor landed so heavily on the nearby pines that every tree died. Their needles turned red, the way leaves turn in autumn, but the color came from radiation, not the season. The fire and the rusty metal and soil were other options, not the cause.",
+  "move": "Red here was not autumn: it was trees killed by radiation.",
+  "keywords": [
+    "chernobyl",
+    "red forest",
+    "radiation",
+    "pine trees",
+    "fallout"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "Multiple-choice card asking why the area near the Chernobyl reactor is called the Red Forest. Three options: a fire after the accident scorched it; radioactive fallout killed the pines; rusty metal and soil from the plant. The reader picks one, then rates how sure they are."
+  },
+  "source": "Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)",
+  "reference": "https://www.youtube.com/watch?v=9DWnjcSo9J0&t=237s",
+  "written": "2026-11-03"
+}

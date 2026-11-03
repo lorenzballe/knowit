@@ -1,0 +1,211 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: thinking-generous-tit-tat -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;justify-content:flex-start;gap:1cqh;flex:1;min-height:0}
+#cap{font:600 max(1.8cqh,12px)/1.3 var(--body);color:var(--k);margin:0;min-height:2.6em}
+#stage:has(#why:not(.gone)) #cap{min-height:0}
+#viz{flex:1;min-height:0;width:100%;display:block}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:.6cqh;flex-shrink:0}
+#why .big{margin:0;font-size:max(2.4cqh,15px);line-height:1.15}
+#why .body{margin:0;font-size:max(1.6cqh,12px);line-height:1.3}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.4cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+#again{align-self:flex-start;font:700 max(1.6cqh,12px)/1 var(--body);color:var(--c);background:var(--k);border:0;border-radius:99px;padding:.8cqh 3.5cqw;cursor:pointer}
+</style>
+<article class="card" id="card" data-topic="thinking" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">GAME THEORY</span></div>
+    <h2 class="q">How does Generous Tit for Tat stop endless revenge loops?</h2>
+    <div class="stagebox" id="stage">
+      <p id="cap">Both play Tit for Tat. One cooperation (orange ring) is misread as a defection… and the echo never stops.</p>
+      <svg id="viz"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">It hits back only about 9 times out of 10</button>
+        <button class="opt" data-i="1">It hits back twice as hard, to end it fast</button>
+        <button class="opt" data-i="2">It never hits back at all</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">It forgives about 1 time in 10</p>
+        <p class="body">One misread move makes two Tit for Tat players punish each other in turn. Skipping about 10% of retaliations breaks that echo, yet it still hits back often enough not to be exploited.</p>
+        <button id="again">Run it again</button>
+      </div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick how it breaks the echo, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A little forgiveness stops one mistake from becoming endless revenge.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Once you understand game theory, you understand the world.” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 0, N = 10;
+const RED = '#e5484d', GRN = '#2fb36f', ORG = '#f5a524';
+let pick = -1, token = 0;
+const S = {A:[], B:[], seenA:[], noise:2, gen:false, rot:0, green:0, res:'', spins:0, forgiven:false};
+let W, H, f, cx, cy, R, lw, cw, cr, y1, y2, stripG, wheelG, redP, grnP, legA, legB, resT, subT;
+
+function reset(){ S.A=[]; S.B=[]; S.seenA=[]; S.res=''; S.spins=0; S.forgiven=false; }
+function cap(t){ Kit.$('cap').textContent = t; }
+function txt(attrs, s, parent){ const e = Kit.mk('text', attrs, parent); e.textContent = s; return e; }
+
+function pt(a){ const r = a*Math.PI/180; return [cx + R*Math.sin(r), cy - R*Math.cos(r)]; }
+function arc(a0, a1){
+  const p0 = pt(a0), p1 = pt(a1), big = (a1 - a0) > 180 ? 1 : 0;
+  return `M${cx},${cy}L${p0[0]},${p0[1]}A${R},${R} 0 ${big} 1 ${p1[0]},${p1[1]}Z`;
+}
+function applyWheel(){
+  if (!wheelG) return;
+  const g = S.green;
+  if (g < 0.002){
+    redP.setAttribute('d', `M${cx-R},${cy}A${R},${R} 0 1 1 ${cx+R},${cy}A${R},${R} 0 1 1 ${cx-R},${cy}Z`);
+    grnP.setAttribute('d', '');
+  } else {
+    redP.setAttribute('d', arc(0, (1-g)*360));
+    grnP.setAttribute('d', arc((1-g)*360, 360));
+  }
+  wheelG.setAttribute('transform', `rotate(${S.rot} ${cx} ${cy})`);
+}
+function updateTexts(){
+  if (!legA) return;
+  const pc = Math.round(S.green*100);
+  legA.textContent = `Retaliate ${100-pc}%`;
+  legB.textContent = `Forgive ${pc}%`;
+  resT.textContent = S.res || '—';
+  resT.setAttribute('fill', S.res === 'Forgive' ? GRN : S.res ? RED : 'var(--k)');
+  subT.textContent = S.gen ? `spin ${S.spins}` : 'Tit for Tat';
+}
+function renderStrip(anim){
+  if (!stripG) return;
+  stripG.innerHTML = '';
+  const fs = Math.max(12, f*0.85);
+  txt({x:0, y:y1, 'dominant-baseline':'central', fill:'var(--k)', 'font-size':fs, 'font-weight':700, 'font-family':'var(--body)'}, 'You', stripG);
+  txt({x:0, y:y2, 'dominant-baseline':'central', fill:'var(--k)', 'font-size':fs, 'font-weight':700, 'font-family':'var(--body)'}, 'Them', stripG);
+  const len = S.A.length, start = Math.max(0, len - N);
+  for (let i = start; i < len; i++){
+    const x = lw + (i - start + .5)*cw;
+    if (i === S.noise) Kit.mk('circle', {cx:x, cy:y1, r:cr+3.5, fill:'none', stroke:ORG, 'stroke-width':3}, stripG);
+    const a = Kit.mk('circle', {cx:x, cy:y1, r:cr, fill:S.A[i]==='D'?RED:GRN, stroke:'var(--k)', 'stroke-width':1.2}, stripG);
+    const b = Kit.mk('circle', {cx:x, cy:y2, r:cr, fill:S.B[i]==='D'?RED:GRN, stroke:'var(--k)', 'stroke-width':1.2}, stripG);
+    if (anim && !Kit.calm && i === len-1) gsap.from([a,b], {attr:{r:0}, duration:.3, ease:'back.out(2)'});
+  }
+}
+function layout(){
+  const svg = Kit.$('viz'), r = Kit.fitSvg(svg);
+  W = r.W; H = r.H; f = Math.max(12, Math.min(r.f, H*0.075));
+  svg.innerHTML = '';
+  lw = Math.max(12, f*0.85)*3.2; cw = (W - lw)/N; cr = Math.max(4, Math.min(cw*0.36, H*0.06));
+  y1 = cr + 4; y2 = y1 + cr*2 + Math.max(6, cr*0.6);
+  stripG = Kit.mk('g', {}, svg);
+  const top = y2 + cr + f*0.8, ptr = f*0.7;
+  R = Math.max(22, Math.min(W*0.2, (H - top - ptr - 4)/2)); cx = W/2; cy = top + ptr + R;
+  wheelG = Kit.mk('g', {}, svg);
+  redP = Kit.mk('path', {fill:RED, stroke:'var(--k)', 'stroke-width':2, 'stroke-linejoin':'round'}, wheelG);
+  grnP = Kit.mk('path', {fill:GRN, stroke:'var(--k)', 'stroke-width':2, 'stroke-linejoin':'round'}, wheelG);
+  Kit.mk('circle', {cx, cy, r:Math.max(4,R*0.1), fill:'var(--k)'}, svg);
+  Kit.mk('polygon', {points:`${cx-ptr*.7},${cy-R-ptr} ${cx+ptr*.7},${cy-R-ptr} ${cx},${cy-R+ptr*.55}`, fill:'var(--k)'}, svg);
+  const fs = Math.max(12, f*0.85), x0 = 2;
+  Kit.mk('circle', {cx:x0+fs*.4, cy:cy-fs*.75, r:fs*.38, fill:RED, stroke:'var(--k)', 'stroke-width':1}, svg);
+  Kit.mk('circle', {cx:x0+fs*.4, cy:cy+fs*.75, r:fs*.38, fill:GRN, stroke:'var(--k)', 'stroke-width':1}, svg);
+  legA = txt({x:x0+fs*1.1, y:cy-fs*.75, 'dominant-baseline':'central', fill:'var(--k)', 'font-size':fs, 'font-weight':600, 'font-family':'var(--body)'}, '', svg);
+  legB = txt({x:x0+fs*1.1, y:cy+fs*.75, 'dominant-baseline':'central', fill:'var(--k)', 'font-size':fs, 'font-weight':600, 'font-family':'var(--body)'}, '', svg);
+  const rx = cx + R + f*0.7, bs = Math.max(13, f*1.05);
+  resT = txt({x:rx, y:cy-bs*.6, 'dominant-baseline':'central', 'font-size':bs, 'font-weight':800, 'font-family':'var(--display)', stroke:'var(--c)', 'stroke-width':0}, '', svg);
+  subT = txt({x:rx, y:cy+bs*.75, 'dominant-baseline':'central', fill:'var(--muted)', 'font-size':Math.max(12,f*.8), 'font-family':'var(--mono)'}, '', svg);
+  applyWheel(); renderStrip(false); updateTexts();
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, Kit.calm ? 0 : ms));
+function spin(forgive){
+  const target = forgive ? (1-S.green)*360 + S.green*360*(0.25 + 0.5*Kit.rnd()) : (1-S.green)*360*(0.04 + 0.92*Kit.rnd());
+  const base = -target, k = Math.ceil((S.rot + 540 - base)/360), to = base + 360*k;
+  if (Kit.calm){ S.rot = to; applyWheel(); return Promise.resolve(); }
+  return new Promise(res => gsap.to(S, {rot:to, duration:.95, ease:'power3.out', onUpdate:applyWheel, onComplete:res}));
+}
+async function decide(gen, tok){
+  if (!gen){ S.res = 'Retaliate'; updateTexts(); return 'D'; }
+  S.spins++; updateTexts();
+  const forgive = Kit.rnd() < 0.1;
+  await spin(forgive);
+  if (tok !== token) return 'D';
+  S.res = forgive ? 'Forgive' : 'Retaliate'; updateTexts();
+  if (forgive){ S.forgiven = true; Kit.haptic('success'); } else Kit.haptic('light');
+  return forgive ? 'C' : 'D';
+}
+async function step(gen, tok){
+  const t = S.A.length; let a = 'C', b = 'C';
+  if (t >= 3){
+    if (S.B[t-1] === 'D') a = await decide(gen, tok);
+    if (tok !== token) return false;
+    if (S.seenA[t-1] === 'D') b = await decide(gen, tok);
+  }
+  if (tok !== token) return false;
+  S.A.push(a); S.B.push(b); S.seenA.push(t === S.noise ? 'D' : a);
+  renderStrip(true); return true;
+}
+function plainFill(){
+  reset(); S.gen = false; S.green = 0;
+  for (let t = 0; t < N + 2; t++){
+    const a = t >= 3 && S.B[t-1] === 'D' ? 'D' : 'C', b = t >= 3 && S.seenA[t-1] === 'D' ? 'D' : 'C';
+    S.A.push(a); S.B.push(b); S.seenA.push(t === S.noise ? 'D' : a);
+  }
+  S.res = 'Retaliate';
+}
+async function plain(tok){
+  while (!Kit.calm && tok === token){
+    reset(); updateTexts(); renderStrip(false);
+    for (let i = 0; i < N + 2; i++){ if (!await step(false, tok)) return; await sleep(430); if (tok !== token) return; }
+    await sleep(1300);
+  }
+}
+async function generous(tok){
+  reset(); S.gen = true; renderStrip(false); updateTexts();
+  cap('Now each retaliation is a spin: 9 times in 10 it hits back, 1 in 10 it forgives.');
+  if (Kit.calm){ S.green = .1; applyWheel(); }
+  else await new Promise(r => gsap.to(S, {green:.1, duration:.8, ease:'power2.out', onUpdate:() => { applyWheel(); updateTexts(); }, onComplete:r}));
+  updateTexts();
+  let after = 0;
+  for (let i = 0; i < 120; i++){
+    if (!await step(true, tok)) return;
+    if (S.forgiven) after++;
+    if (after >= 4) break;
+    await sleep(320); if (tok !== token) return;
+  }
+  if (tok === token) cap(`Forgiven on spin ${S.spins}: the echo stops and both cooperate again.`);
+}
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: ${said}`);
+  Kit.show('keep');
+  layout();
+  token++; generous(token);
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+Kit.$('again').addEventListener('click', () => { Kit.haptic('selection'); token++; generous(token); });
+
+plainFill();
+Kit.onShow.card = () => layout();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.opt', {opacity: 0, y: 10, stagger: .07, duration: .4, ease: 'power3.out'});
+  if (pick < 0){ token++; plain(token); }
+};
+Kit.play.card = async () => {
+  Kit.$('opts').children[0].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 600));
+};
+Kit.single();
+</script>
+</html>

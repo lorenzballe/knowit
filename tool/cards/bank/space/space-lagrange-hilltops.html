@@ -1,0 +1,229 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Parking on a hilltop</title>
+<!-- The Sun-Earth system seen turning with Earth: the effective potential (gravity of both plus the
+     centrifugal term) drawn as a shaded landscape with contours. The reader picks the Lagrange point
+     where a nudged probe stays, says how sure, then five probes are nudged at once and integrated in
+     the rotating frame (restricted three-body problem, Coriolis included): L1-L3 slide off their
+     saddles, L4 and L5 loop on their hilltops. Earth's mass is exaggerated (mu = 0.02) so the dips show.
+     Inspired by Veritasium, "Do we know how magnets work yet?". Touch: taps. -->
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<script src="kit/vendor/d3.min.js"></script>
+<style>
+#stage{position:relative;cursor:pointer;border-radius:2.4cqh;overflow:hidden;background:#0c1a6e}
+#map,#marks{position:absolute;inset:0;width:100%;height:100%;display:block}
+#marks{overflow:visible;pointer-events:none}
+#note{position:absolute;right:1.4cqh;bottom:1cqh;font:600 max(1.45cqh,11px)/1 var(--body);opacity:.7;letter-spacing:.04em}
+.answered .q{font-size:max(2.5cqh,15px)}
+.answered #stage{cursor:default}
+@container (max-height:700px){.answered .in{gap:1.5cqh}.answered .keep{padding:max(1.5cqh,9px) max(4.5cqw,14px)}}
+</style>
+<article class="card" id="card" data-topic="space" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">PICK ONE</span></div>
+    <h2 class="q">Where can a spacecraft park for free?</h2>
+    <div class="stagebox" id="stage" role="img" aria-label="A landscape map around the Sun and Earth: a ring-shaped ridge along Earth's orbit, a deep pit at the Sun, a small pit at Earth, and five marked flat spots, L1 to L5.">
+      <canvas id="map"></canvas>
+      <svg id="marks"></svg>
+      <span id="note">not to scale</span>
+    </div>
+    <p class="say" id="say">Seen turning with Earth, gravity and the orbit’s fling make this landscape. On its five flat spots a probe keeps pace with Earth. <b>Tap where a nudged one stays.</b></p>
+    <div id="sure"></div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Saddles cost fuel: Webb, at L2, fires thrusters every few weeks. Jupiter’s L4 and L5 hold over 15,000 asteroids.</div>
+    <div class="foot"><span class="src">Source · N. J. Cornish, “The Lagrange Points”, NASA WMAP; STScI, JWST Orbit</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+(() => {
+  const MU = .02;                               // Earth's share of the mass, drawn ~7,000 times too big
+  const cv = Kit.$('map'), svg = Kit.$('marks'), stage = Kit.$('stage'), say = Kit.$('say');
+  const Om = (x, y) => { const r1 = Math.hypot(x + MU, y), r2 = Math.hypot(x - 1 + MU, y); return (x * x + y * y) / 2 + (1 - MU) / r1 + MU / r2; };
+  function grad(x, y) { const dx1 = x + MU, dx2 = x - 1 + MU, r1 = Math.hypot(dx1, y), r2 = Math.hypot(dx2, y), a = (1 - MU) / (r1 * r1 * r1), b = MU / (r2 * r2 * r2); return [x - a * dx1 - b * dx2, y - a * y - b * y]; }
+  function root(lo, hi) { for (let i = 0; i < 80; i++) { const m = (lo + hi) / 2; if (Math.sign(grad(m, 0)[0]) === Math.sign(grad(lo, 0)[0])) lo = m; else hi = m; } return (lo + hi) / 2; }
+  const E = 1 - MU;
+  // The five flat spots, and the way each probe is nudged: a hair along Earth's orbit, at rest.
+  const PTS = [
+    {k: 'L1', p: [root(E - .6, E - 1e-4), 0], nudge: .15, ok: false, lab: [-1, 1]},
+    {k: 'L2', p: [root(E + 1e-4, E + .6), 0], nudge: -.15, ok: false, lab: [1, -1]},
+    {k: 'L3', p: [root(-1.5, -MU - .1), 0], nudge: .15, ok: false, lab: [1, -1]},
+    {k: 'L4', p: [.5 - MU, Math.sqrt(3) / 2], nudge: .15, ok: true, lab: [1, 0]},
+    {k: 'L5', p: [.5 - MU, -Math.sqrt(3) / 2], nudge: -.15, ok: true, lab: [1, 0]},
+  ];
+  const BOX = [-1.18, 1.34, -1.02, 1.02];
+  let W = 0, H = 0, k = 1, ox = 0, oy = 0, ctx = null, relief = null;
+  let pick = -1, ran = false, runT = 0, probes = null, raf = 0;
+  const T_END = 12, LOST = .42;
+  const toS = (x, y) => [ox + x * k, oy - y * k];
+
+  // ---------- the landscape ----------
+  function paintRelief() {
+    // drawn at CSS-pixel resolution once per size, then laid under everything
+    const w = Math.ceil(W), h = Math.ceil(H), img = new ImageData(w, h), d = img.data;
+    const lo = -1.95, hi = -1.488;
+    const shade = (X, Y) => { const x = (X - ox) / k, y = (oy - Y) / k; return Math.max(lo, Math.min(hi, -Om(x, y))); };
+    for (let Y = 0; Y < h; Y++) for (let X = 0; X < w; X++) {
+      const v = shade(X + .5, Y + .5), u = (v - lo) / (hi - lo), t = .55 * Math.pow(u, 2.2) + .45 * Math.pow(u, 9);
+      // light from the upper left: slope along that diagonal
+      const sx = shade(X + 1.5, Y + .5) - shade(X - .5, Y + .5), sy = shade(X + .5, Y + 1.5) - shade(X + .5, Y - .5);
+      const lit = Math.max(-1, Math.min(1, (-sx - sy) * k * 1.6));
+      const i = (Y * w + X) * 4;
+      // deep navy in the pits, the card's blue on the slopes, near white on the ridge
+      const r = 12 + t * 168, g = 26 + t * 186, b = 110 + t * 142;
+      const m = 1 + lit * .22;
+      d[i] = Math.min(255, r * m); d[i + 1] = Math.min(255, g * m); d[i + 2] = Math.min(255, b * m); d[i + 3] = 255;
+    }
+    const off = document.createElement('canvas'); off.width = w; off.height = h; off.getContext('2d').putImageData(img, 0, 0);
+    relief = off;
+  }
+  function contours(c) {
+    // contour lines on a coarse grid, through the saddles too
+    const n = 2, nx = Math.ceil(W / n), ny = Math.ceil(H / n), vals = new Float64Array(nx * ny);
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const x = (i * n - ox) / k, y = (oy - j * n) / k; vals[j * nx + i] = Math.max(-3, -Om(x, y)); }
+    const lv = [-1.492, -1.5, -1.51, -1.53, -1.56, -1.6, -1.613, -1.626, -1.68, -1.8, -2.1];
+    const cs = d3.contours().size([nx, ny]).thresholds(lv)(Array.from(vals));
+    const path = d3.geoPath(null, c);
+    c.save(); c.scale(n, n); c.lineWidth = 1 / n * 1.1;
+    cs.forEach(g => { c.strokeStyle = `rgba(255,255,255,${g.value >= -1.511 ? .5 : .26})`; c.beginPath(); path(g); c.stroke(); });
+    c.restore();
+  }
+  function bodies(c) {
+    const [sx, sy] = toS(-MU, 0), [ex, ey] = toS(1 - MU, 0), rs = Math.max(7, k * .075);
+    const glow = c.createRadialGradient(sx, sy, 0, sx, sy, rs * 3.2);
+    glow.addColorStop(0, 'rgba(255,214,90,.9)'); glow.addColorStop(.35, 'rgba(255,190,60,.35)'); glow.addColorStop(1, 'rgba(255,190,60,0)');
+    c.fillStyle = glow; c.beginPath(); c.arc(sx, sy, rs * 3.2, 0, 7); c.fill();
+    c.fillStyle = '#ffd25a'; c.beginPath(); c.arc(sx, sy, rs, 0, 7); c.fill();
+    c.fillStyle = '#8fe3ff'; c.beginPath(); c.arc(ex, ey, Math.max(3.5, k * .028), 0, 7); c.fill();
+    c.lineWidth = 1.5; c.strokeStyle = '#0c1a5c'; c.stroke();
+  }
+
+  // ---------- the probes ----------
+  function deriv(s) { const g = grad(s[0], s[1]); return [s[2], s[3], 2 * s[3] + g[0], -2 * s[2] + g[1]]; }
+  function rk4(s, h) { const a = deriv(s), b = deriv(s.map((v, i) => v + h / 2 * a[i])), c = deriv(s.map((v, i) => v + h / 2 * b[i])), d = deriv(s.map((v, i) => v + h * c[i])); return s.map((v, i) => v + h / 6 * (a[i] + 2 * b[i] + 2 * c[i] + d[i])); }
+  function simulate() {
+    // every path computed ahead, so drawing and the end state are the same on every phone
+    return PTS.map(P => {
+      const [lx, ly] = P.p, r = Math.hypot(lx + MU, ly), a = Math.atan2(ly, lx + MU) + P.nudge;
+      let s = [-MU + r * Math.cos(a), r * Math.sin(a), 0, 0], t = 0;
+      const path = [[s[0], s[1], 0]]; let lostAt = null;
+      while (t < T_END) {
+        for (let i = 0; i < 10; i++) { s = rk4(s, .002); t += .002; }
+        path.push([s[0], s[1], t]);
+        if (Math.hypot(s[0] - lx, s[1] - ly) > LOST) { lostAt = t; break; }
+        if (Math.hypot(s[0] - 1 + MU, s[1]) < .03) { lostAt = t; break; }
+      }
+      return {path, lostAt};
+    });
+  }
+  function drawProbes(c, upto) {
+    probes.forEach((pr, i) => {
+      const pts = pr.path.filter(p => p[2] <= upto); if (pts.length < 2) return;
+      const lost = pr.lostAt !== null && upto >= pr.lostAt;
+      // kept: white; slid away: the colour of its cross, ending where it was lost
+      c.lineWidth = lost ? 2 : 1.6; c.lineJoin = 'round'; c.lineCap = 'round'; c.strokeStyle = lost ? '#ffb4a8' : 'rgba(255,255,255,.95)';
+      c.beginPath(); pts.forEach((p, j) => { const [X, Y] = toS(p[0], p[1]); j ? c.lineTo(X, Y) : c.moveTo(X, Y); }); c.stroke();
+      const p = pts[pts.length - 1], [X, Y] = toS(p[0], p[1]);
+      c.fillStyle = lost ? '#ffb4a8' : '#fff'; c.beginPath(); c.arc(X, Y, lost ? 2.6 : 3.4, 0, 7); c.fill();
+    });
+  }
+
+  // ---------- the marks and words ----------
+  function marks(upto) {
+    svg.innerHTML = '';
+    const fs = Math.max(11.5, Math.min(14, k * .105));
+    const txt = (x, y, s, a) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: '#fff'}, a), svg); e.textContent = s; return e; };
+    const [sx, sy] = toS(-MU, 0), [ex, ey] = toS(1 - MU, 0);
+    txt(sx, sy + Math.max(7, k * .075) * 1.9 + fs * .9, 'Sun', {'text-anchor': 'middle', 'font-weight': 700, opacity: .9});
+    txt(ex, ey + fs * 1.55, 'Earth', {'text-anchor': 'middle', 'font-weight': 700, opacity: .9});
+    PTS.forEach((P, i) => {
+      const [X, Y] = toS(...P.p), chosen = i === pick;
+      if (chosen) Kit.mk('circle', {cx: X, cy: Y, r: 10, fill: 'none', stroke: '#fff', 'stroke-width': 2.4, opacity: .95}, svg);
+      Kit.mk('circle', {cx: X, cy: Y, r: chosen ? 4.5 : 5.5, fill: chosen ? '#fff' : 'none', stroke: '#fff', 'stroke-width': 2}, svg);
+      const lx = X + P.lab[0] * (P.lab[1] ? fs * .85 : 15), ly = Y + (P.lab[1] < 0 ? -fs * .75 : P.lab[1] > 0 ? fs * 1.55 : fs * .36);
+      const anchor = P.lab[0] < 0 ? 'end' : P.lab[0] > 0 ? 'start' : 'middle';
+      const t = txt(lx, ly, P.k, {'text-anchor': anchor});
+      // after the run, a verdict beside each name
+      if (ran && probes) {
+        const pr = probes[i], done = pr.lostAt !== null ? upto >= pr.lostAt : upto >= T_END;
+        if (done) {
+          const bb = t.getBBox(), ix = anchor === 'end' ? bb.x - fs * .95 : bb.x + bb.width + fs * .3, iy = bb.y + bb.height * .1, s = fs * .8;
+          const g = Kit.mk('g', {transform: `translate(${ix} ${iy})`}, svg);
+          // the kind of spot, on the same line, past the verdict
+          if (k >= 70 && (P.k === 'L4' || P.k === 'L5' || P.k === 'L3')) txt(anchor === 'end' ? ix - fs * .25 : ix + s + fs * .3, ly, P.ok ? 'hilltop' : 'saddle', {'text-anchor': anchor === 'end' ? 'end' : 'start', 'font-weight': 600, opacity: .85});
+          Kit.mk('path', {d: P.ok ? `M${s * .1} ${s * .55}l${s * .3} ${s * .3}l${s * .55} ${-s * .7}` : `M${s * .15} ${s * .15}l${s * .65} ${s * .65}M${s * .8} ${s * .15}l${-s * .65} ${s * .65}`, fill: 'none', stroke: P.ok ? '#fff' : '#ffb4a8', 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+        }
+      }
+    });
+  }
+
+  function frame() {
+    if (!ctx) return;
+    const c = ctx;
+    c.clearRect(0, 0, W, H);
+    c.drawImage(relief, 0, 0, Math.ceil(W), Math.ceil(H));
+    contours(c);
+    bodies(c);
+    if (ran && probes) drawProbes(c, runT);
+    marks(runT);
+  }
+  function draw() {
+    const fit = Kit.fitCanvas(cv); ctx = fit.x; W = fit.W; H = fit.H; Kit.fitSvg(svg);
+    // room at the sides for the names and their verdicts
+    const mx = 40, my = 14;
+    k = Math.min((W - 2 * mx) / (BOX[1] - BOX[0]), (H - 2 * my) / (BOX[3] - BOX[2]));
+    ox = W / 2 - (BOX[0] + BOX[1]) / 2 * k; oy = H / 2 + (BOX[2] + BOX[3]) / 2 * k;
+    paintRelief(); frame();
+  }
+
+  // ---------- the run ----------
+  function run() {
+    ran = true; probes = simulate();
+    return new Promise(done => {
+      if (Kit.calm) { runT = T_END; frame(); done(); return; }
+      const t0 = performance.now(), dur = 3200;
+      const step = now => { runT = Math.min(T_END, (now - t0) / dur * T_END); frame(); if (runT < T_END) raf = requestAnimationFrame(step); else done(); };
+      raf = requestAnimationFrame(step);
+    });
+  }
+  let finished = null;
+  const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+    const P = PTS[pick];
+    Kit.answer({choice: P.k, correct: P.ok, sure: pct});
+    sure.grade(P.ok, pct, `${P.k}, ${P.ok ? 'right' : 'wrong'}`);
+    // The words that follow take their place now, unseen, so the map keeps its size while the probes run.
+    Kit.$('card').classList.add('answered');
+    const keep = Kit.$('keep');
+    say.innerHTML = '<b>L4 and L5: hilltops, yet they hold.</b> As a probe starts to roll off, the turning swings it sideways into a loop (the Coriolis effect). Off the saddles, L1–L3, it slides away.';
+    say.style.opacity = 0; keep.classList.remove('gone'); keep.style.opacity = 0;
+    requestAnimationFrame(draw);
+    finished = new Promise(r => requestAnimationFrame(r)).then(run).then(() => {
+      if (Kit.calm || typeof gsap === 'undefined') { say.style.opacity = 1; keep.style.opacity = 1; }
+      else gsap.to([say, keep], {opacity: 1, duration: .5, stagger: .15, ease: 'power2.out'});
+      Kit.haptic('success');
+    });
+  });
+  stage.addEventListener('click', e => {
+    if (ran) return;
+    const b = stage.getBoundingClientRect(), X = e.clientX - b.left, Y = e.clientY - b.top;
+    let best = -1, bd = 1e9;
+    PTS.forEach((P, i) => { const [x, y] = toS(...P.p), d = Math.hypot(x - X, y - Y); if (d < bd) { bd = d; best = i; } });
+    if (bd > Math.max(30, k * .3)) return;
+    pick = best; Kit.haptic('selection'); sure.on();
+    say.innerHTML = `You picked <b>${PTS[pick].k}</b>. Now say how sure you are.`;
+    frame();
+  });
+  Kit.onShow.card = draw;
+  // the words below the drawing change length as the card goes on: redraw at the new size
+  let lastBox = '';
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const b = stage.getBoundingClientRect(), key = Math.round(b.width) + 'x' + Math.round(b.height); if (key !== lastBox && W) { lastBox = key; requestAnimationFrame(draw); } }).observe(stage);
+  Kit.play.card = async () => {
+    const tap = key => { const P = PTS.find(p => p.k === key), [x, y] = toS(...P.p), b = stage.getBoundingClientRect(); stage.dispatchEvent(new MouseEvent('click', {bubbles: true, clientX: b.left + x, clientY: b.top + y})); };
+    tap('L4'); await new Promise(r => setTimeout(r, 120));
+    Kit.$('sure').querySelector('[data-v="70"]').click();
+    await finished;
+  };
+})();
+Kit.single();
+</script>
+</html>

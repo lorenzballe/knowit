@@ -1,0 +1,38 @@
+{
+  "id": "science-globe-spin-inertia",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Same push on a globe ten times heavier. How fast does it spin up?",
+  "answer": "A ten-times-heavier globe does move when pushed, but its large mass gives it a high rotational inertia. The same push adds spin ten times slower. To keep up, you must push ten times harder.",
+  "move": "Heavy things aren't hard to move; they're hard to speed up.",
+  "keywords": [
+    "inertia",
+    "globe",
+    "spin",
+    "mass",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Multiple-choice card asking how fast a globe ten times heavier spins up under the same push. Options: just as fast, ten times slower, or not at all. The reader picks an answer, then rates how sure they are.",
+    "graded": false
+  },
+  "source": "Veritasium, “How Does The Earth Spin?” (YouTube, 2011)",
+  "reference": "https://www.youtube.com/watch?v=9zso7ChaQXQ&t=73s",
+  "written": "2026-11-03"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "thinking-easiest-to-fool",
+  "topic": "thinking",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Richard Feynman named the easiest person to fool. How easy are you?",
+  "answer": "Richard Feynman said the easiest person to fool is you. The first principle is that you must not fool yourself. No one wants your ideas to be right more than you do.",
+  "move": "Check your own ideas hardest: you are the easiest person to fool.",
+  "keywords": [
+    "richard feynman",
+    "self-deception",
+    "science",
+    "veritasium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Card titled Self-deception with a draggable marker labeled YOU on a scale of how easy you are to fool. The reader drags the marker to place themselves, after reading Feynman's quote that you are the easiest person to fool.",
+    "graded": false
+  },
+  "source": "Veritasium, “Why Do You Make People Look Stupid?” (YouTube, 2012)",
+  "reference": "https://www.youtube.com/watch?v=cY_o4A1wzsg&t=179s",
+  "written": "2026-11-03"
+}

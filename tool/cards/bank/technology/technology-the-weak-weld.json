@@ -1,0 +1,37 @@
+{
+  "id": "technology-the-weak-weld",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.lessons_from_failures",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Senna's steering column snapped. Where exactly did it break?",
+  "answer": "The steering column snapped at the joint in the middle (B), at the weld. The column had been lengthened so the wheel stuck out further, and the weld was made with a less resistant material, so it gave way.",
+  "move": "A joint is only as strong as the material holding it together.",
+  "keywords": [
+    "ayrton_senna",
+    "steering_column",
+    "imola",
+    "weld",
+    "joint"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "taps",
+    "label": "A spot-the-break quiz asking where Senna's steering column snapped. Three options: A, right by the steering wheel; B, at the joint in the middle; C, down at the base. The page shows the column with a weld marked, and the reader picks a location and a confidence level."
+  },
+  "source": "Geopop, “Com'è morto Ayrton Senna? La ricostruzione 3d dell'incidente al GP di Imola” (YouTube, 2024)",
+  "reference": "https://www.youtube.com/watch?v=gh5UkpxPTFA&t=219s",
+  "written": "2026-11-03"
+}

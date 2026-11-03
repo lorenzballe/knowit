@@ -1,0 +1,38 @@
+{
+  "id": "human_body-love-chemistry",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "page",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Love begins with four molecules shifting. Which rise, and which fall?",
+  "answer": "As love begins, dopamine, noradrenaline and phenylethylamine go up while serotonin goes down. That swing of brain messengers cuts appetite and can cause insomnia.",
+  "move": "Early love is a chemical swing: three messengers up, serotonin down.",
+  "keywords": [
+    "love",
+    "dopamine",
+    "serotonin",
+    "noradrenaline",
+    "phenylethylamine"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "Titled The chemical cocktail of love. Drag four molecules (dopamine, noradrenaline, phenylethylamine, serotonin) onto a pan, sorting each as rising or falling when love begins.",
+    "graded": false
+  },
+  "source": "Geopop, “Cosa succede nel nostro cervello quando ci innamoriamo? La biochimica dell’amore” (YouTube, 2025)",
+  "reference": "https://www.youtube.com/watch?v=8J1oZkA9D3E&t=216s",
+  "written": "2026-11-03"
+}

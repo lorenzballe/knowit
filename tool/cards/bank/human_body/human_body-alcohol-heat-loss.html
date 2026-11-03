@@ -1,0 +1,196 @@
+<!doctype html>
+<!-- slug: human_body-alcohol-heat-loss -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute · Why alcohol makes you colder</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.2cqh;flex:1;min-height:0}
+#fig{flex:1;min-height:0;position:relative}
+#fig svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ctrl{display:flex;flex-direction:column;align-items:center;gap:1cqh}
+#cap{font:600 max(1.9cqh,13px)/1.3 var(--body);text-align:center;margin:0;min-height:2.6em;display:flex;align-items:center;justify-content:center;overflow-wrap:anywhere}
+#drink{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:3cqh;padding:1.5cqh 6cqw;cursor:pointer;box-shadow:0 .6cqh 1.6cqh color-mix(in srgb,var(--k) 25%,transparent)}
+#drink:active{transform:scale(.97)}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:anywhere}
+</style>
+<article class="card" id="card" data-topic="human_body" data-kind="Tap · step by step">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">WARM ILLUSION</span></div>
+    <h2 class="q">Alcohol makes you feel warm. So why does your body actually get colder?</h2>
+    <div class="stagebox" id="stage">
+      <div id="fig"><svg id="pic" aria-label="A body whose blood vessels widen and radiate heat"></svg></div>
+      <div id="ctrl">
+        <p id="cap">Sober: warm core, normal skin.</p>
+        <button id="drink">🍷 One more drink · 0/4</button>
+      </div>
+      <div id="why" class="gone">
+        <p class="big">Warm skin, colder core</p>
+        <p class="body">Alcohol widens your blood vessels, so more blood flows to the skin. That feels cosy, but the skin is giving heat away, so your core temperature drops. In extreme cases: hypothermia.</p>
+      </div>
+    </div>
+    <p class="say" id="say">Tap the button to drink, and watch skin and core.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>The warm glow of alcohol is heat leaving your body.</div>
+    <div class="foot"><span class="src">Source · Geopop, “Cosa succede al nostro corpo quando ci ubriachiamo? Gli effetti dell'alcol sul nostro cervello” (YouTube, 2023)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const S = {v: 0, ph: .5};
+let lvl = 0, G = null, loop = null;
+const WARM = '#f2552c', COLD = '#2f7fe0', HOT = '#ff3b2f', SKIN = '#f4d3bd', FLUSH = '#ff8f78', VES0 = '#9b2a2e';
+const lerp = gsap.utils.interpolate, cl = (a, b, x) => Math.max(a, Math.min(b, x));
+const CAPS = [
+  'Sober: warm core, normal skin.',
+  'Ethanol in the blood: vessels widen.',
+  'More blood reaches the skin. You feel cosy.',
+  'But warm skin sheds heat into the air…',
+  'Your core is cooling down.'
+];
+
+function build() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  const fs = Math.max(f * .8, 12);
+  const ink = getComputedStyle(Kit.$('card')).getPropertyValue('--k').trim() || '#111';
+  const mk = (t, a, p = svg) => Kit.mk(t, a, p);
+  const cx = W / 2;
+  const gw = Math.max(W * .055, 14);
+  const lx = Math.max(W * .07, gw), rx = W - lx;
+  const gTop = fs * 2.2, gBot = H - fs * .8;
+  const fh = H * .9;
+  const headR = Math.min(fh * .11, W * .12);
+  const headCy = H * .06 + headR;
+  const torsoTop = headCy + headR + fh * .035;
+  const tw = Math.min(W * .4, fh * .55);
+  const Hv = H - torsoTop;
+  const coreCy = torsoTop + Hv * .52;
+
+  const defs = mk('defs', {});
+  const flt = mk('filter', {id: 'blur', x: '-50%', y: '-50%', width: '200%', height: '200%'}, defs);
+  mk('feGaussianBlur', {stdDeviation: Math.max(W * .03, 6)}, flt);
+
+  // glow behind body
+  const glow = mk('g', {filter: 'url(#blur)'});
+  mk('circle', {cx, cy: headCy, r: headR * 1.05, fill: HOT}, glow);
+  mk('rect', {x: cx - tw / 2, y: torsoTop, width: tw, height: Hv + tw, rx: tw * .28, fill: HOT}, glow);
+
+  // waves
+  const em = [];
+  const sides = [.18, .45, .72];
+  sides.forEach(k => { em.push([cx - tw / 2, torsoTop + Hv * k, -1, 0]); em.push([cx + tw / 2, torsoTop + Hv * k, 1, 0]); });
+  const d = Math.SQRT1_2;
+  em.push([cx - headR * d, headCy - headR * d, -d, -d]); em.push([cx + headR * d, headCy - headR * d, d, -d]);
+  em.push([cx - tw * .42, torsoTop + tw * .1, -d, -d]); em.push([cx + tw * .42, torsoTop + tw * .1, d, -d]);
+  em.push([cx - headR, headCy, -1, 0]); em.push([cx + headR, headCy, 1, 0]);
+  const span = Math.max((cx - tw / 2) - (lx + gw) - fs * 1.2, fs * 1.5);
+  const L = Math.max(fs * .55, 7);
+  const waves = em.map(() => mk('path', {fill: 'none', stroke: HOT, 'stroke-width': Math.max(W * .008, 2.2), 'stroke-linecap': 'round', opacity: 0}));
+
+  // body
+  const torso = mk('rect', {x: cx - tw / 2, y: torsoTop, width: tw, height: Hv + tw, rx: tw * .28, fill: SKIN, stroke: ink, 'stroke-width': Math.max(W * .007, 2)});
+  mk('rect', {x: cx - headR * .35, y: headCy + headR * .7, width: headR * .7, height: torsoTop - headCy - headR * .6, fill: SKIN});
+  const head = mk('circle', {cx, cy: headCy, r: headR, fill: SKIN, stroke: ink, 'stroke-width': Math.max(W * .007, 2)});
+  const cheeks = [-1, 1].map(s => mk('ellipse', {cx: cx + s * headR * .5, cy: headCy + headR * .25, rx: headR * .22, ry: headR * .14, fill: HOT, opacity: 0}));
+  [-1, 1].forEach(s => mk('circle', {cx: cx + s * headR * .35, cy: headCy - headR * .12, r: Math.max(headR * .07, 2), fill: ink}));
+
+  // vessels
+  const vg = mk('g', {fill: 'none', 'stroke-linecap': 'round'});
+  const ends = [[-.42, -.36], [-.43, .02], [-.4, .36], [.42, -.36], [.43, .02], [.4, .36], [-.18, -.6], [.18, -.6]];
+  const ves = [];
+  ends.forEach(([ex, ey], i) => {
+    const x2 = cx + ex * tw, y2 = cl(torsoTop + fs * .6, H - fs * .6, coreCy + ey * Hv);
+    const mx = (cx + x2) / 2, my = (coreCy + y2) / 2;
+    const bend = (i % 2 ? 1 : -1) * fs * .6;
+    ves.push(mk('path', {d: `M${cx},${coreCy} Q${mx},${my + bend} ${x2},${y2}`}, vg));
+    const bx = cx + (x2 - cx) * .62, by = coreCy + (y2 - coreCy) * .62 + bend * .5;
+    ves.push(mk('path', {d: `M${bx},${by} Q${bx + (x2 - cx) * .15},${by - fs * .9} ${x2 - ex * fs * .2},${y2 - fs * 1.1}`}, vg));
+  });
+  ves.push(mk('path', {d: `M${cx},${coreCy} L${cx},${headCy + headR * .55} M${cx},${headCy + headR * .55} Q${cx - headR * .3},${headCy + headR * .4} ${cx - headR * .55},${headCy + headR * .25} M${cx},${headCy + headR * .55} Q${cx + headR * .3},${headCy + headR * .4} ${cx + headR * .55},${headCy + headR * .25}`}, vg));
+
+  const crx = tw * .25, cry = Math.min(Hv * .16, tw * .2);
+  const core = mk('ellipse', {cx, cy: coreCy, rx: crx, ry: cry, fill: WARM, stroke: '#fff', 'stroke-width': 2});
+  const ct = mk('text', {x: cx, y: coreCy, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs});
+  ct.textContent = 'CORE';
+
+  // gauges
+  const lab = (x, txt) => { const t = mk('text', {x, y: fs * 1.1, 'text-anchor': 'middle', fill: ink, 'font-family': 'var(--body)', 'font-weight': 800, 'font-size': fs}); t.textContent = txt; };
+  lab(lx, 'SKIN'); lab(rx, 'CORE');
+  const gh = gBot - gTop;
+  mk('rect', {x: lx - gw / 2, y: gTop, width: gw, height: gh, rx: gw / 2, fill: 'none', stroke: ink, 'stroke-width': 2});
+  const lf = mk('rect', {x: lx - gw / 2 + 3, width: gw - 6, rx: (gw - 6) / 2, fill: HOT});
+  const br = gw * .9, tubeB = gBot - br * 1.4;
+  mk('rect', {x: rx - gw / 2, y: gTop, width: gw, height: tubeB - gTop + br, rx: gw / 2, fill: 'none', stroke: ink, 'stroke-width': 2});
+  mk('circle', {cx: rx, cy: gBot - br, r: br, fill: 'none', stroke: ink, 'stroke-width': 2});
+  const rf = mk('rect', {x: rx - gw / 2 + 3, width: gw - 6, rx: (gw - 6) / 2, fill: WARM});
+  const bulb = mk('circle', {cx: rx, cy: gBot - br, r: br - 3, fill: WARM});
+  const la = mk('text', {x: lx, y: gBot + fs * .5, 'text-anchor': 'middle', fill: ink, 'font-size': fs * .9, opacity: 0}); la.textContent = '▲';
+  const ra = mk('text', {x: rx, y: H, 'text-anchor': 'middle', fill: ink, 'font-size': fs * .9, opacity: 0}); ra.textContent = '';
+
+  G = {W, H, fs, glow, waves, em, span, L, torso, head, cheeks, ves, core, lf, rf, bulb, gTop, gBot, gh, tubeB, base: Math.max(W * .006, 1.6)};
+  draw();
+}
+
+function draw() {
+  if (!G) return;
+  const t = cl(0, 1, S.v / 4);
+  G.glow.setAttribute('opacity', t * .7);
+  const sk = lerp(SKIN, FLUSH, t);
+  G.torso.setAttribute('fill', sk); G.head.setAttribute('fill', sk);
+  G.cheeks.forEach(c => c.setAttribute('opacity', t * .8));
+  const vc = lerp(VES0, HOT, t), vw = G.base * (1 + S.v * 1.1);
+  G.ves.forEach(p => { p.setAttribute('stroke', vc); p.setAttribute('stroke-width', vw); });
+  const cc = lerp(WARM, COLD, t);
+  G.core.setAttribute('fill', cc);
+  const lh = G.gh * (.22 + .72 * t) - 6;
+  G.lf.setAttribute('y', G.gBot - 3 - lh); G.lf.setAttribute('height', lh);
+  const tubeH = G.tubeB - G.gTop;
+  const rh = tubeH * (.8 - .6 * t);
+  G.rf.setAttribute('y', G.tubeB - rh + 3); G.rf.setAttribute('height', rh + G.fs);
+  G.rf.setAttribute('fill', cc); G.bulb.setAttribute('fill', cc);
+  const n = G.em.length;
+  G.waves.forEach((w, i) => {
+    const vis = cl(0, 1, S.v * 3 - i);
+    const p = (S.ph + i * .37) % 1;
+    const [x, y, dx, dy] = G.em[i];
+    const dd = G.fs * .5 + p * G.span;
+    const px = x + dx * dd, py = y + dy * dd, nx = -dy, ny = dx;
+    w.setAttribute('d', `M${px + nx * G.L},${py + ny * G.L} Q${px + dx * G.L * .7},${py + dy * G.L * .7} ${px - nx * G.L},${py - ny * G.L}`);
+    w.setAttribute('opacity', vis * Math.sin(Math.PI * p));
+  });
+}
+
+function finish() {
+  Kit.hide('ctrl'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  Kit.haptic('success');
+  build();
+  if (!Kit.calm) gsap.from('#why > *, #keep', {opacity: 0, y: 8, stagger: .1, duration: .45, ease: 'power3.out'});
+}
+
+Kit.$('drink').addEventListener('click', () => {
+  if (lvl >= 4) return;
+  lvl++; Kit.haptic('light');
+  Kit.$('cap').textContent = CAPS[lvl];
+  Kit.$('drink').textContent = `🍷 One more drink · ${lvl}/4`;
+  if (Kit.calm) { S.v = lvl; draw(); }
+  else gsap.to(S, {v: lvl, duration: 1, ease: 'power2.out', onUpdate: draw});
+  if (lvl === 4) setTimeout(finish, Kit.calm ? 50 : 1100);
+});
+
+Kit.onShow.card = () => build();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  if (!loop) loop = gsap.to(S, {ph: '+=1', duration: 2.4, repeat: -1, ease: 'none', onUpdate: draw});
+  gsap.from('#drink', {opacity: 0, y: 10, duration: .5, ease: 'power3.out'});
+};
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  for (let i = 0; i < 4; i++) { Kit.$('drink').click(); await w(300); }
+  await w(1500);
+};
+Kit.single();
+</script>
+</html>

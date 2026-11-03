@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: nature-red-forest-chernobyl -->
+<title>Why the Red Forest is red</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;gap:1.4cqh;flex:1;min-height:0}
+#pic{flex:1;min-height:0;width:100%;display:block;border-radius:1.8cqh}
+#opts{display:flex;flex-direction:column;gap:1cqh}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display)}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.opt{font:700 max(2cqh,13px)/1.2 var(--body);text-align:left;color:var(--k);background:color-mix(in srgb,var(--k) 8%,transparent);border:0;box-shadow:inset 0 0 0 .22cqh color-mix(in srgb,var(--k) 30%,transparent);border-radius:1.8cqh;padding:1.3cqh 4cqw;cursor:pointer;overflow-wrap:anywhere}
+.opt.on{background:var(--k);color:var(--c);box-shadow:none}
+</style>
+<article class="card" id="card" data-topic="nature" data-kind="Pick one · how sure">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">CHERNOBYL</span></div>
+    <h2 class="q">Why is the area near the reactor called the Red Forest?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic" aria-label="A pine forest beside the Chernobyl reactor"></svg>
+      <div id="opts">
+        <button class="opt" data-i="0">A fire after the accident scorched it</button>
+        <button class="opt" data-i="1">Radioactive fallout killed the pines</button>
+        <button class="opt" data-i="2">Rusty metal and soil from the plant</button>
+      </div>
+      <div id="why" class="gone"><p class="big">The fallout killed the pines</p><p class="body">So much radioactive material landed near the reactor that every tree died. Their needles turned red, as leaves do in autumn.</p></div>
+    </div>
+    <div id="sure"></div>
+    <p class="say" id="say">Pick a reason, then say how sure you are.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Red here was not autumn: it was trees killed by radiation.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Chernobyl - What It's Like Today” (YouTube, 2015)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const RIGHT = 1, GREEN = ['#2f6e3b','#3a7d44','#275f33'], RED = ['#b8432a','#c9542f','#a63a24'];
+let pick = -1, dead = false, trees = [], geo = null;
+
+const sure = Kit.sure(Kit.$('sure'), 'How sure are you?', pct => {
+  const ok = pick === RIGHT, said = Kit.$('opts').children[pick].textContent;
+  Kit.answer({choice: said, correct: ok, sure: pct});
+  Kit.hide('opts'); Kit.hide('say'); Kit.show('why');
+  sure.grade(ok, pct, `${ok ? 'Right' : 'Wrong'}: ${said.toLowerCase()}`);
+  Kit.show('keep');
+  reveal();
+});
+Kit.$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b || pick >= 0) return;
+  pick = +b.dataset.i; b.classList.add('on'); Kit.haptic('selection'); sure.on();
+});
+
+function draw(){
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(f, 12);
+  const defs = Kit.mk('defs', {}, svg);
+  const sk = Kit.mk('linearGradient', {id:'sky', x1:0, y1:0, x2:0, y2:1}, defs);
+  Kit.mk('stop', {offset:0, 'stop-color':'#cfe0ea'}, sk);
+  Kit.mk('stop', {offset:1, 'stop-color':'#f3ede0'}, sk);
+  Kit.mk('rect', {x:0, y:0, width:W, height:H, rx:Math.min(W,H)*.04, fill:'url(#sky)'}, svg);
+  const gy = H*.8;
+  Kit.mk('rect', {x:0, y:gy, width:W, height:H-gy, fill:'#8a7a5c'}, svg);
+  Kit.mk('rect', {x:0, y:gy, width:W, height:H*.012, fill:'#6d5f45'}, svg);
+  // reactor
+  const rx = W*.04, rw = W*.17, rh = H*.26, rTop = gy-rh;
+  Kit.mk('rect', {x:rx, y:rTop, width:rw, height:rh, fill:'#5b6470'}, svg);
+  Kit.mk('rect', {x:rx+rw*.62, y:rTop-rh*.75, width:rw*.16, height:rh*.75, fill:'#7a838f'}, svg);
+  Kit.mk('rect', {x:rx+rw*.62, y:rTop-rh*.75+rh*.12, width:rw*.16, height:rh*.06, fill:'#c9542f'}, svg);
+  for (let i = 0; i < 3; i++) Kit.mk('rect', {x:rx+rw*(.1+i*.17), y:rTop+rh*.3, width:rw*.1, height:rh*.18, fill:'#3d444d'}, svg);
+  Kit.mk('text', {x:rx+rw/2, y:gy+fs*1.5, 'text-anchor':'middle', fill:'#fff', 'font-size':fs, 'font-family':'var(--body)', 'font-weight':700}, svg).textContent = 'Reactor';
+  // forest: three rows, back to front
+  trees = [];
+  const x0 = rx+rw+W*.04, x1 = W*.98, src = rx+rw*.7;
+  [[.07,.62,.10],[.035,.8,.08],[0,1,.065]].forEach(([dy,sc,step], row) => {
+    const n = Math.max(5, Math.round((x1-x0)/(W*step)));
+    for (let i = 0; i < n; i++){
+      const x = x0 + (x1-x0)*(i+.5)/n + (Kit.rnd()-.5)*W*.02;
+      const base = gy - H*dy, h = H*.36*sc*(.85+Kit.rnd()*.3), w = h*.48;
+      const g = Kit.mk('g', {}, svg);
+      Kit.mk('rect', {x:x-w*.05, y:base-h*.18, width:w*.1, height:h*.18, fill:'#5a4128'}, g);
+      const polys = [];
+      for (let t = 0; t < 3; t++){
+        const top = base-h + t*h*.24, bot = base-h*.16 - (2-t)*h*.18, ww = w*(.55+t*.22);
+        polys.push(Kit.mk('polygon', {points:`${x},${top} ${x-ww/2},${bot} ${x+ww/2},${bot}`, fill:GREEN[row]}, g));
+      }
+      const dose = Math.exp(-(x-src)/(W*.28)) * (.85+Kit.rnd()*.3);
+      trees.push({polys, x, row, dies: dose > .33});
+    }
+  });
+  const reds = trees.filter(t => t.dies).map(t => t.x);
+  const mid = reds.length ? (Math.min(...reds)+Math.max(...reds))/2 : W*.45;
+  const lab = Kit.mk('text', {x:mid, y:H*.12, 'text-anchor':'middle', fill:'#a63a24', 'font-size':fs*1.3, 'font-family':'var(--hand)', 'font-weight':700, opacity: dead ? 1 : 0}, svg);
+  lab.textContent = 'the Red Forest';
+  const fall = Kit.mk('g', {}, svg);
+  geo = {W, H, gy, src, top:rTop-rh*.75, lab, fall, fs};
+  if (dead) paint(false);
+}
+
+function paint(anim){
+  trees.forEach(t => {
+    if (!t.dies) return;
+    const c = RED[t.row];
+    if (anim) gsap.to(t.polys, {fill:c, duration:.7, delay:.5 + (t.x-geo.src)/geo.W*1.1, ease:'power1.inOut'});
+    else t.polys.forEach(p => p.setAttribute('fill', c));
+  });
+  if (anim) gsap.to(geo.lab, {opacity:1, duration:.5, delay:1.5});
+  else geo.lab.setAttribute('opacity', 1);
+}
+
+function reveal(){
+  if (dead) return; dead = true;
+  if (Kit.calm){ paint(false); return; }
+  const {W, gy, src, top, fall} = geo;
+  for (let i = 0; i < 70; i++){
+    const x = src + (-Math.log(1-Kit.rnd()*.97))*W*.2;
+    if (x > W) continue;
+    const d = Kit.mk('circle', {cx:src, cy:top, r:Math.max(2, W*.006), fill:'#e0a21b', opacity:.9}, fall);
+    gsap.to(d, {attr:{cx:x, cy:gy - Kit.rnd()*geo.H*.25}, duration:.9+Kit.rnd()*.5, delay:Kit.rnd()*.5, ease:'power1.in'});
+    gsap.to(d, {opacity:0, duration:.4, delay:1.6+Kit.rnd()*.3});
+  }
+  paint(true);
+  Kit.haptic('light');
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from('.opt', {opacity:0, y:10, stagger:.07, duration:.4, ease:'power3.out'}); };
+Kit.play.card = async () => {
+  Kit.$('opts').children[1].click();
+  await new Promise(r => setTimeout(r, 100));
+  Kit.$('sure').querySelector('[data-v="80"]').click();
+  await new Promise(r => setTimeout(r, 2600));
+};
+Kit.single();
+</script>
+</html>

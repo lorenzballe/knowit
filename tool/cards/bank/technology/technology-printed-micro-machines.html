@@ -1,0 +1,183 @@
+<!doctype html>
+<!-- slug: technology-printed-micro-machines -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{flex:1;min-height:0;position:relative}
+#pic{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+#why{display:flex;flex-direction:column;gap:1cqh}
+#why .big{font:800 max(2.8cqh,17px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.9cqh,13px)/1.35 var(--body);margin:0;overflow-wrap:break-word}
+#ctl{display:flex}
+#go{font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 6cqw;cursor:pointer;min-width:52%}
+#go:disabled{opacity:.45;cursor:default}
+.say{overflow-wrap:break-word}
+.src{display:block;max-width:calc(100% - 112px);overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="technology" data-kind="Make it · drag">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">MICRO MACHINES</span></div>
+    <h2 class="q">How are bending machines made at microscopic size?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">This silicon wears a film that reacts to light. Make a machine.</p>
+    <div id="ctl"><button id="go">Lay the mask</button></div>
+    <div id="why" class="gone">
+      <p class="big">Like computer chips: photolithography.</p>
+      <p class="body">Light through a mask draws the whole shape at once, then etching carves it out. A machine that moves by bending is just one shape, so it can be made this way, far smaller than one with parts.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>Machines that bend can be printed like chips, so they can be microscopic.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “Why Machines That Bend Are Better” (YouTube, 2019)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const SI='#d3dae6', RES='#d98f3e', UV='#b9a0ff', PIT='#06070b', PANEL='#151923', CHROME='#262b36';
+const st={step:0, dx:0, busy:false, done:false, dragged:false};
+let G={};
+const SAY=[
+  'This silicon wears a film that reacts to light. Make a machine.',
+  'The mask’s dark pattern is the machine’s shape.',
+  'Light changed the film wherever the mask let it through.',
+  'One carved piece, no hinges. Drag the middle sideways.'
+];
+const BTN=['Lay the mask','Flash the light','Etch it'];
+
+function feats(par, fill, beamsToo=true){
+  const {X,Y,s}=G;
+  const g=Kit.mk('g',{},par), mv=Kit.mk('g',{},g), rects=[];
+  const R=(x,y,w,h,p)=>{const r=Kit.mk('rect',{x:X+x*s,y:Y+y*s,width:w*s,height:h*s,fill},p);rects.push(r);return r;};
+  R(.2,.08,.6,.12,g); R(.2,.8,.6,.12,g);
+  R(.08,.40,.08,.20,g); R(.84,.40,.08,.20,g);
+  for(const c of [.425,.475,.525,.575]){R(.16,c-.007,.15,.014,g);R(.69,c-.007,.15,.014,g);}
+  R(.38,.44,.24,.12,mv);
+  for(const c of [.45,.5,.55]){R(.23,c-.007,.15,.014,mv);R(.62,c-.007,.15,.014,mv);}
+  const beams=beamsToo?[0,1,2,3].map(()=>Kit.mk('path',{fill:'none',stroke:fill,'stroke-width':.016*s},g)):[];
+  const b={g,mv,rects,beams}; bend(b,0); return b;
+}
+function bend(b,dx){
+  const {X,Y,s}=G, d=dx*s, xs=[.41,.59];
+  b.beams.forEach((p,i)=>{
+    const x=X+xs[i%2]*s;
+    if(i<2){const y0=Y+.195*s,y1=Y+.445*s,ym=(y0+y1)/2;p.setAttribute('d',`M${x},${y0} C${x},${ym} ${x+d},${ym} ${x+d},${y1}`);}
+    else{const y0=Y+.555*s,y1=Y+.805*s,ym=(y0+y1)/2;p.setAttribute('d',`M${x+d},${y0} C${x+d},${ym} ${x},${ym} ${x},${y1}`);}
+  });
+  b.mv.setAttribute('transform',`translate(${d},0)`);
+}
+function paint(b,c){b.rects.forEach(r=>r.setAttribute('fill',c));b.beams.forEach(p=>p.setAttribute('stroke',c));}
+function upd(){ if(G.main) bend(G.main, st.dx); }
+
+function draw(){
+  const svg=Kit.$('pic'); svg.innerHTML='';
+  const {W,H}=Kit.fitSvg(svg);
+  const s=Math.min(W*.88,H*.88), X=(W-s)/2, Y=(H-s)/2;
+  G={s,X,Y,W,H,svg};
+  Kit.mk('rect',{x:X-s*.045,y:Y-s*.045,width:s*1.09,height:s*1.09,rx:s*.05,fill:PANEL},svg);
+  const defs=Kit.mk('defs',{},svg);
+  const m=Kit.mk('mask',{id:'mk',maskUnits:'userSpaceOnUse',x:X,y:Y,width:s,height:s},defs);
+  Kit.mk('rect',{x:X,y:Y,width:s,height:s,fill:'#fff'},m);
+  feats(m,'#000');
+  const lg=Kit.mk('linearGradient',{id:'ray',x1:0,y1:0,x2:0,y2:1},defs);
+  Kit.mk('stop',{offset:0,'stop-color':UV,'stop-opacity':0},lg);
+  Kit.mk('stop',{offset:1,'stop-color':UV,'stop-opacity':.9},lg);
+
+  G.die=Kit.mk('rect',{x:X,y:Y,width:s,height:s,rx:s*.012,fill:st.step>=3?PIT:RES},svg);
+  G.over=Kit.mk('rect',{x:X,y:Y,width:s,height:s,fill:st.step>=3?PIT:UV,mask:'url(#mk)',opacity:st.step>=2?1:0},svg);
+  G.main=feats(svg, st.step>=3?SI:RES);
+  // hint arrow on the moving part
+  const ay=Y+.5*s, ax0=X+.44*s, ax1=X+.56*s, h=.02*s;
+  G.arrow=Kit.mk('path',{d:`M${ax0},${ay} L${ax1},${ay} M${ax0+h},${ay-h} L${ax0},${ay} L${ax0+h},${ay+h} M${ax1-h},${ay-h} L${ax1},${ay} L${ax1-h},${ay+h}`,
+    fill:'none',stroke:PANEL,'stroke-width':.012*s,'stroke-linecap':'round','stroke-linejoin':'round',opacity:(st.step>=3&&!st.dragged)?1:0},G.main.mv);
+  // mask plate
+  G.plate=Kit.mk('g',{opacity:st.step===1?1:0},svg);
+  Kit.mk('rect',{x:X-s*.03,y:Y-s*.03,width:s*1.06,height:s*1.06,rx:s*.02,fill:'rgba(190,210,255,.16)',stroke:'rgba(225,235,255,.7)','stroke-width':Math.max(1,s*.004)},G.plate);
+  paint(feats(G.plate,CHROME),CHROME);
+  // light rays
+  G.rays=Kit.mk('g',{opacity:0},svg);
+  for(let i=0;i<9;i++){const x=X+s*(.06+i*.11);Kit.mk('rect',{x:x-s*.012,y:0,width:s*.024,height:Y+s,fill:'url(#ray)'},G.rays);}
+  G.flash=Kit.mk('rect',{x:X,y:Y,width:s,height:s,fill:UV,opacity:0},svg);
+  upd();
+}
+
+function setStep(n){
+  st.step=n; Kit.$('say').textContent=SAY[n];
+  if(n<3) Kit.$('go').textContent=BTN[n]; else Kit.hide('ctl');
+}
+function go(){
+  if(st.busy||st.step>=3) return;
+  st.busy=true; Kit.$('go').disabled=true; Kit.haptic('light');
+  const k=Kit.calm?0:1, s=G.s;
+  const end=t=>setTimeout(()=>{st.busy=false;Kit.$('go').disabled=false;},t*1000*k+30);
+  if(st.step===0){
+    setStep(1);
+    gsap.fromTo(G.plate,{y:-s*.6,opacity:0},{y:0,opacity:1,duration:.7*k,ease:'power3.out'});
+    end(.7);
+  } else if(st.step===1){
+    setStep(2);
+    const tl=gsap.timeline();
+    tl.to(G.rays,{opacity:1,duration:.2*k})
+      .to(G.flash,{opacity:.55,duration:.15*k},'<')
+      .to(G.flash,{opacity:0,duration:.4*k})
+      .to(G.over,{opacity:1,duration:.5*k},'<')
+      .to(G.rays,{opacity:0,duration:.4*k},'<')
+      .to(G.plate,{y:-s*.6,opacity:0,duration:.6*k,ease:'power2.in'},'+=.15');
+    end(1.9);
+  } else if(st.step===2){
+    setStep(3);
+    const pr={t:0}, toPit=gsap.utils.interpolate(UV,PIT), toSi=gsap.utils.interpolate(RES,SI), dieC=gsap.utils.interpolate(RES,PIT);
+    gsap.to(pr,{t:1,duration:1.1*k,ease:'power2.inOut',onUpdate(){
+      G.over.setAttribute('fill',toPit(pr.t)); G.die.setAttribute('fill',dieC(pr.t)); paint(G.main,toSi(pr.t));
+    },onComplete(){
+      G.arrow.setAttribute('opacity',1);
+      if(!Kit.calm&&!st.dragged) gsap.to(st,{dx:.03,duration:.22,yoyo:true,repeat:3,ease:'sine.inOut',onUpdate:upd,onComplete(){st.dx=0;upd();}});
+    }});
+    end(1.2);
+  }
+}
+Kit.$('go').addEventListener('click',go);
+
+// drag the etched machine
+let drag=null;
+const pic=Kit.$('pic');
+pic.addEventListener('pointerdown',e=>{
+  if(st.step<3||st.busy) return;
+  gsap.killTweensOf(st);
+  try{pic.setPointerCapture(e.pointerId);}catch(_){}
+  const r=pic.getBoundingClientRect();
+  drag={x0:e.clientX, d0:st.dx, scale:(G.W/r.width)/G.s};
+  if(!st.dragged){st.dragged=true;gsap.to(G.arrow,{opacity:0,duration:.3});}
+  Kit.haptic('selection');
+});
+pic.addEventListener('pointermove',e=>{
+  if(!drag) return;
+  st.dx=Math.max(-.06,Math.min(.06,drag.d0+(e.clientX-drag.x0)*drag.scale)); upd();
+});
+const release=()=>{
+  if(!drag) return; drag=null;
+  const moved=Math.abs(st.dx)>.015;
+  gsap.to(st,{dx:0,duration:Kit.calm?.01:1.3,ease:'elastic.out(1,0.28)',onUpdate:upd});
+  if(moved&&!st.done){st.done=true;setTimeout(finish,Kit.calm?50:900);}
+};
+pic.addEventListener('pointerup',release);
+pic.addEventListener('pointercancel',release);
+
+function finish(){
+  Kit.hide('say'); Kit.show('why'); Kit.show('keep'); Kit.haptic('success');
+  if(!Kit.calm) gsap.from(['#why','#keep'],{opacity:0,y:8,stagger:.12,duration:.45,ease:'power3.out'});
+}
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if(!Kit.calm) gsap.from(G.main.g,{opacity:0,duration:.6}); };
+Kit.play.card = async () => {
+  const w=t=>new Promise(r=>setTimeout(r,t));
+  for(let i=0;i<3;i++){ Kit.$('go').click(); await w(Kit.calm?150:2200); }
+  const r=pic.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
+  const ev=(t,x)=>pic.dispatchEvent(new PointerEvent(t,{clientX:x,clientY:cy,pointerId:1,bubbles:true}));
+  ev('pointerdown',cx); ev('pointermove',cx+30); ev('pointermove',cx+60); ev('pointerup',cx+60);
+  await w(1800);
+};
+Kit.single();
+</script>
+</html>

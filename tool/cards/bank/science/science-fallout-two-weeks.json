@@ -1,0 +1,37 @@
+{
+  "id": "science-fallout-two-weeks",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What fraction of initial fallout radiation remains after about two weeks?",
+  "answer": "The fiercest fallout radiation fades first. After about two weeks, only about 1 % of the starting level remains: far safer, but still not harmless. With food, the video advises staying sheltered about a month.",
+  "move": "Two weeks of shelter cuts fallout radiation to about 1 %.",
+  "keywords": [
+    "fallout",
+    "radiation",
+    "nuclear_blast",
+    "sheltering",
+    "geopop"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "web": {
+    "kit": 1,
+    "touch": "drags",
+    "label": "An interactive chart of fallout radiation decaying from 100 % at day 0 toward about 1 % by day 14. Drag across it to move forward day by day. The question asks what fraction of the initial radiation remains after about two weeks."
+  },
+  "source": "Geopop, “Come sopravvivere a un'esplosione nucleare: guida tecnica per salvarsi da un attacco (ipotetico)” (YouTube, 2022)",
+  "reference": "https://www.youtube.com/watch?v=VNWX06NkitE&t=466s",
+  "written": "2026-11-03"
+}

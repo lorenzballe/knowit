@@ -1,0 +1,210 @@
+<!doctype html>
+<!-- slug: maths-wang-never-repeats -->
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{position:relative;flex:1;min-height:0}
+#stage svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;color:var(--k)}
+#stage svg:active{cursor:grabbing}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .big{font:800 max(2.6cqh,16px)/1.15 var(--display);margin:0}
+#why .body{font:500 max(1.8cqh,13px)/1.3 var(--body);margin:0;overflow-wrap:break-word}
+.say{overflow-wrap:break-word}
+</style>
+<article class="card" id="card" data-topic="maths" data-kind="Drag · find the repeat">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">TILINGS</span></div>
+    <h2 class="q">Wang guessed tiles that can cover the plane must repeat. Was he right?</h2>
+    <div class="stagebox" id="stage"><svg id="pic"></svg></div>
+    <p class="say" id="say">Drag the see-through copy. Make it land exactly on the pattern again.</p>
+    <div id="why" class="gone">
+      <p class="big">No. Wang was wrong.</p>
+      <p class="body">His student Robert Berger found a finite set of 20,426 tiles that covers the whole plane, but only without ever repeating. Like B: no slide ever lands it back on itself.</p>
+    </div>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>A finite set of tiles can cover the endless plane and never repeat.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Infinite Pattern That Never Repeats” (YouTube, 2020)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+const V = ['#ff6b5b', '#2ec4b6'], HC = ['#ffd23f', '#4361ee'];
+const MA = 3, MB = 2, PHI = (1 + Math.sqrt(5)) / 2;
+const md = (n, m) => ((n % m) + m) % m;
+const fibw = o => n => Math.floor((n + o + 1) / PHI) - Math.floor((n + o) / PHI);
+const A = {col: n => [0, 0, 1][md(n, 3)], row: n => [0, 1][md(n, 2)]};
+const B = {col: fibw(7), row: fibw(7)};
+const key = (S, i, j) => '' + S.col(i - 1) + S.col(i) + S.row(j - 1) + S.row(j);
+// An aperiodic (Fibonacci) edge sequence whose every allowed slide shows a mismatch in view.
+function pickSeq(n, max) {
+  for (let o = 6; o < 800; o++) {
+    const f = fibw(o); let ok = true;
+    for (let a = -max; a <= max && ok; a++) {
+      if (!a) continue; let diff = false;
+      for (let i = 0; i < n; i++) if (f(i - 1) !== f(i - 1 - a) || f(i) !== f(i - a)) { diff = true; break; }
+      if (!diff) ok = false;
+    }
+    if (ok) return f;
+  }
+  return fibw(7);
+}
+const st = {x: 1, y: 1};
+let geo = null, panels = [], lastK = '', lastG = '', done = false, seen = new Set(), foundA = false, drag = null;
+const NS = 'http://www.w3.org/2000/svg';
+// Clip a polygon to the rectangle [0,cw]x[0,ch] (Sutherland–Hodgman).
+function clipPoly(pts, cw, ch) {
+  const edges = [p => p[0] >= 0, p => p[0] <= cw, p => p[1] >= 0, p => p[1] <= ch];
+  const cut = [
+    (a, b) => { const t = (0 - a[0]) / (b[0] - a[0]); return [0, a[1] + t * (b[1] - a[1])]; },
+    (a, b) => { const t = (cw - a[0]) / (b[0] - a[0]); return [cw, a[1] + t * (b[1] - a[1])]; },
+    (a, b) => { const t = (0 - a[1]) / (b[1] - a[1]); return [a[0] + t * (b[0] - a[0]), 0]; },
+    (a, b) => { const t = (ch - a[1]) / (b[1] - a[1]); return [a[0] + t * (b[0] - a[0]), ch]; }
+  ];
+  let out = pts;
+  for (let e = 0; e < 4 && out.length; e++) {
+    const inp = out, inside = edges[e]; out = [];
+    for (let k = 0; k < inp.length; k++) {
+      const cur = inp[k], prev = inp[(k + inp.length - 1) % inp.length];
+      const ci = inside(cur), pi = inside(prev);
+      if (ci) { if (!pi) out.push(cut[e](prev, cur)); out.push(cur); }
+      else if (pi) out.push(cut[e](prev, cur));
+    }
+  }
+  return out;
+}
+function tile(par, S, i, j, x, y, s, cw, ch) {
+  const k = key(S, i, j), cx = x + s / 2, cy = y + s / 2;
+  const P = (pts, c) => {
+    if (cw !== undefined) { pts = clipPoly(pts, cw, ch); if (pts.length < 3) return; }
+    Kit.mk('polygon', {points: pts.map(p => p.join(',')).join(' '), fill: c, stroke: 'rgba(0,0,0,.28)', 'stroke-width': Math.max(.6, s * .015), 'stroke-linejoin': 'round'}, par);
+  };
+  P([[x, y], [x + s, y], [cx, cy]], HC[+k[2]]);
+  P([[x, y + s], [x + s, y + s], [cx, cy]], HC[+k[3]]);
+  P([[x, y], [x, y + s], [cx, cy]], V[+k[0]]);
+  P([[x + s, y], [x + s, y + s], [cx, cy]], V[+k[1]]);
+}
+function drawGhosts() {
+  const {s, gw, gh} = geo;
+  const ox = st.x * s, oy = st.y * s, g = ox.toFixed(2) + ',' + oy.toFixed(2);
+  if (g === lastG) return; lastG = g;
+  const i0 = Math.floor(-ox / s), i1 = Math.ceil((gw - ox) / s) - 1;
+  const j0 = Math.floor(-oy / s), j1 = Math.ceil((gh - oy) / s) - 1;
+  panels.forEach(p => {
+    p.ghost.innerHTML = '';
+    for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
+      const x = i * s + ox, y = j * s + oy;
+      tile(p.ghost, p.S, i, j, x, y, s, gw, gh);
+      const r = clipPoly([[x, y], [x + s, y], [x + s, y + s], [x, y + s]], gw, gh);
+      if (r.length >= 3) Kit.mk('polygon', {points: r.map(q => q.join(',')).join(' '), fill: 'none', stroke: '#fff', 'stroke-width': Math.max(1, s * .03)}, p.ghost);
+    }
+  });
+}
+function draw() {
+  const svg = Kit.$('pic'); svg.innerHTML = '';
+  const {W, H, f} = Kit.fitSvg(svg);
+  if (W < 40 || H < 40) return;
+  const fs = Math.max(f * .95, 12), hh = fs * 1.8, gap = fs * 1.1;
+  const side = W > H * 1.25;
+  let pw, ph;
+  if (side) { pw = (W - gap) / 2; ph = H - hh; } else { pw = W; ph = (H - gap) / 2 - hh; }
+  const s = Math.max(8, Math.min(pw / 8, ph / 4));
+  const cols = Math.max(7, Math.min(11, Math.floor(pw / s))), rows = Math.max(4, Math.min(8, Math.floor(ph / s)));
+  B.col = pickSeq(cols, MA); B.row = pickSeq(rows, MB);
+  geo = {s, cols, rows, fs, gw: cols * s, gh: rows * s};
+  const defs = Kit.mk('defs', {}, svg);
+  panels = [A, B].map((S, n) => {
+    const gw = cols * s, gh = rows * s;
+    const px = side ? n * (pw + gap) + (pw - gw) / 2 : (pw - gw) / 2;
+    const py = side ? hh + (ph - gh) / 2 : n * (ph + hh + gap) + hh + (ph - gh) / 2;
+    const g = Kit.mk('g', {transform: `translate(${px},${py})`, class: 'panel'}, svg);
+    const cp = Kit.mk('clipPath', {id: 'cp' + n}, defs);
+    Kit.mk('rect', {x: 0, y: 0, width: gw, height: gh, rx: s * .12}, cp);
+    const t = Kit.mk('text', {x: 0, y: -fs * .55, fill: 'currentColor', style: `font:800 ${fs * 1.1}px var(--display)`}, g);
+    t.textContent = n ? 'B' : 'A';
+    const badge = Kit.mk('text', {x: fs * 1.6, y: -fs * .55, fill: 'currentColor', style: `font:600 ${fs}px var(--body)`}, g);
+    const clip = Kit.mk('g', {'clip-path': `url(#cp${n})`}, g);
+    const base = Kit.mk('g', {}, clip);
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) tile(base, S, i, j, i * s, j * s, s);
+    const ghost = Kit.mk('g', {opacity: .55}, clip);
+    const marks = Kit.mk('g', {}, clip);
+    const frame = Kit.mk('rect', {x: 0, y: 0, width: gw, height: gh, rx: s * .12, fill: 'none', stroke: 'currentColor', 'stroke-width': Math.max(1.5, s * .04)}, g);
+    return {S, ghost, marks, badge, frame, g};
+  });
+  lastK = ''; lastG = ''; apply();
+}
+function apply() {
+  if (!geo) return;
+  const {s, cols, rows} = geo;
+  drawGhosts();
+  const a = Math.round(st.x), b = Math.round(st.y), k = a + ',' + b;
+  if (k === lastK) return; lastK = k;
+  panels.forEach(p => {
+    p.marks.innerHTML = ''; let bad = 0;
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      if (key(p.S, i, j) !== key(p.S, i - a, j - b)) {
+        bad++;
+        Kit.mk('rect', {x: i * s + s * .1, y: j * s + s * .1, width: s * .8, height: s * .8, rx: s * .1, fill: 'none', stroke: '#d90429', 'stroke-width': Math.max(2, s * .09)}, p.marks);
+      }
+    }
+    const home = !a && !b;
+    p.badge.textContent = home ? 'Start spot: slide it elsewhere' : bad ? `✗ ${bad} tiles don't fit` : '✓ Perfect fit: it repeats!';
+    p.frame.setAttribute('stroke', !home && !bad ? '#12b76a' : 'currentColor');
+    p.frame.setAttribute('stroke-width', Math.max(1.5, s * (!home && !bad ? .12 : .04)));
+    p.fit = !home && !bad;
+  });
+}
+function settle() {
+  const a = Math.round(st.x), b = Math.round(st.y);
+  gsap.to(st, {x: a, y: b, duration: Kit.calm ? 0 : .25, ease: 'power3.out', onUpdate: apply, onComplete: apply});
+  if (a || b) {
+    seen.add(a + ',' + b);
+    const k = a + ',' + b; lastK = ''; st.x = st.x; 
+    const fitA = key(A, 0, 0) !== null && panels.length && (() => { for (let j = 0; j < geo.rows; j++) for (let i = 0; i < geo.cols; i++) if (key(A, i, j) !== key(A, i - a, j - b)) return false; return true; })();
+    if (fitA) { foundA = true; Kit.haptic('success'); } else Kit.haptic('selection');
+  }
+  if (!done && ((foundA && seen.size >= 4) || seen.size >= 10)) finish();
+}
+function finish() {
+  done = true; Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  if (!Kit.calm) gsap.from(['#why', '#keep'], {opacity: 0, y: 8, stagger: .1, duration: .4, ease: 'power3.out'});
+}
+const svgEl = Kit.$('pic');
+svgEl.addEventListener('pointerdown', e => {
+  if (!geo) return;
+  drag = {x: e.clientX, y: e.clientY, sx: st.x, sy: st.y};
+  gsap.killTweensOf(st);
+  try { svgEl.setPointerCapture(e.pointerId); } catch (_) {}
+});
+svgEl.addEventListener('pointermove', e => {
+  if (!drag) return;
+  st.x = Math.max(-MA, Math.min(MA, drag.sx + (e.clientX - drag.x) / geo.s));
+  st.y = Math.max(-MB, Math.min(MB, drag.sy + (e.clientY - drag.y) / geo.s));
+  apply();
+});
+const up = () => { if (!drag) return; drag = null; settle(); };
+svgEl.addEventListener('pointerup', up);
+svgEl.addEventListener('pointercancel', up);
+let rq = 0;
+new ResizeObserver(() => { cancelAnimationFrame(rq); rq = requestAnimationFrame(draw); }).observe(Kit.$('stage'));
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => {
+  if (Kit.calm) return;
+  gsap.from('.panel', {opacity: 0, y: 12, stagger: .12, duration: .5, ease: 'power3.out'});
+  gsap.fromTo(st, {x: 1}, {x: 1.35, duration: .35, delay: .7, yoyo: true, repeat: 3, ease: 'sine.inOut', onUpdate: apply});
+};
+Kit.play.card = async () => {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const go = async (dx, dy) => {
+    const r = svgEl.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const ev = (t, X, Y) => svgEl.dispatchEvent(new PointerEvent(t, {clientX: X, clientY: Y, bubbles: true, pointerId: 1}));
+    ev('pointerdown', x, y); ev('pointermove', x + dx * geo.s, y + dy * geo.s); ev('pointerup', x + dx * geo.s, y + dy * geo.s);
+    await wait(350);
+  };
+  await go(1, -1); await go(0, 1); await go(-1, 1); await go(2, -2); await go(-1, 0);
+  await wait(500);
+};
+Kit.single();
+</script>
+</html>

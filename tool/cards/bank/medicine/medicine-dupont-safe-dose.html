@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- slug: medicine-dupont-safe-dose -->
+<title>Astute free card</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/astute-card.css">
+<script src="kit/vendor/gsap.min.js"></script>
+<style>
+#stage{display:flex;flex-direction:column;flex:1;min-height:0;gap:1.2cqh}
+#pic{flex:1;min-height:0;width:100%;display:block}
+#go{align-self:flex-start;font:700 max(2.2cqh,14px)/1.2 var(--body);color:var(--c);background:var(--k);border:0;border-radius:1.8cqh;padding:1.5cqh 5cqw;cursor:pointer}
+#why{display:flex;flex-direction:column;gap:.8cqh}
+#why .body{font:500 max(1.9cqh,13px)/1.3 var(--body);overflow-wrap:anywhere}
+.lbl{font-family:var(--body);font-weight:700}
+.mono{font-family:var(--mono)}
+</style>
+<article class="card" id="card" data-topic="medicine" data-kind="Build it · a safe dose">
+  <div class="in">
+    <div class="label"><svg></svg><span class="t"></span><span class="tag">SAFE DOSE</span></div>
+    <h2 class="q">How did DuPont pick its “safe” C8 limit for drinking water?</h2>
+    <div class="stagebox" id="stage">
+      <svg id="pic"></svg>
+      <button id="go">Round it up</button>
+      <div id="why" class="gone"><p class="body">DuPont scientists calculated about 0.6 parts per billion, then rounded it up to 1. At the time, 1 ppb was about the lowest level you could detect in water: one drop in 50,000 litres.</p></div>
+    </div>
+    <p class="say" id="say">DuPont's scientists got 0.6 ppb. Tap to round it, as they did.</p>
+    <div class="keep gone" id="keep"><b>WHAT TO KEEP</b>DuPont's own limit said: if you can detect C8 in water, it's too high.</div>
+    <div class="foot"><span class="src">Source · Veritasium, “The Biggest Chemical Coverup In History” (YouTube, 2025)</span></div>
+  </div>
+</article>
+<script src="kit/astute-card.js"></script>
+<script>
+let step = 0, G = {};
+const svg = Kit.$('pic');
+const S = (t, a, p) => Kit.mk(t, a, p || svg);
+
+function draw() {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const {W, H, f: f0} = Kit.fitSvg(svg);
+  const f = Math.max(f0, 13);
+  const L = Math.max(f * 1.2, W * .07), R = W - Math.max(f * 2.4, W * .1);
+  const X = v => L + (v / 1.2) * (R - L);
+  const topH = Math.min(H * .44, f * 9);
+  const ay = topH - f * 2.2;
+  G = {X, f, ay};
+
+  // detectable band (>= 1 ppb)
+  S('rect', {x: X(1), y: ay - f * 4.6, width: R - X(1) + f, height: f * 4.6, rx: f * .4, style: 'fill:var(--k);opacity:.1'});
+  S('line', {x1: X(1), y1: ay - f * 4.6, x2: X(1), y2: ay, style: 'stroke:var(--k);stroke-width:2;stroke-dasharray:4 4;opacity:.7'});
+  const dt = S('text', {x: X(1) - f * .4, y: ay - f * 3.6, 'text-anchor': 'end', class: 'lbl', style: `fill:var(--k);font-size:${f * .9}px;opacity:.8`});
+  dt.textContent = 'lowest level detectable →';
+  // axis
+  S('line', {x1: L, y1: ay, x2: R + f, y2: ay, style: 'stroke:var(--k);stroke-width:3;stroke-linecap:round'});
+  [[0, '0'], [1, '1']].forEach(([v, t]) => {
+    S('line', {x1: X(v), y1: ay - f * .4, x2: X(v), y2: ay + f * .4, style: 'stroke:var(--k);stroke-width:2'});
+    const tx = S('text', {x: X(v), y: ay + f * 1.6, 'text-anchor': 'middle', class: 'mono', style: `fill:var(--k);font-size:${f}px`}); tx.textContent = t;
+  });
+  const u = S('text', {x: R + f, y: ay + f * 1.6, 'text-anchor': 'end', class: 'mono', style: `fill:var(--k);font-size:${f * .9}px;opacity:.7`}); u.textContent = 'ppb';
+  // ghost at 0.6
+  G.ghost = S('g', {style: `opacity:${step ? 1 : 0}`});
+  S('circle', {cx: X(.6), cy: ay, r: f * .35, style: 'fill:none;stroke:var(--k);stroke-width:2;stroke-dasharray:3 3'}, G.ghost);
+  const gt = S('text', {x: X(.6), y: ay + f * 1.6, 'text-anchor': 'middle', class: 'mono', style: `fill:var(--k);font-size:${f}px;opacity:.7`}, G.ghost); gt.textContent = '0.6';
+  // marker
+  G.mk = S('g', {transform: `translate(${X(step ? 1 : .6)},0)`});
+  S('circle', {cx: 0, cy: ay, r: f * .55, style: 'fill:var(--k)'}, G.mk);
+  G.mt = S('text', {x: 0, y: ay - f * 1.2, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${f * 1.05}px`}, G.mk);
+  G.mt.textContent = step ? 'limit: 1 ppb' : 'calculated: 0.6';
+
+  // tanks
+  const by = topH + f * .6, bh = H - by;
+  G.tanksG = S('g', {style: `opacity:${step >= 2 ? 1 : 0}`});
+  const tt = S('text', {x: W / 2, y: by + f, 'text-anchor': 'middle', class: 'lbl', style: `fill:var(--k);font-size:${f}px`}, G.tanksG);
+  tt.textContent = '1 ppb = 1 drop in 20 tanks of 2,500 L';
+  const gy = by + f * 2, gh = bh - f * 2 - f * 1.8;
+  const cols = 5, rows = 4, gap = Math.min(W, gh) * .03;
+  const tw = Math.min((W - gap * (cols - 1)) / cols, (gh - gap * (rows - 1)) / rows * 1.15);
+  const th = Math.min(tw / 1.15, (gh - gap * (rows - 1)) / rows);
+  const gx = (W - (tw * cols + gap * (cols - 1))) / 2;
+  G.tanks = []; G.t0 = null;
+  for (let i = 0; i < 20; i++) {
+    const c = i % cols, r = Math.floor(i / cols), x = gx + c * (tw + gap), y = gy + r * (th + gap);
+    const g = S('g', {}, G.tanksG);
+    S('rect', {x, y, width: tw, height: th, rx: tw * .12, style: 'fill:none;stroke:var(--k);stroke-width:2;opacity:.6'}, g);
+    S('rect', {x: x + 3, y: y + th * .12, width: tw - 6, height: th * .88 - 3, rx: tw * .08, style: 'fill:var(--k);opacity:.14'}, g);
+    G.tanks.push(g);
+    if (!i) G.t0 = {x: x + tw / 2, y: y + th * .55};
+  }
+  G.drop = S('circle', {cx: G.t0.x, cy: G.t0.y, r: Math.max(3, f * .3), style: `fill:var(--k);opacity:${step >= 2 ? 1 : 0}`}, G.tanksG);
+  const dl = S('text', {x: W / 2, y: H - f * .4, 'text-anchor': 'middle', class: 'mono', style: `fill:var(--k);font-size:${f * .9}px;opacity:.8`}, G.tanksG);
+  dl.textContent = '● one drop = 0.05 mL · 50,000 L of water';
+}
+
+function next() {
+  const anim = !Kit.calm;
+  if (step === 0) {
+    step = 1; Kit.haptic('light');
+    if (anim) {
+      gsap.to(G.mk, {attr: {transform: `translate(${G.X(1)},0)`}, duration: .9, ease: 'back.out(1.6)'});
+      gsap.to(G.ghost, {opacity: 1, duration: .4});
+    } else draw();
+    G.mt.textContent = 'limit: 1 ppb';
+    Kit.$('go').textContent = 'How much is 1 ppb?';
+    Kit.$('say').textContent = 'It lands right at the detection line. Now see what 1 ppb means.';
+  } else if (step === 1) {
+    step = 2; Kit.haptic('success');
+    if (anim) {
+      gsap.set(G.tanksG, {opacity: 1});
+      gsap.from(G.tanks, {opacity: 0, scale: .6, transformOrigin: '50% 50%', stagger: .03, duration: .3, ease: 'power2.out'});
+      gsap.fromTo(G.drop, {attr: {cy: G.t0.y - G.f * 4}, opacity: 0}, {attr: {cy: G.t0.y}, opacity: 1, delay: .7, duration: .6, ease: 'bounce.out'});
+    } else draw();
+    Kit.hide('go'); Kit.hide('say'); Kit.show('why'); Kit.show('keep');
+  }
+}
+Kit.$('go').addEventListener('click', next);
+
+Kit.onShow.card = () => draw();
+Kit.onEnter.card = () => { if (!Kit.calm) gsap.from(G.mk, {opacity: 0, duration: .5, ease: 'power2.out'}); };
+Kit.play.card = async () => {
+  const w = ms => new Promise(r => setTimeout(r, ms));
+  Kit.$('go').click(); await w(1000); Kit.$('go').click(); await w(1600);
+};
+Kit.single();
+</script>
+</html>
